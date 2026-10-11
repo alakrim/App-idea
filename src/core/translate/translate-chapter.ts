@@ -5,7 +5,6 @@ import { addUsage, throwIfCancelled, ZERO_USAGE } from '../llm/transport';
 import { planLlmChunks } from '../text/chunk';
 
 import type { Lang } from '../domain';
-import type { LlmTransport, LlmUsage } from '../llm/transport';
 import type {
   GlossaryEntry,
   PreviousSentence,
@@ -13,6 +12,7 @@ import type {
   TranslateSentence,
   TranslateUsage,
 } from './types';
+import type { LlmTransport, LlmUsage } from '../llm/transport';
 import type { LlmChunk } from '../text/chunk';
 
 /** Source tokens per request, as estimated by `estimateTokens`. */

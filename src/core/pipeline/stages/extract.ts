@@ -4,11 +4,12 @@
  * model ran, skipped otherwise).
  */
 import { SELECTION_PROMPT_VERSION } from '@/core/extract/prompts';
-import { guessLanguage } from '@/core/translate/detect';
 import { countCodePoints } from '@/core/text/build';
 import { estimateWordCount } from '@/core/text/word-count';
-import { stableHash, hashText } from '../hash';
+import { guessLanguage } from '@/core/translate/detect';
+
 import { StageFailure } from '../errors';
+import { stableHash, hashText } from '../hash';
 import { writeJob } from '../job-records';
 import { stripPdfFurniture } from './pdf-text';
 import { extractWebPage } from './web-extract';
@@ -141,7 +142,10 @@ async function finish(ctx: StageContext, inputHash: string, found: Finished): Pr
 async function requireSourceText(ctx: StageContext): Promise<string> {
   const text = await ctx.ports.chapters.getSourceText(ctx.chapterId);
   if (text === null || text.trim() === '') {
-    throw new StageFailure('CONTENT_EMPTY', EMPTY_MESSAGE, { retryable: false, detail: 'no_source_text' });
+    throw new StageFailure('CONTENT_EMPTY', EMPTY_MESSAGE, {
+      retryable: false,
+      detail: 'no_source_text',
+    });
   }
   return text;
 }

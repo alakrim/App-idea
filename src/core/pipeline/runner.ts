@@ -3,15 +3,16 @@
  * same input hash. It records every job, updates the chapter status and emits progress events. It
  * never retries. Retryable failures are the client's job, and the caller decides what to do.
  */
+import type { PipelineError, Stage } from '@/core/domain';
 import { throwIfCancelled } from '@/core/llm/transport';
+
 import { isCancellation, StageFailure, toPipelineError } from './errors';
-import { CostMeter } from './meter';
 import { writeJob } from './job-records';
+import { CostMeter } from './meter';
 import { STAGE_DEFINITIONS, STAGE_ORDER } from './stages';
 
-import type { PipelineError, Stage } from '@/core/domain';
-import type { JobState } from './job-records';
 import type { PipelineEvent, PreparedStage, StageContext } from './context';
+import type { JobState } from './job-records';
 import type { PdfEngine, PipelinePorts } from './ports';
 
 export interface RunOptions {
@@ -99,12 +100,7 @@ export async function runChapter(
       await writeJob(ports, chapterId, stage, jobState(prepared, 'running', 0, 0, null));
       emit({ type: 'stage', chapterId, stage, status: 'running' });
       await prepared.execute();
-      await writeJob(
-        ports,
-        chapterId,
-        stage,
-        jobState(prepared, 'done', 1, meter.spentUsd, null),
-      );
+      await writeJob(ports, chapterId, stage, jobState(prepared, 'done', 1, meter.spentUsd, null));
       emit({ type: 'stage', chapterId, stage, status: 'done' });
     } catch (thrown) {
       const spent = meter?.spentUsd ?? 0;

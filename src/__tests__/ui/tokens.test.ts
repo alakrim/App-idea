@@ -33,6 +33,23 @@ describe('text colour contrast (design-system.md: AA on bg and surface)', () => 
   }
 });
 
+describe('accent contrast (UI review: light accent must be readable as text)', () => {
+  const themes = ['dark', 'light'] as const;
+
+  for (const scheme of themes) {
+    it(`${scheme} accent meets 4.5:1 on bg and surface`, () => {
+      const colors = palette[scheme];
+      expect(contrastRatio(colors.accent, colors.bg)).toBeGreaterThanOrEqual(4.5);
+      expect(contrastRatio(colors.accent, colors.surface)).toBeGreaterThanOrEqual(4.5);
+    });
+
+    it(`${scheme} onAccent meets 4.5:1 on accent (primary button label)`, () => {
+      const colors = palette[scheme];
+      expect(contrastRatio(colors.onAccent, colors.accent)).toBeGreaterThanOrEqual(4.5);
+    });
+  }
+});
+
 describe('theme scheme resolution', () => {
   it('follows the system scheme in system mode and defaults to dark when unknown', () => {
     expect(resolveScheme('system', 'light')).toBe('light');

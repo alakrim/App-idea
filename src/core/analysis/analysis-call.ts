@@ -1,10 +1,10 @@
-import { parseJsonReply } from '../llm/json';
-import { addUsage } from '../llm/transport';
 import { ANALYSIS_JSON_SCHEMA, analysisResponseSchema, normalizeMemory } from './schemas';
 import { stripNulls } from './strip-nulls';
+import { parseJsonReply } from '../llm/json';
+import { addUsage } from '../llm/transport';
 
-import type { LlmTransport, LlmUsage } from '../llm/transport';
 import type { MemoryFields } from './types';
+import type { LlmTransport, LlmUsage } from '../llm/transport';
 import type { ZodError } from 'zod';
 
 export interface AnalysisResponse {

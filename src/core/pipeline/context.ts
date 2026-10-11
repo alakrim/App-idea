@@ -1,6 +1,6 @@
 import type { Id, PipelineError, Stage } from '../domain';
-import type { ChapterRecord, PdfEngine, PipelinePorts } from './ports';
 import type { CostMeter } from './meter';
+import type { ChapterRecord, PdfEngine, PipelinePorts } from './ports';
 
 /** A narration segment that is saved and playable. Emitted in order, for progressive playback. */
 export interface SegmentReady {
@@ -14,12 +14,33 @@ export interface SegmentReady {
 export type JobStatusEvent = 'running' | 'done' | 'skipped' | 'failed' | 'cancelled';
 
 export type PipelineEvent =
-  | { readonly type: 'stage'; readonly chapterId: Id; readonly stage: Stage; readonly status: JobStatusEvent }
-  | { readonly type: 'progress'; readonly chapterId: Id; readonly stage: Stage; readonly progress: number }
+  | {
+      readonly type: 'stage';
+      readonly chapterId: Id;
+      readonly stage: Stage;
+      readonly status: JobStatusEvent;
+    }
+  | {
+      readonly type: 'progress';
+      readonly chapterId: Id;
+      readonly stage: Stage;
+      readonly progress: number;
+    }
   | { readonly type: 'segmentReady'; readonly chapterId: Id; readonly segment: SegmentReady }
-  | { readonly type: 'cost'; readonly chapterId: Id; readonly stage: Stage; readonly usd: number; readonly totalUsd: number }
+  | {
+      readonly type: 'cost';
+      readonly chapterId: Id;
+      readonly stage: Stage;
+      readonly usd: number;
+      readonly totalUsd: number;
+    }
   | { readonly type: 'done'; readonly chapterId: Id }
-  | { readonly type: 'error'; readonly chapterId: Id; readonly stage: Stage; readonly error: PipelineError };
+  | {
+      readonly type: 'error';
+      readonly chapterId: Id;
+      readonly stage: Stage;
+      readonly error: PipelineError;
+    };
 
 /** Per-run choices that the stages read. */
 export interface StageOptions {

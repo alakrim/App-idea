@@ -19,8 +19,10 @@ function fnv1a(text: string, offset: number): number {
 
 /** 16 hex characters for a string. */
 export function hashText(text: string): string {
-  return fnv1a(text, LANE_A_OFFSET).toString(16).padStart(8, '0') +
-    fnv1a(text, LANE_B_OFFSET).toString(16).padStart(8, '0');
+  return (
+    fnv1a(text, LANE_A_OFFSET).toString(16).padStart(8, '0') +
+    fnv1a(text, LANE_B_OFFSET).toString(16).padStart(8, '0')
+  );
 }
 
 /** Hashes a list of inputs. Each part is JSON-encoded, so the order and the boundaries matter. */

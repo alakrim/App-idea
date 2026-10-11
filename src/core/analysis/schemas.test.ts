@@ -15,8 +15,8 @@ import { stripNulls } from './strip-nulls';
 import { strictViolations } from '../__fixtures__/strict-json-schema';
 import { reply } from '../llm/__fixtures__/replies';
 
-import type { LlmRequest } from '../llm/transport';
 import type { CleanMemoryDraft } from './schemas';
+import type { LlmRequest } from '../llm/transport';
 
 const EMPTY_DRAFT: CleanMemoryDraft = {
   summary: '',

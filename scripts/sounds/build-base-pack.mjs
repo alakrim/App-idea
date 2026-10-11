@@ -32,11 +32,12 @@ import {
   BUILD_SCRIPT,
   LEDGER_PATH,
   LICENSE_DATE,
-  LOOP_SECONDS,
+  LOOP_SAMPLES,
   LUFS_TOLERANCE,
   MANIFEST_PATH,
   PACK_DIR,
   RECIPE_VERSION,
+  ROLL_SAMPLES,
   SAMPLE_RATE,
   TARGET_LUFS,
   TRUE_PEAK_MAX_DBTP,
@@ -46,18 +47,13 @@ const SYNTH_SECONDS = 75;
 /** The loop window starts this far into the synthesis, past the filter start-up transients. */
 const EDGE_TRIM_SECONDS = 6;
 const CROSSFADE_SECONDS = 3;
-const SAMPLES_PER_AAC_FRAME = 1024;
 /**
  * A loose LRA target keeps loudnorm in linear (constant-gain) mode. With a tight target (11 LU) the
  * ocean swell measured 11.1 LU, loudnorm switched to dynamic mode, and it reshaped the envelopes.
  */
 const LRA_TARGET = 20;
 
-// AAC-LC encodes whole 1024-sample frames. A loop that is a whole number of frames decodes back to
-// exactly its own length (priming skip and end padding cancel). A 60 s loop is not a whole number
-// of frames, so the loop is rounded to 2584 frames (60.0004 s) and the seam is not padded.
-const LOOP_SAMPLES =
-  Math.round((LOOP_SECONDS * SAMPLE_RATE) / SAMPLES_PER_AAC_FRAME) * SAMPLES_PER_AAC_FRAME;
+// LOOP_SAMPLES is a whole number of AAC frames (see pack-spec.mjs), so the loop decodes to its own length.
 const CROSSFADE_SAMPLES = CROSSFADE_SECONDS * SAMPLE_RATE;
 const EDGE_SAMPLES = EDGE_TRIM_SECONDS * SAMPLE_RATE;
 /** Loop source window: LOOP + CROSSFADE. The R4 recipe returns window - crossfade = LOOP. */
@@ -182,6 +178,17 @@ function loopGraph() {
   ].join(';');
 }
 
+/** Adds ROLL_SAMPLES of loop audio before and after the loop, so the encoder sees no onset at its edges. */
+function rollGraph() {
+  return [
+    '[0:a]asplit=3[s1][s2][s3]',
+    `[s1]atrim=start_sample=${LOOP_SAMPLES - ROLL_SAMPLES},asetpts=PTS-STARTPTS[pre]`,
+    '[s2]asetpts=PTS-STARTPTS[body]',
+    `[s3]atrim=end_sample=${ROLL_SAMPLES},asetpts=PTS-STARTPTS[post]`,
+    '[pre][body][post]concat=n=3:v=0:a=1[out]',
+  ].join(';');
+}
+
 /** Pass 1 of two-pass loudnorm: measure the loop. */
 async function measureLoudnorm(file) {
   const stderr = await runFfmpegCapture([
@@ -268,11 +275,26 @@ async function buildBed(id, workDir) {
     ]);
   }
 
-  const measured = await measureLoudnorm(source);
+  const rolled = join(workDir, `${id}.rolled.wav`);
   await runFfmpeg([
     '-y',
     '-i',
     source,
+    '-filter_complex',
+    rollGraph(),
+    '-map',
+    '[out]',
+    '-c:a',
+    'pcm_f32le',
+    rolled,
+  ]);
+
+  // Pass 1 measures the loop; the linear gain it implies is applied to the rolled file.
+  const measured = await measureLoudnorm(source);
+  await runFfmpeg([
+    '-y',
+    '-i',
+    rolled,
     '-af',
     loudnormPass2(measured),
     '-ac',
@@ -293,7 +315,14 @@ async function buildBed(id, workDir) {
   ]);
 
   const samples = await decodeMono(encoded);
+  if (samples.length !== 2 * ROLL_SAMPLES + LOOP_SAMPLES) {
+    throw new Error(
+      `${id}: decoded ${samples.length} samples, expected ${2 * ROLL_SAMPLES + LOOP_SAMPLES}`,
+    );
+  }
   const durationMs = Math.round((samples.length / SAMPLE_RATE) * 1000);
+  const loopStartMs = Math.round((ROLL_SAMPLES / SAMPLE_RATE) * 1e6) / 1000;
+  const loopEndMs = Math.round(((ROLL_SAMPLES + LOOP_SAMPLES) / SAMPLE_RATE) * 1e6) / 1000;
   const { integratedLufs, truePeakDbtp } = await measureLoudness(encoded);
   if (Math.abs(integratedLufs - TARGET_LUFS) > LUFS_TOLERANCE) {
     throw new Error(`${id}: integrated loudness ${integratedLufs} LUFS is outside the target`);
@@ -309,8 +338,8 @@ async function buildBed(id, workDir) {
     id,
     file,
     durationMs,
-    loopStartMs: 0,
-    loopEndMs: durationMs,
+    loopStartMs,
+    loopEndMs,
     lufs: Math.round(integratedLufs * 10) / 10,
     bytes: size,
     sha256: await sha256File(join(PACK_DIR, file)),

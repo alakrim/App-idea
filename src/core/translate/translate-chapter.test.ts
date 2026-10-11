@@ -1,10 +1,10 @@
-import { FAKE_USAGE, reply } from '../llm/__fixtures__/replies';
-import { LlmCancelledError } from '../llm/transport';
 import {
   TRANSLATE_CHUNK_TOKENS,
   translateChapter,
   TranslateOutputError,
 } from './translate-chapter';
+import { FAKE_USAGE, reply } from '../llm/__fixtures__/replies';
+import { LlmCancelledError } from '../llm/transport';
 
 import type { ChunkPlanner, TranslateChapterInput, TranslateProgress } from './translate-chapter';
 import type { TranslateSentence } from './types';
@@ -316,9 +316,9 @@ describe('translateChapter: cancellation', () => {
     const { llm, requests } = fakeLlm((user) => echo(user));
     const controller = new AbortController();
     controller.abort();
-    const error = await translateChapter(
-      input({ llm, signal: controller.signal }),
-    ).catch((e: unknown) => e);
+    const error = await translateChapter(input({ llm, signal: controller.signal })).catch(
+      (e: unknown) => e,
+    );
     expect(error).toBeInstanceOf(LlmCancelledError);
     expect(error).toMatchObject({ name: 'AbortError', code: 'CANCELLED' });
     expect(requests).toHaveLength(0);

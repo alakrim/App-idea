@@ -3,6 +3,7 @@
  * the network, the file system or a WebView directly. The app layer (P2) implements these with
  * SQLite, OpenRouter, expo-file-system and a hidden WebView, and tests use in-memory fakes.
  */
+import type { ChapterMemoryRecord, ValidatedCue } from '../analysis/types';
 import type {
   AudioSegment,
   Chapter,
@@ -20,12 +21,11 @@ import type {
   Stage,
   UsageEntry,
 } from '../domain';
-import type { ChapterMemoryRecord, ValidatedCue } from '../analysis/types';
-import type { LlmTransport, LlmUsage } from '../llm/transport';
 import type { ModelPricing } from '../llm/cost';
+import type { LlmTransport, LlmUsage } from '../llm/transport';
 import type { EntityResolution } from '../memory/entities';
-import type { ChapterText } from '../text/build';
 import type { Settings } from '../settings';
+import type { ChapterText } from '../text/build';
 
 /** A chapter with everything a run needs, read once when the run starts. */
 export interface ChapterRecord {
@@ -146,7 +146,11 @@ export interface PdfTextResult {
 }
 
 export interface PdfTextSource {
-  extract(input: { fileUri: string; engine: PdfEngine; signal: AbortSignal }): Promise<PdfTextResult>;
+  extract(input: {
+    fileUri: string;
+    engine: PdfEngine;
+    signal: AbortSignal;
+  }): Promise<PdfTextResult>;
 }
 
 export interface TtsResult {
@@ -161,7 +165,11 @@ export interface Tts {
    * Synthesizes one passage. The core clears `profile.style` before the call when the model does
    * not support steering, so the adapter can pass it through unchanged.
    */
-  synthesize(input: { text: string; profile: NarrationProfile; signal: AbortSignal }): Promise<TtsResult>;
+  synthesize(input: {
+    text: string;
+    profile: NarrationProfile;
+    signal: AbortSignal;
+  }): Promise<TtsResult>;
 }
 
 export interface AudioFiles {

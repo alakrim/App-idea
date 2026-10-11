@@ -50,7 +50,12 @@ const uint32 = (value: number): number[] => [
   value & 0xff,
 ];
 
-const MPEG1_L3_128_44K: HeaderSpec = { version: 'mpeg1', layer: 3, bitrateIndex: 9, sampleRateIndex: 0 };
+const MPEG1_L3_128_44K: HeaderSpec = {
+  version: 'mpeg1',
+  layer: 3,
+  bitrateIndex: 9,
+  sampleRateIndex: 0,
+};
 
 describe('parseFrameHeader', () => {
   it('reads the frame length of a 128 kbit/s MPEG-1 Layer III frame at 44.1 kHz', () => {
@@ -114,7 +119,9 @@ describe('mp3DurationMs', () => {
 
   it('uses the Xing frame count for a VBR file, even when the frames are cut short', () => {
     const stereoXing = 4 + 32; // Frame header, then side information for stereo MPEG-1.
-    const xing = frame(MPEG1_L3_128_44K, { [stereoXing]: [...ascii('Xing'), ...uint32(1), ...uint32(1000)] });
+    const xing = frame(MPEG1_L3_128_44K, {
+      [stereoXing]: [...ascii('Xing'), ...uint32(1), ...uint32(1000)],
+    });
     const file = concat([xing, frame(MPEG1_L3_128_44K), frame(MPEG1_L3_128_44K)]);
     // The header says 1,000 frames, so the duration is 1,000 frames, not the three present.
     expect(mp3DurationMs(file)).toBe(Math.round((1000 * 1152 * 1000) / 44100));
@@ -127,7 +134,9 @@ describe('mp3DurationMs', () => {
   });
 
   it('reads a VBRI frame count', () => {
-    const vbri = frame(MPEG1_L3_128_44K, { 36: [...ascii('VBRI'), 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, ...uint32(500)] });
+    const vbri = frame(MPEG1_L3_128_44K, {
+      36: [...ascii('VBRI'), 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, ...uint32(500)],
+    });
     expect(mp3DurationMs(concat([vbri, frame(MPEG1_L3_128_44K)]))).toBe(
       Math.round((500 * 1152 * 1000) / 44100),
     );

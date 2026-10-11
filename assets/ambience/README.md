@@ -17,9 +17,9 @@ A JSON array. Each entry:
 {
   "id": "base_rain",
   "file": "base_rain.m4a",
-  "durationMs": 60000,
-  "loopStartMs": 0,
-  "loopEndMs": 60000,
+  "durationMs": 60093,
+  "loopStartMs": 46.44,
+  "loopEndMs": 60046.8,
   "lufs": -27.6,
   "bytes": 493423,
   "sha256": "<64 hex chars>",
@@ -30,6 +30,11 @@ A JSON array. Each entry:
 ```
 
 `file` is relative to `base/`. `lufs` is the integrated loudness measured after normalization.
+
+**Loop region.** Each procedural file holds 46.44 ms of loop audio before and after the loop. The
+encoder needs those rolls to avoid an onset at its edges. Players must loop only
+`[loopStartMs, loopEndMs)`: start there, and on reaching `loopEndMs` seek back to `loopStartMs`.
+Playing the whole file would play the rolls and click at each wrap. `durationMs` is the full file length.
 
 ## `LICENSES.json`
 

@@ -4,12 +4,13 @@
  */
 import { analyzeChapter } from '@/core/analysis/map-reduce';
 import { PROMPT_VERSION } from '@/core/analysis/prompts';
+import type { ChapterMemory } from '@/core/domain';
 import { buildPriorContext } from '@/core/memory/codex';
 import { resolveEntities } from '@/core/memory/entities';
 import { estimateWordCount } from '@/core/text/word-count';
+
 import { stableHash } from '../hash';
 
-import type { ChapterMemory } from '@/core/domain';
 import type { StageDefinition } from '../context';
 import type { ChapterRecord } from '../ports';
 
@@ -64,8 +65,7 @@ export const analyzeStage: StageDefinition = {
           lang,
           priorContext,
           sentences: sentences.map((s) => ({ idx: s.idx, text: s.text })),
-          wordCount:
-            chapter.wordCount ?? estimateWordCount(sentences.map((s) => s.text).join(' ')),
+          wordCount: chapter.wordCount ?? estimateWordCount(sentences.map((s) => s.text).join(' ')),
           callLlm: transport,
           signal: ctx.signal,
         });

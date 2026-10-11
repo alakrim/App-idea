@@ -4,16 +4,17 @@
  * start before the chapter is finished. A rerun resumes at the first segment that is missing or was
  * made from different input (a new voice, a new style, or edited text).
  */
-import { planTtsSegments } from '@/core/text/chunk';
-import { countCodePoints } from '@/core/text/build';
-import { detectScript } from '@/core/text/normalize';
-import { estimateSentenceOffsets } from '@/core/text/timing';
+import type { AudioSegment, NarrationProfile } from '@/core/domain';
 import { SPEECH_CHARS_PER_SECOND } from '@/core/llm/cost';
 import { throwIfCancelled } from '@/core/llm/transport';
-import { mp3DurationMs } from '../mp3-duration';
-import { stableHash } from '../hash';
+import { countCodePoints } from '@/core/text/build';
+import { planTtsSegments } from '@/core/text/chunk';
+import { detectScript } from '@/core/text/normalize';
+import { estimateSentenceOffsets } from '@/core/text/timing';
 
-import type { AudioSegment, NarrationProfile } from '@/core/domain';
+import { stableHash } from '../hash';
+import { mp3DurationMs } from '../mp3-duration';
+
 import type { StageContext, StageDefinition } from '../context';
 import type { StoredSentence } from '../ports';
 
@@ -60,7 +61,9 @@ async function buildPlan(ctx: StageContext): Promise<Plan> {
   const spoken = sentences.map((s) => spokenSentence(s));
   const groups = planTtsSegments(spoken);
   const segments = groups.map((group, idx) => {
-    const members = spoken.filter((s) => s.idx >= group.sentenceStart && s.idx <= group.sentenceEnd);
+    const members = spoken.filter(
+      (s) => s.idx >= group.sentenceStart && s.idx <= group.sentenceEnd,
+    );
     const sentenceTexts = members.map((m) => m.text);
     const text = joinSpoken(sentenceTexts);
     return {

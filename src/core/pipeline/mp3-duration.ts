@@ -122,7 +122,8 @@ function findFirstFrame(bytes: Uint8Array, start: number): LocatedFrame | null {
 }
 
 function readXingFrameCount(bytes: Uint8Array, frame: LocatedFrame): number | null {
-  const sideInfo = frame.header.version === 'mpeg1' ? (frame.header.mono ? 17 : 32) : frame.header.mono ? 9 : 17;
+  const sideInfo =
+    frame.header.version === 'mpeg1' ? (frame.header.mono ? 17 : 32) : frame.header.mono ? 9 : 17;
   const tagOffset = frame.offset + HEADER_BYTES + (frame.header.crcPresent ? 2 : 0) + sideInfo;
   const tag = readAscii(bytes, tagOffset, 4);
   if (tag !== 'Xing' && tag !== 'Info') return null;

@@ -1,7 +1,8 @@
 /** The segment stage: source text in, paragraphs and sentences with stable indices out. */
 import { buildChapterText } from '@/core/text/build';
-import { stableHash, hashText } from '../hash';
+
 import { StageFailure } from '../errors';
+import { stableHash, hashText } from '../hash';
 
 import type { StageDefinition } from '../context';
 

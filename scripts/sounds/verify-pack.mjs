@@ -13,6 +13,7 @@ import {
   BASE_BED_IDS,
   DURATION_TOLERANCE_MS,
   LEDGER_PATH,
+  LOOP_SAMPLES,
   LUFS_TOLERANCE,
   MANIFEST_PATH,
   MAX_PACK_BYTES,
@@ -20,6 +21,7 @@ import {
   SAMPLE_RATE,
   SEAM_RMS_FLOOR_DB,
   SEAM_RMS_PERCENTILE,
+  SEAM_JUMP_PERCENTILE,
   SEAM_SPIKE_RATIO,
   SEAM_WINDOW_SECONDS,
   TARGET_LUFS,
@@ -31,8 +33,8 @@ const manifestSchema = z.array(
     id: z.string(),
     file: z.string(),
     durationMs: z.number().int().positive(),
-    loopStartMs: z.literal(0),
-    loopEndMs: z.number().int().positive(),
+    loopStartMs: z.number().nonnegative(),
+    loopEndMs: z.number().positive(),
     lufs: z.number(),
     bytes: z.number().int().positive(),
     sha256: z.string().regex(/^[0-9a-f]{64}$/),
@@ -59,17 +61,13 @@ const rms = (x, from, to) => {
   return Math.sqrt(sum / (to - from));
 };
 
-const median = (values) => {
-  const sorted = Float32Array.from(values).sort();
-  return sorted[sorted.length >> 1];
-};
-
 /**
  * Seam checks on decoded PCM.
  * - Level: |dRMS| between the last and first 50 ms windows. The limit is max(floor, p99) where p99 is
  *   taken over |dRMS| between adjacent non-overlapping 50 ms windows elsewhere in the same file.
  *   Low-frequency beds vary that much naturally, so a fixed 2 dB limit alone is too strict for them.
- * - Jump: the wrap sample step against the median sample step (click detector).
+ * - Jump: the wrap sample step against the median sample step. The limit is max(6x, p99.9 of the
+ *   internal sample steps / median), the same statistical treatment as the level rule.
  */
 function checkSeam(x) {
   const win = Math.round(SEAM_WINDOW_SECONDS * SAMPLE_RATE);
@@ -88,11 +86,18 @@ function checkSeam(x) {
 
   const deltas = new Float32Array(x.length - 1);
   for (let i = 1; i < x.length; i++) deltas[i - 1] = Math.abs(x[i] - x[i - 1]);
-  const medianDelta = median(deltas);
+  const sortedDeltas = Float32Array.from(deltas).sort();
+  const medianDelta = sortedDeltas[sortedDeltas.length >> 1];
   const wrapJump = Math.abs(x[0] - x[x.length - 1]);
   const jumpRatio = medianDelta > 0 ? wrapJump / medianDelta : Number.POSITIVE_INFINITY;
+  const jumpP999Ratio =
+    medianDelta > 0
+      ? sortedDeltas[Math.ceil(SEAM_JUMP_PERCENTILE * (sortedDeltas.length - 1))] / medianDelta
+      : Number.POSITIVE_INFINITY;
+  // A silent loop has no median step, so the jump limit is 0 and the seam fails.
+  const jumpLimit = medianDelta > 0 ? Math.max(SEAM_SPIKE_RATIO, jumpP999Ratio) : 0;
 
-  return { rmsDiffDb, p99Db: p99, limitDb, jumpRatio };
+  return { rmsDiffDb, p99Db: p99, limitDb, jumpRatio, jumpP999Ratio, jumpLimit };
 }
 
 async function verifyBed(entry, ledgerIds) {
@@ -113,6 +118,14 @@ async function verifyBed(entry, ledgerIds) {
   if (Math.abs(decodedMs - entry.durationMs) > DURATION_TOLERANCE_MS) {
     failures.push(`duration ${decodedMs.toFixed(1)} ms outside ${entry.durationMs} +/- 50`);
   }
+  // Loop region: the file carries roll audio outside [loopStartMs, loopEndMs); seams are checked inside it.
+  const regionStart = Math.round((entry.loopStartMs / 1000) * SAMPLE_RATE);
+  const regionEnd = Math.round((entry.loopEndMs / 1000) * SAMPLE_RATE);
+  if (regionEnd - regionStart !== LOOP_SAMPLES) {
+    failures.push(`loop region is ${regionEnd - regionStart} samples, expected ${LOOP_SAMPLES}`);
+  }
+  if (regionEnd > samples.length) failures.push('loop region extends past the file');
+  const loop = samples.subarray(regionStart, regionEnd);
 
   const { integratedLufs, truePeakDbtp } = await measureLoudness(path);
   if (Math.abs(integratedLufs - TARGET_LUFS) > LUFS_TOLERANCE) {
@@ -122,14 +135,16 @@ async function verifyBed(entry, ledgerIds) {
     failures.push(`true peak ${truePeakDbtp} dBTP above ${TRUE_PEAK_MAX_DBTP}`);
   }
 
-  const seam = checkSeam(samples);
+  const seam = checkSeam(loop);
   if (seam.rmsDiffDb > seam.limitDb) {
     failures.push(
       `seam dRMS ${seam.rmsDiffDb.toFixed(2)} dB exceeds ${seam.limitDb.toFixed(2)} dB (p99 ${seam.p99Db.toFixed(2)})`,
     );
   }
-  if (!(seam.jumpRatio <= SEAM_SPIKE_RATIO)) {
-    failures.push(`seam jump is ${seam.jumpRatio.toFixed(2)}x the median delta (limit 6)`);
+  if (!(seam.jumpRatio <= seam.jumpLimit)) {
+    failures.push(
+      `seam jump ${seam.jumpRatio.toFixed(2)}x exceeds ${seam.jumpLimit.toFixed(2)}x (p99.9 ${seam.jumpP999Ratio.toFixed(2)}x)`,
+    );
   }
 
   return {
@@ -143,6 +158,8 @@ async function verifyBed(entry, ledgerIds) {
       p99Db: seam.p99Db.toFixed(2),
       limitDb: seam.limitDb.toFixed(2),
       seamJump: seam.jumpRatio.toFixed(2),
+      jumpP999: seam.jumpP999Ratio.toFixed(2),
+      jumpLimit: seam.jumpLimit.toFixed(2),
       bytes: entry.bytes,
     },
   };

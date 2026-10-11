@@ -5,9 +5,9 @@ import { MEMORY_LIMITS } from './limits';
 import { normalizeName } from '../memory/entities';
 import { normalizeWhitespace } from '../text/normalize';
 
-import type { JsonSchemaSpec } from '../llm/transport';
 import type { NoNulls } from './strip-nulls';
 import type { IntensityLevel, MemoryFields } from './types';
+import type { JsonSchemaSpec } from '../llm/transport';
 
 export const INTENSITY_LEVELS = [
   'low',

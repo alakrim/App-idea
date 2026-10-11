@@ -9,8 +9,9 @@ export const bedManifestEntrySchema = z.object({
   id: z.string(),
   file: z.string(),
   durationMs: z.number().int().positive(),
-  loopStartMs: z.literal(0),
-  loopEndMs: z.number().int().positive(),
+  /** Loop region [loopStartMs, loopEndMs). The file carries roll audio outside it; never play the rolls. */
+  loopStartMs: z.number().nonnegative(),
+  loopEndMs: z.number().positive(),
   lufs: z.number(),
   bytes: z.number().int().positive(),
   sha256: z.string().regex(/^[0-9a-f]{64}$/),

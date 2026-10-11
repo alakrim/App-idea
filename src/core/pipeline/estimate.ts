@@ -12,12 +12,12 @@
  * - Narration is billed on the spoken characters. Translated text is about four characters per
  *   output token.
  */
-import { ANALYSIS_SYSTEM_PROMPT } from '../analysis/prompts';
 import { MAX_CHUNK_TOKENS } from '../analysis/limits';
+import { ANALYSIS_SYSTEM_PROMPT } from '../analysis/prompts';
 import { estimateChatCost, estimateSpeechCost } from '../llm/cost';
+import { estimateTokens } from '../text/chunk';
 import { TRANSLATE_SYSTEM_PROMPT } from '../translate/prompts';
 import { TRANSLATE_CHUNK_TOKENS } from '../translate/translate-chapter';
-import { estimateTokens } from '../text/chunk';
 
 import type { Lang } from '../domain';
 import type { Catalog } from './ports';
@@ -73,7 +73,18 @@ const SPREAD: Readonly<Record<CostStage, number>> = {
 };
 
 const CJK_LANGUAGES = new Set(['zh', 'ja', 'ko']);
-const OTHER_SCRIPT_LANGUAGES = new Set(['ar', 'bg', 'el', 'fa', 'he', 'hi', 'ru', 'sr', 'th', 'uk']);
+const OTHER_SCRIPT_LANGUAGES = new Set([
+  'ar',
+  'bg',
+  'el',
+  'fa',
+  'he',
+  'hi',
+  'ru',
+  'sr',
+  'th',
+  'uk',
+]);
 
 type Family = 'cjk' | 'latin';
 
@@ -110,13 +121,16 @@ export async function estimateChapterCost(input: EstimateInput): Promise<Chapter
   const expansion = translationExpansion(input.sourceLang, target);
 
   const cleanup = await chatStage(input, 'cleanup', {
-    inputTokens: Math.ceil((sourceChars * CLEANUP_INPUT_SHARE) / charsPerToken(input.sourceLang)) +
+    inputTokens:
+      Math.ceil((sourceChars * CLEANUP_INPUT_SHARE) / charsPerToken(input.sourceLang)) +
       CLEANUP_INSTRUCTION_TOKENS,
     outputTokens: CLEANUP_OUTPUT_TOKENS,
     basis: 'upper bound: only pages that need LLM block selection',
   });
 
-  const analysisInput = sourceTokens + chunks * (estimateTokens(ANALYSIS_SYSTEM_PROMPT) + PRIOR_CONTEXT_TOKENS_PER_CALL);
+  const analysisInput =
+    sourceTokens +
+    chunks * (estimateTokens(ANALYSIS_SYSTEM_PROMPT) + PRIOR_CONTEXT_TOKENS_PER_CALL);
   const analysis = await chatStage(input, 'analysis', {
     inputTokens: analysisInput,
     outputTokens:
@@ -129,7 +143,9 @@ export async function estimateChapterCost(input: EstimateInput): Promise<Chapter
         input:
           sourceTokens +
           Math.ceil(sourceTokens / TRANSLATE_CHUNK_TOKENS) *
-            (estimateTokens(TRANSLATE_SYSTEM_PROMPT) + GLOSSARY_TOKENS_PER_CALL + TRANSLATE_CONTEXT_TOKENS),
+            (estimateTokens(TRANSLATE_SYSTEM_PROMPT) +
+              GLOSSARY_TOKENS_PER_CALL +
+              TRANSLATE_CONTEXT_TOKENS),
         output: Math.ceil(sourceTokens * expansion),
       }
     : { input: 0, output: 0 };
@@ -183,7 +199,11 @@ async function chatStage(
 async function speechStage(input: EstimateInput, chars: number): Promise<StageEstimate> {
   const model = await input.catalog.find(input.models.narration);
   if (!model) {
-    return { stage: 'narration', usd: 0, basis: `pricing unavailable for ${input.models.narration}` };
+    return {
+      stage: 'narration',
+      usd: 0,
+      basis: `pricing unavailable for ${input.models.narration}`,
+    };
   }
   return {
     stage: 'narration',

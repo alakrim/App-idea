@@ -2,7 +2,6 @@ import { sentences } from './__fixtures__/builders';
 import { AnalysisOutputError } from './analysis-call';
 import { analyzeChapter } from './map-reduce';
 import { ANALYSIS_SYSTEM_PROMPT } from './prompts';
-
 import { reply as replyWith } from '../llm/__fixtures__/replies';
 
 import type { LlmTransport } from '../llm/transport';

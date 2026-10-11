@@ -2,8 +2,8 @@ import { z } from 'zod';
 
 import { parseJsonReply } from '../llm/json';
 
-import type { JsonSchemaSpec } from '../llm/transport';
 import type { TranslatedItem } from './types';
+import type { JsonSchemaSpec } from '../llm/transport';
 
 /**
  * The model's reply. Strict json_schema mode: every key is required and there are no optional

@@ -52,6 +52,9 @@ export function Screen({
     ),
   }));
 
+  // The large title sits under the status bar with a little air, so it never hugs the top edge.
+  const titleSpacing = title ? styles.titledContent : null;
+
   const heading = title ? (
     <Text variant="display" accessibilityRole="header" numberOfLines={2}>
       {title}
@@ -80,13 +83,13 @@ export function Screen({
         <Animated.ScrollView
           onScroll={onScroll}
           scrollEventThrottle={16}
-          contentContainerStyle={[styles.content, contentStyle]}
+          contentContainerStyle={[styles.content, titleSpacing, contentStyle]}
         >
           {heading}
           {children}
         </Animated.ScrollView>
       ) : (
-        <View style={[styles.content, styles.fill, contentStyle]}>
+        <View style={[styles.content, styles.fill, titleSpacing, contentStyle]}>
           {heading}
           {children}
         </View>
@@ -107,6 +110,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: gutter,
     paddingBottom: space.xxl,
     gap: space.lg,
+  },
+  titledContent: {
+    paddingTop: space.sm,
   },
   compactBar: {
     position: 'absolute',

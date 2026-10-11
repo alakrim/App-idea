@@ -9,9 +9,9 @@ import { planLlmChunks } from '../text/chunk';
 import { normalizeWhitespace } from '../text/normalize';
 
 import type { AnalysisCallResult } from './analysis-call';
-import type { LlmTransport, LlmUsage } from '../llm/transport';
 import type { Lang, MemoryFields, SentenceInput, ValidatedCue } from './types';
 import type { DroppedCue } from './validate-cues';
+import type { LlmTransport, LlmUsage } from '../llm/transport';
 
 /** Splits a chapter into LLM chunks. The engine takes the planner as an argument, so tests can script it. */
 export type ChunkPlanner = (sentences: readonly SentenceInput[]) => SentenceInput[][];

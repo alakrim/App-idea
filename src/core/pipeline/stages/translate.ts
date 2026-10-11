@@ -3,12 +3,13 @@
  * entities up to this chapter. Skipped when there is no target language, or when the target is the
  * source language.
  */
+import type { ChapterMemoryRecord } from '@/core/analysis/types';
 import { buildGlossary } from '@/core/translate/glossary';
 import { TRANSLATE_PROMPT_VERSION } from '@/core/translate/prompts';
 import { translateChapter } from '@/core/translate/translate-chapter';
+
 import { stableHash } from '../hash';
 
-import type { ChapterMemoryRecord } from '@/core/analysis/types';
 import type { StageDefinition } from '../context';
 
 /** Glossary budget for one chapter, in estimated tokens. */
