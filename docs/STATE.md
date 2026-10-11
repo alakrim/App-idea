@@ -88,3 +88,4 @@ _Last updated: 2026-10-11 by architect_
 - [I1] The extraction stack adds +2.06 MB Hermes bytecode. Acceptable for now; revisit in M8 (lazy require inside the pipeline worker).
 - [I1] ✅ All 11 fixes done and verified (819 core/node tests).
 - ✅ Verified + committed: F5 translate (84 tests), F0 app infrastructure (55 tests), A2 audio engine (133 tests). Repo total ≈ 1,000 tests.
+- [A1] ✅ Base pack accepted (roll 2048, verify green). M8: replace the single-sample jump gate with a windowed click detector (≥ 8 kHz band energy in ±1 ms at the wrap vs the internal p99.9 of the same statistic); it is currently a noisy check. Listening test on device (S1) is the real gate.
