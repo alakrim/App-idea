@@ -68,11 +68,28 @@ export interface AddChapterScreenProps {
   seriesId: string;
 }
 
-/** Add a chapter from a link, a PDF or pasted text. Shows the cost before the chapter is created. */
+/** Reads the series languages, which price the chapter, and hands them to the form. */
 export function AddChapterScreen({ seriesId }: AddChapterScreenProps) {
+  const series = useSeries(seriesId);
+  return (
+    <AddChapterForm
+      seriesId={seriesId}
+      sourceLang={series?.sourceLang ?? null}
+      targetLang={series?.targetLang ?? null}
+    />
+  );
+}
+
+export interface AddChapterFormProps {
+  seriesId: string;
+  sourceLang: string | null;
+  targetLang: string | null;
+}
+
+/** Add a chapter from a link, a PDF or pasted text. Shows the cost before the chapter is created. */
+export function AddChapterForm({ seriesId, sourceLang, targetLang }: AddChapterFormProps) {
   const { colors } = useTheme();
   const pipeline = usePipeline();
-  const series = useSeries(seriesId);
   const [mode, setMode] = useState<SourceMode>('link');
   const [url, setUrl] = useState('');
   const [link, setLink] = useState<LinkState>({ kind: 'idle' });
@@ -141,15 +158,15 @@ export function AddChapterScreen({ seriesId }: AddChapterScreenProps) {
   const linkNow = mode === 'link' && isWebUrl(url) ? link : ({ kind: 'idle' } as const);
   const readyPreview = linkNow.kind === 'ready' ? linkNow.preview : null;
   const chars = sourceChars(mode, readyPreview, file, text);
-  const basisKey = `${mode}:${chars}:${series?.sourceLang ?? ''}:${series?.targetLang ?? ''}`;
+  const basisKey = `${mode}:${chars}:${sourceLang ?? ''}:${targetLang ?? ''}`;
   useEffect(() => {
     if (chars === 0) return;
     let active = true;
     void pipeline
       .estimate({
         chars,
-        sourceLang: series?.sourceLang ?? null,
-        targetLang: series?.targetLang ?? null,
+        sourceLang: sourceLang ?? null,
+        targetLang: targetLang ?? null,
       })
       .then((result: CostEstimate) => {
         if (active) setEstimateResult({ key: basisKey, estimate: result });
@@ -158,7 +175,7 @@ export function AddChapterScreen({ seriesId }: AddChapterScreenProps) {
       active = false;
     };
     // The key captures everything the estimate depends on, so the other values are not needed.
-  }, [pipeline, basisKey, chars, series?.sourceLang, series?.targetLang]);
+  }, [pipeline, basisKey, chars, sourceLang, targetLang]);
 
   const estimate: EstimateStatus =
     chars === 0

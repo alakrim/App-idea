@@ -1,4 +1,10 @@
-import { formatCostEstimate, formatDuration, formatFileSize, formatSeriesSummary, formatUsd } from './format';
+import {
+  formatCostEstimate,
+  formatDuration,
+  formatFileSize,
+  formatSeriesSummary,
+  formatUsd,
+} from './format';
 
 describe('formatDuration', () => {
   it('shows hours and minutes for long runs', () => {

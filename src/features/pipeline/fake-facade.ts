@@ -59,7 +59,7 @@ const STAGE_COST_USD: Readonly<Record<Stage, number>> = {
   narrate: 0.014,
 };
 const EXCERPT_CHARS = 400;
-const FAKE_USD_PER_CHAR = 0.0000012;
+const FAKE_USD_PER_CHAR = 0.00005;
 const READING_WORDS_PER_MINUTE = 160;
 
 interface StageSlot {
@@ -78,6 +78,19 @@ interface Run {
   error: PipelineError | null;
   timer: ReturnType<typeof setTimeout> | null;
   listeners: Set<(progress: ChapterProgress) => void>;
+}
+
+function idleSnapshot(chapterId: string): ChapterProgress {
+  return {
+    chapterId,
+    state: 'idle',
+    stages: STAGES.map((stage) => ({ stage, status: 'pending', progress: 0 })),
+    overall: 0,
+    readySegments: 0,
+    totalSegments: null,
+    costUsdSoFar: 0,
+    error: null,
+  };
 }
 
 function emptySlots(): Record<Stage, StageSlot> {
@@ -195,6 +208,7 @@ export function createFakePipeline(options: FakePipelineOptions): PipelineFacade
       if (stage === 'translate' && targetLangOf(run) === null) {
         slot.status = 'skipped';
         slot.progress = 1;
+        persistJob(run, stage, { status: 'skipped', progress: 1, finishedAt: clock() });
         continue;
       }
       return stage;
@@ -422,6 +436,11 @@ export function createFakePipeline(options: FakePipelineOptions): PipelineFacade
     },
 
     subscribe(chapterId, listener) {
+      // A chapter that does not exist has nothing to report, so it reads as idle rather than throwing.
+      if (!runs.has(chapterId) && chapterRepo.get(db, chapterId) === null) {
+        listener(idleSnapshot(chapterId));
+        return () => undefined;
+      }
       const run = runFor(chapterId);
       run.listeners.add(listener);
       listener(snapshot(run));

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- jest.mock factories load helpers with require */
 import { fireEvent, screen } from '@testing-library/react-native';
 import { router } from 'expo-router';
 
@@ -9,11 +10,9 @@ import LibraryTab from '../../app/(tabs)/index';
 
 // Jest cannot load Reanimated 4's worklets runtime, lucide ships untransformed ESM, and the sheet
 // needs the gesture handler. All are mocked here, as in the other screen tests.
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('react-native-reanimated', () => require('./helpers/reanimated-stub'));
 jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
 jest.mock('@gorhom/bottom-sheet', () => require('./helpers/feature-mocks').bottomSheetStub());
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('expo-sqlite', () => require('./helpers/fake-expo-sqlite'));
 
 jest.mock('expo-router', () => ({

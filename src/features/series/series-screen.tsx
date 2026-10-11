@@ -39,15 +39,15 @@ export function SeriesScreen({ seriesId }: SeriesScreenProps) {
   const [deletingChapter, setDeletingChapter] = useState<string | null>(null);
   const [ocrFor, setOcrFor] = useState<string | null>(null);
 
-  const scannedIds = data.chapters
-    .filter((record) => isScannedPdfFailure(record.chapter, record.failure))
-    .map((record) => record.chapter.id);
+  // Live progress is newer than the stored job, so its error wins.
+  const chapters: SeriesChapterItem[] = data.chapters.map((record) => {
+    const live = progress[record.chapter.id] ?? null;
+    return { record, progress: live, failure: live?.error ?? record.failure };
+  });
+  const scannedIds = chapters
+    .filter((item) => isScannedPdfFailure(item.record.chapter, item.failure))
+    .map((item) => item.record.chapter.id);
   const ocrPrices = useOcrPrices(scannedIds, data.series);
-
-  const chapters: SeriesChapterItem[] = data.chapters.map((record) => ({
-    record,
-    progress: progress[record.chapter.id] ?? null,
-  }));
   const menuChapter = data.chapters.find((record) => record.chapter.id === chapterMenuFor) ?? null;
   const menuIndex = data.chapters.findIndex((record) => record.chapter.id === chapterMenuFor);
   const ocrChapter = data.chapters.find((record) => record.chapter.id === ocrFor) ?? null;

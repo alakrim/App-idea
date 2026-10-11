@@ -10,7 +10,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import type { Series } from '@/core/domain';
+import type { PipelineError, Series } from '@/core/domain';
 import type { ChapterProgress } from '@/features/pipeline/facade';
 import { withAlpha } from '@/features/shared/color';
 import { NEUTRAL_TINT } from '@/features/shared/cover-tint';
@@ -38,6 +38,8 @@ const TITLE_REVEAL_RANGE = [160, 230] as const;
 export interface SeriesChapterItem {
   record: ChapterRecord;
   progress: ChapterProgress | null;
+  /** The live error when there is one, else the error stored with the failed job. */
+  failure: PipelineError | null;
 }
 
 export interface SeriesViewProps {
@@ -193,7 +195,7 @@ export function SeriesView(props: SeriesViewProps) {
                   number={index + 1}
                   chapter={item.record.chapter}
                   progress={item.progress}
-                  failure={item.record.failure}
+                  failure={item.failure}
                   ocrUsd={props.ocrPrices[item.record.chapter.id] ?? null}
                   divided={index > 0}
                   onOpen={props.onOpenChapter}

@@ -1,11 +1,11 @@
 import { render, type RenderOptions } from '@testing-library/react-native';
 
 import { DbContext } from '@/db/hooks';
+import type { Db } from '@/db/types';
 import { PipelineContext, type PipelineFacade } from '@/features/pipeline/facade';
 import { ThemeProvider } from '@/ui/theme';
 import { ToastProvider } from '@/ui/toast';
 
-import type { Db } from '@/db/types';
 import type { ReactElement } from 'react';
 
 /** Renders a feature screen inside the providers it reads: theme, toasts, the open DB and the pipeline. */

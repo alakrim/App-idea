@@ -1,9 +1,18 @@
-import { Redirect } from 'expo-router';
-import { CircleCheck, CircleDollarSign, KeyRound, Library, Settings } from 'lucide-react-native';
+import { Redirect, router } from 'expo-router';
+import {
+  BookOpen,
+  CircleCheck,
+  CircleDollarSign,
+  KeyRound,
+  Library,
+  Link,
+  Plus,
+  Settings,
+} from 'lucide-react-native';
 import { useState, type ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { DEMO_NOW_PLAYING, MiniPlayer } from '@/features/player/mini-player';
+import { DEMO_NOW_PLAYING, MiniPlayerView } from '@/features/player/mini-player';
 import { Badge } from '@/ui/badge';
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
@@ -197,6 +206,41 @@ function Gallery() {
           </View>
         </Section>
 
+        <Section title="Screens (fake data)">
+          <Card style={styles.flush}>
+            <ListItem
+              title="Library"
+              subtitle="Continue hero, series grid, sort"
+              leading={Library}
+              onPress={() => router.push('/dev/screens?screen=library')}
+            />
+            <ListItem
+              title="Series"
+              subtitle="Processing, failed and scanned chapters"
+              leading={BookOpen}
+              onPress={() => router.push('/dev/screens?screen=series')}
+            />
+            <ListItem
+              title="Chapter"
+              subtitle="Bilingual reading and ambience cues"
+              leading={BookOpen}
+              onPress={() => router.push('/dev/screens?screen=chapter')}
+            />
+            <ListItem
+              title="Add chapter"
+              subtitle="Link preview and cost estimate"
+              leading={Link}
+              onPress={() => router.push('/dev/screens?screen=add')}
+            />
+            <ListItem
+              title="New series"
+              subtitle="Cover picker and languages"
+              leading={Plus}
+              onPress={() => router.push('/dev/screens?screen=new')}
+            />
+          </Card>
+        </Section>
+
         <Section title="Toast">
           <View style={styles.inline}>
             <Button
@@ -213,7 +257,7 @@ function Gallery() {
         </Section>
 
         <Section title="Mini player">
-          <MiniPlayer nowPlaying={DEMO_NOW_PLAYING} />
+          <MiniPlayerView nowPlaying={DEMO_NOW_PLAYING} />
         </Section>
       </Screen>
 
