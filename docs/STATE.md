@@ -137,3 +137,8 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
 - The crash reporter captured it: `IllegalArgumentException: FontSize should be a positive value. Current value: 0` in `TextAttributeProps.getLetterSpacing` (Samsung SM-S928B, Android 15).
 - **Cause:** `CoverImage` sized its monogram from onLayout width, which is 0 on the first render. Android throws for font size ≤ 0, while iOS, web and Jest accept it.
 - **Fix:** the monogram waits for a real width, and the shared `Text` never renders a non-positive/NaN font size. Regression tests mutation-checked (fail without the fix).
+
+## 2026-10-11 evening: user requests (in progress)
+1. ✅ **Play crash fixed** (c3eac7a → 4320fd6): the scrubber's UI-thread worklets called plain JS helpers ("Tried to synchronously call a Remote Function"). The helpers are now worklets, declared before use. New `npm run worklet:check` (in `verify`) catches the whole class.
+2. 🔄 **N1: three narrator options from the start**: Gemini Flash Lite (best, ~$0.55/h), Kokoro 82M (budget, ~$0.03/h, 8 languages) and Fish Audio S2.1 Pro free (free, rate-limited). The cards appear in onboarding and Settings.
+3. ⛔ **A3: Freesound real ambience is BLOCKED by network policy**: `freesound.org` returns 403 at the proxy. The user must allow `freesound.org` and `cdn.freesound.org` in the environment's network settings (then start a new session). The key is stored outside the repo at `~/.config/lectio/freesound.key` (mode 600); this container is ephemeral, so the next session may need it re-supplied as an env secret (`FREESOUND_API_KEY`). The brief is ready: `docs/briefs/A3-freesound-ambience.md`.
