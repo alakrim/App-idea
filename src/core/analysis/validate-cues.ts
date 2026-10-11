@@ -25,6 +25,7 @@ export interface DroppedCue {
 export interface CueValidationContext {
   /** Number of sentences in the chapter. Valid indices are 0..sentenceCount-1. */
   readonly sentenceCount: number;
+  /** Chapter word count from estimateWordCount (CJK-aware), used by the density cap. */
   readonly wordCount: number;
   /** The chapter's sentences (or every sentence of the chapter), used to estimate narration time. */
   readonly sentences: readonly SentenceInput[];
@@ -186,15 +187,24 @@ function mergeAdjacent(
 }
 
 /**
+ * Cues allowed for a chapter. Under 200 words: none. From 200 words: 2 per 1,000 words, floored,
+ * and never fewer than one.
+ */
+export function maxCuesForWordCount(wordCount: number): number {
+  if (wordCount < CUE_LIMITS.minWordsForCues) return 0;
+  return Math.max(1, Math.floor((CUE_LIMITS.maxPer1kWords * wordCount) / 1000));
+}
+
+/**
  * Keeps cues by descending confidence while the chapter stays under the density cap
- * (2 per 1,000 words, floored) and no sentence is covered by more than two beds.
+ * (see maxCuesForWordCount) and no sentence is covered by more than two beds.
  */
 function applyDensityAndOverlap(
   candidates: readonly CueDraft[],
   ctx: CueValidationContext,
   drop: (cue: unknown, reason: CueDropReason) => void,
 ): CueDraft[] {
-  const maxCues = Math.floor((CUE_LIMITS.maxPer1kWords * ctx.wordCount) / 1000);
+  const maxCues = maxCuesForWordCount(ctx.wordCount);
   const coverage = new Array<number>(Math.max(ctx.sentenceCount, 0)).fill(0);
   const ranked = [...candidates].sort(
     (a, b) => b.confidence - a.confidence || a.startSentence - b.startSentence,

@@ -1,6 +1,6 @@
 import { sentences } from './__fixtures__/builders';
 import { CUE_LIMITS } from './limits';
-import { FADES_BY_INTENSITY, validateCues } from './validate-cues';
+import { FADES_BY_INTENSITY, maxCuesForWordCount, validateCues } from './validate-cues';
 
 import type { CueValidationContext } from './validate-cues';
 
@@ -53,8 +53,8 @@ describe('validateCues: rule by rule', () => {
     expect(cues.find((c) => c.intensity === 'high')).toMatchObject(FADES_BY_INTENSITY.high);
   });
 
-  it('defaults a missing intensity to medium and a missing reason to empty', () => {
-    const { cues } = validateCues([cue({ intensity: undefined, reason: undefined })], ctx());
+  it('defaults a null intensity to medium and a null reason to empty', () => {
+    const { cues } = validateCues([cue({ intensity: null, reason: null })], ctx());
     expect(cues[0]).toMatchObject({ intensity: 'medium', reason: '' });
   });
 
@@ -169,10 +169,31 @@ describe('validateCues: rule by rule', () => {
     expect(dropped).toEqual([expect.objectContaining({ reason: 'density_cap' })]);
   });
 
-  it('allows no cues in a chapter under 500 words', () => {
-    const { cues, dropped } = validateCues([cue()], ctx({ wordCount: 499 }));
+  it('allows no cues in a chapter under 200 words', () => {
+    const { cues, dropped } = validateCues([cue()], ctx({ wordCount: 199 }));
     expect(cues).toEqual([]);
     expect(dropped[0]?.reason).toBe('density_cap');
+  });
+
+  it('allows one cue from 200 words, even though 2 per 1,000 words rounds down to zero', () => {
+    const two = [
+      cue({ startSentence: 0, endSentence: 4, confidence: 0.6, category: 'light_rain' }),
+      cue({ startSentence: 10, endSentence: 14, confidence: 0.9, category: 'city_night' }),
+    ];
+    const { cues, dropped } = validateCues(two, ctx({ wordCount: 200 }));
+    expect(cues.map((c) => c.category)).toEqual(['city_night']);
+    expect(dropped).toEqual([expect.objectContaining({ reason: 'density_cap' })]);
+  });
+
+  it('computes the cue cap from the word count', () => {
+    expect(maxCuesForWordCount(0)).toBe(0);
+    expect(maxCuesForWordCount(199)).toBe(0);
+    expect(maxCuesForWordCount(200)).toBe(1);
+    expect(maxCuesForWordCount(499)).toBe(1);
+    expect(maxCuesForWordCount(500)).toBe(1);
+    expect(maxCuesForWordCount(999)).toBe(1);
+    expect(maxCuesForWordCount(1000)).toBe(2);
+    expect(maxCuesForWordCount(2500)).toBe(5);
   });
 
   it('allows at most two overlapping beds at any sentence', () => {

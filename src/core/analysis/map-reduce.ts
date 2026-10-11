@@ -1,9 +1,10 @@
 import { runAnalysisCall } from './analysis-call';
-import { MAX_CHUNK_CHARS, MEMORY_LIMITS } from './limits';
+import { MAX_CHUNK_TOKENS, MEMORY_LIMITS } from './limits';
 import { mergeMemoryDrafts } from './merge-memory';
 import { buildAnalysisPrompt, buildSummaryReducePrompt } from './prompts';
 import { truncateWords } from './schemas';
 import { validateCues } from './validate-cues';
+import { planLlmChunks } from '../text/chunk';
 import { normalizeWhitespace } from '../text/normalize';
 
 import type { AnalysisResponse } from './analysis-call';
@@ -11,37 +12,17 @@ import type { LlmTransport } from './llm';
 import type { Lang, MemoryFields, SentenceInput, ValidatedCue } from './types';
 import type { DroppedCue } from './validate-cues';
 
-/**
- * Splits a chapter into LLM chunks. Same shape as `planLlmChunks` in src/core/text/chunk.ts, which
- * is not on this branch yet. The engine takes the planner as an argument, so the real one can be
- * passed in without changing this module.
- */
+/** Splits a chapter into LLM chunks. The engine takes the planner as an argument, so tests can script it. */
 export type ChunkPlanner = (sentences: readonly SentenceInput[]) => SentenceInput[][];
 
 /**
- * Greedy planner: consecutive sentences go into one chunk until the next one would exceed
- * `maxChars`. A sentence longer than the limit gets a chunk of its own.
+ * The default planner: the shared LLM chunk planner, with no overlap between chunks. Its chunk
+ * ranges are sentence indices, so they are mapped back to the sentences they cover.
  */
-export function planAnalysisChunks(
-  sentences: readonly SentenceInput[],
-  maxChars: number = MAX_CHUNK_CHARS,
-): SentenceInput[][] {
-  const chunks: SentenceInput[][] = [];
-  let current: SentenceInput[] = [];
-  let size = 0;
-  for (const sentence of sentences) {
-    const length = sentence.text.length;
-    if (current.length > 0 && size + length > maxChars) {
-      chunks.push(current);
-      current = [];
-      size = 0;
-    }
-    current.push(sentence);
-    size += length;
-  }
-  if (current.length > 0) chunks.push(current);
-  return chunks;
-}
+export const defaultChunkPlanner: ChunkPlanner = (sentences) =>
+  planLlmChunks(sentences, { maxTokens: MAX_CHUNK_TOKENS, overlapSentences: 0 }).map((chunk) =>
+    sentences.filter((s) => s.idx >= chunk.start && s.idx <= chunk.end),
+  );
 
 export interface AnalyzeChapterInput {
   readonly seriesTitle: string;
@@ -77,7 +58,7 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
     throw new RangeError('sentences must be indexed 0..n-1 in order');
   }
 
-  const plan = input.planChunks ?? planAnalysisChunks;
+  const plan = input.planChunks ?? defaultChunkPlanner;
   const chunks = plan(input.sentences);
 
   const responses: AnalysisResponse[] = [];

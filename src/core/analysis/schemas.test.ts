@@ -1,10 +1,20 @@
+import { z } from 'zod';
+
+import { strictViolations } from '../__fixtures__/strict-json-schema';
 import { parseAnalysisReply, runAnalysisCall } from './analysis-call';
 import { MEMORY_LIMITS } from './limits';
-import { normalizeMemory, rawCueSchema, truncateWords } from './schemas';
+import {
+  analysisResponseSchema,
+  memoryDraftSchema,
+  normalizeMemory,
+  rawCueSchema,
+  truncateWords,
+} from './schemas';
+import { stripNulls } from './strip-nulls';
 
-import type { MemoryDraft } from './schemas';
+import type { CleanMemoryDraft } from './schemas';
 
-const EMPTY_DRAFT: MemoryDraft = {
+const EMPTY_DRAFT: CleanMemoryDraft = {
   summary: '',
   keyEvents: [],
   characters: [],
@@ -175,9 +185,73 @@ describe('parseAnalysisReply', () => {
         category: 'anything',
         startSentence: 0,
         endSentence: 1,
+        intensity: null,
         confidence: 1,
+        reason: null,
       }).success,
     ).toBe(true);
+  });
+
+  it('requires every cue key, using null for an empty intensity or reason', () => {
+    expect(
+      rawCueSchema.safeParse({ category: 'light_rain', startSentence: 0, endSentence: 4, confidence: 1 })
+        .success,
+    ).toBe(false);
+  });
+});
+
+describe('strict json_schema compatibility of LLM output schemas', () => {
+  it.each([
+    ['memoryDraftSchema', memoryDraftSchema],
+    ['rawCueSchema', rawCueSchema],
+    ['analysisResponseSchema', analysisResponseSchema],
+  ])('%s requires every key and forbids extra keys at every depth', (_name, schema) => {
+    expect(strictViolations(z.toJSONSchema(schema, { io: 'output', reused: 'inline' }))).toEqual(
+      [],
+    );
+  });
+
+  it('the walker flags an optional key and an open object, so the check has teeth', () => {
+    const loose = z.object({ a: z.string().optional(), nested: z.object({ b: z.string() }).passthrough() });
+    expect(strictViolations(z.toJSONSchema(loose, { io: 'output', reused: 'inline' })).length).toBe(
+      2,
+    );
+  });
+
+  it('strips null-valued keys from a parsed reply, at every depth', () => {
+    const clean = stripNulls({
+      summary: 'x',
+      characters: [{ name: 'Ana', aliases: [], role: null, facts: [] }],
+      glossary: [{ term: 'Qi', translation: null, note: 'energy' }],
+    });
+    expect(clean).toEqual({
+      summary: 'x',
+      characters: [{ name: 'Ana', aliases: [], facts: [] }],
+      glossary: [{ term: 'Qi', note: 'energy' }],
+    });
+    expect(clean.characters[0]).not.toHaveProperty('role');
+  });
+
+  it('maps a nullable reply to the clean domain shape when parsed', () => {
+    const reply = JSON.stringify({
+      memory: {
+        summary: 'They talk.',
+        keyEvents: [],
+        characters: [{ name: 'Ana', aliases: [], role: null, facts: [] }],
+        places: [],
+        items: [],
+        relationships: [],
+        openThreads: [],
+        glossary: [{ term: 'Qi', translation: null, note: null }],
+      },
+      cues: [],
+    });
+    const outcome = parseAnalysisReply(reply);
+    expect(outcome.ok).toBe(true);
+    if (outcome.ok) {
+      expect(outcome.value.memory.characters[0]).not.toHaveProperty('role');
+      expect(outcome.value.memory.glossary).toEqual([{ term: 'Qi' }]);
+    }
   });
 });
 

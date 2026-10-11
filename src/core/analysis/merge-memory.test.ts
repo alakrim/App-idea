@@ -67,11 +67,48 @@ describe('mergeMemoryDrafts', () => {
     expect(merged.characters[0]?.facts).toEqual(['医者', '学生']);
   });
 
-  it('concatenates key events in order and keeps the first 10', () => {
+  it('samples key events evenly across chunks and keeps reading order at the cap', () => {
     const first = Array.from({ length: 6 }, (_, i) => `first ${i}`);
     const second = Array.from({ length: 6 }, (_, i) => `second ${i}`);
     const merged = mergeMemoryDrafts([draft({ keyEvents: first }), draft({ keyEvents: second })]);
-    expect(merged.keyEvents).toEqual([...first, ...second.slice(0, 4)]);
+    expect(merged.keyEvents).toEqual([...first.slice(0, 5), ...second.slice(0, 5)]);
+  });
+
+  it('does not let one long chunk crowd out the others when key events are capped', () => {
+    const merged = mergeMemoryDrafts([
+      draft({ keyEvents: ['A only'] }),
+      draft({ keyEvents: Array.from({ length: 8 }, (_, i) => `B${i}`) }),
+      draft({ keyEvents: Array.from({ length: 8 }, (_, i) => `C${i}`) }),
+    ]);
+    expect(merged.keyEvents).toHaveLength(10);
+    expect(merged.keyEvents).toEqual([
+      'A only',
+      'B0',
+      'B1',
+      'B2',
+      'B3',
+      'B4',
+      'C0',
+      'C1',
+      'C2',
+      'C3',
+    ]);
+  });
+
+  it('keeps every key event when the chunks together fit under the cap', () => {
+    const merged = mergeMemoryDrafts([
+      draft({ keyEvents: ['Ana leaves', 'Ana returns'] }),
+      draft({ keyEvents: ['Bo arrives'] }),
+    ]);
+    expect(merged.keyEvents).toEqual(['Ana leaves', 'Ana returns', 'Bo arrives']);
+  });
+
+  it('skips a key event that repeats in a later chunk and fills the slot from the next item', () => {
+    const merged = mergeMemoryDrafts([
+      draft({ keyEvents: ['Storm hits', 'Boat sinks'] }),
+      draft({ keyEvents: ['storm HITS', 'Rescue begins'] }),
+    ]);
+    expect(merged.keyEvents).toEqual(['Storm hits', 'Boat sinks', 'Rescue begins']);
   });
 
   it('takes open threads from the last chunk', () => {

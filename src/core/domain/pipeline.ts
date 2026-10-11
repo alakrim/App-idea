@@ -32,6 +32,7 @@ export const ErrorCodeSchema = z.enum([
   'CONTENT_BLOCKED',
   'PARSE_FAILED',
   'LLM_INVALID_OUTPUT',
+  'INPUT_TOO_LONG',
   'STORAGE_FULL',
   'CANCELLED',
   'UNKNOWN',

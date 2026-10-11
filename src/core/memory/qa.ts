@@ -6,7 +6,7 @@ export interface QaCutoff {
   readonly sentenceIdx: number;
 }
 
-/** A full-text hit from the cutoff chapter. The database already filters by position. */
+/** A full-text hit at or before the cutoff. The database already filters by position. */
 export interface QaFtsHit {
   readonly chapterOrder: number;
   readonly chapterNumber: number;
@@ -61,11 +61,19 @@ function memoryCard(record: ChapterMemoryRecord): string {
   return lines.join('\n');
 }
 
+/** True when a hit is at or before the reader's position: earlier chapter, or the cutoff sentence or earlier. */
+export function isAtOrBeforeCutoff(hit: QaFtsHit, cutoff: QaCutoff): boolean {
+  return (
+    hit.chapterOrder < cutoff.chapterOrder ||
+    (hit.chapterOrder === cutoff.chapterOrder && hit.sentenceIdx <= cutoff.sentenceIdx)
+  );
+}
+
 /**
  * Builds the Q&A prompt. Spoiler safety is enforced here as well as in the database query
  * (defense in depth): memory cards only come from chapters strictly before the cutoff, and passage
- * hits only from the cutoff chapter up to the cutoff sentence. The current chapter's memory card is
- * never included.
+ * hits only from chapters before the cutoff or from the cutoff chapter up to the cutoff sentence.
+ * The current chapter's memory card is never included.
  */
 export function buildQaPrompt(input: QaPromptInput): QaPrompt {
   const { cutoff } = input;
@@ -75,15 +83,14 @@ export function buildQaPrompt(input: QaPromptInput): QaPrompt {
     .sort((a, b) => a.chapterOrder - b.chapterOrder);
 
   const hits = input.ftsHits
-    .filter((h) => h.chapterOrder === cutoff.chapterOrder && h.sentenceIdx <= cutoff.sentenceIdx)
-    .sort((a, b) => a.sentenceIdx - b.sentenceIdx);
+    .filter((h) => isAtOrBeforeCutoff(h, cutoff))
+    .sort((a, b) => a.chapterOrder - b.chapterOrder || a.sentenceIdx - b.sentenceIdx);
 
   const sections = [
     `## Series codex\n${input.codex.trim() || '(none)'}`,
     `## Chapter memory cards\n${memories.map(memoryCard).join('\n\n') || '(none)'}`,
-    `## Passages from the current chapter, up to the reader's position\n${
-      hits.map((h) => `[Ch. ${h.chapterNumber}, sentence ${h.sentenceIdx}] ${h.text}`).join('\n') ||
-      '(none)'
+    `## Passages up to the reader's position\n${
+      hits.map((h) => `(Ch. ${h.chapterNumber}) ${h.text}`).join('\n') || '(none)'
     }`,
   ];
 

@@ -13,8 +13,10 @@ export const CUE_LIMITS = {
   minSeconds: 20,
   /** Narration speed used to estimate seconds from characters. */
   charsPerSecond: 15,
-  /** Density cap: cues allowed per 1,000 words of chapter text. */
+  /** Density cap: cues allowed per 1,000 words of chapter text (at least one once a chapter qualifies). */
   maxPer1kWords: 2,
+  /** Chapters under this many words get no cues at all. */
+  minWordsForCues: 200,
   /** At most this many beds may sound at the same sentence. */
   maxOverlappingBeds: 2,
   /** Same-category cues separated by at most this many sentences merge into one. */
@@ -37,5 +39,9 @@ export const MEMORY_LIMITS = {
   glossary: 30,
 } as const;
 
-/** Approximate character budget for one LLM chunk of sentence text (B7 assumption). */
-export const MAX_CHUNK_CHARS = 12000;
+/**
+ * Token budget for one analysis chunk, estimated by `planLlmChunks` (src/core/text/chunk.ts). It
+ * equals the former 12,000-character budget for CJK text, which is one token per character in that
+ * estimate. Latin text (about four characters per token) now fits four times as much per call.
+ */
+export const MAX_CHUNK_TOKENS = 12000;

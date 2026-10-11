@@ -5,6 +5,7 @@ import { MEMORY_LIMITS } from './limits';
 import { normalizeName } from '../memory/entities';
 import { normalizeWhitespace } from '../text/normalize';
 
+import type { NoNulls } from './strip-nulls';
 import type { IntensityLevel, MemoryFields } from './types';
 
 export const INTENSITY_LEVELS = [
@@ -21,11 +22,14 @@ const namedFactsSchema = z.object({
 const characterSchema = z.object({
   name: z.string(),
   aliases: z.array(z.string()).default([]),
-  role: z.string().optional(),
+  role: z.string().nullable(),
   facts: z.array(z.string()).default([]),
 });
 
-/** What the model returns for `memory`. Lengths are not rejected here; `normalizeMemory` truncates. */
+/**
+ * What the model returns for `memory`. Strict json_schema mode: every key is required and an empty
+ * optional value is null, never absent. Lengths are not rejected here; `normalizeMemory` truncates.
+ */
 export const memoryDraftSchema = z.object({
   summary: z.string(),
   keyEvents: z.array(z.string()).default([]),
@@ -40,8 +44,8 @@ export const memoryDraftSchema = z.object({
     .array(
       z.object({
         term: z.string(),
-        translation: z.string().optional(),
-        note: z.string().optional(),
+        translation: z.string().nullable(),
+        note: z.string().nullable(),
       }),
     )
     .default([]),
@@ -49,15 +53,16 @@ export const memoryDraftSchema = z.object({
 
 /**
  * One cue as the model returns it. Fades are not requested from the model. The validator checks
- * the category and ranges, so this schema accepts any string for the category.
+ * the category and ranges, so this schema accepts any string for the category. `intensity` and
+ * `reason` are null when the model has nothing to say.
  */
 export const rawCueSchema = z.object({
   category: z.string().trim().min(1),
   startSentence: z.number(),
   endSentence: z.number(),
-  intensity: z.enum(INTENSITY_LEVELS).optional(),
+  intensity: z.enum(INTENSITY_LEVELS).nullable(),
   confidence: z.number(),
-  reason: z.string().optional(),
+  reason: z.string().nullable(),
 });
 
 /** Every known category id, as a zod enum. Stored ids are never renamed (ADR-0005). */
@@ -69,7 +74,10 @@ export const analysisResponseSchema = z.object({
   cues: z.array(z.unknown()).default([]),
 });
 
+/** The reply's memory as the model sent it, with nulls. */
 export type MemoryDraft = z.infer<typeof memoryDraftSchema>;
+/** The same memory after `stripNulls`: empty optional values are absent. */
+export type CleanMemoryDraft = NoNulls<MemoryDraft>;
 
 /**
  * Truncates to at most `maxWords` words, keeping the original spacing. CJK ideographs and kana
@@ -112,7 +120,7 @@ function cleanOptional(value: string | undefined): string | undefined {
  * Enforces the memory size caps by truncation, never by rejection, and tidies whitespace. Names are
  * kept exactly as written (only whitespace is collapsed).
  */
-export function normalizeMemory(draft: MemoryDraft): MemoryFields {
+export function normalizeMemory(draft: CleanMemoryDraft): MemoryFields {
   const named = <T extends { name: string }>(entries: readonly T[], max: number): T[] =>
     entries
       .map((entry) => ({ ...entry, name: normalizeWhitespace(entry.name) }))

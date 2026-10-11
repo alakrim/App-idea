@@ -1,6 +1,6 @@
 import { sentences } from './__fixtures__/builders';
 import { AnalysisOutputError } from './analysis-call';
-import { analyzeChapter, planAnalysisChunks } from './map-reduce';
+import { analyzeChapter } from './map-reduce';
 import { ANALYSIS_SYSTEM_PROMPT } from './prompts';
 
 import type { LlmTransport } from './llm';
@@ -29,31 +29,34 @@ const BASE_INPUT = {
   wordCount: 10_000,
 };
 
-describe('planAnalysisChunks', () => {
-  it('keeps everything in one chunk when it fits', () => {
-    expect(planAnalysisChunks(sentences(5, 100), 10_000)).toHaveLength(1);
+describe('default chunk planner (planLlmChunks adapter)', () => {
+  it('keeps a short chapter in one chunk and one call', async () => {
+    const { transport, calls } = scriptedTransport(() => memoryJson('Short.'));
+    const result = await analyzeChapter({
+      ...BASE_INPUT,
+      sentences: sentences(5, 100),
+      callLlm: transport,
+    });
+    expect(result.chunkCount).toBe(1);
+    expect(calls).toHaveLength(1);
   });
 
-  it('splits greedily by character budget without reordering sentences', () => {
-    const chunks = planAnalysisChunks(sentences(10, 100), 350);
-    expect(chunks.map((c) => c.length)).toEqual([3, 3, 3, 1]);
-    expect(chunks.flat().map((s) => s.idx)).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
-  });
-
-  it('gives an oversized sentence a chunk of its own', () => {
-    const chunks = planAnalysisChunks(
-      [
-        { idx: 0, text: 'short' },
-        { idx: 1, text: 'x'.repeat(900) },
-        { idx: 2, text: 'short' },
-      ],
-      100,
+  it('splits a chapter over the token budget into several chunks, in order, without loss', async () => {
+    // Each sentence is ~4,000 Latin characters, about 1,000 tokens, so the 12,000-token budget holds 12.
+    const long = sentences(40, 4000);
+    const { transport, calls } = scriptedTransport(() => memoryJson('Part.'));
+    const result = await analyzeChapter({
+      ...BASE_INPUT,
+      sentences: long,
+      callLlm: transport,
+      reduceSummary: false,
+    });
+    expect(result.chunkCount).toBeGreaterThan(1);
+    expect(calls).toHaveLength(result.chunkCount);
+    const sentenceIdxSeen = calls.flatMap((c) =>
+      [...c.user.matchAll(/^\[(\d+)\] /gm)].map((m) => Number(m[1])),
     );
-    expect(chunks.map((c) => c.map((s) => s.idx))).toEqual([[0], [1], [2]]);
-  });
-
-  it('returns no chunks for an empty chapter', () => {
-    expect(planAnalysisChunks([], 100)).toEqual([]);
+    expect(sentenceIdxSeen).toEqual(long.map((s) => s.idx));
   });
 });
 
@@ -110,6 +113,7 @@ describe('analyzeChapter', () => {
           category: 'city_night',
           startSentence: 2,
           endSentence: 4,
+          intensity: null,
           confidence: 0.7,
           reason: 'Night streets',
         },
@@ -122,6 +126,7 @@ describe('analyzeChapter', () => {
           category: 'city_night',
           startSentence: 5,
           endSentence: 7,
+          intensity: null,
           confidence: 0.9,
           reason: 'Still night',
         },

@@ -44,7 +44,7 @@ export async function synthesizeSpeech(
   }
   if (input.input.length > deps.maxChars) {
     throw pipelineFailure(
-      'UNKNOWN',
+      'INPUT_TOO_LONG',
       `This passage is longer than the narration limit of ${deps.maxChars} characters. Split it and try again.`,
       { retryable: false, detail: `length=${input.input.length} max=${deps.maxChars}` },
     );

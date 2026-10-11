@@ -114,6 +114,15 @@ describe('textRepo.search spoiler cutoff', () => {
     expect(hits(db, 2, 0, 'dragon')).toEqual(['1:0', '1:2', '2:0']);
   });
 
+  it('applies the cutoff sentence rule only inside the cutoff chapter (earlier chapters ignore idx)', () => {
+    const { db } = seedBook();
+
+    // Cutoff at chapter 2, idx 0: chapter 1 idx 2 is past that index but in an earlier chapter.
+    expect(hits(db, 2, 0, 'dragon')).toContain('1:2');
+    // Inside the cutoff chapter the same index is the boundary: idx 0 is in, anything later is out.
+    expect(hits(db, 1, 0, 'dragon')).not.toContain('1:2');
+  });
+
   it('keeps later chapters hidden even when their translation matches', () => {
     const { db } = seedBook();
     textRepo.setTranslations(db, id(3), [{ idx: 0, translated: 'Le dragon meurt.' }]);

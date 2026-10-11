@@ -53,6 +53,28 @@ function uniqueBy(values: readonly string[]): string[] {
   return out;
 }
 
+/**
+ * Picks at most `cap` items round-robin across chunks: the first item of every chunk, then the
+ * second, and so on, so that no chunk is dropped while another keeps several. Duplicates (by
+ * normalized form) are skipped. The result is put back in reading order: chunk, then position.
+ */
+function sampleEvenly(chunks: readonly (readonly string[])[], cap: number): string[] {
+  const seen = new Set<string>();
+  const picked: { chunk: number; pos: number; text: string }[] = [];
+  const depth = Math.max(0, ...chunks.map((c) => c.length));
+  for (let pos = 0; pos < depth && picked.length < cap; pos += 1) {
+    chunks.forEach((events, chunk) => {
+      const text = events[pos];
+      if (text === undefined || picked.length >= cap) return;
+      const key = normalizeName(text);
+      if (!key || seen.has(key)) return;
+      seen.add(key);
+      picked.push({ chunk, pos, text });
+    });
+  }
+  return picked.sort((a, b) => a.chunk - b.chunk || a.pos - b.pos).map((p) => p.text);
+}
+
 function mergeNamedFacts(entries: readonly NamedFacts[], max: number): NamedFacts[] {
   return clusterByName(entries)
     .map((members) => ({
@@ -121,7 +143,8 @@ const EMPTY_MEMORY: MemoryFields = {
 
 /**
  * Merges the memories of consecutive chunks of one chapter (B7 map-reduce). Characters, places and
- * items are unioned by name. Key events are concatenated in order, then capped. Open threads come
+ * items are unioned by name. Key events are sampled evenly across chunks, then kept in reading
+ * order. Open threads come
  * from the last chunk. The summary is the chunk summaries joined, capped; the caller may replace
  * it with a reduce call.
  */
@@ -129,9 +152,10 @@ export function mergeMemoryDrafts(drafts: readonly MemoryFields[]): MemoryFields
   if (drafts.length === 0) return EMPTY_MEMORY;
   const last = drafts[drafts.length - 1] ?? EMPTY_MEMORY;
 
-  const keyEvents = uniqueBy(drafts.flatMap((d) => d.keyEvents))
-    .slice(0, MEMORY_LIMITS.keyEvents)
-    .map((e) => truncateWords(e, MEMORY_LIMITS.keyEventWords));
+  const keyEvents = sampleEvenly(
+    drafts.map((d) => d.keyEvents),
+    MEMORY_LIMITS.keyEvents,
+  ).map((e) => truncateWords(e, MEMORY_LIMITS.keyEventWords));
 
   const relationshipKeys = new Set<string>();
   const relationships = drafts

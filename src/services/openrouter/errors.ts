@@ -1,28 +1,4 @@
-/**
- * Pipeline error contract, as defined in docs/specs/domain.md (Pipeline).
- * Defined locally until src/core/domain lands; the architect reconciles the two.
- */
-export type ErrorCode =
-  | 'NETWORK'
-  | 'AUTH'
-  | 'INSUFFICIENT_CREDITS'
-  | 'RATE_LIMITED'
-  | 'MODEL_UNAVAILABLE'
-  | 'CONTENT_EMPTY'
-  | 'CONTENT_BLOCKED'
-  | 'PARSE_FAILED'
-  | 'LLM_INVALID_OUTPUT'
-  | 'STORAGE_FULL'
-  | 'CANCELLED'
-  | 'UNKNOWN';
-
-export interface PipelineError {
-  code: ErrorCode;
-  /** User-facing, short and human. */
-  message: string;
-  detail?: string;
-  retryable: boolean;
-}
+import type { ErrorCode, PipelineError } from '@/core/domain';
 
 /** Thrown by every service call. Carries the PipelineError plus transient retry hints. */
 export class PipelineFailure extends Error {

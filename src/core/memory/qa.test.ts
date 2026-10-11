@@ -44,7 +44,7 @@ const HITS: QaFtsHit[] = [
     chapterOrder: 2,
     chapterNumber: 2,
     sentenceIdx: 99,
-    text: 'EARLIER_CHAPTER_RAW_TEXT should not be sent.',
+    text: 'EARLIER_CHAPTER_HIT_TEXT is answerable.',
   },
   { chapterOrder: 4, chapterNumber: 4, sentenceIdx: 0, text: 'FUTURE_CHAPTER_RAW_TEXT' },
 ];
@@ -79,12 +79,32 @@ describe('buildQaPrompt spoiler safety', () => {
     expect(user).not.toContain('### Ch. 3');
   });
 
-  it('sends passage hits only from the cutoff chapter up to and including the cutoff sentence', () => {
+  it('sends passage hits up to and including the cutoff sentence, cited as (Ch. N)', () => {
     const { user } = buildQaPrompt(input());
-    expect(user).toContain('[Ch. 3, sentence 5] Early passage in the cutoff chapter.');
-    expect(user).toContain('[Ch. 3, sentence 12] Exact cutoff sentence.');
-    expect(user).not.toContain('sentence 13');
-    expect(user).not.toContain('EARLIER_CHAPTER_RAW_TEXT');
+    expect(user).toContain('(Ch. 3) Early passage in the cutoff chapter.');
+    expect(user).toContain('(Ch. 3) Exact cutoff sentence.');
+    expect(user).not.toContain('FUTURE_SENTENCE_SECRET');
+  });
+
+  it('keeps passage hits from earlier chapters at any sentence, cited by their own chapter', () => {
+    const { user } = buildQaPrompt(input());
+    expect(user).toContain('(Ch. 2) EARLIER_CHAPTER_HIT_TEXT is answerable.');
+    expect(user.indexOf('(Ch. 2)')).toBeLessThan(user.indexOf('(Ch. 3) Early passage'));
+  });
+
+  it('applies the cutoff sentence rule to the cutoff chapter only, not to earlier chapters', () => {
+    const { user } = buildQaPrompt(
+      input({
+        ftsHits: [
+          { chapterOrder: 2, chapterNumber: 2, sentenceIdx: 0, text: 'EARLY_HIT_IDX0' },
+          { chapterOrder: 3, chapterNumber: 3, sentenceIdx: 12, text: 'CUTOFF_HIT_IDX12' },
+          { chapterOrder: 3, chapterNumber: 3, sentenceIdx: 13, text: 'CUTOFF_HIT_IDX13' },
+        ],
+      }),
+    );
+    expect(user).toContain('EARLY_HIT_IDX0');
+    expect(user).toContain('CUTOFF_HIT_IDX12');
+    expect(user).not.toContain('CUTOFF_HIT_IDX13');
   });
 
   it('re-filters memories by order even when the caller passes them in unfiltered', () => {

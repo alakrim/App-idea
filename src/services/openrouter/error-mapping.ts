@@ -13,6 +13,9 @@ const errorBodySchema = z.object({
     .nullish(),
 });
 
+/** 402 `metadata.limit_source` for a transient in-flight budget (R1 section 4). */
+const IN_FLIGHT_BUDGET_SOURCE = 'openrouter_in_flight_budget';
+
 /** Matches OpenRouter's "this model cannot be served" messages, which arrive as 400 or 404. */
 const MODEL_UNAVAILABLE_PATTERN =
   /model[^.]*not (found|available|exist)|no endpoints|not a valid model|unknown model/i;
@@ -57,6 +60,14 @@ export function failureFromHttp(
     });
   }
   if (status === 402) {
+    // The per-key in-flight budget frees up again on its own, so it is a retryable wait.
+    if (limitSource === IN_FLIGHT_BUDGET_SOURCE) {
+      return pipelineFailure(
+        'RATE_LIMITED',
+        'OpenRouter is busy right now. Wait a moment and try again.',
+        { retryable: true, detail, retryAfterMs },
+      );
+    }
     return pipelineFailure(
       'INSUFFICIENT_CREDITS',
       'Your OpenRouter credits have run out. Add credits, then try again.',

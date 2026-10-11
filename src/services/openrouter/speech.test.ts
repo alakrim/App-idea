@@ -60,7 +60,7 @@ describe('synthesizeSpeech', () => {
       .catch((caught: unknown) => caught);
 
     expect(error).toBeInstanceOf(PipelineFailure);
-    expect((error as PipelineFailure).error.code).toBe('UNKNOWN');
+    expect((error as PipelineFailure).error.code).toBe('INPUT_TOO_LONG');
     expect((error as PipelineFailure).error.retryable).toBe(false);
     expect(calls).toHaveLength(0);
   });

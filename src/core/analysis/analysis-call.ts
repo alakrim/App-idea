@@ -1,4 +1,5 @@
 import { analysisResponseSchema, normalizeMemory } from './schemas';
+import { stripNulls } from './strip-nulls';
 
 import type { AnalysisRequest, LlmTransport } from './llm';
 import type { MemoryFields } from './types';
@@ -49,7 +50,7 @@ export function parseAnalysisReply(text: string): ParseOutcome {
   if (!parsed.success) return { ok: false, reason: summarizeIssues(parsed.error) };
   return {
     ok: true,
-    value: { memory: normalizeMemory(parsed.data.memory), cues: parsed.data.cues },
+    value: { memory: normalizeMemory(stripNulls(parsed.data.memory)), cues: parsed.data.cues },
   };
 }
 
