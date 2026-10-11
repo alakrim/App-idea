@@ -77,7 +77,9 @@ function validateSegments(segments: readonly TimelineSegment[]): void {
     let previous = 0;
     for (const offset of segment.sentenceOffsetsMs) {
       if (!(offset >= previous) || offset >= segment.durationMs) {
-        throw new RangeError(`${label}: sentence offsets must be non-decreasing and inside the segment`);
+        throw new RangeError(
+          `${label}: sentence offsets must be non-decreasing and inside the segment`,
+        );
       }
       previous = offset;
     }

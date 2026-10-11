@@ -1,13 +1,14 @@
+import { FAKE_USAGE, reply } from '../llm/__fixtures__/replies';
+import { LlmCancelledError } from '../llm/transport';
 import {
   TRANSLATE_CHUNK_TOKENS,
   translateChapter,
   TranslateOutputError,
-  TranslationCancelledError,
 } from './translate-chapter';
 
 import type { ChunkPlanner, TranslateChapterInput, TranslateProgress } from './translate-chapter';
 import type { TranslateSentence } from './types';
-import type { AnalysisRequest, LlmTransport } from '../analysis/llm';
+import type { LlmReply, LlmRequest, LlmTransport } from '../llm/transport';
 
 /** Reads the `[idx] text` lines after the passage header, so context lines are ignored. */
 function passageOf(user: string): { idx: number; text: string }[] {
@@ -30,12 +31,12 @@ function echo(user: string): string {
 
 function fakeLlm(respond: (user: string, call: number) => string | Promise<string>): {
   llm: LlmTransport;
-  requests: AnalysisRequest[];
+  requests: LlmRequest[];
 } {
-  const requests: AnalysisRequest[] = [];
-  const llm: LlmTransport = async (request) => {
+  const requests: LlmRequest[] = [];
+  const llm: LlmTransport = async (request): Promise<LlmReply> => {
     requests.push(request);
-    return respond(request.user, requests.length);
+    return reply(await respond(request.user, requests.length));
   };
   return { llm, requests };
 }
@@ -78,8 +79,7 @@ describe('translateChapter: the happy path', () => {
     expect(requests).toHaveLength(1);
     expect(result.usage.requests).toBe(1);
     expect(result.usage.repairRequests).toBe(0);
-    expect(result.usage.estimatedInputTokens).toBeGreaterThan(0);
-    expect(result.usage.estimatedOutputTokens).toBeGreaterThan(0);
+    expect(result.usage.usage).toEqual(FAKE_USAGE);
   });
 
   it('sends the system prompt, the languages and the glossary in the request', async () => {
@@ -108,8 +108,7 @@ describe('translateChapter: the happy path', () => {
     expect(result.usage).toEqual({
       requests: 0,
       repairRequests: 0,
-      estimatedInputTokens: 0,
-      estimatedOutputTokens: 0,
+      usage: { promptTokens: 0, completionTokens: 0, costUsd: 0 },
     });
   });
 
@@ -315,22 +314,53 @@ describe('translateChapter: progress, coverage and input checks', () => {
 describe('translateChapter: cancellation', () => {
   it('rejects at once when the signal is already aborted, without calling the model', async () => {
     const { llm, requests } = fakeLlm((user) => echo(user));
-    const signal = { aborted: true };
-    const error = await translateChapter(input({ llm, signal })).catch((e: unknown) => e);
-    expect(error).toBeInstanceOf(TranslationCancelledError);
+    const controller = new AbortController();
+    controller.abort();
+    const error = await translateChapter(
+      input({ llm, signal: controller.signal }),
+    ).catch((e: unknown) => e);
+    expect(error).toBeInstanceOf(LlmCancelledError);
     expect(error).toMatchObject({ name: 'AbortError', code: 'CANCELLED' });
     expect(requests).toHaveLength(0);
   });
 
   it('stops before the next chunk when aborted during a call', async () => {
-    const signal = { aborted: false };
+    const controller = new AbortController();
     const { llm, requests } = fakeLlm((user) => {
-      signal.aborted = true;
+      controller.abort();
       return echo(user);
     });
     await expect(
-      translateChapter(input({ llm, signal, chunker: TWO_CHUNKS })),
-    ).rejects.toBeInstanceOf(TranslationCancelledError);
+      translateChapter(input({ llm, signal: controller.signal, chunker: TWO_CHUNKS })),
+    ).rejects.toBeInstanceOf(LlmCancelledError);
     expect(requests).toHaveLength(1);
+  });
+
+  it('passes the signal to every model call', async () => {
+    const controller = new AbortController();
+    const { llm, requests } = fakeLlm((user) => echo(user));
+    await translateChapter(input({ llm, signal: controller.signal, chunker: TWO_CHUNKS }));
+    expect(requests.map((r) => r.signal)).toEqual([controller.signal, controller.signal]);
+  });
+
+  it('sends the strict translation JSON schema with every call', async () => {
+    const { llm, requests } = fakeLlm((user) => echo(user));
+    await translateChapter(input({ llm }));
+    expect(requests[0]?.jsonSchema?.name).toBe('chapter_translation');
+  });
+
+  it('sums the billed usage of every call, repairs included', async () => {
+    let call = 0;
+    const llm: LlmTransport = async (request): Promise<LlmReply> => {
+      call += 1;
+      const text = call === 1 ? 'not json' : echo(request.user);
+      return reply(text, { promptTokens: 10 * call, completionTokens: 1, costUsd: 0.5 });
+    };
+    const result = await translateChapter(input({ llm }));
+    expect(result.usage).toEqual({
+      requests: 2,
+      repairRequests: 1,
+      usage: { promptTokens: 30, completionTokens: 2, costUsd: 1 },
+    });
   });
 });

@@ -22,7 +22,7 @@ export interface LibraryUsage {
 function assertChapterId(chapterId: string): void {
   // Chapter ids become path segments, so reject anything that is not a plain ULID (no `..`, no `/`).
   if (!IdSchema.safeParse(chapterId).success) {
-    throw new Error("Refusing to build a file path from a non-ULID chapter id.");
+    throw new Error('Refusing to build a file path from a non-ULID chapter id.');
   }
 }
 

@@ -1,14 +1,17 @@
 import { AudioContext, AudioManager } from 'react-native-audio-api';
 
+import type { RemoteEvent } from '@/core/playback/remote-commands';
+
 import { type ResolveBed, createAmbienceMixer } from './ambience-mixer';
-import type { AudioEngine } from './engine';
+import { resolveInstalledBed } from './ambience-pack';
 import {
   type InterruptionEvent,
   createLectioEngine,
   type PlatformEventSource,
 } from './lectio-engine';
-import type { RemoteEvent } from '@/core/playback/remote-commands';
 import { createVoicePlayer } from './voice-player';
+
+import type { AudioEngine } from './engine';
 
 /**
  * Phone calls and other focus losses, from react-native-audio-api's session observer. The
@@ -38,18 +41,19 @@ const noRemoteEvents: PlatformEventSource<RemoteEvent> = {
 };
 
 export interface NativeEngineOptions {
-  resolveBed: ResolveBed;
+  /** Maps an ambience category to an installed bed. Defaults to the bundled base pack. */
+  resolveBed?: ResolveBed;
 }
 
 /**
  * The production engine: expo-audio for the narration and react-native-audio-api for the beds.
  * Nothing native is created until the first call to load() or to the mixer.
  */
-export function createNativeAudioEngine(options: NativeEngineOptions): AudioEngine {
+export function createNativeAudioEngine(options: NativeEngineOptions = {}): AudioEngine {
   return createLectioEngine({
     voice: createVoicePlayer(),
     mixer: createAmbienceMixer({
-      resolveBed: options.resolveBed,
+      resolveBed: options.resolveBed ?? resolveInstalledBed,
       createContext: () => new AudioContext(),
     }),
     interruptions: nativeInterruptions,

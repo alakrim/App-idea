@@ -9,9 +9,8 @@ import {
   useOpenRouter,
 } from '@/app-shell/openrouter-provider';
 import { readCatalogSnapshot, writeCatalogSnapshot } from '@/services/catalog-cache';
-import { createFakeFetch, jsonResponse } from '@/services/openrouter/__fixtures__/fake-fetch';
-
 import type { OpenRouterClient } from '@/services/openrouter';
+import { createFakeFetch, jsonResponse } from '@/services/openrouter/__fixtures__/fake-fetch';
 
 jest.mock('@/services/catalog-cache', () => ({
   readCatalogSnapshot: jest.fn(() => null),
@@ -99,7 +98,9 @@ describe('createLectioOpenRouter', () => {
   });
 
   it('does not write the cache when the fetch fails', async () => {
-    const fake = createFakeFetch(() => jsonResponse({ error: { message: 'down' } }, { status: 500 }));
+    const fake = createFakeFetch(() =>
+      jsonResponse({ error: { message: 'down' } }, { status: 500 }),
+    );
     const client = createLectioOpenRouter({ fetchImpl: fake.fetchImpl });
 
     await expect(client.models.list()).rejects.toThrow();
@@ -139,4 +140,3 @@ describe('OpenRouterProvider', () => {
     }
   });
 });
-

@@ -1,10 +1,11 @@
 import { collectTranslations, validateAlignment } from './align';
 import { buildTranslatePrompt, withRepairNote } from './prompts';
-import { parseTranslateReply } from './schemas';
-import { estimateTokens, planLlmChunks } from '../text/chunk';
+import { parseTranslateReply, TRANSLATE_JSON_SCHEMA } from './schemas';
+import { addUsage, throwIfCancelled, ZERO_USAGE } from '../llm/transport';
+import { planLlmChunks } from '../text/chunk';
 
-import type { LlmTransport } from '../analysis/llm';
 import type { Lang } from '../domain';
+import type { LlmTransport, LlmUsage } from '../llm/transport';
 import type {
   GlossaryEntry,
   PreviousSentence,
@@ -31,11 +32,6 @@ export interface TranslateProgress {
   readonly total: number;
 }
 
-/** The subset of `AbortSignal` that the engine reads. */
-export interface CancelSignal {
-  readonly aborted: boolean;
-}
-
 export interface TranslateChapterInput {
   readonly sentences: readonly TranslateSentence[];
   readonly sourceLang: Lang;
@@ -49,7 +45,8 @@ export interface TranslateChapterInput {
   /** Chunks in flight at once. Defaults to 1, which keeps the context strictly sequential. */
   readonly concurrency?: number;
   readonly onProgress?: (progress: TranslateProgress) => void;
-  readonly signal?: CancelSignal;
+  /** Checked between chunks and passed to every model call. */
+  readonly signal?: AbortSignal;
 }
 
 export interface TranslateChapterResult {
@@ -67,16 +64,6 @@ export class TranslateOutputError extends Error {
   constructor(message: string) {
     super(message);
     this.name = 'TranslateOutputError';
-  }
-}
-
-/** Raised when `signal` is aborted. The engine checks between model calls only. */
-export class TranslationCancelledError extends Error {
-  readonly code = 'CANCELLED' as const;
-
-  constructor() {
-    super('translation cancelled');
-    this.name = 'AbortError';
   }
 }
 
@@ -116,7 +103,8 @@ class ChapterRun {
   readonly partialIdx: number[] = [];
 
   private readonly input: TranslateChapterInput;
-  private readonly counts = { requests: 0, repairRequests: 0, inputTokens: 0, outputTokens: 0 };
+  private readonly counts = { requests: 0, repairRequests: 0 };
+  private spent: LlmUsage = ZERO_USAGE;
 
   constructor(input: TranslateChapterInput) {
     this.input = input;
@@ -126,8 +114,7 @@ class ChapterRun {
     return {
       requests: this.counts.requests,
       repairRequests: this.counts.repairRequests,
-      estimatedInputTokens: this.counts.inputTokens,
-      estimatedOutputTokens: this.counts.outputTokens,
+      usage: this.spent,
     };
   }
 
@@ -252,12 +239,16 @@ class ChapterRun {
 
   private async call(prompt: PromptPair, isRepair: boolean): Promise<string> {
     throwIfCancelled(this.input.signal);
-    const reply = await this.input.llm({ system: prompt.system, user: prompt.user });
+    const reply = await this.input.llm({
+      system: prompt.system,
+      user: prompt.user,
+      jsonSchema: TRANSLATE_JSON_SCHEMA,
+      signal: this.input.signal,
+    });
     this.counts.requests += 1;
     if (isRepair) this.counts.repairRequests += 1;
-    this.counts.inputTokens += estimateTokens(prompt.system) + estimateTokens(prompt.user);
-    this.counts.outputTokens += estimateTokens(reply);
-    return reply;
+    this.spent = addUsage(this.spent, reply.usage);
+    return reply.text;
   }
 }
 
@@ -267,8 +258,4 @@ function defaultChunker(sentences: readonly TranslateSentence[]): readonly LlmCh
 
 function isBlank(text: string): boolean {
   return text.trim() === '';
-}
-
-function throwIfCancelled(signal: CancelSignal | undefined): void {
-  if (signal?.aborted) throw new TranslationCancelledError();
 }

@@ -173,7 +173,10 @@ export function createAmbienceMixer(options: AmbienceMixerOptions): AmbienceMixe
     source.loopEnd = buffer.duration;
     const gain = ctx.createGain();
     gain.gain.setValueAtTime(0, now);
-    gain.gain.linearRampToValueAtTime(dbToLinear(pendingBed.gainDb), now + pendingBed.fadeMs / 1000);
+    gain.gain.linearRampToValueAtTime(
+      dbToLinear(pendingBed.gainDb),
+      now + pendingBed.fadeMs / 1000,
+    );
     source.connect(gain);
     gain.connect(g.master);
     source.start(now);

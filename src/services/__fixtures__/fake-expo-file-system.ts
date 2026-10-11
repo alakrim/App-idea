@@ -18,9 +18,7 @@ class Node {
     const pieces = parts.map(uriOf);
     this.uri = pieces
       .map((piece, index) => (index === 0 ? piece : piece.replace(/^\/+/, '')))
-      .map((piece, index, all) =>
-        index === all.length - 1 ? piece : piece.replace(/\/+$/, ''),
-      )
+      .map((piece, index, all) => (index === all.length - 1 ? piece : piece.replace(/\/+$/, '')))
       .join('/');
   }
 

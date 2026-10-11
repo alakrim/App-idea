@@ -6,7 +6,11 @@ import {
   planBeds,
 } from '@/core/playback/ambience-scheduler';
 import { DUCKING_DEFAULTS, duckEnvelope } from '@/core/playback/ducking';
-import { type RemoteCommand, type RemoteEvent, toRemoteCommand } from '@/core/playback/remote-commands';
+import {
+  type RemoteCommand,
+  type RemoteEvent,
+  toRemoteCommand,
+} from '@/core/playback/remote-commands';
 import { buildTimeline, type ChapterTimeline } from '@/core/playback/timeline';
 
 import type { AmbienceMixer } from './ambience-mixer';

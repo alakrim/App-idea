@@ -5,13 +5,7 @@ import type { TimelineSegment } from '@/core/playback/timeline';
 
 /** Everything features may observe about playback. `error` is terminal until the next load. */
 export type PlaybackState =
-  | 'idle'
-  | 'loading'
-  | 'playing'
-  | 'paused'
-  | 'buffering'
-  | 'ended'
-  | 'error';
+  'idle' | 'loading' | 'playing' | 'paused' | 'buffering' | 'ended' | 'error';
 
 /** A narration file plus its sentence timing. Offsets are relative to the segment start. */
 export interface LoadedSegment extends TimelineSegment {

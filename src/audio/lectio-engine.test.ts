@@ -1,20 +1,30 @@
 import type { AmbienceCue } from '@/core/domain/analysis';
 import type { RemoteEvent } from '@/core/playback/remote-commands';
 
+import { type InterruptionEvent, type LectioEngineDeps, createLectioEngine } from './lectio-engine';
+
 import type { AmbienceMixer } from './ambience-mixer';
 import type { ChapterLoad, LoadedSegment, PlaybackState, PositionUpdate } from './engine';
-import {
-  type InterruptionEvent,
-  type LectioEngineDeps,
-  createLectioEngine,
-} from './lectio-engine';
 import type { VoicePort, VoiceSnapshot } from './voice-port';
 
-const ID = (n: number) => `01HZX0000000000000000000${n}`.slice(0, 26).padEnd(26, '0');
+/** 26-character ULID-shaped ids for fixtures. */
+const ID = (n: number) => `01HZX${String(n).padStart(21, '0')}`;
 
 const SEGMENTS: LoadedSegment[] = [
-  { uri: 'file:///a.m4a', durationMs: 4000, sentenceStart: 0, sentenceEnd: 1, sentenceOffsetsMs: [0, 2000] },
-  { uri: 'file:///b.m4a', durationMs: 6000, sentenceStart: 2, sentenceEnd: 3, sentenceOffsetsMs: [0, 3000] },
+  {
+    uri: 'file:///a.m4a',
+    durationMs: 4000,
+    sentenceStart: 0,
+    sentenceEnd: 1,
+    sentenceOffsetsMs: [0, 2000],
+  },
+  {
+    uri: 'file:///b.m4a',
+    durationMs: 6000,
+    sentenceStart: 2,
+    sentenceEnd: 3,
+    sentenceOffsetsMs: [0, 3000],
+  },
 ];
 
 const RAIN: AmbienceCue = {
@@ -146,7 +156,9 @@ describe('lectio-engine: loading', () => {
   it('rejects an invalid timeline before the voice sees anything', async () => {
     const { engine, voice } = setup();
     const bad = chapter({
-      segments: [{ uri: 'x', durationMs: 1000, sentenceStart: 3, sentenceEnd: 3, sentenceOffsetsMs: [0] }],
+      segments: [
+        { uri: 'x', durationMs: 1000, sentenceStart: 3, sentenceEnd: 3, sentenceOffsetsMs: [0] },
+      ],
     });
     await expect(engine.load(bad, 0)).rejects.toThrow(RangeError);
     expect(voice.load).not.toHaveBeenCalled();
@@ -326,7 +338,9 @@ describe('lectio-engine: ambience master', () => {
   it('ignores cues that are disabled', async () => {
     const { engine, mixer } = setup();
     await engine.load(chapter({ cues: [{ ...RAIN, enabled: false }] }), 0);
-    expect(mixer.apply).not.toHaveBeenCalledWith(expect.arrayContaining([expect.objectContaining({ type: 'start' })]));
+    expect(mixer.apply).not.toHaveBeenCalledWith(
+      expect.arrayContaining([expect.objectContaining({ type: 'start' })]),
+    );
   });
 });
 
@@ -381,7 +395,11 @@ describe('lectio-engine: remote commands', () => {
     expect(voice.play).toHaveBeenCalledTimes(1);
     expect(voice.pause).toHaveBeenCalledTimes(1);
     expect(voice.seekTo).toHaveBeenCalledWith(2000);
-    expect(remoteCommands).toEqual([{ type: 'play' }, { type: 'pause' }, { type: 'seek', positionMs: 2000 }]);
+    expect(remoteCommands).toEqual([
+      { type: 'play' },
+      { type: 'pause' },
+      { type: 'seek', positionMs: 2000 },
+    ]);
   });
 
   it('toggles against the state the engine last reported', async () => {

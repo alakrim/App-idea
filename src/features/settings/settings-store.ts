@@ -8,6 +8,8 @@ import type { Db } from '../../db/types';
 
 interface SettingsState {
   settings: Settings;
+  /** True once `hydrate` has read the saved settings. */
+  hydrated: boolean;
 }
 
 export interface SettingsStore {
@@ -23,18 +25,18 @@ export interface SettingsStore {
 
 export function createSettingsStore(now: () => number = Date.now): SettingsStore {
   let database: Db | null = null;
-  const store = create<SettingsState>()(() => ({ settings: DEFAULT_SETTINGS }));
+  const store = create<SettingsState>()(() => ({ settings: DEFAULT_SETTINGS, hydrated: false }));
 
   return {
     hydrate(db) {
       database = db;
-      store.setState({ settings: settingsRepo.load(db) });
+      store.setState({ settings: settingsRepo.getSettings(db), hydrated: true });
     },
     patch(patch) {
       if (database === null) {
         throw new Error('Settings were changed before the library finished opening.');
       }
-      store.setState({ settings: settingsRepo.patch(database, patch, now()) });
+      store.setState({ settings: settingsRepo.patchSettings(database, patch, now()) });
     },
     getSettings: () => store.getState().settings,
     useSettingsState: store,

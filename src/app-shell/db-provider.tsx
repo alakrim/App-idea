@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
 
 import { getDatabase } from '@/db/client';
+import type { LectioDatabase } from '@/db/client';
 import { DbContext } from '@/db/hooks';
 import { useLectioMigrations } from '@/db/use-migrations';
 import { settingsStore } from '@/features/settings/settings-store';
 
 import { FatalError, formatErrorDetails, hideSplashScreen } from './fatal-error';
-
-import type { LectioDatabase } from '@/db/client';
 
 export { useDb } from '@/db/hooks';
 
@@ -54,8 +53,6 @@ function LibraryOpener({ children, onRetry }: { children: ReactNode; onRetry: ()
   );
 }
 
-type Failure = { error: unknown } | null;
-
 function LibraryMigrator({
   db,
   children,
@@ -66,29 +63,21 @@ function LibraryMigrator({
   onRetry: () => void;
 }) {
   const migration = useLectioMigrations(db);
-  const [booted, setBooted] = useState(false);
-  const [bootFailure, setBootFailure] = useState<Failure>(null);
+  const hydrated = settingsStore.useSettingsState((state) => state.hydrated);
 
   useEffect(() => {
-    if (!migration.success) return;
-    try {
-      settingsStore.hydrate(db);
-      setBooted(true);
-    } catch (error) {
-      setBootFailure({ error });
-    }
+    // A read failure here throws out of the effect, which the root ErrorBoundary catches.
+    if (migration.success) settingsStore.hydrate(db);
   }, [db, migration.success]);
 
   useEffect(() => {
-    if (booted) hideSplashScreen();
-  }, [booted]);
+    if (hydrated) hideSplashScreen();
+  }, [hydrated]);
 
-  const failure: Failure =
-    migration.error !== undefined ? { error: migration.error } : bootFailure;
-  if (failure !== null) {
-    return <LibraryFailure error={failure.error} onRetry={onRetry} />;
+  if (migration.error !== undefined) {
+    return <LibraryFailure error={migration.error} onRetry={onRetry} />;
   }
-  if (!booted) {
+  if (!hydrated) {
     return null;
   }
   return <DbContext.Provider value={db}>{children}</DbContext.Provider>;

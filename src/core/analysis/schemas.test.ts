@@ -3,6 +3,8 @@ import { z } from 'zod';
 import { parseAnalysisReply, runAnalysisCall } from './analysis-call';
 import { MEMORY_LIMITS } from './limits';
 import {
+  ANALYSIS_JSON_SCHEMA,
+  analysisOutputSchema,
   analysisResponseSchema,
   memoryDraftSchema,
   normalizeMemory,
@@ -11,7 +13,9 @@ import {
 } from './schemas';
 import { stripNulls } from './strip-nulls';
 import { strictViolations } from '../__fixtures__/strict-json-schema';
+import { reply } from '../llm/__fixtures__/replies';
 
+import type { LlmRequest } from '../llm/transport';
 import type { CleanMemoryDraft } from './schemas';
 
 const EMPTY_DRAFT: CleanMemoryDraft = {
@@ -208,11 +212,29 @@ describe('strict json_schema compatibility of LLM output schemas', () => {
   it.each([
     ['memoryDraftSchema', memoryDraftSchema],
     ['rawCueSchema', rawCueSchema],
-    ['analysisResponseSchema', analysisResponseSchema],
+    ['analysisOutputSchema', analysisOutputSchema],
   ])('%s requires every key and forbids extra keys at every depth', (_name, schema) => {
     expect(strictViolations(z.toJSONSchema(schema, { io: 'output', reused: 'inline' }))).toEqual(
       [],
     );
+  });
+
+  it('sends the full cue item schema to the model, not an open unknown (ADR-0006 §2)', () => {
+    const json = ANALYSIS_JSON_SCHEMA.schema as {
+      properties: { cues: { items: { properties: Record<string, unknown> } } };
+    };
+    expect(Object.keys(json.properties.cues.items.properties).sort()).toEqual(
+      ['category', 'confidence', 'endSentence', 'intensity', 'reason', 'startSentence'].sort(),
+    );
+    expect(strictViolations(ANALYSIS_JSON_SCHEMA.schema)).toEqual([]);
+  });
+
+  it('keeps the parse schema lenient on cue items, so one bad cue cannot drop the memory', () => {
+    const parsed = analysisResponseSchema.safeParse({
+      memory: EMPTY_DRAFT,
+      cues: [{ category: 42 }],
+    });
+    expect(parsed.success).toBe(true);
   });
 
   it('the walker flags an optional key and an open object, so the check has teeth', () => {
@@ -267,9 +289,9 @@ describe('runAnalysisCall repair retry', () => {
 
   it('retries once with a repair note after an invalid reply', async () => {
     const calls: { user: string }[] = [];
-    const transport = jest.fn(async (req: { system: string; user: string }) => {
+    const transport = jest.fn(async (req: LlmRequest) => {
       calls.push({ user: req.user });
-      return calls.length === 1 ? 'not json' : good;
+      return reply(calls.length === 1 ? 'not json' : good);
     });
     const result = await runAnalysisCall(transport, { system: 'S', user: 'U' });
     expect(result.memory.summary).toBe('ok');
@@ -277,8 +299,18 @@ describe('runAnalysisCall repair retry', () => {
     expect(calls[1]?.user).toContain('could not be used (reply is not valid JSON)');
   });
 
+  it('sums the usage of the first call and the repair', async () => {
+    let call = 0;
+    const transport = jest.fn(async () => {
+      call += 1;
+      return reply(call === 1 ? 'not json' : good, { promptTokens: 7, costUsd: 0.25 });
+    });
+    const result = await runAnalysisCall(transport, { system: 'S', user: 'U' });
+    expect(result.usage).toEqual({ promptTokens: 14, completionTokens: 80, costUsd: 0.5 });
+  });
+
   it('raises a typed error after a second invalid reply', async () => {
-    const transport = jest.fn(async () => 'still not json');
+    const transport = jest.fn(async () => reply('still not json'));
     await expect(runAnalysisCall(transport, { system: 'S', user: 'U' })).rejects.toMatchObject({
       code: 'LLM_INVALID_OUTPUT',
     });

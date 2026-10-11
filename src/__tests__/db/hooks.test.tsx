@@ -1,21 +1,21 @@
 import { act, render, screen } from '@testing-library/react-native';
 import { Text } from 'react-native';
 
-import type { ReactElement } from 'react';
-
-import { DbContext, useChapters, useJobs, useSeriesList } from '@/db/hooks';
 import { chapterRow, id, seriesRow, T0 } from '@/db/__fixtures__/factories';
 import { createTestDb } from '@/db/__fixtures__/test-db';
+import { DbContext, useChapters, useJobs, useSeriesList } from '@/db/hooks';
 import { chapterRepo } from '@/db/repos/chapter-repo';
 import { seriesRepo } from '@/db/repos/series-repo';
 import { jobs } from '@/db/schema';
-
 import type { Db } from '@/db/types';
 
-// The change event is what drizzle's useLiveQuery listens to. The fake lets a test fire it.
-jest.mock('expo-sqlite', () => require('../helpers/fake-expo-sqlite'));
+import { __emitChange as emitChange } from '../helpers/fake-expo-sqlite';
 
-const sqlite = jest.requireMock<typeof import('../helpers/fake-expo-sqlite')>('expo-sqlite');
+import type { ReactElement } from 'react';
+
+// The change event is what drizzle's useLiveQuery listens to. The fake lets a test fire it.
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+jest.mock('expo-sqlite', () => require('../helpers/fake-expo-sqlite'));
 
 let db: Db;
 
@@ -68,7 +68,7 @@ describe('live hooks', () => {
 
     seriesRepo.insert(db, seriesRow(2, { title: 'Emma' }));
     await act(async () => {
-      sqlite.__emitChange('series');
+      emitChange('series');
     });
 
     expect(screen.getByText('Emma')).toBeTruthy();
@@ -81,7 +81,7 @@ describe('live hooks', () => {
     const readsBefore = listSpy.mock.calls.length;
 
     await act(async () => {
-      sqlite.__emitChange('vocab');
+      emitChange('vocab');
     });
 
     expect(listSpy.mock.calls.length).toBe(readsBefore);
@@ -131,7 +131,7 @@ describe('live hooks', () => {
       })
       .run();
     await act(async () => {
-      sqlite.__emitChange('jobs');
+      emitChange('jobs');
     });
 
     expect(screen.getByText('jobs: 1')).toBeTruthy();

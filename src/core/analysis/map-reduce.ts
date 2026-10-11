@@ -4,11 +4,12 @@ import { mergeMemoryDrafts } from './merge-memory';
 import { buildAnalysisPrompt, buildSummaryReducePrompt } from './prompts';
 import { truncateWords } from './schemas';
 import { validateCues } from './validate-cues';
+import { addUsage, throwIfCancelled, ZERO_USAGE } from '../llm/transport';
 import { planLlmChunks } from '../text/chunk';
 import { normalizeWhitespace } from '../text/normalize';
 
-import type { AnalysisResponse } from './analysis-call';
-import type { LlmTransport } from './llm';
+import type { AnalysisCallResult } from './analysis-call';
+import type { LlmTransport, LlmUsage } from '../llm/transport';
 import type { Lang, MemoryFields, SentenceInput, ValidatedCue } from './types';
 import type { DroppedCue } from './validate-cues';
 
@@ -34,6 +35,8 @@ export interface AnalyzeChapterInput {
   readonly sentences: readonly SentenceInput[];
   readonly wordCount: number;
   readonly callLlm: LlmTransport;
+  /** Aborts between chunks and is passed to every model call. */
+  readonly signal?: AbortSignal;
   readonly planChunks?: ChunkPlanner;
   /**
    * For multi-chunk chapters, rewrite the summary with one extra call (default true). When false
@@ -47,6 +50,8 @@ export interface ChapterAnalysis {
   readonly cues: ValidatedCue[];
   readonly dropped: DroppedCue[];
   readonly chunkCount: number;
+  /** Usage of every model call made for this chapter, repairs and the summary reduce included. */
+  readonly usage: LlmUsage;
 }
 
 /**
@@ -61,8 +66,9 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
   const plan = input.planChunks ?? defaultChunkPlanner;
   const chunks = plan(input.sentences);
 
-  const responses: AnalysisResponse[] = [];
+  const responses: AnalysisCallResult[] = [];
   for (const chunk of chunks) {
+    throwIfCancelled(input.signal);
     responses.push(
       await runAnalysisCall(
         input.callLlm,
@@ -73,19 +79,23 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
           priorContext: input.priorContext,
           lang: input.lang,
         }),
+        input.signal,
       ),
     );
   }
 
+  let usage = responses.reduce((sum, r) => addUsage(sum, r.usage), ZERO_USAGE);
   const merged = mergeMemoryDrafts(responses.map((r) => r.memory));
   let memory: MemoryFields = merged;
   if (responses.length > 1 && (input.reduceSummary ?? true)) {
-    const reduced = await reduceSummary(input.callLlm, {
+    throwIfCancelled(input.signal);
+    const reduced = await reduceSummary(input.callLlm, input.signal, {
       chapterTitle: input.chapterTitle,
       lang: input.lang,
       summaries: responses.map((r) => r.memory.summary).filter((s) => s !== ''),
     });
-    if (reduced) memory = { ...merged, summary: reduced };
+    usage = addUsage(usage, reduced.usage);
+    if (reduced.summary) memory = { ...merged, summary: reduced.summary };
   }
 
   const { cues, dropped } = validateCues(
@@ -97,16 +107,18 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
     },
   );
 
-  return { memory, cues, dropped, chunkCount: chunks.length };
+  return { memory, cues, dropped, chunkCount: chunks.length, usage };
 }
 
-/** One plain-text call. Returns null when the reply is empty, so the joined summary is kept. */
+/** One plain-text call. A null summary means the reply was empty, so the joined summary is kept. */
 async function reduceSummary(
   callLlm: LlmTransport,
+  signal: AbortSignal | undefined,
   input: { chapterTitle: string; lang: Lang; summaries: readonly string[] },
-): Promise<string | null> {
-  if (input.summaries.length === 0) return null;
-  const reply = await callLlm(buildSummaryReducePrompt(input));
-  const text = truncateWords(normalizeWhitespace(reply), MEMORY_LIMITS.summaryWords);
-  return text || null;
+): Promise<{ summary: string | null; usage: LlmUsage }> {
+  if (input.summaries.length === 0) return { summary: null, usage: ZERO_USAGE };
+  const prompt = buildSummaryReducePrompt(input);
+  const reply = await callLlm({ system: prompt.system, user: prompt.user, signal });
+  const text = truncateWords(normalizeWhitespace(reply.text), MEMORY_LIMITS.summaryWords);
+  return { summary: text || null, usage: reply.usage };
 }

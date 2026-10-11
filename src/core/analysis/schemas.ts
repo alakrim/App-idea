@@ -5,6 +5,7 @@ import { MEMORY_LIMITS } from './limits';
 import { normalizeName } from '../memory/entities';
 import { normalizeWhitespace } from '../text/normalize';
 
+import type { JsonSchemaSpec } from '../llm/transport';
 import type { NoNulls } from './strip-nulls';
 import type { IntensityLevel, MemoryFields } from './types';
 
@@ -68,7 +69,26 @@ export const rawCueSchema = z.object({
 /** Every known category id, as a zod enum. Stored ids are never renamed (ADR-0005). */
 export const ambienceCategoryIdSchema = z.enum(AMBIENCE_CATEGORY_IDS);
 
-/** The whole analysis reply. Cues stay `unknown` so that one bad cue cannot drop the memory. */
+/**
+ * The reply shape sent to the model. Cue items are described in full, with nullable fields, so that
+ * strict structured-output decoding constrains them (ADR-0006 §2). `validateCues` stays the
+ * semantic gate.
+ */
+export const analysisOutputSchema = z.object({
+  memory: memoryDraftSchema,
+  cues: z.array(rawCueSchema),
+});
+
+/** The json_schema the analysis call sends. Derived from the output schema, never hand-written. */
+export const ANALYSIS_JSON_SCHEMA: JsonSchemaSpec = {
+  name: 'chapter_analysis',
+  schema: z.toJSONSchema(analysisOutputSchema, { io: 'output', reused: 'inline' }),
+};
+
+/**
+ * What the reply is parsed with. Cues stay `unknown` here, so that one malformed cue cannot drop the
+ * memory. Each cue is then checked by `validateCues`, which drops the ones that fail.
+ */
 export const analysisResponseSchema = z.object({
   memory: memoryDraftSchema,
   cues: z.array(z.unknown()).default([]),

@@ -1,3 +1,5 @@
+import type { LlmUsage } from '../llm/transport';
+
 /** One sentence to translate. `idx` is the 0-based sentence index, unique within the chapter. */
 export interface TranslateSentence {
   readonly idx: number;
@@ -30,14 +32,10 @@ export interface PromptPair {
   readonly user: string;
 }
 
-/**
- * Call accounting for one translation run. The transport returns text only, so the token counts
- * are estimates from the text-length heuristic, not billed usage.
- */
+/** Call accounting for one translation run: the billed usage of every model call, repairs included. */
 export interface TranslateUsage {
   /** Model calls made, including repair calls. */
   readonly requests: number;
   readonly repairRequests: number;
-  readonly estimatedInputTokens: number;
-  readonly estimatedOutputTokens: number;
+  readonly usage: LlmUsage;
 }

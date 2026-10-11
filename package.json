@@ -14,6 +14,8 @@
     "test:core": "jest --selectProjects core",
     "db:generate": "drizzle-kit generate",
     "bundle:check": "expo export --platform android --output-dir dist/check && rm -rf dist/check",
+    "sounds:build": "node scripts/sounds/build-base-pack.mjs",
+    "sounds:verify": "node scripts/sounds/verify-pack.mjs",
     "verify": "npm run typecheck && npm run lint && npm run test && npm run bundle:check"
   },
   "dependencies": {

@@ -1,5 +1,5 @@
-import { DEFAULT_SETTINGS } from '../../core/defaults';
 import { settingsRepo } from './settings-repo';
+import { DEFAULT_SETTINGS } from '../../core/defaults';
 import { createTestDb } from '../__fixtures__/test-db';
 import { settings } from '../schema';
 
@@ -15,14 +15,18 @@ describe('settingsRepo', () => {
   it('returns the defaults when nothing is stored', () => {
     const { db } = createTestDb();
 
-    expect(settingsRepo.load(db)).toEqual(DEFAULT_SETTINGS);
+    expect(settingsRepo.getSettings(db)).toEqual(DEFAULT_SETTINGS);
   });
 
   it('patches only the given keys and keeps the rest at their stored values', () => {
     const { db } = createTestDb();
 
-    const first = settingsRepo.patch(db, { theme: 'light', defaultTargetLang: 'it' }, T0);
-    const second = settingsRepo.patch(db, { ambience: { enabled: false, levelDb: -30, duckingDb: 6 } }, T0 + 1);
+    const first = settingsRepo.patchSettings(db, { theme: 'light', defaultTargetLang: 'it' }, T0);
+    const second = settingsRepo.patchSettings(
+      db,
+      { ambience: { enabled: false, levelDb: -30, duckingDb: 6 } },
+      T0 + 1,
+    );
 
     expect(first).toEqual({ ...DEFAULT_SETTINGS, theme: 'light', defaultTargetLang: 'it' });
     expect(second).toEqual({
@@ -31,14 +35,14 @@ describe('settingsRepo', () => {
       defaultTargetLang: 'it',
       ambience: { enabled: false, levelDb: -30, duckingDb: 6 },
     });
-    expect(settingsRepo.load(db)).toEqual(second);
+    expect(settingsRepo.getSettings(db)).toEqual(second);
   });
 
   it('stores one row per key and updates it in place', () => {
     const { db } = createTestDb();
 
-    settingsRepo.patch(db, { onboardingDone: true }, T0);
-    settingsRepo.patch(db, { onboardingDone: false }, T0 + 5);
+    settingsRepo.patchSettings(db, { onboardingDone: true }, T0);
+    settingsRepo.patchSettings(db, { onboardingDone: false }, T0 + 5);
 
     const rows = db.select().from(settings).all();
     expect(rows).toEqual([{ key: 'onboardingDone', value: 'false', updatedAt: T0 + 5 }]);
@@ -48,7 +52,11 @@ describe('settingsRepo', () => {
     const { db } = createTestDb();
 
     expect(() =>
-      settingsRepo.patch(db, { theme: 'light', reading: { fontScale: 9, showOriginal: false } }, T0),
+      settingsRepo.patchSettings(
+        db,
+        { theme: 'light', reading: { fontScale: 9, showOriginal: false } },
+        T0,
+      ),
     ).toThrow();
     expect(db.select().from(settings).all()).toEqual([]);
   });
@@ -56,7 +64,7 @@ describe('settingsRepo', () => {
   it('rejects a malformed model id before saving', () => {
     const { db } = createTestDb();
 
-    expect(() => settingsRepo.patch(db, { analysisModel: 'gemini flash' }, T0)).toThrow();
+    expect(() => settingsRepo.patchSettings(db, { analysisModel: 'gemini flash' }, T0)).toThrow();
   });
 
   it('resets invalid stored JSON to its default and warns once per key', () => {
@@ -66,7 +74,7 @@ describe('settingsRepo', () => {
     storeRaw(db, 'onboardingDone', 'true');
     const onInvalid = jest.fn<void, [SettingKey, string]>();
 
-    const loaded = settingsRepo.load(db, onInvalid);
+    const loaded = settingsRepo.getSettings(db, onInvalid);
 
     expect(loaded.theme).toBe(DEFAULT_SETTINGS.theme);
     expect(loaded.reading).toEqual(DEFAULT_SETTINGS.reading);
@@ -80,7 +88,7 @@ describe('settingsRepo', () => {
     const warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
 
     try {
-      expect(settingsRepo.load(db).uiLanguage).toBe('en');
+      expect(settingsRepo.getSettings(db).uiLanguage).toBe('en');
       expect(warn).toHaveBeenCalledTimes(1);
       expect(String(warn.mock.calls[0]?.[0])).toContain('uiLanguage');
       expect(String(warn.mock.calls[0]?.[0])).not.toContain('sk-or-v1');
@@ -93,6 +101,6 @@ describe('settingsRepo', () => {
     const { db } = createTestDb();
     storeRaw(db, 'legacyFlag', 'true');
 
-    expect(settingsRepo.load(db)).toEqual(DEFAULT_SETTINGS);
+    expect(settingsRepo.getSettings(db)).toEqual(DEFAULT_SETTINGS);
   });
 });

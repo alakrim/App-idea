@@ -3,7 +3,9 @@ import { AnalysisOutputError } from './analysis-call';
 import { analyzeChapter } from './map-reduce';
 import { ANALYSIS_SYSTEM_PROMPT } from './prompts';
 
-import type { LlmTransport } from './llm';
+import { reply as replyWith } from '../llm/__fixtures__/replies';
+
+import type { LlmTransport } from '../llm/transport';
 
 const memoryJson = (summary: string, extra: Record<string, unknown> = {}): string =>
   JSON.stringify({ memory: { summary, ...extra }, cues: [] });
@@ -16,7 +18,7 @@ function scriptedTransport(reply: (user: string, call: number) => string): {
   const calls: { system: string; user: string }[] = [];
   const transport: LlmTransport = async (req) => {
     calls.push({ system: req.system, user: req.user });
-    return reply(req.user, calls.length);
+    return replyWith(reply(req.user, calls.length));
   };
   return { transport, calls };
 }

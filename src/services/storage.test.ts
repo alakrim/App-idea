@@ -3,6 +3,7 @@ import * as FileSystem from 'expo-file-system';
 import * as fake from './__fixtures__/fake-expo-file-system';
 import * as storage from './storage';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('expo-file-system', () => require('./__fixtures__/fake-expo-file-system'));
 
 const CHAPTER = '01HZX0000000000000000000AA';

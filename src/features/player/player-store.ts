@@ -1,6 +1,7 @@
 import { type StoreApi, type UseBoundStore, create } from 'zustand';
 
 import type { AudioEngine, ChapterLoad, LoadedSegment, PlaybackState } from '@/audio/engine';
+import type { PlaybackPoint } from '@/core/domain/library';
 import { createPositionSaver } from '@/core/playback/position-saver';
 import {
   END_OF_CHAPTER_SLEEP_TIMER,
@@ -9,7 +10,6 @@ import {
   minutesSleepTimer,
   sleepPhase,
 } from '@/core/playback/sleep-timer';
-import type { PlaybackPoint } from '@/core/domain/library';
 
 export const SLEEP_TICK_MS = 250;
 export const POSITION_SAVE_WINDOW_MS = 5000;
@@ -48,7 +48,8 @@ export interface PlayerState {
 }
 
 /** What a sleep-timer request can ask for. */
-export type SleepRequest = { mode: 'off' } | { mode: 'minutes'; minutes: number } | { mode: 'endOfChapter' };
+export type SleepRequest =
+  { mode: 'off' } | { mode: 'minutes'; minutes: number } | { mode: 'endOfChapter' };
 
 export interface PlayerActions {
   load(chapter: ChapterLoad, startMs?: number): Promise<void>;
@@ -135,7 +136,11 @@ export function createPlayerStore(deps: PlayerStoreDeps): PlayerStore {
       store.setState({ positionMs, sentenceIdx });
       const chapter = store.getState().nowPlaying;
       if (chapter && sentenceIdx >= 0) {
-        saver.push({ chapterId: chapter.chapterId, chapterOrder: chapter.chapterOrder, sentenceIdx });
+        saver.push({
+          chapterId: chapter.chapterId,
+          chapterOrder: chapter.chapterOrder,
+          sentenceIdx,
+        });
       }
     }),
     engine.onState((next) => {

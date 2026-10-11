@@ -15,7 +15,9 @@ export const SLEEP_TIMER_OFF: SleepTimer = { mode: 'off', endsAt: null };
 /** A timer that fades out and pauses after `minutes`, counted from `now`. */
 export function minutesSleepTimer(now: number, minutes: number): SleepTimer {
   if (!Number.isInteger(minutes) || minutes < 1 || minutes > MAX_SLEEP_MINUTES) {
-    throw new RangeError(`minutes must be an integer from 1 to ${MAX_SLEEP_MINUTES}, got ${minutes}`);
+    throw new RangeError(
+      `minutes must be an integer from 1 to ${MAX_SLEEP_MINUTES}, got ${minutes}`,
+    );
   }
   return { mode: 'minutes', endsAt: now + minutes * 60_000 };
 }

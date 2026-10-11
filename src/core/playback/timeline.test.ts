@@ -23,7 +23,9 @@ describe('buildTimeline', () => {
 
   it('rejects segments that are not contiguous from sentence 0', () => {
     expect(() =>
-      buildTimeline([{ durationMs: 1000, sentenceStart: 1, sentenceEnd: 1, sentenceOffsetsMs: [0] }]),
+      buildTimeline([
+        { durationMs: 1000, sentenceStart: 1, sentenceEnd: 1, sentenceOffsetsMs: [0] },
+      ]),
     ).toThrow(/expected sentenceStart 0/);
     expect(() =>
       buildTimeline([
@@ -35,13 +37,19 @@ describe('buildTimeline', () => {
 
   it('rejects offset lists that do not match the sentence range or leave the segment', () => {
     expect(() =>
-      buildTimeline([{ durationMs: 1000, sentenceStart: 0, sentenceEnd: 1, sentenceOffsetsMs: [0] }]),
+      buildTimeline([
+        { durationMs: 1000, sentenceStart: 0, sentenceEnd: 1, sentenceOffsetsMs: [0] },
+      ]),
     ).toThrow(/expected 2 sentence offsets/);
     expect(() =>
-      buildTimeline([{ durationMs: 1000, sentenceStart: 0, sentenceEnd: 1, sentenceOffsetsMs: [0, 1000] }]),
+      buildTimeline([
+        { durationMs: 1000, sentenceStart: 0, sentenceEnd: 1, sentenceOffsetsMs: [0, 1000] },
+      ]),
     ).toThrow(/non-decreasing and inside/);
     expect(() =>
-      buildTimeline([{ durationMs: 1000, sentenceStart: 0, sentenceEnd: 1, sentenceOffsetsMs: [500, 100] }]),
+      buildTimeline([
+        { durationMs: 1000, sentenceStart: 0, sentenceEnd: 1, sentenceOffsetsMs: [500, 100] },
+      ]),
     ).toThrow(/non-decreasing and inside/);
   });
 });

@@ -50,8 +50,7 @@ export function planBeds(
   if (sentenceIdx < 0) return [];
   return cues
     .filter(
-      (cue) =>
-        cue.enabled && cue.startSentence <= sentenceIdx && sentenceIdx <= cue.endSentence,
+      (cue) => cue.enabled && cue.startSentence <= sentenceIdx && sentenceIdx <= cue.endSentence,
     )
     .sort(
       (a, b) =>

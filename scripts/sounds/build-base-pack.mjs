@@ -3,9 +3,9 @@
 //
 // Pipeline per bed:
 //   1. synthesize 75 s mono float with ffmpeg generators and filters (every random source is seeded)
-//   2. cut 6 s from each end (filter start-up), then build a seamless 60 s loop with R4's equal-power
-//      afade qsin crossfade (3 s overlap): output = source_window - 3 s
-//   3. two-pass loudnorm to -28 LUFS, true peak <= -3 dBTP
+//   2. take a 63 s window starting 6 s in (skips filter start-up), then build a seamless loop of
+//      2584 AAC frames (60.0004 s) with R4's equal-power afade qsin crossfade (3 s overlap)
+//   3. two-pass loudnorm to -28 LUFS (linear gain), true peak <= -3 dBTP
 //   4. encode AAC-LC, mono, 44.1 kHz, 64 kbps as .m4a
 //
 // Determinism: anoisesrc is seeded with `s=`, and aevalsrc's random(n) is deterministic across runs
@@ -39,7 +39,7 @@ import {
 } from './pack-spec.mjs';
 
 const SYNTH_SECONDS = 75;
-/** Synthesis starts at this offset: the first seconds carry filter start-up transients. */
+/** The loop window starts this far into the synthesis, past the filter start-up transients. */
 const EDGE_TRIM_SECONDS = 6;
 const CROSSFADE_SECONDS = 3;
 const SAMPLES_PER_AAC_FRAME = 1024;
@@ -52,7 +52,8 @@ const LRA_TARGET = 20;
 // AAC-LC encodes whole 1024-sample frames. A loop that is a whole number of frames decodes back to
 // exactly its own length (priming skip and end padding cancel). A 60 s loop is not a whole number
 // of frames, so the loop is rounded to 2584 frames (60.0004 s) and the seam is not padded.
-const LOOP_SAMPLES = Math.round((LOOP_SECONDS * SAMPLE_RATE) / SAMPLES_PER_AAC_FRAME) * SAMPLES_PER_AAC_FRAME;
+const LOOP_SAMPLES =
+  Math.round((LOOP_SECONDS * SAMPLE_RATE) / SAMPLES_PER_AAC_FRAME) * SAMPLES_PER_AAC_FRAME;
 const CROSSFADE_SAMPLES = CROSSFADE_SECONDS * SAMPLE_RATE;
 const EDGE_SAMPLES = EDGE_TRIM_SECONDS * SAMPLE_RATE;
 /** Loop source window: LOOP + CROSSFADE. The R4 recipe returns window - crossfade = LOOP. */
@@ -200,7 +201,18 @@ async function buildBed(id, workDir) {
     'pcm_f32le',
     synth,
   ]);
-  await runFfmpeg(['-y', '-i', synth, '-filter_complex', loopGraph(), '-map', '[out]', '-c:a', 'pcm_f32le', loop]);
+  await runFfmpeg([
+    '-y',
+    '-i',
+    synth,
+    '-filter_complex',
+    loopGraph(),
+    '-map',
+    '[out]',
+    '-c:a',
+    'pcm_f32le',
+    loop,
+  ]);
 
   const measured = await measureLoudnorm(loop);
   await runFfmpeg([

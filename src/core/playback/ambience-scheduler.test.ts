@@ -1,4 +1,3 @@
-import type { AmbienceCue } from '../domain/analysis';
 import {
   type BedCommand,
   type BedTarget,
@@ -8,7 +7,10 @@ import {
   planBeds,
 } from './ambience-scheduler';
 
-const ULID = (n: number) => `01HZX00000000000000000000${String(n).padStart(1, '0')}`;
+import type { AmbienceCue } from '../domain/analysis';
+
+/** 26-character ULID-shaped ids for fixtures. */
+const ULID = (n: number) => `01HZX${String(n).padStart(21, '0')}`;
 
 function cue(overrides: Partial<AmbienceCue> & { id: string }): AmbienceCue {
   return {
@@ -124,8 +126,20 @@ describe('planBeds', () => {
 });
 
 describe('diffBeds', () => {
-  const bedA: BedTarget = { cueId: ULID(1), category: 'a', gainDb: -22, fadeInMs: 2500, fadeOutMs: 3000 };
-  const bedB: BedTarget = { cueId: ULID(2), category: 'b', gainDb: -22, fadeInMs: 2500, fadeOutMs: 3000 };
+  const bedA: BedTarget = {
+    cueId: ULID(1),
+    category: 'a',
+    gainDb: -22,
+    fadeInMs: 2500,
+    fadeOutMs: 3000,
+  };
+  const bedB: BedTarget = {
+    cueId: ULID(2),
+    category: 'b',
+    gainDb: -22,
+    fadeInMs: 2500,
+    fadeOutMs: 3000,
+  };
 
   it('returns nothing when the beds are unchanged', () => {
     expect(diffBeds([bedA], [bedA])).toEqual([]);
@@ -178,8 +192,20 @@ describe('diffBeds', () => {
 
   it('handles a seek that jumps across cue boundaries', () => {
     const cues = [
-      cue({ id: ULID(1), startSentence: 0, endSentence: 4, category: 'forest_night', confidence: 0.9 }),
-      cue({ id: ULID(2), startSentence: 10, endSentence: 20, category: 'city_night', confidence: 0.9 }),
+      cue({
+        id: ULID(1),
+        startSentence: 0,
+        endSentence: 4,
+        category: 'forest_night',
+        confidence: 0.9,
+      }),
+      cue({
+        id: ULID(2),
+        startSentence: 10,
+        endSentence: 20,
+        category: 'city_night',
+        confidence: 0.9,
+      }),
     ];
     const inFirst = planBeds(cues, 2);
     const afterFirst = planBeds(cues, 8);

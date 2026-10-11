@@ -20,7 +20,9 @@ export type ApiKeyStatus = 'unknown' | 'missing' | 'present';
 
 export class InvalidApiKeyError extends Error {
   constructor() {
-    super('That does not look like an OpenRouter key. Keys start with "sk-or-". Check the copy and try again.');
+    super(
+      'That does not look like an OpenRouter key. Keys start with "sk-or-". Check the copy and try again.',
+    );
     this.name = 'InvalidApiKeyError';
   }
 }
@@ -85,7 +87,11 @@ function subscribe(listener: () => void): () => void {
 
 /** Whether a key is saved. 'unknown' until the first read finishes, or after a read error. */
 export function useApiKeyStatus(): ApiKeyStatus {
-  const status = useSyncExternalStore(subscribe, () => currentStatus, () => 'unknown' as const);
+  const status = useSyncExternalStore(
+    subscribe,
+    () => currentStatus,
+    () => 'unknown' as const,
+  );
   useEffect(() => {
     if (status === 'unknown') {
       void refreshApiKeyStatus();

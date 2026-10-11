@@ -21,7 +21,9 @@ describe('duckEnvelope', () => {
   it('rejects a ducking depth outside 0 to 24 dB', () => {
     expect(() => duckEnvelope({ ...base, duckingDb: -1, voiceActive: true })).toThrow(RangeError);
     expect(() => duckEnvelope({ ...base, duckingDb: 30, voiceActive: true })).toThrow(RangeError);
-    expect(() => duckEnvelope({ ...base, duckingDb: Number.NaN, voiceActive: true })).toThrow(RangeError);
+    expect(() => duckEnvelope({ ...base, duckingDb: Number.NaN, voiceActive: true })).toThrow(
+      RangeError,
+    );
   });
 });
 

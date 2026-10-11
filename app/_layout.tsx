@@ -11,6 +11,8 @@ import { StatusBar } from 'expo-status-bar';
 import { useMemo, type ComponentProps } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import '@/bootstrap';
+
 import { DbProvider } from '@/app-shell/db-provider';
 import { FatalError, formatErrorDetails } from '@/app-shell/fatal-error';
 import { OpenRouterProvider } from '@/app-shell/openrouter-provider';

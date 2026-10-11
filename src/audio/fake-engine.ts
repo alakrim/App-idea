@@ -2,9 +2,14 @@ import type { BedCommand } from '@/core/playback/ambience-scheduler';
 import type { DuckRamp } from '@/core/playback/ducking';
 import type { RemoteEvent } from '@/core/playback/remote-commands';
 
+import {
+  type InterruptionEvent,
+  createLectioEngine,
+  type PlatformEventSource,
+} from './lectio-engine';
+
 import type { AmbienceMixer } from './ambience-mixer';
 import type { AudioEngine } from './engine';
-import { type InterruptionEvent, createLectioEngine, type PlatformEventSource } from './lectio-engine';
 import type { VoicePort, VoiceSegment, VoiceSnapshot } from './voice-port';
 
 /** Snapshot cadence of the virtual voice, matching the native player's 250 ms update interval. */
@@ -184,9 +189,10 @@ export function createFakeEngine(): FakeAudioEngine {
   const remote = createEmitter<RemoteEvent>();
   const engine = createLectioEngine({ voice, mixer, interruptions, remote });
 
-  return {
-    ...engine,
-    advance: (ms) => voice.advance(ms),
+  // Object spread would evaluate the getters once, at construction, so the readbacks would freeze.
+  // Assigning the engine's methods onto an object that already has the accessors keeps them live.
+  const fake = {
+    advance: (ms: number) => voice.advance(ms),
     get ambienceCommands() {
       return mixer.commands;
     },
@@ -197,7 +203,8 @@ export function createFakeEngine(): FakeAudioEngine {
     get voiceVolume() {
       return voice.currentVolume;
     },
-    emitRemote: (event) => remote.emit(event),
-    emitInterruption: (event) => interruptions.emit(event),
+    emitRemote: (event: RemoteEvent) => remote.emit(event),
+    emitInterruption: (event: InterruptionEvent) => interruptions.emit(event),
   };
+  return Object.assign(fake, engine);
 }

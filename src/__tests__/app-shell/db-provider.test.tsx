@@ -1,18 +1,19 @@
 import { act, fireEvent, screen, waitFor } from '@testing-library/react-native';
 import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from 'react';
 import { Clipboard, Text } from 'react-native';
 
-import { DbProvider, useDb } from '@/app-shell/db-provider';
 import { renderThemed } from '@/__tests__/helpers/render-themed';
-import { getDatabase } from '@/db/client';
+import { DbProvider, useDb } from '@/app-shell/db-provider';
 import { createTestDb } from '@/db/__fixtures__/test-db';
+import { getDatabase } from '@/db/client';
 import { settings } from '@/db/schema';
+import type { Db } from '@/db/types';
 import { useLectioMigrations } from '@/db/use-migrations';
 import { settingsStore } from '@/features/settings/settings-store';
 
-import type { Db } from '@/db/types';
-
 // Jest cannot load Reanimated 4's worklets runtime, and lucide ships untransformed ESM.
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('react-native-reanimated', () => require('../helpers/reanimated-stub'));
 jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
 jest.mock('@/db/client', () => ({ getDatabase: jest.fn() }));
@@ -27,10 +28,12 @@ const migrationsMock = jest.mocked(useLectioMigrations);
 const hideAsync = jest.mocked(SplashScreen.hideAsync);
 
 let testDb: Db;
-let seenByChild: Db | null = null;
 
-function Probe() {
-  seenByChild = useDb();
+function Probe({ onDb }: { onDb: (db: Db) => void }) {
+  const db = useDb();
+  useEffect(() => {
+    onDb(db);
+  }, [db, onDb]);
   return <Text>probe</Text>;
 }
 
@@ -38,7 +41,6 @@ beforeEach(() => {
   jest.clearAllMocks();
   const created = createTestDb();
   testDb = created.db;
-  seenByChild = null;
   getDatabaseMock.mockReturnValue(testDb as never);
   migrationsMock.mockReturnValue({ success: false, error: undefined });
 });
@@ -73,13 +75,14 @@ describe('DbProvider', () => {
   it('exposes the open database through useDb()', async () => {
     migrationsMock.mockReturnValue({ success: true, error: undefined });
 
+    const seen: Db[] = [];
     await renderThemed(
       <DbProvider>
-        <Probe />
+        <Probe onDb={(db) => seen.push(db)} />
       </DbProvider>,
     );
 
-    await waitFor(() => expect(seenByChild).toBe(testDb));
+    await waitFor(() => expect(seen[0]).toBe(testDb));
   });
 
   it('shows a designed failure when migrations fail, and Retry reopens the library', async () => {
@@ -144,4 +147,3 @@ describe('DbProvider', () => {
     }
   });
 });
-

@@ -41,7 +41,15 @@ export async function runFfmpegCapture(args) {
 
 /** EBU R128 integrated loudness and true peak, from the ebur128 summary block. */
 export async function measureLoudness(file) {
-  const stderr = await runFfmpegCapture(['-i', file, '-af', 'ebur128=peak=true', '-f', 'null', '-']);
+  const stderr = await runFfmpegCapture([
+    '-i',
+    file,
+    '-af',
+    'ebur128=peak=true',
+    '-f',
+    'null',
+    '-',
+  ]);
   const integrated = /Integrated loudness:\s*\n\s*I:\s*(-?\d+(?:\.\d+)?)\s*LUFS/.exec(stderr);
   const truePeak = /True peak:\s*\n\s*Peak:\s*(-?\d+(?:\.\d+)?)\s*dBFS/.exec(stderr);
   if (!integrated || !truePeak) throw new Error(`could not parse ebur128 summary for ${file}`);

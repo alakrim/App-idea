@@ -12,7 +12,8 @@ export const warnInvalidSetting: InvalidSettingHandler = (key, reason) => {
   console.warn(`Lectio: ignoring stored setting "${key}" (${reason}) and using its default.`);
 };
 
-type ParsedValue<K extends SettingKey> = { ok: true; value: Settings[K] } | { ok: false; reason: string };
+type ParsedValue<K extends SettingKey> =
+  { ok: true; value: Settings[K] } | { ok: false; reason: string };
 
 function parseStoredValue<K extends SettingKey>(key: K, raw: string): ParsedValue<K> {
   let json: unknown;
@@ -37,7 +38,7 @@ function assign<K extends SettingKey>(target: Settings, key: K, value: Settings[
  * fails its schema is reported through `onInvalid` and replaced by its default. Unknown keys are
  * ignored.
  */
-function load(db: Db, onInvalid: InvalidSettingHandler = warnInvalidSetting): Settings {
+function getSettings(db: Db, onInvalid: InvalidSettingHandler = warnInvalidSetting): Settings {
   const result: Settings = { ...DEFAULT_SETTINGS };
   for (const row of db.select().from(settings).all()) {
     const key = SettingKeySchema.safeParse(row.key);
@@ -56,7 +57,7 @@ function load(db: Db, onInvalid: InvalidSettingHandler = warnInvalidSetting): Se
  * Writes only the keys present in `patch`, in one transaction, and returns the full settings.
  * Throws a ZodError (and writes nothing) when a value is invalid.
  */
-function patch(db: Db, input: SettingsPatch, updatedAt: number): Settings {
+function patchSettings(db: Db, input: SettingsPatch, updatedAt: number): Settings {
   const validated = SettingsPatchSchema.parse(input);
   db.transaction((tx) => {
     for (const key of SettingKeySchema.options) {
@@ -69,7 +70,7 @@ function patch(db: Db, input: SettingsPatch, updatedAt: number): Settings {
         .run();
     }
   });
-  return load(db);
+  return getSettings(db);
 }
 
-export const settingsRepo = { load, patch };
+export const settingsRepo = { getSettings, patchSettings };

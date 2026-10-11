@@ -1,5 +1,7 @@
 import * as SecureStore from 'expo-secure-store';
 
+import type * as SecretsNamespace from './secrets';
+
 jest.mock('expo-secure-store', () => ({
   AFTER_FIRST_UNLOCK: 6,
   getItemAsync: jest.fn(),
@@ -9,7 +11,7 @@ jest.mock('expo-secure-store', () => ({
 
 const VALID_KEY = 'sk-or-v1-0123456789abcdef0123456789abcdef';
 
-type SecretsModule = typeof import('./secrets');
+type SecretsModule = typeof SecretsNamespace;
 
 function loadSecrets(): SecretsModule {
   let loaded: SecretsModule | undefined;
@@ -48,19 +50,15 @@ describe('setApiKey / getApiKey / clearApiKey', () => {
 
     await secrets.setApiKey(`  ${VALID_KEY}\n`);
 
-    expect(secureStore.setItemAsync).toHaveBeenCalledWith(
-      'openrouter.api-key',
-      VALID_KEY,
-      { keychainAccessible: SecureStore.AFTER_FIRST_UNLOCK },
-    );
+    expect(secureStore.setItemAsync).toHaveBeenCalledWith('openrouter.api-key', VALID_KEY, {
+      keychainAccessible: SecureStore.AFTER_FIRST_UNLOCK,
+    });
   });
 
   it('rejects a malformed key without touching the keystore', async () => {
     const secrets = loadSecrets();
 
-    await expect(secrets.setApiKey('not-a-key')).rejects.toBeInstanceOf(
-      secrets.InvalidApiKeyError,
-    );
+    await expect(secrets.setApiKey('not-a-key')).rejects.toBeInstanceOf(secrets.InvalidApiKeyError);
     expect(secureStore.setItemAsync).not.toHaveBeenCalled();
   });
 

@@ -1,7 +1,6 @@
+import { createSettingsStore } from './settings-store';
 import { DEFAULT_SETTINGS } from '../../core/defaults';
 import { createTestDb } from '../../db/__fixtures__/test-db';
-
-import { createSettingsStore } from './settings-store';
 
 const T0 = 1_700_000_000_000;
 
