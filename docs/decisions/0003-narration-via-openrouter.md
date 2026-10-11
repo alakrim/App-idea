@@ -18,3 +18,8 @@
 ## Risks
 - Per-language quality is unverified. Add a paid A/B listening test (gated on user approval of spend, ~$0.20).
 - Price unit semantics differ by model (per char vs per audio token). Cost estimation must handle both, and the ledger records the actual `usage` returned.
+
+## Amendment (2026-10-11): default voice chosen by the user after the live audition
+- **Default narrator for every language: `google/gemini-3.8-flash-lite-tts`, voice `Kore`, style "Warm, intimate audiobook narrator. Measured pace, natural pauses at commas and full stops."** The user picked it by ear over Kokoro, MAI 2.1 Flash and ElevenLabs v3 (https://claude.ai/artifact/R3d3Rxb42W5rm1hn6wqhJp).
+- Gemini TTS is **PCM-only**, so synthesis requests `pcm` and stores WAV until **E1** (native AAC encoder) lands. E1 is now a priority because of storage (~170 MB/h WAV vs ~20 MB/h AAC).
+- Kokoro stays the Budget tier and ElevenLabs v3 the Premium tier in the picker.

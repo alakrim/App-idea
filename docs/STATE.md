@@ -117,5 +117,5 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
 - ⚠️ The analysis prompt is ~4.7k tokens per call, so prompt caching is worth adding. → L1.
 - Gemini `instructions` steering works: an Italian sample took 14.4 s with the narrator style and 10.5 s without it.
 - Pure-JS MP3 encoding (lamejs) was rejected: LGPL, and only 2× real time in an interpreter (V8 `--jitless`). → Plan **E1**: a native Android AAC encoder module (MediaCodec + MediaMuxer, local Expo module), WAV → m4a after synthesis. Until then, PCM models store WAV (~170 MB/h).
-- Listening page for the user: https://claude.ai/artifact/R3d3Rxb42W5rm1hn6wqhJp. **Waiting on the user's picks to set the default voice tiers.**
+- Listening page for the user: https://claude.ai/artifact/R3d3Rxb42W5rm1hn6wqhJp. **User decision: Gemini 3.8 Flash Lite TTS is the default for all languages (ADR-0003 amendment). E1 native AAC encoder is now a priority.**
 - Reminder: ask the user to **revoke the test key** on openrouter.ai once the voice choice is settled. Any later live verification needs a new key.
