@@ -1,0 +1,12 @@
+# ADR-0005: Ambience beds: taxonomy, mix and sound sourcing
+
+**Status**: accepted (2026-10-11). Evidence: `docs/research/R4-ambience.md`.
+
+## Decision
+- **Taxonomy**: the 59 categories in R4. v1 enables **beds only** (51). `kind: 'bed' | 'oneshot'` is reserved in the schema, and one-shots ship in v1.1. Ids are stable `snake_case` and never renamed.
+- **Mix**: at most 2 simultaneous beds. Default bed level is −22 dB relative to narration, user-adjustable from −30 to −14 dB or off. Narration-aware ducking is an extra 6–9 dB while the voice is active (attack 30 ms, release 550 ms). Fade-in is 2.5 s by default and fade-out 3 s. Crossfade when one bed replaces another.
+- **Cue validation**: minimum span 3 sentences / about 20 s; at most 2 cues per 1k words; never more than 2 overlapping beds; drop cues with confidence < 0.55; merge adjacent identical categories.
+- **Format**: AAC-LC `.m4a`, 44.1 kHz, mono 64 kbps, 30–60 s seamless loops, normalized to −28 LUFS integrated. Loops are made by the build script `scripts/sounds/` (ffmpeg with an equal-power `afade qsin` crossfade, the recipe from R4).
+- **Sourcing policy**: CC0 first. The **base pack v0 is procedural** (rain, wind, ocean, crowd murmur, space hum, fire), synthesized by our build script, so licensing risk is zero. Sampled CC0 beds (Freesound CC0, OpenGameArt CC0, Kenney) are added through `assets/ambience/LICENSES.json` (a ledger entry per file: source URL, author, license, date). CC-BY content only goes in with an in-app credits screen. NC, SA, GPL and Sampling+ are never used.
+- **Unmapped categories**: if a cue's category has no installed sound, the player maps it to its family fallback bed (e.g. `horse_gallop` → `countryside_wind` family fallback) or silently skips it. The analysis still stores the true category, so better packs light it up retroactively.
+- `ffmpeg-static` (GPL) is a **build-time devDependency only** and never ships.

@@ -1,6 +1,6 @@
-# Architecture (v0.1, DRAFT, pending research R1–R4)
+# Architecture (v1.0)
 
-> Status: draft written by the architect before research landed. Sections marked **[R#]** are validated or revised once the matching report is in `docs/research/`.
+> Status: v1, research R1–R4 incorporated. Binding decisions are in ADRs 0001–0005 (`docs/decisions/`). Where this doc and an ADR disagree, the ADR wins. **[R#]** marks point to the evidence in `docs/research/`.
 
 ## 1. Shape of the system
 - **Client-only, BYOK.** There is no backend. The phone calls OpenRouter directly with the user's key, which is kept in the OS keystore (`expo-secure-store`). This gives zero infra cost and privacy by default, and the user controls their spend.
