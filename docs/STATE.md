@@ -64,3 +64,9 @@ _Last updated: 2026-10-11 by architect_
 - [B3] Add a test asserting `bundled-migrations.ts` lists every entry in `migrations/meta/_journal.json` (read via fs in Node).
 - [B3] Repos still missing: narration_profiles, ambience_cues, chapter_memory, entities/entity_facts, audio_segments, qa_messages, vocab, settings (zod-validated). Assigned to the M2–M5 feature briefs as needed.
 - [B3] Call `useLectioMigrations()` in `app/_layout.tsx`, gating render with a designed splash/error state.
+- [B6] **Metro bundling of the extract stack**: import `src/core/extract` from app code and prove `bundle:check` passes (defuddle's exports map is `import`-only, and linkedom is ESM). Fix via metro `unstable_conditionNames` / resolver if needed.
+- [B6] Lexicon signal is inert because it is scored after the post-filter. Score lexicon hits on the *pre-filter* blocks as an information signal, weighted lightly (0.05), and re-balance the weights. Calibrate on a real corpus later (M8).
+- [B6] Kicker/section-label lines ("Weather | Live updates"): add a rule for short pipe-separated label lines without terminal punctuation.
+
+## Verified wave-2 results
+- B3 DB: 47 tests; B4 text: 218 tests; B5 OpenRouter: 84 tests; B6 extract: 171 tests; B7 analysis/memory: 117 tests (all re-run by architect).
