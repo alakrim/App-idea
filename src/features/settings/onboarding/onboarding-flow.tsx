@@ -11,10 +11,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useSettings } from '@/features/settings/settings-store';
 import { Button } from '@/ui/button';
-import { Text } from '@/ui/text';
 import { useMotion } from '@/ui/motion';
+import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
-import { durations, gutter, hairline, iconSize, iconStrokeWidth, minTouchTarget, radius, space } from '@/ui/tokens';
+import {
+  durations,
+  gutter,
+  hairline,
+  iconSize,
+  iconStrokeWidth,
+  minTouchTarget,
+  radius,
+  space,
+} from '@/ui/tokens';
 
 import { ConnectStep } from './connect-step';
 import { WelcomeIllustration } from './welcome-illustration';
@@ -69,9 +78,7 @@ function StepProgress({ step }: { step: StepIndex }) {
   const fraction = useSharedValue((step + 1) / STEP_COUNT);
 
   useEffect(() => {
-    /* eslint-disable react-hooks/immutability */
     fraction.value = springTo((step + 1) / STEP_COUNT, 'gentle');
-    /* eslint-enable react-hooks/immutability */
   }, [step, fraction, springTo]);
 
   const fillStyle = useAnimatedStyle(() => ({ width: `${fraction.value * 100}%` }));

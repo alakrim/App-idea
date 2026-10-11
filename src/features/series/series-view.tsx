@@ -10,12 +10,12 @@ import Animated, {
 } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import type { Series } from '@/core/domain';
+import type { ChapterProgress } from '@/features/pipeline/facade';
+import { withAlpha } from '@/features/shared/color';
 import { NEUTRAL_TINT } from '@/features/shared/cover-tint';
 import { formatSeriesSummary } from '@/features/shared/format';
 import { languagePairLabel } from '@/features/shared/languages';
-import { withAlpha } from '@/features/shared/color';
-import type { Series } from '@/core/domain';
-import type { ChapterProgress } from '@/features/pipeline/facade';
 import { Badge } from '@/ui/badge';
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
@@ -28,6 +28,7 @@ import { gutter, hairline, radius, space } from '@/ui/tokens';
 
 import { ChapterRow } from './chapter-row';
 import { COVER_PICKER_WIDTH } from './cover-picker';
+
 import type { ChapterRecord, PlayTarget } from './series-data';
 
 const HERO_HEIGHT = 400;
@@ -92,9 +93,16 @@ export function SeriesView(props: SeriesViewProps) {
   return (
     <SafeAreaView edges={['top']} style={[styles.root, { backgroundColor: colors.bg }]}>
       <View style={[styles.bar, { borderBottomColor: colors.border }]}>
-        <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: colors.bg }, barStyle]} />
+        <Animated.View
+          pointerEvents="none"
+          style={[StyleSheet.absoluteFill, { backgroundColor: colors.bg }, barStyle]}
+        />
         <IconButton label="Back to library" icon={ChevronLeft} onPress={onBack} />
-        <Animated.View style={[styles.barTitle, barStyle]} importantForAccessibility="no-hide-descendants" accessibilityElementsHidden>
+        <Animated.View
+          style={[styles.barTitle, barStyle]}
+          importantForAccessibility="no-hide-descendants"
+          accessibilityElementsHidden
+        >
           <Text variant="heading" numberOfLines={1} align="center">
             {series.title}
           </Text>
@@ -102,7 +110,12 @@ export function SeriesView(props: SeriesViewProps) {
         <IconButton label="Series actions" icon={Ellipsis} onPress={onMenu} />
       </View>
 
-      <Animated.ScrollView onScroll={onScroll} scrollEventThrottle={16} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <Animated.ScrollView
+        onScroll={onScroll}
+        scrollEventThrottle={16}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.hero}>
           <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, washStyle]}>
             <LinearGradient
@@ -116,7 +129,13 @@ export function SeriesView(props: SeriesViewProps) {
           <Animated.View style={[styles.coverShadow, coverStyle]}>
             <CoverImage uri={series.coverUri} title={series.title} style={styles.cover} />
           </Animated.View>
-          <Text variant="display" align="center" numberOfLines={2} accessibilityRole="header" style={styles.title}>
+          <Text
+            variant="display"
+            align="center"
+            numberOfLines={2}
+            accessibilityRole="header"
+            style={styles.title}
+          >
             {series.title}
           </Text>
           <View style={styles.meta}>
@@ -141,7 +160,13 @@ export function SeriesView(props: SeriesViewProps) {
               }}
             />
           </View>
-          <Button label="Add chapter" icon={Plus} variant="secondary" size="lg" onPress={onAddChapter} />
+          <Button
+            label="Add chapter"
+            icon={Plus}
+            variant="secondary"
+            size="lg"
+            onPress={onAddChapter}
+          />
         </View>
 
         {count === 0 ? (

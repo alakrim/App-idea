@@ -3,7 +3,6 @@ import { z } from 'zod';
 
 import { readCatalogSnapshot } from '@/services/catalog-cache';
 import { PipelineFailure } from '@/services/openrouter';
-
 import type { OpenRouterClient, OpenRouterModel, OutputModality } from '@/services/openrouter';
 
 /**
@@ -79,23 +78,26 @@ export function useModelCatalog(
   outputModality: OutputModality,
   readCache: (modality: OutputModality) => CachedCatalog | null = readCachedCatalog,
 ): { state: CatalogState; reload: () => void } {
-  const [state, setState] = useState<CatalogState>({ status: 'loading' });
   const [attempt, setAttempt] = useState(0);
+  const [settled, setSettled] = useState<{
+    attempt: number;
+    modality: OutputModality;
+    state: CatalogState;
+  } | null>(null);
 
   useEffect(() => {
     let active = true;
     const controller = new AbortController();
-    setState({ status: 'loading' });
+    const finish = (state: CatalogState) => {
+      if (active) setSettled({ attempt, modality: outputModality, state });
+    };
 
     client.models
       .list({ outputModality, signal: controller.signal })
-      .then((models) => {
-        if (active) setState({ status: 'live', models });
-      })
+      .then((models) => finish({ status: 'live', models }))
       .catch((error: unknown) => {
-        if (!active) return;
         const cached = readCache(outputModality);
-        setState(
+        finish(
           cached
             ? { status: 'cached', models: cached.models, savedAt: cached.savedAt }
             : { status: 'unavailable', message: catalogFailureMessage(error) },
@@ -108,8 +110,15 @@ export function useModelCatalog(
     };
   }, [client, outputModality, readCache, attempt]);
 
-  return { state, reload: () => setAttempt((current) => current + 1) };
+  // A result only counts for the request that produced it. Anything else is still loading.
+  const current =
+    settled !== null && settled.attempt === attempt && settled.modality === outputModality
+      ? settled.state
+      : LOADING;
+  return { state: current, reload: () => setAttempt((value) => value + 1) };
 }
+
+const LOADING: CatalogState = { status: 'loading' };
 
 /**
  * True when a catalog has loaded and does not offer `modelId`. The saved model then needs a

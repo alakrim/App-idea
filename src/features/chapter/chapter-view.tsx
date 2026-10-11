@@ -3,6 +3,8 @@ import { useState, type ReactNode } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import type { AmbienceCue, Chapter, Job, PipelineError, Series, Stage } from '@/core/domain';
+import type { ChapterProgress } from '@/features/pipeline/facade';
 import { formatDuration, formatUsd, formatWordCount } from '@/features/shared/format';
 import { Badge, type BadgeTone } from '@/ui/badge';
 import { Button } from '@/ui/button';
@@ -17,12 +19,9 @@ import { gutter, hairline, space } from '@/ui/tokens';
 import { AmbienceList } from './ambience-list';
 import { isTranslated, type ReadingParagraph } from './chapter-data';
 import { rowStateOf, statusLine } from './chapter-status';
-import { stepStates } from './stage-steps';
-import { StageStepper } from './stage-stepper';
 import { READING_MODES, ReadingText, type ReadingMode } from './reading-text';
-
-import type { AmbienceCue, Chapter, Job, PipelineError, Series, Stage } from '@/core/domain';
-import type { ChapterProgress } from '@/features/pipeline/facade';
+import { StageStepper } from './stage-stepper';
+import { stepStates } from './stage-steps';
 
 const STATE_BADGE: Record<ReturnType<typeof rowStateOf>, { label: string; tone: BadgeTone }> = {
   draft: { label: 'Not processed', tone: 'neutral' },
@@ -139,11 +138,20 @@ export function ChapterView({
                 .map((job, index) => (
                   <View
                     key={job.id}
-                    style={[styles.costRow, index > 0 ? { borderTopWidth: hairline, borderTopColor: colors.border } : null]}
+                    style={[
+                      styles.costRow,
+                      index > 0
+                        ? { borderTopWidth: hairline, borderTopColor: colors.border }
+                        : null,
+                    ]}
                   >
                     <Text variant="body">{STAGE_NAMES[job.stage]}</Text>
                     <Text variant="caption" tone="muted">
-                      {job.costUsd > 0 ? formatUsd(job.costUsd) : job.status === 'skipped' ? 'Not needed' : '—'}
+                      {job.costUsd > 0
+                        ? formatUsd(job.costUsd)
+                        : job.status === 'skipped'
+                          ? 'Not needed'
+                          : '—'}
                     </Text>
                   </View>
                 ))}
@@ -161,7 +169,11 @@ export function ChapterView({
                 onChange={setMode}
               />
             ) : null}
-            <ReadingText paragraphs={paragraphs} mode={effectiveMode} sourceLang={chapter.sourceLang} />
+            <ReadingText
+              paragraphs={paragraphs}
+              mode={effectiveMode}
+              sourceLang={chapter.sourceLang}
+            />
           </Section>
         ) : null}
 

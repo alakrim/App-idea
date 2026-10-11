@@ -1,9 +1,9 @@
 import { router, Stack, useLocalSearchParams } from 'expo-router';
 
+import { useSeries } from '@/db/hooks';
 import { SeriesForm } from '@/features/series/series-form';
 import { updateSeries } from '@/features/series/series-service';
 import { useSeriesDeps } from '@/features/series/use-series-deps';
-import { useSeries } from '@/db/hooks';
 import { ErrorState } from '@/ui/error-state';
 import { Screen } from '@/ui/screen';
 
@@ -15,7 +15,9 @@ export default function EditSeriesScreen() {
   if (series === null) {
     return (
       <>
-        <Stack.Screen options={{ headerShown: true, title: 'Edit series', presentation: 'modal' }} />
+        <Stack.Screen
+          options={{ headerShown: true, title: 'Edit series', presentation: 'modal' }}
+        />
         <Screen edges={['bottom']} scrollable={false}>
           <ErrorState
             title="Series not found"

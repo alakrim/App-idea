@@ -2,14 +2,13 @@ import { ChevronDown, ChevronUp } from 'lucide-react-native';
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import type { CostEstimate } from '@/features/pipeline/facade';
 import { formatCostEstimate, formatUsd } from '@/features/shared/format';
 import { Card } from '@/ui/card';
 import { Skeleton } from '@/ui/skeleton';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { hairline, iconSize, iconStrokeWidth, minTouchTarget, space } from '@/ui/tokens';
-
-import type { CostEstimate } from '@/features/pipeline/facade';
 
 const STAGE_LABELS: Readonly<Record<string, string>> = {
   clean: 'Clean',
@@ -18,7 +17,8 @@ const STAGE_LABELS: Readonly<Record<string, string>> = {
   narrate: 'Narrate',
 };
 
-export type EstimateStatus = { kind: 'idle' } | { kind: 'loading' } | { kind: 'ready'; estimate: CostEstimate };
+export type EstimateStatus =
+  { kind: 'idle' } | { kind: 'loading' } | { kind: 'ready'; estimate: CostEstimate };
 
 export interface EstimateCardProps {
   status: EstimateStatus;
@@ -54,7 +54,11 @@ export function EstimateCard({ status }: EstimateCardProps) {
       <Text variant="micro" tone="muted">
         Estimated cost
       </Text>
-      <Text variant="title" accessibilityLiveRegion="polite" accessibilityLabel={`Estimated cost ${formatCostEstimate(estimate)}`}>
+      <Text
+        variant="title"
+        accessibilityLiveRegion="polite"
+        accessibilityLabel={`Estimated cost ${formatCostEstimate(estimate)}`}
+      >
         {formatCostEstimate(estimate)}
       </Text>
       <Text variant="caption" tone="muted">
@@ -81,7 +85,10 @@ export function EstimateCard({ status }: EstimateCardProps) {
           {estimate.lines.map((line, index) => (
             <View
               key={`${line.stage}-${index}`}
-              style={[styles.line, index > 0 ? { borderTopWidth: hairline, borderTopColor: colors.border } : null]}
+              style={[
+                styles.line,
+                index > 0 ? { borderTopWidth: hairline, borderTopColor: colors.border } : null,
+              ]}
             >
               <View style={styles.lineCopy}>
                 <Text variant="bodyStrong">{STAGE_LABELS[line.stage] ?? line.stage}</Text>

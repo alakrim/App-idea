@@ -1,10 +1,9 @@
+import type { AmbienceCue, Chapter, Job, ParagraphKind, Series } from '@/core/domain';
 import { chapterRepo } from '@/db/repos/chapter-repo';
 import { cueRepo } from '@/db/repos/cue-repo';
 import { jobRepo } from '@/db/repos/job-repo';
 import { seriesRepo } from '@/db/repos/series-repo';
 import { textRepo } from '@/db/repos/text-repo';
-
-import type { AmbienceCue, Chapter, Job, ParagraphKind, Series } from '@/core/domain';
 import type { Db } from '@/db/types';
 
 export const CHAPTER_SCREEN_TABLES = [

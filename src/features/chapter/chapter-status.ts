@@ -1,7 +1,6 @@
-import { formatDuration } from '@/features/shared/format';
-
 import type { Chapter, PipelineError, Stage } from '@/core/domain';
 import type { ChapterProgress } from '@/features/pipeline/facade';
+import { formatDuration } from '@/features/shared/format';
 
 export type ChapterRowState = 'draft' | 'processing' | 'ready' | 'failed';
 

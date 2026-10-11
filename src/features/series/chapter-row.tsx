@@ -2,18 +2,17 @@ import { Play } from 'lucide-react-native';
 import { memo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import type { Chapter, PipelineError } from '@/core/domain';
 import { rowStateOf, isScannedPdfFailure, statusLine } from '@/features/chapter/chapter-status';
 import { StageStepper } from '@/features/chapter/stage-stepper';
 import { stepStates } from '@/features/chapter/stage-steps';
+import type { ChapterProgress } from '@/features/pipeline/facade';
 import { formatUsd } from '@/features/shared/format';
 import { Button } from '@/ui/button';
 import { IconButton } from '@/ui/icon-button';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { hairline, minTouchTarget, space } from '@/ui/tokens';
-
-import type { Chapter, PipelineError } from '@/core/domain';
-import type { ChapterProgress } from '@/features/pipeline/facade';
 
 export interface ChapterRowProps {
   /** 1-based position in the series. */
@@ -74,16 +73,17 @@ export const ChapterRow = memo(function ChapterRow({
           <Text variant="bodyStrong" numberOfLines={2}>
             {chapter.title}
           </Text>
-          <Text
-            variant="caption"
-            tone={state === 'failed' ? 'danger' : 'muted'}
-            numberOfLines={2}
-          >
+          <Text variant="caption" tone={state === 'failed' ? 'danger' : 'muted'} numberOfLines={2}>
             {line}
           </Text>
         </View>
         {state === 'ready' ? (
-          <IconButton label={`Play chapter ${number}`} icon={Play} variant="surface" onPress={() => onPlay(chapter.id)} />
+          <IconButton
+            label={`Play chapter ${number}`}
+            icon={Play}
+            variant="surface"
+            onPress={() => onPlay(chapter.id)}
+          />
         ) : null}
       </View>
 

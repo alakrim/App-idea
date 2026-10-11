@@ -4,10 +4,10 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
 import { selectionHaptic } from './haptics';
+import { useMotion } from './motion';
 import { Text } from './text';
 import { useTheme } from './theme';
 import { hairline, minTouchTarget, opacity, radius, space } from './tokens';
-import { useMotion } from './motion';
 
 export interface SliderProps {
   /** Accessible name, such as "Ambience level". */
@@ -77,9 +77,9 @@ export function Slider({
   useEffect(() => {
     lastEmitted.current = value;
     // Follow external changes (presets, resets) with a spring, not a jump.
-    /* eslint-disable react-hooks/immutability */
+     
     fraction.value = springTo(toFraction(value, min, max), 'gentle');
-    /* eslint-enable react-hooks/immutability */
+     
   }, [value, min, max, fraction, springTo]);
 
   const emit = useMemo(
@@ -97,6 +97,8 @@ export function Slider({
     [min, max, step, onValueChange, onValueCommit],
   );
 
+  // Gesture callbacks run on the UI thread, where shared values are written by design.
+  /* eslint-disable react-hooks/refs, react-hooks/immutability */
   const gesture = useMemo(
     () =>
       Gesture.Pan()
@@ -115,6 +117,7 @@ export function Slider({
         }),
     [disabled, emit, fraction, width],
   );
+  /* eslint-enable react-hooks/refs, react-hooks/immutability */
 
   const fillStyle = useAnimatedStyle(() => ({
     width: fraction.value * width.value,
@@ -133,6 +136,7 @@ export function Slider({
     const next = snapValue(lastEmitted.current + direction * step, min, max, step);
     if (next === lastEmitted.current) return;
     lastEmitted.current = next;
+    /* eslint-disable-next-line react-hooks/immutability */
     fraction.value = toFraction(next, min, max);
     selectionHaptic();
     onValueChange(next);
@@ -153,6 +157,7 @@ export function Slider({
           accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
           onAccessibilityAction={handleAccessibilityAction}
           onLayout={(event) => {
+            /* eslint-disable-next-line react-hooks/immutability */
             width.value = event.nativeEvent.layout.width;
           }}
           style={styles.hitArea}

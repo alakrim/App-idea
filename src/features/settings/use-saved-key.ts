@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { getApiKey, useApiKeyStatus } from '@/services/secrets';
-
 import type { OpenRouterClient } from '@/services/openrouter';
+import { getApiKey, useApiKeyStatus } from '@/services/secrets';
 
 import { keyTail } from './format';
 import { describeKeyError } from './key-format';
@@ -21,27 +20,26 @@ export interface SavedKeyView {
 /** Whether a key is saved, and its last four characters. Never exposes the full key. */
 export function useSavedKey(): SavedKeyView {
   const status = useApiKeyStatus();
-  const [tail, setTail] = useState<string | null>(null);
+  const [tailRead, setTailRead] = useState<string | null>(null);
   const [revision, setRevision] = useState(0);
 
   useEffect(() => {
-    if (status !== 'present') {
-      setTail(null);
-      return;
-    }
+    if (status !== 'present') return;
     let active = true;
     getApiKey()
       .then((key) => {
-        if (active) setTail(key === null ? null : keyTail(key));
+        if (active) setTailRead(key === null ? null : keyTail(key));
       })
       .catch(() => {
-        if (active) setTail(null);
+        if (active) setTailRead(null);
       });
     return () => {
       active = false;
     };
   }, [status, revision]);
 
+  // Nothing is shown without a saved key. The last read stays until a newer one arrives.
+  const tail = status === 'present' ? tailRead : null;
   return { status, tail, refresh: () => setRevision((current) => current + 1) };
 }
 
@@ -59,33 +57,36 @@ export function useSavedKeyAccount(
   client: OpenRouterClient,
   enabled: boolean,
 ): { state: SavedAccountState; reload: () => void } {
-  const [state, setState] = useState<SavedAccountState>({ status: 'idle' });
   const [attempt, setAttempt] = useState(0);
+  const [settled, setSettled] = useState<{ attempt: number; state: SavedAccountState } | null>(
+    null,
+  );
 
   useEffect(() => {
-    if (!enabled) {
-      setState({ status: 'idle' });
-      return;
-    }
+    if (!enabled) return;
     let active = true;
-    setState({ status: 'checking' });
     client
       .validateKey()
       .then((result) => {
         if (!active) return;
-        setState(
-          result.valid
+        setSettled({
+          attempt,
+          state: result.valid
             ? { status: 'ready', account: accountFrom(result) }
             : { status: 'failed', message: describeKeyError(result.error) },
-        );
+        });
       })
       .catch(() => {
-        if (active) setState({ status: 'failed', message: CHECK_FAILED });
+        if (active) setSettled({ attempt, state: { status: 'failed', message: CHECK_FAILED } });
       });
     return () => {
       active = false;
     };
   }, [client, enabled, attempt]);
 
+  let state: SavedAccountState = { status: 'idle' };
+  if (enabled) {
+    state = settled?.attempt === attempt ? settled.state : { status: 'checking' };
+  }
   return { state, reload: () => setAttempt((current) => current + 1) };
 }

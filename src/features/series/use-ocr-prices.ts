@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 
+import type { Series } from '@/core/domain';
 import { usePipeline } from '@/features/pipeline/facade';
 
 import { OCR_QUOTE_CHARS } from './series-data';
-
-import type { Series } from '@/core/domain';
 
 /** OCR cost estimate per scanned chapter. Recomputed when the set of scanned chapters changes. */
 export function useOcrPrices(
@@ -22,7 +21,11 @@ export function useOcrPrices(
     const ids = key === '' ? [] : key.split(',');
     void Promise.all(
       ids.map(async (chapterId) => {
-        const estimate = await pipeline.estimate({ chars: OCR_QUOTE_CHARS, sourceLang, targetLang });
+        const estimate = await pipeline.estimate({
+          chars: OCR_QUOTE_CHARS,
+          sourceLang,
+          targetLang,
+        });
         return [chapterId, estimate.totalUsd] as const;
       }),
     ).then((entries) => {

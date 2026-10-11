@@ -19,7 +19,9 @@ export function ModelRow({ title, kind, modelId, missing }: ModelRowProps) {
     <ListItem
       title={title}
       subtitle={
-        missing ? `${modelLabel(modelId)} is no longer offered. Choose another.` : modelLabel(modelId)
+        missing
+          ? `${modelLabel(modelId)} is no longer offered. Choose another.`
+          : modelLabel(modelId)
       }
       onPress={() => router.push({ pathname: '/settings/model', params: { kind } })}
       accessibilityHint={`Opens the ${title.toLowerCase()} picker`}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { Card } from '@/ui/card';
@@ -18,8 +18,9 @@ const PREVIEW_TEXT =
 /** Reading text size with a live preview in the reading face (Literata). */
 export function ReadingSettings() {
   const { settings, patch } = useSettings();
-  const [scale, setScale] = useState(settings.reading.fontScale);
-  useEffect(() => setScale(settings.reading.fontScale), [settings.reading.fontScale]);
+  // The slider shows its draft while dragged. The saved size is written once, on release.
+  const [dragScale, setDragScale] = useState<number | null>(null);
+  const scale = dragScale ?? settings.reading.fontScale;
 
   return (
     <>
@@ -34,8 +35,11 @@ export function ReadingSettings() {
           formatValue={(next) => `${formatPercent(next)} of the standard size`}
           minimumLabel="Smaller"
           maximumLabel="Larger"
-          onValueChange={setScale}
-          onValueCommit={(fontScale) => patch({ reading: { ...settings.reading, fontScale } })}
+          onValueChange={setDragScale}
+          onValueCommit={(fontScale) => {
+            setDragScale(null);
+            patch({ reading: { ...settings.reading, fontScale } });
+          }}
         />
       </View>
 

@@ -1,9 +1,9 @@
 import { router } from 'expo-router';
 
-import { cueRepo } from '@/db/repos/cue-repo';
 import { useDb } from '@/db/hooks';
-import { useChapterProgressMap } from '@/features/pipeline/use-chapter-progress';
+import { cueRepo } from '@/db/repos/cue-repo';
 import { usePipeline } from '@/features/pipeline/facade';
+import { useChapterProgressMap } from '@/features/pipeline/use-chapter-progress';
 import { useDbRead } from '@/features/shared/use-db-read';
 import { ErrorState } from '@/ui/error-state';
 import { Screen } from '@/ui/screen';

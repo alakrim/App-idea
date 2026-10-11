@@ -1,7 +1,6 @@
 import { chapterRepo } from '@/db/repos/chapter-repo';
 import { positionRepo } from '@/db/repos/position-repo';
 import { seriesRepo, type SeriesSummary } from '@/db/repos/series-repo';
-
 import type { Db } from '@/db/types';
 
 export type LibrarySort = 'recent' | 'title';

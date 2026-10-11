@@ -31,7 +31,9 @@ export function formatUsd(usd: number): string {
 }
 
 /** "≈ $0.04 (0.03–0.06)". The range is the estimate's own low and high bounds. */
-export function formatCostEstimate(estimate: Pick<CostEstimate, 'totalUsd' | 'lowUsd' | 'highUsd'>): string {
+export function formatCostEstimate(
+  estimate: Pick<CostEstimate, 'totalUsd' | 'lowUsd' | 'highUsd'>,
+): string {
   const total = formatUsd(estimate.totalUsd);
   const low = estimate.lowUsd.toFixed(2);
   const high = estimate.highUsd.toFixed(2);

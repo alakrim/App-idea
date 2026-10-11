@@ -1,6 +1,5 @@
-import { estimateSpeechCost } from '@/core/llm/cost';
 import { DEFAULT_NARRATION } from '@/core/defaults';
-
+import { estimateSpeechCost } from '@/core/llm/cost';
 import type { NarrationSettings } from '@/core/settings';
 import type { OpenRouterModel } from '@/services/openrouter';
 
@@ -104,9 +103,7 @@ export function narrationForModel(
     provider: 'openrouter',
     model: model.id,
     voice,
-    style: supportsStyleInstructions(model.id)
-      ? (current.style ?? DEFAULT_NARRATION.style)
-      : null,
+    style: supportsStyleInstructions(model.id) ? (current.style ?? DEFAULT_NARRATION.style) : null,
   };
 }
 

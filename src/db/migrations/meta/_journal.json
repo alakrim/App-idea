@@ -15,6 +15,13 @@
       "when": 1791724695385,
       "tag": "0001_fts5_sentences",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1791728219249,
+      "tag": "0002_curly_redwing",
+      "breakpoints": true
     }
   ]
 }

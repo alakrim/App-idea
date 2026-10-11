@@ -2,11 +2,15 @@ import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { PipelineFailure } from '@/services/openrouter';
-
-import { cachedPreview, hasPaidPreviewConsent, recordPaidPreviewConsent, savePreview } from './preview-cache';
-import { previewCacheKey } from './preview-sample';
-
 import type { OpenRouterClient } from '@/services/openrouter';
+
+import {
+  cachedPreview,
+  hasPaidPreviewConsent,
+  recordPaidPreviewConsent,
+  savePreview,
+} from './preview-cache';
+import { previewCacheKey } from './preview-sample';
 
 export interface PreviewRequest {
   model: string;

@@ -24,7 +24,12 @@ export function StageStepper({ steps, variant = 'full' }: StageStepperProps) {
   const size = NODE_SIZE[variant];
 
   return (
-    <View accessible accessibilityRole="text" accessibilityLabel={describeSteps(steps)} style={styles.row}>
+    <View
+      accessible
+      accessibilityRole="text"
+      accessibilityLabel={describeSteps(steps)}
+      style={styles.row}
+    >
       {steps.map((step, index) => {
         const previous = steps[index - 1];
         return (
@@ -46,7 +51,13 @@ export function StageStepper({ steps, variant = 'full' }: StageStepperProps) {
             {variant === 'full' ? (
               <Text
                 variant="micro"
-                tone={step.status === 'failed' ? 'danger' : step.status === 'pending' ? 'faint' : 'muted'}
+                tone={
+                  step.status === 'failed'
+                    ? 'danger'
+                    : step.status === 'pending'
+                      ? 'faint'
+                      : 'muted'
+                }
                 align="center"
                 numberOfLines={1}
                 maxFontSizeMultiplier={1.1}
@@ -91,7 +102,16 @@ function StepNode({ step, variant }: StepNodeProps) {
       );
     case 'failed':
       return (
-        <View style={[...base, { backgroundColor: colors.surfaceRaised, borderWidth: hairline, borderColor: colors.danger }]}>
+        <View
+          style={[
+            ...base,
+            {
+              backgroundColor: colors.surfaceRaised,
+              borderWidth: hairline,
+              borderColor: colors.danger,
+            },
+          ]}
+        >
           <X size={icon} strokeWidth={iconStrokeWidth + 0.25} color={colors.danger} />
         </View>
       );
@@ -103,7 +123,12 @@ function StepNode({ step, variant }: StepNodeProps) {
       );
     case 'pending':
       return (
-        <View style={[...base, { borderWidth: hairline, borderColor: colors.border, backgroundColor: colors.surface }]} />
+        <View
+          style={[
+            ...base,
+            { borderWidth: hairline, borderColor: colors.border, backgroundColor: colors.surface },
+          ]}
+        />
       );
   }
 }

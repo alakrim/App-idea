@@ -11,8 +11,8 @@ import { Text } from '@/ui/text';
 import { TextField } from '@/ui/text-field';
 import { gutter, space } from '@/ui/tokens';
 
-import { CoverPicker } from './cover-picker';
 import { importCover } from './cover-import';
+import { CoverPicker } from './cover-picker';
 import { LanguageSheet } from './language-sheet';
 import { validateSeriesName, type SeriesFormValues } from './series-service';
 

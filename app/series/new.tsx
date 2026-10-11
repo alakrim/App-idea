@@ -13,7 +13,13 @@ export default function NewSeriesScreen() {
       <Stack.Screen options={{ headerShown: true, title: 'New series', presentation: 'modal' }} />
       <Screen edges={['bottom']} scrollable={false}>
         <SeriesForm
-          initial={{ title: '', coverUri: null, coverTint: null, sourceLang: null, targetLang: null }}
+          initial={{
+            title: '',
+            coverUri: null,
+            coverTint: null,
+            sourceLang: null,
+            targetLang: null,
+          }}
           submitLabel="Create series"
           onSubmit={(values) => {
             const seriesId = createSeries(deps, values);

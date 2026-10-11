@@ -44,7 +44,10 @@ export function nativeLanguageName(code: string): string {
 }
 
 /** "中文 → Italiano" for a series with both languages set. Null when either one is missing. */
-export function languagePairLabel(sourceLang: string | null, targetLang: string | null): string | null {
+export function languagePairLabel(
+  sourceLang: string | null,
+  targetLang: string | null,
+): string | null {
   if (sourceLang === null || targetLang === null) return null;
   return `${nativeLanguageName(sourceLang)} → ${nativeLanguageName(targetLang)}`;
 }

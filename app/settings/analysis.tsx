@@ -1,7 +1,7 @@
 import { useOpenRouter } from '@/app-shell/openrouter-provider';
+import { isModelMissing, useModelCatalog } from '@/features/settings/model-catalog';
 import { modelKindConfig } from '@/features/settings/model-kinds';
 import { ModelRow } from '@/features/settings/model-row';
-import { isModelMissing, useModelCatalog } from '@/features/settings/model-catalog';
 import { SettingsPage } from '@/features/settings/settings-page';
 import { SettingsSection } from '@/features/settings/settings-section';
 import { useSettings } from '@/features/settings/settings-store';

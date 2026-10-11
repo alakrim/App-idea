@@ -47,7 +47,12 @@ export function ChapterActionsSheet({
             onPress={onRenarrate}
           />
         ) : null}
-        <ListItem title="Delete chapter" subtitle="Removes its text and audio" leading={Trash2} onPress={onDelete} />
+        <ListItem
+          title="Delete chapter"
+          subtitle="Removes its text and audio"
+          leading={Trash2}
+          onPress={onDelete}
+        />
       </View>
     </Sheet>
   );

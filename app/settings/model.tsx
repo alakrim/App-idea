@@ -2,10 +2,10 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { View } from 'react-native';
 
 import { useOpenRouter } from '@/app-shell/openrouter-provider';
+import { isModelMissing, useModelCatalog } from '@/features/settings/model-catalog';
+import { modelKindConfig, parseModelKind, type ModelKind } from '@/features/settings/model-kinds';
 import { ModelNotice } from '@/features/settings/model-notice';
 import { ModelPicker } from '@/features/settings/model-picker';
-import { modelKindConfig, parseModelKind, type ModelKind } from '@/features/settings/model-kinds';
-import { useModelCatalog } from '@/features/settings/model-catalog';
 import { SettingsPage } from '@/features/settings/settings-page';
 import { useSettings } from '@/features/settings/settings-store';
 import { ErrorState } from '@/ui/error-state';
@@ -38,8 +38,8 @@ function Picker({ kind }: { kind: ModelKind }) {
   const catalog = useModelCatalog(client, config.modality);
 
   const loaded = catalog.state.status === 'live' || catalog.state.status === 'cached';
-  const models = loaded ? catalog.state.models.filter(config.accept) : [];
-  const isMissing = loaded && !models.some((model) => model.id === config.selectedId);
+  const models = 'models' in catalog.state ? catalog.state.models.filter(config.accept) : [];
+  const isMissing = isModelMissing(catalog.state, config.selectedId);
 
   return (
     <SettingsPage title={config.title} scrollable={false}>

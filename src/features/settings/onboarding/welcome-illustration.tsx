@@ -56,13 +56,7 @@ export function WelcomeIllustration() {
       ))}
       <View style={styles.waveform}>
         {WAVE_SHAPE.map((shape, index) => (
-          <WaveBar
-            key={index}
-            index={index}
-            shape={shape}
-            morph={morph}
-            color={colors.accent}
-          />
+          <WaveBar key={index} index={index} shape={shape} morph={morph} color={colors.accent} />
         ))}
       </View>
     </View>

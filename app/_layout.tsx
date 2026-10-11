@@ -16,6 +16,7 @@ import '@/bootstrap';
 import { DbProvider } from '@/app-shell/db-provider';
 import { FatalError, formatErrorDetails } from '@/app-shell/fatal-error';
 import { OpenRouterProvider } from '@/app-shell/openrouter-provider';
+import { PipelineProvider } from '@/features/pipeline/pipeline-provider';
 import { useSettings } from '@/features/settings/settings-store';
 import { fontAssets } from '@/ui/fonts';
 import { ThemeProvider, useTheme } from '@/ui/theme';
@@ -42,9 +43,11 @@ export default function RootLayout() {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <DbProvider>
           <OpenRouterProvider>
-            <ToastProvider>
-              <RootNavigator />
-            </ToastProvider>
+            <PipelineProvider>
+              <ToastProvider>
+                <RootNavigator />
+              </ToastProvider>
+            </PipelineProvider>
           </OpenRouterProvider>
         </DbProvider>
       </GestureHandlerRootView>

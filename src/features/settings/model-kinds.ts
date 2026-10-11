@@ -1,11 +1,10 @@
 import { DEFAULT_MODELS, DEFAULT_NARRATION } from '@/core/defaults';
-
-import { formatContext, formatHourlyCost, formatPerMillion } from './format';
-import { hourlyNarrationCost, narrationForModel, narratableModels } from './voice-tiers';
-
 import type { Settings, SettingsPatch } from '@/core/settings';
 import type { OpenRouterModel, OutputModality } from '@/services/openrouter';
 import { supportsStructuredOutput } from '@/services/openrouter';
+
+import { formatContext, formatHourlyCost, formatPerMillion } from './format';
+import { hourlyNarrationCost, narrationForModel, narratableModels } from './voice-tiers';
 
 /**
  * The model pickers the app offers. One route serves all of them, selected by `kind`, so each

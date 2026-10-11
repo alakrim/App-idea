@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/ui/button';
@@ -7,9 +7,9 @@ import { Slider } from '@/ui/slider';
 import { Text } from '@/ui/text';
 import { space } from '@/ui/tokens';
 
-import { formatDb } from './summaries';
 import { SwitchCard, ValueHeading } from './setting-controls';
 import { useSettings } from './settings-store';
+import { formatDb } from './summaries';
 
 export const AMBIENCE_LEVEL_RANGE = { min: -30, max: -14 } as const;
 export const DUCKING_RANGE = { min: 0, max: 16 } as const;
@@ -18,11 +18,11 @@ export const DUCKING_RANGE = { min: 0, max: 16 } as const;
 export function AmbienceSettings() {
   const { settings, patch } = useSettings();
   const ambience = settings.ambience;
-  const [level, setLevel] = useState(ambience.levelDb);
-  const [ducking, setDucking] = useState(ambience.duckingDb);
-
-  useEffect(() => setLevel(ambience.levelDb), [ambience.levelDb]);
-  useEffect(() => setDucking(ambience.duckingDb), [ambience.duckingDb]);
+  // While a slider is dragged it shows its draft. The saved value is written once, on release.
+  const [dragLevel, setDragLevel] = useState<number | null>(null);
+  const [dragDucking, setDragDucking] = useState<number | null>(null);
+  const level = dragLevel ?? ambience.levelDb;
+  const ducking = dragDucking ?? ambience.duckingDb;
 
   return (
     <>
@@ -49,8 +49,11 @@ export function AmbienceSettings() {
           minimumLabel="Subtle"
           maximumLabel="Present"
           disabled={!ambience.enabled}
-          onValueChange={setLevel}
-          onValueCommit={(levelDb) => patch({ ambience: { ...ambience, levelDb } })}
+          onValueChange={setDragLevel}
+          onValueCommit={(levelDb) => {
+            setDragLevel(null);
+            patch({ ambience: { ...ambience, levelDb } });
+          }}
         />
       </View>
 
@@ -65,8 +68,11 @@ export function AmbienceSettings() {
           minimumLabel="None"
           maximumLabel="Deep"
           disabled={!ambience.enabled}
-          onValueChange={setDucking}
-          onValueCommit={(duckingDb) => patch({ ambience: { ...ambience, duckingDb } })}
+          onValueChange={setDragDucking}
+          onValueCommit={(duckingDb) => {
+            setDragDucking(null);
+            patch({ ambience: { ...ambience, duckingDb } });
+          }}
         />
       </View>
 
@@ -77,6 +83,7 @@ export function AmbienceSettings() {
             label="Play a sample"
             variant="secondary"
             disabled
+            onPress={() => undefined}
             accessibilityHint="Available with the player"
           />
           <Text variant="caption" tone="muted">

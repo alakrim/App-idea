@@ -1,9 +1,8 @@
+import type { Chapter, PipelineError, Series } from '@/core/domain';
 import { chapterRepo } from '@/db/repos/chapter-repo';
 import { jobRepo } from '@/db/repos/job-repo';
 import { positionRepo } from '@/db/repos/position-repo';
 import { seriesRepo } from '@/db/repos/series-repo';
-
-import type { Chapter, PipelineError, Series } from '@/core/domain';
 import type { Db } from '@/db/types';
 
 /** Chapter length assumed for the OCR quote, since the scan has no text to count yet. */

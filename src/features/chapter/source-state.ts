@@ -25,7 +25,11 @@ export function urlProblem(value: string): string | null {
 
 /** A usable title from the first line of pasted text. */
 export function titleFromText(text: string): string {
-  const firstLine = text.split('\n').map((line) => line.trim()).find((line) => line !== '') ?? '';
+  const firstLine =
+    text
+      .split('\n')
+      .map((line) => line.trim())
+      .find((line) => line !== '') ?? '';
   return Array.from(firstLine).slice(0, TITLE_MAX).join('');
 }
 

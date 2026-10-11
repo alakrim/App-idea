@@ -1,22 +1,22 @@
 import { router } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import { useChapterProgressMap } from '@/features/pipeline/use-chapter-progress';
+import { isScannedPdfFailure } from '@/features/chapter/chapter-status';
 import { usePipeline } from '@/features/pipeline/facade';
+import { useChapterProgressMap } from '@/features/pipeline/use-chapter-progress';
 import { ConfirmSheet } from '@/features/shared/confirm-sheet';
 import { formatUsd } from '@/features/shared/format';
 import { SeriesActionsSheet } from '@/features/shared/series-actions-sheet';
-import { isScannedPdfFailure } from '@/features/chapter/chapter-status';
 import { useDbRead } from '@/features/shared/use-db-read';
 import { ErrorState } from '@/ui/error-state';
 import { Screen } from '@/ui/screen';
 
 import { ChapterActionsSheet } from './chapter-actions-sheet';
-import { deleteChapter, deleteSeries, moveChapter } from './series-service';
 import { SERIES_SCREEN_TABLES, playTarget, readSeriesScreen } from './series-data';
+import { deleteChapter, deleteSeries, moveChapter } from './series-service';
 import { SeriesView, type SeriesChapterItem } from './series-view';
-import { useSeriesDeps } from './use-series-deps';
 import { useOcrPrices } from './use-ocr-prices';
+import { useSeriesDeps } from './use-series-deps';
 
 export interface SeriesScreenProps {
   seriesId: string;
@@ -27,7 +27,10 @@ export function SeriesScreen({ seriesId }: SeriesScreenProps) {
   const data = useDbRead(readSeriesScreen, SERIES_SCREEN_TABLES, seriesId);
   const deps = useSeriesDeps();
   const pipeline = usePipeline();
-  const chapterIds = useMemo(() => data.chapters.map((record) => record.chapter.id), [data.chapters]);
+  const chapterIds = useMemo(
+    () => data.chapters.map((record) => record.chapter.id),
+    [data.chapters],
+  );
   const progress = useChapterProgressMap(chapterIds);
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -74,7 +77,9 @@ export function SeriesScreen({ seriesId }: SeriesScreenProps) {
         onMenu={() => setMenuOpen(true)}
         onPlay={(chapterId) => router.push({ pathname: '/player', params: { chapterId } })}
         onAddChapter={() => router.push({ pathname: '/chapter/new', params: { seriesId } })}
-        onOpenChapter={(chapterId) => router.push({ pathname: '/chapter/[chapterId]', params: { chapterId } })}
+        onOpenChapter={(chapterId) =>
+          router.push({ pathname: '/chapter/[chapterId]', params: { chapterId } })
+        }
         onChapterMenu={setChapterMenuFor}
         onRetry={(chapterId) => pipeline.retry(chapterId)}
         onOcr={setOcrFor}

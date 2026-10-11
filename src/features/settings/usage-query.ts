@@ -1,12 +1,12 @@
 import { count, gte, sql, sum } from 'drizzle-orm';
 
-import { usageLedger } from '@/db/schema';
 import { usageRepo } from '@/db/repos/usage-repo';
+import { usageLedger } from '@/db/schema';
+import type { Db } from '@/db/types';
 
 import { DAY_MS, buildUsageSummary, stageLabel, utcDayStart } from './usage';
 
 import type { UsageCount, UsageSummary } from './usage';
-import type { Db } from '@/db/types';
 
 /** Reads the three windows and the 30-day breakdowns from the usage ledger. */
 export function loadUsageSummary(db: Db, now: number): UsageSummary {
@@ -32,7 +32,12 @@ export function loadUsageSummary(db: Db, now: number): UsageSummary {
     .where(gte(usageLedger.at, month))
     .groupBy(usageLedger.stage)
     .all()
-    .map((row) => ({ key: row.key, label: stageLabel(row.key), calls: row.calls, costUsd: row.costUsd }));
+    .map((row) => ({
+      key: row.key,
+      label: stageLabel(row.key),
+      calls: row.calls,
+      costUsd: row.costUsd,
+    }));
 
   return buildUsageSummary({
     today: modelRows(today),

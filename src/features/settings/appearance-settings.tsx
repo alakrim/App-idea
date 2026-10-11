@@ -1,12 +1,12 @@
+import { StyleSheet, View } from 'react-native';
+
+import type { ThemeMode } from '@/core/settings';
 import { SegmentedControl, type SegmentedOption } from '@/ui/segmented-control';
 import { Text } from '@/ui/text';
 import { space } from '@/ui/tokens';
-import { StyleSheet, View } from 'react-native';
 
 import { ValueHeading } from './setting-controls';
 import { useSettings } from './settings-store';
-
-import type { ThemeMode } from '@/core/settings';
 
 const OPTIONS: readonly SegmentedOption<ThemeMode>[] = [
   { value: 'system', label: 'System' },
@@ -30,8 +30,8 @@ export function AppearanceSettings() {
         />
       </View>
       <Text variant="caption" tone="muted">
-        System follows your phone&apos;s light or dark setting. Dark is the default, made for reading
-        at night.
+        System follows your phone&apos;s light or dark setting. Dark is the default, made for
+        reading at night.
       </Text>
     </>
   );

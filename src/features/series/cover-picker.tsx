@@ -5,7 +5,7 @@ import Animated from 'react-native-reanimated';
 import { CoverImage } from '@/ui/cover-image';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
-import { iconSize, iconStrokeWidth, illustration, minTouchTarget, radius, space } from '@/ui/tokens';
+import { iconSize, iconStrokeWidth, illustration, radius, space } from '@/ui/tokens';
 import { usePressScale } from '@/ui/use-press-scale';
 
 /** The picker is 168 pt wide, a 2:3 card that matches the shelf. */
@@ -44,7 +44,12 @@ export function CoverPicker({ title, coverUri, busy, onPress }: CoverPickerProps
         {coverUri || hasName ? (
           <CoverImage uri={coverUri} title={title.trim() || 'New series'} style={styles.fill} />
         ) : (
-          <View style={[styles.prompt, { backgroundColor: colors.surfaceRaised, borderColor: colors.border }]}>
+          <View
+            style={[
+              styles.prompt,
+              { backgroundColor: colors.surfaceRaised, borderColor: colors.border },
+            ]}
+          >
             <View style={[styles.halo, { backgroundColor: colors.accentSoft }]}>
               <ImagePlus size={iconSize.md} strokeWidth={iconStrokeWidth} color={colors.accent} />
             </View>

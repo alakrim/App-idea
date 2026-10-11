@@ -1,11 +1,10 @@
 import { useCallback, useState } from 'react';
 
+import type { KeyCheck } from '@/services/openrouter';
 import { isWellFormedApiKey, setApiKey } from '@/services/secrets';
 
 import { checkCandidateKey } from './key-check';
 import { describeKeyError, INVALID_KEY_FORMAT_MESSAGE } from './key-format';
-
-import type { KeyCheck } from '@/services/openrouter';
 
 export interface KeyAccount {
   label: string;

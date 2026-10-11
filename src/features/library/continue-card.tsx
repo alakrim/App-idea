@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { Play } from 'lucide-react-native';
 import { Pressable, StyleSheet, View } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 import { withAlpha } from '@/features/shared/color';
 import { CoverImage } from '@/ui/cover-image';
@@ -18,7 +19,6 @@ import {
 import { usePressScale } from '@/ui/use-press-scale';
 
 import type { ListeningState } from './library-data';
-import Animated from 'react-native-reanimated';
 
 /** Cover width inside the hero. The hero reads as a card, so the cover stays modest. */
 const HERO_COVER_WIDTH = 92;
@@ -36,7 +36,13 @@ export interface ContinueCardProps {
 }
 
 /** The "Continue listening" hero: the chapter last played, one tap from the player. */
-export function ContinueCard({ seriesTitle, coverUri, coverTint, listening, onPlay }: ContinueCardProps) {
+export function ContinueCard({
+  seriesTitle,
+  coverUri,
+  coverTint,
+  listening,
+  onPlay,
+}: ContinueCardProps) {
   const { colors, scheme } = useTheme();
   const { animatedStyle, onPressIn, onPressOut } = usePressScale();
   const position = `Chapter ${listening.chapterNumber} of ${listening.chapterCount}`;

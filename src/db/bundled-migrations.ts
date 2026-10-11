@@ -1,5 +1,6 @@
 import migration0000 from './migrations/0000_swift_omega_sentinel.sql';
 import migration0001 from './migrations/0001_fts5_sentences.sql';
+import migration0002 from './migrations/0002_curly_redwing.sql';
 import journal from './migrations/meta/_journal.json';
 
 /**
@@ -11,5 +12,6 @@ export const bundledMigrations = {
   migrations: {
     m0000: migration0000,
     m0001: migration0001,
+    m0002: migration0002,
   },
 };

@@ -2,9 +2,9 @@ import * as Speech from 'expo-speech';
 import { useEffect, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { useOpenRouter } from '@/app-shell/openrouter-provider';
 import { DEFAULT_NARRATION } from '@/core/defaults';
 import { estimateSpeechCost } from '@/core/llm/cost';
-import { useOpenRouter } from '@/app-shell/openrouter-provider';
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
 import { ErrorState } from '@/ui/error-state';
@@ -15,16 +15,16 @@ import { TextField } from '@/ui/text-field';
 import { useTheme } from '@/ui/theme';
 import { hairline, minTouchTarget, radius, space } from '@/ui/tokens';
 
-import { formatUsdPrecise, modelLabel } from './format';
-import { ModelRow } from './model-row';
-import { isModelMissing, useModelCatalog } from './model-catalog';
-import { displayName } from './model-search';
-import { ModelNotice } from './model-notice';
-import { useSettings } from './settings-store';
-import { DeviceVoiceCard, VoiceTierCard } from './voice-tier-card';
 import { loadDeviceVoices, type DeviceVoice } from './device-voices';
+import { formatUsdPrecise, modelLabel } from './format';
+import { isModelMissing, useModelCatalog } from './model-catalog';
+import { ModelNotice } from './model-notice';
+import { ModelRow } from './model-row';
+import { displayName } from './model-search';
 import { previewSampleFor } from './preview-sample';
+import { useSettings } from './settings-store';
 import { useVoicePreview } from './use-voice-preview';
+import { DeviceVoiceCard, VoiceTierCard } from './voice-tier-card';
 import {
   buildVoiceTiers,
   narrationForDevice,
@@ -78,19 +78,17 @@ export function NarrationPanel() {
   const estimate = selectedModel ? estimateSpeechCost(selectedModel, sample.text.length) : 0;
   const preview = useVoicePreview(client);
 
-  const [styleDraft, setStyleDraft] = useState(narration.style ?? '');
-  useEffect(() => {
-    setStyleDraft(narration.style ?? '');
-  }, [narration.style]);
-
-  const [speedDraft, setSpeedDraft] = useState(narration.speed);
-  useEffect(() => {
-    setSpeedDraft(narration.speed);
-  }, [narration.speed]);
+  // Drafts exist only while the user is typing or dragging. They are saved on blur or release.
+  const [styleDraft, setStyleDraft] = useState<string | null>(null);
+  const [speedDraft, setSpeedDraft] = useState<number | null>(null);
+  const styleText = styleDraft ?? narration.style ?? '';
+  const speed = speedDraft ?? narration.speed;
 
   const commitStyle = () => {
-    const next = styleDraft.trim();
-    const style = next === '' ? null : next;
+    if (styleDraft === null) return;
+    const trimmed = styleDraft.trim();
+    const style = trimmed === '' ? null : trimmed;
+    setStyleDraft(null);
     if (style !== (narration.style ?? null)) {
       patch({ narration: { ...narration, style } });
     }
@@ -99,7 +97,11 @@ export function NarrationPanel() {
   const playSample = () => {
     if (isDevice) {
       Speech.stop();
-      Speech.speak(sample.text, { voice: narration.voice, language: sample.lang, rate: narration.speed });
+      Speech.speak(sample.text, {
+        voice: narration.voice,
+        language: sample.lang,
+        rate: narration.speed,
+      });
       return;
     }
     if (!selectedModel) return;
@@ -117,8 +119,8 @@ export function NarrationPanel() {
   return (
     <>
       <Text variant="body" tone="muted">
-        Narration turns your text into speech. Prices are live from OpenRouter and show what one hour
-        of narration costs.
+        Narration turns your text into speech. Prices are live from OpenRouter and show what one
+        hour of narration costs.
       </Text>
 
       {missing ? (
@@ -165,7 +167,11 @@ export function NarrationPanel() {
 
       <View style={styles.section}>
         <SectionLabel
-          title={isDevice ? 'Device voice' : `Voice · ${selectedModel ? displayName(selectedModel) : modelLabel(narration.model)}`}
+          title={
+            isDevice
+              ? 'Device voice'
+              : `Voice · ${selectedModel ? displayName(selectedModel) : modelLabel(narration.model)}`
+          }
         />
         {voices.length === 0 ? (
           <Card>
@@ -218,7 +224,7 @@ export function NarrationPanel() {
             label="How should it sound?"
             placeholder="Warm audiobook narrator, measured pace"
             helper="Optional. Only some voice models follow style notes."
-            value={styleDraft}
+            value={styleText}
             onChangeText={setStyleDraft}
             onBlur={commitStyle}
             onSubmitEditing={commitStyle}
@@ -232,12 +238,12 @@ export function NarrationPanel() {
         <View style={styles.row}>
           <SectionLabel title="Speed" />
           <Text variant="caption" tone="accent">
-            {`${speedDraft.toFixed(2)}×`}
+            {`${speed.toFixed(2)}×`}
           </Text>
         </View>
         <Slider
           label="Narration speed"
-          value={speedDraft}
+          value={speed}
           min={SPEED_MIN}
           max={SPEED_MAX}
           step={SPEED_STEP}
@@ -245,8 +251,9 @@ export function NarrationPanel() {
           minimumLabel="Slower"
           maximumLabel="Faster"
           onValueChange={setSpeedDraft}
-          onValueCommit={(speed) => {
-            if (speed !== narration.speed) patch({ narration: { ...narration, speed } });
+          onValueCommit={(next) => {
+            setSpeedDraft(null);
+            if (next !== narration.speed) patch({ narration: { ...narration, speed: next } });
           }}
         />
       </View>
@@ -273,7 +280,9 @@ export function NarrationPanel() {
               disabled={!isDevice && !selectedModel}
               onPress={playSample}
               accessibilityHint={
-                isDevice ? 'Speaks the sample with the device voice' : 'Plays a cached sample, or makes one'
+                isDevice
+                  ? 'Speaks the sample with the device voice'
+                  : 'Plays a cached sample, or makes one'
               }
             />
           )}

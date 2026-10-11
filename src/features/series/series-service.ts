@@ -1,7 +1,6 @@
+import type { IdGenerator } from '@/core/domain';
 import { chapterRepo } from '@/db/repos/chapter-repo';
 import { seriesRepo } from '@/db/repos/series-repo';
-
-import type { IdGenerator } from '@/core/domain';
 import type { Db } from '@/db/types';
 
 export const SERIES_NAME_MAX = 80;
@@ -103,7 +102,11 @@ export type MoveDirection = 'up' | 'down';
  * Moves a chapter one place up or down. Moving past the first or last chapter does nothing. The
  * neighbours are read from the list without the moved chapter, which is what `moveBetween` expects.
  */
-export function moveChapter(deps: SeriesServiceDeps, chapterId: string, direction: MoveDirection): void {
+export function moveChapter(
+  deps: SeriesServiceDeps,
+  chapterId: string,
+  direction: MoveDirection,
+): void {
   const chapter = chapterRepo.get(deps.db, chapterId);
   if (!chapter) throw new Error(`Chapter ${chapterId} does not exist`);
   const siblings = chapterRepo.listBySeries(deps.db, chapter.seriesId);

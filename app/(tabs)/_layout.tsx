@@ -1,12 +1,19 @@
+import { Redirect } from 'expo-router';
 import { Tabs } from 'expo-router/js-tabs';
 import { BookA, Library, MessagesSquare, Settings } from 'lucide-react-native';
 import { View } from 'react-native';
 
 import { MiniPlayer } from '@/features/player/mini-player';
+import { useSettings } from '@/features/settings/settings-store';
 import { TabBar } from '@/ui/tab-bar';
 import { iconSize, iconStrokeWidth, transparent } from '@/ui/tokens';
 
 export default function TabsLayout() {
+  const { settings } = useSettings();
+  // First run goes through onboarding. The tabs are only shown once it is marked done.
+  if (!settings.onboardingDone) {
+    return <Redirect href="/onboarding" />;
+  }
   return (
     <Tabs
       screenOptions={{ headerShown: false }}

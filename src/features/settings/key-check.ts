@@ -1,5 +1,4 @@
 import { createOpenRouterClient } from '@/services/openrouter';
-
 import type { KeyCheck } from '@/services/openrouter';
 
 /** Must match the app identity in src/app-shell/openrouter-provider.ts (HTTP-Referer and X-Title). */

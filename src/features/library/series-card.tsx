@@ -2,14 +2,13 @@ import { memo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
+import type { SeriesSummary } from '@/db/repos/series-repo';
 import { formatSeriesSummary } from '@/features/shared/format';
-import { usePressScale } from '@/ui/use-press-scale';
 import { CoverImage } from '@/ui/cover-image';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { radius, space } from '@/ui/tokens';
-
-import type { SeriesSummary } from '@/db/repos/series-repo';
+import { usePressScale } from '@/ui/use-press-scale';
 
 /** The listening hairline under each cover. Thin enough to read as a detail, not a bar. */
 const PROGRESS_HEIGHT = 2;
@@ -33,8 +32,7 @@ export const SeriesCard = memo(function SeriesCard({
   const { animatedStyle, onPressIn, onPressOut } = usePressScale();
   const summary = formatSeriesSummary(series.chapterCount, series.totalDurationMs);
   const share = reachedShare === null ? 0 : Math.min(1, Math.max(0, reachedShare));
-  const listening =
-    reachedShare === null ? '' : `, ${Math.round(share * 100)} percent listened`;
+  const listening = reachedShare === null ? '' : `, ${Math.round(share * 100)} percent listened`;
 
   return (
     <Animated.View style={[styles.cell, animatedStyle]}>

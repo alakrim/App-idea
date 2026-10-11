@@ -1,20 +1,20 @@
-import { Alert, StyleSheet, View } from 'react-native';
 import { useState } from 'react';
+import { Alert, StyleSheet, View } from 'react-native';
 
-import { SettingsPage } from '@/features/settings/settings-page';
-import { SettingsSection } from '@/features/settings/settings-section';
+import { useOpenRouter } from '@/app-shell/openrouter-provider';
 import { KeyForm, AccountDetails } from '@/features/settings/key-form';
 import { maskApiKey } from '@/features/settings/key-format';
+import { SettingsPage } from '@/features/settings/settings-page';
+import { SettingsSection } from '@/features/settings/settings-section';
 import { useKeyConnection } from '@/features/settings/use-key-connection';
 import { useSavedKey, useSavedKeyAccount } from '@/features/settings/use-saved-key';
-import { useOpenRouter } from '@/app-shell/openrouter-provider';
+import { clearApiKey } from '@/services/secrets';
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
 import { Skeleton } from '@/ui/skeleton';
 import { Text } from '@/ui/text';
 import { useToast } from '@/ui/toast';
 import { space } from '@/ui/tokens';
-import { clearApiKey } from '@/services/secrets';
 
 /** API key settings. The saved key is only ever shown masked, with its last four characters. */
 export default function ApiKeyScreen() {

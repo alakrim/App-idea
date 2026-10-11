@@ -2,7 +2,6 @@ import { addDatabaseChangeListener } from 'expo-sqlite';
 import { useEffect, useMemo, useState } from 'react';
 
 import { useDb } from '@/db/hooks';
-
 import type { Db } from '@/db/types';
 
 /**

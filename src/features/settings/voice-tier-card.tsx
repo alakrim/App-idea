@@ -6,8 +6,9 @@ import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { hairline, iconSize, iconStrokeWidth, radius, space } from '@/ui/tokens';
 
-import { displayName } from './model-search';
 import { formatHourlyCost, providerLabel } from './format';
+import { displayName } from './model-search';
+
 import type { VoiceTier, VoiceTierId } from './voice-tiers';
 
 const TIER_NAMES: Readonly<Record<VoiceTierId, string>> = {

@@ -2,6 +2,7 @@ import { Check } from 'lucide-react-native';
 import { useMemo, useState, type ReactNode } from 'react';
 import { FlatList, Pressable, StyleSheet, View, type ListRenderItem } from 'react-native';
 
+import type { OpenRouterModel } from '@/services/openrouter';
 import { Badge } from '@/ui/badge';
 import { Text } from '@/ui/text';
 import { TextField } from '@/ui/text-field';
@@ -10,8 +11,6 @@ import { iconSize, iconStrokeWidth, minTouchTarget, radius, space } from '@/ui/t
 
 import { providerLabel } from './format';
 import { displayName, filterModels } from './model-search';
-
-import type { OpenRouterModel } from '@/services/openrouter';
 
 export type PickerItem =
   | { kind: 'header'; key: string; title: string }
@@ -34,9 +33,7 @@ export function buildPickerItems(
   }
 
   const searching = query.trim() !== '';
-  const recommended = searching
-    ? undefined
-    : matches.find((model) => model.id === recommendedId);
+  const recommended = searching ? undefined : matches.find((model) => model.id === recommendedId);
   const rest = matches.filter((model) => model !== recommended);
 
   const items: PickerItem[] = [];
@@ -124,7 +121,10 @@ export function ModelPicker({
         accessibilityLabel={`${label}. ${providerLabel(item.model.id)}. ${describe(item.model)}`}
         accessibilityState={{ checked: selected }}
         onPress={() => onSelect(item.model)}
-        style={({ pressed }) => [styles.row, pressed ? { backgroundColor: colors.surfaceRaised } : null]}
+        style={({ pressed }) => [
+          styles.row,
+          pressed ? { backgroundColor: colors.surfaceRaised } : null,
+        ]}
       >
         <View style={[styles.monogram, { backgroundColor: colors.accentSoft }]}>
           <Text variant="bodyStrong" tone="accent">

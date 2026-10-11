@@ -1,10 +1,10 @@
 import { router } from 'expo-router';
 import { useCallback, useState } from 'react';
 
-import { ConfirmSheet } from '@/features/shared/confirm-sheet';
-import { SeriesActionsSheet } from '@/features/shared/series-actions-sheet';
 import { deleteSeries } from '@/features/series/series-service';
 import { useSeriesDeps } from '@/features/series/use-series-deps';
+import { ConfirmSheet } from '@/features/shared/confirm-sheet';
+import { SeriesActionsSheet } from '@/features/shared/series-actions-sheet';
 import { Screen } from '@/ui/screen';
 
 import { LibraryView } from './library-view';
@@ -50,7 +50,10 @@ export function LibraryScreen() {
         onEdit={() => {
           if (menuEntry) {
             setMenuFor(null);
-            router.push({ pathname: '/series/[seriesId]/edit', params: { seriesId: menuEntry.series.id } });
+            router.push({
+              pathname: '/series/[seriesId]/edit',
+              params: { seriesId: menuEntry.series.id },
+            });
           }
         }}
         onDelete={() => {

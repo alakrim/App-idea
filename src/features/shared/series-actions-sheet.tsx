@@ -24,8 +24,18 @@ export function SeriesActionsSheet({
   return (
     <Sheet visible={visible} onClose={onClose} title={seriesTitle} snapPoints={['30%']}>
       <View style={styles.list}>
-        <ListItem title="Edit series" subtitle="Name, cover and languages" leading={Pencil} onPress={onEdit} />
-        <ListItem title="Delete series" subtitle="Removes its chapters and audio" leading={Trash2} onPress={onDelete} />
+        <ListItem
+          title="Edit series"
+          subtitle="Name, cover and languages"
+          leading={Pencil}
+          onPress={onEdit}
+        />
+        <ListItem
+          title="Delete series"
+          subtitle="Removes its chapters and audio"
+          leading={Trash2}
+          onPress={onDelete}
+        />
       </View>
     </Sheet>
   );

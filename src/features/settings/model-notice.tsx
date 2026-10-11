@@ -24,7 +24,10 @@ export function ModelNotice({ tone, message, action }: ModelNoticeProps) {
       accessibilityRole="alert"
       style={[
         styles.box,
-        { backgroundColor: colors.surfaceRaised, borderColor: warning ? colors.warning : colors.border },
+        {
+          backgroundColor: colors.surfaceRaised,
+          borderColor: warning ? colors.warning : colors.border,
+        },
       ]}
     >
       <View style={styles.row}>

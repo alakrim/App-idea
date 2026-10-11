@@ -3,8 +3,8 @@ import { useMemo, type ReactNode } from 'react';
 import { useDb } from '@/db/hooks';
 import type { Db } from '@/db/types';
 
-import { createFakePipeline } from './fake-facade';
 import { PipelineContext, type PipelineFacade } from './facade';
+import { createFakePipeline } from './fake-facade';
 
 /**
  * The pipeline the app runs on. Brief P2 swaps this one line for the real factory. Feature code

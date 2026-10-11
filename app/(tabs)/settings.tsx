@@ -1,3 +1,4 @@
+import Constants from 'expo-constants';
 import { router } from 'expo-router';
 import {
   BookOpen,
@@ -13,13 +14,9 @@ import {
 } from 'lucide-react-native';
 import { useMemo, useState } from 'react';
 
-import { ListItem } from '@/ui/list-item';
-import { Screen } from '@/ui/screen';
 import { useDb } from '@/db/hooks';
-import { useSavedKey } from '@/features/settings/use-saved-key';
-import { useSettings } from '@/features/settings/settings-store';
 import { SettingsSection } from '@/features/settings/settings-section';
-import { loadUsageSummary } from '@/features/settings/usage-query';
+import { useSettings } from '@/features/settings/settings-store';
 import {
   ambienceSummary,
   analysisSummary,
@@ -31,8 +28,11 @@ import {
   translationSummary,
   usageSummary,
 } from '@/features/settings/summaries';
+import { loadUsageSummary } from '@/features/settings/usage-query';
+import { useSavedKey } from '@/features/settings/use-saved-key';
 import { bytesUsedByLibrary, freeSpaceBytes } from '@/services/storage';
-import Constants from 'expo-constants';
+import { ListItem } from '@/ui/list-item';
+import { Screen } from '@/ui/screen';
 
 /** The settings home. Each row shows its current value, so most answers are visible without opening it. */
 export default function SettingsScreen() {

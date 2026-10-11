@@ -1,13 +1,22 @@
-import { Armchair, CloudRain, Building, Moon, Sparkles, Swords, Ship, Trees } from 'lucide-react-native';
+import {
+  Armchair,
+  CloudRain,
+  Building,
+  Moon,
+  Sparkles,
+  Swords,
+  Ship,
+  Trees,
+} from 'lucide-react-native';
 import { Switch, StyleSheet, View } from 'react-native';
 
 import { getCategory } from '@/core/analysis/ambience-taxonomy';
+import type { AmbienceCue } from '@/core/domain';
 import { Card } from '@/ui/card';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { hairline, iconSize, iconStrokeWidth, minTouchTarget, radius, space } from '@/ui/tokens';
 
-import type { AmbienceCue } from '@/core/domain';
 import type { LucideIcon } from 'lucide-react-native';
 
 const FAMILY_ICONS: Readonly<Record<string, LucideIcon>> = {
@@ -25,11 +34,6 @@ const FAMILY_ICONS: Readonly<Record<string, LucideIcon>> = {
 export function cueLabel(categoryId: string): string {
   const words = categoryId.replace(/_/g, ' ');
   return words.charAt(0).toUpperCase() + words.slice(1);
-}
-
-export function cueIcon(categoryId: string): LucideIcon {
-  const family = getCategory(categoryId)?.family ?? '';
-  return FAMILY_ICONS[family] ?? Sparkles;
 }
 
 export interface AmbienceListProps {
@@ -63,13 +67,17 @@ interface CueRowProps {
 
 function CueRow({ cue, divided, onToggle }: CueRowProps) {
   const { colors } = useTheme();
-  const Icon = cueIcon(cue.category);
+  const family = getCategory(cue.category)?.family ?? '';
+  const Icon = FAMILY_ICONS[family] ?? Sparkles;
   const label = cueLabel(cue.category);
   const range = `Sentences ${cue.startSentence + 1}–${cue.endSentence + 1}`;
 
   return (
     <View
-      style={[styles.row, divided ? { borderTopWidth: hairline, borderTopColor: colors.border } : null]}
+      style={[
+        styles.row,
+        divided ? { borderTopWidth: hairline, borderTopColor: colors.border } : null,
+      ]}
       accessibilityLabel={`${label}, ${range}. ${cue.reason}`}
     >
       <View style={[styles.icon, { backgroundColor: colors.accentSoft }]}>

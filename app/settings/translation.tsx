@@ -1,15 +1,19 @@
+import { Check } from 'lucide-react-native';
 import { useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View, type ListRenderItem } from 'react-native';
-import { Check } from 'lucide-react-native';
 
 import { useOpenRouter } from '@/app-shell/openrouter-provider';
+import {
+  filterLanguages,
+  LANGUAGE_OPTIONS,
+  type LanguageOption,
+} from '@/features/settings/languages';
+import { isModelMissing, useModelCatalog } from '@/features/settings/model-catalog';
 import { modelKindConfig } from '@/features/settings/model-kinds';
 import { ModelRow } from '@/features/settings/model-row';
-import { isModelMissing, useModelCatalog } from '@/features/settings/model-catalog';
 import { SettingsPage } from '@/features/settings/settings-page';
 import { SettingsSection } from '@/features/settings/settings-section';
 import { useSettings } from '@/features/settings/settings-store';
-import { filterLanguages, LANGUAGE_OPTIONS, type LanguageOption } from '@/features/settings/languages';
 import { Text } from '@/ui/text';
 import { TextField } from '@/ui/text-field';
 import { useTheme } from '@/ui/theme';
@@ -33,7 +37,10 @@ export default function TranslationScreen() {
   const renderItem: ListRenderItem<LanguageChoice> = ({ item }) => (
     <LanguageRow
       choice={item}
-      selected={item?.code === settings.defaultTargetLang || (item === null && settings.defaultTargetLang === null)}
+      selected={
+        item?.code === settings.defaultTargetLang ||
+        (item === null && settings.defaultTargetLang === null)
+      }
       onSelect={() => patch({ defaultTargetLang: item?.code ?? null })}
     />
   );
@@ -97,10 +104,15 @@ function LanguageRow({
   return (
     <Pressable
       accessibilityRole="radio"
-      accessibilityLabel={choice ? `${choice.nativeName}, ${choice.englishName}` : 'Off, no translation'}
+      accessibilityLabel={
+        choice ? `${choice.nativeName}, ${choice.englishName}` : 'Off, no translation'
+      }
       accessibilityState={{ checked: selected }}
       onPress={onSelect}
-      style={({ pressed }) => [styles.row, pressed ? { backgroundColor: colors.surfaceRaised } : null]}
+      style={({ pressed }) => [
+        styles.row,
+        pressed ? { backgroundColor: colors.surfaceRaised } : null,
+      ]}
     >
       <View style={styles.copy}>
         <Text variant="bodyStrong">{title}</Text>

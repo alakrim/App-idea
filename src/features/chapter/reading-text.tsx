@@ -63,7 +63,9 @@ function ParagraphBlock({ paragraph, mode, joiner }: ParagraphBlockProps) {
   }
 
   const text = paragraph.sentences
-    .map((sentence) => (mode === 'translation' ? (sentence.translated ?? sentence.text) : sentence.text))
+    .map((sentence) =>
+      mode === 'translation' ? (sentence.translated ?? sentence.text) : sentence.text,
+    )
     .join(joiner);
   return (
     <Text
@@ -85,7 +87,12 @@ interface BilingualSentenceProps {
 function BilingualSentence({ sentence, quote }: BilingualSentenceProps) {
   const textStyle = quote ? styles.quote : undefined;
   return (
-    <View style={styles.pair} accessibilityLabel={sentence.translated ? `${sentence.translated}. Original: ${sentence.text}` : sentence.text}>
+    <View
+      style={styles.pair}
+      accessibilityLabel={
+        sentence.translated ? `${sentence.translated}. Original: ${sentence.text}` : sentence.text
+      }
+    >
       <Text variant="reading" style={textStyle}>
         {sentence.translated ?? sentence.text}
       </Text>

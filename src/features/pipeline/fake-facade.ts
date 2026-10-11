@@ -3,18 +3,18 @@
  * (chapters, jobs, sentences, translations), on a scripted, timer-driven schedule. Brief P2 replaces
  * it; until then the app runs on this file.
  */
+import { createIdGenerator } from '@/core/domain';
+import type { ChapterSource, Chapter, Job, JobStatus, PipelineError, Stage } from '@/core/domain';
 import { buildChapterText } from '@/core/text/build';
 import { estimateWordCount } from '@/core/text/word-count';
-import { createIdGenerator } from '@/core/domain';
 import { chapterRepo } from '@/db/repos/chapter-repo';
 import { jobRepo } from '@/db/repos/job-repo';
 import { seriesRepo } from '@/db/repos/series-repo';
 import { textRepo } from '@/db/repos/text-repo';
+import type { Db } from '@/db/types';
 
 import { FAKE_ARTICLE_TEXT, fakeTranslation } from './fake-content';
 
-import type { ChapterSource, Chapter, Job, JobStatus, PipelineError, Stage } from '@/core/domain';
-import type { Db } from '@/db/types';
 import type {
   ChapterInput,
   ChapterProgress,
@@ -81,10 +81,9 @@ interface Run {
 }
 
 function emptySlots(): Record<Stage, StageSlot> {
-  return Object.fromEntries(STAGES.map((stage) => [stage, { status: 'pending', progress: 0 }])) as Record<
-    Stage,
-    StageSlot
-  >;
+  return Object.fromEntries(
+    STAGES.map((stage) => [stage, { status: 'pending', progress: 0 }]),
+  ) as Record<Stage, StageSlot>;
 }
 
 export function createFakePipeline(options: FakePipelineOptions): PipelineFacade {
@@ -459,7 +458,11 @@ export function fakeEstimate({ chars, sourceLang, targetLang }: EstimateArgs): C
   const translates = targetLang !== null && targetLang !== sourceLang;
   const total = chars * FAKE_USD_PER_CHAR * (translates ? 1.2 : 1);
   const lines: CostLine[] = [
-    { stage: 'clean', usd: total * 0.14, basis: `About ${Math.round(chars / 4000)}k tokens of cleanup` },
+    {
+      stage: 'clean',
+      usd: total * 0.14,
+      basis: `About ${Math.round(chars / 4000)}k tokens of cleanup`,
+    },
     { stage: 'analyze', usd: total * 0.3, basis: 'Ambience and memory, one pass' },
     ...(translates
       ? [{ stage: 'translate' as const, usd: total * 0.26, basis: `Into ${targetLang}` }]
@@ -506,7 +509,10 @@ function defaultTitle(input: ChapterInput): string {
 function titleFromUrl(url: string): string {
   try {
     const { hostname, pathname } = new URL(url);
-    const slug = pathname.split('/').filter((part) => part.length > 0).pop();
+    const slug = pathname
+      .split('/')
+      .filter((part) => part.length > 0)
+      .pop();
     if (!slug) return hostname.replace(/^www\./, '');
     const words = decodeURIComponent(slug).replace(/[-_]+/g, ' ').trim();
     return words.charAt(0).toUpperCase() + words.slice(1);

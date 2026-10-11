@@ -303,6 +303,10 @@ export const vocab = sqliteTable(
     lang: text('lang').notNull(),
     explanation: text('explanation'),
     translation: text('translation'),
+    /** Set by every flashcard review. Null until the item has been reviewed once. */
+    reviewedAt: integer('reviewed_at'),
+    /** The last flashcard verdict: true for "Known", false for "Again" or never reviewed. */
+    known: integer('known', { mode: 'boolean' }).notNull().default(false),
     createdAt: integer('created_at').notNull(),
   },
   (t) => [

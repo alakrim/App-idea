@@ -1,6 +1,6 @@
-import { modelLabel, providerLabel } from './format';
-
 import type { OpenRouterModel } from '@/services/openrouter';
+
+import { modelLabel, providerLabel } from './format';
 
 /**
  * Every word of the query must appear in the model's name, id, provider or short label. Matching

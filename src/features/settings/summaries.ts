@@ -1,7 +1,7 @@
+import type { Settings, ThemeMode } from '@/core/settings';
+
 import { formatBytes, formatPercent, formatUsdPrecise, modelLabel } from './format';
 import { languageLabel } from './languages';
-
-import type { Settings, ThemeMode } from '@/core/settings';
 
 /** The current-value subtitles on the settings home. Pure, so each rule is testable. */
 
@@ -30,11 +30,15 @@ export function narrationSummary(narration: Settings['narration']): string {
   return `${modelLabel(narration.model)} · ${narration.voice}`;
 }
 
-export function translationSummary(settings: Pick<Settings, 'translationModel' | 'defaultTargetLang'>): string {
+export function translationSummary(
+  settings: Pick<Settings, 'translationModel' | 'defaultTargetLang'>,
+): string {
   return `${modelLabel(settings.translationModel)} · ${languageLabel(settings.defaultTargetLang)}`;
 }
 
-export function analysisSummary(settings: Pick<Settings, 'analysisModel' | 'cleanupModel'>): string {
+export function analysisSummary(
+  settings: Pick<Settings, 'analysisModel' | 'cleanupModel'>,
+): string {
   return `${modelLabel(settings.analysisModel)} · ${modelLabel(settings.cleanupModel)}`;
 }
 
@@ -54,7 +58,10 @@ export function storageSummary(usedBytes: number, freeBytes: number): string {
   return `${formatBytes(usedBytes)} used · ${formatBytes(freeBytes)} free`;
 }
 
-export function apiKeySummary(status: 'unknown' | 'missing' | 'present', tail: string | null): string {
+export function apiKeySummary(
+  status: 'unknown' | 'missing' | 'present',
+  tail: string | null,
+): string {
   if (status === 'present') {
     return tail ? `Connected · ending ${tail}` : 'Connected';
   }

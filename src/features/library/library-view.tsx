@@ -8,8 +8,13 @@ import { SegmentedControl, type SegmentedOption } from '@/ui/segmented-control';
 import { Text } from '@/ui/text';
 import { space, tabBarHeight } from '@/ui/tokens';
 
-import { continueListening, sortLibrary, type LibraryEntry, type LibrarySort } from './library-data';
 import { ContinueCard } from './continue-card';
+import {
+  continueListening,
+  sortLibrary,
+  type LibraryEntry,
+  type LibrarySort,
+} from './library-data';
 import { SeriesCard } from './series-card';
 
 const SORT_OPTIONS: readonly SegmentedOption<LibrarySort>[] = [
@@ -49,7 +54,11 @@ export function LibraryView({
     );
   }
 
-  return <ShelfGrid {...{ entries, sort, onSortChange, onOpenSeries, onSeriesMenu, onPlay, onCreateSeries }} />;
+  return (
+    <ShelfGrid
+      {...{ entries, sort, onSortChange, onOpenSeries, onSeriesMenu, onPlay, onCreateSeries }}
+    />
+  );
 }
 
 function ShelfGrid({
@@ -100,7 +109,12 @@ function ShelfGrid({
         </View>
         <IconButton label="New series" icon={Plus} variant="surface" onPress={onCreateSeries} />
       </View>
-      <SegmentedControl label="Sort series" options={SORT_OPTIONS} value={sort} onChange={onSortChange} />
+      <SegmentedControl
+        label="Sort series"
+        options={SORT_OPTIONS}
+        value={sort}
+        onChange={onSortChange}
+      />
     </View>
   );
 
