@@ -1,3 +1,4 @@
+import { getCategory, type AmbienceIconName } from '@/core/analysis/ambience-taxonomy';
 import {
   Anchor,
   Atom,
@@ -58,11 +59,8 @@ import {
   Wind,
   Wine,
   Zap,
-} from 'lucide-react-native';
-
-import { getCategory, type AmbienceIconName } from '@/core/analysis/ambience-taxonomy';
-
-import type { LucideIcon } from 'lucide-react-native';
+} from '@/ui/icons';
+import type { LucideIcon } from '@/ui/icons';
 
 /**
  * The component for each ambience icon name. Typed over every name in the taxonomy, so adding a

@@ -1,11 +1,11 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { ChevronDown, ChevronUp, Languages } from 'lucide-react-native';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text as RNText, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
 import type { Paragraph, Sentence } from '@/core/domain';
+import { ChevronDown, ChevronUp, Languages } from '@/ui/icons';
 import { useMotion } from '@/ui/motion';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';

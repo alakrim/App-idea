@@ -1,11 +1,12 @@
 import { StyleSheet, View } from 'react-native';
 
+import type { LucideIcon } from '@/ui/icons';
+
 import { Button, type ButtonVariant } from './button';
 import { Text } from './text';
 import { useTheme } from './theme';
 import { hairline, iconStrokeWidth, illustration, radius, space } from './tokens';
 
-import type { LucideIcon } from 'lucide-react-native';
 import type { ReactNode } from 'react';
 
 export interface EmptyStateAction {

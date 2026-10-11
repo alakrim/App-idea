@@ -1,13 +1,5 @@
 import { setStringAsync } from 'expo-clipboard';
 import { router } from 'expo-router';
-import {
-  AudioLines,
-  ChevronDown,
-  CloudRain,
-  Gauge,
-  Headphones,
-  Repeat1,
-} from 'lucide-react-native';
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
@@ -20,6 +12,7 @@ import { CoverImage } from '@/ui/cover-image';
 import { EmptyState } from '@/ui/empty-state';
 import { ErrorState } from '@/ui/error-state';
 import { IconButton } from '@/ui/icon-button';
+import { AudioLines, ChevronDown, CloudRain, Gauge, Headphones, Repeat1 } from '@/ui/icons';
 import { useMotion } from '@/ui/motion';
 import { Skeleton } from '@/ui/skeleton';
 import { Text } from '@/ui/text';

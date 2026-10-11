@@ -14,7 +14,7 @@ import { createFakePipeline } from '@/features/pipeline/fake-facade';
 import { ChapterScreen } from './chapter-screen';
 
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 jest.mock('expo-sqlite', () => require('../../__tests__/helpers/fake-expo-sqlite'));
 jest.mock('expo-router', () => ({
   router: { push: jest.fn(), replace: jest.fn(), back: jest.fn(), canGoBack: () => true },

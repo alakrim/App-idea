@@ -13,7 +13,7 @@ import { createFakePipeline } from '@/features/pipeline/fake-facade';
 import { SeriesScreen } from './series-screen';
 
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 jest.mock('expo-image', () => require('../../__tests__/helpers/feature-mocks').expoImageStub());
 jest.mock('@gorhom/bottom-sheet', () =>
   require('../../__tests__/helpers/feature-mocks').bottomSheetStub(),

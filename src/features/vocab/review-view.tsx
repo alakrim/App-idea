@@ -1,10 +1,10 @@
-import { BookA, X } from 'lucide-react-native';
 import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
 import { EmptyState } from '@/ui/empty-state';
 import { IconButton } from '@/ui/icon-button';
+import { BookA, X } from '@/ui/icons';
 import { Screen } from '@/ui/screen';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';

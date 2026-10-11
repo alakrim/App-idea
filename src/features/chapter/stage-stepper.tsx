@@ -1,6 +1,6 @@
-import { Check, Minus, X } from 'lucide-react-native';
 import { StyleSheet, View } from 'react-native';
 
+import { Check, Minus, X } from '@/ui/icons';
 import { ProgressRing } from '@/ui/progress-ring';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';

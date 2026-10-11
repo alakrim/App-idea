@@ -4,7 +4,7 @@ import { AMBIENCE_ICONS, ambienceIconOf } from './ambience-display';
 
 // Lucide ships untransformed ESM, so the icon components are stubbed. The names are checked here;
 // the typecheck checks that every name is a real export.
-jest.mock('lucide-react-native', () => {
+jest.mock('@/ui/icons', () => {
   // One stub per icon name, so the same icon is the same object wherever it is read.
   const stubs: Record<string, () => null> = {};
   return new Proxy({}, { get: (_target, name: string) => (stubs[name] ??= () => null) });

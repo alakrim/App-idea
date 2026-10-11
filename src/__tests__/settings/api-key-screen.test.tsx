@@ -8,7 +8,7 @@ import { renderThemed } from '../helpers/render-themed';
 
  
 jest.mock('react-native-reanimated', () => require('../helpers/reanimated-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 jest.mock('expo-router', () => ({
   router: { push: jest.fn(), back: jest.fn(), replace: jest.fn() },
   Stack: { Screen: () => null },

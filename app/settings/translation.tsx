@@ -1,4 +1,3 @@
-import { Check } from 'lucide-react-native';
 import { useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View, type ListRenderItem } from 'react-native';
 
@@ -10,6 +9,7 @@ import { SettingsPage } from '@/features/settings/settings-page';
 import { SettingsSection } from '@/features/settings/settings-section';
 import { useSettings } from '@/features/settings/settings-store';
 import { filterLanguages, LANGUAGES, type LanguageOption } from '@/features/shared/languages';
+import { Check } from '@/ui/icons';
 import { Text } from '@/ui/text';
 import { TextField } from '@/ui/text-field';
 import { useTheme } from '@/ui/theme';

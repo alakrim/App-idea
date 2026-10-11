@@ -1,16 +1,15 @@
-import { Pause, Play, RotateCcw, RotateCw } from 'lucide-react-native';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { impactHaptic } from '@/ui/haptics';
+import { Pause, Play, RotateCcw, RotateCw } from '@/ui/icons';
+import type { LucideIcon } from '@/ui/icons';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { iconStrokeWidth, opacity, radius, space, transparent } from '@/ui/tokens';
 import { usePressScale } from '@/ui/use-press-scale';
 
 import { PLAYER } from './layout';
-
-import type { LucideIcon } from 'lucide-react-native';
 
 export interface TransportProps {
   playing: boolean;

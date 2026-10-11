@@ -1,9 +1,9 @@
-import { Check } from 'lucide-react-native';
 import { useMemo, useState, type ReactNode } from 'react';
 import { FlatList, Pressable, StyleSheet, View, type ListRenderItem } from 'react-native';
 
 import type { OpenRouterModel } from '@/services/openrouter';
 import { Badge } from '@/ui/badge';
+import { Check } from '@/ui/icons';
 import { Text } from '@/ui/text';
 import { TextField } from '@/ui/text-field';
 import { useTheme } from '@/ui/theme';

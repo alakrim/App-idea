@@ -8,7 +8,7 @@ import { renderThemed } from '../helpers/render-themed';
 // Both are mocked per file because jest.config.js is owned by the architect.
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('react-native-reanimated', () => require('../helpers/reanimated-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 
 describe('Button', () => {
   it('exposes its label as an accessible button', async () => {

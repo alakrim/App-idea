@@ -1,8 +1,8 @@
-import { CircleDollarSign } from 'lucide-react-native';
 import { StyleSheet, View } from 'react-native';
 
 import { Card } from '@/ui/card';
 import { EmptyState } from '@/ui/empty-state';
+import { CircleDollarSign } from '@/ui/icons';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { hairline, radius, space } from '@/ui/tokens';

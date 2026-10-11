@@ -8,7 +8,7 @@ import { renderThemed } from '../helpers/render-themed';
 // verified on device; these tests check the value logic and the accessibility contract.
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('react-native-reanimated', () => require('../helpers/reanimated-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 jest.mock('expo-haptics', () => ({
   selectionAsync: jest.fn(() => Promise.resolve()),
   impactAsync: jest.fn(() => Promise.resolve()),

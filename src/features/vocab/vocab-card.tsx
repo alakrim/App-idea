@@ -1,9 +1,9 @@
-import { Trash } from 'lucide-react-native';
 import { Pressable, StyleSheet, View } from 'react-native';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
+import { Trash } from '@/ui/icons';
 import { Skeleton } from '@/ui/skeleton';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';

@@ -1,6 +1,8 @@
 import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
+import type { LucideIcon } from '@/ui/icons';
+
 import { impactHaptic } from './haptics';
 import { Text } from './text';
 import { useTheme } from './theme';
@@ -15,8 +17,6 @@ import {
   type ThemeColors,
 } from './tokens';
 import { usePressScale } from './use-press-scale';
-
-import type { LucideIcon } from 'lucide-react-native';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 export type ButtonSize = 'md' | 'lg';

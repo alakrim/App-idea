@@ -6,7 +6,7 @@ import { renderThemed } from '@/__tests__/helpers/render-themed';
 import { SeriesForm } from './series-form';
 
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 jest.mock('expo-image', () => require('../../__tests__/helpers/feature-mocks').expoImageStub());
 jest.mock('@gorhom/bottom-sheet', () =>
   require('../../__tests__/helpers/feature-mocks').bottomSheetStub(),

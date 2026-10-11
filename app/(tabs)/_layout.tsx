@@ -1,10 +1,10 @@
 import { Redirect } from 'expo-router';
 import { Tabs } from 'expo-router/js-tabs';
-import { BookA, Library, MessagesSquare, Settings } from 'lucide-react-native';
 import { View } from 'react-native';
 
 import { MiniPlayer } from '@/features/player/mini-player';
 import { useSettings } from '@/features/settings/settings-store';
+import { BookA, Library, MessagesSquare, Settings } from '@/ui/icons';
 import { TabBar } from '@/ui/tab-bar';
 import { iconSize, iconStrokeWidth, transparent } from '@/ui/tokens';
 

@@ -1,7 +1,6 @@
 import * as Clipboard from 'expo-clipboard';
 import * as DocumentPicker from 'expo-document-picker';
 import { router } from 'expo-router';
-import { ClipboardPaste, FileText, TriangleAlert } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
 import {
   KeyboardAvoidingView,
@@ -18,6 +17,7 @@ import { usePipeline, type CostEstimate, type SourcePreview } from '@/features/p
 import { formatFileSize } from '@/features/shared/format';
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
+import { ClipboardPaste, FileText, TriangleAlert } from '@/ui/icons';
 import { SegmentedControl, type SegmentedOption } from '@/ui/segmented-control';
 import { Skeleton } from '@/ui/skeleton';
 import { Text } from '@/ui/text';

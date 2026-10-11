@@ -1,4 +1,3 @@
-import { Sparkles } from 'lucide-react-native';
 import { Switch, StyleSheet, View } from 'react-native';
 
 import { getCategory } from '@/core/analysis/ambience-taxonomy';
@@ -6,6 +5,7 @@ import type { AmbienceCue } from '@/core/domain';
 import { AMBIENCE_ICONS } from '@/features/shared/ambience-display';
 import { ambienceLabel } from '@/features/shared/ambience-labels';
 import { Card } from '@/ui/card';
+import { Sparkles } from '@/ui/icons';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { hairline, iconSize, iconStrokeWidth, minTouchTarget, radius, space } from '@/ui/tokens';

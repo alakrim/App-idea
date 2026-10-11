@@ -1,10 +1,9 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import type { LucideIcon } from '@/ui/icons';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { hairline, iconSize, iconStrokeWidth, minTouchTarget, radius, space } from '@/ui/tokens';
-
-import type { LucideIcon } from 'lucide-react-native';
 
 export interface ChipProps {
   label: string;

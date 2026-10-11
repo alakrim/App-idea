@@ -1,4 +1,3 @@
-import { BookOpen, Send, ShieldCheck } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
@@ -11,6 +10,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useSettings } from '@/features/settings/settings-store';
 import { Button } from '@/ui/button';
+import { BookOpen, Send, ShieldCheck } from '@/ui/icons';
+import type { LucideIcon } from '@/ui/icons';
 import { useMotion } from '@/ui/motion';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
@@ -27,8 +28,6 @@ import {
 
 import { ConnectStep } from './connect-step';
 import { WelcomeIllustration } from './welcome-illustration';
-
-import type { LucideIcon } from 'lucide-react-native';
 
 const STEP_COUNT = 3;
 type StepIndex = 0 | 1 | 2;

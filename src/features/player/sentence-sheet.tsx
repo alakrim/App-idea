@@ -1,8 +1,8 @@
-import { BookmarkPlus, Copy, Repeat1 } from 'lucide-react-native';
 import { StyleSheet, View } from 'react-native';
 
 import type { Sentence } from '@/core/domain';
 import { Button } from '@/ui/button';
+import { BookmarkPlus, Copy, Repeat1 } from '@/ui/icons';
 import { Sheet } from '@/ui/sheet';
 import { Text } from '@/ui/text';
 import { space } from '@/ui/tokens';

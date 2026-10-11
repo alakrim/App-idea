@@ -11,7 +11,7 @@ import { PlaybackProvider } from './player-provider';
 
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
 jest.mock('react-native-gesture-handler', () => require('./__fixtures__/gesture-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 jest.mock('expo-router', () => ({
   router: { push: jest.fn(), navigate: jest.fn(), back: jest.fn() },
 }));

@@ -1,7 +1,7 @@
-import { Info, TriangleAlert } from 'lucide-react-native';
 import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/ui/button';
+import { Info, TriangleAlert } from '@/ui/icons';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { hairline, iconSize, iconStrokeWidth, radius, space } from '@/ui/tokens';

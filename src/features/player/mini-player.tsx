@@ -1,10 +1,10 @@
 import { router } from 'expo-router';
-import { Pause, Play } from 'lucide-react-native';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 
 import { CoverImage } from '@/ui/cover-image';
+import { Pause, Play } from '@/ui/icons';
 import { clampProgress } from '@/ui/progress-ring';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';

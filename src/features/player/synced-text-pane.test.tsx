@@ -9,7 +9,7 @@ import { SyncedTextPane, type SyncedTextPaneProps } from './synced-text-pane';
 
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
 jest.mock('react-native-gesture-handler', () => require('./__fixtures__/gesture-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 
 const PARAGRAPHS = [
   { idx: 0, sentenceStart: 0, sentenceEnd: 2, kind: 'text' as const },

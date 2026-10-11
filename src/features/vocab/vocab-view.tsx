@@ -1,8 +1,8 @@
-import { BookA, Search } from 'lucide-react-native';
 import { ScrollView, StyleSheet, TextInput, View } from 'react-native';
 
 import { Button } from '@/ui/button';
 import { EmptyState } from '@/ui/empty-state';
+import { BookA, Search } from '@/ui/icons';
 import { Screen } from '@/ui/screen';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';

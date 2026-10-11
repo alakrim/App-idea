@@ -16,7 +16,7 @@ import { settingsStore } from '@/features/settings/settings-store';
 // Jest cannot load Reanimated 4's worklets runtime, and lucide ships untransformed ESM.
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('react-native-reanimated', () => require('../helpers/reanimated-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 jest.mock('@/db/client', () => ({ getDatabase: jest.fn() }));
 jest.mock('@/db/use-migrations', () => ({ useLectioMigrations: jest.fn() }));
 jest.mock('expo-splash-screen', () => ({

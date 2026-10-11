@@ -1,12 +1,12 @@
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
-import { Stethoscope } from 'lucide-react-native';
 import { useRef, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { parseAmbienceLicenses } from '@/features/settings/licenses';
 import { SettingsPage } from '@/features/settings/settings-page';
 import { SettingsSection } from '@/features/settings/settings-section';
+import { Stethoscope } from '@/ui/icons';
 import { ListItem } from '@/ui/list-item';
 import { Text } from '@/ui/text';
 import { space } from '@/ui/tokens';

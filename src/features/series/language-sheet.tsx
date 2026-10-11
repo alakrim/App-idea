@@ -1,7 +1,7 @@
-import { Check } from 'lucide-react-native';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 
 import { LANGUAGES } from '@/features/shared/languages';
+import { Check } from '@/ui/icons';
 import { Sheet } from '@/ui/sheet';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';

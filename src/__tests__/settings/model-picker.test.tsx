@@ -8,7 +8,7 @@ import { renderThemed } from '../helpers/render-themed';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('react-native-reanimated', () => require('../helpers/reanimated-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 
 function model(id: string, name: string): OpenRouterModel {
   return {

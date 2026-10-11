@@ -1,4 +1,3 @@
-import { ArrowUp, MessagesSquare, Sparkles } from 'lucide-react-native';
 import { useRef } from 'react';
 import {
   KeyboardAvoidingView,
@@ -15,6 +14,7 @@ import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
 import { EmptyState } from '@/ui/empty-state';
 import { IconButton } from '@/ui/icon-button';
+import { ArrowUp, MessagesSquare, Sparkles } from '@/ui/icons';
 import { Screen } from '@/ui/screen';
 import { Skeleton } from '@/ui/skeleton';
 import { Text } from '@/ui/text';

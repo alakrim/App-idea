@@ -1,9 +1,9 @@
-import { Library, Plus } from 'lucide-react-native';
 import { useCallback, useMemo } from 'react';
 import { FlatList, StyleSheet, View, type ListRenderItemInfo } from 'react-native';
 
 import { EmptyState } from '@/ui/empty-state';
 import { IconButton } from '@/ui/icon-button';
+import { Library, Plus } from '@/ui/icons';
 import { SegmentedControl, type SegmentedOption } from '@/ui/segmented-control';
 import { Text } from '@/ui/text';
 import { space, tabBarHeight } from '@/ui/tokens';

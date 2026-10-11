@@ -1,6 +1,5 @@
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
-import { ClipboardPaste, ExternalLink } from 'lucide-react-native';
 import { useState } from 'react';
 import { Linking, StyleSheet, View } from 'react-native';
 
@@ -8,6 +7,7 @@ import { formatUsd } from '@/core/llm/cost';
 import { Badge } from '@/ui/badge';
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
+import { ClipboardPaste, ExternalLink } from '@/ui/icons';
 import { Skeleton } from '@/ui/skeleton';
 import { Text } from '@/ui/text';
 import { TextField } from '@/ui/text-field';

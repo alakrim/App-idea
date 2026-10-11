@@ -1,11 +1,11 @@
 import { Pressable, StyleSheet } from 'react-native';
 import Animated from 'react-native-reanimated';
 
+import type { LucideIcon } from '@/ui/icons';
+
 import { useTheme } from './theme';
 import { iconSize, iconStrokeWidth, minTouchTarget, opacity, radius, transparent } from './tokens';
 import { usePressScale } from './use-press-scale';
-
-import type { LucideIcon } from 'lucide-react-native';
 
 export type IconButtonVariant = 'ghost' | 'surface';
 

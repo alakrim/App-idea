@@ -1,7 +1,7 @@
 import { fireEvent, screen } from '@testing-library/react-native';
-import { BookOpen } from 'lucide-react-native';
 
 import { EmptyState } from '@/ui/empty-state';
+import { BookOpen } from '@/ui/icons';
 
 import { renderThemed } from '../helpers/render-themed';
 
@@ -9,7 +9,7 @@ import { renderThemed } from '../helpers/render-themed';
 // Both are mocked per file because jest.config.js is owned by the architect.
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('react-native-reanimated', () => require('../helpers/reanimated-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 
 describe('EmptyState', () => {
   it('shows the title, the description and one call to action', async () => {

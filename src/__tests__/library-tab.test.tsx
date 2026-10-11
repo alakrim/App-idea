@@ -11,7 +11,7 @@ import LibraryTab from '../../app/(tabs)/index';
 // Jest cannot load Reanimated 4's worklets runtime, lucide ships untransformed ESM, and the sheet
 // needs the gesture handler. All are mocked here, as in the other screen tests.
 jest.mock('react-native-reanimated', () => require('./helpers/reanimated-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 jest.mock('@gorhom/bottom-sheet', () => require('./helpers/feature-mocks').bottomSheetStub());
 jest.mock('expo-sqlite', () => require('./helpers/fake-expo-sqlite'));
 

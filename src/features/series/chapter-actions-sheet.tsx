@@ -1,6 +1,6 @@
-import { ArrowDown, ArrowUp, RotateCw, Trash2 } from 'lucide-react-native';
 import { StyleSheet, View } from 'react-native';
 
+import { ArrowDown, ArrowUp, RotateCw, Trash2 } from '@/ui/icons';
 import { ListItem } from '@/ui/list-item';
 import { Sheet } from '@/ui/sheet';
 import { space } from '@/ui/tokens';

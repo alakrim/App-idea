@@ -1,4 +1,3 @@
-import { ChevronLeft, Play } from 'lucide-react-native';
 import { useCallback, useRef, useState, type ReactNode } from 'react';
 import { ScrollView, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -11,6 +10,7 @@ import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
 import { ErrorState } from '@/ui/error-state';
 import { IconButton } from '@/ui/icon-button';
+import { ChevronLeft, Play } from '@/ui/icons';
 import { useMotion } from '@/ui/motion';
 import { SegmentedControl } from '@/ui/segmented-control';
 import { Text } from '@/ui/text';

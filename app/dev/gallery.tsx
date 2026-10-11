@@ -1,14 +1,4 @@
 import { Redirect, router } from 'expo-router';
-import {
-  BookOpen,
-  CircleCheck,
-  CircleDollarSign,
-  KeyRound,
-  Library,
-  Link,
-  Plus,
-  Settings,
-} from 'lucide-react-native';
 import { useState, type ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -20,6 +10,16 @@ import { CoverImage } from '@/ui/cover-image';
 import { EmptyState } from '@/ui/empty-state';
 import { ErrorState } from '@/ui/error-state';
 import { IconButton } from '@/ui/icon-button';
+import {
+  BookOpen,
+  CircleCheck,
+  CircleDollarSign,
+  KeyRound,
+  Library,
+  Link,
+  Plus,
+  Settings,
+} from '@/ui/icons';
 import { ListItem } from '@/ui/list-item';
 import { ProgressRing } from '@/ui/progress-ring';
 import { Screen } from '@/ui/screen';

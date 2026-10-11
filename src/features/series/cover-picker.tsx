@@ -1,8 +1,8 @@
-import { ImagePlus, LoaderCircle } from 'lucide-react-native';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { CoverImage } from '@/ui/cover-image';
+import { ImagePlus, LoaderCircle } from '@/ui/icons';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { iconSize, iconStrokeWidth, illustration, radius, space } from '@/ui/tokens';

@@ -1,4 +1,3 @@
-import { Play } from 'lucide-react-native';
 import { memo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
@@ -10,6 +9,7 @@ import type { ChapterProgress } from '@/features/pipeline/facade';
 import { formatUsd } from '@/features/shared/format';
 import { Button } from '@/ui/button';
 import { IconButton } from '@/ui/icon-button';
+import { Play } from '@/ui/icons';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { hairline, minTouchTarget, space } from '@/ui/tokens';

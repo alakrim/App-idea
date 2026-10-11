@@ -2,9 +2,24 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import expo from 'eslint-config-expo/flat.js';
 import prettier from 'eslint-config-prettier/flat';
 
+// The package root re-exports every icon, and Metro does not tree-shake it. Only src/ui/icons.ts
+// may import lucide, through deep paths; everything else imports from `@/ui/icons`.
+const iconImportRestriction = {
+  group: ['lucide-react-native', 'lucide-react-native/**'],
+  message:
+    'Import icons from `@/ui/icons`. Importing lucide-react-native directly bloats the bundle.',
+};
+
 export default defineConfig([
   globalIgnores(['dist/', '.expo/', 'node_modules/', 'android/', 'ios/', 'web-build/']),
   expo,
+  {
+    files: ['**/*.{ts,tsx}'],
+    ignores: ['src/ui/icons.ts'],
+    rules: {
+      'no-restricted-imports': ['error', { patterns: [iconImportRestriction] }],
+    },
+  },
   {
     files: ['**/*.{ts,tsx}'],
     rules: {
@@ -33,6 +48,7 @@ export default defineConfig([
         'error',
         {
           patterns: [
+            iconImportRestriction,
             {
               group: [
                 'react',

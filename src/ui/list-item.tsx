@@ -1,11 +1,12 @@
-import { ChevronRight } from 'lucide-react-native';
 import { Pressable, StyleSheet, View, type ViewStyle } from 'react-native';
+
+import { ChevronRight } from '@/ui/icons';
+import type { LucideIcon } from '@/ui/icons';
 
 import { Text } from './text';
 import { useTheme } from './theme';
 import { iconSize, iconStrokeWidth, minTouchTarget, radius, space } from './tokens';
 
-import type { LucideIcon } from 'lucide-react-native';
 import type { ReactNode } from 'react';
 
 export interface ListItemProps {

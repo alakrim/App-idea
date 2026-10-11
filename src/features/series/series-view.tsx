@@ -1,5 +1,4 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { BookOpen, ChevronLeft, Ellipsis, Play, Plus } from 'lucide-react-native';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   Extrapolation,
@@ -22,6 +21,7 @@ import { Card } from '@/ui/card';
 import { CoverImage } from '@/ui/cover-image';
 import { EmptyState } from '@/ui/empty-state';
 import { IconButton } from '@/ui/icon-button';
+import { BookOpen, ChevronLeft, Ellipsis, Play, Plus } from '@/ui/icons';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { gutter, hairline, radius, space } from '@/ui/tokens';

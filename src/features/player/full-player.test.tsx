@@ -19,7 +19,7 @@ import type { ReactElement } from 'react';
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
 jest.mock('react-native-gesture-handler', () => require('./__fixtures__/gesture-stub'));
 jest.mock('@gorhom/bottom-sheet', () => require('./__fixtures__/bottom-sheet-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 // The vocab provider reads the database and OpenRouter before it uses the injected actions.
 jest.mock('@/db/hooks', () => ({ useDb: () => ({}) }));
 jest.mock('@/app-shell/openrouter-provider', () => ({ useOpenRouter: () => ({}) }));

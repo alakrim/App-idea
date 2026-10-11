@@ -1,17 +1,5 @@
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
-import {
-  BookOpen,
-  CircleDollarSign,
-  HardDrive,
-  Info,
-  KeyRound,
-  Languages,
-  Mic,
-  Palette,
-  Sparkles,
-  Wind,
-} from 'lucide-react-native';
 import { useMemo, useState } from 'react';
 
 import { useDb } from '@/db/hooks';
@@ -31,6 +19,18 @@ import {
 import { loadUsageSummary } from '@/features/settings/usage-query';
 import { useSavedKey } from '@/features/settings/use-saved-key';
 import { bytesUsedByLibrary, freeSpaceBytes } from '@/services/storage';
+import {
+  BookOpen,
+  CircleDollarSign,
+  HardDrive,
+  Info,
+  KeyRound,
+  Languages,
+  Mic,
+  Palette,
+  Sparkles,
+  Wind,
+} from '@/ui/icons';
 import { ListItem } from '@/ui/list-item';
 import { Screen } from '@/ui/screen';
 

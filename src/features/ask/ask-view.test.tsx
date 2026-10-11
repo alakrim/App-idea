@@ -14,7 +14,7 @@ jest.mock('@gorhom/bottom-sheet', () =>
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   require('@/__tests__/helpers/feature-mocks').bottomSheetStub(),
 );
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 jest.mock('expo-router', () => ({ router: { push: jest.fn(), navigate: jest.fn() } }));
 
 const SERIES = { id: 'series-1', title: 'The Jade Lantern' };

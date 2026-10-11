@@ -1,7 +1,7 @@
-import { Check, Moon } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { Check, Moon } from '@/ui/icons';
 import { ListItem } from '@/ui/list-item';
 import { Sheet } from '@/ui/sheet';
 import { useTheme } from '@/ui/theme';

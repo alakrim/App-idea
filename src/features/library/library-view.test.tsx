@@ -12,7 +12,7 @@ import { readLibrary } from './library-data';
 import { LibraryView, type LibraryViewProps } from './library-view';
 
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 jest.mock('expo-image', () => require('../../__tests__/helpers/feature-mocks').expoImageStub());
 
 function entries() {

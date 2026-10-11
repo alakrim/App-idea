@@ -15,7 +15,7 @@ import { createFakePipeline } from '@/features/pipeline/fake-facade';
 import { AddChapterScreen } from './add-chapter-screen';
 
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 jest.mock('@gorhom/bottom-sheet', () =>
   require('../../__tests__/helpers/feature-mocks').bottomSheetStub(),
 );

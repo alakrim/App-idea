@@ -1,6 +1,7 @@
-import { Eye, EyeOff } from 'lucide-react-native';
 import { useState } from 'react';
 import { StyleSheet, TextInput, View, type TextInputProps } from 'react-native';
+
+import { Eye, EyeOff } from '@/ui/icons';
 
 import { IconButton } from './icon-button';
 import { Text } from './text';

@@ -1,10 +1,10 @@
-import { ChevronDown, ChevronUp } from 'lucide-react-native';
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import type { CostEstimate } from '@/features/pipeline/facade';
 import { formatCostEstimate, formatUsd } from '@/features/shared/format';
 import { Card } from '@/ui/card';
+import { ChevronDown, ChevronUp } from '@/ui/icons';
 import { Skeleton } from '@/ui/skeleton';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';

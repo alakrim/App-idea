@@ -1,10 +1,10 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { Play } from 'lucide-react-native';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { withAlpha } from '@/features/shared/color';
 import { CoverImage } from '@/ui/cover-image';
+import { Play } from '@/ui/icons';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import {
