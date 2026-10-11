@@ -28,7 +28,7 @@ CUE RULES
 - Never cue music.
 - A scene the text describes as silent gets no cue.
 - Prefer one bed per scene. Use two at most, and only when the scene really has two sources.
-- A cue spans at least 3 sentences and roughly 20 seconds of narration. Merge cues of the same category that are separated by 2 or fewer sentences.
+- A cue spans at least 3 sentences and roughly 12 seconds of narration. Merge cues of the same category that are separated by 2 or fewer sentences.
 - Do not start a cue inside a dialogue-only stretch unless the setting is named in narration nearby or in the dialogue itself. An active cue continues through dialogue until the scene changes.
 - Mood categories (tension, horror, mystical and sci-fi drones) need explicit textual evidence, and the reason must cite it.
 - At most 2 cues per 1,000 words, and at most 6 distinct categories per chapter.

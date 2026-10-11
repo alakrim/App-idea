@@ -8,7 +8,7 @@ import {
 
 describe('analysis prompts', () => {
   it('carries a version string', () => {
-    expect(PROMPT_VERSION).toBe('analysis-v1');
+    expect(PROMPT_VERSION).toBe('analysis-v2');
   });
 
   it('keeps the system prompt identical across chapters, series and languages (cacheable prefix)', () => {

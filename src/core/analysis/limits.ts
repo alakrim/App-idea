@@ -9,8 +9,12 @@ export const CUE_LIMITS = {
   confidenceFloor: 0.55,
   /** A cue spans at least this many sentences ... */
   minSentences: 3,
-  /** ... and at least this many estimated seconds of narration (see text/speech-rate). */
-  minSeconds: 20,
+  /**
+   * ... and at least this many estimated seconds of narration (see text/speech-rate). 12 s keeps about
+   * 6 s at full level between the default fades, and admits a typical 4-sentence Mandarin scene
+   * (ADR-0005 amendment, from the live test).
+   */
+  minSeconds: 12,
   /** Density cap: cues allowed per 1,000 words of chapter text (at least one once a chapter qualifies). */
   maxPer1kWords: 2,
   /** Chapters under this many words get no cues at all. */

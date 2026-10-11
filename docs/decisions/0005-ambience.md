@@ -10,3 +10,6 @@
 - **Sourcing policy**: CC0 first. The **base pack v0 is procedural** (rain, wind, ocean, crowd murmur, space hum, fire), synthesized by our build script, so licensing risk is zero. Sampled CC0 beds (Freesound CC0, OpenGameArt CC0, Kenney) are added through `assets/ambience/LICENSES.json` (a ledger entry per file: source URL, author, license, date). CC-BY content only goes in with an in-app credits screen. NC, SA, GPL and Sampling+ are never used.
 - **Unmapped categories**: if a cue's category has no installed sound, the player maps it to its family fallback bed (e.g. `horse_gallop` → `countryside_wind` family fallback) or silently skips it. The analysis still stores the true category, so better packs light it up retroactively.
 - `ffmpeg-static` (GPL) is a **build-time devDependency only** and never ships.
+
+## Amendment (2026-10-11): minimum cue span 12 s (was 20 s)
+The live test showed a typical 4-sentence Mandarin scene (~70 Han characters, ~15 s at 4.5 chars/s) being dropped. The floor is now **12 s of estimated narration plus ≥ 3 sentences**, the same rule for every script (durations come from `text/speech-rate`). With the default 2.5 s fade-in and 3 s fade-out, a 12 s bed still holds full level for about 6 s, so beds don't feel jittery.

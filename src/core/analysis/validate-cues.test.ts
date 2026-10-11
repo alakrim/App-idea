@@ -250,11 +250,11 @@ describe('validateCues: minimum span by script (text/speech-rate)', () => {
     expect(cues).toHaveLength(1);
   });
 
-  it('still drops a Mandarin cue under the 20 s minimum', () => {
-    // 4 x 15 Han characters = 60 characters = 13.3 s at 4.5 a second.
+  it('still drops a Mandarin cue under the 12 s minimum', () => {
+    // 4 x 10 Han characters = 40 characters = 8.9 s at 4.5 a second.
     const { dropped } = validateCues(
       [cue({ startSentence: 0, endSentence: 3 })],
-      ctx({ sentenceCount: 4, sentences: mandarin(4, 15), wordCount: 1_000 }),
+      ctx({ sentenceCount: 4, sentences: mandarin(4, 10), wordCount: 1_000 }),
     );
     expect(dropped.map((d) => d.reason)).toEqual(['too_short']);
   });
@@ -265,11 +265,11 @@ describe('validateCues: minimum span by script (text/speech-rate)', () => {
         idx,
         text: `${'a'.repeat(letters)}.`,
       }));
-    // 3 x 60 letters = 180 letters = 12.9 s at 14 a second: too short.
+    // 3 x 40 letters = 120 letters = 8.6 s at 14 a second: too short.
     expect(
       validateCues(
         [cue({ startSentence: 0, endSentence: 2 })],
-        ctx({ sentenceCount: 3, sentences: english(60), wordCount: 1_000 }),
+        ctx({ sentenceCount: 3, sentences: english(40), wordCount: 1_000 }),
       ).dropped.map((d) => d.reason),
     ).toEqual(['too_short']);
     // 3 x 100 letters = 300 letters = 21.4 s: long enough.
@@ -281,8 +281,19 @@ describe('validateCues: minimum span by script (text/speech-rate)', () => {
     ).toHaveLength(1);
   });
 
-  // Open (L1 item 3): the live-test cue was 4 sentences and about 70 characters, which is about
-  // 14 s at 4.5 characters a second. That is under the 20 s floor in ADR-0005, so it is still dropped.
-  // The floor needs an architect decision before this can pass. See the L1 report.
-  it.todo('keeps the 70-character Mandarin rain cue from the live test');
+  it('keeps the 70-character Mandarin rain cue from the live test', () => {
+    // Sentences 1-4 of the live-test chapter: about 70 Han characters = about 15 s at 4.5 a second.
+    const live = [
+      '雨从傍晚开始下，一直没有停。',
+      '林默翻身上马，沿着山道向北疾驰，马蹄踏碎了路上的积水。',
+      '雨点打在他的斗笠上，噼啪作响。',
+      '远处的山林在雨幕中只剩下模糊的轮廓。',
+    ].map((text, idx) => ({ idx, text }));
+    const { cues, dropped } = validateCues(
+      [cue({ startSentence: 0, endSentence: 3 })],
+      ctx({ sentenceCount: 4, sentences: live, wordCount: 1_000 }),
+    );
+    expect(dropped).toEqual([]);
+    expect(cues).toHaveLength(1);
+  });
 });
