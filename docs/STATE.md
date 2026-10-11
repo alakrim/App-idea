@@ -21,9 +21,8 @@ _Last updated: 2026-10-11 by architect_
 ## Work in flight
 | Task | Brief | Status |
 |---|---|---|
-| I1 Integration fixes (11 items) | docs/briefs/I1-integration-fixes.md | running |
+| P1 Pipeline core (transport v2, stages, runner, queue, cost preview) | docs/briefs/P1-pipeline-core.md | running |
 | F0 App infrastructure (providers, settings, secrets, storage) | docs/briefs/F0-app-infrastructure.md | running |
-| F5 Translation engine (sentence-aligned) | docs/briefs/F5-core-translate.md | running |
 | A1 Procedural ambience base pack + verify script | docs/briefs/A1-sound-pack.md | running |
 | A2 Audio engine + playback scheduler + player store | docs/briefs/A2-audio-engine.md | running |
 

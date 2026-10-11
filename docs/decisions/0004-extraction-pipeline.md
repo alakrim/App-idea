@@ -21,3 +21,6 @@
 ## Device probes (bundle into one dev-build screen, run with S1)
 - P1: `Intl.Segmenter`, `TextDecoder('gbk'|'big5'|'shift_jis')`, regex lookbehind
 - P2: pdf.js in WebView on a 200-page PDF, and the bridge message size limit
+
+## Amendment (2026-10-11): PDF path for v1
+For v1 the **default PDF path is OpenRouter's file-parser `cloudflare-ai` engine** (free). On-device pdf.js is deferred to M8. Reasons: the text goes to OpenRouter for analysis anyway, a WebView pdf.js bundle would add about 1 MB plus bridge complexity, and the free engine handles multi-column layouts better than a quick pdf.js port. Scanned PDFs (< 50 chars/page) prompt for `mistral-ocr` with a cost confirmation.
