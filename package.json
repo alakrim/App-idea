@@ -12,6 +12,7 @@
     "format": "prettier --write .",
     "test": "jest",
     "test:core": "jest --selectProjects core",
+    "db:generate": "drizzle-kit generate",
     "bundle:check": "expo export --platform android --output-dir dist/check && rm -rf dist/check",
     "verify": "npm run typecheck && npm run lint && npm run test && npm run bundle:check"
   },
