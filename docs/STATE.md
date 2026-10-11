@@ -3,7 +3,7 @@
 _Last updated: 2026-10-11 by architect_
 
 ## Current phase
-**M1 → M2/M5/M6 groundwork**. Wave 2 (B1–B7) is done and verified. Wave 3 (I1, F0, F5, A1, A2) is running.
+**Core loop complete in code** (URL/PDF/text → extract → clean → analyze → translate → narrate → play, with ambience, memory Q&A and vocab). 1,467 tests, e2e green. Now: device build + integration polish. Previously: **M1 → M2/M5/M6 groundwork**. Wave 2 (B1–B7) is done and verified. Wave 3 (I1, F0, F5, A1, A2) is running.
 
 ## Milestones
 | # | Milestone | Status |
@@ -11,18 +11,18 @@ _Last updated: 2026-10-11 by architect_
 | M0 | Protocol docs, research R1–R4, architecture v1, stack decision | ✅ done (ADRs 0001–0005) |
 | M1 | Scaffold, design system + shell, domain + DB, text engine, OpenRouter client, extraction, analysis + memory | ✅ done (664 tests, verify green) |
 | M2 | Settings (API key validate + usage), Library (Series CRUD + cover), Chapter add (URL/PDF/text) | ✅ done (U1, U2); share-intent deferred |
-| M3 | Pipeline orchestrator: job graph, extract→clean→segment wiring, WebView fallback, PDF | not started |
-| M4 | Analysis wiring: cues + memory + codex persisted, cost preview | not started |
-| M5 | Translation + narration (TTS) + voice picker with previews + usage ledger | not started |
-| M6 | Player: AudioEngine (expo-audio voice + react-native-audio-api ambience), mixer, synced text, learner mode; procedural sound pack build | not started |
+| M3 | Pipeline orchestrator: job graph, extract→clean→segment wiring, WebView fallback, PDF | ✅ done (P1, P2) |
+| M4 | Analysis wiring: cues + memory + codex persisted, cost preview | ✅ done (P1, P2) |
+| M5 | Translation + narration (TTS) + voice picker with previews + usage ledger | ✅ done (F5, P1, P2, U1) |
+| M6 | Player: AudioEngine, mixer, synced text, learner mode; procedural sound pack | ✅ done in code (A1, A2, U3); device validation pending (S1) |
 | M7 | Ask (spoiler-safe Q&A), Vocab | ✅ done (U4) |
 | M8 | Polish, accessibility, performance, EAS build, device spike S1 + probes P1/P2, Maestro E2E | not started |
 
 ## Work in flight
 | Task | Brief | Status |
 |---|---|---|
-| U3 Player experience (full player, synced text, learner mode) | docs/briefs/U3-player-ui.md | running |
-| P2 Pipeline services: real ports + facade, end-to-end slice | docs/briefs/P2-pipeline-services.md | running |
+| B8 Local Android APK build (sideloadable, no Expo account) | docs/briefs/B8-android-apk.md | running |
+| I2 Integration + polish + in-app Diagnostics (device probes) | docs/briefs/I2-integration-polish.md | running |
 
 ## Next up
 - **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.
@@ -103,5 +103,6 @@ _Last updated: 2026-10-11 by architect_
   - move the vocab prompt + schema to `src/core/vocab/prompts.ts`
   - `Card raised` top highlight is invisible in the light theme; use a border-top in light
   - **Polish:** Vocab review buttons should span the width (two equal buttons), with the card vertically balanced. A "not revealed yet" answer should carry no citation chip.
+- [P2] ✅ Pipeline services accepted: 8 e2e scenarios green (URL, text, PDF, scanned PDF + OCR, WebView render, cancel/resume, voice change, AUTH pause/resume), verified by the architect. Device-only: WebView bridge limits, RN fetch UA/streaming, keep-awake, picked-PDF URIs, live `cloudflare-ai` page output.
 - [U3] ✅ Player accepted (89 tests). **Architect root-caused U3's open issue 1**: `usePlaybackContent` called a zustand hook as `content(selector)`, which the React Compiler memoized as a plain call. Fixed with `useStore`, all `'use no memo'` removed, and the fix verified by reproducing error #300 in a web build before the fix and clean after it. The rule is now in CONVENTIONS.
   Open: web preview cannot open expo-sqlite (sync op timeout + missing `wasm` assetExt), so web is a fake-data preview only; device is the real target. Repeat-sentence precision is ±250 ms (4 Hz position). Gestures need device verification (S1). The ambience display names come from category ids; add proper labels to the taxonomy (I2).
