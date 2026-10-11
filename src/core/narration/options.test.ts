@@ -8,9 +8,8 @@ import {
   NARRATOR_OPTIONS,
   optionFor,
   segmentMaxCharsFor,
+  type NarratorId,
 } from './options';
-
-import type { NARRATOR_IDS } from './options';
 
 /** Voice lists in the shape the live catalogue returns them (ADR-0003, L1 brief). */
 const KOKORO_VOICES = [
@@ -25,7 +24,7 @@ const KOKORO_VOICES = [
 ];
 const GEMINI_VOICES = ['Zephyr', 'Puck', 'Charon', 'Kore'];
 
-function option(id: (typeof NARRATOR_IDS)[number]) {
+function option(id: NarratorId) {
   const found = NARRATOR_OPTIONS.find((entry) => entry.id === id);
   if (!found) throw new Error(`no narrator ${id}`);
   return found;

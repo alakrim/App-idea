@@ -74,7 +74,6 @@ export function NarratorOptionCard({
           backgroundColor: selected ? colors.accentSoft : colors.surface,
           borderColor: selected ? colors.accent : colors.border,
         },
-        available ? null : { opacity: opacity.disabled },
       ]}
     >
       <Pressable
@@ -88,7 +87,7 @@ export function NarratorOptionCard({
         <View style={styles.head}>
           <Text
             variant="micro"
-            tone={selected ? 'accent' : 'faint'}
+            tone={selected ? 'accent' : 'muted'}
             numberOfLines={1}
             style={styles.headName}
           >
@@ -112,7 +111,7 @@ export function NarratorOptionCard({
           {languageLine(option)}
         </Text>
         {available ? null : <Badge label={unsupportedLabel(lang)} tone="warning" />}
-        <Text variant="caption" tone="faint">
+        <Text variant="caption" tone="muted">
           {option.notes}
         </Text>
       </View>

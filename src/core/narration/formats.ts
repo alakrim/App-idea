@@ -8,7 +8,7 @@
  */
 
 export type SpeechFormat = 'mp3' | 'pcm' | 'wav';
-export type AudioContainer = SpeechFormat;
+type AudioContainer = SpeechFormat;
 
 export interface StorableAudio {
   readonly bytes: Uint8Array;

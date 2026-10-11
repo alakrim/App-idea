@@ -30,7 +30,7 @@ export type PreviewPhase = 'idle' | 'confirming' | 'loading' | 'ready' | 'error'
 const GENERIC_FAILURE = 'The preview could not be made. Check your connection and try again.';
 
 /**
- * Voice previews. A cached clip plays at no cost. A new clip needs the user's one-time consent
+ * Voice previews. A cached clip plays at no cost. A new paid clip needs the user's one-time consent
  * because it spends OpenRouter credits, and then it is synthesized, cached and played.
  */
 export function useVoicePreview(client: OpenRouterClient) {
@@ -96,7 +96,9 @@ export function useVoicePreview(client: OpenRouterClient) {
         playUri(cached.uri);
         return;
       }
-      if (!hasPaidPreviewConsent()) {
+      // A free narrator costs nothing to sample, so only a paid sample asks for consent.
+      const paid = request.estimateUsd > 0;
+      if (paid && !hasPaidPreviewConsent()) {
         setPending(request);
         setPhase('confirming');
         return;

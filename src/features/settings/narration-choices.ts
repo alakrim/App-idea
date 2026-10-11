@@ -14,7 +14,7 @@ import type { PreviewRequest } from './use-voice-preview';
  */
 
 /** Characters in one hour of narration (about 15 characters a second). */
-export const NARRATION_CHARS_PER_HOUR = 54_000;
+const NARRATION_CHARS_PER_HOUR = 54_000;
 
 export function hourlyNarrationCost(model: Pick<OpenRouterModel, 'pricing'>): number {
   return estimateSpeechCost(model, NARRATION_CHARS_PER_HOUR);
@@ -73,7 +73,7 @@ export function narrationForOption(
   };
 }
 
-export interface NarratorPreviewInput {
+interface NarratorPreviewInput {
   narration: NarrationSettings;
   /** The language the narrator picks its voice for. */
   lang: string;

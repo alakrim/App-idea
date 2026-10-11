@@ -5,7 +5,7 @@
  */
 
 /** Only the header reads the check needs, so tests can pass a plain map. */
-export interface HeaderReader {
+interface HeaderReader {
   get(name: string): string | null;
 }
 

@@ -7,13 +7,14 @@
 import type { AudioSegment, NarrationProfile } from '@/core/domain';
 import { throwIfCancelled } from '@/core/llm/transport';
 import { wavDurationMs } from '@/core/narration/formats';
-import { segmentMaxCharsFor } from '@/core/narration/options';
+import { isLanguageSupported, optionFor, segmentMaxCharsFor } from '@/core/narration/options';
 import { countCodePoints } from '@/core/text/build';
 import { planTtsSegments } from '@/core/text/chunk';
 import { detectScript } from '@/core/text/normalize';
 import { estimateSpeechSeconds } from '@/core/text/speech-rate';
 import { estimateSentenceOffsets } from '@/core/text/timing';
 
+import { StageFailure } from '../errors';
 import { stableHash } from '../hash';
 import { mp3DurationMs } from '../mp3-duration';
 
@@ -36,6 +37,45 @@ interface PlannedSegment {
 interface Plan {
   readonly profile: NarrationProfile;
   readonly segments: readonly PlannedSegment[];
+  /** The language being read aloud: the translation's when there is one, else the source's. */
+  readonly spokenLang: string | null;
+}
+
+/** English names for the messages below. Unlisted languages show their code. */
+const LANGUAGE_NAMES: Readonly<Record<string, string>> = {
+  ar: 'Arabic',
+  de: 'German',
+  en: 'English',
+  es: 'Spanish',
+  fr: 'French',
+  hi: 'Hindi',
+  it: 'Italian',
+  ja: 'Japanese',
+  ko: 'Korean',
+  nl: 'Dutch',
+  pl: 'Polish',
+  pt: 'Portuguese',
+  ru: 'Russian',
+  sv: 'Swedish',
+  tr: 'Turkish',
+  uk: 'Ukrainian',
+  zh: 'Chinese',
+};
+
+/**
+ * Stops before any paid call when the chosen narrator cannot read the chapter's language (the
+ * Budget narrator speaks 8 languages). Sending it anyway would buy unusable audio.
+ */
+function assertNarratorSpeaks(profile: NarrationProfile, spokenLang: string | null): void {
+  const option = optionFor(profile.model);
+  if (option === null || spokenLang === null || isLanguageSupported(option, spokenLang)) return;
+  const family = spokenLang.split('-')[0]?.toLowerCase() ?? spokenLang;
+  const name = LANGUAGE_NAMES[family] ?? spokenLang;
+  throw new StageFailure(
+    'MODEL_UNAVAILABLE',
+    `The ${option.label} narrator can't read ${name}. Choose Best quality or Free in Settings → Narration, then retry.`,
+    { retryable: false, detail: `${profile.model} does not support ${spokenLang}` },
+  );
 }
 
 export const narrateStage: StageDefinition = {
@@ -85,7 +125,12 @@ async function buildPlan(ctx: StageContext): Promise<Plan> {
       ]),
     };
   });
-  return { profile, segments };
+  const translated = sentences.some((s) => s.translated !== null);
+  const { chapter, series } = ctx.record;
+  const spokenLang = translated
+    ? series.targetLang
+    : (chapter.sourceLang ?? series.sourceLang ?? null);
+  return { profile, segments, spokenLang };
 }
 
 function spokenSentence(sentence: StoredSentence) {
@@ -111,6 +156,7 @@ function joinSpoken(parts: readonly string[]): string {
 async function execute(ctx: StageContext, plan: Plan): Promise<void> {
   const { chapters, audio, tts } = ctx.ports;
   const { profile, segments } = plan;
+  assertNarratorSpeaks(profile, plan.spokenLang);
   const existing = await chapters.listAudioSegments(ctx.chapterId);
 
   let firstStale = 0;

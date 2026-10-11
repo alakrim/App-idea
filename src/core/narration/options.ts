@@ -9,8 +9,7 @@ import { DEFAULT_TTS_MAX_CHARS } from '../text/chunk';
 
 import type { Lang } from '../domain';
 
-export const NARRATOR_IDS = ['best', 'budget', 'free'] as const;
-export type NarratorId = (typeof NARRATOR_IDS)[number];
+export type NarratorId = 'best' | 'budget' | 'free';
 
 export interface NarratorOption {
   readonly id: NarratorId;

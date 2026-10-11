@@ -1,5 +1,9 @@
 import { pcmToWav } from '@/core/narration/formats';
-import { FREE_NARRATOR_MODEL_ID } from '@/core/narration/options';
+import {
+  FREE_NARRATOR_MODEL_ID,
+  GEMINI_NARRATOR_MODEL_ID,
+  KOKORO_MODEL_ID,
+} from '@/core/narration/options';
 import { estimateSpeechSeconds } from '@/core/text/speech-rate';
 
 import { CHAPTER_ID, createFakePorts, mp3Bytes } from '../__fixtures__/fake-ports';
@@ -135,5 +139,44 @@ describe('narrate stage: segment size per narrator', () => {
     expect(fake.state.ttsCalls[0]?.text.length).toBeGreaterThan(600);
     expect(fake.state.ttsCalls[0]?.text.length).toBeLessThanOrEqual(1_800);
     expect(fake.state.ttsCalls[0]?.voice).toBe('');
+  });
+});
+
+describe('narrate stage: a narrator that cannot speak the chapter language', () => {
+  const GERMAN = [
+    'Der alte Mann ging mit seinem Hund durch den Wald, und die Sonne stand schon tief.',
+    'Er dachte an die Zeit, als er noch jung war und nicht so viel über das Leben wusste.',
+    'Dann hörte er ein Geräusch hinter den Bäumen und blieb stehen, weil er nicht allein war.',
+  ].join(' ');
+
+  it('fails before any paid request, with a message that names the language and the fix', async () => {
+    const fake = createFakePorts({
+      sourceText: GERMAN,
+      targetLang: null,
+      narration: { model: KOKORO_MODEL_ID, voice: 'af_heart' },
+    });
+
+    await runChapter(CHAPTER_ID, fake.ports);
+
+    expect(fake.state.ttsCalls).toHaveLength(0);
+    const job = fake.job('narrate');
+    expect(job?.status).toBe('failed');
+    expect(job?.error?.code).toBe('MODEL_UNAVAILABLE');
+    expect(job?.error?.retryable).toBe(false);
+    expect(job?.error?.message).toContain("can't read German");
+    expect(job?.error?.message).toContain('Settings → Narration');
+  });
+
+  it('still narrates the same chapter with a multilingual narrator', async () => {
+    const fake = createFakePorts({
+      sourceText: GERMAN,
+      targetLang: null,
+      narration: { model: GEMINI_NARRATOR_MODEL_ID, voice: 'Kore' },
+    });
+
+    await runChapter(CHAPTER_ID, fake.ports);
+
+    expect(fake.job('narrate')?.status).toBe('done');
+    expect(fake.state.ttsCalls.length).toBeGreaterThan(0);
   });
 });

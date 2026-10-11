@@ -49,6 +49,9 @@ describe('settings home summaries', () => {
     expect(narrationSummary({ ...cloud, provider: 'device', voice: 'Samantha' })).toBe(
       'Device voice · Samantha',
     );
+    expect(narrationSummary({ ...cloud, model: 'fish-audio/s2.1-pro-free:free', voice: '' })).toBe(
+      'S2.1 Pro Free',
+    );
   });
 
   it('shows the key as connected with its tail, or not set', () => {

@@ -27,14 +27,14 @@ const REFUSED_SETTING_PATTERN =
 const AUDIO_FORMAT_PATTERN = /\b(pcm|mp3|wav|opus|flac|aac)\b|audio format|output format/i;
 
 /** What the transport learned about a 429: whether it is a daily allowance, and the copy for it. */
-export interface LimitContext {
+interface LimitContext {
   daily: boolean;
   /** The user-facing copy for a daily limit. Each feature words its own. */
   dailyMessage?: string;
 }
 
 /** The copy for a daily free-model limit when the feature has none of its own. */
-export const DAILY_LIMIT_MESSAGE =
+const DAILY_LIMIT_MESSAGE =
   'OpenRouter has used up the daily allowance for this free model. Try again tomorrow, or choose a paid model in Settings.';
 
 interface UpstreamError {

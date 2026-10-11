@@ -111,6 +111,20 @@ describe('onboarding flow', () => {
     expect(onFinish).toHaveBeenCalledTimes(1);
   });
 
+  it('saves the narrator picked on the narrator step, and keeps it when it moves on', async () => {
+    await renderFlow();
+    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    await screen.findByRole('header', { name: 'Connect OpenRouter' });
+    await fireEvent.press(screen.getByRole('button', { name: 'Skip for now' }));
+    await screen.findByRole('header', { name: 'Choose your narrator' });
+
+    await fireEvent.press(screen.getByRole('radio', { name: /^Budget narrator/ }));
+
+    expect(mockPatch).toHaveBeenCalledWith({
+      narration: expect.objectContaining({ model: 'hexgrad/kokoro-82m', voice: 'af_heart' }),
+    });
+  });
+
   it('checks a pasted key, saves it, and shows the account without echoing the key', async () => {
     mockCheck.mockResolvedValue(VALID_ACCOUNT);
     jest.mocked(setApiKey).mockResolvedValue(undefined);

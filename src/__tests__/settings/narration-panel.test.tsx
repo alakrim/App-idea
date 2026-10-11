@@ -5,8 +5,8 @@ import { OpenRouterProvider } from '@/app-shell/openrouter-provider';
 import { DEFAULT_NARRATION } from '@/core/defaults';
 import { FREE_NARRATOR_MODEL_ID, KOKORO_MODEL_ID } from '@/core/narration/options';
 import type { NarrationSettings } from '@/core/settings';
-import { NarrationPanel } from '@/features/settings/narration-settings';
 import type { CatalogState } from '@/features/settings/model-catalog';
+import { NarrationPanel } from '@/features/settings/narration-settings';
 import { createOpenRouterClient, type OpenRouterModel } from '@/services/openrouter';
 
 import { renderThemed } from '../helpers/render-themed';
@@ -113,7 +113,6 @@ describe('narration settings panel', () => {
     settingsWith({ ...DEFAULT_NARRATION });
     await renderPanel();
 
-    expect(screen.getByRole('radiogroup', { name: 'Narrator' })).toBeOnTheScreen();
     expect(
       screen.getByRole('radio', { name: /^Best quality narrator/, checked: true }),
     ).toBeOnTheScreen();

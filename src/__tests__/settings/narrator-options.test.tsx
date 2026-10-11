@@ -214,6 +214,16 @@ describe('narrator option cards', () => {
     expect(screen.getByRole('button', { name: 'Not now' })).toBeOnTheScreen();
   });
 
+  it('samples the free narrator without asking, because it costs nothing', async () => {
+    await renderList({ keyPresent: true, lang: 'en' });
+
+    await act(async () => {
+      await fireEvent.press(screen.getAllByRole('button', { name: 'Preview' })[2]!);
+    });
+
+    expect(screen.queryByText(/Previews use your OpenRouter credits/)).toBeNull();
+  });
+
   it('plays a cached sample without asking, and makes no new one', async () => {
     jest
       .mocked(cachedPreview)
