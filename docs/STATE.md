@@ -60,3 +60,7 @@ _Last updated: 2026-10-11 by architect_
 - [B5] Reconcile `services/openrouter/errors.ts` with `core/domain` (import the shared types).
 - [B5] 402 with `limit_source: openrouter_in_flight_budget` should be retryable after Retry-After.
 - [B7] Swap the local chunk planner for `planLlmChunks` from core/text once B4 lands.
+- [B3] Deleting the furthest chapter cascades the position row. Instead, move `furthest`/`current` to the end of the previous chapter (or delete only if none). Add a test.
+- [B3] Add a test asserting `bundled-migrations.ts` lists every entry in `migrations/meta/_journal.json` (read via fs in Node).
+- [B3] Repos still missing: narration_profiles, ambience_cues, chapter_memory, entities/entity_facts, audio_segments, qa_messages, vocab, settings (zod-validated). Assigned to the M2–M5 feature briefs as needed.
+- [B3] Call `useLectioMigrations()` in `app/_layout.tsx`, gating render with a designed splash/error state.

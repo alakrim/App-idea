@@ -77,8 +77,9 @@ AudioSegment { id, chapterId, idx, sentenceStart, sentenceEnd /* inclusive */, f
 
 ## Spoiler cutoff
 ```ts
-ListeningPosition { seriesId, chapterId, chapterOrder, sentenceIdx, updatedAt }
-// cutoff = max position ever reached (furthest listened). Q&A may see:
+PlaybackPoint     { chapterId, chapterOrder, sentenceIdx }
+ListeningPosition { seriesId, current: PlaybackPoint, furthest: PlaybackPoint, updatedAt }   // amended 2026-10-11 (B3)
+// cutoff = `furthest`. No position row ⇒ nothing from the book is visible to Q&A. Q&A may see:
 //   memories + facts where chapterOrder < cutoff.chapterOrder
 //   sentences of the cutoff chapter with idx <= cutoff.sentenceIdx (via FTS)
 //   nothing else.
@@ -89,3 +90,6 @@ ListeningPosition { seriesId, chapterId, chapterOrder, sentenceIdx, updatedAt }
 UsageEntry { id, at, chapterId|null, stage|'qa'|'vocab'|'validate', model, promptTokens, completionTokens,
              audioSeconds|null, costUsd, generationId: string|null }
 ```
+
+## Additions accepted 2026-10-11 (B3)
+`Vocab`, `QaMessage {id, seriesId, role: 'user'|'assistant', content, cutoffChapterOrder, cutoffSentenceIdx, citations, createdAt}`, `TtsProviderId = 'openrouter' | 'device'`. Timestamps are epoch ms. LLM output schemas use `.nullable()`, never `.optional()` (strict json_schema compatibility).
