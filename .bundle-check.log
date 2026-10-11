@@ -1,7 +1,0 @@
-
-> lectio@0.1.0 bundle:check
-> expo export --platform android --output-dir dist/check && rm -rf dist/check
-
-React Compiler enabled
-Starting Metro Bundler
-

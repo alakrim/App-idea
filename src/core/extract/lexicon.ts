@@ -106,8 +106,9 @@ export const LEXICON_RULES: readonly LexiconRule[] = [
   {
     id: 'share_prompt',
     kind: 'share',
+    // English is matched case-sensitively so narrative "share this story" in lowercase is kept.
     pattern:
-      /\bshare (?:this|on|via|article|story)\b|^\s*share\s*$|分享到|分享至|^\s*(?:分享|シェア|공유하기)\s*$/i,
+      /\bShare (?:this|on|via|article|story)\b|^\s*Share\s*$|分享到|分享至|^\s*(?:分享|シェア|공유하기)\s*$/,
     maxUnits: 25,
     examples: ['Share this on Facebook', 'Share', '分享到微博', 'シェア'],
   },
@@ -124,8 +125,9 @@ export const LEXICON_RULES: readonly LexiconRule[] = [
   {
     id: 'related_links',
     kind: 'related',
+    // Case-sensitive English: "I read more books" in a sentence must not match "Read more".
     pattern:
-      /\brelated (?:articles?|stories|posts|content|topics|reading)\b|\bread more\b|\bmore from\b|you may also like|recommended for you|相关阅读|相关文章|相關文章|関連記事|関連作品|관련 기사/i,
+      /\bRelated (?:[Aa]rticles?|[Ss]tories|[Pp]osts|[Cc]ontent|[Tt]opics|[Rr]eading)\b|\bRead [Mm]ore\b|\bMore from\b|\bYou [Mm]ay [Aa]lso [Ll]ike\b|\bRecommended for you\b|相关阅读|相关文章|相關文章|関連記事|関連作品|관련 기사/,
     maxUnits: 25,
     examples: [
       'Related articles',
@@ -156,7 +158,7 @@ export const LEXICON_RULES: readonly LexiconRule[] = [
     id: 'cookie_notice',
     kind: 'cookie',
     pattern:
-      /\bwe use cookies\b|\bcookie (?:policy|settings|notice|consent|preferences)\b|\baccept (?:all )?cookies\b|\baccept all\b|\bmanage (?:cookies|consent)\b|\bprivacy (?:policy|notice)\b|我们使用.{0,4}cookie|쿠키|クッキー/i,
+      /\bwe use cookies\b|\bcookie (?:policy|settings|notice|consent|preferences)\b|\baccept (?:all )?cookies\b|\baccept all\b|\bmanage (?:cookies|consent)\b|\bprivacy (?:policy|notice)\b|^\s*Accept all\b|我们使用.{0,4}cookie|쿠키|クッキー/i,
     maxUnits: 60,
     examples: [
       'We use cookies to improve your experience.',
@@ -172,7 +174,7 @@ export const LEXICON_RULES: readonly LexiconRule[] = [
     id: 'donation_note',
     kind: 'donation',
     pattern:
-      /patreon|ko-?fi|buy me a coffee|\bpaypal\b|\bdonat(?:e|ion|ions|ing)\b|support (?:me|us|the translator)\b|translator'?s? (?:note|comment)|\bTL\s*(?:note|:)|\bTN\s*:|\bA\/N\b|author'?s? (?:note|comment)|求(?:月票|推荐票|收藏|订阅|追读)|月票|推荐票|打赏|ご支援|ご感想|翻译者|译者的话|译注|作者的话|作者有话说|感谢.{0,6}支持/i,
+      /patreon|ko-?fi|buy me a coffee|\bpaypal\b|\bdonat(?:e|ion|ions|ing)\b|support (?:me|us) on\b|support (?:the|my) translator\b|translator'?s? (?:note|comment)|\bTL\s*(?:note|:)|\bTN\s*:|\bA\/N\b|author'?s? (?:note|comment)|求(?:月票|推荐票|收藏|订阅|追读)|月票|推荐票|打赏|ご支援|ご感想|翻译者|译者的话|译注|作者的话|作者有话说/i,
     maxUnits: 60,
     examples: [
       'Support me on Patreon!',

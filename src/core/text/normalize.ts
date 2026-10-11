@@ -83,9 +83,18 @@ export function scriptOfCodePoint(cp: number): Script | null {
   return null;
 }
 
-/** True for CJK letters and for the CJK and fullwidth punctuation blocks that surround them. */
-export function isCjkLike(cp: number): boolean {
-  return scriptOfCodePoint(cp) === 'cjk' || (cp >= 0x3000 && cp <= 0x303f) || (cp >= 0xff00 && cp <= 0xffef);
+/** Hangul syllables and Jamo. Korean is word-spaced, unlike Han and kana. */
+export function isHangul(cp: number): boolean {
+  return (cp >= 0x1100 && cp <= 0x11ff) || (cp >= 0x3130 && cp <= 0x318f) || (cp >= 0xac00 && cp <= 0xd7af);
+}
+
+/**
+ * True for characters written without spaces around them: Han, kana, and the CJK and fullwidth
+ * punctuation blocks. Hangul is excluded because it is word-spaced.
+ */
+export function isUnspacedCjk(cp: number): boolean {
+  if ((cp >= 0x3000 && cp <= 0x303f) || (cp >= 0xff00 && cp <= 0xffef)) return true;
+  return scriptOfCodePoint(cp) === 'cjk' && !isHangul(cp);
 }
 
 /**

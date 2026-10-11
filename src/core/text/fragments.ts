@@ -1,5 +1,5 @@
 import { isNonTerminalPeriod } from './abbreviations';
-import { detectScript, isCjkLike } from './normalize';
+import { detectScript, isHangul, isUnspacedCjk, scriptOfCodePoint } from './normalize';
 
 /** Longest sentence kept whole. Longer ones are split at a secondary break. */
 export const MAX_SENTENCE_CHARS = 400;
@@ -7,17 +7,33 @@ export const MAX_SENTENCE_CHARS = 400;
 const LETTER_OR_DIGIT = /[\p{L}\p{N}]/gu;
 const WORD = /[\p{L}\p{N}]+/gu;
 
-/** CJK fragments need two letters, Latin-script fragments need three words to stand alone. */
+/**
+ * Fragments need two characters in CJK ideographs or kana, and three words in every other script.
+ * Hangul is word-spaced, so it follows the word rule.
+ */
 function isShortFragment(sentence: string): boolean {
-  if (detectScript(sentence) === 'cjk') return (sentence.match(LETTER_OR_DIGIT) ?? []).length < 2;
+  if (detectScript(sentence) === 'cjk' && !isHangulDominant(sentence)) {
+    return (sentence.match(LETTER_OR_DIGIT) ?? []).length < 2;
+  }
   return (sentence.match(WORD) ?? []).length < 3;
+}
+
+function isHangulDominant(text: string): boolean {
+  let hangul = 0;
+  let others = 0;
+  for (const ch of text) {
+    const cp = ch.codePointAt(0) ?? 0;
+    if (isHangul(cp)) hangul += 1;
+    else if (scriptOfCodePoint(cp) === 'cjk') others += 1;
+  }
+  return hangul > others;
 }
 
 function joinFragments(left: string, right: string): string {
   const lastOfLeft = Array.from(left).at(-1) ?? '';
   const firstOfRight = right.charAt(0);
   const cjkBoundary =
-    isCjkLike(lastOfLeft.codePointAt(0) ?? 0) || isCjkLike(firstOfRight.codePointAt(0) ?? 0);
+    isUnspacedCjk(lastOfLeft.codePointAt(0) ?? 0) || isUnspacedCjk(firstOfRight.codePointAt(0) ?? 0);
   return cjkBoundary ? `${left}${right}` : `${left} ${right}`;
 }
 

@@ -19,7 +19,7 @@ const PAIRS: ReadonlyMap<string, string> = new Map([
 ]);
 /** Characters that can open a new sentence in Latin text, besides capitals and caseless letters. */
 const SENTENCE_OPENERS: ReadonlySet<string> = new Set([
-  '"', '“', '„', '«', '「', '『', '‘', '—', '¿', '¡', '（', '(',
+  '"', '“', '„', '«', '「', '『', '‘', '¿', '¡', '（', '(',
 ]);
 const CASED_OR_CASELESS_LETTER = /^[\p{Lu}\p{Lt}\p{Lo}]$/u;
 const WHITESPACE = /\s/u;
@@ -131,6 +131,12 @@ function skipWhitespace(text: string, from: number): number {
 
 function startsSentence(text: string, at: number): boolean {
   const ch = String.fromCodePoint(text.codePointAt(at) ?? 0);
+  if (ch === '—') {
+    // A dash opens a new speech turn only when a capital follows it. A lower-case word after the
+    // dash is a dialogue tag (`— chiese il figlio`).
+    const letter = String.fromCodePoint(text.codePointAt(skipWhitespace(text, at + 1)) ?? 0);
+    return CASED_OR_CASELESS_LETTER.test(letter);
+  }
   return SENTENCE_OPENERS.has(ch) || CASED_OR_CASELESS_LETTER.test(ch);
 }
 

@@ -137,7 +137,8 @@ export function scoreExtraction(input: ScoreInput): ScoreResult {
     WEIGHTS.repeated * components.repeated +
     WEIGHTS.lexicon * components.lexicon +
     WEIGHTS.links * components.links;
-  if (hardFails.length > 0) score = Math.min(score, HARD_FAIL_CAP);
+  if (blocks.length === 0) score = 0;
+  else if (hardFails.length > 0) score = Math.min(score, HARD_FAIL_CAP);
 
   return {
     score: round(clamp01(score), 3),
