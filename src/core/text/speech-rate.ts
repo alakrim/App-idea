@@ -1,35 +1,32 @@
 /*
  * Speech rate by writing system. Narration time is estimated from characters, but one character
  * means very different amounts of speech in different scripts: a Mandarin character is one syllable,
- * an English letter is a fraction of a word. These rates are assumptions, not measurements:
+ * an English letter is a fraction of a word.
  *
- * - Latin, Cyrillic and Greek: about 14 characters a second. Narration runs at about 150 words a
- *   minute, and an English word with its space is about 6 characters, which gives 15. Counting only
- *   letters (no spaces) brings that down to about 14.
- * - Han (Mandarin, zh): about 4.5 characters a second. Mandarin speech is about 4 to 5 syllables a
- *   second, and each Han character is roughly one syllable.
- * - Japanese (kana and kanji mixed, ja): about 7 characters a second. Kana are mora-sized, and kanji
- *   readings are longer than one mora on average.
- * - Hangul (ko): about 6.5 characters a second. Each syllable block is one character.
- * - Thai (th): about 10 characters a second. Thai is written without spaces between words, and its
- *   combining marks are counted as part of their syllable.
- * - Other scripts (Arabic, Hebrew, Devanagari, ...): about 12 characters a second.
+ * Calibrated on 2026-10-11 against live narration from the default voice (Gemini 3.8 Flash Lite TTS,
+ * voice Kore, "measured pace" audiobook style), counting letters, digits and CJK characters only:
+ * - Latin: English 9.5, Italian 9.5, Portuguese 8.7 characters a second, so 9.2.
+ * - Han (Mandarin): 2.65 and 2.37 characters a second, so 2.5.
+ * - Japanese (kana and kanji mixed): 4.2 characters a second.
+ * Not measured yet, so scaled from conversational rates by the same narrator slowdown (about 0.6):
+ * - Hangul (ko): 4. Thai (th): 6. Other scripts (Arabic, Hebrew, Devanagari, ...): 7.5.
+ * Faster voices (ElevenLabs measured about 12.8 Latin characters a second) make these estimates
+ * slightly long, which errs on the safe side for cost previews.
  *
  * Only letters, digits and combining marks are counted. Whitespace, punctuation and symbols take
- * no narration time. Calibrate these against measured WAV durations once live narration runs.
- * Callers that only have a character count, such as the cost preview, pass a language to pick a rate.
- * With no language they use the ADR-0003 hour (54,000 characters, 15 a second).
+ * no narration time. Callers that only have a character count, such as the cost preview, pass a
+ * language to pick a rate. With no language they use the ADR-0003 hour (54,000 characters, 15 a second).
  */
 
 export type SpeechRate = 'latin' | 'han' | 'japanese' | 'hangul' | 'thai' | 'other';
 
 export const SPEECH_CHARS_PER_SECOND: Readonly<Record<SpeechRate, number>> = {
-  latin: 14,
-  han: 4.5,
-  japanese: 7,
-  hangul: 6.5,
-  thai: 10,
-  other: 12,
+  latin: 9.2,
+  han: 2.5,
+  japanese: 4.2,
+  hangul: 4,
+  thai: 6,
+  other: 7.5,
 };
 
 /** Rate of each language family, keyed by the primary subtag. Unlisted languages use the script. */
