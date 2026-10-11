@@ -19,7 +19,7 @@ _Last updated: 2026-10-11 by architect_
 | M8 | Polish, accessibility, performance, EAS build, device spike S1 + probes P1/P2, Maestro E2E | not started |
 
 ## Work in flight
-_None. Paused at the user's request: waiting on the device test of `lectio-0.1.0-fb8c82d-arm64.apk` (apk-builds branch, sha256 b950d965…ff38; fixes the launch crash, includes the crash reporter) and on the user's pick of next steps._
+_None. Waiting on the user's device test of `lectio-0.1.0-c3eac7a-arm64.apk` (apk-builds branch). It fixes the Library crash (cover monogram at font size 0). The user asked for bug fixes only until they have tested properly._
 
 ## Next up
 - **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.
@@ -132,3 +132,8 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
   - `npm run boot:check` boots the release bundle with Hermes-only globals and stubbed native modules. Open item: it stalls before the first route renders, so it cannot yet prove later startup paths.
   - **On-device crash reporter (X2):** any future crash shows its report on the next launch (Copy/Share), and it stays in Diagnostics → Last crash.
 - Ruled out along the way: the GitHub upload (byte-identical), Hermes bytecode/runtime versions (both 250829098.0.17), native lib deps, 16 KB page alignment, manifest/services, the extraction stack's module init.
+
+## Incident 2: Library crash on device (2026-10-11), fixed in c3eac7a
+- The crash reporter captured it: `IllegalArgumentException: FontSize should be a positive value. Current value: 0` in `TextAttributeProps.getLetterSpacing` (Samsung SM-S928B, Android 15).
+- **Cause:** `CoverImage` sized its monogram from onLayout width, which is 0 on the first render. Android throws for font size ≤ 0, while iOS, web and Jest accept it.
+- **Fix:** the monogram waits for a real width, and the shared `Text` never renders a non-positive/NaN font size. Regression tests mutation-checked (fail without the fix).
