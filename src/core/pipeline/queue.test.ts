@@ -165,7 +165,7 @@ describe('PipelineQueue', () => {
     const before = createPipelineQueue(fake.ports);
     await before.enqueue(A);
     await before.enqueue(B);
-    expect(fake.state.queue).toEqual([A, B]);
+    expect(fake.state.queue.map((item) => item.chapterId)).toEqual([A, B]);
     await until(() => fake.job('analyze', A)?.status === 'running');
 
     // The new session reads the same stores once the old one is gone.
@@ -187,6 +187,68 @@ describe('PipelineQueue', () => {
     ).toBe(true);
     expect(fake.state.queue).toEqual([]);
     expect(fake.chapter(A).status).toBe('ready');
+  });
+
+  it('persists each chapter\'s run options, and a restored chapter runs from its saved stage', async () => {
+    let dying = true;
+    const fake = createFakePorts({
+      sourceText: TEXT,
+      llm: () => (dying ? new Promise<LlmReply>(() => undefined) : undefined),
+    });
+    fake.addChapter(B, 2, TEXT);
+    const before = createPipelineQueue(fake.ports);
+    await before.enqueue(A);
+    await before.enqueue(B, { from: 'narrate', force: true, pdfEngine: 'mistral-ocr' });
+    expect(fake.state.queue).toEqual([
+      { chapterId: A },
+      { chapterId: B, from: 'narrate', force: true, pdfEngine: 'mistral-ocr' },
+    ]);
+    await until(() => fake.job('analyze', A)?.status === 'running');
+
+    dying = false;
+    const events: PipelineEvent[] = [];
+    const after = createPipelineQueue(fake.ports, { onEvent: (e) => events.push(e) });
+    await after.restore();
+    await after.idle();
+
+    const bStages = events.flatMap((e) =>
+      e.type === 'stage' && e.chapterId === B ? [e.stage] : [],
+    );
+    expect(bStages[0]).toBe('narrate');
+    expect(bStages).not.toContain('extract');
+  });
+
+  it('pauses on an AUTH failure, keeps the queue, and runs it again after resume()', async () => {
+    let keyMissing = true;
+    const authError = Object.assign(new Error('no key'), {
+      error: { code: 'AUTH', message: 'Add your OpenRouter key.', retryable: false },
+    });
+    const fake = createFakePorts({
+      sourceText: TEXT,
+      llm: () => {
+        if (keyMissing) throw authError;
+        return undefined;
+      },
+    });
+    fake.addChapter(B, 2, TEXT);
+    const queue = createPipelineQueue(fake.ports);
+    await queue.enqueue(A);
+    await queue.enqueue(B);
+    await queue.idle();
+
+    expect(queue.isPaused()).toBe(true);
+    expect(queue.snapshot()).toEqual({ running: null, pending: [A, B] });
+    expect(fake.chapter(A).status).toBe('failed');
+    expect(fake.chapter(B).status).toBe('draft');
+    expect(fake.state.queue.map((item) => item.chapterId)).toEqual([A, B]);
+
+    keyMissing = false;
+    queue.resume();
+    await queue.idle();
+
+    expect(queue.isPaused()).toBe(false);
+    expect([A, B].map((id) => fake.chapter(id).status)).toEqual(['ready', 'ready']);
+    expect(fake.state.queue).toEqual([]);
   });
 
   it('keeps a failure in its own chapter, so the chapters after it still run', async () => {

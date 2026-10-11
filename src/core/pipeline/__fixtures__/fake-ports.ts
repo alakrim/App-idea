@@ -382,8 +382,8 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     async loadQueue() {
       return [...state.queue];
     },
-    async saveQueue(ids) {
-      state.queue = [...ids];
+    async saveQueue(items) {
+      state.queue = items.map((item) => ({ ...item }));
     },
   };
 

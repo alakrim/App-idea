@@ -55,22 +55,15 @@ export function buildSelectionPrompt(
   return { system: SELECTION_SYSTEM_PROMPT, user };
 }
 
-const FENCED_JSON = /```(?:json)?\s*([\s\S]*?)```/;
 
 /**
  * Parses a model reply into a validated selection. A reply wrapped in a Markdown code fence is
  * accepted. Anything else that fails JSON or schema validation returns null.
  */
 export function parseSelectionResponse(raw: string): Selection | null {
-  const fenced = FENCED_JSON.exec(raw);
-  const payload = fenced?.[1] ?? raw;
-  let json: unknown;
-  try {
-    json = JSON.parse(payload.trim());
-  } catch {
-    return null;
-  }
-  const parsed = selectionSchema.safeParse(json);
+  const json = parseJsonReply(raw);
+  if (!json.ok) return null;
+  const parsed = selectionSchema.safeParse(json.value);
   return parsed.success ? parsed.data : null;
 }
 

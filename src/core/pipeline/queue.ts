@@ -7,10 +7,10 @@ import { toPipelineError } from './errors';
 import { runChapter } from './runner';
 
 import type { PipelineEvent } from './context';
-import type { PipelinePorts } from './ports';
-import type { RunOptions } from './runner';
+import type { PersistedQueueItem, PipelinePorts } from './ports';
+import type { RunOptions, RunOutcome } from './runner';
 
-/** Per-chapter options. They are not persisted, so a restored chapter runs with the defaults. */
+/** Per-chapter options. They are persisted with the queue, so a restored chapter keeps them. */
 export type QueueRunOptions = Pick<RunOptions, 'from' | 'force' | 'pdfEngine'>;
 
 export interface QueueSnapshot {
@@ -32,6 +32,7 @@ interface Item {
 
 export class PipelineQueue {
   private items: Item[] = [];
+  private paused = false;
   private draining: Promise<void> | null = null;
   private persisting: Promise<void> = Promise.resolve();
   private readonly listeners = new Set<(snapshot: QueueSnapshot) => void>();
@@ -47,6 +48,22 @@ export class PipelineQueue {
       running: running?.chapterId ?? null,
       pending: this.items.filter((item) => item.controller === null).map((i) => i.chapterId),
     };
+  }
+
+  /**
+   * True after a chapter failed with AUTH (no key, or a rejected one). The queue then keeps every
+   * chapter and waits for `resume()`, so the chapter can run once the user connects OpenRouter.
+   */
+  isPaused(): boolean {
+    return this.paused;
+  }
+
+  /** Clears an AUTH pause and runs the queue again from its first chapter. */
+  resume(): void {
+    if (!this.paused) return;
+    this.paused = false;
+    this.notify();
+    this.kick();
   }
 
   /** Calls `listener` now and after each change. Returns the unsubscribe function. */
@@ -99,12 +116,12 @@ export class PipelineQueue {
     this.notify();
   }
 
-  /** Re-enqueues the chapters persisted by an earlier session, in their saved order. */
+  /** Re-enqueues the chapters persisted by an earlier session, in their saved order and with their options. */
   async restore(): Promise<void> {
     const saved = await this.ports.jobs.loadQueue();
-    for (const chapterId of saved) {
-      if (!this.items.some((item) => item.chapterId === chapterId)) {
-        this.items.push({ chapterId, options: {}, controller: null });
+    for (const entry of saved) {
+      if (!this.items.some((item) => item.chapterId === entry.chapterId)) {
+        this.items.push({ chapterId: entry.chapterId, options: optionsOf(entry), controller: null });
       }
     }
     this.notify();
@@ -124,13 +141,14 @@ export class PipelineQueue {
   }
 
   private async drain(): Promise<void> {
-    while (this.items.length > 0) {
+    while (!this.paused && this.items.length > 0) {
       const item = this.items[0];
       if (!item) break;
       item.controller = new AbortController();
       this.notify();
+      let outcome: RunOutcome | null = null;
       try {
-        await runChapter(item.chapterId, this.ports, {
+        outcome = await runChapter(item.chapterId, this.ports, {
           ...item.options,
           signal: item.controller.signal,
           onEvent: this.options.onEvent,
@@ -143,6 +161,13 @@ export class PipelineQueue {
           error: toPipelineError(thrown),
         });
       }
+      item.controller = null;
+      if (outcome?.status === 'failed' && outcome.error.code === 'AUTH') {
+        // Nothing can run without a key, so the chapter stays first in line for `resume()`.
+        this.paused = true;
+        this.notify();
+        break;
+      }
       this.items = this.items.filter((entry) => entry !== item);
       await this.persist();
       this.notify();
@@ -150,8 +175,11 @@ export class PipelineQueue {
   }
 
   private persist(): Promise<void> {
-    const ids = this.items.map((item) => item.chapterId);
-    const next = this.persisting.then(() => this.ports.jobs.saveQueue(ids));
+    const entries: PersistedQueueItem[] = this.items.map((item) => ({
+      chapterId: item.chapterId,
+      ...item.options,
+    }));
+    const next = this.persisting.then(() => this.ports.jobs.saveQueue(entries));
     // Each save reports its own failure, and a failed save does not block the ones after it.
     this.persisting = next.catch(() => undefined);
     return next;
@@ -161,6 +189,15 @@ export class PipelineQueue {
     const snapshot = this.snapshot();
     for (const listener of this.listeners) listener(snapshot);
   }
+}
+
+/** The run options carried by a persisted entry. Unknown keys are not copied. */
+function optionsOf(entry: PersistedQueueItem): QueueRunOptions {
+  return {
+    ...(entry.from === undefined ? {} : { from: entry.from }),
+    ...(entry.force === undefined ? {} : { force: entry.force }),
+    ...(entry.pdfEngine === undefined ? {} : { pdfEngine: entry.pdfEngine }),
+  };
 }
 
 export function createPipelineQueue(

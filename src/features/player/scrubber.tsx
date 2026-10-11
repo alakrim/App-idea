@@ -9,13 +9,14 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
 import { selectionHaptic } from '@/ui/haptics';
+import { useMotion } from '@/ui/motion';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { hairline, radius, space } from '@/ui/tokens';
 
 import { describeDuration, formatClock, formatRemaining } from './format';
 import { PLAYER } from './layout';
-import { useGlide } from './motion';
+import { glideTo } from './motion';
 import {
   SCRUB_STEP_MS,
   fractionToMs,
@@ -51,7 +52,9 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
   const width = useSharedValue(0);
   const scrubbing = useSharedValue(false);
   const anchor = useSharedValue(0);
-  const fraction = useGlide(msToFraction(positionMs, durationMs));
+  const { reduced } = useMotion();
+  const fraction = useSharedValue(msToFraction(positionMs, durationMs));
+  const targetFraction = msToFraction(positionMs, durationMs);
   const durationShared = useSharedValue(durationMs);
   const reportedMs = useSharedValue(-1);
   const lastStep = useSharedValue(-1);
@@ -59,6 +62,14 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
   useEffect(() => {
     durationShared.value = durationMs;
   }, [durationMs, durationShared]);
+
+  // The thumb follows the playing position, but never while the finger is on it: engine updates
+  // keep arriving during a drag and must not pull the thumb away from the finger.
+  useEffect(() => {
+    if (scrubbing.value) return;
+     
+    fraction.value = glideTo(targetFraction, reduced);
+  }, [targetFraction, reduced, fraction, scrubbing]);
 
   const showPreview = useCallback((ms: number | null) => setPreviewMs(ms), []);
   const haptic = useCallback(() => selectionHaptic(), []);

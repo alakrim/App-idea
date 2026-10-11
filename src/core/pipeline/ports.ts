@@ -97,14 +97,22 @@ export interface ChapterStore {
   deleteAudioFrom(chapterId: Id, segmentIdx: number): Promise<void>;
 }
 
+/** A queued chapter and the options its run was queued with. Persisted, so they survive a restart. */
+export interface PersistedQueueItem {
+  readonly chapterId: string;
+  readonly from?: Stage;
+  readonly force?: boolean;
+  readonly pdfEngine?: PdfEngine;
+}
+
 export interface JobStore {
   get(chapterId: Id, stage: Stage): Promise<Job | null>;
   upsert(job: Job): Promise<void>;
   /** Marks every pending or running job of the chapter as cancelled. */
   cancelUnfinished(chapterId: Id): Promise<void>;
   /** The persisted chapter queue, in order. Used to resume the queue after an app restart. */
-  loadQueue(): Promise<string[]>;
-  saveQueue(chapterIds: readonly string[]): Promise<void>;
+  loadQueue(): Promise<PersistedQueueItem[]>;
+  saveQueue(items: readonly PersistedQueueItem[]): Promise<void>;
 }
 
 export interface UsageLedger {
