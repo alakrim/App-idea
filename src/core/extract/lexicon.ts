@@ -8,15 +8,7 @@
  */
 
 export type LexiconKind =
-  | 'nav'
-  | 'ad'
-  | 'share'
-  | 'related'
-  | 'comments'
-  | 'cookie'
-  | 'donation'
-  | 'byline'
-  | 'timestamp';
+  'nav' | 'ad' | 'share' | 'related' | 'comments' | 'cookie' | 'donation' | 'byline' | 'timestamp';
 
 export interface LexiconRule {
   id: string;

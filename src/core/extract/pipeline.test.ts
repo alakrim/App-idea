@@ -27,7 +27,8 @@ const ARTICLE_HTML = `<!doctype html><html lang="en"><head>
   <div class="cookie-banner"><p>We use cookies to improve your experience.</p><button>Accept all</button></div>
 </body></html>`;
 
-const SPA_HTML = '<!doctype html><html><head><title>Reader</title></head><body><div id="root"></div><script src="/app.js"></script></body></html>';
+const SPA_HTML =
+  '<!doctype html><html><head><title>Reader</title></head><body><div id="root"></div><script src="/app.js"></script></body></html>';
 
 function bytesOf(text: string): Uint8Array {
   return new TextEncoder().encode(text);

@@ -10,7 +10,7 @@ const WORD = /[\p{L}\p{N}]/u;
 /** Terminal characters that close a sentence, including closing quotes and brackets. */
 const TERMINAL = /[.!?…。！？」』”’"')）]$/u;
 
-export function countCjkChars(text: string): number {
+function countCjkChars(text: string): number {
   return text.match(CJK_CHAR)?.length ?? 0;
 }
 

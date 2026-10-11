@@ -30,6 +30,7 @@ describe('LEXICON_RULES table', () => {
 describe('matchRule', () => {
   it.each([
     ['Share this on Facebook', 'share_prompt'],
+    ['Advertisement', 'ad_label'],
     ['Next chapter →', 'nav_next_prev_en'],
     ['下一章', 'nav_next_prev_zh'],
     ['次へ', 'nav_next_prev_ja'],

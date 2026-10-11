@@ -37,9 +37,7 @@ describe('htmlToBlocks', () => {
   });
 
   it('collapses whitespace, including non-breaking and ideographic spaces', () => {
-    expect(htmlToBlocks('<p>  a \n  b&nbsp;c　d  </p>')).toEqual([
-      { tag: 'p', text: 'a b c d' },
-    ]);
+    expect(htmlToBlocks('<p>  a \n  b&nbsp;c　d  </p>')).toEqual([{ tag: 'p', text: 'a b c d' }]);
   });
 
   it('drops script, style and noscript content', () => {

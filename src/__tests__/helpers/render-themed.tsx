@@ -6,9 +6,12 @@ import { ToastProvider } from '@/ui/toast';
 import type { ReactElement } from 'react';
 
 /** Renders with the theme (and toast host) that every app screen expects. */
-export function renderThemed(ui: ReactElement, options: { mode?: ThemeMode } & RenderOptions = {}) {
+export async function renderThemed(
+  ui: ReactElement,
+  options: { mode?: ThemeMode } & RenderOptions = {},
+) {
   const { mode = 'dark', ...renderOptions } = options;
-  return render(
+  return await render(
     <ThemeProvider initialMode={mode}>
       <ToastProvider>{ui}</ToastProvider>
     </ThemeProvider>,

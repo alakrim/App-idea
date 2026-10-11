@@ -24,6 +24,7 @@ import { useToast } from '@/ui/toast';
 import { space, typography, type TextVariant } from '@/ui/tokens';
 
 const GALLERY_FRAME_HEIGHT = 360;
+const GALLERY_COVER_WIDTH = 96;
 const MODE_OPTIONS: readonly SegmentedOption<ThemeMode>[] = [
   { value: 'system', label: 'System' },
   { value: 'dark', label: 'Dark' },
@@ -247,7 +248,7 @@ const styles = StyleSheet.create({
     gap: space.md,
   },
   cover: {
-    width: 96,
+    width: GALLERY_COVER_WIDTH,
   },
   frame: {
     height: GALLERY_FRAME_HEIGHT,

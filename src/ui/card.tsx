@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, View, type StyleProp, type ViewStyle } from 'rea
 import Animated from 'react-native-reanimated';
 
 import { useTheme } from './theme';
-import { gutter, radius, space } from './tokens';
+import { gutter, radius, space, topHighlight } from './tokens';
 import { usePressScale } from './use-press-scale';
 
 import type { ReactNode } from 'react';
@@ -31,7 +31,11 @@ export function Card({
 
   const surface = [
     styles.base,
-    { backgroundColor: raised ? colors.surfaceRaised : colors.surface, borderColor: colors.border },
+    {
+      backgroundColor: raised ? colors.surfaceRaised : colors.surface,
+      borderColor: colors.border,
+      borderTopColor: raised ? topHighlight : colors.border,
+    },
     style,
   ];
 

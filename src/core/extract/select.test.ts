@@ -7,6 +7,7 @@ import {
   parseSelectionResponse,
   selectionSchema,
 } from './select';
+
 import type { Block } from './types';
 
 const p = (text: string): Block => ({ tag: 'p', text });
@@ -27,9 +28,13 @@ describe('buildSelectionPrompt', () => {
     });
     expect(system).toBe(SELECTION_SYSTEM_PROMPT);
     expect(user).toBe(
-      ['Title: Harbour storm', 'Language hint: en', 'Blocks:', '[0] First block.', '[1] Second block.'].join(
-        '\n',
-      ),
+      [
+        'Title: Harbour storm',
+        'Language hint: en',
+        'Blocks:',
+        '[0] First block.',
+        '[1] Second block.',
+      ].join('\n'),
     );
   });
 
@@ -81,7 +86,11 @@ describe('selectionSchema and parseSelectionResponse', () => {
 });
 
 describe('applySelection', () => {
-  const blocks = [p('Alpha narrative line.'), p('Beta narrative line.'), p('Gamma narrative line.')];
+  const blocks = [
+    p('Alpha narrative line.'),
+    p('Beta narrative line.'),
+    p('Gamma narrative line.'),
+  ];
 
   it('keeps the selected blocks in their original order', () => {
     const outcome = applySelection(blocks, [2, 0]);

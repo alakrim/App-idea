@@ -5,6 +5,7 @@ import {
   mainLinkDensity,
   scoreExtraction,
 } from './quality';
+
 import type { Block } from './types';
 
 const SUBJECTS = [
@@ -179,9 +180,10 @@ describe('scoreExtraction', () => {
   });
 
   it('scores a link-heavy junk page below the WebView threshold', () => {
-    const links = Array.from({ length: 30 }, (_, i) => `<a href="/s/${i}">Story link ${i}</a>`).join(
-      '',
-    );
+    const links = Array.from(
+      { length: 30 },
+      (_, i) => `<a href="/s/${i}">Story link ${i}</a>`,
+    ).join('');
     const rawHtml = `<html><body><div class="directory">${links}</div></body></html>`;
     const blocks: Block[] = Array.from({ length: 30 }, (_, i) => ({
       tag: 'li' as const,
@@ -202,9 +204,9 @@ describe('mainLinkDensity', () => {
   });
 
   it('falls back to body when there is no article or main element', () => {
-    expect(mainLinkDensity('<html><body><div><a href="/x">only links</a></div></body></html>')).toBe(
-      1,
-    );
+    expect(
+      mainLinkDensity('<html><body><div><a href="/x">only links</a></div></body></html>'),
+    ).toBe(1);
   });
 
   it('ignores script and style text when measuring the candidate', () => {

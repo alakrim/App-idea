@@ -3,6 +3,7 @@ import { join } from 'path';
 
 import { detectCharset } from './charset';
 import { extractArticle } from './pipeline';
+
 import type { Decision, ExtractResult } from './types';
 
 const FIXTURES = join(__dirname, '__fixtures__');
@@ -103,7 +104,11 @@ describe('end-to-end extractArticle on fixtures', () => {
   });
 
   it('routes a link-only junk page to webview or LLM selection, never accept', async () => {
-    const result = await run('junk-links.html', 'text/html; charset=utf-8', 'https://links.example/');
+    const result = await run(
+      'junk-links.html',
+      'text/html; charset=utf-8',
+      'https://links.example/',
+    );
     expect(['webview', 'llm_select']).toContain(result.decision);
     expect(result.decision).not.toBe('accept');
   });

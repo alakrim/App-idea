@@ -1,4 +1,5 @@
 import { postfilter } from './postfilter';
+
 import type { Block } from './types';
 
 const p = (text: string): Block => ({ tag: 'p', text });
@@ -48,9 +49,7 @@ describe('postfilter', () => {
       'donation_note',
       'timestamp_relative',
     ]);
-    expect(blocks.map((block) => block.text)).toEqual([
-      'She opened the letter and read it twice.',
-    ]);
+    expect(blocks.map((block) => block.text)).toEqual(['She opened the letter and read it twice.']);
   });
 
   it('keeps a long narrative line that contains a lexicon word', () => {
@@ -64,11 +63,11 @@ describe('postfilter', () => {
 
   it('removes a short, repeated line that does not end a sentence', () => {
     const { blocks, removed } = postfilter([
-      p('Advertisement'),
+      p('Pull quote'),
       p('Real text one.'),
-      p('Advertisement'),
+      p('Pull quote'),
       p('Real text two.'),
-      p('Advertisement'),
+      p('Pull quote'),
     ]);
     expect(removed.map((item) => item.reason)).toEqual([
       'repeated_short_block',

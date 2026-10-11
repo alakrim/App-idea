@@ -90,7 +90,6 @@ export const space = {
   xxl: 32,
   xxxl: 48,
 } as const;
-export type SpaceToken = keyof typeof space;
 
 /** Screen gutter. */
 export const gutter = space.lg;
@@ -151,9 +150,6 @@ export const typography = {
   reading: { size: 19, lineHeight: 30, fontFamily: fontFamily.literata.regular },
 } as const satisfies Record<string, TypeStyle>;
 export type TextVariant = keyof typeof typography;
-
-/** User-adjustable reading size range. */
-export const readingSize = { min: 15, max: 26, default: 19 } as const;
 
 /** Respect the OS font scale, but never beyond this multiplier. */
 export const maxFontScale = 1.35;

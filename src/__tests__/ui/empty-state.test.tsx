@@ -5,14 +5,15 @@ import { EmptyState } from '@/ui/empty-state';
 
 import { renderThemed } from '../helpers/render-themed';
 
-// Jest cannot load Reanimated 4's native worklets runtime, and lucide ships untransformed ESM.
+// Jest cannot load Reanimated 4's worklets runtime, and lucide ships untransformed ESM.
 // Both are mocked per file because jest.config.js is owned by the architect.
-jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+jest.mock('react-native-reanimated', () => require('../helpers/reanimated-stub'));
 jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
 
 describe('EmptyState', () => {
-  it('shows the title, the description and one call to action', () => {
-    renderThemed(
+  it('shows the title, the description and one call to action', async () => {
+    await renderThemed(
       <EmptyState
         icon={BookOpen}
         title="Save words while you listen"
@@ -26,9 +27,9 @@ describe('EmptyState', () => {
     expect(screen.getByRole('button', { name: 'Browse' })).toBeOnTheScreen();
   });
 
-  it('runs the action when the call to action is pressed', () => {
+  it('runs the action when the call to action is pressed', async () => {
     const onPress = jest.fn();
-    renderThemed(
+    await renderThemed(
       <EmptyState
         icon={BookOpen}
         title="Nothing here"
@@ -37,13 +38,13 @@ describe('EmptyState', () => {
       />,
     );
 
-    fireEvent.press(screen.getByRole('button', { name: 'Add' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Add' }));
 
     expect(onPress).toHaveBeenCalledTimes(1);
   });
 
-  it('renders without a call to action when none is given', () => {
-    renderThemed(<EmptyState icon={BookOpen} title="Quiet" description="Nothing to do." />);
+  it('renders without a call to action when none is given', async () => {
+    await renderThemed(<EmptyState icon={BookOpen} title="Quiet" description="Nothing to do." />);
 
     expect(screen.queryByRole('button')).toBeNull();
   });
