@@ -1,14 +1,20 @@
 /* eslint-disable @typescript-eslint/no-require-imports -- mock factories require react and react-native lazily */
 import { act, fireEvent, screen } from '@testing-library/react-native';
 
+import { OpenRouterProvider } from '@/app-shell/openrouter-provider';
+import { DEFAULT_NARRATION } from '@/core/defaults';
 import { OnboardingFlow } from '@/features/settings/onboarding/onboarding-flow';
+import { createOpenRouterClient } from '@/services/openrouter';
 import { setApiKey } from '@/services/secrets';
 
 import { renderThemed } from '../helpers/render-themed';
 
- 
 jest.mock('react-native-reanimated', () => require('../helpers/reanimated-stub'));
 jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
+jest.mock('expo-audio', () => ({
+  useAudioPlayer: () => ({ replace: jest.fn(), play: jest.fn() }),
+  useAudioPlayerStatus: () => ({ playing: false }),
+}));
 jest.mock('expo-router', () => ({
   router: { push: jest.fn(), back: jest.fn(), replace: jest.fn() },
   Stack: { Screen: () => null },
@@ -33,7 +39,7 @@ jest.mock('react-native-safe-area-context', () => {
 jest.mock('@/services/secrets', () => ({
   isWellFormedApiKey: (key: string) => key.startsWith('sk-or-') && key.length >= 20,
   setApiKey: jest.fn(),
-  getApiKey: jest.fn(),
+  getApiKey: jest.fn(() => Promise.resolve(null)),
   clearApiKey: jest.fn(),
   useApiKeyStatus: jest.fn(() => 'missing'),
 }));
@@ -47,7 +53,13 @@ jest.mock('@/features/settings/settings-store', () => ({
 const VALID_KEY = 'sk-or-v1-0123456789abcdefghijkl';
 const mockCheck = jest.fn();
 const mockPatch = jest.fn();
-const mockSettings = { onboardingDone: false, contentNoticeAccepted: false };
+const mockSettings = {
+  onboardingDone: false,
+  contentNoticeAccepted: false,
+  uiLanguage: 'en',
+  defaultTargetLang: null,
+  narration: DEFAULT_NARRATION,
+};
 
 const VALID_ACCOUNT = {
   valid: true,
@@ -60,7 +72,18 @@ const VALID_ACCOUNT = {
 
 async function renderFlow() {
   const onFinish = jest.fn();
-  const view = await renderThemed(<OnboardingFlow onFinish={onFinish} />);
+  // Without a key the catalogue cannot load, so the narrator step shows its no-key states.
+  const client = createOpenRouterClient({
+    getApiKey: async () => null,
+    appUrl: 'https://lectio.app',
+    appTitle: 'Lectio',
+    fetchImpl: () => Promise.reject(new Error('no network in tests')),
+  });
+  const view = await renderThemed(
+    <OpenRouterProvider client={client}>
+      <OnboardingFlow onFinish={onFinish} />
+    </OpenRouterProvider>,
+  );
   return { view, onFinish };
 }
 
@@ -69,7 +92,7 @@ describe('onboarding flow', () => {
     jest.clearAllMocks();
   });
 
-  it('walks through value, key and notice, then saves onboarding as done', async () => {
+  it('walks through value, key, narrator and notice, then saves onboarding as done', async () => {
     const { onFinish } = await renderFlow();
 
     expect(screen.getByRole('header', { name: 'Any page, read to you.' })).toBeOnTheScreen();
@@ -77,6 +100,9 @@ describe('onboarding flow', () => {
 
     expect(await screen.findByRole('header', { name: 'Connect OpenRouter' })).toBeOnTheScreen();
     await fireEvent.press(screen.getByRole('button', { name: 'Skip for now' }));
+
+    expect(await screen.findByRole('header', { name: 'Choose your narrator' })).toBeOnTheScreen();
+    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
 
     expect(await screen.findByRole('header', { name: 'Before you import' })).toBeOnTheScreen();
     await fireEvent.press(screen.getByRole('button', { name: 'I understand' }));

@@ -27,6 +27,8 @@ export function narrationSummary(narration: Settings['narration']): string {
   if (narration.provider === 'device') {
     return `Device voice · ${narration.voice}`;
   }
+  // A narrator with no voice of its own is named by its model alone.
+  if (narration.voice === '') return modelLabel(narration.model);
   return `${modelLabel(narration.model)} · ${narration.voice}`;
 }
 

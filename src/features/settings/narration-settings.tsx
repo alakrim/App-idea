@@ -3,43 +3,42 @@ import { useEffect, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { useOpenRouter } from '@/app-shell/openrouter-provider';
-import { DEFAULT_NARRATION } from '@/core/defaults';
 import { estimateSpeechCost } from '@/core/llm/cost';
+import { voicesForLanguage } from '@/core/narration/voices';
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
 import { ErrorState } from '@/ui/error-state';
-import { Skeleton } from '@/ui/skeleton';
 import { Slider } from '@/ui/slider';
 import { Text } from '@/ui/text';
 import { TextField } from '@/ui/text-field';
 import { useTheme } from '@/ui/theme';
 import { hairline, minTouchTarget, radius, space } from '@/ui/tokens';
 
+import { DeviceVoiceCard } from './device-voice-card';
 import { loadDeviceVoices, type DeviceVoice } from './device-voices';
 import { formatUsdPrecise, modelLabel } from './format';
 import { isModelMissing, useModelCatalog } from './model-catalog';
 import { ModelNotice } from './model-notice';
 import { ModelRow } from './model-row';
 import { displayName } from './model-search';
+import {
+  narratableModels,
+  narrationForDevice,
+  narrationWithVoice,
+  supportsStyleInstructions,
+} from './narration-choices';
+import { shortLanguageName } from './narrator-copy';
+import { NarratorOptionList } from './narrator-option-list';
 import { previewSampleFor } from './preview-sample';
 import { useSettings } from './settings-store';
 import { useVoicePreview } from './use-voice-preview';
-import { DeviceVoiceCard, VoiceTierCard } from './voice-tier-card';
-import {
-  buildVoiceTiers,
-  narrationForDevice,
-  narrationForModel,
-  narrationWithVoice,
-  narratableModels,
-  supportsStyleInstructions,
-} from './voice-tiers';
 
 const SPEED_MIN = 0.8;
 const SPEED_MAX = 1.2;
 const SPEED_STEP = 0.05;
 const STYLE_MAX_LENGTH = 200;
 
-/** Narration settings: model tiers with live prices, voices, style, speed and a preview. */
+/** Narration settings: the three narrators, voices, style, speed and a preview. */
 export function NarrationPanel() {
   const client = useOpenRouter();
   const { settings, patch } = useSettings();
@@ -66,15 +65,18 @@ export function NarrationPanel() {
         : [],
     [speech.state],
   );
-  const tiers = useMemo(() => buildVoiceTiers(models, DEFAULT_NARRATION.model), [models]);
+  const lang = settings.defaultTargetLang ?? settings.uiLanguage;
   const selectedModel = models.find((model) => model.id === narration.model);
   const missing = !isDevice && isModelMissing(speech.state, narration.model);
   const voices = isDevice
     ? (deviceVoices ?? []).map((voice) => ({ id: voice.identifier, label: voice.name }))
-    : (selectedModel?.supportedVoices ?? []).map((voice) => ({ id: voice, label: voice }));
+    : voicesForLanguage(narration.model, selectedModel?.supportedVoices ?? [], lang).map(
+        (voice) => ({ id: voice, label: voice }),
+      );
+  const takesNoVoice = !isDevice && selectedModel?.supportedVoices.length === 0;
   const styleSupported = !isDevice && supportsStyleInstructions(narration.model);
 
-  const sample = previewSampleFor(settings.defaultTargetLang ?? settings.uiLanguage);
+  const sample = previewSampleFor(lang);
   const estimate = selectedModel ? estimateSpeechCost(selectedModel, sample.text.length) : 0;
   const preview = useVoicePreview(client);
 
@@ -131,25 +133,20 @@ export function NarrationPanel() {
       ) : null}
 
       <View style={styles.section}>
-        <SectionLabel title="Voice model" />
-        {speech.state.status === 'loading' ? (
-          <Skeleton height={space.xxxl + space.xl} label="Loading voice models" />
-        ) : null}
+        <SectionLabel title="Narrator" />
         {speech.state.status === 'unavailable' ? (
           <ErrorState
-            title="Voice models are unavailable"
+            title="Narrator prices are unavailable"
             message={speech.state.message}
             onRetry={speech.reload}
           />
         ) : null}
-        {tiers.map((tier) => (
-          <VoiceTierCard
-            key={tier.id}
-            tier={tier}
-            selected={!isDevice && tier.model.id === narration.model}
-            onSelect={() => patch({ narration: narrationForModel(narration, tier.model) })}
-          />
-        ))}
+        <NarratorOptionList
+          narration={narration}
+          lang={lang}
+          catalog={speech.state}
+          onChoose={(next) => patch({ narration: next })}
+        />
         <DeviceVoiceCard
           selected={isDevice}
           onSelect={() => {
@@ -176,9 +173,12 @@ export function NarrationPanel() {
         {voices.length === 0 ? (
           <Card>
             <Text variant="caption" tone="muted">
-              {isDevice
-                ? 'This phone has no installed voices to choose from. Install a speech language in the system settings.'
-                : 'This model lists no voices right now.'}
+              {emptyVoiceCopy({
+                isDevice,
+                loading: speech.state.status === 'loading',
+                takesNoVoice: takesNoVoice === true,
+                lang,
+              })}
             </Text>
           </Card>
         ) : (
@@ -300,6 +300,23 @@ export function NarrationPanel() {
       </View>
     </>
   );
+}
+
+interface EmptyVoiceState {
+  isDevice: boolean;
+  loading: boolean;
+  takesNoVoice: boolean;
+  lang: string;
+}
+
+/** Why the voice list is empty. Each case says what the user can do about it. */
+function emptyVoiceCopy({ isDevice, loading, takesNoVoice, lang }: EmptyVoiceState): string {
+  if (isDevice) {
+    return 'This phone has no installed voices to choose from. Install a speech language in the system settings.';
+  }
+  if (loading) return 'Loading the voices…';
+  if (takesNoVoice) return 'This narrator picks its own voice, so there is nothing to choose.';
+  return `This model has no voice for ${shortLanguageName(lang)}. Pick another narrator, or change the target language.`;
 }
 
 function SectionLabel({ title }: { title: string }) {

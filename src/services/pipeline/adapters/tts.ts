@@ -1,9 +1,10 @@
 /*
- * Tts: one narration passage through OpenRouter's /audio/speech. MP3 models return MP3. PCM-only
- * models (Gemini TTS) return raw PCM, which is wrapped in a WAV header so every player can read it.
- * The device voice cannot write a file, so a profile that uses it cannot produce a stored segment.
+ * Tts: one narration passage through OpenRouter's /audio/speech. The reply's content type decides
+ * the container: MP3 is stored as MP3, WAV as WAV, and raw PCM (Gemini TTS) is wrapped in a WAV
+ * header so every player can read it. The device voice cannot write a file, so a profile that uses
+ * it cannot produce a stored segment.
  */
-import { parsePcmContentType, pcmToWav, speechFormatFor } from '@/core/narration/formats';
+import { speechFormatFor, storableAudio } from '@/core/narration/formats';
 import { StageFailure } from '@/core/pipeline/errors';
 import type { Tts } from '@/core/pipeline/ports';
 import type { OpenRouterClient } from '@/services/openrouter';
@@ -31,19 +32,12 @@ export function createTts({ openrouter }: TtsDeps): Tts {
         ...(profile.style === null ? {} : { instructions: profile.style }),
         signal,
       });
-      if (reply.formatUsed === 'pcm') {
-        const pcm = new Uint8Array(reply.audio);
-        return {
-          bytes: pcmToWav(pcm, parsePcmContentType(reply.contentType)),
-          mime: 'audio/wav',
-          costUsd: reply.costUsd,
-        };
-      }
-      return {
-        bytes: new Uint8Array(reply.audio),
-        mime: reply.contentType,
-        costUsd: reply.costUsd,
-      };
+      const stored = storableAudio(
+        new Uint8Array(reply.audio),
+        reply.contentType,
+        reply.formatUsed,
+      );
+      return { bytes: stored.bytes, mime: stored.mime, costUsd: reply.costUsd };
     },
   };
 }

@@ -7,6 +7,7 @@
 import type { AudioSegment, NarrationProfile } from '@/core/domain';
 import { throwIfCancelled } from '@/core/llm/transport';
 import { wavDurationMs } from '@/core/narration/formats';
+import { segmentMaxCharsFor } from '@/core/narration/options';
 import { countCodePoints } from '@/core/text/build';
 import { planTtsSegments } from '@/core/text/chunk';
 import { detectScript } from '@/core/text/normalize';
@@ -60,7 +61,7 @@ async function buildPlan(ctx: StageContext): Promise<Plan> {
     : { ...ctx.record.narration, style: null };
 
   const spoken = sentences.map((s) => spokenSentence(s));
-  const groups = planTtsSegments(spoken);
+  const groups = planTtsSegments(spoken, { maxChars: segmentMaxCharsFor(profile.model) });
   const segments = groups.map((group, idx) => {
     const members = spoken.filter(
       (s) => s.idx >= group.sentenceStart && s.idx <= group.sentenceEnd,

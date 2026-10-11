@@ -1,8 +1,10 @@
 import {
+  containerOf,
   DEFAULT_PCM_FORMAT,
   parsePcmContentType,
   pcmToWav,
   speechFormatFor,
+  storableAudio,
   wavDurationMs,
 } from './formats';
 
@@ -123,5 +125,36 @@ describe('wavDurationMs', () => {
     noFormat.set(new TextEncoder().encode('RIFFxxxxWAVE'), 0);
     noFormat.set(new TextEncoder().encode('data'), 12);
     expect(wavDurationMs(noFormat)).toBeNull();
+  });
+});
+
+describe('containerOf and storableAudio', () => {
+  const pcm = new Uint8Array([1, 0, 2, 0]);
+
+  it('reads the container from the content type before the requested format', () => {
+    expect(containerOf('audio/pcm;rate=24000;channels=1', 'mp3')).toBe('pcm');
+    expect(containerOf('audio/wav', 'mp3')).toBe('wav');
+    expect(containerOf('audio/x-wav', 'pcm')).toBe('wav');
+    expect(containerOf('audio/mpeg', 'wav')).toBe('mp3');
+    expect(containerOf('audio/mp3', 'pcm')).toBe('mp3');
+  });
+
+  it('falls back to the requested format for an unknown or missing content type', () => {
+    expect(containerOf('application/octet-stream', 'mp3')).toBe('mp3');
+    expect(containerOf(null, 'wav')).toBe('wav');
+    expect(containerOf(undefined, 'pcm')).toBe('pcm');
+  });
+
+  it('wraps PCM as WAV with the rate from its content type', () => {
+    const stored = storableAudio(pcm, 'audio/pcm;rate=16000;channels=1', 'pcm');
+    expect(stored.mime).toBe('audio/wav');
+    expect(stored.bytes).toEqual(pcmToWav(pcm, { rate: 16_000, channels: 1 }));
+  });
+
+  it('stores WAV and MP3 as they are', () => {
+    const wav = new Uint8Array([82, 73, 70, 70]);
+    expect(storableAudio(wav, 'audio/wav', 'wav')).toEqual({ bytes: wav, mime: 'audio/wav' });
+    const mp3 = new Uint8Array([0xff, 0xfb]);
+    expect(storableAudio(mp3, 'audio/mpeg', 'mp3')).toEqual({ bytes: mp3, mime: 'audio/mpeg' });
   });
 });

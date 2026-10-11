@@ -4,7 +4,7 @@ import type { OpenRouterModel, OutputModality } from '@/services/openrouter';
 import { supportsStructuredOutput } from '@/services/openrouter';
 
 import { formatContext, formatHourlyCost, formatPerMillion } from './format';
-import { hourlyNarrationCost, narrationForModel, narratableModels } from './voice-tiers';
+import { hourlyNarrationCost, narrationForModel, narratableModels } from './narration-choices';
 
 /**
  * The model pickers the app offers. One route serves all of them, selected by `kind`, so each
@@ -46,7 +46,13 @@ function describeText(model: OpenRouterModel): string {
 
 function describeSpeech(model: OpenRouterModel): string {
   const voices = model.supportedVoices.length;
-  return `${voices} voices · ${formatHourlyCost(hourlyNarrationCost(model))} of narration`;
+  const voiceText = voices === 0 ? 'Own voice' : `${voices} voices`;
+  return `${voiceText} · ${formatHourlyCost(hourlyNarrationCost(model))} of narration`;
+}
+
+/** The language the narration is for: the app's target language, or the UI language when none is set. */
+function targetLang(settings: Pick<Settings, 'defaultTargetLang' | 'uiLanguage'>): string {
+  return settings.defaultTargetLang ?? settings.uiLanguage;
 }
 
 export function modelKindConfig(kind: ModelKind, settings: Settings): ModelKindConfig {
@@ -93,7 +99,9 @@ export function modelKindConfig(kind: ModelKind, settings: Settings): ModelKindC
         selectedId: settings.narration.model,
         recommendedId: DEFAULT_NARRATION.model,
         describe: describeSpeech,
-        patchFor: (model) => ({ narration: narrationForModel(settings.narration, model) }),
+        patchFor: (model) => ({
+          narration: narrationForModel(settings.narration, model, targetLang(settings)),
+        }),
       };
   }
 }

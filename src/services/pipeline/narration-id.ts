@@ -21,7 +21,7 @@ export function narrationProfileId(settings: NarrationSettings): string {
 export function narrationProfileFor(settings: NarrationSettings): NarrationProfile {
   return {
     id: narrationProfileId(settings),
-    name: `${settings.voice} (${settings.model})`,
+    name: settings.voice === '' ? settings.model : `${settings.voice} (${settings.model})`,
     provider: settings.provider,
     model: settings.model,
     voice: settings.voice,

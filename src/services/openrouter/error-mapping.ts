@@ -26,6 +26,17 @@ const REFUSED_SETTING_PATTERN =
 /** The refused setting is an audio format, so the message can name the format. */
 const AUDIO_FORMAT_PATTERN = /\b(pcm|mp3|wav|opus|flac|aac)\b|audio format|output format/i;
 
+/** What the transport learned about a 429: whether it is a daily allowance, and the copy for it. */
+export interface LimitContext {
+  daily: boolean;
+  /** The user-facing copy for a daily limit. Each feature words its own. */
+  dailyMessage?: string;
+}
+
+/** The copy for a daily free-model limit when the feature has none of its own. */
+export const DAILY_LIMIT_MESSAGE =
+  'OpenRouter has used up the daily allowance for this free model. Try again tomorrow, or choose a paid model in Settings.';
+
 interface UpstreamError {
   message: string | null;
   limitSource: string | null;
@@ -54,6 +65,7 @@ export function failureFromHttp(
   status: number,
   bodyText: string,
   retryAfterMs: number | null,
+  limit: LimitContext = { daily: false },
 ): PipelineFailure {
   const upstream = readUpstreamError(bodyText);
   const detail = upstream.message ?? `HTTP ${status}`;
@@ -118,6 +130,13 @@ export function failureFromHttp(
   if (status === 408) {
     return pipelineFailure('NETWORK', 'OpenRouter took too long to answer. Try again.', {
       retryable: true,
+      detail,
+    });
+  }
+  if (status === 429 && limit.daily) {
+    // A daily allowance does not refill on a retry, so the request is not repeated.
+    return pipelineFailure('RATE_LIMITED', limit.dailyMessage ?? DAILY_LIMIT_MESSAGE, {
+      retryable: false,
       detail,
     });
   }

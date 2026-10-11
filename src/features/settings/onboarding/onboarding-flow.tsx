@@ -27,10 +27,11 @@ import {
 } from '@/ui/tokens';
 
 import { ConnectStep } from './connect-step';
+import { NarratorStep } from './narrator-step';
 import { WelcomeIllustration } from './welcome-illustration';
 
-const STEP_COUNT = 3;
-type StepIndex = 0 | 1 | 2;
+const STEP_COUNT = 4;
+type StepIndex = 0 | 1 | 2 | 3;
 
 export interface OnboardingFlowProps {
   /** Called after the notice is accepted and onboarding is saved as done. */
@@ -38,15 +39,16 @@ export interface OnboardingFlowProps {
 }
 
 /**
- * First-run onboarding: value, key, notice. Only the notice is required. Saving the notice marks
- * onboarding done, which is what the tab layout checks before showing the app.
+ * First-run onboarding: value, key, narrator, notice. Only the notice is required. Saving the notice
+ * marks onboarding done, which is what the tab layout checks before showing the app.
  */
 export function OnboardingFlow({ onFinish }: OnboardingFlowProps) {
   const { colors } = useTheme();
   const { patch } = useSettings();
   const [step, setStep] = useState<StepIndex>(0);
 
-  const next = () => setStep((current) => (current < 2 ? ((current + 1) as StepIndex) : current));
+  const next = () =>
+    setStep((current) => (current < STEP_COUNT - 1 ? ((current + 1) as StepIndex) : current));
 
   const accept = () => {
     patch({ contentNoticeAccepted: true, onboardingDone: true });
@@ -65,7 +67,8 @@ export function OnboardingFlow({ onFinish }: OnboardingFlowProps) {
       >
         {step === 0 ? <ValueStep onNext={next} /> : null}
         {step === 1 ? <ConnectStep onDone={next} onSkip={next} /> : null}
-        {step === 2 ? <NoticeStep onAccept={accept} /> : null}
+        {step === 2 ? <NarratorStep onDone={next} /> : null}
+        {step === 3 ? <NoticeStep onAccept={accept} /> : null}
       </Animated.View>
     </SafeAreaView>
   );

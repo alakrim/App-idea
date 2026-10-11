@@ -2,10 +2,19 @@
  * Speech formats. Gemini TTS models accept only raw PCM: `response_format: "mp3"` is refused with
  * HTTP 400, and `pcm` returns 16-bit little-endian mono samples with a content type such as
  * `audio/pcm;rate=24000;channels=1`. The app stores that audio as WAV, which every player reads.
+ * Some models answer in WAV, and their files are stored as they are. The container is decided by
+ * the reply's content type, because a model can answer in a format other than the one asked for.
  * Pure, so it runs in Node tests and on the device.
  */
 
-export type SpeechFormat = 'mp3' | 'pcm';
+export type SpeechFormat = 'mp3' | 'pcm' | 'wav';
+export type AudioContainer = SpeechFormat;
+
+export interface StorableAudio {
+  readonly bytes: Uint8Array;
+  /** The MIME type to store the file under. */
+  readonly mime: 'audio/mpeg' | 'audio/wav';
+}
 
 export interface PcmFormat {
   readonly rate: number;
@@ -23,6 +32,40 @@ const MAX_CHANNELS = 8;
 /** The format a model is asked for. Gemini TTS is PCM-only, and every other speech model takes MP3. */
 export function speechFormatFor(modelId: string): SpeechFormat {
   return /gemini.*tts/i.test(modelId) ? 'pcm' : 'mp3';
+}
+
+/**
+ * The container a speech reply is really in. The content type wins, because a model can answer in
+ * another format than the one asked for. The requested format is the fallback for an unknown type.
+ */
+export function containerOf(
+  contentType: string | null | undefined,
+  requested: SpeechFormat,
+): AudioContainer {
+  const type = (contentType ?? '').toLowerCase();
+  if (type.includes('pcm')) return 'pcm';
+  if (type.includes('wav')) return 'wav';
+  if (type.includes('mpeg') || type.includes('mp3')) return 'mp3';
+  return requested;
+}
+
+/**
+ * Audio ready to store. Raw PCM is wrapped in a WAV header, WAV is stored as it is, and MP3 is
+ * stored as it is.
+ */
+export function storableAudio(
+  audio: Uint8Array,
+  contentType: string | null | undefined,
+  requested: SpeechFormat,
+): StorableAudio {
+  switch (containerOf(contentType, requested)) {
+    case 'pcm':
+      return { bytes: pcmToWav(audio, parsePcmContentType(contentType)), mime: 'audio/wav' };
+    case 'wav':
+      return { bytes: audio, mime: 'audio/wav' };
+    case 'mp3':
+      return { bytes: audio, mime: 'audio/mpeg' };
+  }
 }
 
 /**

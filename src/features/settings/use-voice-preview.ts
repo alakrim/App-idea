@@ -1,11 +1,9 @@
 import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
-import { File } from 'expo-file-system';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { parsePcmContentType, pcmToWav, speechFormatFor } from '@/core/narration/formats';
+import { storableAudio, speechFormatFor } from '@/core/narration/formats';
 import { PipelineFailure } from '@/services/openrouter';
 import type { OpenRouterClient } from '@/services/openrouter';
-import { previewsDirectory, writeBytes } from '@/services/storage';
 
 import {
   cachedPreview,
@@ -14,29 +12,6 @@ import {
   savePreview,
 } from './preview-cache';
 import { previewCacheKey } from './preview-sample';
-
-/*
- * PCM-only voices (Gemini TTS) answer with raw PCM, which is cached as WAV beside the MP3 clips.
- * The MP3 cache file name is fixed by preview-cache, so WAV clips get their own `.wav` name.
- */
-function wavPreviewFile(key: string): File {
-  return new File(previewsDirectory(), `${key}.wav`);
-}
-
-function cachedWavPreview(key: string): File | null {
-  try {
-    const file = wavPreviewFile(key);
-    return file.exists ? file : null;
-  } catch {
-    return null;
-  }
-}
-
-function saveWavPreview(key: string, wav: Uint8Array): File {
-  const file = wavPreviewFile(key);
-  writeBytes(file, wav);
-  return file;
-}
 
 export interface PreviewRequest {
   model: string;
@@ -98,13 +73,10 @@ export function useVoicePreview(client: OpenRouterClient) {
           signal: controller.signal,
         });
         if (controller.signal.aborted) return;
-        const saved =
-          result.formatUsed === 'pcm'
-            ? saveWavPreview(
-                key,
-                pcmToWav(new Uint8Array(result.audio), parsePcmContentType(result.contentType)),
-              )
-            : savePreview(key, result.audio);
+        const saved = savePreview(
+          key,
+          storableAudio(new Uint8Array(result.audio), result.contentType, result.formatUsed),
+        );
         playUri(saved.uri);
       } catch (error) {
         if (controller.signal.aborted) return;
@@ -119,7 +91,7 @@ export function useVoicePreview(client: OpenRouterClient) {
   const preview = useCallback(
     (request: PreviewRequest) => {
       const key = previewCacheKey(request);
-      const cached = cachedPreview(key) ?? cachedWavPreview(key);
+      const cached = cachedPreview(key);
       if (cached) {
         playUri(cached.uri);
         return;

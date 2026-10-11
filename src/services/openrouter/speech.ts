@@ -1,4 +1,5 @@
 import type { SpeechFormat } from '@/core/narration/formats';
+import { FREE_NARRATOR_DAILY_LIMIT_MESSAGE } from '@/core/narration/options';
 
 import { PipelineFailure, pipelineFailure } from './errors';
 
@@ -6,11 +7,19 @@ import type { Transport } from './transport';
 
 export type { SpeechFormat } from '@/core/narration/formats';
 
-/** Gemini TTS answers an mp3 request with this 400 message. The retry asks for pcm instead. */
-const PCM_ONLY_PATTERN = /only supports response_format="pcm"/;
+/**
+ * A 400 that names the one format a speech model accepts, for example `only supports
+ * response_format="pcm"` (Gemini TTS) or `only supports response_format=wav`. The first group
+ * that matches gives the format for the single retry.
+ */
+const SUPPORTED_FORMAT_PATTERNS: readonly RegExp[] = [
+  /only supports?\s+(?:response_format\s*[=:]\s*)?["']?(mp3|pcm|wav)\b/i,
+  /supported (?:response[_ ])?formats?\s*(?:are|is|:)?\s*["']?(mp3|pcm|wav)\b/i,
+];
 
 export interface SpeechInput {
   model: string;
+  /** The voice id. Empty for a model that takes no voice, and then the field is left out. */
   voice: string;
   input: string;
   format: SpeechFormat;
@@ -27,7 +36,7 @@ export interface SpeechResult {
   generationId: string | null;
   /** The speech endpoint returns no usage, so the cost is estimated with cost.ts. */
   costUsd: number | null;
-  /** The format the audio is in. It differs from the one asked for when a PCM-only model was retried. */
+  /** The format the audio is in. It differs from the one asked for when a model was retried. */
   formatUsed: SpeechFormat;
 }
 
@@ -39,7 +48,19 @@ interface SpeechDeps {
 const DEFAULT_CONTENT_TYPE: Record<SpeechFormat, string> = {
   mp3: 'audio/mpeg',
   pcm: 'audio/pcm',
+  wav: 'audio/wav',
 };
+
+/** The format a speech model names when it refuses `requested`, or null when it names none. */
+export function formatSupportedBy(message: string, requested: SpeechFormat): SpeechFormat | null {
+  for (const pattern of SUPPORTED_FORMAT_PATTERNS) {
+    const named = pattern.exec(message)?.[1]?.toLowerCase();
+    if (named === 'mp3' || named === 'pcm' || named === 'wav') {
+      return named === requested ? null : named;
+    }
+  }
+  return null;
+}
 
 /** Synthesizes one passage with POST /audio/speech. The caller splits longer text first. */
 export async function synthesizeSpeech(
@@ -65,13 +86,15 @@ export async function synthesizeSpeech(
         body: {
           model: input.model,
           input: input.input,
-          voice: input.voice,
+          // A model with no voices takes none. JSON.stringify drops an undefined field.
+          voice: input.voice === '' ? undefined : input.voice,
           response_format: format,
           speed: input.speed,
           instructions: input.instructions,
         },
         accept: 'audio/*',
         signal: input.signal,
+        dailyLimitMessage: FREE_NARRATOR_DAILY_LIMIT_MESSAGE,
       },
       async (res) => {
         const audio = await res.arrayBuffer();
@@ -93,17 +116,16 @@ export async function synthesizeSpeech(
   try {
     return await request(input.format);
   } catch (error) {
-    // Self-healing: a model that only speaks PCM refuses mp3 once, and then the same text is
-    // requested as PCM. The caller reads `formatUsed` to know what it received.
-    if (input.format === 'mp3' && isPcmOnlyRefusal(error)) return request('pcm');
+    // Self-healing: a model that names the one format it accepts is asked again in that format,
+    // once. The caller reads `formatUsed` to know what it received.
+    const retryFormat = refusedFormatOf(error, input.format);
+    if (retryFormat !== null) return request(retryFormat);
     throw error;
   }
 }
 
-function isPcmOnlyRefusal(error: unknown): boolean {
-  return (
-    error instanceof PipelineFailure &&
-    error.error.detail !== undefined &&
-    PCM_ONLY_PATTERN.test(error.error.detail)
-  );
+function refusedFormatOf(error: unknown, requested: SpeechFormat): SpeechFormat | null {
+  if (!(error instanceof PipelineFailure)) return null;
+  const { detail } = error.error;
+  return detail === undefined ? null : formatSupportedBy(detail, requested);
 }

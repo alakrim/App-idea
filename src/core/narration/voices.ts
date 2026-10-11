@@ -34,9 +34,13 @@ const MULTILINGUAL_MODEL = /gemini|elevenlabs|openai|gpt-/i;
 const GEMINI_DEFAULT_VOICE = 'Kore';
 const KOKORO_DEFAULT_VOICE = 'af_heart';
 
-function primaryLanguage(lang: string): string {
+/** The language family of a tag: `pt-BR` and `pt-PT` are both `pt`. */
+export function primaryLanguage(lang: string): string {
   return (lang.split('-')[0] ?? lang).toLowerCase();
 }
+
+/** The languages Kokoro speaks, read from its voice-letter map. */
+export const KOKORO_LANGUAGES: readonly Lang[] = [...new Set(Object.values(KOKORO_LANGUAGE))];
 
 /** The language of one voice of one model, or null when the id does not show it. */
 export function voiceLanguage(modelId: string, voiceId: string): VoiceLanguage | null {

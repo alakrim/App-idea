@@ -129,3 +129,45 @@ describe('createTts', () => {
     expect(requests).toHaveLength(0);
   });
 });
+
+describe('createTts: containers and voiceless narrators', () => {
+  const FREE: NarrationProfile = {
+    ...MP3_MODEL,
+    id: 'profile-free',
+    model: 'fish-audio/s2.1-pro-free:free',
+    voice: '',
+  };
+
+  it('stores a WAV reply as WAV, with its header intact', async () => {
+    const wav = pcmToWav(new Uint8Array(24_000 * 2), { rate: 24_000, channels: 1 });
+    const { openrouter, requests } = fakeClient(() =>
+      reply({ audio: Uint8Array.from(wav).buffer, contentType: 'audio/wav', formatUsed: 'wav' }),
+    );
+
+    const result = await createTts({ openrouter }).synthesize({
+      text: 'Chapter one.',
+      profile: { ...MP3_MODEL, model: 'fish-audio/s2.1-pro-free:free' },
+      signal: new AbortController().signal,
+    });
+
+    expect(requests[0]?.format).toBe('mp3');
+    expect(result.mime).toBe('audio/wav');
+    expect(result.bytes).toEqual(wav);
+    expect(wavDurationMs(result.bytes)).toBe(1_000);
+  });
+
+  it('sends an empty voice so the request omits it, and stores the MP3 reply', async () => {
+    const mp3 = new Uint8Array([0xff, 0xfb, 0x90, 0x00]);
+    const { openrouter, requests } = fakeClient(() => reply({ audio: mp3.buffer }));
+
+    const result = await createTts({ openrouter }).synthesize({
+      text: 'Chapter one.',
+      profile: FREE,
+      signal: new AbortController().signal,
+    });
+
+    expect(requests[0]?.voice).toBe('');
+    expect(result.mime).toBe('audio/mpeg');
+    expect(Array.from(result.bytes)).toEqual(Array.from(mp3));
+  });
+});

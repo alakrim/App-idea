@@ -110,6 +110,8 @@ export interface FakeOptions {
   ) => LlmReply | undefined | Promise<LlmReply | undefined>;
   readonly tts?: (text: string, profile: NarrationProfile) => TtsResult | Promise<TtsResult>;
   readonly catalog?: Record<string, CatalogModel>;
+  /** Overrides fields of the chapter's narration profile. */
+  readonly narration?: Partial<NarrationProfile>;
 }
 
 export interface FakeState {
@@ -239,7 +241,7 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     chapters: new Map([[CHAPTER_ID, chapter]]),
     series,
     settings: TEST_SETTINGS,
-    narration: DEFAULT_NARRATION,
+    narration: { ...DEFAULT_NARRATION, ...options.narration },
     sourceText: new Map(),
     sentences: new Map(),
     memories: new Map(),

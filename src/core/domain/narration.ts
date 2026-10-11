@@ -10,7 +10,8 @@ export const NarrationProfileSchema = z.object({
   name: z.string().min(1),
   provider: TtsProviderIdSchema,
   model: z.string().min(1),
-  voice: z.string().min(1),
+  /** Empty for a model that takes no voice, such as the free narrator. The request then omits it. */
+  voice: z.string(),
   /** Steering instructions, when the model supports them. */
   style: z.string().nullable(),
   /** Synthesis-time speed, 0.8 to 1.2. */

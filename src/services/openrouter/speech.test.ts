@@ -1,6 +1,9 @@
+import { FREE_NARRATOR_DAILY_LIMIT_MESSAGE } from '@/core/narration/options';
+
 import { createFakeFetch, errorResponse } from './__fixtures__/fake-fetch';
 import { createOpenRouterClient } from './client';
 import { PipelineFailure } from './errors';
+import { formatSupportedBy } from './speech';
 
 import type { Route } from './__fixtures__/fake-fetch';
 
@@ -167,6 +170,126 @@ describe('synthesizeSpeech', () => {
       });
       expect(result.formatUsed).toBe('mp3');
       expect(mp3.calls).toHaveLength(1);
+    });
+  });
+});
+
+describe('synthesizeSpeech: optional voice and format self-heal', () => {
+  it('leaves the voice out of the request for a model that takes none', async () => {
+    const { client, calls } = makeClient(() => audioResponse([1, 2, 3]));
+
+    await client.synthesizeSpeech({
+      ...speechInput,
+      model: 'fish-audio/s2.1-pro-free:free',
+      voice: '',
+      format: 'mp3',
+      input: 'Chapter one.',
+    });
+
+    expect(calls[0]?.body).toEqual({
+      model: 'fish-audio/s2.1-pro-free:free',
+      input: 'Chapter one.',
+      response_format: 'mp3',
+      instructions: 'Calm audiobook narrator.',
+    });
+    expect(calls[0]?.body).not.toHaveProperty('voice');
+  });
+
+  it('retries once in the WAV format a model names, and reports WAV', async () => {
+    const wavReply = () =>
+      new Response(new Uint8Array([82, 73, 70, 70]), {
+        status: 200,
+        headers: { 'content-type': 'audio/wav' },
+      });
+    const { client, calls } = makeClient((call) =>
+      (call.body as { response_format: string }).response_format === 'mp3'
+        ? errorResponse(400, 'This model only supports response_format=wav')
+        : wavReply(),
+    );
+
+    const result = await client.synthesizeSpeech({
+      ...speechInput,
+      model: 'fish-audio/s2.1-pro-free:free',
+      voice: '',
+      format: 'mp3',
+      input: 'Hi.',
+    });
+
+    expect(calls.map((call) => (call.body as { response_format: string }).response_format)).toEqual(
+      ['mp3', 'wav'],
+    );
+    expect(result.formatUsed).toBe('wav');
+    expect(result.contentType).toBe('audio/wav');
+  });
+
+  it('does not retry when the model names the format that was already asked for', async () => {
+    const { client, calls } = makeClient(() =>
+      errorResponse(400, 'This model only supports response_format=mp3'),
+    );
+
+    await expect(
+      client.synthesizeSpeech({ ...speechInput, format: 'mp3', input: 'Hi.' }),
+    ).rejects.toBeInstanceOf(PipelineFailure);
+    expect(calls).toHaveLength(1);
+  });
+
+  it('does not retry on a refusal that names no format', async () => {
+    const { client, calls } = makeClient(() =>
+      errorResponse(400, 'This model does not support the speed setting'),
+    );
+
+    await expect(
+      client.synthesizeSpeech({ ...speechInput, format: 'mp3', input: 'Hi.' }),
+    ).rejects.toBeInstanceOf(PipelineFailure);
+    expect(calls).toHaveLength(1);
+  });
+});
+
+describe('formatSupportedBy', () => {
+  it('reads the format from each wording OpenRouter uses', () => {
+    expect(formatSupportedBy('Gemini TTS only supports response_format="pcm"', 'mp3')).toBe('pcm');
+    expect(formatSupportedBy('only supports response_format=wav', 'mp3')).toBe('wav');
+    expect(formatSupportedBy('Supported formats: mp3, wav', 'pcm')).toBe('mp3');
+    expect(formatSupportedBy("supported response formats are 'wav'", 'mp3')).toBe('wav');
+  });
+
+  it('returns null when the message names no format, or the requested one', () => {
+    expect(formatSupportedBy('something else went wrong', 'mp3')).toBeNull();
+    expect(formatSupportedBy('only supports response_format="mp3"', 'mp3')).toBeNull();
+    expect(formatSupportedBy('only supports response_format="flac"', 'mp3')).toBeNull();
+  });
+});
+
+describe('synthesizeSpeech daily free-model limit', () => {
+  it('stops at one request and says the narrator is used up for the day', async () => {
+    const fake = createFakeFetch(() =>
+      errorResponse(429, 'Rate limit exceeded: free-models-per-day'),
+    );
+    const client = createOpenRouterClient({
+      getApiKey: async () => 'sk-or-v1-TESTKEY',
+      appUrl: 'https://lectio.app',
+      appTitle: 'Lectio',
+      fetchImpl: fake.fetchImpl,
+      maxRetries: 3,
+      sleep: async () => undefined,
+    });
+
+    const error = await client
+      .synthesizeSpeech({
+        ...speechInput,
+        model: 'fish-audio/s2.1-pro-free:free',
+        voice: '',
+        format: 'mp3',
+        input: 'Hi.',
+      })
+      .catch((caught: unknown) => caught);
+
+    expect(fake.calls).toHaveLength(1);
+    expect(error).toBeInstanceOf(PipelineFailure);
+    expect((error as PipelineFailure).error).toMatchObject({
+      code: 'RATE_LIMITED',
+      retryable: false,
+      message: FREE_NARRATOR_DAILY_LIMIT_MESSAGE,
     });
   });
 });

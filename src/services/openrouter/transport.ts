@@ -1,5 +1,6 @@
 import { failureFromHttp } from './error-mapping';
 import { PipelineFailure, pipelineFailure, redactFailure } from './errors';
+import { isDailyLimit } from './rate-limit';
 import { backoffDelayMs, parseRetryAfter } from './retry';
 
 import type { ZodType } from 'zod';
@@ -25,6 +26,8 @@ export interface TransportRequest {
   body?: unknown;
   accept: string;
   signal?: AbortSignal;
+  /** The copy shown when the free model's daily allowance is used up. */
+  dailyLimitMessage?: string;
 }
 
 type BodyReader<T> = (res: Response) => Promise<T>;
@@ -142,6 +145,10 @@ async function attemptOnce<T>(
         res.status,
         bodyText,
         parseRetryAfter(res.headers.get('retry-after'), config.now),
+        {
+          daily: isDailyLimit(bodyText, res.headers, config.now()),
+          ...(req.dailyLimitMessage === undefined ? {} : { dailyMessage: req.dailyLimitMessage }),
+        },
       );
     }
     return await readBody(res);

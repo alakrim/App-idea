@@ -93,3 +93,35 @@ describe('failureFromHttp 402 handling', () => {
     });
   });
 });
+
+describe('failureFromHttp 429 handling', () => {
+  const minuteBody = JSON.stringify({ error: { message: 'Too many requests', code: 429 } });
+  const dailyBody = JSON.stringify({
+    error: { message: 'Rate limit exceeded: free-models-per-day', code: 429 },
+  });
+
+  it('keeps a per-minute 429 retryable, and honours Retry-After', () => {
+    const failure = failureFromHttp(429, minuteBody, 2000);
+    expect(failure.error).toMatchObject({ code: 'RATE_LIMITED', retryable: true });
+    expect(failure.retryAfterMs).toBe(2000);
+  });
+
+  it('maps a daily free-model allowance to a non-retryable RATE_LIMITED with the caller copy', () => {
+    const failure = failureFromHttp(429, dailyBody, null, {
+      daily: true,
+      dailyMessage: 'The free narrator is used up for today.',
+    });
+    expect(failure.error).toEqual({
+      code: 'RATE_LIMITED',
+      message: 'The free narrator is used up for today.',
+      retryable: false,
+      detail: 'Rate limit exceeded: free-models-per-day',
+    });
+  });
+
+  it('uses the generic daily copy when the feature has none of its own', () => {
+    const failure = failureFromHttp(429, dailyBody, null, { daily: true });
+    expect(failure.error.message).toContain('daily allowance for this free model');
+    expect(failure.error.retryable).toBe(false);
+  });
+});

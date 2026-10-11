@@ -1,4 +1,5 @@
 import { pcmToWav } from '@/core/narration/formats';
+import { FREE_NARRATOR_MODEL_ID } from '@/core/narration/options';
 import { estimateSpeechSeconds } from '@/core/text/speech-rate';
 
 import { CHAPTER_ID, createFakePorts, mp3Bytes } from '../__fixtures__/fake-ports';
@@ -101,5 +102,38 @@ describe('narrate stage: a chapter whose voice changes format', () => {
     expect(segments.every((s) => s.fileUri.endsWith('.wav'))).toBe(true);
     expect(segments.every((s) => s.durationMs === 1_000)).toBe(true);
     expect(fake.state.ttsCalls.slice(before).every((call) => call.voice === 'Puck')).toBe(true);
+  });
+});
+
+describe('narrate stage: segment size per narrator', () => {
+  /** One paragraph of about 1,240 characters, so the segment size alone decides the split. */
+  const LONG_PARAGRAPH = Array.from(
+    { length: 20 },
+    (_, i) => `Sentence number ${i} keeps the story moving forward slowly.`,
+  ).join(' ');
+
+  it('splits at the default 600 characters for a narrator without a size of its own', async () => {
+    const fake = createFakePorts({ sourceText: LONG_PARAGRAPH, targetLang: null });
+
+    await runChapter(CHAPTER_ID, fake.ports);
+
+    const texts = fake.state.ttsCalls.map((call) => call.text);
+    expect(texts.length).toBeGreaterThan(1);
+    for (const text of texts) expect(text.length).toBeLessThanOrEqual(600);
+  });
+
+  it('sends the free narrator a passage of up to 1,800 characters in one request', async () => {
+    const fake = createFakePorts({
+      sourceText: LONG_PARAGRAPH,
+      targetLang: null,
+      narration: { model: FREE_NARRATOR_MODEL_ID, voice: '' },
+    });
+
+    await runChapter(CHAPTER_ID, fake.ports);
+
+    expect(fake.state.ttsCalls).toHaveLength(1);
+    expect(fake.state.ttsCalls[0]?.text.length).toBeGreaterThan(600);
+    expect(fake.state.ttsCalls[0]?.text.length).toBeLessThanOrEqual(1_800);
+    expect(fake.state.ttsCalls[0]?.voice).toBe('');
   });
 });

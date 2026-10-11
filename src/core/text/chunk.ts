@@ -16,7 +16,7 @@ export interface LlmChunk {
 }
 
 export interface TtsPlanOptions {
-  /** Longest segment in characters (code points). Defaults to 600. */
+  /** Longest segment in characters (code points). Defaults to DEFAULT_TTS_MAX_CHARS. */
   maxChars?: number;
   /** Paragraphs shorter than this may be joined with a following text paragraph. Defaults to 120. */
   minChars?: number;
@@ -29,7 +29,8 @@ export interface LlmPlanOptions {
 
 export type TtsPlanInput = Pick<Sentence, 'idx' | 'paragraphIdx' | 'kind' | 'charCount'>;
 
-const DEFAULT_MAX_CHARS = 600;
+/** Longest narration segment in characters, when the narrator does not ask for another size. */
+export const DEFAULT_TTS_MAX_CHARS = 600;
 const DEFAULT_MIN_CHARS = 120;
 
 interface OpenSegment {
@@ -50,7 +51,7 @@ export function planTtsSegments(
   sentences: readonly TtsPlanInput[],
   options: TtsPlanOptions = {},
 ): TtsSegment[] {
-  const maxChars = options.maxChars ?? DEFAULT_MAX_CHARS;
+  const maxChars = options.maxChars ?? DEFAULT_TTS_MAX_CHARS;
   const minChars = options.minChars ?? DEFAULT_MIN_CHARS;
   assertPositiveInteger('maxChars', maxChars);
   assertNonNegativeInteger('minChars', minChars);
