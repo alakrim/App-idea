@@ -1,0 +1,12 @@
+docs/
+.claude/
+.expo/
+dist/
+android/
+ios/
+web-build/
+package-lock.json
+expo-env.d.ts
+CLAUDE.md
+AGENTS.md
+assets/

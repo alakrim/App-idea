@@ -34,3 +34,4 @@ _(none yet)_
 
 ## Notes
 - The `haiku-worker` agent file loads on the next session start. Until then, workers are spawned as general-purpose with model=haiku and effort=high, using the same instructions file.
+- B1 scaffold installed: Expo SDK 57 (`expo@57.0.27`, `expo-router@57.0.25`), React Native `0.86.3`, React `19.2.3`. Also TypeScript `6.0.3`, Jest `29.7.0` (`jest-expo@57.0.5`), ESLint `9.39.5`, Prettier `3.9.10`.
