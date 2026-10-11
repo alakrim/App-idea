@@ -22,9 +22,15 @@ _Last updated: 2026-10-11 by architect_
 | Task | Brief | Status |
 |---|---|---|
 | P1 Pipeline core (transport v2, stages, runner, queue, cost preview) | docs/briefs/P1-pipeline-core.md | running |
-| F0 App infrastructure (providers, settings, secrets, storage) | docs/briefs/F0-app-infrastructure.md | running |
-| A1 Procedural ambience base pack + verify script | docs/briefs/A1-sound-pack.md | running |
-| A2 Audio engine + playback scheduler + player store | docs/briefs/A2-audio-engine.md | running |
+| A1 Procedural ambience pack, revision (phase-locked tones, statistical seam check) | docs/briefs/A1-sound-pack.md | running |
+| U1 Settings + onboarding UI | docs/briefs/U1-settings-onboarding.md | running |
+| U2 Library, series, add chapter, chapter view | docs/briefs/U2-library-series-chapters.md | running |
+
+## Next up
+- **P2** pipeline services: implement the ports (DB repos, OpenRouter transport v2 adapter, fetcher, hidden WebView extractor, PDF via file-parser, TTS, audio files), a real `PipelineFacade`, keep-awake while processing, a completion notification.
+- **U3** player UI: full player (cover backdrop, scrubber, synced sentence text, bilingual, speed, sleep timer, ambience chip), mini-player wiring, and the player empty-state fix.
+- **U4** Ask (spoiler-safe Q&A chat with citations) + Vocab (save word/phrase with in-context explanation).
+- **S1 device spike** checklist (from A2): lock-screen next/prev/seek is not exposed by expo-audio 57; segment swap gap; pitch at 2×; audio session ownership expo-audio vs audio-api; interruptions; ducking latency < 100 ms; 45 min background ambience.
 
 ## UI review notes (architect, from web screenshots of B2), for the M2 feature UI brief
 - Large titles hug the top edge. Add `sm` top padding under the safe area.
@@ -81,3 +87,4 @@ _Last updated: 2026-10-11 by architect_
 - [I1] Analysis JSON schema: describe cue items fully (nullable fields) instead of `z.unknown()` (ADR-0006 §2).
 - [I1] The extraction stack adds +2.06 MB Hermes bytecode. Acceptable for now; revisit in M8 (lazy require inside the pipeline worker).
 - [I1] ✅ All 11 fixes done and verified (819 core/node tests).
+- ✅ Verified + committed: F5 translate (84 tests), F0 app infrastructure (55 tests), A2 audio engine (133 tests). Repo total ≈ 1,000 tests.
