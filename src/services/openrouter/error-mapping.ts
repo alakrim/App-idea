@@ -18,10 +18,11 @@ const IN_FLIGHT_BUDGET_SOURCE = 'openrouter_in_flight_budget';
 
 /** Matches OpenRouter's "this model cannot be served" messages, which arrive as 400 or 404. */
 const MODEL_UNAVAILABLE_PATTERN =
-  /model[^.]*not (found|available|exist)|no endpoints|not a valid model|unknown model/i;
+  /model[^.]*not (found|available|exist|supported)|no endpoints|not a valid model|unknown model/i;
 
 /** A 400 that refuses a setting: "Gemini TTS only supports response_format=\"pcm\"", "not supported". */
-const REFUSED_SETTING_PATTERN = /unsupported|not supported|does not support|doesn't support|only supports/i;
+const REFUSED_SETTING_PATTERN =
+  /unsupported|not supported|does not support|doesn't support|only supports/i;
 /** The refused setting is an audio format, so the message can name the format. */
 const AUDIO_FORMAT_PATTERN = /\b(pcm|mp3|wav|opus|flac|aac)\b|audio format|output format/i;
 
@@ -93,6 +94,13 @@ export function failureFromHttp(
       { retryable: false, detail },
     );
   }
+  if (status === 404 || (status === 400 && MODEL_UNAVAILABLE_PATTERN.test(detail))) {
+    return pipelineFailure(
+      'MODEL_UNAVAILABLE',
+      'This model is not available on OpenRouter right now. Choose another one in Settings.',
+      { retryable: false, detail },
+    );
+  }
   if (status === 400 && REFUSED_SETTING_PATTERN.test(detail)) {
     // Not retryable: the same request is refused again. Retrying with another format is the
     // caller's decision (speech.ts does it for PCM-only models).
@@ -106,13 +114,6 @@ export function failureFromHttp(
           "This model doesn't accept one of the settings the app sent. Choose another model or voice in Settings.",
           { retryable: false, detail },
         );
-  }
-  if (status === 404 || (status === 400 && MODEL_UNAVAILABLE_PATTERN.test(detail))) {
-    return pipelineFailure(
-      'MODEL_UNAVAILABLE',
-      'This model is not available on OpenRouter right now. Choose another one in Settings.',
-      { retryable: false, detail },
-    );
   }
   if (status === 408) {
     return pipelineFailure('NETWORK', 'OpenRouter took too long to answer. Try again.', {

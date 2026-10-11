@@ -1,7 +1,9 @@
+import type { Db } from '@/db/types';
+
 import { PROBES, runDiagnostics, type DiagnosticsDeps } from './run-all';
+
 import type { ProbeOutcome, ProbeSpec } from './probe';
 
-import type { Db } from '@/db/types';
 
 /** Dependencies where every probe that touches the device is a stand-in. */
 function fakeDeps(overrides: Partial<DiagnosticsDeps> = {}): DiagnosticsDeps {

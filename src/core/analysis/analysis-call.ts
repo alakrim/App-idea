@@ -73,6 +73,7 @@ export async function runAnalysisCall(
     user: request.user,
     jsonSchema: ANALYSIS_JSON_SCHEMA,
     signal,
+    cacheSystem: true,
   });
   const firstOutcome = parseAnalysisReply(first.text);
   if (firstOutcome.ok) return { ...firstOutcome.value, usage: first.usage };
@@ -82,6 +83,7 @@ export async function runAnalysisCall(
     user: `${request.user}\n\nYour previous reply could not be used (${firstOutcome.reason}). Reply again with only the corrected JSON object.`,
     jsonSchema: ANALYSIS_JSON_SCHEMA,
     signal,
+    cacheSystem: true,
   });
   const usage = addUsage(first.usage, second.usage);
   const repaired = parseAnalysisReply(second.text);

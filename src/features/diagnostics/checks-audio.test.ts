@@ -1,4 +1,3 @@
-import type { InstalledBed } from '@/audio/ambience-pack';
 import type {
   MixerBuffer,
   MixerBufferSource,
@@ -7,6 +6,7 @@ import type {
   MixerNode,
   MixerParam,
 } from '@/audio/ambience-mixer';
+import type { InstalledBed } from '@/audio/ambience-pack';
 
 import { checkBedDecode, checkDuckingRamps, checkLockScreenSession, PLAYBACK_BED } from './checks-audio';
 

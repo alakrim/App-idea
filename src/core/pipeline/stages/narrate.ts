@@ -5,11 +5,12 @@
  * made from different input (a new voice, a new style, or edited text).
  */
 import type { AudioSegment, NarrationProfile } from '@/core/domain';
-import { SPEECH_CHARS_PER_SECOND } from '@/core/llm/cost';
 import { throwIfCancelled } from '@/core/llm/transport';
+import { wavDurationMs } from '@/core/narration/formats';
 import { countCodePoints } from '@/core/text/build';
 import { planTtsSegments } from '@/core/text/chunk';
 import { detectScript } from '@/core/text/normalize';
+import { estimateSpeechSeconds } from '@/core/text/speech-rate';
 import { estimateSentenceOffsets } from '@/core/text/timing';
 
 import { stableHash } from '../hash';
@@ -128,11 +129,11 @@ async function execute(ctx: StageContext, plan: Plan): Promise<void> {
         const result = await tts.synthesize({ text: segment.text, profile, signal: ctx.signal });
         const ext = extensionFor(result.mime);
         const uri = await audio.write(ctx.chapterId, segment.idx, result.bytes, ext);
-        const measured = ext === 'mp3' ? mp3DurationMs(result.bytes) : null;
+        const measured = measureDurationMs(ext, result.bytes);
         const durationMs =
           measured !== null && measured > 0
             ? measured
-            : Math.max(1, Math.round((segment.chars / SPEECH_CHARS_PER_SECOND) * 1000));
+            : Math.max(1, Math.round(estimateSpeechSeconds(segment.text) * 1000));
         await ctx.meter.recordSpeech(profile.model, {
           chars: segment.chars,
           audioSeconds: durationMs / 1000,
@@ -190,6 +191,13 @@ function matches(stored: AudioSegment | undefined, planned: PlannedSegment | und
     stored.sentenceEnd === planned.sentenceEnd &&
     stored.inputHash === planned.hash
   );
+}
+
+/** Exact length from the file header when the format has one (MP3 frames, WAV data), else null. */
+function measureDurationMs(ext: string, bytes: Uint8Array): number | null {
+  if (ext === 'mp3') return mp3DurationMs(bytes);
+  if (ext === 'wav') return wavDurationMs(bytes);
+  return null;
 }
 
 function extensionFor(mime: string): string {

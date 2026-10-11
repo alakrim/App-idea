@@ -21,6 +21,9 @@ import { PROBES, runDiagnostics } from './run-all';
 
 import type { ProbeResult, ProbeStatus } from './probe';
 
+/** Values longer than this wrap under their label instead of sitting beside it. */
+const STACKED_VALUE_LENGTH = 28;
+
 const STATUS_BADGE: Record<ProbeStatus, { label: string; tone: BadgeTone }> = {
   pass: { label: 'Pass', tone: 'success' },
   fail: { label: 'Fail', tone: 'danger' },
@@ -147,13 +150,19 @@ function ProbeRow({ label, result }: { label: string; result: ProbeResult | null
   );
 }
 
+/** A label and its value. Long values, such as JSON, take the full row width under the label. */
 function Row({ label, value }: { label: string; value: string }) {
+  const stacked = value.length > STACKED_VALUE_LENGTH;
   return (
-    <View style={styles.row}>
+    <View style={[styles.row, stacked ? styles.stacked : null]}>
       <Text variant="caption" tone="muted" style={styles.rowLabel}>
         {label}
       </Text>
-      <Text variant="caption" style={styles.rowValue} selectable>
+      <Text
+        variant="caption"
+        style={[styles.rowValue, stacked ? styles.valueStacked : null]}
+        selectable
+      >
         {value}
       </Text>
     </View>
@@ -178,11 +187,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: space.md,
   },
+  stacked: {
+    flexDirection: 'column',
+    gap: space.xxs,
+  },
   rowLabel: {
     flexShrink: 0,
   },
   rowValue: {
     flex: 1,
+    minWidth: 0,
     textAlign: 'right',
+  },
+  valueStacked: {
+    flex: 0,
+    textAlign: 'left',
   },
 });

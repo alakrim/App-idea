@@ -15,6 +15,11 @@ export interface LlmRequest {
   readonly user: string;
   readonly jsonSchema?: JsonSchemaSpec;
   readonly signal?: AbortSignal;
+  /**
+   * The system text is static across calls, so the provider may cache it. Providers that need an
+   * explicit cache breakpoint get one; the others cache automatically and ignore the flag.
+   */
+  readonly cacheSystem?: boolean;
 }
 
 export interface LlmUsage {

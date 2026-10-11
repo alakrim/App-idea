@@ -3,13 +3,13 @@ import { StyleSheet } from 'react-native';
 
 import { renderThemed } from '@/__tests__/helpers/render-themed';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
-jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
-
 import { ReadingText } from './reading-text';
 
 import type { ReadingParagraph } from './chapter-data';
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
+jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
 
 const PARAGRAPHS: ReadingParagraph[] = [
   {

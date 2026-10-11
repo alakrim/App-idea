@@ -2,7 +2,7 @@
  * End to end: a URL goes in, a chapter comes out ready to play. The real composition runs (the
  * repos on an in-memory SQLite with the shipped migrations, the core queue and runner, the adapters,
  * the OpenRouter client), over a fake network that serves the article, the catalog, canned structured
- * replies and tiny valid mp3 frames. Nothing reaches a real service.
+ * replies, tiny valid mp3 frames and PCM for Gemini TTS. Nothing reaches a real service.
  */
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
@@ -242,11 +242,12 @@ describe('pipeline end to end (URL to playable chapter)', () => {
     const spokenMs = segments.reduce((sum, s) => sum + s.durationMs, 0);
     expect(chapterRepo.get(db, chapterId)?.durationMs).toBe(spokenMs);
 
-    // Files written: the extracted text and one mp3 per segment.
+    // Files written: the extracted text and one file per segment. The narration model is Gemini
+    // TTS, which returns PCM, so the segments are stored as WAV.
     const written = [...files.entries.keys()];
     expect(written).toContain(`sources/${chapterId}/text.txt`);
     for (const segment of segments) {
-      expect(written).toContain(`audio/${chapterId}/${segment.idx}.mp3`);
+      expect(written).toContain(`audio/${chapterId}/${segment.idx}.wav`);
     }
 
     // Usage rows: one per model call, with the real cost OpenRouter reported.

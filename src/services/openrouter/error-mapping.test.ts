@@ -32,4 +32,64 @@ describe('failureFromHttp 402 handling', () => {
     expect(failure.error).toMatchObject({ code: 'RATE_LIMITED', retryable: true });
     expect(failure.retryAfterMs).toBeNull();
   });
+
+  describe('failureFromHttp refused settings (400)', () => {
+    // The exact live body from the 2026-10-11 test: Gemini TTS refuses mp3.
+    const LIVE_PCM_ONLY = JSON.stringify({
+      error: { message: 'Gemini TTS only supports response_format="pcm"', code: 400 },
+    });
+
+    it('maps the live PCM-only 400 to a non-retryable, specific audio-format message', () => {
+      const failure = failureFromHttp(400, LIVE_PCM_ONLY, null);
+      expect(failure.error).toEqual({
+        code: 'MODEL_UNAVAILABLE',
+        message: "This voice model can't produce that audio format.",
+        detail: 'Gemini TTS only supports response_format="pcm"',
+        retryable: false,
+      });
+      expect(failure.retryAfterMs).toBeNull();
+    });
+
+    it('gives an unsupported setting that is not a format a settings message, not a retry', () => {
+      const failure = failureFromHttp(
+        400,
+        JSON.stringify({ error: { message: 'instructions is unsupported for this model' } }),
+        null,
+      );
+      expect(failure.error).toMatchObject({ code: 'MODEL_UNAVAILABLE', retryable: false });
+      expect(failure.error.message).toMatch(/settings/);
+      expect(failure.error.message).not.toMatch(/Try again/);
+    });
+
+    it('keeps a 400 that names no refused setting as a non-retryable generic failure', () => {
+      const failure = failureFromHttp(
+        400,
+        JSON.stringify({ error: { message: 'bad schema' } }),
+        null,
+      );
+      expect(failure.error).toMatchObject({ code: 'UNKNOWN', retryable: false });
+    });
+
+    it('keeps a model that is not supported on OpenRouter as a model message', () => {
+      const failure = failureFromHttp(
+        400,
+        JSON.stringify({ error: { message: 'model acme/x is not supported' } }),
+        null,
+      );
+      expect(failure.error).toMatchObject({ code: 'MODEL_UNAVAILABLE', retryable: false });
+      expect(failure.error.message).toMatch(/not available on OpenRouter/);
+    });
+
+    it('never maps a refused 400 to the retryable generic "Try again"', () => {
+      for (const message of [
+        'Gemini TTS only supports response_format="pcm"',
+        'unsupported parameter: speed',
+        'output format wav is not supported',
+      ]) {
+        const failure = failureFromHttp(400, JSON.stringify({ error: { message } }), null);
+        expect(failure.error.retryable).toBe(false);
+        expect(failure.error.message).not.toMatch(/Try again/);
+      }
+    });
+  });
 });

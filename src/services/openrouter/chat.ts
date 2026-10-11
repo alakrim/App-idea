@@ -249,6 +249,11 @@ export interface ChatRawInput {
    */
   jsonSchema?: { name: string; schema: object };
   signal?: AbortSignal;
+  /**
+   * Marks the system text as a cacheable prefix for models that need an explicit breakpoint
+   * (anthropic/*, google/gemini*, qwen/*). Other models cache automatically, and the flag does nothing.
+   */
+  cacheSystem?: boolean;
 }
 
 export interface ChatRawResult {
@@ -284,16 +289,16 @@ export async function chatRaw(deps: ChatDeps, input: ChatRawInput): Promise<Chat
       ? `${input.system}\n\n${jsonOnlyInstruction(input.jsonSchema.schema as Record<string, unknown>)}`
       : input.system;
 
+  const systemMessage: ChatMessage = {
+    role: 'system',
+    content:
+      input.cacheSystem && needsExplicitCache(input.model)
+        ? [{ type: 'text', text: system, cache_control: { type: 'ephemeral' } }]
+        : system,
+  };
   const completion = await sendChatCompletion(
     deps,
-    requestBody(
-      input,
-      [
-        { role: 'system', content: system },
-        { role: 'user', content: input.user },
-      ],
-      responseFormat,
-    ),
+    requestBody(input, [systemMessage, { role: 'user', content: input.user }], responseFormat),
     input.signal,
   );
   return {
@@ -302,6 +307,13 @@ export async function chatRaw(deps: ChatDeps, input: ChatRawInput): Promise<Chat
     generationId: completion.generationId,
     model: completion.model,
   };
+}
+
+/** Providers that cache a prompt only when it carries an explicit `cache_control` breakpoint. */
+const EXPLICIT_CACHE_MODEL = /^(anthropic\/|google\/gemini|qwen\/)/;
+
+function needsExplicitCache(modelId: string): boolean {
+  return EXPLICIT_CACHE_MODEL.test(modelId);
 }
 
 function requestBody(

@@ -224,3 +224,17 @@ describe('analyzeChapter', () => {
     ).rejects.toThrow(RangeError);
   });
 });
+
+describe('analysis calls and the prompt cache', () => {
+  it('asks for a cacheable system prompt on the chunk call and on its repair call', async () => {
+    const seen: (boolean | undefined)[] = [];
+    let n = 0;
+    const transport: LlmTransport = async (req) => {
+      seen.push(req.cacheSystem);
+      n += 1;
+      return replyWith(n === 1 ? 'not json' : memoryJson('Short.'));
+    };
+    await analyzeChapter({ ...BASE_INPUT, sentences: sentences(5, 100), callLlm: transport });
+    expect(seen).toEqual([true, true]);
+  });
+});

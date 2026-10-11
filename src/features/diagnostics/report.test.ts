@@ -1,5 +1,6 @@
-import type { EnvironmentInfo } from './environment';
 import { buildReport, reportToJson, REPORT_SCHEMA, REPORT_VERSION, summarize } from './report';
+
+import type { EnvironmentInfo } from './environment';
 import type { ProbeResult } from './probe';
 
 const ENVIRONMENT: EnvironmentInfo = {

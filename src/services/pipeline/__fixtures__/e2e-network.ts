@@ -28,6 +28,11 @@ export function mp3Bytes(frames: number): Uint8Array {
   return bytes;
 }
 
+/** Raw 16-bit little-endian mono PCM at 24 kHz, as Gemini TTS returns it: `samples` of silence. */
+export function pcmBytes(samples: number): Uint8Array {
+  return new Uint8Array(new ArrayBuffer(samples * 2));
+}
+
 export interface NetworkCall {
   readonly method: string;
   readonly path: string;
@@ -191,7 +196,21 @@ export function createNetwork(pageHtml: string): Network {
         });
       }
       const input = String(body?.input ?? '');
-      const frames = Math.max(2, Math.round((input.length / 15) * 38));
+      const seconds = Math.max(0.2, input.length / 15);
+      // Live behaviour: Gemini TTS refuses mp3 and answers pcm with a rate and channel count.
+      const model = String(body?.model ?? '');
+      if (/gemini.*tts/i.test(model) && body?.response_format !== 'pcm') {
+        return jsonResponse(
+          { error: { message: 'Gemini TTS only supports response_format="pcm"' } },
+          { status: 400 },
+        );
+      }
+      if (body?.response_format === 'pcm') {
+        return new Response(pcmBytes(Math.round(seconds * 24_000)).buffer as ArrayBuffer, {
+          headers: { 'content-type': 'audio/pcm;rate=24000;channels=1' },
+        });
+      }
+      const frames = Math.max(2, Math.round(seconds * 38));
       return new Response(mp3Bytes(frames).buffer as ArrayBuffer, {
         headers: { 'content-type': 'audio/mpeg' },
       });

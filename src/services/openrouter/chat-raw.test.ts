@@ -119,4 +119,63 @@ describe('chatRaw', () => {
       chatRaw(deps, { model: PLAIN, system: 's', user: 'u', signal: controller.signal }),
     ).rejects.toMatchObject({ error: { code: 'CANCELLED' } });
   });
+
+  describe('prompt caching (cacheSystem)', () => {
+    const CACHE_BLOCK = {
+      type: 'text',
+      text: 'Pick blocks.',
+      cache_control: { type: 'ephemeral' },
+    };
+
+    it.each([['anthropic/claude-haiku-5.5'], ['google/gemini-3.8-flash'], ['qwen/qwen-3-coder']])(
+      'puts an explicit cache_control breakpoint on the system block for %s',
+      async (model) => {
+        const { deps, completions } = makeDeps(() => chatReply('{}'));
+        await chatRaw(deps, {
+          model,
+          system: 'Pick blocks.',
+          user: 'Blocks...',
+          cacheSystem: true,
+        });
+        const body = bodyOf(completions()[0]);
+        expect(body.messages).toEqual([
+          { role: 'system', content: [CACHE_BLOCK] },
+          { role: 'user', content: 'Blocks...' },
+        ]);
+      },
+    );
+
+    it('sends a plain system string for providers that cache automatically', async () => {
+      const { deps, completions } = makeDeps(() => chatReply('{}'));
+      await chatRaw(deps, { model: PLAIN, system: 'Pick blocks.', user: 'u', cacheSystem: true });
+      expect(bodyOf(completions()[0]).messages).toEqual([
+        { role: 'system', content: 'Pick blocks.' },
+        { role: 'user', content: 'u' },
+      ]);
+    });
+
+    it('sends a plain system string when caching is not asked for', async () => {
+      const { deps, completions } = makeDeps(() => chatReply('{}'));
+      await chatRaw(deps, { model: 'anthropic/claude-haiku-5.5', system: 'S', user: 'u' });
+      expect(bodyOf(completions()[0]).messages).toEqual([
+        { role: 'system', content: 'S' },
+        { role: 'user', content: 'u' },
+      ]);
+    });
+
+    it('keeps the cache block on the system prompt when the reply needs a JSON-only instruction', async () => {
+      const { deps, completions } = makeDeps(() => chatReply('{"keep":[0]}'));
+      await chatRaw(deps, {
+        model: 'anthropic/claude-haiku-5.5',
+        system: 'Pick blocks.',
+        user: 'u',
+        jsonSchema: { name: 'index_selection', schema: SCHEMA },
+        cacheSystem: true,
+      });
+      const body = bodyOf(completions()[0]);
+      expect(body.response_format).toBeUndefined();
+      const [system] = body.messages as { content: { text: string }[] }[];
+      expect(system?.content[0]?.text).toContain('Respond with only a single JSON object');
+    });
+  });
 });

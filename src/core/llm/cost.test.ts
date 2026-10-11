@@ -24,8 +24,21 @@ describe('estimateSpeechCost', () => {
     // 54,000 characters = 3,600 s of audio = 90,000 audio tokens at $6/M, plus 13,500 text tokens
     // at $0.50/M. This matches the R1 figure of about $0.55 per hour.
     const expected = 90_000 * 0.000006 + 13_500 * 0.0000005;
-    expect(estimateSpeechCost(tokenPriced, 54_000)).toBeCloseTo(expected, 10);
-    expect(estimateSpeechCost(tokenPriced, 54_000)).toBeCloseTo(0.54675, 5);
+    expect(estimateSpeechCost(tokenPriced, 54_000, 3_600)).toBeCloseTo(expected, 10);
+    expect(estimateSpeechCost(tokenPriced, 54_000, 3_600)).toBeCloseTo(0.54675, 5);
+  });
+
+  it('times characters at the Latin rate (14 a second) when no seconds are given', () => {
+    // 14,000 characters = 1,000 s = 25,000 audio tokens at $6/M, plus 3,500 text tokens at $0.50/M.
+    const expected = 25_000 * 0.000006 + 3_500 * 0.0000005;
+    expect(estimateSpeechCost(tokenPriced, 14_000)).toBeCloseTo(expected, 10);
+  });
+
+  it('prices the seconds it is given, so a slow script costs more per character', () => {
+    // 4,500 Han characters at 4.5 a second are 1,000 s of audio, 25,000 tokens at $6/M, plus
+    // 1,125 text tokens at $0.50/M. The same audio from 14,000 Latin characters costs the same.
+    const expected = 25_000 * 0.000006 + 1_125 * 0.0000005;
+    expect(estimateSpeechCost(tokenPriced, 4_500, 1_000)).toBeCloseTo(expected, 10);
   });
 
   it('returns zero for empty input', () => {

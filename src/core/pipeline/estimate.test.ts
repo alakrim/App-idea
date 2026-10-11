@@ -88,3 +88,55 @@ describe('translationExpansion', () => {
     expect(translationExpansion('ja', 'zh')).toBe(1);
   });
 });
+
+describe('narration cost by script on a token-priced model', () => {
+  // Audio is billed per second, so the same character count costs more when it is slower to speak.
+  const tokenPricedNarration = {
+    pricing: { prompt: 0.0000005, completion: 0.000006 },
+    supportsStyle: true,
+  };
+  const pricedCatalog = {
+    find: async (id: string) =>
+      id === MODELS.narration ? tokenPricedNarration : (CATALOG[id] ?? null),
+  };
+
+  async function narrationUsd(sourceLang: string, chars: number): Promise<number> {
+    const estimate = await estimateChapterCost({
+      size: { unit: 'chars', count: chars },
+      sourceLang,
+      targetLang: null,
+      models: MODELS,
+      catalog: pricedCatalog,
+    });
+    return estimate.perStage.find((s) => s.stage === 'narration')?.usd ?? Number.NaN;
+  }
+
+  it('prices a zh chapter about three times a same-length en chapter', async () => {
+    const zh = await narrationUsd('zh', 10_000);
+    const en = await narrationUsd('en', 10_000);
+    expect(zh / en).toBeGreaterThan(2.9);
+    expect(zh / en).toBeLessThan(3.2);
+  });
+
+  it('bills 10,000 zh characters as 2,222 s of audio (25 tokens a second at 4.5 characters)', async () => {
+    // 2,222.2 s x 25 tokens x $6/M, plus 2,500 text tokens at $0.50/M.
+    const expected = (10_000 / 4.5) * 25 * 0.000006 + 2_500 * 0.0000005;
+    expect(await narrationUsd('zh', 10_000)).toBeCloseTo(expected, 10);
+  });
+
+  it('bills the spoken language of a translated chapter, not the source language', async () => {
+    // zh to it: the narration is Italian, so the Latin rate applies.
+    const estimate = await estimateChapterCost({
+      size: { unit: 'chars', count: 10_000 },
+      sourceLang: 'zh',
+      targetLang: 'it',
+      models: MODELS,
+      catalog: pricedCatalog,
+    });
+    const narration = estimate.perStage.find((s) => s.stage === 'narration')?.usd ?? 0;
+    expect(narration).toBeGreaterThan(0);
+    expect(estimate.perStage.find((s) => s.stage === 'narration')?.basis).toContain(
+      'it speech rate',
+    );
+  });
+});

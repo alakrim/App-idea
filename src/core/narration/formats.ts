@@ -36,7 +36,8 @@ export function parsePcmContentType(contentType: string | null | undefined): Pcm
     if (eq > 0) params.set(part.slice(0, eq).trim().toLowerCase(), part.slice(eq + 1).trim());
   }
   const rate = positiveInteger(params.get('rate'), MAX_RATE) ?? DEFAULT_PCM_FORMAT.rate;
-  const channels = positiveInteger(params.get('channels'), MAX_CHANNELS) ?? DEFAULT_PCM_FORMAT.channels;
+  const channels =
+    positiveInteger(params.get('channels'), MAX_CHANNELS) ?? DEFAULT_PCM_FORMAT.channels;
   return { rate, channels };
 }
 

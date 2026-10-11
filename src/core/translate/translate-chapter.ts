@@ -244,6 +244,7 @@ class ChapterRun {
       user: prompt.user,
       jsonSchema: TRANSLATE_JSON_SCHEMA,
       signal: this.input.signal,
+      cacheSystem: true,
     });
     this.counts.requests += 1;
     if (isRepair) this.counts.repairRequests += 1;

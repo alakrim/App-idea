@@ -103,4 +103,70 @@ describe('synthesizeSpeech', () => {
       .catch((caught: unknown) => caught);
     expect((error as PipelineFailure).error.code).toBe('INSUFFICIENT_CREDITS');
   });
+
+  describe('synthesizeSpeech PCM-only models', () => {
+    const PCM_CONTENT_TYPE = 'audio/pcm;rate=24000;channels=1';
+    const pcmReply = () =>
+      new Response(new Uint8Array([1, 0, 2, 0]), {
+        status: 200,
+        headers: { 'content-type': PCM_CONTENT_TYPE, 'x-generation-id': 'gen-pcm-1' },
+      });
+    const refusesMp3 = (call: { body: unknown }) =>
+      (call.body as { response_format: string }).response_format === 'mp3'
+        ? errorResponse(400, 'Gemini TTS only supports response_format="pcm"')
+        : pcmReply();
+
+    it('retries once as pcm after the live mp3 refusal, and reports the format it got', async () => {
+      const { client, calls } = makeClient(refusesMp3);
+
+      const result = await client.synthesizeSpeech({
+        ...speechInput,
+        format: 'mp3',
+        input: 'Chapter one.',
+      });
+
+      expect(
+        calls.map((call) => (call.body as { response_format: string }).response_format),
+      ).toEqual(['mp3', 'pcm']);
+      expect(result.formatUsed).toBe('pcm');
+      expect(result.contentType).toBe(PCM_CONTENT_TYPE);
+      expect(new Uint8Array(result.audio)).toEqual(new Uint8Array([1, 0, 2, 0]));
+    });
+
+    it('retries only once, and surfaces the refusal when pcm is refused too', async () => {
+      const { client, calls } = makeClient(() =>
+        errorResponse(400, 'Gemini TTS only supports response_format="pcm"'),
+      );
+
+      const error = await client
+        .synthesizeSpeech({ ...speechInput, format: 'mp3', input: 'Hi.' })
+        .catch((caught: unknown) => caught);
+
+      expect(calls).toHaveLength(2);
+      expect(error).toBeInstanceOf(PipelineFailure);
+      expect((error as PipelineFailure).error).toMatchObject({
+        code: 'MODEL_UNAVAILABLE',
+        retryable: false,
+      });
+    });
+
+    it('does not retry a pcm request, and an mp3 success reports mp3', async () => {
+      const pcmOnly = makeClient(() =>
+        errorResponse(400, 'Gemini TTS only supports response_format="pcm"'),
+      );
+      await expect(
+        pcmOnly.client.synthesizeSpeech({ ...speechInput, format: 'pcm', input: 'Hi.' }),
+      ).rejects.toBeInstanceOf(PipelineFailure);
+      expect(pcmOnly.calls).toHaveLength(1);
+
+      const mp3 = makeClient(() => audioResponse([1, 2, 3]));
+      const result = await mp3.client.synthesizeSpeech({
+        ...speechInput,
+        format: 'mp3',
+        input: 'Hi.',
+      });
+      expect(result.formatUsed).toBe('mp3');
+      expect(mp3.calls).toHaveLength(1);
+    });
+  });
 });

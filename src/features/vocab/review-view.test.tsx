@@ -1,5 +1,4 @@
 import { fireEvent, screen } from '@testing-library/react-native';
-import type { ReactTestInstance } from 'react-test-renderer';
 import { StyleSheet } from 'react-native';
 
 import { renderThemed } from '@/__tests__/helpers/render-themed';
@@ -34,9 +33,11 @@ function props(overrides: Partial<ReviewViewProps> = {}): ReviewViewProps {
   };
 }
 
+type TestNode = ReturnType<typeof screen.getByRole>;
+
 /** The nearest ancestor that takes a share of its row, which is each grade button's wrapper. */
-function flexAncestor(node: ReactTestInstance | null): ReactTestInstance | null {
-  for (let current = node; current; current = current.parent) {
+function flexAncestor(node: TestNode | null): TestNode | null {
+  for (let current: TestNode | null = node; current; current = current.parent) {
     if (StyleSheet.flatten(current.props.style)?.flex === 1) return current;
   }
   return null;
