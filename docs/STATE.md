@@ -96,3 +96,4 @@ _Last updated: 2026-10-11 by architect_
   - Delete stale audio files when the segment count shrinks.
   - Persist per-chapter run options (`from`/`force`/`pdfEngine`) with the queue.
   - Dedupe JSON parsing: `core/extract/select.ts` and `services/openrouter/json.ts` → `core/llm/json.ts`.
+- [U1] ✅ Settings + onboarding accepted (112 tests; screenshots reviewed). M8 polish: drop the duplicate "Default" badge when it equals "Recommended"; multi-line style field; ScrollView + keyboard handling on onboarding step 2 (small phones); ambience "Play a sample" once the player exposes a sample API; move the usage stage query into `usageRepo`; export the catalog snapshot schema from `services/openrouter/models.ts`.
