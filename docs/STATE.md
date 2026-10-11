@@ -46,11 +46,11 @@ _Last updated: 2026-10-11 by architect_
 - ADR-0004: Layered extraction (dual extractor, quality gate, WebView fallback, LLM index-selection)
 - ADR-0005: Ambience beds only in v1, max 2, −22 dB, procedural base pack, CC0-first ledger
 
-## Open questions for the user
-1. **Android device for spike S1 / probes P1–P2.** These need a dev build on a physical Android phone (through EAS with your Expo account, or a local build if you install the Android SDK). When can you test?
-2. **Paid listening test (~$0.20 of your OpenRouter credits)** to compare narration quality across languages and voices before we pick defaults. OK to spend?
-3. **Sampled ambience sounds.** v0 ships synthesized beds (rain, wind, ocean, crowd, space hum, fire). For realistic horses, battles, taverns and so on we need CC0 recordings. Option A: you create a free Freesound API key so a worker can curate CC0 sounds. Option B: you approve an existing commercial pack.
-4. **App name.** "Lectio" is a working name. Keep it?
+## Open questions for the user (answered 2026-10-11)
+1. **Device test**: the user will install and test the APK once it is sent. → B8 is producing it.
+2. **Paid listening test**: approved. The user will add a dedicated OpenRouter key (credit limit $1) as the environment secret `OPENROUTER_API_KEY`, which is visible from the next session. Rules: read it only from env, never write it to the repo, files or logs. After the test, remind the user to revoke the key on openrouter.ai and remove the variable.
+3. **Freesound**: the user will create an API key and add it as `FREESOUND_API_KEY` (next session). Use CC0 sounds only, with a ledger entry per file.
+4. **Name**: keep "Lectio" for now.
 
 ## Notes
 - The `haiku-worker` agent file loads on the next session start. Until then, workers are spawned as general-purpose with model=haiku and effort=high, using the same instructions file.
