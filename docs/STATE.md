@@ -19,7 +19,7 @@ _Last updated: 2026-10-11 by architect_
 | M8 | Polish, accessibility, performance, EAS build, device spike S1 + probes P1/P2, Maestro E2E | not started |
 
 ## Work in flight
-_None. Waiting on the user's device test of APK `lectio-0.1.0-2f87cb9-arm64.apk` (sha256 0a48f03b…b3e3)._
+_None. Paused at the user's request: waiting on the device test of `lectio-0.1.0-fb8c82d-arm64.apk` (apk-builds branch, sha256 b950d965…ff38; fixes the launch crash, includes the crash reporter) and on the user's pick of next steps._
 
 ## Next up
 - **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.
