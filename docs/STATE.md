@@ -106,3 +106,16 @@ _Last updated: 2026-10-11 by architect_
 - [P2] ✅ Pipeline services accepted: 8 e2e scenarios green (URL, text, PDF, scanned PDF + OCR, WebView render, cancel/resume, voice change, AUTH pause/resume), verified by the architect. Device-only: WebView bridge limits, RN fetch UA/streaming, keep-awake, picked-PDF URIs, live `cloudflare-ai` page output.
 - [U3] ✅ Player accepted (89 tests). **Architect root-caused U3's open issue 1**: `usePlaybackContent` called a zustand hook as `content(selector)`, which the React Compiler memoized as a plain call. Fixed with `useStore`, all `'use no memo'` removed, and the fix verified by reproducing error #300 in a web build before the fix and clean after it. The rule is now in CONVENTIONS.
   Open: web preview cannot open expo-sqlite (sync op timeout + missing `wasm` assetExt), so web is a fake-data preview only; device is the real target. Repeat-sentence precision is ±250 ms (4 Hz position). Gestures need device verification (S1). The ambience display names come from category ids; add proper labels to the taxonomy (I2).
+
+## Live test findings (2026-10-11, architect, user-approved key with a $1.50 limit, spent $0.067)
+Ran our real `services/openrouter` client and the core analysis/translate engines against live OpenRouter. The key was never written to disk or the repo.
+- ✅ `/key` validation, the model catalogue, `chatRaw` strict json_schema with `anthropic/claude-haiku-5.5`, the analysis engine (accurate memory and glossary) and zh→it translation (fluent, glossary respected, «» dialogue) all worked first time. The `mp3DurationMs` parser read every real MP3 correctly.
+- ❌ **Gemini TTS is PCM-only** (400 on `mp3`; `pcm` returns `audio/pcm;rate=24000;channels=1`). The default narration model would have failed on every chapter. → L1.
+- ❌ **CJK ambience cues are always dropped**: the duration heuristic used 15 chars/s, but Mandarin is ~4.5 chars/s. → L1.
+- ⚠️ Error mapping turned that 400 into a retryable "Try again". → L1.
+- ⚠️ Microsoft MAI and Mistral Voxtral voices are locale-specific (Voxtral: en/gb/fr only; MAI: no ja). The voice picker must filter by target language. → L1 (core) + a later UI wiring step.
+- ⚠️ The analysis prompt is ~4.7k tokens per call, so prompt caching is worth adding. → L1.
+- Gemini `instructions` steering works: an Italian sample took 14.4 s with the narrator style and 10.5 s without it.
+- Pure-JS MP3 encoding (lamejs) was rejected: LGPL, and only 2× real time in an interpreter (V8 `--jitless`). → Plan **E1**: a native Android AAC encoder module (MediaCodec + MediaMuxer, local Expo module), WAV → m4a after synthesis. Until then, PCM models store WAV (~170 MB/h).
+- Listening page for the user: https://claude.ai/artifact/R3d3Rxb42W5rm1hn6wqhJp. **Waiting on the user's picks to set the default voice tiers.**
+- Reminder: ask the user to **revoke the test key** on openrouter.ai once the voice choice is settled. Any later live verification needs a new key.
