@@ -1,6 +1,5 @@
 import { chatReply, createFakeFetch } from './__fixtures__/fake-fetch';
 import { createOpenRouterClient } from './client';
-import { PipelineFailure } from './errors';
 
 import type { Route } from './__fixtures__/fake-fetch';
 
@@ -97,13 +96,10 @@ describe('parsePdf', () => {
     expect(result.text).toBe('Once.');
   });
 
-  it('fails with CONTENT_EMPTY when nothing is parsed, so the caller can try OCR', async () => {
-    const { client } = makeClient(() => chatReply('OK', { annotations: [] }));
-    const error = await client
-      .parsePdf({ ...pdfInput, engine: 'cloudflare-ai' })
-      .catch((caught: unknown) => caught);
-    expect(error).toBeInstanceOf(PipelineFailure);
-    expect((error as PipelineFailure).error.code).toBe('CONTENT_EMPTY');
-    expect((error as PipelineFailure).error.retryable).toBe(false);
+  it('returns an empty text with the usage of the call when nothing is parsed, so the caller can offer OCR', async () => {
+    const { client } = makeClient(() => chatReply('OK', { annotations: [], cost: 0.0003 }));
+    const result = await client.parsePdf({ ...pdfInput, engine: 'cloudflare-ai' });
+    expect(result.text).toBe('');
+    expect(result.usage.costUsd).toBe(0.0003);
   });
 });

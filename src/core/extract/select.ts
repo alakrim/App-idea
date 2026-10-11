@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { SELECTION_SYSTEM_PROMPT } from './prompts';
+import { parseJsonReply } from '../llm/json';
 
 import type { Block } from './types';
 
@@ -54,7 +55,6 @@ export function buildSelectionPrompt(
   ].join('\n');
   return { system: SELECTION_SYSTEM_PROMPT, user };
 }
-
 
 /**
  * Parses a model reply into a validated selection. A reply wrapped in a Markdown code fence is

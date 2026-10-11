@@ -1,7 +1,6 @@
 /*
- * Shared helpers for model replies. Every LLM output is parsed here and then validated with zod.
- * One parser serves the analysis, translation, selection and OpenRouter client paths, so a reply
- * that one of them accepts is accepted by all of them.
+ * Shared helpers for model replies. Every LLM output is parsed here and then validated with zod, so
+ * the analysis, translation, selection and OpenRouter client paths all parse the same way.
  */
 
 const FENCED_BODY = /^```(?:json)?\s*([\s\S]*?)\s*```$/u;
@@ -15,13 +14,8 @@ export function stripCodeFence(text: string): string {
 
 export type JsonReply = { readonly ok: true; readonly value: unknown } | { readonly ok: false };
 
-/**
- * Parses JSON from a model reply that may carry a code fence or prose around the object. It tries
- * the whole reply, then the first fenced body, then the span from the first `{` or `[` to the last
- * `}` or `]`. Invalid JSON is reported, never thrown, and the reply is never echoed.
- */
-export function parseJsonReply(text: string): JsonReply {
-  for (const candidate of jsonCandidates(text)) {
+function firstParsable(candidates: readonly string[]): JsonReply {
+  for (const candidate of candidates) {
     try {
       return { ok: true, value: JSON.parse(candidate) };
     } catch {
@@ -31,8 +25,22 @@ export function parseJsonReply(text: string): JsonReply {
   return { ok: false };
 }
 
-function jsonCandidates(raw: string): string[] {
-  const trimmed = raw.trim();
+/**
+ * Parses a reply that is the JSON itself, optionally wrapped in one code fence. Prose around the
+ * JSON is rejected, so a selection or a translation is never taken from a half-formed reply.
+ * Invalid JSON is reported, never thrown, and the reply is never echoed.
+ */
+export function parseJsonReply(text: string): JsonReply {
+  return firstParsable([stripCodeFence(text)]);
+}
+
+/**
+ * Like `parseJsonReply`, but also accepts a fenced body or a span from the first `{` or `[` to the
+ * last `}` or `]` when the model wrapped its JSON in prose. Used where a reply may carry chatter,
+ * such as the OpenRouter client's JSON-only fallback.
+ */
+export function parseTolerantJson(text: string): JsonReply {
+  const trimmed = text.trim();
   const candidates = [stripCodeFence(trimmed)];
 
   const fenced = FENCE_ANYWHERE.exec(trimmed)?.[1]?.trim();
@@ -42,5 +50,5 @@ function jsonCandidates(raw: string): string[] {
   const end = Math.max(trimmed.lastIndexOf('}'), trimmed.lastIndexOf(']'));
   if (start >= 0 && end > start) candidates.push(trimmed.slice(start, end + 1));
 
-  return candidates;
+  return firstParsable(candidates);
 }

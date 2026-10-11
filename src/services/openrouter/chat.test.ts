@@ -1,9 +1,10 @@
 import { z } from 'zod';
 
+import { parseTolerantJson } from '@/core/llm/json';
+
 import { chatReply, createFakeFetch, jsonResponse } from './__fixtures__/fake-fetch';
 import { chatJson, chatText } from './chat';
 import { PipelineFailure } from './errors';
-import { parseTolerantJson } from './json';
 import { createModelCatalog } from './models';
 import { createTransport } from './transport';
 

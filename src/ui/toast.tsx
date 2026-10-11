@@ -8,7 +8,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeInUp, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -19,9 +19,16 @@ import { durations, gutter, hairline, radius, space } from './tokens';
 
 export type ToastTone = 'neutral' | 'success' | 'danger';
 
+export interface ToastAction {
+  label: string;
+  onPress: () => void;
+}
+
 export interface ToastInput {
   message: string;
   tone?: ToastTone;
+  /** An optional button on the toast, such as "Connect OpenRouter". */
+  action?: ToastAction;
 }
 
 interface ToastApi {
@@ -36,15 +43,16 @@ interface ActiveToast {
   id: number;
   message: string;
   tone: ToastTone;
+  action: ToastAction | undefined;
 }
 
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [active, setActive] = useState<ActiveToast | null>(null);
   const lastId = useRef(0);
 
-  const show = useCallback(({ message, tone = 'neutral' }: ToastInput) => {
+  const show = useCallback(({ message, tone = 'neutral', action }: ToastInput) => {
     lastId.current += 1;
-    setActive({ id: lastId.current, message, tone });
+    setActive({ id: lastId.current, message, tone, action });
   }, []);
 
   useEffect(() => {
@@ -62,7 +70,15 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={api}>
       {children}
-      {active ? <ToastView key={active.id} message={active.message} tone={active.tone} /> : null}
+      {active ? (
+        <ToastView
+          key={active.id}
+          message={active.message}
+          tone={active.tone}
+          action={active.action}
+          onDismiss={() => setActive((current) => (current?.id === active.id ? null : current))}
+        />
+      ) : null}
     </ToastContext.Provider>
   );
 }
@@ -76,7 +92,17 @@ export function useToast(): ToastApi {
   return api;
 }
 
-function ToastView({ message, tone }: { message: string; tone: ToastTone }) {
+function ToastView({
+  message,
+  tone,
+  action,
+  onDismiss,
+}: {
+  message: string;
+  tone: ToastTone;
+  action: ToastAction | undefined;
+  onDismiss: () => void;
+}) {
   const { colors } = useTheme();
   const { reduced } = useMotion();
   const insets = useSafeAreaInsets();
@@ -100,6 +126,22 @@ function ToastView({ message, tone }: { message: string; tone: ToastTone }) {
         <Text variant="bodyStrong" tone="default" style={{ color: toneColor }}>
           {message}
         </Text>
+        {action ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={action.label}
+            hitSlop={space.sm}
+            onPress={() => {
+              onDismiss();
+              action.onPress();
+            }}
+            style={({ pressed }) => [styles.action, { opacity: pressed ? 0.6 : 1 }]}
+          >
+            <Text variant="bodyStrong" tone="accent">
+              {action.label}
+            </Text>
+          </Pressable>
+        ) : null}
       </Animated.View>
     </View>
   );
@@ -114,6 +156,12 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 10,
     pointerEvents: 'box-none',
+  },
+  action: {
+    alignSelf: 'flex-end',
+    minHeight: 44,
+    justifyContent: 'center',
+    marginTop: space.xs,
   },
   toast: {
     position: 'absolute',

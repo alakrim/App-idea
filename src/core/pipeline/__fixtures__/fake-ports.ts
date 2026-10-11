@@ -30,6 +30,7 @@ import type {
   ChapterRecord,
   ChapterStore,
   PdfTextResult,
+  PersistedQueueItem,
   PipelinePorts,
   StoredSentence,
   TtsResult,
@@ -124,7 +125,7 @@ export interface FakeState {
   readonly facts: EntityFact[];
   readonly segments: Map<Id, AudioSegment[]>;
   readonly jobs: Map<string, Job>;
-  queue: string[];
+  queue: PersistedQueueItem[];
   readonly ledger: UsageEntry[];
   readonly fetched: string[];
   readonly rendered: string[];

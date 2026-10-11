@@ -31,6 +31,41 @@ function setup() {
   return testDb.db;
 }
 
+describe('cueRepo.replaceForChapter', () => {
+  it('replaces the chapter cues and leaves other chapters alone', () => {
+    const db = setup();
+    cueRepo.insert(db, cue(1, 4));
+    cueRepo.insert(db, cue(3, 2, { chapterId: id(2) }));
+
+    cueRepo.replaceForChapter(db, id(1), [cue(5, 12, { category: 'rain' })]);
+
+    expect(cueRepo.listForChapter(db, id(1)).map((c) => c.id)).toEqual([id(105)]);
+    expect(cueRepo.listForChapter(db, id(2))).toHaveLength(1);
+  });
+
+  it('keeps the listener switch for a cue with the same category and range', () => {
+    const db = setup();
+    cueRepo.insert(db, cue(1, 4));
+    cueRepo.setEnabled(db, id(101), false);
+
+    cueRepo.replaceForChapter(db, id(1), [cue(9, 4, { enabled: true })]);
+
+    expect(cueRepo.listForChapter(db, id(1))).toEqual([
+      expect.objectContaining({ id: id(109), enabled: false }),
+    ]);
+  });
+
+  it('rejects a cue that belongs to another chapter and keeps the old cues', () => {
+    const db = setup();
+    cueRepo.insert(db, cue(1, 4));
+
+    expect(() => cueRepo.replaceForChapter(db, id(1), [cue(2, 9, { chapterId: id(2) })])).toThrow(
+      /belongs to chapter/,
+    );
+    expect(cueRepo.listForChapter(db, id(1)).map((c) => c.id)).toEqual([id(101)]);
+  });
+});
+
 describe('cueRepo', () => {
   it('lists a chapter cues in start order and only that chapter', () => {
     const db = setup();

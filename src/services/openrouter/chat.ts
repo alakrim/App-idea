@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
+import { parseTolerantJson } from '@/core/llm/json';
+
 import { PipelineFailure, pipelineFailure } from './errors';
-import { parseTolerantJson } from './json';
 import { supportsStructuredOutput } from './models';
 import { jsonBody } from './transport';
 
@@ -232,6 +233,71 @@ export async function chatText(deps: ChatDeps, input: ChatTextInput): Promise<Ch
   );
   return {
     text: completion.content.trim(),
+    usage: completion.usage,
+    generationId: completion.generationId,
+    model: completion.model,
+  };
+}
+
+export interface ChatRawInput {
+  model: string;
+  system: string;
+  user: string;
+  /**
+   * The reply must follow this schema. It is sent as strict `json_schema` when the catalog says the
+   * model supports structured outputs, and otherwise as a JSON-only instruction in the system text.
+   */
+  jsonSchema?: { name: string; schema: object };
+  signal?: AbortSignal;
+}
+
+export interface ChatRawResult {
+  /** The reply text, unvalidated and untrimmed. The caller parses and validates it. */
+  text: string;
+  usage: ChatUsage;
+  generationId: string | null;
+  model: string;
+}
+
+/**
+ * One chat call that returns the raw reply text and the usage, with no zod validation and no
+ * repair call. The pipeline uses it, because the core validates replies itself and retries them
+ * with its own rules.
+ */
+export async function chatRaw(deps: ChatDeps, input: ChatRawInput): Promise<ChatRawResult> {
+  const structured =
+    input.jsonSchema !== undefined &&
+    (await canUseStructuredOutput(deps.models, input.model, input.signal));
+  const responseFormat: ResponseFormat | undefined =
+    input.jsonSchema && structured
+      ? {
+          type: 'json_schema',
+          json_schema: {
+            name: input.jsonSchema.name,
+            strict: true,
+            schema: input.jsonSchema.schema as Record<string, unknown>,
+          },
+        }
+      : undefined;
+  const system =
+    input.jsonSchema && !structured
+      ? `${input.system}\n\n${jsonOnlyInstruction(input.jsonSchema.schema as Record<string, unknown>)}`
+      : input.system;
+
+  const completion = await sendChatCompletion(
+    deps,
+    requestBody(
+      input,
+      [
+        { role: 'system', content: system },
+        { role: 'user', content: input.user },
+      ],
+      responseFormat,
+    ),
+    input.signal,
+  );
+  return {
+    text: completion.content,
     usage: completion.usage,
     generationId: completion.generationId,
     model: completion.model,

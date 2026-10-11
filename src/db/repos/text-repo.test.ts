@@ -88,6 +88,18 @@ describe('textRepo bulk writes', () => {
         .map((s) => s.idx),
     ).toEqual([1]);
   });
+  it('stores null for a sentence that has no usable translation', () => {
+    const { db } = seedBook();
+    textRepo.setTranslations(db, id(1), [
+      { idx: 1, translated: 'Un chevalier part.' },
+      { idx: 2, translated: null },
+    ]);
+
+    expect(textRepo.getRange(db, id(1), 1, 2).map((s) => s.translated)).toEqual([
+      'Un chevalier part.',
+      null,
+    ]);
+  });
 
   it('drops search rows for sentences that are replaced', () => {
     const { db } = seedBook();

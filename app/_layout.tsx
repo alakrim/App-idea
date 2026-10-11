@@ -16,6 +16,7 @@ import '@/bootstrap';
 import { DbProvider } from '@/app-shell/db-provider';
 import { FatalError, formatErrorDetails } from '@/app-shell/fatal-error';
 import { OpenRouterProvider } from '@/app-shell/openrouter-provider';
+import { PipelineLifecycle } from '@/features/pipeline/pipeline-lifecycle';
 import { PipelineProvider } from '@/features/pipeline/pipeline-provider';
 import { PlayerEngineProvider } from '@/features/player/player-provider';
 import { useSettings } from '@/features/settings/settings-store';
@@ -46,7 +47,10 @@ export default function RootLayout() {
           <OpenRouterProvider>
             <PipelineProvider>
               <ToastProvider>
-                <PlayerEngineProvider><RootNavigator /></PlayerEngineProvider>
+                <PipelineLifecycle />
+                <PlayerEngineProvider>
+                  <RootNavigator />
+                </PlayerEngineProvider>
               </ToastProvider>
             </PipelineProvider>
           </OpenRouterProvider>

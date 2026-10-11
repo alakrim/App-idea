@@ -87,11 +87,7 @@ export const memoryRepo = {
 
   /** The memory card of one chapter with its order and display number. Null when none is stored. */
   getMemoryRecord(db: Db, chapterId: string): ChapterMemoryRecord | null {
-    const row = db
-      .select()
-      .from(chapterMemory)
-      .where(eq(chapterMemory.chapterId, chapterId))
-      .get();
+    const row = db.select().from(chapterMemory).where(eq(chapterMemory.chapterId, chapterId)).get();
     if (!row) return null;
     const chapter = db
       .select({ seriesId: chapters.seriesId })
@@ -168,6 +164,18 @@ export const memoryRepo = {
       .map((row) => EntityFactSchema.parse(row));
   },
 
+  /** Every entity fact of the series, in chapter order. */
+  listFacts(db: Db, seriesId: string): EntityFact[] {
+    return db
+      .select({ fact: entityFacts })
+      .from(entityFacts)
+      .innerJoin(entities, eq(entities.id, entityFacts.entityId))
+      .where(eq(entities.seriesId, seriesId))
+      .orderBy(asc(entityFacts.chapterOrder), asc(entityFacts.id))
+      .all()
+      .map((row) => EntityFactSchema.parse(row.fact));
+  },
+
   /**
    * Applies one chapter's entity resolution in a single transaction: entities are upserted, and
    * new facts are inserted. A repeated fact id is left as it is, so a retried chapter is idempotent.
@@ -179,10 +187,7 @@ export const memoryRepo = {
           throw new Error(`Entity ${entity.id} belongs to series ${entity.seriesId}`);
         }
         const row = { ...entity, aliases: JSON.stringify(entity.aliases) };
-        tx.insert(entities)
-          .values(row)
-          .onConflictDoUpdate({ target: entities.id, set: row })
-          .run();
+        tx.insert(entities).values(row).onConflictDoUpdate({ target: entities.id, set: row }).run();
       }
       for (const fact of resolution.newFacts) {
         tx.insert(entityFacts).values(fact).onConflictDoNothing({ target: entityFacts.id }).run();

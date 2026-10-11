@@ -5,7 +5,7 @@ import { CHAPTER_ID, createFakePorts, ulid } from './__fixtures__/fake-ports';
 import { createPipelineQueue } from './queue';
 
 import type { PipelineEvent } from './context';
-import type { PipelineQueue} from './queue';
+import type { PipelineQueue } from './queue';
 
 const TEXT = 'The boats came in at dusk. Ada waited on the quay for the post.';
 const A = CHAPTER_ID;
@@ -189,7 +189,7 @@ describe('PipelineQueue', () => {
     expect(fake.chapter(A).status).toBe('ready');
   });
 
-  it('persists each chapter\'s run options, and a restored chapter runs from its saved stage', async () => {
+  it("persists each chapter's run options, and a restored chapter runs from its saved stage", async () => {
     let dying = true;
     const fake = createFakePorts({
       sourceText: TEXT,

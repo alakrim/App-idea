@@ -35,15 +35,33 @@ module.exports = {
       ],
     },
     {
-      // Pure-TS adapters that run in Node: OpenRouter client, SQLite repos (better-sqlite3).
+      // Pure-TS adapters that run in Node: OpenRouter client, SQLite repos (better-sqlite3), and the
+      // pipeline services with their end-to-end test, which runs the core extract stack too.
       displayName: 'node',
       testEnvironment: 'node',
       testMatch: [
         '<rootDir>/src/services/openrouter/**/*.test.ts',
+        '<rootDir>/src/services/pipeline/**/*.test.ts',
         '<rootDir>/src/db/**/*.test.ts',
       ],
-      moduleNameMapper,
-      transform: tsTransform,
+      moduleNameMapper: {
+        ...moduleNameMapper,
+        '^defuddle/node$': '<rootDir>/node_modules/defuddle/dist/node.js',
+      },
+      transform: {
+        ...tsTransform,
+        '^.+\\.js$': [
+          'babel-jest',
+          {
+            babelrc: false,
+            configFile: false,
+            plugins: ['@babel/plugin-transform-modules-commonjs'],
+          },
+        ],
+      },
+      transformIgnorePatterns: [
+        '/node_modules/(?!(?:linkedom|css-select|boolbase|css-what|domhandler|domelementtype|domutils|dom-serializer|entities|nth-check|html-escaper|htmlparser2|uhyphen)/)',
+      ],
     },
     {
       displayName: 'app',
@@ -53,9 +71,14 @@ module.exports = {
         '/node_modules/',
         '<rootDir>/src/core/',
         '<rootDir>/src/services/openrouter/',
+        '<rootDir>/src/services/pipeline/',
         '<rootDir>/src/db/',
       ],
-      moduleNameMapper,
+      moduleNameMapper: {
+        ...moduleNameMapper,
+        // The app's extract stack (services/pipeline) imports defuddle's Node build.
+        '^defuddle/node$': '<rootDir>/node_modules/defuddle/dist/node.js',
+      },
     },
   ],
 };

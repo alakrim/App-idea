@@ -183,6 +183,23 @@ describe('memoryRepo entities and facts', () => {
   });
 });
 
+describe('memoryRepo.listFacts', () => {
+  it('lists every fact of the series, in chapter order, and no other series', () => {
+    const { db } = createTestDb();
+    seedSeries(db);
+    memoryRepo.saveEntityResolution(db, id(1), {
+      upserts: [LIN_MO],
+      newFacts: [fact(2, 3, 3, 'Is the master'), fact(1, 1, 1, 'Is a disciple')],
+    });
+
+    expect(memoryRepo.listFacts(db, id(1)).map((f) => f.fact)).toEqual([
+      'Is a disciple',
+      'Is the master',
+    ]);
+    expect(memoryRepo.listFacts(db, id(2))).toEqual([]);
+  });
+});
+
 describe('memoryRepo.listAnalyzedSeries', () => {
   it('lists only series with at least one analyzed chapter', () => {
     const { db } = createTestDb();

@@ -1,5 +1,4 @@
 import { sendChatCompletion } from './chat';
-import { pipelineFailure } from './errors';
 
 import type { ChatAnnotation, ChatDeps, ChatUsage } from './chat';
 
@@ -27,7 +26,8 @@ const PDF_REPLY_MAX_TOKENS = 5;
 
 /**
  * Extracts the text of a PDF through the OpenRouter file-parser plugin. The parsed text comes back
- * in `message.annotations`, not in the model's reply (R1, section 2).
+ * in `message.annotations`, not in the model's reply (R1, section 2). A document with no text comes
+ * back as an empty string, with the usage of the call.
  */
 export async function parsePdf(deps: ChatDeps, input: PdfInput): Promise<PdfResult> {
   const completion = await sendChatCompletion(
@@ -56,16 +56,9 @@ export async function parsePdf(deps: ChatDeps, input: PdfInput): Promise<PdfResu
     input.signal,
   );
 
+  // An empty text is returned, not thrown, so the caller can still record what the call cost. The
+  // pipeline decides what an empty PDF means (a scan that needs OCR).
   const text = extractFileText(completion.annotations);
-  if (text.length === 0) {
-    throw pipelineFailure(
-      'CONTENT_EMPTY',
-      'No readable text was found in this PDF. It may be a scan.',
-      {
-        retryable: false,
-      },
-    );
-  }
   return {
     text,
     usage: completion.usage,

@@ -1,11 +1,18 @@
-import { chatJson, chatText } from './chat';
+import { chatJson, chatRaw, chatText } from './chat';
 import { validateKey } from './key';
 import { createModelCatalog } from './models';
 import { parsePdf } from './pdf';
 import { synthesizeSpeech } from './speech';
 import { createTransport } from './transport';
 
-import type { ChatJsonInput, ChatJsonResult, ChatTextInput, ChatTextResult } from './chat';
+import type {
+  ChatJsonInput,
+  ChatJsonResult,
+  ChatRawInput,
+  ChatRawResult,
+  ChatTextInput,
+  ChatTextResult,
+} from './chat';
 import type { KeyCheck } from './key';
 import type { ModelCatalog } from './models';
 import type { PdfInput, PdfResult } from './pdf';
@@ -34,6 +41,7 @@ export interface OpenRouterClient {
   validateKey(): Promise<KeyCheck>;
   chatJson<T>(input: ChatJsonInput<T>): Promise<ChatJsonResult<T>>;
   chatText(input: ChatTextInput): Promise<ChatTextResult>;
+  chatRaw(input: ChatRawInput): Promise<ChatRawResult>;
   synthesizeSpeech(input: SpeechInput): Promise<SpeechResult>;
   parsePdf(input: PdfInput): Promise<PdfResult>;
 }
@@ -72,6 +80,7 @@ export function createOpenRouterClient(options: OpenRouterClientOptions): OpenRo
     validateKey: () => validateKey({ transport }),
     chatJson: (input) => chatJson(chatDeps, input),
     chatText: (input) => chatText(chatDeps, input),
+    chatRaw: (input) => chatRaw(chatDeps, input),
     synthesizeSpeech: (input) =>
       synthesizeSpeech(
         { transport, maxChars: options.maxSpeechChars ?? defaults.maxSpeechChars },

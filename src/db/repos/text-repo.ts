@@ -22,7 +22,8 @@ export interface ChapterText {
 
 export interface Translation {
   idx: number;
-  translated: string;
+  /** Null when the sentence has no usable translation, so the UI shows the original. */
+  translated: string | null;
 }
 
 export interface SpoilerSafeQuery {

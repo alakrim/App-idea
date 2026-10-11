@@ -77,12 +77,15 @@ export class PipelineQueue {
 
   /** Adds a chapter to the end of the queue. A chapter already queued stays where it is. */
   async enqueue(chapterId: string, options: QueueRunOptions = {}): Promise<void> {
-    if (!this.items.some((item) => item.chapterId === chapterId)) {
-      this.items.push({ chapterId, options, controller: null });
-      await this.persist();
-      this.notify();
+    if (this.items.some((item) => item.chapterId === chapterId)) {
+      this.kick();
+      return;
     }
+    this.items.push({ chapterId, options, controller: null });
+    this.notify();
+    // The run starts before the save, so `idle()` already reflects the chapter when this returns.
     this.kick();
+    await this.persist();
   }
 
   /** Removes a pending chapter, or aborts the running one. Its run ends as cancelled. */
@@ -121,7 +124,11 @@ export class PipelineQueue {
     const saved = await this.ports.jobs.loadQueue();
     for (const entry of saved) {
       if (!this.items.some((item) => item.chapterId === entry.chapterId)) {
-        this.items.push({ chapterId: entry.chapterId, options: optionsOf(entry), controller: null });
+        this.items.push({
+          chapterId: entry.chapterId,
+          options: optionsOf(entry),
+          controller: null,
+        });
       }
     }
     this.notify();
