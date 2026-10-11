@@ -9,11 +9,8 @@ import type { SQL } from 'drizzle-orm';
 
 type VocabRow = typeof vocab.$inferSelect;
 
-/** A saved item plus its flashcard state. */
-export interface VocabItem extends Vocab {
-  reviewedAt: number | null;
-  known: boolean;
-}
+/** A saved item, with its flashcard state (see VocabSchema). */
+export type VocabItem = Vocab;
 
 /** What the learner saved. The explanation is filled later, so it starts empty. */
 export interface NewVocabInput {
@@ -39,7 +36,7 @@ export interface VocabExplanation {
 }
 
 function toItem(row: VocabRow): VocabItem {
-  return { ...VocabSchema.parse(row), reviewedAt: row.reviewedAt, known: row.known };
+  return VocabSchema.parse(row);
 }
 
 function matchesQuery(query: string): SQL {

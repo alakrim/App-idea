@@ -3,7 +3,7 @@ import {
   VOCAB_EXPLANATION_MAX_WORDS,
   VOCAB_SYSTEM_PROMPT,
   VocabExplanationSchema,
-} from './vocab-explain';
+} from './prompts';
 
 const valid = {
   term: 'Bellissimo',

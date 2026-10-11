@@ -44,6 +44,10 @@ export const VocabSchema = z.object({
   lang: LangSchema,
   explanation: z.string().nullable(),
   translation: z.string().nullable(),
+  /** Set by every flashcard review. Null until the item has been reviewed once. */
+  reviewedAt: TimestampSchema.nullable(),
+  /** The last flashcard verdict: true for "Known", false for "Again" or never reviewed. */
+  known: z.boolean(),
   createdAt: TimestampSchema,
 });
 export type Vocab = z.infer<typeof VocabSchema>;

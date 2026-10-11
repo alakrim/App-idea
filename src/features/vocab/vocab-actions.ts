@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react';
 
 import type { IdGenerator, Lang } from '@/core/domain';
+import { buildVocabPrompt, VOCAB_JSON_SCHEMA_NAME, VocabExplanationSchema } from '@/core/vocab/prompts';
 import type { Settings } from '@/core/settings';
 import { chapterRepo } from '@/db/repos/chapter-repo';
 import { seriesRepo } from '@/db/repos/series-repo';
@@ -10,8 +11,6 @@ import { vocabRepo } from '@/db/repos/vocab-repo';
 import type { Db } from '@/db/types';
 import type { OpenRouterClient } from '@/services/openrouter';
 import { PipelineFailure } from '@/services/openrouter/errors';
-
-import { buildVocabPrompt, VOCAB_JSON_SCHEMA_NAME, VocabExplanationSchema } from './vocab-explain';
 
 /** Longest term kept. A whole sentence saved with no selection is cut to this. */
 export const MAX_TERM_LENGTH = 120;
