@@ -103,3 +103,5 @@ _Last updated: 2026-10-11 by architect_
   - move the vocab prompt + schema to `src/core/vocab/prompts.ts`
   - `Card raised` top highlight is invisible in the light theme; use a border-top in light
   - **Polish:** Vocab review buttons should span the width (two equal buttons), with the card vertically balanced. A "not revealed yet" answer should carry no citation chip.
+- [U3] ✅ Player accepted (89 tests). **Architect root-caused U3's open issue 1**: `usePlaybackContent` called a zustand hook as `content(selector)`, which the React Compiler memoized as a plain call. Fixed with `useStore`, all `'use no memo'` removed, and the fix verified by reproducing error #300 in a web build before the fix and clean after it. The rule is now in CONVENTIONS.
+  Open: web preview cannot open expo-sqlite (sync op timeout + missing `wasm` assetExt), so web is a fake-data preview only; device is the real target. Repeat-sentence precision is ±250 ms (4 Hz position). Gestures need device verification (S1). The ambience display names come from category ids; add proper labels to the taxonomy (I2).
