@@ -19,10 +19,7 @@ _Last updated: 2026-10-11 by architect_
 | M8 | Polish, accessibility, performance, EAS build, device spike S1 + probes P1/P2, Maestro E2E | not started |
 
 ## Work in flight
-| Task | Brief | Status |
-|---|---|---|
-| B8 Local Android APK build (sideloadable, no Expo account) | docs/briefs/B8-android-apk.md | running |
-| I2 Integration + polish + in-app Diagnostics (device probes) | docs/briefs/I2-integration-polish.md | running |
+_None. Waiting on the user's device test of APK `lectio-0.1.0-2f87cb9-arm64.apk` (sha256 0a48f03b…b3e3)._
 
 ## Next up
 - **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.
@@ -119,6 +116,7 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
 - Pure-JS MP3 encoding (lamejs) was rejected: LGPL, and only 2× real time in an interpreter (V8 `--jitless`). → Plan **E1**: a native Android AAC encoder module (MediaCodec + MediaMuxer, local Expo module), WAV → m4a after synthesis. Until then, PCM models store WAV (~170 MB/h).
 - Listening page for the user: https://claude.ai/artifact/R3d3Rxb42W5rm1hn6wqhJp. **User decision: Gemini 3.8 Flash Lite TTS is the default for all languages (ADR-0003 amendment). E1 native AAC encoder is now a priority.**
 - Reminder: ask the user to **revoke the test key** on openrouter.ai once the voice choice is settled. Any later live verification needs a new key.
+- [B8] ✅ Local Android build works: `scripts/android/build-apk.sh` (SDK bootstrap + Maven Central → Google mirror for 429s), release arm64 APK signed with the debug key, ~7 min. Permissions trimmed to network, media foreground service, wake lock, vibrate and audio settings. Doc: `docs/BUILD-ANDROID.md`.
 - [I2] ✅ Integration and polish accepted (verify green, 1,636 tests). Delivered: vocab from the player, sentence deep links, ambience labels and icons, dedupes, polish list, ambience sample, usage by stage, **Diagnostics screen** (About → 7 taps on the version). Skipped: Ask chips can't deep-link to a sentence because citations carry no sentence index (needs a prompt change; backlog).
 - [L1] ✅ Live-API fixes accepted. The architect set the cue floor to 12 s (ADR-0005 amendment) and bumped the analysis prompt to v2.
 - **Live re-check (architect):** Gemini narration through the real `tts` adapter returns valid WAV (12.6 s). **Speech rates calibrated** from the live samples (Latin 9.2, Han 2.5, Japanese 4.2 chars/s). C1 is updating the tests that hard-coded the old numbers.
