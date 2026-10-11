@@ -4,8 +4,16 @@ import type { AmbienceCue, AmbienceIntensity } from '../domain/analysis';
 export const MAX_BEDS = 2;
 /** Default bed level relative to narration (ADR-0005). */
 export const DEFAULT_BED_LEVEL_DB = -22;
-const BED_GAIN_MIN_DB = -30;
-const BED_GAIN_MAX_DB = -12;
+/**
+ * Assumed loudness of the narration, in LUFS. This is an estimate of typical TTS output. M8 will
+ * measure it per segment. Beds sit `levelDb` below this reference, whatever their own loudness.
+ */
+export const NARRATION_REF_LUFS = -18;
+/** Loudness the base pack is normalized to (ADR-0005, A1). Used when a bed's loudness is unknown. */
+export const BED_TARGET_LUFS = -28;
+/** The relative level (levelDb plus intensity) is clamped to this range before loudness is applied. */
+const RELATIVE_MIN_DB = -30;
+const RELATIVE_MAX_DB = -12;
 const RETARGET_RAMP_MS = 400;
 const GAIN_EPSILON_DB = 0.01;
 
@@ -31,10 +39,26 @@ export type BedCommand =
   | { type: 'stop'; cueId: string; fadeMs: number }
   | { type: 'retarget'; cueId: string; gainDb: number; rampMs: number };
 
-/** Gain for one bed: the master level, shifted by intensity, kept inside the allowed range. */
-export function bedGainDb(levelDb: number, intensity: AmbienceIntensity): number {
+/**
+ * File gain for one bed. The relative level (`levelDb` plus intensity) is clamped to [-30, -12] dB
+ * relative to the narration. The gain then places that level against the reference narration
+ * loudness, and removes the bed's own loudness, so beds of different loudness sound equally loud.
+ */
+export function bedGainDb(
+  levelDb: number,
+  intensity: AmbienceIntensity,
+  bedLufs: number = BED_TARGET_LUFS,
+): number {
   const raw = levelDb + INTENSITY_OFFSET_DB[intensity];
-  return Math.min(BED_GAIN_MAX_DB, Math.max(BED_GAIN_MIN_DB, raw));
+  const relative = Math.min(RELATIVE_MAX_DB, Math.max(RELATIVE_MIN_DB, raw));
+  return NARRATION_REF_LUFS + relative - bedLufs;
+}
+
+export interface PlanOptions {
+  /** Base bed level relative to the narration, in dB. */
+  levelDb?: number;
+  /** Integrated loudness of the bed a category resolves to. Null or missing means the target. */
+  bedLufs?: (category: string) => number | null;
 }
 
 /**
@@ -45,9 +69,10 @@ export function bedGainDb(levelDb: number, intensity: AmbienceIntensity): number
 export function planBeds(
   cues: readonly AmbienceCue[],
   sentenceIdx: number,
-  levelDb: number = DEFAULT_BED_LEVEL_DB,
+  options: PlanOptions = {},
 ): BedTarget[] {
   if (sentenceIdx < 0) return [];
+  const levelDb = options.levelDb ?? DEFAULT_BED_LEVEL_DB;
   return cues
     .filter(
       (cue) => cue.enabled && cue.startSentence <= sentenceIdx && sentenceIdx <= cue.endSentence,
@@ -62,7 +87,7 @@ export function planBeds(
     .map((cue) => ({
       cueId: cue.id,
       category: cue.category,
-      gainDb: bedGainDb(levelDb, cue.intensity),
+      gainDb: bedGainDb(levelDb, cue.intensity, options.bedLufs?.(cue.category) ?? BED_TARGET_LUFS),
       fadeInMs: cue.fadeInMs,
       fadeOutMs: cue.fadeOutMs,
     }));

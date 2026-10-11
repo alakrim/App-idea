@@ -5,10 +5,14 @@ import { type DuckRamp, dbToLinear } from '@/core/playback/ducking';
 const MASTER_RAMP_MS = 300;
 const DEFAULT_CACHE_SIZE = 4;
 
-/** A bundled bed the category resolved to. `asset` is the `require()` id that decodes it. */
+/**
+ * A bundled bed the category resolved to. `asset` is the `require()` id that decodes it. `lufs` is
+ * the bed's integrated loudness from the manifest, which the planner uses to level it.
+ */
 export interface ResolvedBed {
   id: string;
   asset: number;
+  lufs: number;
 }
 
 export type ResolveBed = (categoryId: string) => ResolvedBed | null;

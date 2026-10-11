@@ -149,7 +149,7 @@ describe('lectio-engine: loading', () => {
     const { engine, mixer } = setup();
     await engine.load(chapter(), 2500);
     expect(mixer.apply).toHaveBeenLastCalledWith([
-      { type: 'start', cueId: ID(1), category: 'light_rain', gainDb: -22, fadeMs: 2500 },
+      { type: 'start', cueId: ID(1), category: 'light_rain', gainDb: -12, fadeMs: 2500 },
     ]);
   });
 
@@ -245,7 +245,7 @@ describe('lectio-engine: seeking and rate', () => {
     mixer.apply.mockClear();
     engine.seekTo(1000);
     expect(mixer.apply).toHaveBeenCalledWith([
-      { type: 'start', cueId: ID(1), category: 'light_rain', gainDb: -22, fadeMs: 2500 },
+      { type: 'start', cueId: ID(1), category: 'light_rain', gainDb: -12, fadeMs: 2500 },
     ]);
   });
 
@@ -325,7 +325,7 @@ describe('lectio-engine: ambience master', () => {
     mixer.apply.mockClear();
     engine.setAmbienceMaster(true, -18);
     expect(mixer.apply).toHaveBeenCalledWith([
-      { type: 'retarget', cueId: ID(1), gainDb: -18, rampMs: 400 },
+      { type: 'retarget', cueId: ID(1), gainDb: -8, rampMs: 400 },
     ]);
   });
 

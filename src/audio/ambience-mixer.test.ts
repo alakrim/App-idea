@@ -107,9 +107,9 @@ function createFakeContext() {
 }
 
 const BEDS: Record<string, ResolvedBed> = {
-  light_rain: { id: 'base_rain', asset: 101 },
-  forest_night: { id: 'base_wind', asset: 102 },
-  city_night: { id: 'base_crowd', asset: 103 },
+  light_rain: { id: 'base_rain', asset: 101, lufs: -28 },
+  forest_night: { id: 'base_wind', asset: 102, lufs: -28 },
+  city_night: { id: 'base_crowd', asset: 103, lufs: -28 },
 };
 
 /**

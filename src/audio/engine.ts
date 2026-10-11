@@ -57,7 +57,10 @@ export interface AudioEngine {
    * changes. Callers outside the engine (for example a preview) should not mix with it.
    */
   setAmbience(commands: readonly BedCommand[]): void;
-  /** Turns the ambience master on or off, and sets the base bed level in dB (-40 to 0). */
+  /**
+   * Turns the ambience master on or off. `levelDb` (-40 to 0) is the bed level relative to the
+   * narration, so a bed sits that far below the narration whatever its own file loudness.
+   */
   setAmbienceMaster(enabled: boolean, levelDb: number): void;
   /** About 4 Hz while playing, plus on every sentence change and seek. */
   onPosition(callback: (update: PositionUpdate) => void): Unsubscribe;

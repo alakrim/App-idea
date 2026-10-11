@@ -1,6 +1,7 @@
 import {
   type BedCommand,
   type BedTarget,
+  BED_TARGET_LUFS,
   DEFAULT_BED_LEVEL_DB,
   bedGainDb,
   diffBeds,
@@ -56,16 +57,37 @@ const byId = (beds: readonly BedTarget[]) =>
   [...beds].sort((a, b) => a.cueId.localeCompare(b.cueId));
 
 describe('bedGainDb', () => {
-  it('shifts the level by intensity', () => {
-    expect(bedGainDb(-22, 'low')).toBe(-25);
-    expect(bedGainDb(-22, 'medium')).toBe(-22);
-    expect(bedGainDb(-22, 'high')).toBe(-19);
+  it('places the relative level against the narration reference, less the bed loudness', () => {
+    // Default -22 dB at medium on a -28 LUFS bed: -18 + -22 - (-28) = -12 dB file gain.
+    expect(bedGainDb(-22, 'medium', -28)).toBe(-12);
+    expect(bedGainDb(-22, 'low', -28)).toBe(-15);
+    expect(bedGainDb(-22, 'high', -28)).toBe(-9);
   });
 
-  it('clamps the result to [-30, -12]', () => {
-    expect(bedGainDb(-28, 'low')).toBe(-30);
-    expect(bedGainDb(-14, 'high')).toBe(-12);
-    expect(bedGainDb(-40, 'medium')).toBe(-30);
+  it('shifts the relative level by intensity before the loudness is applied', () => {
+    expect(bedGainDb(-22, 'medium', -28) - bedGainDb(-22, 'low', -28)).toBe(3);
+    expect(bedGainDb(-22, 'high', -28) - bedGainDb(-22, 'medium', -28)).toBe(3);
+  });
+
+  it('clamps the relative level to [-30, -12], not the final gain', () => {
+    // Relative -11 is clamped to -12, so the file gain is -18 + -12 - (-28) = -2 dB.
+    expect(bedGainDb(-14, 'high', -28)).toBe(-2);
+    // Relative -33 is clamped to -30: -18 - 30 + 28 = -20 dB.
+    expect(bedGainDb(-36, 'low', -28)).toBe(-20);
+  });
+
+  it('defaults to a -28 LUFS bed, the base pack target', () => {
+    expect(bedGainDb(-22, 'medium')).toBe(bedGainDb(-22, 'medium', BED_TARGET_LUFS));
+  });
+
+  it('gives beds of different loudness the same perceived level', () => {
+    // Perceived level of a bed is its file gain plus its own loudness.
+    const perceived = (levelDb: number, intensity: 'low' | 'medium' | 'high', lufs: number) =>
+      bedGainDb(levelDb, intensity, lufs) + lufs;
+    for (const intensity of ['low', 'medium', 'high'] as const) {
+      expect(perceived(-22, intensity, -28)).toBeCloseTo(perceived(-22, intensity, -24), 10);
+      expect(perceived(-22, intensity, -28)).toBeCloseTo(perceived(-22, intensity, -33), 10);
+    }
   });
 });
 
@@ -109,19 +131,39 @@ describe('planBeds', () => {
   });
 
   it('carries the level, fades and intensity into each target', () => {
-    const [target] = planBeds([cue({ id: ULID(1), intensity: 'high' })], 3, -24);
+    const [target] = planBeds([cue({ id: ULID(1), intensity: 'high' })], 3, { levelDb: -24 });
     expect(target).toEqual({
       cueId: ULID(1),
       category: 'light_rain',
-      gainDb: -21,
+      gainDb: -11,
       fadeInMs: 2500,
       fadeOutMs: 3000,
     });
   });
 
-  it('defaults to the ADR level of -22 dB', () => {
+  it('defaults to the ADR level of -22 dB relative to narration', () => {
     const [target] = planBeds([cue({ id: ULID(1), intensity: 'medium' })], 3);
-    expect(target?.gainDb).toBe(DEFAULT_BED_LEVEL_DB);
+    expect(target?.gainDb).toBe(bedGainDb(DEFAULT_BED_LEVEL_DB, 'medium'));
+  });
+
+  it('levels each bed by the loudness of the file it resolves to', () => {
+    const cues = [
+      cue({ id: ULID(1), category: 'quiet_bed', confidence: 0.9 }),
+      cue({ id: ULID(2), category: 'loud_bed', confidence: 0.8 }),
+    ];
+    const lufs: Record<string, number> = { quiet_bed: -33, loud_bed: -24 };
+    const targets = planBeds(cues, 3, { bedLufs: (category) => lufs[category] ?? null });
+    const byCategory = Object.fromEntries(targets.map((t) => [t.category, t.gainDb]));
+    // The quieter file needs more gain, so both come out at the same perceived level.
+    expect((byCategory.quiet_bed ?? 0) - (byCategory.loud_bed ?? 0)).toBeCloseTo(9, 10);
+    expect((byCategory.quiet_bed ?? 0) + -33).toBeCloseTo((byCategory.loud_bed ?? 0) + -24, 10);
+  });
+
+  it('falls back to the target loudness when a bed has none', () => {
+    const [target] = planBeds([cue({ id: ULID(1), category: 'unknown' })], 3, {
+      bedLufs: () => null,
+    });
+    expect(target?.gainDb).toBe(bedGainDb(DEFAULT_BED_LEVEL_DB, 'medium', BED_TARGET_LUFS));
   });
 });
 

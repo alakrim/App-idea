@@ -40,6 +40,8 @@ export interface LectioEngineDeps {
   mixer: AmbienceMixer;
   interruptions: PlatformEventSource<InterruptionEvent>;
   remote: PlatformEventSource<RemoteEvent>;
+  /** Loudness of the bed a category resolves to. Omitted means every bed is the target loudness. */
+  bedLufs?: (category: string) => number | null;
 }
 
 interface LoadedChapter {
@@ -124,7 +126,7 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
   function planAt(idx: number): void {
     sentenceIdx = idx;
     if (idx < 0) return;
-    const next = planBeds(cues, idx, levelDb);
+    const next = planBeds(cues, idx, { levelDb, bedLufs: deps.bedLufs });
     const commands = diffBeds(beds, next);
     beds = next;
     if (commands.length > 0) mixer.apply(commands);
