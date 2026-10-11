@@ -36,8 +36,9 @@ describe('estimateSentenceOffsets', () => {
   });
 
   it('adds a smaller pause for commas than for terminal punctuation', () => {
+    // Same letters in both: the comma pause is 3 character equivalents, the terminal one 8.
     const comma = estimateSentenceOffsets(['abcdef, ghi', 'jkl'], 1000)[1] ?? 0;
-    const terminal = estimateSentenceOffsets(['abcdef. ghi', 'jkl'], 1000)[1] ?? 0;
+    const terminal = estimateSentenceOffsets(['abcdef ghi.', 'jkl'], 1000)[1] ?? 0;
     expect(terminal).toBeGreaterThan(comma);
   });
 

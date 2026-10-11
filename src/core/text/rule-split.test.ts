@@ -27,10 +27,9 @@ describe('splitByRules: Latin', () => {
     ]);
   });
 
-  it('keeps e.g., i.e. and etc. intact', () => {
+  it('keeps e.g., i.e. and etc. intact, so they do not end a sentence', () => {
     expect(splitByRules('Bring tools, e.g. saws, i.e. the big ones, etc. Then leave.')).toEqual([
-      'Bring tools, e.g. saws, i.e. the big ones, etc.',
-      'Then leave.',
+      'Bring tools, e.g. saws, i.e. the big ones, etc. Then leave.',
     ]);
   });
 

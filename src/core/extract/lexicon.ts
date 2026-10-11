@@ -8,7 +8,15 @@
  */
 
 export type LexiconKind =
-  'nav' | 'share' | 'related' | 'comments' | 'cookie' | 'donation' | 'byline' | 'timestamp';
+  | 'nav'
+  | 'ad'
+  | 'share'
+  | 'related'
+  | 'comments'
+  | 'cookie'
+  | 'donation'
+  | 'byline'
+  | 'timestamp';
 
 export interface LexiconRule {
   id: string;
@@ -100,6 +108,16 @@ export const LEXICON_RULES: readonly LexiconRule[] = [
       /目次|目录|目錄|\btable of contents\b|^\s*contents\s*$|índice|^\s*sommaire\s*$|inhaltsverzeichnis/i,
     maxUnits: 12,
     examples: ['目次', '目录', 'Table of contents', 'Contents'],
+  },
+
+  // Advertisement labels.
+  {
+    id: 'ad_label',
+    kind: 'ad',
+    pattern:
+      /^\s*(?:Advertisement|Advertising|Sponsored(?: content)?|Promoted|Publicidad|Pubblicità|Publicité|Werbung|Anzeige|广告|広告|광고)\s*$/i,
+    maxUnits: 10,
+    examples: ['Advertisement', 'Sponsored content', 'Publicidad', '広告', '광고'],
   },
 
   // Share and social prompts.

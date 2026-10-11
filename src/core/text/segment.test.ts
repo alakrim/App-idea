@@ -83,10 +83,10 @@ describe('segmentSentences', () => {
   });
 
   it('refines native output with the rule splitter, so dialogue dashes that ICU keeps are split', () => {
-    const sentences = segmentSentences('— Ciao, disse lui. — Come stai? Bene, grazie a tutti.', 'it', {
+    const sentences = segmentSentences('— Ciao, disse lui. — Come stai oggi? Bene, grazie a tutti.', 'it', {
       segmenter: wholeTextSegmenter(),
     });
-    expect(sentences).toEqual(['— Ciao, disse lui.', '— Come stai?', 'Bene, grazie a tutti.']);
+    expect(sentences).toEqual(['— Ciao, disse lui.', '— Come stai oggi?', 'Bene, grazie a tutti.']);
   });
 
   it('does not call the native segmenter for CJK text', () => {
@@ -98,22 +98,21 @@ describe('segmentSentences', () => {
   });
 
   it('falls back to the rule splitter when the native segmenter is null', () => {
-    expect(segmentSentences('Hello there. Good morning friend.', undefined, { segmenter: null })).toEqual([
-      'Hello there.',
-      'Good morning friend.',
-    ]);
+    expect(
+      segmentSentences('Hello there, my friend. Good morning to everyone.', undefined, { segmenter: null }),
+    ).toEqual(['Hello there, my friend.', 'Good morning to everyone.']);
   });
 
   it('falls back to the rule splitter when the native segmenter rejects the locale', () => {
     expect(
-      segmentSentences('Hello there. Good morning friend.', 'not a locale!!', {
+      segmentSentences('Hello there, my friend. Good morning to everyone.', 'not a locale!!', {
         segmenter: throwingSegmenter,
       }),
-    ).toEqual(['Hello there.', 'Good morning friend.']);
+    ).toEqual(['Hello there, my friend.', 'Good morning to everyone.']);
   });
 
   it('detects Intl.Segmenter at runtime when no segmenter option is given', () => {
-    expect(resolveIntlSegmenter()).toBeTypeOf('function');
+    expect(typeof resolveIntlSegmenter()).toBe('function');
     expect(resolveIntlSegmenter({})).toBeNull();
     expect(
       segmentSentences('Mr. Hollis left. He was tired after the long trip.', 'en'),

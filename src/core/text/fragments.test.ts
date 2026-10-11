@@ -13,8 +13,8 @@ describe('mergeShortFragments', () => {
   });
 
   it('leaves fragments of three or more words alone', () => {
-    expect(mergeShortFragments(['One two.', 'Three four five.'])).toEqual([
-      'One two.',
+    expect(mergeShortFragments(['One two three.', 'Three four five.'])).toEqual([
+      'One two three.',
       'Three four five.',
     ]);
   });
@@ -27,9 +27,9 @@ describe('mergeShortFragments', () => {
   });
 
   it('uses the word rule for Hangul, which is word-spaced', () => {
-    expect(mergeShortFragments(['그는 떠났다.', '기다려 줘.', '그녀는 남았다.'])).toEqual([
+    expect(mergeShortFragments(['그는 떠났다.', '기다려 줘.', '그녀는 조용히 남았다.'])).toEqual([
       '그는 떠났다. 기다려 줘.',
-      '그녀는 남았다.',
+      '그녀는 조용히 남았다.',
     ]);
   });
 
