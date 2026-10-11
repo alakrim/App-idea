@@ -1,6 +1,6 @@
 # STATE: source of truth
 
-_Last updated: 2026-10-11 by architect_
+_Last updated: 2026-10-11 (night) by architect_
 
 ## Current phase
 **Core loop complete in code** (URL/PDF/text → extract → clean → analyze → translate → narrate → play, with ambience, memory Q&A and vocab). 1,467 tests, e2e green. Now: device build + integration polish. Previously: **M1 → M2/M5/M6 groundwork**. Wave 2 (B1–B7) is done and verified. Wave 3 (I1, F0, F5, A1, A2) is running.
@@ -19,7 +19,7 @@ _Last updated: 2026-10-11 by architect_
 | M8 | Polish, accessibility, performance, EAS build, device spike S1 + probes P1/P2, Maestro E2E | not started |
 
 ## Work in flight
-_None. Waiting on the user's device test of `lectio-0.1.0-c3eac7a-arm64.apk` (apk-builds branch). It fixes the Library crash (cover monogram at font size 0). The user asked for bug fixes only until they have tested properly._
+_Incident 3 (choppy narration) is fixed in code (254fbad). The APK for it is being built, then it goes to the user for a device test. A3 (Freesound) is blocked by Freesound itself; the user has to choose a way forward (see "Freesound, 2026-10-11 night")._
 
 ## Next up
 - **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.
@@ -148,3 +148,19 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
    - Known open item: the narrate concurrency orphan file when one segment of a pair fails (harmless, as the file is overwritten on retry).
    - **APK delivered**: `lectio-0.1.0-63a0b8c-arm64.apk` on branch `apk-builds` (bc2ca55), 45,770,786 bytes, SHA-256 `182ba146…60fa`, the same debug signing key (`fac61745…3b9c`), 10 permissions, Hermes bundle checked for the new strings, and the GitHub blob `a7d2bc35` matches the local file.
 3. ⛔ **A3: Freesound real ambience is BLOCKED by network policy**: `freesound.org` returns 403 at the proxy. The user must allow `freesound.org` and `cdn.freesound.org` in the environment's network settings (then start a new session). The key is stored outside the repo at `~/.config/lectio/freesound.key` (mode 600); this container is ephemeral, so the next session may need it re-supplied as an env secret (`FREESOUND_API_KEY`). The brief is ready: `docs/briefs/A3-freesound-ambience.md`.
+
+## Incident 3: narration stops and starts like a scratched CD (2026-10-11 night), fixed in 254fbad
+- **Symptom (user):** playing a chapter, the AI voice keeps stopping and starting, chopped up.
+- **Root cause (architect, from the native sources of both libraries):** the app had **two audio-focus clients**. `native-engine.ts` subscribed to interruptions through react-native-audio-api's `AudioManager.observeAudioInterruptions(true)`, which on Android *requests* `AUDIOFOCUS_GAIN` (`AudioAPIModule.kt` → `AudioFocusListener.requestAudioFocus`). expo-audio requests `AUDIOFOCUS_GAIN_TRANSIENT` on every `play()` and abandons focus whenever no player is playing (`AudioModule.kt`, `onPlaybackStateChange`). The loop: voice plays → audio-api loses focus → interruption `began` → the engine pauses the voice → expo-audio abandons focus → audio-api regains it → `ended` with `shouldResume: true` (transient loss) → the engine plays → and again. It also started on any momentary stop (segment swap, seek, buffering).
+- **Fix:** expo-audio is the only focus client. It already pauses on focus loss and resumes after a transient one, and the engine follows through the voice snapshots. The native engine no longer listens through react-native-audio-api.
+- **Regression test:** `src/audio/native-engine.test.ts` fails if anything asks react-native-audio-api for focus (mutation-checked: it fails on the old code, `Expected number of calls: 0, Received: 1`). A second test checks the engine follows a native pause and resume without re-issuing play or pause.
+- **Evidence:** `npm run verify` exit 0 (183 suites, 1,740 tests, lint 0, typecheck, worklet:check OK, bundle OK). `npm run boot:check` OK.
+- **Device check wanted (S1):** a 10-minute listen across several segment boundaries; a phone call mid-chapter (the voice pauses and resumes); another music app started mid-chapter (the voice pauses).
+- **Noticed, not changed (backlog, user-visible):** ambience beds keep playing while the voice is paused, and 7 dB louder because ducking releases. They also keep playing through a phone call. Proposed: beds follow the transport (fade out on pause, error or end; fade back in on play; keep them through buffering), with a ~350 ms grace so segment swaps don't flicker them.
+- **Noticed (S1):** expo-audio 57 asks for `AUDIOFOCUS_GAIN_TRANSIENT`, not long-term `GAIN`, and drops focus at every momentary stop. With another music app paused in the background, that app may resume for a moment at each segment swap. If S1 shows it, the fix is a single-player playlist or a patch to expo-audio's focus type.
+
+## Freesound, 2026-10-11 night
+- The user reports full internet access now and supplied the key again. It is stored outside the repo at `~/.config/lectio/freesound.key` (mode 600) and is never written to the repo.
+- Every `freesound.org`, `cdn.freesound.org` and `labs.freesound.org` URL still returns **403**. This is **Freesound refusing this cloud IP, not our network policy**: the proxy passes the tunnel through, the TLS certificate is Freesound's own (Let's Encrypt, not the proxy's interception CA), and the 403 has an empty body and no server header. Other hosts (example.com, Openverse) work.
+- Reachable alternative: **Openverse** (`api.openverse.org`) indexes Freesound's CC0 catalogue (240 CC0 results for "rain", with author, licence and landing URL). But its audio URLs point at `cdn.freesound.org`, so the files still can't be downloaded from here.
+- Options for the user: (a) run the A3 download step on their own computer (a residential IP), then push the files; (b) use other CC0 sources reachable from here (Wikimedia Commons public-domain/CC0 field recordings; quality varies); (c) keep the procedural pack for now.
