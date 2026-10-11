@@ -1,40 +1,11 @@
-import {
-  Armchair,
-  CloudRain,
-  Building,
-  Moon,
-  Sparkles,
-  Swords,
-  Ship,
-  Trees,
-} from 'lucide-react-native';
 import { Switch, StyleSheet, View } from 'react-native';
 
-import { getCategory } from '@/core/analysis/ambience-taxonomy';
 import type { AmbienceCue } from '@/core/domain';
+import { ambienceIconOf, ambienceLabel } from '@/features/shared/ambience-display';
 import { Card } from '@/ui/card';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { hairline, iconSize, iconStrokeWidth, minTouchTarget, radius, space } from '@/ui/tokens';
-
-import type { LucideIcon } from 'lucide-react-native';
-
-const FAMILY_ICONS: Readonly<Record<string, LucideIcon>> = {
-  nature: Trees,
-  weather: CloudRain,
-  urban: Building,
-  interiors: Armchair,
-  transport: Ship,
-  combat: Swords,
-  mystical: Sparkles,
-  mood: Moon,
-};
-
-/** "tavern_crowd" becomes "Tavern crowd". The id stays the stable key; this is only the label. */
-export function cueLabel(categoryId: string): string {
-  const words = categoryId.replace(/_/g, ' ');
-  return words.charAt(0).toUpperCase() + words.slice(1);
-}
 
 export interface AmbienceListProps {
   cues: readonly AmbienceCue[];
@@ -67,9 +38,8 @@ interface CueRowProps {
 
 function CueRow({ cue, divided, onToggle }: CueRowProps) {
   const { colors } = useTheme();
-  const family = getCategory(cue.category)?.family ?? '';
-  const Icon = FAMILY_ICONS[family] ?? Sparkles;
-  const label = cueLabel(cue.category);
+  const Icon = ambienceIconOf(cue.category);
+  const label = ambienceLabel(cue.category);
   const range = `Sentences ${cue.startSentence + 1}–${cue.endSentence + 1}`;
 
   return (

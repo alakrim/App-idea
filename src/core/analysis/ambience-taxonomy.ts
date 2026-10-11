@@ -26,8 +26,76 @@ export const BASE_PACK_IDS = [
 
 export type BasePackId = (typeof BASE_PACK_IDS)[number];
 
+/** Lucide icon names the taxonomy uses. The player maps each one to its component. */
+export const AMBIENCE_ICON_NAMES = [
+  'Anchor',
+  'Atom',
+  'Bell',
+  'Bird',
+  'Bomb',
+  'Briefcase',
+  'Bug',
+  'Building',
+  'Building2',
+  'Castle',
+  'Church',
+  'Clock',
+  'CloudDrizzle',
+  'CloudLightning',
+  'CloudRain',
+  'CloudSnow',
+  'Coffee',
+  'Cog',
+  'Crosshair',
+  'DoorClosed',
+  'Droplet',
+  'Droplets',
+  'Drum',
+  'Flame',
+  'Footprints',
+  'Ghost',
+  'HeartPulse',
+  'Hospital',
+  'Landmark',
+  'Library',
+  'Lock',
+  'Moon',
+  'Mountain',
+  'Music',
+  'Plane',
+  'Rocket',
+  'Route',
+  'Satellite',
+  'School',
+  'Ship',
+  'Skull',
+  'Snowflake',
+  'Sparkle',
+  'Sparkles',
+  'Store',
+  'Sword',
+  'Swords',
+  'Target',
+  'Telescope',
+  'TrainFront',
+  'Trophy',
+  'Users',
+  'Utensils',
+  'WandSparkles',
+  'Waves',
+  'Waypoints',
+  'Wind',
+  'Wine',
+  'Zap',
+] as const;
+export type AmbienceIconName = (typeof AMBIENCE_ICON_NAMES)[number];
+
 export interface AmbienceCategoryDef {
   readonly id: string;
+  /** English display name, Title Case, at most 18 characters. */
+  readonly label: string;
+  /** Lucide icon name for the category. */
+  readonly icon: AmbienceIconName;
   readonly family: string;
   readonly kind: AmbienceKind;
   readonly description: string;
@@ -39,6 +107,8 @@ export const AMBIENCE_CATEGORIES = [
   // nature
   {
     id: 'forest_day_birds',
+    label: 'Forest by Day',
+    icon: 'Bird',
     family: 'nature',
     kind: 'bed',
     description: 'Daytime forest with birdsong, light leaf rustle, distant woodpecker.',
@@ -46,6 +116,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'forest_night',
+    label: 'Forest at Night',
+    icon: 'Moon',
     family: 'nature',
     kind: 'bed',
     description: 'Night forest: crickets, an occasional owl, soft wind in trees.',
@@ -53,6 +125,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'open_field_wind',
+    label: 'Open Field',
+    icon: 'Wind',
     family: 'nature',
     kind: 'bed',
     description: 'Open grassland or moor, steady wind through grass, no birds.',
@@ -60,6 +134,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'mountain_wind',
+    label: 'Mountain Wind',
+    icon: 'Mountain',
     family: 'nature',
     kind: 'bed',
     description: 'High exposed mountain wind with cold gusts and sparse echo.',
@@ -67,6 +143,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'ocean_waves',
+    label: 'Ocean Waves',
+    icon: 'Waves',
     family: 'nature',
     kind: 'bed',
     description: 'Surf on a beach, rhythmic waves with a slow swell.',
@@ -74,6 +152,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'river_stream',
+    label: 'River Stream',
+    icon: 'Droplets',
     family: 'nature',
     kind: 'bed',
     description: 'Flowing stream or river over stones.',
@@ -81,6 +161,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'jungle_insects',
+    label: 'Jungle',
+    icon: 'Bug',
     family: 'nature',
     kind: 'bed',
     description: 'Tropical jungle: insects, distant monkeys, dripping foliage.',
@@ -89,6 +171,8 @@ export const AMBIENCE_CATEGORIES = [
   // weather
   {
     id: 'light_rain',
+    label: 'Light Rain',
+    icon: 'CloudDrizzle',
     family: 'weather',
     kind: 'bed',
     description: 'Gentle steady rain on leaves or ground.',
@@ -96,6 +180,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'heavy_rain',
+    label: 'Heavy Rain',
+    icon: 'CloudRain',
     family: 'weather',
     kind: 'bed',
     description: 'Downpour, dense steady rain.',
@@ -103,6 +189,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'storm_wind',
+    label: 'Storm',
+    icon: 'CloudLightning',
     family: 'weather',
     kind: 'bed',
     description: 'Storm: strong gusts, rain, distant rolling thunder.',
@@ -110,6 +198,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'snowfall_quiet',
+    label: 'Quiet Snowfall',
+    icon: 'CloudSnow',
     family: 'weather',
     kind: 'bed',
     description: 'Muffled quiet of falling snow.',
@@ -117,6 +207,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'blizzard_wind',
+    label: 'Blizzard',
+    icon: 'Snowflake',
     family: 'weather',
     kind: 'bed',
     description: 'Howling snow wind, harsh and cold.',
@@ -124,6 +216,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'thunder_clap',
+    label: 'Thunder Clap',
+    icon: 'Zap',
     family: 'weather',
     kind: 'oneshot',
     description: 'Single close thunder crack.',
@@ -132,6 +226,8 @@ export const AMBIENCE_CATEGORIES = [
   // urban
   {
     id: 'city_street_day',
+    label: 'City Street',
+    icon: 'Building2',
     family: 'urban',
     kind: 'bed',
     description: 'Busy city street by day: traffic, footsteps, distant voices.',
@@ -139,6 +235,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'city_night',
+    label: 'City at Night',
+    icon: 'Building',
     family: 'urban',
     kind: 'bed',
     description: 'Night city: light traffic, distant sirens, humming signs.',
@@ -146,6 +244,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'market_crowd',
+    label: 'Market',
+    icon: 'Store',
     family: 'urban',
     kind: 'bed',
     description: 'Open market or bazaar: vendors calling, many voices.',
@@ -153,6 +253,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'village_square',
+    label: 'Village Square',
+    icon: 'Landmark',
     family: 'urban',
     kind: 'bed',
     description: 'Small village square, few voices, a cart, a dog barking.',
@@ -160,6 +262,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'harbor_port',
+    label: 'Harbor',
+    icon: 'Anchor',
     family: 'urban',
     kind: 'bed',
     description: 'Port: gulls, ropes, distant cranes, water against hulls.',
@@ -167,6 +271,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'crowd_murmur',
+    label: 'Crowd',
+    icon: 'Users',
     family: 'urban',
     kind: 'bed',
     description: 'Large crowd murmuring; no distinct words.',
@@ -175,6 +281,8 @@ export const AMBIENCE_CATEGORIES = [
   // interiors
   {
     id: 'tavern_crowd',
+    label: 'Tavern',
+    icon: 'Wine',
     family: 'interiors',
     kind: 'bed',
     description: 'Busy tavern: many conversations, clinking mugs, distant laughter.',
@@ -182,6 +290,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'castle_hall',
+    label: 'Castle Hall',
+    icon: 'Castle',
     family: 'interiors',
     kind: 'bed',
     description: 'Large stone hall with faint echo and distant footsteps.',
@@ -189,6 +299,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'fireplace_crackle',
+    label: 'Fireplace',
+    icon: 'Flame',
     family: 'interiors',
     kind: 'bed',
     description: 'Crackling fire in a room, soft pops.',
@@ -196,6 +308,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'kitchen_busy',
+    label: 'Kitchen',
+    icon: 'Utensils',
     family: 'interiors',
     kind: 'bed',
     description: 'Kitchen at work: pots, chopping, sizzling, voices.',
@@ -203,6 +317,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'office_hum',
+    label: 'Office',
+    icon: 'Briefcase',
     family: 'interiors',
     kind: 'bed',
     description: 'Modern office: HVAC hum, keyboards, faint phones.',
@@ -210,6 +326,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'library_quiet',
+    label: 'Library',
+    icon: 'Library',
     family: 'interiors',
     kind: 'bed',
     description: 'Library: near silence, page turns, soft room tone.',
@@ -217,6 +335,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'hospital_ward',
+    label: 'Hospital Ward',
+    icon: 'Hospital',
     family: 'interiors',
     kind: 'bed',
     description: 'Hospital ward: distant monitors, carts, low voices.',
@@ -224,6 +344,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'prison_cell',
+    label: 'Prison Cell',
+    icon: 'Lock',
     family: 'interiors',
     kind: 'bed',
     description: 'Stone cell with dripping water and distant metal echoes.',
@@ -231,6 +353,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'cafe_soft',
+    label: 'Quiet Cafe',
+    icon: 'Coffee',
     family: 'interiors',
     kind: 'bed',
     description: 'Quiet cafe, soft chatter, cups clinking.',
@@ -238,6 +362,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'lecture_hall',
+    label: 'Lecture Hall',
+    icon: 'School',
     family: 'interiors',
     kind: 'bed',
     description: 'Lecture hall: quiet audience rustle, distant HVAC.',
@@ -245,6 +371,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'door_slam',
+    label: 'Door Slam',
+    icon: 'DoorClosed',
     family: 'interiors',
     kind: 'oneshot',
     description: 'Single heavy door slam.',
@@ -253,6 +381,8 @@ export const AMBIENCE_CATEGORIES = [
   // transport
   {
     id: 'horse_trot',
+    label: 'Horse Trot',
+    icon: 'Footprints',
     family: 'transport',
     kind: 'bed',
     description: 'Horse walking or trotting on a dirt road, hooves, light tack creak.',
@@ -260,6 +390,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'horse_gallop',
+    label: 'Horse Gallop',
+    icon: 'Route',
     family: 'transport',
     kind: 'bed',
     description: 'Fast gallop, pounding hooves, breath and leather.',
@@ -267,6 +399,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'carriage_wheels',
+    label: 'Carriage',
+    icon: 'Waypoints',
     family: 'transport',
     kind: 'bed',
     description: 'Wooden carriage on road, wheels creaking, harness jingle.',
@@ -274,6 +408,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'ship_deck',
+    label: 'Ship Deck',
+    icon: 'Ship',
     family: 'transport',
     kind: 'bed',
     description: 'Wooden sailing ship at sea: ropes, creaking hull, sails.',
@@ -281,6 +417,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'train_interior',
+    label: 'Train',
+    icon: 'TrainFront',
     family: 'transport',
     kind: 'bed',
     description: 'Train carriage: rhythmic wheels on rail, muffled cabin.',
@@ -288,6 +426,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'airplane_cabin',
+    label: 'Airplane',
+    icon: 'Plane',
     family: 'transport',
     kind: 'bed',
     description: 'Airplane cabin: steady engine drone, muffled air.',
@@ -296,6 +436,8 @@ export const AMBIENCE_CATEGORIES = [
   // combat
   {
     id: 'battle_field',
+    label: 'Battlefield',
+    icon: 'Swords',
     family: 'combat',
     kind: 'bed',
     description: 'Distant battlefield: shouts, clashing metal, horns.',
@@ -303,6 +445,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'war_drums',
+    label: 'War Drums',
+    icon: 'Drum',
     family: 'combat',
     kind: 'bed',
     description: 'Drums and horns of an approaching army, tense.',
@@ -310,6 +454,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'gunfight_ambient',
+    label: 'Gunfire',
+    icon: 'Crosshair',
     family: 'combat',
     kind: 'bed',
     description: 'Distant gunfire with echoes and shouting.',
@@ -317,6 +463,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'arena_crowd',
+    label: 'Arena Crowd',
+    icon: 'Trophy',
     family: 'combat',
     kind: 'bed',
     description: 'Stadium or arena crowd cheering or jeering.',
@@ -324,6 +472,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'sword_clash',
+    label: 'Sword Clash',
+    icon: 'Sword',
     family: 'combat',
     kind: 'oneshot',
     description: 'Single steel-on-steel clash.',
@@ -331,6 +481,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'gunshot',
+    label: 'Gunshot',
+    icon: 'Target',
     family: 'combat',
     kind: 'oneshot',
     description: 'Single gunshot.',
@@ -338,6 +490,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'explosion_distant',
+    label: 'Distant Blast',
+    icon: 'Bomb',
     family: 'combat',
     kind: 'oneshot',
     description: 'Distant boom with rumble.',
@@ -346,6 +500,8 @@ export const AMBIENCE_CATEGORIES = [
   // mystical
   {
     id: 'ritual_chant',
+    label: 'Ritual Chant',
+    icon: 'Sparkles',
     family: 'mystical',
     kind: 'bed',
     description: 'Low chanted voices in a ritual, reverberant.',
@@ -353,6 +509,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'temple_incense',
+    label: 'Temple',
+    icon: 'Church',
     family: 'mystical',
     kind: 'bed',
     description: 'Temple interior: soft bells, hushed chanting.',
@@ -360,6 +518,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'qi_hum',
+    label: 'Qi Aura',
+    icon: 'Atom',
     family: 'mystical',
     kind: 'bed',
     description: 'Cultivation aura: low resonant hum, soft wind, faint shimmer.',
@@ -367,6 +527,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'spirit_whispers',
+    label: 'Spirit Whispers',
+    icon: 'Ghost',
     family: 'mystical',
     kind: 'bed',
     description: 'Faint ghostly whispers, eerie air.',
@@ -374,6 +536,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'magic_shimmer',
+    label: 'Magic',
+    icon: 'WandSparkles',
     family: 'mystical',
     kind: 'oneshot',
     description: 'Spell cast with a rising shimmer.',
@@ -381,6 +545,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'bell_toll',
+    label: 'Bell Toll',
+    icon: 'Bell',
     family: 'mystical',
     kind: 'oneshot',
     description: 'Single temple or church bell toll.',
@@ -389,6 +555,8 @@ export const AMBIENCE_CATEGORIES = [
   // sci-fi
   {
     id: 'starship_bridge',
+    label: 'Starship Bridge',
+    icon: 'Rocket',
     family: 'sci-fi',
     kind: 'bed',
     description: 'Spaceship bridge: low electronic hum, faint console tones.',
@@ -396,6 +564,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'spaceship_engine',
+    label: 'Engine Rumble',
+    icon: 'Cog',
     family: 'sci-fi',
     kind: 'bed',
     description: 'Deep engine rumble in a spaceship corridor.',
@@ -403,6 +573,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'alien_atmosphere',
+    label: 'Alien World',
+    icon: 'Telescope',
     family: 'sci-fi',
     kind: 'bed',
     description: 'Alien planet: strange wind, unfamiliar chirps, low drone.',
@@ -410,6 +582,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'space_station',
+    label: 'Space Station',
+    icon: 'Satellite',
     family: 'sci-fi',
     kind: 'bed',
     description: 'Space station: steady air handling, distant clanks.',
@@ -417,6 +591,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'laser_blast',
+    label: 'Laser',
+    icon: 'Sparkle',
     family: 'sci-fi',
     kind: 'oneshot',
     description: 'Single laser zap.',
@@ -425,6 +601,8 @@ export const AMBIENCE_CATEGORIES = [
   // mood
   {
     id: 'tense_heartbeat',
+    label: 'Heartbeat',
+    icon: 'HeartPulse',
     family: 'mood',
     kind: 'bed',
     description:
@@ -433,6 +611,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'clock_ticking',
+    label: 'Ticking Clock',
+    icon: 'Clock',
     family: 'mood',
     kind: 'bed',
     description: 'Slow ticking clock, tension.',
@@ -440,6 +620,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'ominous_drone',
+    label: 'Ominous Drone',
+    icon: 'Skull',
     family: 'mood',
     kind: 'bed',
     description: 'Low dark drone, horror atmosphere.',
@@ -447,6 +629,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'ballroom_party',
+    label: 'Ballroom',
+    icon: 'Music',
     family: 'mood',
     kind: 'bed',
     description: 'Ballroom or party murmur: glasses, distant chatter. No music.',
@@ -454,6 +638,8 @@ export const AMBIENCE_CATEGORIES = [
   },
   {
     id: 'rain_on_window',
+    label: 'Rain on Glass',
+    icon: 'Droplet',
     family: 'mood',
     kind: 'bed',
     description: 'Rain against window glass heard from a warm room; intimate scenes.',

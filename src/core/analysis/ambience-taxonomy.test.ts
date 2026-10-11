@@ -1,6 +1,7 @@
 import {
   AMBIENCE_CATEGORIES,
   AMBIENCE_CATEGORY_IDS,
+  AMBIENCE_ICON_NAMES,
   BASE_PACK_IDS,
   ENABLED_KINDS,
   enabledCategories,
@@ -11,6 +12,35 @@ import {
 } from './ambience-taxonomy';
 
 const SNAKE_CASE = /^[a-z][a-z0-9]*(_[a-z0-9]+)*$/;
+
+/** Title Case, with the short words lower case when they sit inside the label. */
+const TITLE_CASE_WORD = /^[A-Z][a-z]*$/;
+const SMALL_WORDS = new Set(['at', 'by', 'on', 'of']);
+
+describe('ambience display labels and icons', () => {
+  it('gives every category an English label of at most 18 characters in Title Case', () => {
+    for (const c of AMBIENCE_CATEGORIES) {
+      expect(c.label.length).toBeGreaterThan(0);
+      expect(c.label.length).toBeLessThanOrEqual(18);
+      const words = c.label.split(' ');
+      words.forEach((word, index) => {
+        const ok = TITLE_CASE_WORD.test(word) || (index > 0 && SMALL_WORDS.has(word));
+        expect({ id: c.id, word, ok }).toEqual({ id: c.id, word, ok: true });
+      });
+    }
+  });
+
+  it('gives every category a lucide icon name from the shared list', () => {
+    for (const c of AMBIENCE_CATEGORIES) {
+      expect(AMBIENCE_ICON_NAMES).toContain(c.icon);
+    }
+  });
+
+  it('keeps labels unique, so the sheet never shows two categories the same way', () => {
+    const labels = AMBIENCE_CATEGORIES.map((c) => c.label);
+    expect(new Set(labels).size).toBe(labels.length);
+  });
+});
 
 describe('ambience taxonomy integrity', () => {
   it('has the 59 R4 categories: 51 beds and 8 oneshots', () => {

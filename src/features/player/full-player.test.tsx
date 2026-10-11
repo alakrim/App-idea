@@ -5,13 +5,14 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 
 
+import { VocabActionsProvider } from '@/features/vocab/vocab-provider';
+import type { VocabActions } from '@/features/vocab/vocab-actions';
 import { ThemeProvider } from '@/ui/theme';
 import { ToastProvider } from '@/ui/toast';
 
 import { fixtureChapter, id, setupController } from './__fixtures__/playback-fixtures';
 import { FullPlayer } from './full-player';
 import { PlaybackProvider } from './player-provider';
-import { VocabActionsContext } from './vocab-actions';
 
 import type { ReactElement } from 'react';
 
@@ -21,6 +22,9 @@ jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/rean
 jest.mock('react-native-gesture-handler', () => require('./__fixtures__/gesture-stub'));
 jest.mock('@gorhom/bottom-sheet', () => require('./__fixtures__/bottom-sheet-stub'));
 jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));
+// The vocab provider reads the database and OpenRouter before it uses the injected actions.
+jest.mock('@/db/hooks', () => ({ useDb: () => ({}) }));
+jest.mock('@/app-shell/openrouter-provider', () => ({ useOpenRouter: () => ({}) }));
 jest.mock('expo-clipboard', () => ({ setStringAsync: jest.fn(() => Promise.resolve(true)) }));
 jest.mock('expo-router', () => ({
   router: { push: jest.fn(), navigate: jest.fn(), back: jest.fn(), replace: jest.fn() },
@@ -35,11 +39,13 @@ const PHONE_FRAME = {
 };
 
 /** Theme, safe area (as on a phone with no notch) and toasts, outermost first. */
-async function renderPhone(ui: ReactElement) {
+async function renderPhone(ui: ReactElement, vocab: VocabActions = fakeVocabActions({})) {
   return await render(
     <ThemeProvider initialMode="dark">
       <SafeAreaProvider initialMetrics={PHONE_FRAME}>
-        <ToastProvider>{ui}</ToastProvider>
+        <ToastProvider>
+          <VocabActionsProvider actions={vocab}>{ui}</VocabActionsProvider>
+        </ToastProvider>
       </SafeAreaProvider>
     </ThemeProvider>,
   );
@@ -174,9 +180,9 @@ describe('FullPlayer loaded', () => {
   it('shows the ambience that sounds here and turns it off from its sheet', async () => {
     await renderPlayer();
 
-    expect(screen.getByText('Harbor port')).toBeOnTheScreen();
+    expect(screen.getByText('Harbor')).toBeOnTheScreen();
 
-    await fireEvent.press(screen.getByRole('button', { name: /Ambience, Harbor port/ }));
+    await fireEvent.press(screen.getByRole('button', { name: /Ambience, Harbor/ }));
     await fireEvent(screen.getByRole('switch', { name: 'Ambience on' }), 'valueChange', false);
     await flush();
 
@@ -197,28 +203,68 @@ describe('FullPlayer learner actions', () => {
     expect(screen.getByRole('button', { name: 'Repeat sentence' })).toBeOnTheScreen();
   });
 
-  it('saves a held sentence to Vocab through the injected actions', async () => {
-    const onSaveVocab = jest.fn();
+  it('saves a held sentence to Vocab through the provider, and confirms the save', async () => {
+    const saveToVocab = jest.fn(() => 'vocab-1');
+    const actions = fakeVocabActions({ saveToVocab });
     const { controller } = setupController([fixtureChapter(1, 1, 'ready')]);
     await act(async () => {
       await controller.playChapter(id(1));
     });
     await renderPhone(
-        <VocabActionsContext.Provider value={{ onSaveVocab }}>
-          <PlaybackProvider controller={controller}>
-            <FullPlayer />
-          </PlaybackProvider>
-        </VocabActionsContext.Provider>
+      <PlaybackProvider controller={controller}>
+        <FullPlayer />
+      </PlaybackProvider>,
+      actions,
     );
     await fireEvent.press(screen.getAllByRole('button', { name: 'Open text' })[0] as never);
     await fireEvent(screen.getByText('Sentence 1 of chapter 1.'), 'longPress');
 
     await fireEvent.press(screen.getByRole('button', { name: 'Save to Vocab' }));
 
-    expect(onSaveVocab).toHaveBeenCalledWith(
-      { chapterId: id(1), idx: 1 },
-      'Sentence 1 of chapter 1.',
-    );
+    expect(saveToVocab).toHaveBeenCalledWith({
+      seriesId: controller.content.getState().seriesId,
+      chapterId: id(1),
+      sentenceIdx: 1,
+      text: 'Sentence 1 of chapter 1.',
+    });
+    expect(screen.getByText('Saved to Vocab')).toBeOnTheScreen();
   });
 
+  it('does not confirm a save that failed', async () => {
+    const actions = fakeVocabActions({
+      saveToVocab: jest.fn(() => {
+        throw new Error('Select a word or phrase to save.');
+      }),
+    });
+    const { controller } = setupController([fixtureChapter(1, 1, 'ready')]);
+    await act(async () => {
+      await controller.playChapter(id(1));
+    });
+    await renderPhone(
+      <PlaybackProvider controller={controller}>
+        <FullPlayer />
+      </PlaybackProvider>,
+      actions,
+    );
+    await fireEvent.press(screen.getAllByRole('button', { name: 'Open text' })[0] as never);
+    await fireEvent(screen.getByText('Sentence 1 of chapter 1.'), 'longPress');
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Save to Vocab' }));
+
+    expect(screen.queryByText('Saved to Vocab')).toBeNull();
+    expect(screen.getByText('Nothing to save in this sentence')).toBeOnTheScreen();
+  });
 });
+
+/** Vocab actions with every method stubbed. The provider takes them through its test seam. */
+function fakeVocabActions(overrides: Partial<VocabActions>): VocabActions {
+  return {
+    saveToVocab: jest.fn(() => 'vocab-1'),
+    retryExplanation: jest.fn(),
+    isPending: () => false,
+    failureOf: () => null,
+    getVersion: () => 0,
+    subscribe: () => () => undefined,
+    ...overrides,
+  };
+}

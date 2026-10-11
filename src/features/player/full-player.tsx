@@ -14,6 +14,8 @@ import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanima
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type { Sentence } from '@/core/domain';
+import { ambienceIconOf } from '@/features/shared/ambience-display';
+import { useVocabActions } from '@/features/vocab/vocab-actions';
 import { CoverImage } from '@/ui/cover-image';
 import { EmptyState } from '@/ui/empty-state';
 import { ErrorState } from '@/ui/error-state';
@@ -25,7 +27,7 @@ import { useTheme } from '@/ui/theme';
 import { useToast } from '@/ui/toast';
 import { gutter, space } from '@/ui/tokens';
 
-import { activeAmbienceNames } from './ambience-names';
+import { activeAmbience } from './ambience-names';
 import { AmbienceSheet } from './ambience-sheet';
 import { PlayerBackdrop } from './backdrop';
 import { Chip } from './chip';
@@ -38,7 +40,6 @@ import { SleepChip, SleepSheet } from './sleep-timer';
 import { SpeedSheet } from './speed-sheet';
 import { SyncedTextPane, displayText } from './synced-text-pane';
 import { Transport } from './transport';
-import { useVocabActions } from './vocab-actions';
 
 type OpenSheet = 'speed' | 'sleep' | 'ambience' | null;
 
@@ -160,6 +161,7 @@ function ReadyPlayer() {
 
   const title = usePlayerState((state) => state.nowPlaying?.title ?? '');
   const seriesTitle = usePlayerState((state) => state.nowPlaying?.seriesTitle ?? '');
+  const seriesId = usePlaybackContent((content) => content.seriesId);
   const coverUri = usePlayerState((state) => state.nowPlaying?.coverUri ?? null);
   const playState = usePlayerState((state) => state.state);
   const positionMs = usePlayerState((state) => state.positionMs);
@@ -187,7 +189,8 @@ function ReadyPlayer() {
         : [],
     [timeline],
   );
-  const activeNames = useMemo(() => activeAmbienceNames(cues, sentenceIdx), [cues, sentenceIdx]);
+  const activeCues = useMemo(() => activeAmbience(cues, sentenceIdx), [cues, sentenceIdx]);
+  const activeNames = activeCues.map((entry) => entry.label);
 
   const coverHeight = Math.min(
     COVER_MAX_HEIGHT,
@@ -219,8 +222,20 @@ function ReadyPlayer() {
     toast.show({ message: 'Sentence copied', tone: 'success' });
     setActionSentence(null);
   };
+  /** Saves the sentence. The toast confirms only a save that happened. */
   const saveVocab = (sentence: Sentence) => {
-    vocab.onSaveVocab({ chapterId: sentence.chapterId, idx: sentence.idx }, displayText(sentence));
+    if (seriesId === null) return;
+    try {
+      vocab.saveToVocab({
+        seriesId,
+        chapterId: sentence.chapterId,
+        sentenceIdx: sentence.idx,
+        text: displayText(sentence),
+      });
+    } catch {
+      toast.show({ message: 'Nothing to save in this sentence', tone: 'danger' });
+      return;
+    }
     toast.show({ message: 'Saved to Vocab' });
     setActionSentence(null);
   };
@@ -257,7 +272,7 @@ function ReadyPlayer() {
               label={ambienceLabel}
               accessibilityLabel={`Ambience, ${ambienceLabel}`}
               hint="Opens the ambience settings"
-              icon={CloudRain}
+              icon={activeCues[0] ? ambienceIconOf(activeCues[0].id) : CloudRain}
               active={ambience.enabled && activeNames.length > 0}
               onPress={() => setSheet('ambience')}
               testID="ambience-chip"

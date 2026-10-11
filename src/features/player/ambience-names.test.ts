@@ -1,6 +1,6 @@
 import type { AmbienceCue } from '@/core/domain';
 
-import { activeAmbienceNames, humanizeCategory } from './ambience-names';
+import { activeAmbience } from './ambience-names';
 
 function cue(
   category: string,
@@ -23,15 +23,8 @@ function cue(
   };
 }
 
-describe('humanizeCategory', () => {
-  it('turns a stable id into sentence-case words', () => {
-    expect(humanizeCategory('tavern_crowd')).toBe('Tavern crowd');
-    expect(humanizeCategory('rain')).toBe('Rain');
-  });
-});
-
-describe('activeAmbienceNames', () => {
-  it('lists the enabled cues that cover the sentence, without repeats', () => {
+describe('activeAmbience', () => {
+  it('lists the enabled cues that cover the sentence, once per category, with label and icon', () => {
     const cues = [
       cue('light_rain', 0, 5),
       cue('tavern_crowd', 3, 9),
@@ -39,7 +32,16 @@ describe('activeAmbienceNames', () => {
       cue('harbor_port', 0, 9, false),
     ];
 
-    expect(activeAmbienceNames(cues, 4)).toEqual(['Light rain', 'Tavern crowd']);
-    expect(activeAmbienceNames(cues, 10)).toEqual([]);
+    expect(activeAmbience(cues, 4)).toEqual([
+      { id: 'light_rain', label: 'Light Rain', icon: 'CloudDrizzle' },
+      { id: 'tavern_crowd', label: 'Tavern', icon: 'Wine' },
+    ]);
+    expect(activeAmbience(cues, 10)).toEqual([]);
+  });
+
+  it('keeps an unknown category with no icon, so the chip can still name it', () => {
+    expect(activeAmbience([cue('unknown_thing', 0, 2)], 1)).toEqual([
+      { id: 'unknown_thing', label: 'Unknown thing', icon: null },
+    ]);
   });
 });
