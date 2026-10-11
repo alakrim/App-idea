@@ -3,8 +3,8 @@ import { useReducedMotion, withSpring, withTiming } from 'react-native-reanimate
 import { springs, type SpringToken } from './tokens';
 
 /**
- * Motion helpers that respect the OS reduce-motion setting. With reduce motion on, springs and
- * timed moves become an instant change.
+ * Motion helpers that respect the OS reduce-motion setting. With reduce motion on, springs become
+ * an instant change.
  */
 export function useMotion() {
   const reduced = useReducedMotion();
