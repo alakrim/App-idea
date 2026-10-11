@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 import { SELECTION_PROMPT_VERSION, SELECTION_SYSTEM_PROMPT } from './prompts';
 import {
   MAX_DROPPED_CHAR_SHARE,
@@ -7,6 +9,7 @@ import {
   parseSelectionResponse,
   selectionSchema,
 } from './select';
+import { strictViolations } from '../__fixtures__/strict-json-schema';
 
 import type { Block } from './types';
 
@@ -134,5 +137,13 @@ describe('applySelection', () => {
 
   it('applies an empty selection to an empty chapter', () => {
     expect(applySelection([], [])).toEqual({ blocks: [], applied: true, warning: null });
+  });
+});
+
+describe('selectionSchema strict json_schema compatibility', () => {
+  it('requires every key and forbids extra keys', () => {
+    expect(
+      strictViolations(z.toJSONSchema(selectionSchema, { io: 'output', reused: 'inline' })),
+    ).toEqual([]);
   });
 });

@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-import { strictViolations } from '../__fixtures__/strict-json-schema';
 import { parseAnalysisReply, runAnalysisCall } from './analysis-call';
 import { MEMORY_LIMITS } from './limits';
 import {
@@ -11,6 +10,7 @@ import {
   truncateWords,
 } from './schemas';
 import { stripNulls } from './strip-nulls';
+import { strictViolations } from '../__fixtures__/strict-json-schema';
 
 import type { CleanMemoryDraft } from './schemas';
 
@@ -194,8 +194,12 @@ describe('parseAnalysisReply', () => {
 
   it('requires every cue key, using null for an empty intensity or reason', () => {
     expect(
-      rawCueSchema.safeParse({ category: 'light_rain', startSentence: 0, endSentence: 4, confidence: 1 })
-        .success,
+      rawCueSchema.safeParse({
+        category: 'light_rain',
+        startSentence: 0,
+        endSentence: 4,
+        confidence: 1,
+      }).success,
     ).toBe(false);
   });
 });
@@ -212,7 +216,10 @@ describe('strict json_schema compatibility of LLM output schemas', () => {
   });
 
   it('the walker flags an optional key and an open object, so the check has teeth', () => {
-    const loose = z.object({ a: z.string().optional(), nested: z.object({ b: z.string() }).passthrough() });
+    const loose = z.object({
+      a: z.string().optional(),
+      nested: z.object({ b: z.string() }).passthrough(),
+    });
     expect(strictViolations(z.toJSONSchema(loose, { io: 'output', reused: 'inline' })).length).toBe(
       2,
     );

@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 import { useColorScheme, type ColorSchemeName } from 'react-native';
 
 import { palette, type ThemeColors, type ThemeScheme } from './tokens';
@@ -28,18 +28,38 @@ const ThemeContext = createContext<Theme | null>(null);
 
 interface ThemeProviderProps {
   children: ReactNode;
-  /** Persistence is a later brief; for now the choice lives in context only. */
+  /** Controlled mode, usually the saved `settings.theme`. Omit it to let the provider keep its own. */
+  mode?: ThemeMode;
+  /** Called with the new mode whenever `setMode` is used. */
+  onModeChange?: (mode: ThemeMode) => void;
+  /** Starting mode when the provider is uncontrolled. */
   initialMode?: ThemeMode;
 }
 
-export function ThemeProvider({ children, initialMode = 'system' }: ThemeProviderProps) {
+export function ThemeProvider({
+  children,
+  mode: controlledMode,
+  onModeChange,
+  initialMode = 'system',
+}: ThemeProviderProps) {
   const systemScheme = useColorScheme();
-  const [mode, setMode] = useState<ThemeMode>(initialMode);
+  const [localMode, setLocalMode] = useState<ThemeMode>(initialMode);
+  const mode = controlledMode ?? localMode;
   const scheme = resolveScheme(mode, systemScheme);
+
+  const setMode = useCallback(
+    (next: ThemeMode) => {
+      if (controlledMode === undefined) {
+        setLocalMode(next);
+      }
+      onModeChange?.(next);
+    },
+    [controlledMode, onModeChange],
+  );
 
   const value = useMemo<Theme>(
     () => ({ mode, scheme, colors: palette[scheme], setMode }),
-    [mode, scheme],
+    [mode, scheme, setMode],
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

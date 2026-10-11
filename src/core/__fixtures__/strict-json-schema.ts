@@ -16,7 +16,9 @@ export function strictViolations(schema: unknown, path = '$'): string[] {
     const keys = Object.keys(properties).sort();
     const required = Array.isArray(node.required) ? node.required.map(String).sort() : [];
     if (JSON.stringify(required) !== JSON.stringify(keys)) {
-      out.push(`${path}: required ${JSON.stringify(required)} is not the keys ${JSON.stringify(keys)}`);
+      out.push(
+        `${path}: required ${JSON.stringify(required)} is not the keys ${JSON.stringify(keys)}`,
+      );
     }
     if (node.additionalProperties !== false) out.push(`${path}: additionalProperties is not false`);
     for (const [key, value] of Object.entries(properties)) {

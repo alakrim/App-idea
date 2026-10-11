@@ -30,7 +30,12 @@ function buildCandidate(
     title: article.title,
     byline: article.byline,
   });
-  const { score, signals } = scoreExtraction({ blocks, rawHtml, lang: article.lang });
+  const { score, signals } = scoreExtraction({
+    blocks,
+    rawHtml,
+    lang: article.lang,
+    preFilterBlocks: article.blocks,
+  });
   return {
     ...article,
     extractor,

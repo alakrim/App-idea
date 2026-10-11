@@ -13,6 +13,9 @@ export interface ErrorStateProps {
   message: string;
   onRetry?: () => void;
   retryLabel?: string;
+  /** An optional second action, such as copying diagnostic details. */
+  secondaryLabel?: string;
+  onSecondary?: () => void;
 }
 
 /** Failure state: says what happened and offers the next step. Announced assertively. */
@@ -21,6 +24,8 @@ export function ErrorState({
   message,
   onRetry,
   retryLabel = 'Try again',
+  secondaryLabel,
+  onSecondary,
 }: ErrorStateProps) {
   const { colors } = useTheme();
 
@@ -48,6 +53,9 @@ export function ErrorState({
       </View>
       {onRetry ? (
         <Button label={retryLabel} onPress={onRetry} variant="secondary" size="lg" />
+      ) : null}
+      {onSecondary && secondaryLabel ? (
+        <Button label={secondaryLabel} onPress={onSecondary} variant="ghost" />
       ) : null}
     </View>
   );

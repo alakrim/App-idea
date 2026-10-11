@@ -1,0 +1,50 @@
+[
+  {
+    "id": "base_rain",
+    "file": "base_rain.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-11"
+  },
+  {
+    "id": "base_wind",
+    "file": "base_wind.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-11"
+  },
+  {
+    "id": "base_ocean",
+    "file": "base_ocean.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-11"
+  },
+  {
+    "id": "base_crowd",
+    "file": "base_crowd.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-11"
+  },
+  {
+    "id": "base_space_hum",
+    "file": "base_space_hum.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-11"
+  },
+  {
+    "id": "base_fire",
+    "file": "base_fire.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-11"
+  }
+]

@@ -116,6 +116,15 @@ describe('scoreExtraction', () => {
     expect(signals.lang).toBe('en');
   });
 
+  it('scores a page whose five components are all 1 as exactly 1, so the weights sum to 1', () => {
+    const { score } = scoreExtraction({
+      blocks: narrativeBlocks(20),
+      rawHtml: CLEAN_HTML,
+      lang: 'en',
+    });
+    expect(score).toBe(1);
+  });
+
   it('scores an empty extraction as 0 with the empty hard fail', () => {
     const { score, signals } = scoreExtraction({ blocks: [], rawHtml: CLEAN_HTML, lang: null });
     expect(score).toBe(0);
@@ -156,7 +165,7 @@ describe('scoreExtraction', () => {
     expect(signals.repeatedBlockRatio).toBe(0.333);
   });
 
-  it('fails the lexicon check at three or more boilerplate hits', () => {
+  it('reports lexicon hits as information and does not gate on them', () => {
     const blocks: Block[] = [
       ...narrativeBlocks(20),
       { tag: 'li', text: 'Related articles' },
@@ -165,8 +174,41 @@ describe('scoreExtraction', () => {
     ];
     const { score, signals } = scoreExtraction({ blocks, rawHtml: CLEAN_HTML, lang: 'en' });
     expect(signals.lexiconHits).toBe(3);
-    expect(signals.hardFails).toContain('lexicon');
-    expect(decisionForScore(score)).toBe('webview');
+    expect(signals.hardFails).toEqual([]);
+    expect(decisionForScore(score)).toBe('accept');
+  });
+
+  it('reads lexicon hits on the pre-filter blocks when they are given', () => {
+    const clean = narrativeBlocks(20);
+    const boilerplate: Block[] = [
+      { tag: 'li', text: 'Related articles' },
+      { tag: 'li', text: 'Leave a reply' },
+      { tag: 'li', text: 'Share this on Facebook' },
+    ];
+    const { signals } = scoreExtraction({
+      blocks: clean,
+      preFilterBlocks: [...clean, ...boilerplate],
+      rawHtml: CLEAN_HTML,
+      lang: 'en',
+    });
+    expect(signals.lexiconHits).toBe(3);
+    expect(signals.components.lexicon).toBe(1);
+  });
+
+  it('costs points only when boilerplate dominates the page, and never below zero', () => {
+    const narrative = narrativeBlocks(10);
+    const junk = (n: number): Block[] =>
+      Array.from({ length: n }, () => ({ tag: 'li' as const, text: 'Leave a reply' }));
+    const score = (boilerplate: number): number =>
+      scoreExtraction({
+        blocks: narrative,
+        preFilterBlocks: [...narrative, ...junk(boilerplate)],
+        rawHtml: CLEAN_HTML,
+        lang: 'en',
+      }).signals.components.lexicon ?? 0;
+    expect(score(2)).toBe(1); // 2 of 12 blocks: within the tolerated share
+    expect(score(10)).toBe(0.5); // 10 of 20 blocks: a half share, halfway down the ramp
+    expect(score(40)).toBe(0); // 40 of 50 blocks: past the zero share
   });
 
   it('fails the sentence check when most long blocks lack terminal punctuation', () => {

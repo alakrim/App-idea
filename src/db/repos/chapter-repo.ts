@@ -1,10 +1,10 @@
-import { and, asc, eq, ne, sql } from 'drizzle-orm';
+import { and, asc, desc, eq, lt, ne, sql } from 'drizzle-orm';
 
 import { ChapterSourceSchema } from '../../core/domain';
 import { parseJsonColumn } from '../json-column';
-import { chapters } from '../schema';
+import { chapters, listeningPositions, sentences } from '../schema';
 
-import type { Chapter, ChapterStatus, Id } from '../../core/domain';
+import type { Chapter, ChapterStatus, Id, PlaybackPoint } from '../../core/domain';
 import type { Db } from '../types';
 
 export type ChapterPatch = Partial<Omit<Chapter, 'id' | 'seriesId' | 'order' | 'createdAt'>>;
@@ -16,6 +16,74 @@ export interface Neighbors {
 }
 
 type ChapterRow = typeof chapters.$inferSelect;
+
+/** The last sentence of the nearest chapter before `order` that has text, or null if none does. */
+function lastSentenceBefore(tx: Db, seriesId: string, order: number): PlaybackPoint | null {
+  const previous = tx
+    .select({
+      chapterId: chapters.id,
+      chapterOrder: chapters.order,
+      sentenceIdx: sql<number>`max(${sentences.idx})`,
+    })
+    .from(chapters)
+    .innerJoin(sentences, eq(sentences.chapterId, chapters.id))
+    .where(and(eq(chapters.seriesId, seriesId), lt(chapters.order, order)))
+    .groupBy(chapters.id)
+    .orderBy(desc(chapters.order))
+    .limit(1)
+    .get();
+  return previous ?? null;
+}
+
+/**
+ * Keeps the listening position off a chapter that is about to be deleted. A point on that chapter
+ * moves to the end of the nearest previous chapter. Without one, the position row is removed.
+ */
+function repointPositionsAwayFrom(tx: Db, chapterId: Id, seriesId: string, order: number): void {
+  const position = tx
+    .select()
+    .from(listeningPositions)
+    .where(eq(listeningPositions.seriesId, seriesId))
+    .get();
+  if (!position) return;
+  const onDeleted =
+    position.currentChapterId === chapterId || position.furthestChapterId === chapterId;
+  if (!onDeleted) return;
+
+  const fallback = lastSentenceBefore(tx, seriesId, order);
+  if (!fallback) {
+    tx.delete(listeningPositions).where(eq(listeningPositions.seriesId, seriesId)).run();
+    return;
+  }
+
+  const current: PlaybackPoint =
+    position.currentChapterId === chapterId
+      ? fallback
+      : {
+          chapterId: position.currentChapterId,
+          chapterOrder: position.currentChapterOrder,
+          sentenceIdx: position.currentSentenceIdx,
+        };
+  const furthest: PlaybackPoint =
+    position.furthestChapterId === chapterId
+      ? fallback
+      : {
+          chapterId: position.furthestChapterId,
+          chapterOrder: position.furthestChapterOrder,
+          sentenceIdx: position.furthestSentenceIdx,
+        };
+  tx.update(listeningPositions)
+    .set({
+      currentChapterId: current.chapterId,
+      currentChapterOrder: current.chapterOrder,
+      currentSentenceIdx: current.sentenceIdx,
+      furthestChapterId: furthest.chapterId,
+      furthestChapterOrder: furthest.chapterOrder,
+      furthestSentenceIdx: furthest.sentenceIdx,
+    })
+    .where(eq(listeningPositions.seriesId, seriesId))
+    .run();
+}
 
 function toChapter(row: ChapterRow): Chapter {
   return {
@@ -64,8 +132,20 @@ export const chapterRepo = {
       .map(toChapter);
   },
 
+  /**
+   * Deletes a chapter and its text. In the same transaction, a listening position on it is moved
+   * to the end of the previous chapter, so the spoiler cutoff never points at a missing chapter.
+   */
   delete(db: Db, id: string): void {
-    db.delete(chapters).where(eq(chapters.id, id)).run();
+    db.transaction((tx) => {
+      const chapter = tx
+        .select({ seriesId: chapters.seriesId, order: chapters.order })
+        .from(chapters)
+        .where(eq(chapters.id, id))
+        .get();
+      if (chapter) repointPositionsAwayFrom(tx, id, chapter.seriesId, chapter.order);
+      tx.delete(chapters).where(eq(chapters.id, id)).run();
+    });
   },
 
   /**

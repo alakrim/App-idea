@@ -52,6 +52,31 @@ describe('postfilter', () => {
     expect(blocks.map((block) => block.text)).toEqual(['She opened the letter and read it twice.']);
   });
 
+  it('removes a short pipe, breadcrumb or bullet label line with no terminal punctuation', () => {
+    const { blocks, removed } = postfilter([
+      p('Weather | Live updates'),
+      p('Home › News › World'),
+      p('Tech • Reviews'),
+      p('Prose that continues the story.'),
+    ]);
+    expect(removed.map((item) => item.reason)).toEqual(['label_line', 'label_line', 'label_line']);
+    expect(blocks.map((block) => block.text)).toEqual(['Prose that continues the story.']);
+  });
+
+  it('keeps a label-looking line that ends a sentence, is long, or has no separator', () => {
+    const kept = [
+      p('He paused | then went on, quietly.'),
+      p(
+        'The harbour was quiet that night, and the boats rocked gently at their moorings | nobody spoke.',
+      ),
+      p('Weather Live updates'),
+      p('Dialogue - said he, without turning.'),
+    ];
+    const { blocks, removed } = postfilter(kept);
+    expect(removed).toEqual([]);
+    expect(blocks).toEqual(kept);
+  });
+
   it('keeps a long narrative line that contains a lexicon word', () => {
     const line =
       'At the end of the next chapter in the old journal, the author admitted that the expedition had ' +

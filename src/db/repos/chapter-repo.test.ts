@@ -139,6 +139,62 @@ describe('chapterRepo', () => {
     ]);
   });
 
+  it('moves a position on the deleted chapter to the end of the nearest previous chapter with text', () => {
+    const { db } = createTestDb();
+    seedSeries(db, 3);
+    textRepo.replaceChapterText(db, id(1), chapterText(1, ['One.', 'Two.', 'Three.']));
+    // Chapter 2 has no text, so the nearest previous chapter with text is chapter 1.
+    positionRepo.record(db, id(1), { chapterId: id(3), sentenceIdx: 0 }, T0);
+
+    chapterRepo.delete(db, id(3));
+
+    expect(positionRepo.get(db, id(1))).toEqual({
+      seriesId: id(1),
+      current: { chapterId: id(1), chapterOrder: 1, sentenceIdx: 2 },
+      furthest: { chapterId: id(1), chapterOrder: 1, sentenceIdx: 2 },
+      updatedAt: T0,
+    });
+  });
+
+  it('moves only the point that sits on the deleted chapter, and keeps the other one', () => {
+    const { db } = createTestDb();
+    seedSeries(db, 3);
+    textRepo.replaceChapterText(db, id(1), chapterText(1, ['One.', 'Two.', 'Three.']));
+    textRepo.replaceChapterText(db, id(2), chapterText(2, ['Four.', 'Five.']));
+    // Furthest reaches chapter 2, then the listener seeks back to chapter 1.
+    positionRepo.record(db, id(1), { chapterId: id(2), sentenceIdx: 0 }, T0);
+    positionRepo.record(db, id(1), { chapterId: id(1), sentenceIdx: 1 }, T0 + 1);
+
+    chapterRepo.delete(db, id(2));
+
+    expect(positionRepo.get(db, id(1))).toMatchObject({
+      current: { chapterId: id(1), chapterOrder: 1, sentenceIdx: 1 },
+      furthest: { chapterId: id(1), chapterOrder: 1, sentenceIdx: 2 },
+    });
+  });
+
+  it('removes the position row when no previous chapter has text', () => {
+    const { db } = createTestDb();
+    seedSeries(db, 2);
+    textRepo.replaceChapterText(db, id(2), chapterText(2, ['Only.']));
+    positionRepo.record(db, id(1), { chapterId: id(2), sentenceIdx: 0 }, T0);
+
+    chapterRepo.delete(db, id(2));
+
+    expect(positionRepo.get(db, id(1))).toBeNull();
+  });
+
+  it('leaves the listening position alone when the deleted chapter is not on it', () => {
+    const { db } = createTestDb();
+    seedSeries(db, 2);
+    textRepo.replaceChapterText(db, id(1), chapterText(1, ['One.']));
+    positionRepo.record(db, id(1), { chapterId: id(1), sentenceIdx: 0 }, T0);
+
+    chapterRepo.delete(db, id(2));
+
+    expect(positionRepo.get(db, id(1))?.furthest.chapterId).toBe(id(1));
+  });
+
   it('rejects a corrupt JSON source on read instead of returning it', () => {
     const { db, sqlite } = createTestDb();
     seedSeries(db, 1);

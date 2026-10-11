@@ -5,8 +5,8 @@ exports[`analysis prompts matches the snapshot of the static system prompt 1`] =
 
 OUTPUT
 Return only a JSON object. No prose, no code fence. Use this shape:
-{"memory": {"summary": string, "keyEvents": string[], "characters": [{"name": string, "aliases": string[], "role": string, "facts": string[]}], "places": [{"name": string, "facts": string[]}], "items": [{"name": string, "facts": string[]}], "relationships": [{"a": string, "b": string, "nature": string}], "openThreads": string[], "glossary": [{"term": string, "translation": string, "note": string}]}, "cues": [{"category": string, "startSentence": integer, "endSentence": integer, "intensity": "low" | "medium" | "high", "confidence": number, "reason": string}]}
-"role", "translation" and "note" are optional. Leave them out when you have nothing to say.
+{"memory": {"summary": string, "keyEvents": string[], "characters": [{"name": string, "aliases": string[], "role": string | null, "facts": string[]}], "places": [{"name": string, "facts": string[]}], "items": [{"name": string, "facts": string[]}], "relationships": [{"a": string, "b": string, "nature": string}], "openThreads": string[], "glossary": [{"term": string, "translation": string | null, "note": string | null}]}, "cues": [{"category": string, "startSentence": integer, "endSentence": integer, "intensity": "low" | "medium" | "high" | null, "confidence": number, "reason": string | null}]}
+Every key is always present. Use null for "role", "translation", "note", "intensity" and "reason" when you have nothing to say.
 
 MEMORY RULES
 - Facts come only from the passage you are given. No speculation and no inference beyond the text.

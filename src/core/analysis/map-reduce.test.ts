@@ -66,7 +66,7 @@ describe('analyzeChapter', () => {
       memory: {
         summary: 'Rain falls on the town.',
         keyEvents: ['Rain starts'],
-        characters: [{ name: 'Ana', aliases: [], facts: ['waits'] }],
+        characters: [{ name: 'Ana', aliases: [], role: null, facts: ['waits'] }],
       },
       cues: [
         {

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "base_rain",
+    "file": "base_rain.m4a",
+    "durationMs": 60000,
+    "loopStartMs": 0,
+    "loopEndMs": 60000,
+    "lufs": -27.6,
+    "bytes": 493425,
+    "sha256": "86d16193ed1c6c27e07b791cca8e3e6ebacc1906ee1fc05c8f99215957951cac",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "base-pack-v1"
+  },
+  {
+    "id": "base_wind",
+    "file": "base_wind.m4a",
+    "durationMs": 60000,
+    "loopStartMs": 0,
+    "loopEndMs": 60000,
+    "lufs": -28,
+    "bytes": 493350,
+    "sha256": "f64b26cadb41a2ae4385d337f0c8ea6012f39108bff45c3340257419ff03f3f5",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "base-pack-v1"
+  },
+  {
+    "id": "base_ocean",
+    "file": "base_ocean.m4a",
+    "durationMs": 60000,
+    "loopStartMs": 0,
+    "loopEndMs": 60000,
+    "lufs": -28,
+    "bytes": 494279,
+    "sha256": "40dbb5c66cfb31c84b5d9a7dcc502866619853f130a9e324ce61a93780e79a31",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "base-pack-v1"
+  },
+  {
+    "id": "base_crowd",
+    "file": "base_crowd.m4a",
+    "durationMs": 60000,
+    "loopStartMs": 0,
+    "loopEndMs": 60000,
+    "lufs": -28,
+    "bytes": 493502,
+    "sha256": "84c6a16c5a84259736023eac93ddd641863f5256fc84e9899f93fe8f767b4d56",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "base-pack-v1"
+  },
+  {
+    "id": "base_space_hum",
+    "file": "base_space_hum.m4a",
+    "durationMs": 60000,
+    "loopStartMs": 0,
+    "loopEndMs": 60000,
+    "lufs": -28,
+    "bytes": 509511,
+    "sha256": "dae00f22a8c3f1beb7996ce401d956f3d3ee8df0157b29a7909cbbef04f60a45",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "base-pack-v1"
+  },
+  {
+    "id": "base_fire",
+    "file": "base_fire.m4a",
+    "durationMs": 60000,
+    "loopStartMs": 0,
+    "loopEndMs": 60000,
+    "lufs": -28.1,
+    "bytes": 500531,
+    "sha256": "9cd0b83a1aed6b665d9d9f1808837760dcd195d90fce9a0111330857606e913c",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "base-pack-v1"
+  }
+]

@@ -1,9 +1,10 @@
 import { z } from 'zod';
 
+import type { PipelineError } from '@/core/domain';
+
 import { PipelineFailure } from './errors';
 import { jsonBody } from './transport';
 
-import type { PipelineError } from './errors';
 import type { Transport } from './transport';
 
 export type KeyCheck =

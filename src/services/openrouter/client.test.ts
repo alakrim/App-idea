@@ -1,3 +1,5 @@
+import type { ErrorCode } from '@/core/domain';
+
 import {
   chatReply,
   createFakeFetch,
@@ -10,7 +12,6 @@ import { PipelineFailure } from './errors';
 
 import type { Route } from './__fixtures__/fake-fetch';
 import type { OpenRouterClientOptions } from './client';
-import type { ErrorCode } from './errors';
 
 const FAKE_KEY = 'sk-or-v1-FAKEKEY0123456789abcdefghijklmnop';
 

@@ -20,11 +20,28 @@ const LENGTH_GOOD = 400;
 const LENGTH_FAIL_UNITS = { article: 150, chapter: 300 } as const;
 const REPEATED_GOOD = 0.1;
 const REPEATED_FAIL = 0.3;
-const LEXICON_FAIL_HITS = 3;
+/**
+ * Share of blocks that may match the lexicon before the lexicon component starts to cost points.
+ * A few navigation or share lines are normal on a real page. Above the zero share, the component is 0.
+ */
+const LEXICON_TOLERATED_SHARE = 0.25;
+const LEXICON_ZERO_SHARE = 0.75;
 const LINK_GOOD = 0.25;
 const LINK_FAIL = 0.5;
 
-const WEIGHTS = { length: 0.25, sentence: 0.25, repeated: 0.15, lexicon: 0.15, links: 0.2 };
+/** The lexicon signal is informational: a light weight, and it never gates on its own. */
+const LEXICON_WEIGHT = 0.05;
+const BASE_WEIGHTS = { length: 0.25, sentence: 0.25, repeated: 0.15, links: 0.2 };
+const BASE_WEIGHT_SUM = Object.values(BASE_WEIGHTS).reduce((sum, w) => sum + w, 0);
+/** The other weights are scaled so that all five sum to 1. */
+const REBALANCE = (1 - LEXICON_WEIGHT) / BASE_WEIGHT_SUM;
+const WEIGHTS = {
+  length: BASE_WEIGHTS.length * REBALANCE,
+  sentence: BASE_WEIGHTS.sentence * REBALANCE,
+  repeated: BASE_WEIGHTS.repeated * REBALANCE,
+  links: BASE_WEIGHTS.links * REBALANCE,
+  lexicon: LEXICON_WEIGHT,
+};
 
 export interface ScoreInput {
   blocks: readonly Block[];
@@ -33,6 +50,11 @@ export interface ScoreInput {
   lang: string | null;
   /** Chapters need more text than articles to pass the length check. Defaults to `article`. */
   expect?: keyof typeof LENGTH_FAIL_UNITS;
+  /**
+   * The blocks before post-filtering. The lexicon signal is read here, because the post-filter
+   * removes the very lines that the lexicon matches. Defaults to `blocks`.
+   */
+  preFilterBlocks?: readonly Block[];
 }
 
 export interface ScoreResult {
@@ -77,10 +99,12 @@ export function mainLinkDensity(rawHtml: string): number | null {
 
 /**
  * Scores one extraction from 0 to 1 using the five R3 signals: effective length, sentence-likeness,
- * repeated blocks, lexicon hits, and raw-DOM link density. Any R3 "poor" condition caps the score.
+ * repeated blocks, lexicon hits (information only, on the pre-filter blocks), and raw-DOM link
+ * density. Any R3 "poor" condition caps the score. The lexicon never caps it on its own.
  */
 export function scoreExtraction(input: ScoreInput): ScoreResult {
   const { blocks, rawHtml, lang } = input;
+  const lexiconBlocks = input.preFilterBlocks ?? blocks;
   const failUnits = LENGTH_FAIL_UNITS[input.expect ?? 'article'];
 
   const blockUnits = blocks.map((block) => measureUnits(block.text));
@@ -100,10 +124,11 @@ export function scoreExtraction(input: ScoreInput): ScoreResult {
   const repeated = blocks.filter((block) => (shapeCounts.get(shapeKey(block.text)) ?? 0) >= 2);
   const repeatedBlockRatio = blocks.length === 0 ? 0 : repeated.length / blocks.length;
 
-  const lexiconHits = blocks.filter(
-    (block, i) => matchRule(block.text, blockUnits[i] ?? 0) !== null,
+  const lexiconUnits = lexiconBlocks.map((block) => measureUnits(block.text));
+  const lexiconHits = lexiconBlocks.filter(
+    (block, i) => matchRule(block.text, lexiconUnits[i] ?? 0) !== null,
   ).length;
-  const lexiconHitRate = blocks.length === 0 ? 0 : lexiconHits / blocks.length;
+  const lexiconHitRate = lexiconBlocks.length === 0 ? 0 : lexiconHits / lexiconBlocks.length;
 
   const linkDensity = mainLinkDensity(rawHtml);
 
@@ -113,7 +138,6 @@ export function scoreExtraction(input: ScoreInput): ScoreResult {
   } else {
     if (units < failUnits) hardFails.push('length');
     if (eligible.length > 0 && sentenceLikeness < SENTENCE_FAIL) hardFails.push('sentence');
-    if (lexiconHits >= LEXICON_FAIL_HITS) hardFails.push('lexicon');
   }
 
   const components = {
@@ -124,7 +148,10 @@ export function scoreExtraction(input: ScoreInput): ScoreResult {
         ? 1
         : 1 - (repeatedBlockRatio - REPEATED_GOOD) / (REPEATED_FAIL - REPEATED_GOOD),
     ),
-    lexicon: clamp01(1 - lexiconHits / LEXICON_FAIL_HITS),
+    lexicon: clamp01(
+      1 -
+        (lexiconHitRate - LEXICON_TOLERATED_SHARE) / (LEXICON_ZERO_SHARE - LEXICON_TOLERATED_SHARE),
+    ),
     links:
       linkDensity === null || linkDensity <= LINK_GOOD
         ? 1
