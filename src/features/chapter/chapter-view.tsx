@@ -1,5 +1,5 @@
 import { ChevronLeft, Play } from 'lucide-react-native';
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useRef, useState, type ReactNode } from 'react';
 import { ScrollView, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -21,10 +21,10 @@ import { AmbienceList } from './ambience-list';
 import { isTranslated, type ReadingParagraph } from './chapter-data';
 import { rowStateOf, statusLine } from './chapter-status';
 import { READING_MODES, ReadingText, type ReadingMode } from './reading-text';
-import { paragraphOfSentence } from './sentence-focus';
 import { StageStepper } from './stage-stepper';
 import { stepStates } from './stage-steps';
 import { useSentenceFocus } from './use-sentence-focus';
+import { useSentenceScroll } from './use-sentence-scroll';
 
 const STATE_BADGE: Record<ReturnType<typeof rowStateOf>, { label: string; tone: BadgeTone }> = {
   draft: { label: 'Not processed', tone: 'neutral' },
@@ -77,19 +77,10 @@ export function ChapterView({
   const { reduced } = useMotion();
   const [mode, setMode] = useState<ReadingMode>('translation');
   const scrollRef = useRef<ScrollView>(null);
-  // Offsets inside the scroll content. Each one arrives from onLayout, in no fixed order.
-  const offsets = useRef<{
-    section: number | null;
-    reading: number | null;
-    paragraphs: Map<number, number>;
-  }>({
-    section: null,
-    reading: null,
-    paragraphs: new Map(),
-  });
-  const pendingSentence = useRef<number | null>(null);
-  // The deep-linked sentence already scrolled to. A later re-read of the chapter must not scroll again.
-  const scrolledSentence = useRef<number | null>(null);
+  const scrollToY = useCallback((y: number, animated: boolean) => {
+    scrollRef.current?.scrollTo({ y, animated });
+  }, []);
+  const scroll = useSentenceScroll({ focusSentence, paragraphs, reduced, scrollTo: scrollToY });
   const highlight = useSentenceFocus(focusSentence, reduced);
   const state = rowStateOf(chapter, progress);
   const badge = STATE_BADGE[state];
@@ -98,37 +89,6 @@ export function ChapterView({
   const spent = jobs.reduce((sum, job) => sum + job.costUsd, 0);
   const steps = stepStates(progress?.stages ?? jobsAsStages(jobs));
   const words = chapter.wordCount;
-
-  // Scrolls to the pending sentence once its paragraph and the text's position are both known.
-  const scrollToPending = useCallback(() => {
-    const sentenceIdx = pendingSentence.current;
-    if (sentenceIdx === null) return;
-    const paragraphIdx = paragraphOfSentence(paragraphs, sentenceIdx);
-    if (paragraphIdx === null) {
-      pendingSentence.current = null;
-      return;
-    }
-    const { section, reading, paragraphs: known } = offsets.current;
-    const paragraphY = known.get(paragraphIdx);
-    if (section === null || reading === null || paragraphY === undefined) return;
-    pendingSentence.current = null;
-    scrolledSentence.current = sentenceIdx;
-    scrollRef.current?.scrollTo({
-      y: Math.max(0, section + reading + paragraphY - space.xl),
-      animated: !reduced,
-    });
-  }, [paragraphs, reduced]);
-
-  useEffect(() => {
-    if (focusSentence === null) {
-      pendingSentence.current = null;
-      scrolledSentence.current = null;
-      return;
-    }
-    if (scrolledSentence.current === focusSentence) return;
-    pendingSentence.current = focusSentence;
-    scrollToPending();
-  }, [focusSentence, scrollToPending]);
 
   return (
     <SafeAreaView edges={['top', 'bottom']} style={[styles.root, { backgroundColor: colors.bg }]}>
@@ -220,10 +180,7 @@ export function ChapterView({
           <Section
             title="Text"
             testID="chapter-text-section"
-            onLayout={(event) => {
-              offsets.current.section = event.nativeEvent.layout.y;
-              scrollToPending();
-            }}
+            onLayout={(event) => scroll.onSectionLayout(event.nativeEvent.layout.y)}
           >
             {translated ? (
               <SegmentedControl
@@ -235,20 +192,14 @@ export function ChapterView({
             ) : null}
             <View
               testID="chapter-reading-text"
-              onLayout={(event: LayoutChangeEvent) => {
-                offsets.current.reading = event.nativeEvent.layout.y;
-                scrollToPending();
-              }}
+              onLayout={(event: LayoutChangeEvent) => scroll.onReadingLayout(event.nativeEvent.layout.y)}
             >
               <ReadingText
                 paragraphs={paragraphs}
                 mode={effectiveMode}
                 sourceLang={chapter.sourceLang}
                 highlight={highlight}
-                onParagraphLayout={(paragraphIdx, y) => {
-                  offsets.current.paragraphs.set(paragraphIdx, y);
-                  scrollToPending();
-                }}
+                onParagraphLayout={scroll.onParagraphLayout}
               />
             </View>
           </Section>
