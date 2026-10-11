@@ -88,3 +88,11 @@ _Last updated: 2026-10-11 by architect_
 - [I1] ✅ All 11 fixes done and verified (819 core/node tests).
 - ✅ Verified + committed: F5 translate (84 tests), F0 app infrastructure (55 tests), A2 audio engine (133 tests). Repo total ≈ 1,000 tests.
 - [A1] ✅ Base pack accepted (roll 2048, verify green). M8: replace the single-sample jump gate with a windowed click detector (≥ 8 kHz band energy in ±1 ms at the wrap vs the internal p99.9 of the same statistic); it is currently a noisy check. Listening test on device (S1) is the real gate.
+- [P1] ✅ Pipeline core verified (core+node suites green, `src/core` lint clean). P2 notes:
+  - `ChapterRecord.narration` needs a real `NarrationProfile` row (id): upsert the profile from settings.
+  - `setTranslations` stores `translated: null` for `partialIdx`.
+  - The PDF adapter must split pages (header/footer removal depends on it).
+  - The Fetcher enforces 5 MB / 30 s.
+  - Delete stale audio files when the segment count shrinks.
+  - Persist per-chapter run options (`from`/`force`/`pdfEngine`) with the queue.
+  - Dedupe JSON parsing: `core/extract/select.ts` and `services/openrouter/json.ts` → `core/llm/json.ts`.
