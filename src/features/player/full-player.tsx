@@ -67,25 +67,25 @@ export function FullPlayer() {
   return <ReadyPlayer />;
 }
 
-/** Close button, and the "Now playing" label that sits over every state. */
-function TopBar() {
+/** Close button, with an optional label. The label is left out where it would contradict the state. */
+function TopBar({ label = 'Now playing' }: { label?: string }) {
   return (
     <View style={styles.topBar}>
       <IconButton label="Close player" icon={ChevronDown} onPress={() => router.back()} />
       <Text variant="micro" tone="muted">
-        Now playing
+        {label}
       </Text>
       <View style={styles.topBarSpacer} />
     </View>
   );
 }
 
-function PlayerFrame({ children }: { children: ReactNode }) {
+function PlayerFrame({ children, label }: { children: ReactNode; label?: string }) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   return (
     <View style={[styles.root, { backgroundColor: colors.bg, paddingTop: insets.top }]}>
-      <TopBar />
+      <TopBar label={label} />
       {children}
     </View>
   );
@@ -93,7 +93,7 @@ function PlayerFrame({ children }: { children: ReactNode }) {
 
 function EmptyPlayer() {
   return (
-    <PlayerFrame>
+    <PlayerFrame label="">
       <EmptyState
         icon={Headphones}
         title="Nothing playing"

@@ -27,8 +27,9 @@ export const PLAYER = {
   followAnchor: 0.35,
   /** How long auto-scroll stays paused after the listener scrolls the text by hand. */
   autoScrollPauseMs: 5000,
-  /** Opacity of the cover colour behind the blurred backdrop. */
+  /** Opacity of the cover colour behind the blurred backdrop, in the dark and light themes. */
   backdropTintAlpha: 0.45,
+  backdropTintAlphaLight: 0.22,
   /** Duration of the smooth glide used for progress and position, between engine updates. */
   glideMs: 260,
 } as const;

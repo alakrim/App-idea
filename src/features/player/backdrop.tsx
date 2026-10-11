@@ -18,7 +18,7 @@ export interface PlayerBackdropProps {
 
 /** The cover, blurred and tinted, that fades into the background so the controls stay legible. */
 export function PlayerBackdrop({ uri, title, tint }: PlayerBackdropProps) {
-  const { colors } = useTheme();
+  const { colors, scheme } = useTheme();
   const fallback = coverGradientFor(title);
   const top = tint ?? fallback.from;
 
@@ -29,9 +29,12 @@ export function PlayerBackdrop({ uri, title, tint }: PlayerBackdropProps) {
       ) : (
         <LinearGradient colors={[fallback.from, fallback.to]} style={StyleSheet.absoluteFill} />
       )}
-      <BlurView intensity={80} tint="dark" style={StyleSheet.absoluteFill} />
+      <BlurView intensity={80} tint={scheme} style={StyleSheet.absoluteFill} />
       <LinearGradient
-        colors={[withAlpha(top, PLAYER.backdropTintAlpha), colors.bg]}
+        colors={[
+          withAlpha(top, scheme === 'dark' ? PLAYER.backdropTintAlpha : PLAYER.backdropTintAlphaLight),
+          colors.bg,
+        ]}
         locations={[0, 0.75]}
         style={StyleSheet.absoluteFill}
       />

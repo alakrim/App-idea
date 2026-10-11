@@ -100,9 +100,11 @@ export function SleepSheet({ visible, onClose }: SleepSheetProps) {
             onPress={() => choose(row.request)}
             accessibilityHint={row.selected ? 'Selected' : undefined}
             trailing={
-              row.selected ? (
-                <Check size={iconSize.sm} strokeWidth={iconStrokeWidth} color={colors.accent} />
-              ) : null
+              <View style={styles.check}>
+                {row.selected ? (
+                  <Check size={iconSize.sm} strokeWidth={iconStrokeWidth} color={colors.accent} />
+                ) : null}
+              </View>
             }
           />
         ))}
@@ -114,5 +116,11 @@ export function SleepSheet({ visible, onClose }: SleepSheetProps) {
 const styles = StyleSheet.create({
   list: {
     gap: space.xs,
+  },
+  check: {
+    width: iconSize.sm,
+    height: iconSize.sm,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

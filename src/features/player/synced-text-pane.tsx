@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import { ChevronDown, ChevronUp, Languages } from 'lucide-react-native';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text as RNText, View } from 'react-native';
@@ -18,6 +19,7 @@ import {
   minTouchTarget,
   radius,
   space,
+  transparent,
 } from '@/ui/tokens';
 
 import { useFollowPause } from './follow-pause';
@@ -246,19 +248,26 @@ export function SyncedTextPane({
           )}
         </View>
       </GestureDetector>
-      <FlatList
-        ref={listRef}
-        data={items}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.key}
-        contentContainerStyle={styles.list}
-        showsVerticalScrollIndicator={false}
-        accessibilityElementsHidden={!open}
-        importantForAccessibility={open ? 'auto' : 'no-hide-descendants'}
-        onScrollBeginDrag={follow.pause}
-        onScrollToIndexFailed={() => undefined}
-        scrollEnabled={open}
-      />
+      <View style={styles.listWrap}>
+        <FlatList
+          ref={listRef}
+          data={items}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.key}
+          contentContainerStyle={styles.list}
+          showsVerticalScrollIndicator={false}
+          accessibilityElementsHidden={!open}
+          importantForAccessibility={open ? 'auto' : 'no-hide-descendants'}
+          onScrollBeginDrag={follow.pause}
+          onScrollToIndexFailed={() => undefined}
+          scrollEnabled={open}
+        />
+        <LinearGradient
+          pointerEvents="none"
+          colors={[colors.surfaceRaised, transparent]}
+          style={styles.listFade}
+        />
+      </View>
     </Animated.View>
   );
 }
@@ -330,7 +339,6 @@ function SentenceSpan({
   const available = sentence.idx < availableCount;
   return (
     <RNText
-      accessibilityRole="button"
       onPress={available ? () => onSeek(sentence.idx) : undefined}
       onLongPress={() => onLongPress(sentence.idx)}
       style={[
@@ -442,6 +450,16 @@ const styles = StyleSheet.create({
   peek: {
     minHeight: minTouchTarget,
     justifyContent: 'center',
+  },
+  listWrap: {
+    flex: 1,
+  },
+  listFade: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: space.xl,
   },
   list: {
     paddingHorizontal: gutter,

@@ -43,6 +43,10 @@ Dependencies flow only one way, `app → features → (ui, audio, services, db) 
 - Motion runs on Reanimated on the UI thread and respects reduce-motion.
 - Copy is short and human. Errors say what happened and what to do next.
 
+## React Compiler rules (it is on: `experiments.reactCompiler`)
+- Every hook call must have a `use*` name at the call site. Never call a hook through a variable or property without the `use` prefix (e.g. `content(selector)` on a zustand store). The compiler memoizes it as a plain call and the hook order breaks ("Rendered fewer hooks than expected", which caused a real player crash). For zustand, use `useStore(store, selector)` or a `useX` property.
+- `'use no memo'` is forbidden unless an ADR justifies it.
+
 ## LLM usage
 - Prompts live in `src/core/**/prompts.ts` as versioned constants (`PROMPT_VERSION`). Outputs are stored with that version.
 - Request structured output (`json_schema`) whenever the model supports it, and always validate with zod. A failed validation gets one repair retry, then a typed error.

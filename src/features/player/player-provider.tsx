@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, type ReactNode } from 'react';
 import { AppState } from 'react-native';
+import { useStore } from 'zustand';
 
 import type { AudioEngine } from '@/audio/engine';
 import { useDb } from '@/db/hooks';
@@ -76,13 +77,15 @@ export function usePlayback(): PlaybackController {
 /** Selects from the player state, such as the position or the play state. */
 export function usePlayerState<T>(selector: (state: PlayerState) => T): T {
   const { player } = usePlayback();
-  return player.usePlayerState(selector);
+  // Call zustand through `useStore`, never through a store held in a variable: the React Compiler
+  // only treats `use*` names as hooks, and memoizing a hidden hook call breaks the hook order.
+  return useStore(player.usePlayerState, selector);
 }
 
 /** Selects from the content of the chapter in view. */
 export function usePlaybackContent<T>(selector: (state: PlaybackContent) => T): T {
   const { content } = usePlayback();
-  return content(selector);
+  return useStore(content, selector);
 }
 
 /** Starts a chapter from anywhere in the app. The returned function never throws. */

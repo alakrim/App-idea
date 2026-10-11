@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
     gap: space.sm,
   },
   preset: {
-    minWidth: minTouchTarget,
+    flexBasis: '30%',
+    flexGrow: 1,
     minHeight: minTouchTarget,
     paddingHorizontal: space.md,
     borderRadius: radius.pill,
