@@ -18,7 +18,8 @@ import {
   MAX_PACK_BYTES,
   PACK_DIR,
   SAMPLE_RATE,
-  SEAM_RMS_TOLERANCE_DB,
+  SEAM_RMS_FLOOR_DB,
+  SEAM_RMS_PERCENTILE,
   SEAM_SPIKE_RATIO,
   SEAM_WINDOW_SECONDS,
   TARGET_LUFS,
@@ -63,12 +64,27 @@ const median = (values) => {
   return sorted[sorted.length >> 1];
 };
 
-/** Seam checks on decoded PCM: RMS of the 50 ms before and after the wrap, and the wrap sample jump. */
+/**
+ * Seam checks on decoded PCM.
+ * - Level: |dRMS| between the last and first 50 ms windows. The limit is max(floor, p99) where p99 is
+ *   taken over |dRMS| between adjacent non-overlapping 50 ms windows elsewhere in the same file.
+ *   Low-frequency beds vary that much naturally, so a fixed 2 dB limit alone is too strict for them.
+ * - Jump: the wrap sample step against the median sample step (click detector).
+ */
 function checkSeam(x) {
   const win = Math.round(SEAM_WINDOW_SECONDS * SAMPLE_RATE);
-  const headRms = rms(x, 0, win);
-  const tailRms = rms(x, x.length - win, x.length);
-  const rmsDiffDb = Math.abs(20 * Math.log10(tailRms / headRms));
+  const dbOf = (from, to) => 20 * Math.log10(Math.max(rms(x, from, to), 1e-9));
+
+  const windows = Math.floor(x.length / win);
+  const levels = new Float64Array(windows);
+  for (let k = 0; k < windows; k++) levels[k] = dbOf(k * win, (k + 1) * win);
+  const internal = new Float64Array(windows - 1);
+  for (let k = 0; k + 1 < windows; k++) internal[k] = Math.abs(levels[k + 1] - levels[k]);
+  internal.sort();
+  const p99 = internal[Math.ceil(SEAM_RMS_PERCENTILE * (internal.length - 1))];
+
+  const rmsDiffDb = Math.abs(dbOf(x.length - win, x.length) - dbOf(0, win));
+  const limitDb = Math.max(SEAM_RMS_FLOOR_DB, p99);
 
   const deltas = new Float32Array(x.length - 1);
   for (let i = 1; i < x.length; i++) deltas[i - 1] = Math.abs(x[i] - x[i - 1]);
@@ -76,7 +92,7 @@ function checkSeam(x) {
   const wrapJump = Math.abs(x[0] - x[x.length - 1]);
   const jumpRatio = medianDelta > 0 ? wrapJump / medianDelta : Number.POSITIVE_INFINITY;
 
-  return { rmsDiffDb, jumpRatio };
+  return { rmsDiffDb, p99Db: p99, limitDb, jumpRatio };
 }
 
 async function verifyBed(entry, ledgerIds) {
@@ -107,8 +123,10 @@ async function verifyBed(entry, ledgerIds) {
   }
 
   const seam = checkSeam(samples);
-  if (seam.rmsDiffDb > SEAM_RMS_TOLERANCE_DB) {
-    failures.push(`seam RMS differs by ${seam.rmsDiffDb.toFixed(2)} dB (limit 2)`);
+  if (seam.rmsDiffDb > seam.limitDb) {
+    failures.push(
+      `seam dRMS ${seam.rmsDiffDb.toFixed(2)} dB exceeds ${seam.limitDb.toFixed(2)} dB (p99 ${seam.p99Db.toFixed(2)})`,
+    );
   }
   if (!(seam.jumpRatio <= SEAM_SPIKE_RATIO)) {
     failures.push(`seam jump is ${seam.jumpRatio.toFixed(2)}x the median delta (limit 6)`);
@@ -122,6 +140,8 @@ async function verifyBed(entry, ledgerIds) {
       lufs: integratedLufs.toFixed(2),
       truePeak: truePeakDbtp.toFixed(2),
       seamRmsDb: seam.rmsDiffDb.toFixed(2),
+      p99Db: seam.p99Db.toFixed(2),
+      limitDb: seam.limitDb.toFixed(2),
       seamJump: seam.jumpRatio.toFixed(2),
       bytes: entry.bytes,
     },

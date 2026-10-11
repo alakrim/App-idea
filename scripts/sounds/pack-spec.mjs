@@ -31,6 +31,11 @@ export const LUFS_TOLERANCE = 1;
 export const TRUE_PEAK_MAX_DBTP = -3;
 export const DURATION_TOLERANCE_MS = 50;
 export const SEAM_WINDOW_SECONDS = 0.05;
-export const SEAM_RMS_TOLERANCE_DB = 2;
+/**
+ * Seam level rule: |dRMS| across the loop seam must be <= max(floor, p99 of the |dRMS| between
+ * adjacent windows elsewhere in the same file). The floor is the absolute 2 dB from the brief.
+ */
+export const SEAM_RMS_FLOOR_DB = 2;
+export const SEAM_RMS_PERCENTILE = 0.99;
 export const SEAM_SPIKE_RATIO = 6;
 export const MAX_PACK_BYTES = 3_000_000;

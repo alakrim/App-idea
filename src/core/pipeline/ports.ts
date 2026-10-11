@@ -7,7 +7,6 @@ import type {
   AudioSegment,
   Chapter,
   ChapterMemory,
-  ChapterMemoryRecord,
   ChapterStatus,
   Entity,
   EntityFact,
@@ -21,7 +20,7 @@ import type {
   Stage,
   UsageEntry,
 } from '../domain';
-import type { ValidatedCue } from '../analysis/types';
+import type { ChapterMemoryRecord, ValidatedCue } from '../analysis/types';
 import type { LlmTransport, LlmUsage } from '../llm/transport';
 import type { ModelPricing } from '../llm/cost';
 import type { EntityResolution } from '../memory/entities';
