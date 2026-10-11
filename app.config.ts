@@ -21,6 +21,15 @@ const config: ExpoConfig = {
       monochromeImage: './assets/images/android-icon-monochrome.png',
     },
     predictiveBackGestureEnabled: false,
+    // Lectio never records, photographs, draws over other apps or uses biometrics. Libraries declare
+    // these by default; block them so the installed app asks for nothing it does not use.
+    blockedPermissions: [
+      'android.permission.RECORD_AUDIO',
+      'android.permission.CAMERA',
+      'android.permission.SYSTEM_ALERT_WINDOW',
+      'android.permission.USE_BIOMETRIC',
+      'android.permission.USE_FINGERPRINT',
+    ],
   },
   plugins: [
     'expo-router',
@@ -33,7 +42,8 @@ const config: ExpoConfig = {
       },
     ],
     ['expo-sqlite', { enableFTS: true }],
-    'expo-secure-store',
+    ['expo-secure-store', { faceIDPermission: false }],
+    ['expo-image-picker', { cameraPermission: false, microphonePermission: false }],
     [
       'expo-audio',
       {
