@@ -19,7 +19,7 @@ _Last updated: 2026-10-11 (night) by architect_
 | M8 | Polish, accessibility, performance, EAS build, device spike S1 + probes P1/P2, Maestro E2E | not started |
 
 ## Work in flight
-_Incident 3 (choppy narration) is fixed in code (254fbad). The APK for it is being built, then it goes to the user for a device test. A3 (Freesound) is blocked by Freesound itself; the user has to choose a way forward (see "Freesound, 2026-10-11 night")._
+_Incident 3 (choppy narration) is fixed (254fbad). APK `lectio-0.1.0-0a238dd-arm64.apk` is on branch `apk-builds` (1f0c103): 45,770,742 bytes, SHA-256 `b0018eba…83a9`, the same debug key (`fac61745…3b9c`), Hermes bundle. Waiting on the user's device test. A3 (Freesound) is blocked by Freesound itself; the user has to choose a way forward (see "Freesound, 2026-10-11 night")._
 
 ## Next up
 - **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.
