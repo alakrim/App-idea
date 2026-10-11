@@ -2,18 +2,17 @@ import { Play } from 'lucide-react-native';
 import { memo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import type { Chapter, PipelineError } from '@/core/domain';
 import { isScannedPdfFailure, rowStateOf, statusLine } from '@/features/chapter/chapter-status';
 import { StageStepper } from '@/features/chapter/stage-stepper';
 import { stepStates } from '@/features/chapter/stage-steps';
+import type { ChapterProgress } from '@/features/pipeline/facade';
 import { formatUsd } from '@/features/shared/format';
 import { Button } from '@/ui/button';
 import { IconButton } from '@/ui/icon-button';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { hairline, minTouchTarget, space } from '@/ui/tokens';
-
-import type { Chapter, PipelineError } from '@/core/domain';
-import type { ChapterProgress } from '@/features/pipeline/facade';
 
 const NUMBER_WIDTH = space.xl;
 
