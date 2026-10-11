@@ -1,4 +1,4 @@
-import { AudioContext, AudioManager } from 'react-native-audio-api';
+import { AudioContext } from 'react-native-audio-api';
 
 import type { RemoteEvent } from '@/core/playback/remote-commands';
 
@@ -14,18 +14,20 @@ import { createVoicePlayer } from './voice-player';
 import type { AudioEngine } from './engine';
 
 /**
- * Phone calls and other focus losses, from react-native-audio-api's session observer. The
- * observer starts on the first subscribe, not at import time, so tests never touch native code.
+ * Phone calls and other focus losses are handled by expo-audio itself, so the engine listens to
+ * nothing here. expo-audio owns audio focus for the whole app: it pauses the narration when focus is
+ * lost and resumes it after a transient loss, and the engine follows through the voice snapshots.
+ *
+ * Do not subscribe through react-native-audio-api's `AudioManager.observeAudioInterruptions`. On
+ * Android that call requests audio focus for a second client inside this app. The two clients then
+ * take focus from each other on every play: each narration play() made react-native-audio-api
+ * report an interruption, the engine paused the voice, expo-audio released focus, the other client
+ * reported the interruption over with "resume", and the engine played again. The narration stopped
+ * and started in a loop, like a scratched CD (incident 3 in docs/STATE.md).
  */
-const nativeInterruptions: PlatformEventSource<InterruptionEvent> = {
-  subscribe(callback) {
-    AudioManager.observeAudioInterruptions(true);
-    const subscription = AudioManager.addSystemEventListener('interruption', (event) => {
-      callback({ type: event.type, shouldResume: event.shouldResume });
-    });
-    return () => {
-      subscription?.remove();
-    };
+const noInterruptions: PlatformEventSource<InterruptionEvent> = {
+  subscribe() {
+    return () => undefined;
   },
 };
 
@@ -71,7 +73,7 @@ export function createNativeAudioEngine(options: NativeEngineOptions = {}): Audi
       resolveBed,
       createContext: () => new AudioContext(),
     }),
-    interruptions: nativeInterruptions,
+    interruptions: noInterruptions,
     remote: noRemoteEvents,
     bedLufs: (category) => resolveBed(category)?.lufs ?? null,
   });
