@@ -10,12 +10,13 @@
  * - Translation output is the source tokens times a language-pair factor. CJK to Latin uses 1.6,
  *   which is conservative, since a CJK token carries more meaning and English runs longer.
  * - Narration is billed on the spoken characters. Translated text is about four characters per
- *   output token.
+ *   output token. Its audio length comes from the speech rate of the spoken language (text/speech-rate).
  */
 import { MAX_CHUNK_TOKENS } from '../analysis/limits';
 import { ANALYSIS_SYSTEM_PROMPT } from '../analysis/prompts';
 import { estimateChatCost, estimateSpeechCost } from '../llm/cost';
 import { estimateTokens } from '../text/chunk';
+import { estimateSpeechSecondsForChars } from '../text/speech-rate';
 import { TRANSLATE_SYSTEM_PROMPT } from '../translate/prompts';
 import { TRANSLATE_CHUNK_TOKENS } from '../translate/translate-chapter';
 
@@ -158,7 +159,7 @@ export async function estimateChapterCost(input: EstimateInput): Promise<Chapter
     : { stage: 'translation' as const, usd: 0, basis: 'no translation for this chapter' };
 
   const spokenChars = translates ? translationTokens.output * 4 : sourceChars;
-  const narration = await speechStage(input, spokenChars);
+  const narration = await speechStage(input, spokenChars, translates ? target : input.sourceLang);
 
   const perStage = [cleanup, analysis, translation, narration];
   const range = (estimate: StageEstimate): { low: number; high: number } => ({
@@ -196,7 +197,12 @@ async function chatStage(
   };
 }
 
-async function speechStage(input: EstimateInput, chars: number): Promise<StageEstimate> {
+/** Narration is priced on the spoken characters, and timed with the rate of the spoken language. */
+async function speechStage(
+  input: EstimateInput,
+  chars: number,
+  spokenLang: Lang,
+): Promise<StageEstimate> {
   const model = await input.catalog.find(input.models.narration);
   if (!model) {
     return {
@@ -205,9 +211,10 @@ async function speechStage(input: EstimateInput, chars: number): Promise<StageEs
       basis: `pricing unavailable for ${input.models.narration}`,
     };
   }
+  const seconds = estimateSpeechSecondsForChars(chars, spokenLang);
   return {
     stage: 'narration',
-    usd: estimateSpeechCost(model, chars),
-    basis: `${Math.round(chars)} spoken characters`,
+    usd: estimateSpeechCost(model, chars, seconds),
+    basis: `${Math.round(chars)} spoken characters, about ${Math.round(seconds)} s at the ${baseLanguage(spokenLang)} speech rate`,
   };
 }

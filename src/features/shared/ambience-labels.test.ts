@@ -1,6 +1,5 @@
 import { ambienceLabel, humanizeCategory } from './ambience-labels';
 
-import { AMBIENCE_CATEGORIES } from '@/core/analysis/ambience-taxonomy';
 
 describe('ambienceLabel', () => {
   it('uses the taxonomy label for a known category', () => {

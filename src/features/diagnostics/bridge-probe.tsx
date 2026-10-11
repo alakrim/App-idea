@@ -2,12 +2,7 @@ import { useCallback, useRef, useState, type ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
 import WebView, { type WebViewMessageEvent } from 'react-native-webview';
 
-import type { BridgeDeps } from './checks-webview';
-
-/** A page that posts `chars` characters back to native once it has loaded. */
-export function bridgeHtml(chars: number): string {
-  return `<!doctype html><html><body><script>window.ReactNativeWebView.postMessage('x'.repeat(${chars}));</script></body></html>`;
-}
+import { bridgeHtml, type BridgeDeps } from './checks-webview';
 
 interface Pending {
   id: number;

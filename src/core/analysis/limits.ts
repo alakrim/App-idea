@@ -9,10 +9,8 @@ export const CUE_LIMITS = {
   confidenceFloor: 0.55,
   /** A cue spans at least this many sentences ... */
   minSentences: 3,
-  /** ... and at least this many estimated seconds of narration. */
+  /** ... and at least this many estimated seconds of narration (see text/speech-rate). */
   minSeconds: 20,
-  /** Narration speed used to estimate seconds from characters. */
-  charsPerSecond: 15,
   /** Density cap: cues allowed per 1,000 words of chapter text (at least one once a chapter qualifies). */
   maxPer1kWords: 2,
   /** Chapters under this many words get no cues at all. */

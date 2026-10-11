@@ -1,8 +1,8 @@
-import { router } from 'expo-router';
 import Constants from 'expo-constants';
+import { router } from 'expo-router';
 import { Stethoscope } from 'lucide-react-native';
-import { Pressable, StyleSheet, View } from 'react-native';
 import { useRef, useState } from 'react';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import { parseAmbienceLicenses } from '@/features/settings/licenses';
 import { SettingsPage } from '@/features/settings/settings-page';

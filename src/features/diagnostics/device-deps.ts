@@ -1,11 +1,12 @@
 import { File, Paths } from 'expo-file-system';
 import { Platform } from 'react-native';
 
-import { INSTALLED_BEDS, type InstalledBed } from '@/audio/ambience-pack';
 import type { MixerContext } from '@/audio/ambience-mixer';
+import { INSTALLED_BEDS, type InstalledBed } from '@/audio/ambience-pack';
 import { webViewRenderQueue } from '@/services/pipeline/webview-bridge';
 
 import { globalLanguageEnv } from './checks-language';
+
 import type { StorageSizes } from './checks-storage';
 import type { DiagnosticsDeps } from './run-all';
 

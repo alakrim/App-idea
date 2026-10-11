@@ -1,5 +1,5 @@
 import * as Clipboard from 'expo-clipboard';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { useDb } from '@/db/hooks';
@@ -13,12 +13,13 @@ import { useToast } from '@/ui/toast';
 import { space } from '@/ui/tokens';
 
 import { useBridgeProbe } from './bridge-probe';
+import { deviceDiagnosticsDeps } from './device-deps';
 import { readEnvironment, type EnvironmentInfo } from './environment';
 import { resultHeadline, valueLines } from './format';
-import { deviceDiagnosticsDeps } from './device-deps';
-import type { ProbeResult, ProbeStatus } from './probe';
 import { buildReport, reportToJson, summarize } from './report';
 import { PROBES, runDiagnostics } from './run-all';
+
+import type { ProbeResult, ProbeStatus } from './probe';
 
 const STATUS_BADGE: Record<ProbeStatus, { label: string; tone: BadgeTone }> = {
   pass: { label: 'Pass', tone: 'success' },
@@ -32,29 +33,36 @@ const STATUS_BADGE: Record<ProbeStatus, { label: string; tone: BadgeTone }> = {
 export function DiagnosticsScreen() {
   const db = useDb();
   const toast = useToast();
-  const bridge = useBridgeProbe();
+  const { send, host } = useBridgeProbe();
   const [results, setResults] = useState<ProbeResult[]>([]);
-  const [running, setRunning] = useState(false);
+  // Starts true: the probes run as soon as the screen opens.
+  const [running, setRunning] = useState(true);
   const [environment] = useState<EnvironmentInfo>(() => readEnvironment());
   const runId = useRef(0);
 
-  const start = () => {
+  // Only asynchronous work happens here, so it is safe to call from an effect. Each run has an id,
+  // so a run that outlives a newer one cannot write its results over the newer run.
+  const execute = useCallback(() => {
     runId.current += 1;
     const current = runId.current;
-    setRunning(true);
-    setResults([]);
-    void runDiagnostics(deviceDiagnosticsDeps(db, bridge), PROBES, (result) => {
+    void runDiagnostics(deviceDiagnosticsDeps(db, { send }), PROBES, (result) => {
       if (runId.current === current) setResults((previous) => [...previous, result]);
     })
       .catch(() => undefined)
       .finally(() => {
         if (runId.current === current) setRunning(false);
       });
-  };
+  }, [db, send]);
 
-  // Runs once when the screen opens. `start` is rebuilt on every render, so it is kept out of the deps.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => start(), []);
+  useEffect(() => {
+    execute();
+  }, [execute]);
+
+  const runAgain = () => {
+    setRunning(true);
+    setResults([]);
+    execute();
+  };
 
   const summary = useMemo(() => summarize(results), [results]);
 
@@ -84,7 +92,7 @@ export function DiagnosticsScreen() {
           variant="secondary"
           disabled={running}
           fullWidth
-          onPress={start}
+          onPress={runAgain}
         />
         <Button label="Copy report" fullWidth disabled={results.length === 0} onPress={copy} />
       </View>
@@ -98,7 +106,7 @@ export function DiagnosticsScreen() {
         return <ProbeRow key={probe.spec.id} label={probe.spec.label} result={result ?? null} />;
       })}
 
-      {bridge.host}
+      {host}
     </SettingsPage>
   );
 }
@@ -117,7 +125,7 @@ function ProbeRow({ label, result }: { label: string; result: ProbeResult | null
   const badge = STATUS_BADGE[result.status];
   const headline = resultHeadline(result);
   return (
-    <Card accessibilityLabel={`${label}: ${badge.label}`}>
+    <Card>
       <View style={styles.probeHead}>
         <Text variant="bodyStrong" style={styles.probeTitle}>
           {label}

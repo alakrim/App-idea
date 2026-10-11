@@ -3,13 +3,13 @@ import { useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View, type ListRenderItem } from 'react-native';
 
 import { useOpenRouter } from '@/app-shell/openrouter-provider';
-import { filterLanguages, LANGUAGES, type LanguageOption } from '@/features/shared/languages';
 import { isModelMissing, useModelCatalog } from '@/features/settings/model-catalog';
 import { modelKindConfig } from '@/features/settings/model-kinds';
 import { ModelRow } from '@/features/settings/model-row';
 import { SettingsPage } from '@/features/settings/settings-page';
 import { SettingsSection } from '@/features/settings/settings-section';
 import { useSettings } from '@/features/settings/settings-store';
+import { filterLanguages, LANGUAGES, type LanguageOption } from '@/features/shared/languages';
 import { Text } from '@/ui/text';
 import { TextField } from '@/ui/text-field';
 import { useTheme } from '@/ui/theme';

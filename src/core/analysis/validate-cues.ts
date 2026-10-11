@@ -1,3 +1,5 @@
+import { estimateSpeechSeconds } from '../text/speech-rate';
+
 import { getCategory, isEnabledKind } from './ambience-taxonomy';
 import { CUE_LIMITS } from './limits';
 import { ambienceCategoryIdSchema, rawCueSchema } from './schemas';
@@ -85,7 +87,9 @@ export function validateCues(
   const drop = (cue: unknown, reason: CueDropReason): void => {
     dropped.push({ cue, reason });
   };
-  const charsByIdx = new Map<number, number>(ctx.sentences.map((s) => [s.idx, s.text.length]));
+  const secondsByIdx = new Map<number, number>(
+    ctx.sentences.map((s) => [s.idx, estimateSpeechSeconds(s.text)]),
+  );
 
   const candidates: CueDraft[] = [];
   for (const raw of rawCues) {
@@ -118,9 +122,8 @@ export function validateCues(
       continue;
     }
 
-    let chars = 0;
-    for (let i = range.start; i <= range.end; i += 1) chars += charsByIdx.get(i) ?? 0;
-    const seconds = chars / CUE_LIMITS.charsPerSecond;
+    let seconds = 0;
+    for (let i = range.start; i <= range.end; i += 1) seconds += secondsByIdx.get(i) ?? 0;
     const sentences = range.end - range.start + 1;
     if (sentences < CUE_LIMITS.minSentences || seconds < CUE_LIMITS.minSeconds) {
       drop(raw, 'too_short');

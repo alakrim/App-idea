@@ -88,7 +88,7 @@ function ParagraphBlock({
 
   if (mode === 'both') {
     return (
-      <View style={styles.paragraph} onLayout={onLayout}>
+      <View style={styles.paragraph} onLayout={onLayout} testID={`paragraph-${paragraph.idx}`}>
         {paragraph.sentences.map((sentence) => (
           <BilingualSentence
             key={sentence.idx}
@@ -106,7 +106,7 @@ function ParagraphBlock({
   const lastIdx = paragraph.sentences.length - 1;
 
   return (
-    <View onLayout={onLayout}>
+    <View onLayout={onLayout} testID={`paragraph-${paragraph.idx}`}>
       <Text
         variant={heading ? 'heading' : 'reading'}
         tone={quote ? 'muted' : 'default'}

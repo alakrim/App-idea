@@ -1,8 +1,21 @@
-import type { InstalledBed } from '@/audio/ambience-pack';
 import type { MixerContext } from '@/audio/ambience-mixer';
+import type { InstalledBed } from '@/audio/ambience-pack';
 import type { Db } from '@/db/types';
 
 import { checkBedDecode, checkDuckingRamps, checkLockScreenSession } from './checks-audio';
+import {
+  checkRegexFeatures,
+  checkLegacyDecoders,
+  checkSentenceSegmentation,
+  type LanguageEnv,
+} from './checks-language';
+import { checkPipelineQueue } from './checks-pipeline';
+import {
+  checkFts5Trigram,
+  checkSqliteVersion,
+  checkStorageSizes,
+  type StorageSizes,
+} from './checks-storage';
 import {
   checkRenderRoundTrip,
   checkBridgeSize,
@@ -10,21 +23,9 @@ import {
   type BridgeDeps,
   type RenderDeps,
 } from './checks-webview';
-import {
-  checkFts5Trigram,
-  checkSqliteVersion,
-  checkStorageSizes,
-  type StorageSizes,
-} from './checks-storage';
-import { checkPipelineQueue } from './checks-pipeline';
-import {
-  checkRegexFeatures,
-  checkLegacyDecoders,
-  checkSentenceSegmentation,
-  type LanguageEnv,
-} from './checks-language';
-import type { ProbeOutcome, ProbeResult, ProbeSpec } from './probe';
 import { runProbe } from './probe';
+
+import type { ProbeOutcome, ProbeResult, ProbeSpec } from './probe';
 
 /** Everything the probes touch on the device. The screen builds it; tests pass fakes. */
 export interface DiagnosticsDeps {

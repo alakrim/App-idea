@@ -99,7 +99,11 @@ export async function checkDuckingRamps(deps: AudioDeps): Promise<ProbeOutcome> 
   const duck = ramps.find((ramp) => ramp.node === 'ducking');
   const bedFade = ramps.find((ramp) => ramp.node === 'bed');
   const duckLengthMs = duck ? round(duck.endMs - duck.startMs) : null;
-  const ok = duck !== undefined && duckLengthMs !== null && Math.abs(duckLengthMs - 300) <= 50;
+  const ok =
+    bedFade !== undefined &&
+    duck !== undefined &&
+    duckLengthMs !== null &&
+    Math.abs(duckLengthMs - 300) <= 50;
   return {
     status: ok ? 'pass' : 'fail',
     values: {
@@ -109,7 +113,11 @@ export async function checkDuckingRamps(deps: AudioDeps): Promise<ProbeOutcome> 
       bedFadeInLengthMs: bedFade ? round(bedFade.endMs - bedFade.startMs) : null,
       rampCount: ramps.length,
     },
-    message: ok ? undefined : 'The ducking ramp was not scheduled as 300 ms.',
+    message: ok
+      ? undefined
+      : bedFade === undefined
+        ? 'The sample bed did not start, so there was nothing to duck.'
+        : 'The ducking ramp was not scheduled as 300 ms.',
   };
 }
 

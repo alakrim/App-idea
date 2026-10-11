@@ -1,7 +1,7 @@
 import type { Settings, ThemeMode } from '@/core/settings';
+import { languageLabel } from '@/features/shared/languages';
 
 import { formatBytes, formatPercent, formatUsdPrecise, modelLabel } from './format';
-import { languageLabel } from '@/features/shared/languages';
 
 /** The current-value subtitles on the settings home. Pure, so each rule is testable. */
 

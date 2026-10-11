@@ -1,7 +1,9 @@
+import { Sparkles } from 'lucide-react-native';
 import { Switch, StyleSheet, View } from 'react-native';
 
+import { getCategory } from '@/core/analysis/ambience-taxonomy';
 import type { AmbienceCue } from '@/core/domain';
-import { ambienceIconOf } from '@/features/shared/ambience-display';
+import { AMBIENCE_ICONS } from '@/features/shared/ambience-display';
 import { ambienceLabel } from '@/features/shared/ambience-labels';
 import { Card } from '@/ui/card';
 import { Text } from '@/ui/text';
@@ -39,7 +41,8 @@ interface CueRowProps {
 
 function CueRow({ cue, divided, onToggle }: CueRowProps) {
   const { colors } = useTheme();
-  const Icon = ambienceIconOf(cue.category);
+  const category = getCategory(cue.category);
+  const Icon = category ? AMBIENCE_ICONS[category.icon] : Sparkles;
   const label = ambienceLabel(cue.category);
   const range = `Sentences ${cue.startSentence + 1}–${cue.endSentence + 1}`;
 

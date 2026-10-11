@@ -3,8 +3,8 @@ import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { router } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { VocabActionsProvider } from '@/features/vocab/vocab-provider';
 import type { VocabActions } from '@/features/vocab/vocab-actions';
+import { VocabActionsProvider } from '@/features/vocab/vocab-provider';
 import { ThemeProvider } from '@/ui/theme';
 import { ToastProvider } from '@/ui/toast';
 

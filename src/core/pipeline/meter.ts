@@ -57,7 +57,8 @@ export class CostMeter {
     spec: { chars: number; audioSeconds: number; costUsd: number | null },
   ): Promise<void> {
     const model = await this.lookup(modelId);
-    const costUsd = spec.costUsd ?? (model ? estimateSpeechCost(model, spec.chars) : 0);
+    const costUsd =
+      spec.costUsd ?? (model ? estimateSpeechCost(model, spec.chars, spec.audioSeconds) : 0);
     await this.write({
       model: modelId,
       promptTokens: spec.chars,

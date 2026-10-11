@@ -27,6 +27,11 @@ export async function checkRenderRoundTrip(deps: RenderDeps): Promise<ProbeOutco
   };
 }
 
+/** A page that posts `chars` characters back to native once it has loaded. */
+export function bridgeHtml(chars: number): string {
+  return `<!doctype html><html><body><script>window.ReactNativeWebView.postMessage('x'.repeat(${chars}));</script></body></html>`;
+}
+
 /** Posts a string of `bytes` characters from the page to native and reports what arrived. */
 export interface BridgeDeps {
   send(bytes: number): Promise<number>;

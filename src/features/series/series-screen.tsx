@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
 
+import { useLiveRead } from '@/db/hooks';
 import { isScannedPdfFailure } from '@/features/chapter/chapter-status';
 import { usePipeline } from '@/features/pipeline/facade';
 import { useChapterProgressMap } from '@/features/pipeline/use-chapter-progress';
@@ -16,7 +17,6 @@ import { deleteChapter, deleteSeries, moveChapter } from './series-service';
 import { SeriesView, type SeriesChapterItem } from './series-view';
 import { useOcrPrices } from './use-ocr-prices';
 import { useSeriesDeps } from './use-series-deps';
-import { useLiveRead } from '@/db/hooks';
 
 export interface SeriesScreenProps {
   seriesId: string;

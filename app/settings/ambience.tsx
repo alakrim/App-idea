@@ -1,6 +1,6 @@
+import { usePlayback } from '@/features/player/player-provider';
 import { AmbienceSettings } from '@/features/settings/ambience-settings';
 import { SettingsPage } from '@/features/settings/settings-page';
-import { usePlayback } from '@/features/player/player-provider';
 
 export default function AmbienceScreen() {
   const playback = usePlayback();
