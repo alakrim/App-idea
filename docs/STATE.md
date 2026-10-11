@@ -3,13 +3,13 @@
 _Last updated: 2026-10-11 by architect_
 
 ## Current phase
-**M1: Foundations**. Wave 2 (B2–B7) is running in parallel.
+**M1 → M2/M5/M6 groundwork**. Wave 2 (B1–B7) is done and verified. Wave 3 (I1, F0, F5, A1, A2) is running.
 
 ## Milestones
 | # | Milestone | Status |
 |---|---|---|
 | M0 | Protocol docs, research R1–R4, architecture v1, stack decision | ✅ done (ADRs 0001–0005) |
-| M1 | Scaffold (B1 ✅), design system + shell (B2), domain + DB (B3), text engine (B4), OpenRouter client (B5), extraction (B6), analysis + memory (B7) | in progress |
+| M1 | Scaffold, design system + shell, domain + DB, text engine, OpenRouter client, extraction, analysis + memory | ✅ done (664 tests, verify green) |
 | M2 | Settings (API key validate + usage), Library (Series CRUD + cover), Chapter add (URL/PDF/share-intent) | not started |
 | M3 | Pipeline orchestrator: job graph, extract→clean→segment wiring, WebView fallback, PDF | not started |
 | M4 | Analysis wiring: cues + memory + codex persisted, cost preview | not started |
@@ -21,12 +21,18 @@ _Last updated: 2026-10-11 by architect_
 ## Work in flight
 | Task | Brief | Status |
 |---|---|---|
-| B2 Design system + navigation shell | docs/briefs/B2-design-system-shell.md | running |
-| B3 Domain schemas + SQLite/Drizzle + FTS5 | docs/briefs/B3-domain-db.md | running |
-| B4 Text engine (segmentation, chunking, timing) | docs/briefs/B4-core-text.md | running |
-| B5 OpenRouter client + cost | docs/briefs/B5-openrouter-client.md | running |
-| B6 Extraction engine | docs/briefs/B6-core-extract.md | running |
-| B7 Analysis + memory + Q&A assembly | docs/briefs/B7-core-analysis.md | running |
+| I1 Integration fixes (11 items) | docs/briefs/I1-integration-fixes.md | running |
+| F0 App infrastructure (providers, settings, secrets, storage) | docs/briefs/F0-app-infrastructure.md | running |
+| F5 Translation engine (sentence-aligned) | docs/briefs/F5-core-translate.md | running |
+| A1 Procedural ambience base pack + verify script | docs/briefs/A1-sound-pack.md | running |
+| A2 Audio engine + playback scheduler + player store | docs/briefs/A2-audio-engine.md | running |
+
+## UI review notes (architect, from web screenshots of B2), for the M2 feature UI brief
+- Large titles hug the top edge. Add `sm` top padding under the safe area.
+- New series: the cover preview is screen-filling. Use a 2:3 cover picker about 168 pt wide with an "Add cover" overlay, and an image-plus prompt instead of the monogram when the name is empty.
+- Player empty state: replace the fake "N" cover with an EmptyState. Center the ambience chip with the title block.
+- Settings rows: add a chevron plus a current-value subtitle ("Not set", "Gemini · Kore", "−22 dB").
+- Light theme `accent` #B9761A is 3.37:1 on bg. Darken it until the contrast is ≥ 4.5 for text use, or restrict it to icons and large text.
 
 ## Done (verified by architect)
 - R1–R4 research: `docs/research/`. R1's key claim (OpenRouter `/audio/speech` plus 32 speech models) was re-verified live by the architect.
@@ -69,4 +75,4 @@ _Last updated: 2026-10-11 by architect_
 - [B6] Kicker/section-label lines ("Weather | Live updates"): add a rule for short pipe-separated label lines without terminal punctuation.
 
 ## Verified wave-2 results
-- B3 DB: 47 tests; B4 text: 218 tests; B5 OpenRouter: 84 tests; B6 extract: 171 tests; B7 analysis/memory: 117 tests (all re-run by architect).
+- B2 UI shell: 27 app tests, visually reviewed via web export + Playwright (dark/light). B3 DB: 47 tests; B4 text: 218 tests; B5 OpenRouter: 84 tests; B6 extract: 171 tests; B7 analysis/memory: 117 tests (all re-run by architect).

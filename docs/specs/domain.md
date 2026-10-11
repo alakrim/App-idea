@@ -37,7 +37,7 @@ Job   { id, chapterId, stage, status: 'pending'|'running'|'done'|'failed'|'skipp
 PipelineError { code: ErrorCode, message: string /* user-facing */, detail?: string, retryable: boolean }
 ErrorCode = 'NETWORK' | 'AUTH' | 'INSUFFICIENT_CREDITS' | 'RATE_LIMITED' | 'MODEL_UNAVAILABLE'
           | 'CONTENT_EMPTY' | 'CONTENT_BLOCKED' | 'PARSE_FAILED' | 'LLM_INVALID_OUTPUT'
-          | 'STORAGE_FULL' | 'CANCELLED' | 'UNKNOWN'
+          | 'INPUT_TOO_LONG' | 'STORAGE_FULL' | 'CANCELLED' | 'UNKNOWN'
 ```
 
 ## Analysis: ambience
