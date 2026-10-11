@@ -68,7 +68,7 @@ describe('narrate stage: WAV output from a PCM-only voice', () => {
     expect(segment).toBeDefined();
     const expectedMs = Math.round(estimateSpeechSeconds(first?.text ?? '') * 1000);
     expect(segment?.durationMs).toBe(expectedMs);
-    // A flat 15 characters a second would give about a third of the Mandarin duration.
+    // A flat 15 characters a second would be several times too short for Mandarin.
     const flatMs = Math.round(([...(first?.text ?? '')].length / 15) * 1000);
     expect(segment?.durationMs ?? 0).toBeGreaterThan(flatMs * 2);
   });

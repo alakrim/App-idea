@@ -1,3 +1,5 @@
+import { SPEECH_AUDIO_TOKENS_PER_SECOND, TEXT_CHARS_PER_TOKEN } from '../llm/cost';
+import { SPEECH_CHARS_PER_SECOND } from '../text/speech-rate';
 import { CATALOG, MODELS } from './__fixtures__/fake-ports';
 import { estimateChapterCost, translationExpansion } from './estimate';
 
@@ -112,16 +114,19 @@ describe('narration cost by script on a token-priced model', () => {
     return estimate.perStage.find((s) => s.stage === 'narration')?.usd ?? Number.NaN;
   }
 
-  it('prices a zh chapter about three times a same-length en chapter', async () => {
+  it('prices a zh chapter three to four times a same-length en chapter', async () => {
     const zh = await narrationUsd('zh', 10_000);
     const en = await narrationUsd('en', 10_000);
-    expect(zh / en).toBeGreaterThan(2.9);
-    expect(zh / en).toBeLessThan(3.2);
+    expect(zh / en).toBeGreaterThan(3);
+    expect(zh / en).toBeLessThan(4);
   });
 
-  it('bills 10,000 zh characters as 2,222 s of audio (25 tokens a second at 4.5 characters)', async () => {
-    // 2,222.2 s x 25 tokens x $6/M, plus 2,500 text tokens at $0.50/M.
-    const expected = (10_000 / 4.5) * 25 * 0.000006 + 2_500 * 0.0000005;
+  it('bills 10,000 zh characters at the Han rate in audio tokens, plus the text tokens', async () => {
+    // Audio seconds at the Han rate x 25 tokens a second x $6/M, plus the text tokens at $0.50/M.
+    const audioSeconds = 10_000 / SPEECH_CHARS_PER_SECOND.han;
+    const textTokens = 10_000 / TEXT_CHARS_PER_TOKEN;
+    const expected =
+      audioSeconds * SPEECH_AUDIO_TOKENS_PER_SECOND * 0.000006 + textTokens * 0.0000005;
     expect(await narrationUsd('zh', 10_000)).toBeCloseTo(expected, 10);
   });
 

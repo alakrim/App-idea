@@ -1,10 +1,11 @@
 import { sentences } from './__fixtures__/builders';
 import { CUE_LIMITS } from './limits';
 import { FADES_BY_INTENSITY, maxCuesForWordCount, validateCues } from './validate-cues';
+import { SPEECH_CHARS_PER_SECOND } from '../text/speech-rate';
 
 import type { CueValidationContext } from './validate-cues';
 
-/** 40 sentences of 80 characters: a 4-sentence cue is 320 chars, about 21 s, so it passes. */
+/** 40 sentences of 80 characters: a 4-sentence cue is well over the minimum span, so it passes. */
 const SENTENCES = sentences(40, 80);
 
 function ctx(overrides: Partial<CueValidationContext> = {}): CueValidationContext {
@@ -111,13 +112,13 @@ describe('validateCues: rule by rule', () => {
     expect(dropped[0]?.reason).toBe('too_short');
   });
 
-  it('drops cues under 20 seconds at about 14 letters a second', () => {
+  it('drops a 3-sentence cue under the minimum span', () => {
     const short = sentences(40, 20);
     const { dropped } = validateCues(
       [cue({ startSentence: 0, endSentence: 2 })],
       ctx({ sentences: short }),
     );
-    // 3 * 20 = 60 chars, which is about 4 s at 14 letters a second.
+    // Three sentences of about 19 letters each are well under CUE_LIMITS.minSeconds at the Latin rate.
     expect(dropped[0]?.reason).toBe('too_short');
   });
 
@@ -240,21 +241,33 @@ describe('validateCues: minimum span by script (text/speech-rate)', () => {
       text: `${'雨'.repeat(hanPerSentence)}。`,
     }));
 
-  it('keeps a 4-sentence Mandarin cue of about 22 s, which 15 characters a second dropped', () => {
-    // 4 x 25 Han characters = 100 characters = 22 s at 4.5 a second (about 6.7 s at 15).
+  /** Han characters per sentence for a 4-sentence cue lasting `seconds` at the Han rate, rounded down. */
+  const hanPerSentenceFor = (seconds: number): number =>
+    Math.floor((seconds * SPEECH_CHARS_PER_SECOND.han) / 4);
+
+  it('keeps a 4-sentence Mandarin cue of twice the minimum span', () => {
+    // Twice the minimum at the Han rate. The hour convention (15 characters a second) would drop it.
     const { cues, dropped } = validateCues(
       [cue({ startSentence: 0, endSentence: 3 })],
-      ctx({ sentenceCount: 4, sentences: mandarin(4, 25), wordCount: 1_000 }),
+      ctx({
+        sentenceCount: 4,
+        sentences: mandarin(4, hanPerSentenceFor(2 * CUE_LIMITS.minSeconds)),
+        wordCount: 1_000,
+      }),
     );
     expect(dropped).toEqual([]);
     expect(cues).toHaveLength(1);
   });
 
-  it('still drops a Mandarin cue under the 12 s minimum', () => {
-    // 4 x 10 Han characters = 40 characters = 8.9 s at 4.5 a second.
+  it('still drops a short Mandarin cue under the minimum span', () => {
+    // Half the minimum at the Han rate.
     const { dropped } = validateCues(
       [cue({ startSentence: 0, endSentence: 3 })],
-      ctx({ sentenceCount: 4, sentences: mandarin(4, 10), wordCount: 1_000 }),
+      ctx({
+        sentenceCount: 4,
+        sentences: mandarin(4, hanPerSentenceFor(CUE_LIMITS.minSeconds / 2)),
+        wordCount: 1_000,
+      }),
     );
     expect(dropped.map((d) => d.reason)).toEqual(['too_short']);
   });
@@ -265,24 +278,36 @@ describe('validateCues: minimum span by script (text/speech-rate)', () => {
         idx,
         text: `${'a'.repeat(letters)}.`,
       }));
-    // 3 x 40 letters = 120 letters = 8.6 s at 14 a second: too short.
+    /** Letters per sentence for a 3-sentence cue lasting `seconds` at the Latin rate. */
+    const lettersPerSentenceFor = (seconds: number): number =>
+      Math.round((seconds * SPEECH_CHARS_PER_SECOND.latin) / 3);
+
+    // Half the minimum span: too short.
     expect(
       validateCues(
         [cue({ startSentence: 0, endSentence: 2 })],
-        ctx({ sentenceCount: 3, sentences: english(40), wordCount: 1_000 }),
+        ctx({
+          sentenceCount: 3,
+          sentences: english(lettersPerSentenceFor(CUE_LIMITS.minSeconds / 2)),
+          wordCount: 1_000,
+        }),
       ).dropped.map((d) => d.reason),
     ).toEqual(['too_short']);
-    // 3 x 100 letters = 300 letters = 21.4 s: long enough.
+    // Twice the minimum span: long enough.
     expect(
       validateCues(
         [cue({ startSentence: 0, endSentence: 2 })],
-        ctx({ sentenceCount: 3, sentences: english(100), wordCount: 1_000 }),
+        ctx({
+          sentenceCount: 3,
+          sentences: english(lettersPerSentenceFor(2 * CUE_LIMITS.minSeconds)),
+          wordCount: 1_000,
+        }),
       ).cues,
     ).toHaveLength(1);
   });
 
   it('keeps the 70-character Mandarin rain cue from the live test', () => {
-    // Sentences 1-4 of the live-test chapter: about 70 Han characters = about 15 s at 4.5 a second.
+    // Sentences 1-4 of the live-test chapter: 66 Han characters, about 26 s at the Han rate.
     const live = [
       '雨从傍晚开始下，一直没有停。',
       '林默翻身上马，沿着山道向北疾驰，马蹄踏碎了路上的积水。',
