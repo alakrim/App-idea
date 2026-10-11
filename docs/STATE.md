@@ -123,3 +123,12 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
 - Backlog: an orphaned `<idx>.mp3` stays on disk when a chapter switches to WAV; move the `.wav` preview handling into `preview-cache.ts`; Ask citations should carry a sentence index.
 - **APK delivery (2026-10-11):** chat uploads cap at 30 MB. The user chose repo delivery and no size-motivated risk. APKs are published on the **`apk-builds` orphan branch** (binaries kept out of the code branch history; README with install steps + SHA-256). First build there: `lectio-0.1.0-2f87cb9-arm64.apk` (70.2 MB, no R8).
 - **R8/resource shrinking reverted** (user decision). Can strip JNI/reflection-only classes and fails only on a device; revisit for Play builds after device tests. Kept, because they're lossless: compressed native libs, fonts trimmed from 36 to the 7 used, icons from 1,892 to 121 lucide modules.
+
+## Incident: launch crash on device (2026-10-11), RESOLVED in code, pending device confirmation
+- **Symptom (user):** the APK installs; the icon animates, the screen goes black for ~1 s, then the app closes.
+- **Root cause (X1, with source-mapped evidence):** `src/core/domain/ids.ts` created a ULID generator at module load. ulid's React Native build throws `PRNG_DETECT` when `globalThis.crypto.getRandomValues` is missing, and Hermes has no Web Crypto. Jest resolved ulid's Node build, so 1,600+ tests passed.
+- **Fix:** an expo-crypto-backed `crypto.getRandomValues` polyfill loaded first in `index.js`, plus a safe fallback in `ids.ts` and a regression test using ulid's browser build.
+- **Prevention:**
+  - `npm run boot:check` boots the release bundle with Hermes-only globals and stubbed native modules. Open item: it stalls before the first route renders, so it cannot yet prove later startup paths.
+  - **On-device crash reporter (X2):** any future crash shows its report on the next launch (Copy/Share), and it stays in Diagnostics → Last crash.
+- Ruled out along the way: the GitHub upload (byte-identical), Hermes bytecode/runtime versions (both 250829098.0.17), native lib deps, 16 KB page alignment, manifest/services, the extraction stack's module init.
