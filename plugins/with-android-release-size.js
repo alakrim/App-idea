@@ -2,7 +2,7 @@
  * Expo config plugin: smaller Android release builds.
  *
  * - R8 code shrinking and resource shrinking in release builds (the dex alone was ~50 MB raw).
- * - Compressed native libraries in the APK (`useLegacyPackaging`), so the download is smaller.
+ * - Compressed native libraries and JS bundle in the APK, so the download is smaller.
  * - Conservative keep rules for libraries that reach Java/Kotlin code through JNI or reflection,
  *   so R8 cannot strip classes that are only referenced from C++ or by name.
  *
@@ -16,6 +16,9 @@ const GRADLE_PROPERTIES = {
   'android.enableMinifyInReleaseBuilds': 'true',
   'android.enableShrinkResourcesInReleaseBuilds': 'true',
   'expo.useLegacyPackaging': 'true',
+  // Deflate the Hermes bundle inside the APK (~8.7 MB stored → ~4 MB). Costs a little cold-start
+  // time; revisit for Play builds, where the store compresses the download anyway.
+  'android.enableBundleCompression': 'true',
 };
 
 const KEEP_RULES_MARKER = '# Lectio: keep rules (plugins/with-android-release-size.js)';
