@@ -51,3 +51,12 @@ _Last updated: 2026-10-11 by architect_
 - Wave-2 deps (installed centrally by the architect): zod 4.6.5, drizzle-orm 0.45.4, expo-sqlite 57.0.4, expo-audio 57.0.5, defuddle 0.19.5, linkedom 0.18.13, @gorhom/bottom-sheet 5.2.14, lucide-react-native 1.55.0, better-sqlite3 13.0.3 (dev).
 - `npm audit` reports 65 transitive vulnerabilities, mostly in dev/build tooling. To triage in M8.
 - New Architecture: always on from SDK 55+, so no config key is needed.
+
+## Integration backlog (for brief I1, after wave 2)
+- [B7] `buildQaPrompt` FTS hits: allow earlier chapters too (`order < cutoff` OR `order == cutoff && idx <= sentence`); the DB repo must match. Add tests.
+- [B7] keyEvents merge across chunks: sample evenly across chunks instead of keeping the first 10.
+- [B7] Cue density cap: chapters of 200–500 words get at most 1 cue (currently 0).
+- [B5+B7] Strict json_schema mode: LLM output schemas must use `.nullable()`, never `.optional()`. Add a normalizer that maps null to absent after parsing, and add this to CONVENTIONS.
+- [B5] Reconcile `services/openrouter/errors.ts` with `core/domain` (import the shared types).
+- [B5] 402 with `limit_source: openrouter_in_flight_budget` should be retryable after Retry-After.
+- [B7] Swap the local chunk planner for `planLlmChunks` from core/text once B4 lands.
