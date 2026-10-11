@@ -1,5 +1,10 @@
-import { ANALYSIS_SYSTEM_PROMPT, PROMPT_VERSION, buildAnalysisPrompt, buildSummaryReducePrompt } from './prompts';
 import { enabledCategories } from './ambience-taxonomy';
+import {
+  ANALYSIS_SYSTEM_PROMPT,
+  PROMPT_VERSION,
+  buildAnalysisPrompt,
+  buildSummaryReducePrompt,
+} from './prompts';
 
 describe('analysis prompts', () => {
   it('carries a version string', () => {
@@ -28,7 +33,8 @@ describe('analysis prompts', () => {
   });
 
   it('lists every enabled category id and no oneshot id in the system prompt', () => {
-    for (const c of enabledCategories()) expect(ANALYSIS_SYSTEM_PROMPT).toContain(`${c.id}: ${c.description}`);
+    for (const c of enabledCategories())
+      expect(ANALYSIS_SYSTEM_PROMPT).toContain(`${c.id}: ${c.description}`);
     expect(ANALYSIS_SYSTEM_PROMPT).not.toContain('gunshot:');
     expect(ANALYSIS_SYSTEM_PROMPT).not.toContain('thunder_clap:');
   });

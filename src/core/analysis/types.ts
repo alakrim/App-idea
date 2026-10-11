@@ -4,13 +4,7 @@
  */
 import type { AmbienceCue, AmbienceIntensity, ChapterMemory } from '@/core/domain';
 
-export type {
-  ChapterMemory,
-  Entity,
-  EntityFact,
-  EntityKind,
-  Lang,
-} from '@/core/domain';
+export type { ChapterMemory, Entity, EntityFact, EntityKind, Lang } from '@/core/domain';
 
 export type IntensityLevel = AmbienceIntensity;
 

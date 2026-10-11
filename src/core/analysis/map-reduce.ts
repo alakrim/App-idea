@@ -1,14 +1,15 @@
-import { normalizeWhitespace } from '../text/normalize';
 import { runAnalysisCall } from './analysis-call';
-import { buildAnalysisPrompt, buildSummaryReducePrompt } from './prompts';
 import { MAX_CHUNK_CHARS, MEMORY_LIMITS } from './limits';
 import { mergeMemoryDrafts } from './merge-memory';
+import { buildAnalysisPrompt, buildSummaryReducePrompt } from './prompts';
 import { truncateWords } from './schemas';
 import { validateCues } from './validate-cues';
+import { normalizeWhitespace } from '../text/normalize';
+
 import type { AnalysisResponse } from './analysis-call';
 import type { LlmTransport } from './llm';
-import type { DroppedCue } from './validate-cues';
 import type { Lang, MemoryFields, SentenceInput, ValidatedCue } from './types';
+import type { DroppedCue } from './validate-cues';
 
 /**
  * Splits a chapter into LLM chunks. Same shape as `planLlmChunks` in src/core/text/chunk.ts, which

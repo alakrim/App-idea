@@ -1,6 +1,7 @@
+import { parseAnalysisReply, runAnalysisCall } from './analysis-call';
 import { MEMORY_LIMITS } from './limits';
 import { normalizeMemory, rawCueSchema, truncateWords } from './schemas';
-import { parseAnalysisReply, runAnalysisCall } from './analysis-call';
+
 import type { MemoryDraft } from './schemas';
 
 const EMPTY_DRAFT: MemoryDraft = {
@@ -66,7 +67,11 @@ describe('normalizeMemory caps (truncation, never rejection)', () => {
   it('caps places and items at 8 and relationships at 10', () => {
     const places = Array.from({ length: 12 }, (_, i) => ({ name: `Place ${i}`, facts: [] }));
     const items = Array.from({ length: 12 }, (_, i) => ({ name: `Item ${i}`, facts: [] }));
-    const relationships = Array.from({ length: 12 }, (_, i) => ({ a: `A${i}`, b: 'B', nature: 'n' }));
+    const relationships = Array.from({ length: 12 }, (_, i) => ({
+      a: `A${i}`,
+      b: 'B',
+      nature: 'n',
+    }));
     const out = normalizeMemory({ ...EMPTY_DRAFT, places, items, relationships });
     expect(out.places).toHaveLength(8);
     expect(out.items).toHaveLength(8);
@@ -100,7 +105,10 @@ describe('normalizeMemory caps (truncation, never rejection)', () => {
   });
 
   it('drops nameless entries rather than failing', () => {
-    const out = normalizeMemory({ ...EMPTY_DRAFT, characters: [{ name: ' ', aliases: [], facts: [] }] });
+    const out = normalizeMemory({
+      ...EMPTY_DRAFT,
+      characters: [{ name: ' ', aliases: [], facts: [] }],
+    });
     expect(out.characters).toEqual([]);
   });
 
@@ -127,7 +135,11 @@ describe('parseAnalysisReply', () => {
     const outcome = parseAnalysisReply(validReply);
     expect(outcome.ok).toBe(true);
     if (outcome.ok) {
-      expect(outcome.value.memory).toMatchObject({ summary: 'They talk.', keyEvents: [], glossary: [] });
+      expect(outcome.value.memory).toMatchObject({
+        summary: 'They talk.',
+        keyEvents: [],
+        glossary: [],
+      });
       expect(outcome.value.cues).toHaveLength(1);
     }
   });
@@ -137,7 +149,10 @@ describe('parseAnalysisReply', () => {
   });
 
   it('rejects text that is not JSON', () => {
-    expect(parseAnalysisReply('Sure! Here it is.')).toEqual({ ok: false, reason: 'reply is not valid JSON' });
+    expect(parseAnalysisReply('Sure! Here it is.')).toEqual({
+      ok: false,
+      reason: 'reply is not valid JSON',
+    });
   });
 
   it('rejects a reply without a memory summary and names the field, not the content', () => {
@@ -155,7 +170,14 @@ describe('parseAnalysisReply', () => {
   });
 
   it('accepts a cue schema with any category string, leaving the check to the validator', () => {
-    expect(rawCueSchema.safeParse({ category: 'anything', startSentence: 0, endSentence: 1, confidence: 1 }).success).toBe(true);
+    expect(
+      rawCueSchema.safeParse({
+        category: 'anything',
+        startSentence: 0,
+        endSentence: 1,
+        confidence: 1,
+      }).success,
+    ).toBe(true);
   });
 });
 
@@ -186,7 +208,9 @@ describe('runAnalysisCall repair retry', () => {
     const transport = jest.fn(async () => {
       throw new Error('network down');
     });
-    await expect(runAnalysisCall(transport, { system: 'S', user: 'U' })).rejects.toThrow('network down');
+    await expect(runAnalysisCall(transport, { system: 'S', user: 'U' })).rejects.toThrow(
+      'network down',
+    );
     expect(transport).toHaveBeenCalledTimes(1);
   });
 });

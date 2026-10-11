@@ -1,6 +1,7 @@
 import { enabledCategories } from './ambience-taxonomy';
 import { CUE_LIMITS, MEMORY_LIMITS } from './limits';
 import { normalizeWhitespace } from '../text/normalize';
+
 import type { Lang, SentenceInput } from './types';
 
 /** Bump when the wording or the output shape changes. Stored with every analysis result. */

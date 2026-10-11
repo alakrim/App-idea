@@ -1,6 +1,7 @@
-import { CUE_LIMITS } from './limits';
 import { sentences } from './__fixtures__/builders';
+import { CUE_LIMITS } from './limits';
 import { FADES_BY_INTENSITY, validateCues } from './validate-cues';
+
 import type { CueValidationContext } from './validate-cues';
 
 /** 40 sentences of 80 characters: a 4-sentence cue is 320 chars, about 21 s, so it passes. */
@@ -42,7 +43,10 @@ describe('validateCues: rule by rule', () => {
 
   it('gives each intensity its own default fades', () => {
     const { cues } = validateCues(
-      [cue({ startSentence: 0, endSentence: 3, intensity: 'low' }), cue({ startSentence: 10, endSentence: 13, intensity: 'high' })],
+      [
+        cue({ startSentence: 0, endSentence: 3, intensity: 'low' }),
+        cue({ startSentence: 10, endSentence: 13, intensity: 'high' }),
+      ],
       ctx(),
     );
     expect(cues.find((c) => c.intensity === 'low')).toMatchObject(FADES_BY_INTENSITY.low);
@@ -90,7 +94,10 @@ describe('validateCues: rule by rule', () => {
   });
 
   it('clamps indices into the chapter', () => {
-    const { cues } = validateCues([cue({ startSentence: -3, endSentence: 999 })], ctx({ sentenceCount: 10 }));
+    const { cues } = validateCues(
+      [cue({ startSentence: -3, endSentence: 999 })],
+      ctx({ sentenceCount: 10 }),
+    );
     expect(cues[0]).toMatchObject({ startSentence: 0, endSentence: 9 });
   });
 
@@ -106,7 +113,10 @@ describe('validateCues: rule by rule', () => {
 
   it('drops cues under 20 seconds at 15 characters per second', () => {
     const short = sentences(40, 20);
-    const { dropped } = validateCues([cue({ startSentence: 0, endSentence: 2 })], ctx({ sentences: short }));
+    const { dropped } = validateCues(
+      [cue({ startSentence: 0, endSentence: 2 })],
+      ctx({ sentences: short }),
+    );
     // 3 * 20 = 60 chars, which is 4 s at 15 chars/s.
     expect(dropped[0]?.reason).toBe('too_short');
   });
@@ -120,7 +130,12 @@ describe('validateCues: rule by rule', () => {
       ctx(),
     );
     expect(cues).toHaveLength(1);
-    expect(cues[0]).toMatchObject({ startSentence: 2, endSentence: 11, confidence: 0.9, reason: 'second' });
+    expect(cues[0]).toMatchObject({
+      startSentence: 2,
+      endSentence: 11,
+      confidence: 0.9,
+      reason: 'second',
+    });
     expect(dropped.map((d) => d.reason)).toEqual(['merged']);
   });
 
@@ -134,7 +149,10 @@ describe('validateCues: rule by rule', () => {
 
   it('never merges different categories', () => {
     const { cues } = validateCues(
-      [cue({ startSentence: 2, endSentence: 5 }), cue({ category: 'city_night', startSentence: 6, endSentence: 9 })],
+      [
+        cue({ startSentence: 2, endSentence: 5 }),
+        cue({ category: 'city_night', startSentence: 6, endSentence: 9 }),
+      ],
       ctx(),
     );
     expect(cues).toHaveLength(2);

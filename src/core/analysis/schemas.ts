@@ -1,11 +1,17 @@
 import { z } from 'zod';
 
-import { normalizeWhitespace } from '../text/normalize';
-import { normalizeName } from '../memory/entities';
+import { AMBIENCE_CATEGORY_IDS } from './ambience-taxonomy';
 import { MEMORY_LIMITS } from './limits';
+import { normalizeName } from '../memory/entities';
+import { normalizeWhitespace } from '../text/normalize';
+
 import type { IntensityLevel, MemoryFields } from './types';
 
-export const INTENSITY_LEVELS = ['low', 'medium', 'high'] as const satisfies readonly IntensityLevel[];
+export const INTENSITY_LEVELS = [
+  'low',
+  'medium',
+  'high',
+] as const satisfies readonly IntensityLevel[];
 
 const namedFactsSchema = z.object({
   name: z.string(),
@@ -54,7 +60,8 @@ export const rawCueSchema = z.object({
   reason: z.string().optional(),
 });
 
-export type RawCue = z.infer<typeof rawCueSchema>;
+/** Every known category id, as a zod enum. Stored ids are never renamed (ADR-0005). */
+export const ambienceCategoryIdSchema = z.enum(AMBIENCE_CATEGORY_IDS);
 
 /** The whole analysis reply. Cues stay `unknown` so that one bad cue cannot drop the memory. */
 export const analysisResponseSchema = z.object({

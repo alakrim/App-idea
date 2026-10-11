@@ -1,4 +1,5 @@
 import { mergeMemoryDrafts } from './merge-memory';
+
 import type { MemoryFields } from './types';
 
 const BASE: MemoryFields = {
@@ -24,7 +25,16 @@ describe('mergeMemoryDrafts', () => {
   it('unions characters by name or alias, merging facts and aliases', () => {
     const merged = mergeMemoryDrafts([
       draft({ characters: [{ name: 'Ana Ruiz', aliases: ['Ana'], facts: ['is a pilot'] }] }),
-      draft({ characters: [{ name: 'Ana', aliases: ['La Capitana'], role: 'captain', facts: ['is a pilot', 'flies at dawn'] }] }),
+      draft({
+        characters: [
+          {
+            name: 'Ana',
+            aliases: ['La Capitana'],
+            role: 'captain',
+            facts: ['is a pilot', 'flies at dawn'],
+          },
+        ],
+      }),
     ]);
     expect(merged.characters).toEqual([
       {
@@ -79,7 +89,10 @@ describe('mergeMemoryDrafts', () => {
         glossary: [{ term: 'Qi', note: 'energy' }],
       }),
       draft({
-        relationships: [{ a: 'ana', b: 'bo', nature: 'Sister' }, { a: 'Ana', b: 'Cy', nature: 'rival' }],
+        relationships: [
+          { a: 'ana', b: 'bo', nature: 'Sister' },
+          { a: 'Ana', b: 'Cy', nature: 'rival' },
+        ],
         glossary: [{ term: 'QI', translation: 'energia' }],
       }),
     ]);
@@ -97,8 +110,15 @@ describe('mergeMemoryDrafts', () => {
   });
 
   it('caps characters at 15 across chunks', () => {
-    const many = Array.from({ length: 10 }, (_, i) => ({ name: `Name ${i}`, aliases: [], facts: [] }));
-    const merged = mergeMemoryDrafts([draft({ characters: many }), draft({ characters: many.map((c) => ({ ...c, name: `${c.name}x` })) })]);
+    const many = Array.from({ length: 10 }, (_, i) => ({
+      name: `Name ${i}`,
+      aliases: [],
+      facts: [],
+    }));
+    const merged = mergeMemoryDrafts([
+      draft({ characters: many }),
+      draft({ characters: many.map((c) => ({ ...c, name: `${c.name}x` })) }),
+    ]);
     expect(merged.characters).toHaveLength(15);
   });
 });

@@ -56,8 +56,18 @@ interface Mention {
 function mentionsOf(memory: ChapterMemory): Mention[] {
   return [
     ...memory.characters.map((c) => ({ kind: 'character' as const, ...c })),
-    ...memory.places.map((p) => ({ kind: 'place' as const, name: p.name, aliases: [], facts: p.facts })),
-    ...memory.items.map((i) => ({ kind: 'item' as const, name: i.name, aliases: [], facts: i.facts })),
+    ...memory.places.map((p) => ({
+      kind: 'place' as const,
+      name: p.name,
+      aliases: [],
+      facts: p.facts,
+    })),
+    ...memory.items.map((i) => ({
+      kind: 'item' as const,
+      name: i.name,
+      aliases: [],
+      facts: i.facts,
+    })),
   ];
 }
 
@@ -91,7 +101,9 @@ export function resolveEntities(
     if (keys.length === 0) continue;
 
     let entity = [...byId.values()].find(
-      (e) => e.kind === mention.kind && nameKeys(e.canonicalName, e.aliases).some((k) => keys.includes(k)),
+      (e) =>
+        e.kind === mention.kind &&
+        nameKeys(e.canonicalName, e.aliases).some((k) => keys.includes(k)),
     );
     if (!entity) {
       entity = {

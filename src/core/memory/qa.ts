@@ -49,10 +49,14 @@ function memoryCard(record: ChapterMemoryRecord): string {
   for (const c of m.characters) {
     const aliases = c.aliases.length > 0 ? ` (also: ${c.aliases.join(', ')})` : '';
     const role = c.role ? ` [${c.role}]` : '';
-    lines.push(`Character: ${c.name}${aliases}${role}${c.facts.length ? ` - ${c.facts.join('; ')}` : ''}`);
+    lines.push(
+      `Character: ${c.name}${aliases}${role}${c.facts.length ? ` - ${c.facts.join('; ')}` : ''}`,
+    );
   }
-  for (const p of m.places) lines.push(`Place: ${p.name}${p.facts.length ? ` - ${p.facts.join('; ')}` : ''}`);
-  for (const i of m.items) lines.push(`Item: ${i.name}${i.facts.length ? ` - ${i.facts.join('; ')}` : ''}`);
+  for (const p of m.places)
+    lines.push(`Place: ${p.name}${p.facts.length ? ` - ${p.facts.join('; ')}` : ''}`);
+  for (const i of m.items)
+    lines.push(`Item: ${i.name}${i.facts.length ? ` - ${i.facts.join('; ')}` : ''}`);
   for (const r of m.relationships) lines.push(`Relationship: ${r.a} / ${r.b}: ${r.nature}`);
   return lines.join('\n');
 }

@@ -1,7 +1,8 @@
-import { emptyMemory, fakeId } from '../analysis/__fixtures__/builders';
-import type { ChapterMemoryRecord } from '../analysis/types';
 import { QA_SYSTEM_PROMPT, buildQaPrompt } from './qa';
+import { emptyMemory, fakeId } from '../analysis/__fixtures__/builders';
+
 import type { QaFtsHit, QaPromptInput } from './qa';
+import type { ChapterMemoryRecord } from '../analysis/types';
 
 const CUTOFF = { chapterOrder: 3, sentenceIdx: 12 };
 
@@ -26,10 +27,25 @@ const MEMORIES: ChapterMemoryRecord[] = [
 ];
 
 const HITS: QaFtsHit[] = [
-  { chapterOrder: 3, chapterNumber: 3, sentenceIdx: 5, text: 'Early passage in the cutoff chapter.' },
+  {
+    chapterOrder: 3,
+    chapterNumber: 3,
+    sentenceIdx: 5,
+    text: 'Early passage in the cutoff chapter.',
+  },
   { chapterOrder: 3, chapterNumber: 3, sentenceIdx: 12, text: 'Exact cutoff sentence.' },
-  { chapterOrder: 3, chapterNumber: 3, sentenceIdx: 13, text: 'FUTURE_SENTENCE_SECRET after the cutoff.' },
-  { chapterOrder: 2, chapterNumber: 2, sentenceIdx: 99, text: 'EARLIER_CHAPTER_RAW_TEXT should not be sent.' },
+  {
+    chapterOrder: 3,
+    chapterNumber: 3,
+    sentenceIdx: 13,
+    text: 'FUTURE_SENTENCE_SECRET after the cutoff.',
+  },
+  {
+    chapterOrder: 2,
+    chapterNumber: 2,
+    sentenceIdx: 99,
+    text: 'EARLIER_CHAPTER_RAW_TEXT should not be sent.',
+  },
   { chapterOrder: 4, chapterNumber: 4, sentenceIdx: 0, text: 'FUTURE_CHAPTER_RAW_TEXT' },
 ];
 
@@ -103,9 +119,7 @@ describe('buildQaPrompt content', () => {
   });
 
   it('shows (none) for empty sections', () => {
-    const { user } = buildQaPrompt(
-      input({ codex: '', memories: [], ftsHits: [] }),
-    );
+    const { user } = buildQaPrompt(input({ codex: '', memories: [], ftsHits: [] }));
     expect(user.match(/\(none\)/g)).toHaveLength(3);
   });
 

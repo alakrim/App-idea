@@ -29,7 +29,17 @@ describe('ambience taxonomy integrity', () => {
   it('has the nine R4 families and a description for every category', () => {
     const families = [...new Set(AMBIENCE_CATEGORIES.map((c) => c.family))].sort();
     expect(families).toEqual(
-      ['combat', 'interiors', 'mood', 'mystical', 'nature', 'sci-fi', 'transport', 'urban', 'weather'].sort(),
+      [
+        'combat',
+        'interiors',
+        'mood',
+        'mystical',
+        'nature',
+        'sci-fi',
+        'transport',
+        'urban',
+        'weather',
+      ].sort(),
     );
     for (const c of AMBIENCE_CATEGORIES) expect(c.description.trim().length).toBeGreaterThan(0);
   });

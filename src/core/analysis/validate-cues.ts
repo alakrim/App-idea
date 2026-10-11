@@ -1,6 +1,7 @@
 import { getCategory, isEnabledKind } from './ambience-taxonomy';
 import { CUE_LIMITS } from './limits';
-import { rawCueSchema } from './schemas';
+import { ambienceCategoryIdSchema, rawCueSchema } from './schemas';
+
 import type { AmbienceCategoryId } from './ambience-taxonomy';
 import type { IntensityLevel, SentenceInput, ValidatedCue } from './types';
 
@@ -45,7 +46,9 @@ export const FADES_BY_INTENSITY: Readonly<
 
 const INTENSITY_ORDER: readonly IntensityLevel[] = ['low', 'medium', 'high'];
 
-type CueDraft = Omit<ValidatedCue, 'fadeInMs' | 'fadeOutMs'>;
+type CueDraft = Omit<ValidatedCue, 'fadeInMs' | 'fadeOutMs' | 'category'> & {
+  readonly category: AmbienceCategoryId;
+};
 
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
@@ -91,7 +94,8 @@ export function validateCues(
       continue;
     }
     const cue = parsed.data;
-    const category = getCategory(cue.category);
+    const known = ambienceCategoryIdSchema.safeParse(cue.category);
+    const category = known.success ? getCategory(known.data) : undefined;
     if (!category) {
       drop(raw, 'unknown_category');
       continue;

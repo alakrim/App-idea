@@ -1,10 +1,6 @@
 import { normalizeName } from './entities';
-import type {
-  ChapterMemoryRecord,
-  Entity,
-  EntityFact,
-  EntityKind,
-} from '../analysis/types';
+
+import type { ChapterMemoryRecord, Entity, EntityFact, EntityKind } from '../analysis/types';
 
 const CJK = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/gu;
 
@@ -58,7 +54,11 @@ function chapterBlock(record: ChapterMemoryRecord): Block {
   };
 }
 
-function entityBlock(entity: Entity, facts: readonly EntityFact[], cite: (order: number) => string): Block {
+function entityBlock(
+  entity: Entity,
+  facts: readonly EntityFact[],
+  cite: (order: number) => string,
+): Block {
   const aliases = entity.aliases.length > 0 ? ` (also: ${entity.aliases.join(', ')})` : '';
   const body = facts.map((f) => `${f.fact}${cite(f.chapterOrder)}`).join('; ');
   const latest = facts.reduce((max, f) => Math.max(max, f.chapterOrder), entity.firstChapterOrder);

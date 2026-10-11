@@ -1,8 +1,13 @@
-import { emptyMemory, entity, fact, fakeId } from '../analysis/__fixtures__/builders';
-import type { ChapterMemoryRecord, Entity, EntityFact } from '../analysis/types';
 import { buildPriorContext, estimateTokens } from './codex';
+import { emptyMemory, entity, fact, fakeId } from '../analysis/__fixtures__/builders';
 
-function record(chapterOrder: number, summary: string, keyEvents: string[] = []): ChapterMemoryRecord {
+import type { ChapterMemoryRecord, Entity, EntityFact } from '../analysis/types';
+
+function record(
+  chapterOrder: number,
+  summary: string,
+  keyEvents: string[] = [],
+): ChapterMemoryRecord {
   return {
     chapterOrder,
     chapterNumber: chapterOrder,
@@ -27,7 +32,12 @@ const facts: EntityFact[] = [
   fact({ id: fakeId(201), entityId: fakeId(101), fact: 'is a pilot', chapterOrder: 1 }),
   fact({ id: fakeId(202), entityId: fakeId(102), fact: 'owns the inn', chapterOrder: 2 }),
   fact({ id: fakeId(203), entityId: fakeId(101), fact: 'SPOILER_FACT secret', chapterOrder: 3 }),
-  fact({ id: fakeId(204), entityId: fakeId(103), fact: 'SPOILER_NEW is the villain', chapterOrder: 3 }),
+  fact({
+    id: fakeId(204),
+    entityId: fakeId(103),
+    fact: 'SPOILER_NEW is the villain',
+    chapterOrder: 3,
+  }),
 ];
 
 describe('estimateTokens', () => {
@@ -89,6 +99,8 @@ describe('buildPriorContext', () => {
   });
 
   it('is deterministic for the same input', () => {
-    expect(buildPriorContext(ents, facts, memories, 3, 200)).toBe(buildPriorContext(ents, facts, memories, 3, 200));
+    expect(buildPriorContext(ents, facts, memories, 3, 200)).toBe(
+      buildPriorContext(ents, facts, memories, 3, 200),
+    );
   });
 });

@@ -1,8 +1,8 @@
-import type { ZodError } from 'zod';
-
 import { analysisResponseSchema, normalizeMemory } from './schemas';
+
 import type { AnalysisRequest, LlmTransport } from './llm';
 import type { MemoryFields } from './types';
+import type { ZodError } from 'zod';
 
 export interface AnalysisResponse {
   readonly memory: MemoryFields;

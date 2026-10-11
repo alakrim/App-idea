@@ -1,5 +1,11 @@
-import { emptyMemory, entity, fact, CHAPTER_ID, SERIES_ID } from '../analysis/__fixtures__/builders';
 import { nameKeys, normalizeName, resolveEntities } from './entities';
+import {
+  emptyMemory,
+  entity,
+  fact,
+  CHAPTER_ID,
+  SERIES_ID,
+} from '../analysis/__fixtures__/builders';
 
 let counter = 0;
 const newId = (): string => `ID${String(++counter).padStart(4, '0')}`;
@@ -71,28 +77,46 @@ describe('resolveEntities', () => {
     const memory = emptyMemory({
       characters: [{ name: 'La Capitana', aliases: ['Ana Ruiz'], facts: ['commands the ship'] }],
     });
-    const { upserts, newFacts } = resolveEntities(existing, memory, 5, { seriesId: SERIES_ID, newId });
+    const { upserts, newFacts } = resolveEntities(existing, memory, 5, {
+      seriesId: SERIES_ID,
+      newId,
+    });
 
     expect(upserts).toEqual([
-      expect.objectContaining({ id: 'E1', canonicalName: 'Ana Ruiz', aliases: ['Ana', 'La Capitana'] }),
+      expect.objectContaining({
+        id: 'E1',
+        canonicalName: 'Ana Ruiz',
+        aliases: ['Ana', 'La Capitana'],
+      }),
     ]);
-    expect(newFacts).toEqual([expect.objectContaining({ entityId: 'E1', fact: 'commands the ship', chapterOrder: 5 })]);
+    expect(newFacts).toEqual([
+      expect.objectContaining({ entityId: 'E1', fact: 'commands the ship', chapterOrder: 5 }),
+    ]);
   });
 
   it('matches across diacritics and width, and keeps the earliest first-chapter order', () => {
-    const existing = [entity({ id: 'E1', canonicalName: 'José Plaza', kind: 'place', firstChapterOrder: 4 })];
+    const existing = [
+      entity({ id: 'E1', canonicalName: 'José Plaza', kind: 'place', firstChapterOrder: 4 }),
+    ];
     const memory = emptyMemory({
       places: [{ name: 'Jose Plaza', facts: ['a fountain'] }],
     });
     const { upserts } = resolveEntities(existing, memory, 2, { seriesId: SERIES_ID, newId });
     // Diacritic variants share one normalized key, so no new alias is stored.
-    expect(upserts).toEqual([expect.objectContaining({ id: 'E1', firstChapterOrder: 2, aliases: [] })]);
+    expect(upserts).toEqual([
+      expect.objectContaining({ id: 'E1', firstChapterOrder: 2, aliases: [] }),
+    ]);
   });
 
   it('matches CJK names by their NFKC form', () => {
     const existing = [entity({ id: 'E1', canonicalName: 'ヤマダ' })];
-    const memory = emptyMemory({ characters: [{ name: 'ﾔﾏﾀﾞ', aliases: [], facts: ['a doctor'] }] });
-    const { upserts, newFacts } = resolveEntities(existing, memory, 1, { seriesId: SERIES_ID, newId });
+    const memory = emptyMemory({
+      characters: [{ name: 'ﾔﾏﾀﾞ', aliases: [], facts: ['a doctor'] }],
+    });
+    const { upserts, newFacts } = resolveEntities(existing, memory, 1, {
+      seriesId: SERIES_ID,
+      newId,
+    });
     expect(upserts).toHaveLength(1);
     expect(upserts[0]?.id).toBe('E1');
     expect(newFacts[0]?.entityId).toBe('E1');
@@ -122,7 +146,9 @@ describe('resolveEntities', () => {
   it('drops facts that already exist for the series', () => {
     const existing = [entity({ id: 'E1', canonicalName: 'Ana' })];
     const stored = [fact({ id: 'F1', entityId: 'E1', fact: 'is a pilot', chapterOrder: 1 })];
-    const memory = emptyMemory({ characters: [{ name: 'Ana', aliases: [], facts: ['Is a pilot', 'flies at night'] }] });
+    const memory = emptyMemory({
+      characters: [{ name: 'Ana', aliases: [], facts: ['Is a pilot', 'flies at night'] }],
+    });
     const { newFacts } = resolveEntities(existing, memory, 2, {
       seriesId: SERIES_ID,
       newId,
@@ -132,7 +158,10 @@ describe('resolveEntities', () => {
   });
 
   it('returns only the entities this chapter touched', () => {
-    const existing = [entity({ id: 'E1', canonicalName: 'Ana' }), entity({ id: 'E2', canonicalName: 'Bo' })];
+    const existing = [
+      entity({ id: 'E1', canonicalName: 'Ana' }),
+      entity({ id: 'E2', canonicalName: 'Bo' }),
+    ];
     const memory = emptyMemory({ characters: [{ name: 'Ana', aliases: [], facts: [] }] });
     const { upserts } = resolveEntities(existing, memory, 2, { seriesId: SERIES_ID, newId });
     expect(upserts.map((e) => e.id)).toEqual(['E1']);

@@ -1,7 +1,11 @@
-import { normalizeName, nameKeys } from '../memory/entities';
 import { MEMORY_LIMITS } from './limits';
 import { truncateWords } from './schemas';
-import type { GlossaryEntry, MemoryFields, NamedFacts } from './types';
+import { normalizeName, nameKeys } from '../memory/entities';
+
+import type { MemoryFields } from './types';
+
+type GlossaryEntry = MemoryFields['glossary'][number];
+type NamedFacts = MemoryFields['places'][number];
 
 interface NamedEntry {
   readonly name: string;

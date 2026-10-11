@@ -1,7 +1,8 @@
-import { AnalysisOutputError } from './analysis-call';
-import { ANALYSIS_SYSTEM_PROMPT } from './prompts';
-import { analyzeChapter, planAnalysisChunks } from './map-reduce';
 import { sentences } from './__fixtures__/builders';
+import { AnalysisOutputError } from './analysis-call';
+import { analyzeChapter, planAnalysisChunks } from './map-reduce';
+import { ANALYSIS_SYSTEM_PROMPT } from './prompts';
+
 import type { LlmTransport } from './llm';
 
 const memoryJson = (summary: string, extra: Record<string, unknown> = {}): string =>
@@ -59,8 +60,21 @@ describe('planAnalysisChunks', () => {
 describe('analyzeChapter', () => {
   it('makes one call for a single-chunk chapter and validates its cues', async () => {
     const reply = JSON.stringify({
-      memory: { summary: 'Rain falls on the town.', keyEvents: ['Rain starts'], characters: [{ name: 'Ana', aliases: [], facts: ['waits'] }] },
-      cues: [{ category: 'light_rain', startSentence: 0, endSentence: 4, intensity: 'low', confidence: 0.8, reason: 'Rain on roofs' }],
+      memory: {
+        summary: 'Rain falls on the town.',
+        keyEvents: ['Rain starts'],
+        characters: [{ name: 'Ana', aliases: [], facts: ['waits'] }],
+      },
+      cues: [
+        {
+          category: 'light_rain',
+          startSentence: 0,
+          endSentence: 4,
+          intensity: 'low',
+          confidence: 0.8,
+          reason: 'Rain on roofs',
+        },
+      ],
     });
     const { transport, calls } = scriptedTransport(() => reply);
 
@@ -77,7 +91,13 @@ describe('analyzeChapter', () => {
     expect(result.memory.summary).toBe('Rain falls on the town.');
     expect(result.memory.characters[0]?.name).toBe('Ana');
     expect(result.cues).toEqual([
-      expect.objectContaining({ category: 'light_rain', startSentence: 0, endSentence: 4, intensity: 'low', fadeInMs: 3000 }),
+      expect.objectContaining({
+        category: 'light_rain',
+        startSentence: 0,
+        endSentence: 4,
+        intensity: 'low',
+        fadeInMs: 3000,
+      }),
     ]);
     expect(result.dropped).toEqual([]);
   });
@@ -85,14 +105,31 @@ describe('analyzeChapter', () => {
   it('runs one call per chunk, merges memories, reduces the summary, and merges cues across the boundary', async () => {
     const chunkA = JSON.stringify({
       memory: { summary: 'Part one happens.', openThreads: ['Who sent the letter?'] },
-      cues: [{ category: 'city_night', startSentence: 2, endSentence: 4, confidence: 0.7, reason: 'Night streets' }],
+      cues: [
+        {
+          category: 'city_night',
+          startSentence: 2,
+          endSentence: 4,
+          confidence: 0.7,
+          reason: 'Night streets',
+        },
+      ],
     });
     const chunkB = JSON.stringify({
       memory: { summary: 'Part two follows.', openThreads: ['Where is the key?'] },
-      cues: [{ category: 'city_night', startSentence: 5, endSentence: 7, confidence: 0.9, reason: 'Still night' }],
+      cues: [
+        {
+          category: 'city_night',
+          startSentence: 5,
+          endSentence: 7,
+          confidence: 0.9,
+          reason: 'Still night',
+        },
+      ],
     });
     const { transport, calls } = scriptedTransport((user) => {
-      if (user.includes('Part 1:')) return 'The chapter opens in the city and moves on to the harbour.';
+      if (user.includes('Part 1:'))
+        return 'The chapter opens in the city and moves on to the harbour.';
       return user.includes('[0] ') ? chunkA : chunkB;
     });
 
@@ -108,10 +145,17 @@ describe('analyzeChapter', () => {
     expect(calls).toHaveLength(3);
     expect(calls[2]?.user).toContain('Part 1: Part one happens.');
     expect(result.chunkCount).toBe(2);
-    expect(result.memory.summary).toBe('The chapter opens in the city and moves on to the harbour.');
+    expect(result.memory.summary).toBe(
+      'The chapter opens in the city and moves on to the harbour.',
+    );
     expect(result.memory.openThreads).toEqual(['Where is the key?']);
     expect(result.cues).toHaveLength(1);
-    expect(result.cues[0]).toMatchObject({ category: 'city_night', startSentence: 2, endSentence: 7, confidence: 0.9 });
+    expect(result.cues[0]).toMatchObject({
+      category: 'city_night',
+      startSentence: 2,
+      endSentence: 7,
+      confidence: 0.9,
+    });
   });
 
   it('keeps the joined summary when reduceSummary is false', async () => {
@@ -130,8 +174,14 @@ describe('analyzeChapter', () => {
   });
 
   it('repairs an invalid chunk reply once', async () => {
-    const { transport, calls } = scriptedTransport((_user, call) => (call === 1 ? 'oops' : memoryJson('Fixed.')));
-    const result = await analyzeChapter({ ...BASE_INPUT, sentences: sentences(4, 80), callLlm: transport });
+    const { transport, calls } = scriptedTransport((_user, call) =>
+      call === 1 ? 'oops' : memoryJson('Fixed.'),
+    );
+    const result = await analyzeChapter({
+      ...BASE_INPUT,
+      sentences: sentences(4, 80),
+      callLlm: transport,
+    });
     expect(calls).toHaveLength(2);
     expect(calls[1]?.user).toContain('could not be used');
     expect(result.memory.summary).toBe('Fixed.');
