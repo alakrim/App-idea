@@ -1,3 +1,12 @@
+// Every helper here runs inside the scrubber's gesture and animated styles on the UI thread, so each
+// one is a worklet. Calling a plain JS function there crashes the app on device.
+
+// Declared first: the worklets plugin turns worklet functions into constants, which are not hoisted.
+function clamp01(value: number): number {
+  'worklet';
+  return Math.min(1, Math.max(0, value));
+}
+
 /** Each 15 s step crossed while scrubbing ticks a haptic and is announced to assistive tech. */
 export const SCRUB_STEP_MS = 15_000;
 
@@ -13,6 +22,7 @@ const FINE_BANDS: readonly { beyondPx: number; sensitivity: number }[] = [
  * the scrub, so a long chapter can be placed to the second.
  */
 export function scrubSensitivity(verticalOffsetPx: number): number {
+  'worklet';
   const distance = Math.abs(verticalOffsetPx);
   const band = FINE_BANDS.find((candidate) => distance >= candidate.beyondPx);
   return band?.sensitivity ?? 1;
@@ -25,24 +35,24 @@ export function scrubFraction(
   trackWidthPx: number,
   sensitivity: number,
 ): number {
+  'worklet';
   if (trackWidthPx <= 0) return clamp01(startFraction);
   return clamp01(startFraction + (dxPx / trackWidthPx) * sensitivity);
 }
 
 export function fractionToMs(fraction: number, durationMs: number): number {
+  'worklet';
   return Math.round(clamp01(fraction) * Math.max(0, durationMs));
 }
 
 export function msToFraction(ms: number, durationMs: number): number {
+  'worklet';
   if (durationMs <= 0) return 0;
   return clamp01(ms / durationMs);
 }
 
 /** The 15 s step index a position falls in. Crossing a boundary is what earns a haptic tick. */
 export function scrubStep(ms: number): number {
+  'worklet';
   return Math.floor(Math.max(0, ms) / SCRUB_STEP_MS);
-}
-
-function clamp01(value: number): number {
-  return Math.min(1, Math.max(0, value));
 }

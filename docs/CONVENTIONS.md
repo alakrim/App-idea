@@ -47,6 +47,11 @@ Dependencies flow only one way, `app → features → (ui, audio, services, db) 
 - Every hook call must have a `use*` name at the call site. Never call a hook through a variable or property without the `use` prefix (e.g. `content(selector)` on a zustand store). The compiler memoizes it as a plain call and the hook order breaks ("Rendered fewer hooks than expected", which caused a real player crash). For zustand, use `useStore(store, selector)` or a `useX` property.
 - `'use no memo'` is forbidden unless an ADR justifies it.
 
+## Worklets (Reanimated 4 / react-native-worklets)
+- Code inside `useAnimatedStyle`, `useDerivedValue`, `useAnimatedReaction` and gesture callbacks runs on the UI thread. Every function it calls must be a worklet (`'worklet';` as its first statement), or come from Reanimated/Worklets. To reach JS code, use `runOnJS(fn)(...)`, or `.runOnJS(true)` on a gesture. A plain function call crashes the app on device, and Jest won't notice (Reanimated is stubbed there). This crashed the player's scrubber (2026-10-11).
+- Declare worklet helpers **before** the code that uses them: the worklets Babel plugin turns them into constants, which are not hoisted.
+- `npm run worklet:check` (part of `verify`) enforces the first rule.
+
 ## LLM usage
 - Prompts live in `src/core/**/prompts.ts` as versioned constants (`PROMPT_VERSION`). Outputs are stored with that version.
 - Request structured output (`json_schema`) whenever the model supports it, and always validate with zod. A failed validation gets one repair retry, then a typed error.

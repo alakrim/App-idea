@@ -35,7 +35,10 @@ export interface ScrubberProps {
   onSeek: (ms: number) => void;
 }
 
-const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+function clamp(value: number, min: number, max: number): number {
+  'worklet';
+  return Math.min(max, Math.max(min, value));
+}
 
 /**
  * The chapter timeline as a scrubber. Dragging is relative to where the finger lands, and dragging
@@ -67,7 +70,7 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
   // keep arriving during a drag and must not pull the thumb away from the finger.
   useEffect(() => {
     if (scrubbing.value) return;
-     
+
     fraction.value = glideTo(targetFraction, reduced);
   }, [targetFraction, reduced, fraction, scrubbing]);
 

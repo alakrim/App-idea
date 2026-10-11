@@ -17,7 +17,8 @@
     "boot:check": "node scripts/smoke/boot-bundle.mjs",
     "sounds:build": "node scripts/sounds/build-base-pack.mjs",
     "sounds:verify": "node scripts/sounds/verify-pack.mjs",
-    "verify": "npm run typecheck && npm run lint && npm run test && npm run bundle:check"
+    "verify": "npm run typecheck && npm run lint && npm run worklet:check && npm run test && npm run bundle:check",
+    "worklet:check": "node scripts/smoke/worklet-audit.cjs"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.4.2",
