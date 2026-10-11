@@ -26,8 +26,10 @@ export function createHostTimers() {
     return id;
   };
 
-  /** Runs the earliest due timer, advancing virtual time, until the window is exhausted. */
   /**
+   * Runs due timers in order, advancing virtual time, until none is due within the window. Each
+   * pass yields to the host event loop first, so queued microtasks run before the next timer.
+   *
    * @param {number} windowMs
    * @param {(error: unknown) => void} onError
    */

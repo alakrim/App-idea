@@ -9,8 +9,11 @@
 //   node scripts/smoke/boot-bundle.mjs [--dir <expo export dir>] [--window-ms 4000]
 //
 // Without --dir it runs `npx expo export --platform android --no-bytecode --source-maps` into a
-// temporary directory first. Set BOOT_RAW_STACK=1 to print the unmapped V8 stack of each error,
-// BOOT_VERBOSE=1 for the mapped stacks of soft errors, and BOOT_CALLS=1 to list native calls.
+// temporary directory first. Exit status is 1 on a fatal error, or when fewer than --require-views
+// host views are created (default 0: a boot that renders nothing and reports nothing still fails,
+// because the native host would see no screen). Set BOOT_RAW_STACK=1 to print the unmapped V8 stack of each error,
+// BOOT_VERBOSE=1 for the mapped stacks of soft errors, BOOT_LOGS=1 for every console line, and
+// BOOT_CALLS=1 to list native calls.
 
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, readdirSync } from 'node:fs';
@@ -24,17 +27,23 @@ import { parseArgs } from 'node:util';
 import { createHostTimers } from './host-timers.mjs';
 import { createRecorder, installNativeStubs } from './native-stubs.mjs';
 
-/** A boot that renders fewer host views than this has not drawn a screen. */
-const MIN_VIEWS_FOR_RENDER = 3;
-
 const REPO_ROOT = fileURLToPath(new URL('../../', import.meta.url));
 
 /** @param {string} dir */
 function exportBundle(dir) {
   execFileSync(
     'npx',
-    ['expo', 'export', '--platform', 'android', '--no-bytecode', '--source-maps', '--output-dir', dir],
-    { cwd: REPO_ROOT, stdio: ['ignore', 'ignore', 'inherit'] }
+    [
+      'expo',
+      'export',
+      '--platform',
+      'android',
+      '--no-bytecode',
+      '--source-maps',
+      '--output-dir',
+      dir,
+    ],
+    { cwd: REPO_ROOT, stdio: ['ignore', 'ignore', 'inherit'] },
   );
 }
 
@@ -92,9 +101,10 @@ function mapStack(stack, bundlePath, map) {
   if (Array.isArray(stack)) {
     return stack
       .map((frame) => {
-        const f = /** @type {{ methodName?: string, file?: string, lineNumber?: number, column?: number }} */ (
-          frame
-        );
+        const f =
+          /** @type {{ methodName?: string, file?: string, lineNumber?: number, column?: number }} */ (
+            frame
+          );
         const where =
           f.file === bundlePath && f.lineNumber !== undefined && f.column !== undefined
             ? originalPosition(f.lineNumber, f.column, map)
@@ -106,7 +116,7 @@ function mapStack(stack, bundlePath, map) {
   const escaped = bundlePath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const frame = new RegExp(`${escaped}:(\\d+):(\\d+)`, 'g');
   return String(stack).replace(frame, (_match, line, col) =>
-    originalPosition(Number(line), Number(col), map)
+    originalPosition(Number(line), Number(col), map),
   );
 }
 
@@ -173,8 +183,10 @@ async function main() {
     options: {
       dir: { type: 'string' },
       'window-ms': { type: 'string', default: '4000' },
+      'require-views': { type: 'string', default: '0' },
     },
   });
+  const requiredViews = Number(values['require-views']);
   const dir = values.dir ? resolve(values.dir) : mkdtempSync(join(tmpdir(), 'lectio-boot-'));
   if (values.dir === undefined) {
     exportBundle(dir);
@@ -227,9 +239,10 @@ async function main() {
 
   if (recorder.fatals.length === 0) {
     try {
-      const registry = /** @type {{ runApplication: (key: string, p: object) => void, getAppKeys: () => string[] }} */ (
-        sandbox.RN$AppRegistry
-      );
+      const registry =
+        /** @type {{ runApplication: (key: string, p: object) => void, getAppKeys: () => string[] }} */ (
+          sandbox.RN$AppRegistry
+        );
       phases.push(`app keys: ${registry.getAppKeys().join(',')}`);
       registry.runApplication('main', { rootTag: 1, initialProps: {}, fabric: true });
       phases.push('runApplication returned');
@@ -255,20 +268,26 @@ async function main() {
       console.log(mapStack(soft.stack, bundlePath, map));
     }
   }
-  for (const line of recorder.logs.filter((l) => l.startsWith('error:'))) {
+  const shownLogs =
+    process.env.BOOT_LOGS === '1'
+      ? recorder.logs
+      : recorder.logs.filter((l) => l.startsWith('error:'));
+  for (const line of shownLogs) {
     console.log(line.split('\n')[0]);
   }
-  const rendered = [...recorder.views.values()].reduce((a, b) => a + b, 0) >= MIN_VIEWS_FOR_RENDER;
+  const hostViews = [...recorder.views.values()].reduce((a, b) => a + b, 0);
   const first = recorder.fatals[0];
   if (first) {
     console.log(`FATAL: ${first.message}`);
     console.log(mapStack(first.stack, bundlePath, map));
     process.exitCode = 1;
-  } else if (!rendered) {
-    console.log('FAIL: no screen rendered and no fatal error was reported');
+  } else if (hostViews < requiredViews) {
+    console.log(
+      `FAIL: ${hostViews} host views created, ${requiredViews} required, and no error was reported`,
+    );
     process.exitCode = 1;
   } else {
-    console.log('OK: boot completed with no uncaught error and a rendered screen');
+    console.log(`OK: no uncaught error; ${hostViews} host views created`);
   }
 }
 

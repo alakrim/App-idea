@@ -32,8 +32,9 @@ export function createIdGenerator(options: IdGeneratorOptions = {}): IdGenerator
  * IDs are row keys, not secrets, so Math.random is an acceptable source where Web Crypto is absent.
  */
 function defaultPrng(): PRNG {
-  const source = (globalThis as { crypto?: { getRandomValues?: (bytes: Uint8Array) => Uint8Array } })
-    .crypto;
+  const source = (
+    globalThis as { crypto?: { getRandomValues?: (bytes: Uint8Array) => Uint8Array } }
+  ).crypto;
   if (typeof source?.getRandomValues === 'function') {
     const getRandomValues = source.getRandomValues.bind(source);
     return () => {

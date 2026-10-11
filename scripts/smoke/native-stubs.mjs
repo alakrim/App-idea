@@ -141,7 +141,7 @@ function createHostObject(recorder, label) {
           return {};
         };
       },
-    }
+    },
   );
 }
 
@@ -249,7 +249,7 @@ function createTurboModule(name, ctx) {
           return implemented?.(...args);
         };
       },
-    }
+    },
   );
 }
 
@@ -273,7 +273,7 @@ function createFabricUIManager(recorder) {
           return {};
         };
       },
-    }
+    },
   );
 }
 
@@ -298,7 +298,7 @@ function createExpoModules(ctx) {
         }
         return cache.get(name);
       },
-    }
+    },
   );
 }
 
@@ -327,14 +327,19 @@ class StubEventEmitter {
 export function installNativeStubs(ctx) {
   const { sandbox, recorder } = ctx;
   sandbox.RN$Bridgeless = true;
-  sandbox.RN$registerCallableModule = (/** @type {string} */ name, /** @type {unknown} */ factory) => {
+  sandbox.RN$registerCallableModule = (
+    /** @type {string} */ name,
+    /** @type {unknown} */ factory,
+  ) => {
     recorder.callableModules.set(name, factory);
   };
   sandbox.nativeFabricUIManager = createFabricUIManager(recorder);
   sandbox.__turboModuleProxy = (/** @type {string} */ name) => {
     if (name === 'ExceptionsManager') {
       return {
-        reportException: (/** @type {{ message: string, stack: unknown, isFatal: boolean }} */ e) => {
+        reportException: (
+          /** @type {{ message: string, stack: unknown, isFatal: boolean }} */ e,
+        ) => {
           (e.isFatal ? recorder.fatals : recorder.softs).push({
             message: e.message,
             stack: e.stack,
@@ -359,7 +364,7 @@ export function installNativeStubs(ctx) {
         typeof name === 'string' && LINKED_TURBO_MODULES.has(name)
           ? createTurboModule(name, ctx)
           : undefined,
-    }
+    },
   );
   sandbox.expo = {
     EventEmitter: StubEventEmitter,

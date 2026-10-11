@@ -14,6 +14,7 @@
     "test:core": "jest --selectProjects core",
     "db:generate": "drizzle-kit generate",
     "bundle:check": "expo export --platform android --output-dir dist/check && rm -rf dist/check",
+    "boot:check": "node scripts/smoke/boot-bundle.mjs",
     "sounds:build": "node scripts/sounds/build-base-pack.mjs",
     "sounds:verify": "node scripts/sounds/verify-pack.mjs",
     "verify": "npm run typecheck && npm run lint && npm run test && npm run bundle:check"
@@ -31,6 +32,7 @@
     "expo-blur": "~57.0.3",
     "expo-clipboard": "~57.0.2",
     "expo-constants": "~57.0.21",
+    "expo-crypto": "~57.0.3",
     "expo-document-picker": "~57.0.3",
     "expo-file-system": "~57.0.7",
     "expo-font": "~57.0.4",

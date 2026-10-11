@@ -10,7 +10,7 @@ const ULID_PATTERN = /^[0-9A-HJKMNP-TV-Z]{26}$/;
  */
 const ULID_BROWSER_BUILD = join(
   dirname(require.resolve('ulid/package.json')),
-  'dist/browser/index.cjs'
+  'dist/browser/index.cjs',
 );
 
 /**
@@ -36,6 +36,8 @@ describe('ids without Web Crypto (the Hermes runtime)', () => {
     jest.isolateModules(() => {
       jest.doMock('ulid', () => jest.requireActual(ULID_BROWSER_BUILD));
       expect(() => {
+        // require (not requireActual) so the module loads in the isolated registry, not the cached one.
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         require('./ids');
       }).not.toThrow();
     });
