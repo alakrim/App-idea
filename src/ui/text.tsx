@@ -1,4 +1,5 @@
 import {
+  StyleSheet,
   Text as RNText,
   type StyleProp,
   type TextProps as RNTextProps,
@@ -17,7 +18,13 @@ export interface TextProps extends Omit<RNTextProps, 'style'> {
   style?: StyleProp<TextStyle>;
 }
 
-/** Variant-driven text. Caps OS font scaling at the design system limit. */
+/**
+ * Variant-driven text. Caps OS font scaling at the design system limit.
+ *
+ * Android's text layout throws ("FontSize should be a positive value") for a font size of 0 or less,
+ * which kills the app. That happens with sizes computed from a layout that has not run yet. Text
+ * with no positive size would be invisible anyway, so it is not rendered at all.
+ */
 export function Text({
   variant = 'body',
   tone = 'default',
@@ -29,6 +36,10 @@ export function Text({
   const { colors } = useTheme();
   const type = typography[variant];
   const color = toneColor(tone, colors);
+
+  if (!hasRenderableFontSize(style)) {
+    return null;
+  }
 
   return (
     <RNText
@@ -48,6 +59,12 @@ export function Text({
       {...rest}
     />
   );
+}
+
+/** False when the style sets a font size Android cannot lay out: zero, negative or not a number. */
+export function hasRenderableFontSize(style: StyleProp<TextStyle>): boolean {
+  const fontSize = StyleSheet.flatten(style)?.fontSize;
+  return fontSize === undefined || (Number.isFinite(fontSize) && fontSize > 0);
 }
 
 function toneColor(tone: TextTone, colors: ThemeColors): string {

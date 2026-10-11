@@ -68,26 +68,34 @@ function Monogram({ title }: { title: string }) {
 }
 
 function CoverMonogramText({ title }: { title: string }) {
+  // 0 until the first layout. The letter is sized from the width, so it waits for a real width:
+  // a font size of 0 crashes Android's text layout.
   const [width, setWidth] = useState(0);
 
   return (
     <View style={styles.monogramBox} onLayout={(event) => setWidth(event.nativeEvent.layout.width)}>
-      <Text
-        variant="title"
-        importantForAccessibility="no"
-        accessibilityElementsHidden
-        style={[
-          styles.monogram,
-          {
-            fontSize: width * coverMonogramRatio,
-            lineHeight: width * coverMonogramRatio * coverMonogramLineRatio,
-            color: coverMonogramColor,
-          },
-        ]}
-      >
-        {monogramFor(title)}
-      </Text>
+      {width > 0 ? <MonogramLetter title={title} width={width} /> : null}
     </View>
+  );
+}
+
+function MonogramLetter({ title, width }: { title: string; width: number }) {
+  return (
+    <Text
+      variant="title"
+      importantForAccessibility="no"
+      accessibilityElementsHidden
+      style={[
+        styles.monogram,
+        {
+          fontSize: width * coverMonogramRatio,
+          lineHeight: width * coverMonogramRatio * coverMonogramLineRatio,
+          color: coverMonogramColor,
+        },
+      ]}
+    >
+      {monogramFor(title)}
+    </Text>
   );
 }
 
