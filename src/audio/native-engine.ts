@@ -48,7 +48,15 @@ export interface NativeEngineOptions {
 /** The bundled base pack, with each bed's manifest loudness attached. */
 const resolveBundledBed: ResolveBed = (categoryId) => {
   const bed = resolveInstalledBed(categoryId);
-  return bed ? { id: bed.id, asset: bed.asset, lufs: bed.meta.lufs } : null;
+  return bed
+    ? {
+        id: bed.id,
+        asset: bed.asset,
+        lufs: bed.meta.lufs,
+        loopStartMs: bed.meta.loopStartMs,
+        loopEndMs: bed.meta.loopEndMs,
+      }
+    : null;
 };
 
 /**

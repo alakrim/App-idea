@@ -52,9 +52,11 @@ class FakeSource extends FakeNode implements MixerBufferSource {
   loopStart = 0;
   loopEnd = 0;
   startedAt: number | null = null;
+  startOffset: number | null = null;
   stopCalls: (number | undefined)[] = [];
-  start(when?: number): void {
+  start(when?: number, offset?: number): void {
     this.startedAt = when ?? 0;
+    this.startOffset = offset ?? 0;
   }
   stop(when?: number): void {
     this.stopCalls.push(when);
@@ -107,9 +109,9 @@ function createFakeContext() {
 }
 
 const BEDS: Record<string, ResolvedBed> = {
-  light_rain: { id: 'base_rain', asset: 101, lufs: -28 },
-  forest_night: { id: 'base_wind', asset: 102, lufs: -28 },
-  city_night: { id: 'base_crowd', asset: 103, lufs: -28 },
+  light_rain: { id: 'base_rain', asset: 101, lufs: -28, loopStartMs: 46.44, loopEndMs: 60046.8 },
+  forest_night: { id: 'base_wind', asset: 102, lufs: -28, loopStartMs: 0, loopEndMs: 60000 },
+  city_night: { id: 'base_crowd', asset: 103, lufs: -28, loopStartMs: 0, loopEndMs: 60000 },
 };
 
 /**
@@ -154,15 +156,18 @@ describe('ambience mixer: lazy setup', () => {
 });
 
 describe('ambience mixer: starting and stopping', () => {
-  it('decodes the resolved bed and starts it looping over its full length, with a fade-in', async () => {
+  it('decodes the resolved bed and loops only its manifest loop region, never the codec roll', async () => {
     const { mixer, decodes, sources, gains, resolveBed } = setup();
     mixer.apply([start('c1', 'light_rain', -22, 2500)]);
     expect(resolveBed).toHaveBeenCalledWith('light_rain');
     expect(decodes[0]?.asset).toBe(101);
-    decodes[0]?.resolve({ duration: 60 });
+    decodes[0]?.resolve({ duration: 60.0932 });
     await flush();
     const [source] = sources;
-    expect(source).toMatchObject({ loop: true, loopStart: 0, loopEnd: 60, startedAt: 0 });
+    expect(source).toMatchObject({ loop: true, startedAt: 0 });
+    expect(source?.loopStart).toBeCloseTo(0.04644, 6);
+    expect(source?.loopEnd).toBeCloseTo(60.0468, 6);
+    expect(source?.startOffset).toBeCloseTo(0.04644, 6);
     const bedGain = bedGains(gains)[0];
     expect(bedGain?.gain.ramps[0]).toEqual({ value: 0, at: 0 });
     expect(bedGain?.gain.ramps[1]?.at).toBeCloseTo(2.5, 10);

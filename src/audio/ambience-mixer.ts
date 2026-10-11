@@ -13,6 +13,12 @@ export interface ResolvedBed {
   id: string;
   asset: number;
   lufs: number;
+  /**
+   * Loop region in ms, from the manifest. Files carry codec "roll" audio outside it so the AAC seam
+   * is clean; only [loopStartMs, loopEndMs) may ever loop (assets/ambience/README.md).
+   */
+  loopStartMs: number;
+  loopEndMs: number;
 }
 
 export type ResolveBed = (categoryId: string) => ResolvedBed | null;
@@ -47,7 +53,7 @@ export interface MixerBufferSource extends MixerNode {
   loop: boolean;
   loopStart: number;
   loopEnd: number;
-  start(when?: number): void;
+  start(when?: number, offset?: number): void;
   stop(when?: number): void;
 }
 
@@ -167,14 +173,21 @@ export function createAmbienceMixer(options: AmbienceMixerOptions): AmbienceMixe
     return decoding;
   }
 
-  function startSource(cueId: string, buffer: MixerBuffer, pendingBed: PendingBed): void {
+  function startSource(
+    cueId: string,
+    buffer: MixerBuffer,
+    bed: ResolvedBed,
+    pendingBed: PendingBed,
+  ): void {
     const { context: ctx, graph: g } = ensureGraph();
     const now = ctx.currentTime;
     const source = ctx.createBufferSource();
     source.buffer = buffer;
     source.loop = true;
-    source.loopStart = 0;
-    source.loopEnd = buffer.duration;
+    const loopStart = Math.min(bed.loopStartMs / 1000, buffer.duration);
+    const loopEnd = Math.min(bed.loopEndMs / 1000, buffer.duration);
+    source.loopStart = loopStart;
+    source.loopEnd = loopEnd > loopStart ? loopEnd : buffer.duration;
     const gain = ctx.createGain();
     gain.gain.setValueAtTime(0, now);
     gain.gain.linearRampToValueAtTime(
@@ -183,7 +196,7 @@ export function createAmbienceMixer(options: AmbienceMixerOptions): AmbienceMixe
     );
     source.connect(gain);
     gain.connect(g.master);
-    source.start(now);
+    source.start(now, loopStart);
     sounding.set(cueId, { source, gain });
   }
 
@@ -202,7 +215,7 @@ export function createAmbienceMixer(options: AmbienceMixerOptions): AmbienceMixe
         const current = pending.get(command.cueId);
         if (disposed || !current || current.token !== token) return;
         pending.delete(command.cueId);
-        startSource(command.cueId, buffer, current);
+        startSource(command.cueId, buffer, resolved, current);
       },
       (error: unknown) => {
         const current = pending.get(command.cueId);
