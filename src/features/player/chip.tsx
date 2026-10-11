@@ -19,7 +19,15 @@ export interface ChipProps {
 }
 
 /** A pill-shaped control on the player: speed, sleep, ambience and repeat. Minimum 44 pt tall. */
-export function Chip({ label, accessibilityLabel, hint, icon: Icon, active = false, onPress, testID }: ChipProps) {
+export function Chip({
+  label,
+  accessibilityLabel,
+  hint,
+  icon: Icon,
+  active = false,
+  onPress,
+  testID,
+}: ChipProps) {
   const { colors } = useTheme();
   const content = (
     <View style={styles.content}>

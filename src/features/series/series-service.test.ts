@@ -16,7 +16,6 @@ import {
   type SeriesServiceDeps,
 } from './series-service';
 
-
 function setup() {
   const { db } = createTestDb();
   const deleted: { files: string[]; chapters: string[] } = { files: [], chapters: [] };

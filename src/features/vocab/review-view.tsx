@@ -77,30 +77,32 @@ export function ReviewView(props: ReviewViewProps) {
     <Screen title="Review" scrollable={false}>
       <View style={styles.body}>
         {header}
-        <Card style={styles.face} raised accessibilityLabel={`Flashcard for ${card.term}`}>
-          <Text variant="heading" accessibilityRole="header">
-            {card.term}
-          </Text>
-          {card.sentence ? (
-            <Text variant="reading" tone="muted">
-              {card.sentence}
+        <View style={styles.stage}>
+          <Card style={styles.face} accessibilityLabel={`Flashcard for ${card.term}`}>
+            <Text variant="heading" accessibilityRole="header">
+              {card.term}
             </Text>
-          ) : null}
-          {state.revealed ? (
-            <View style={[styles.answer, { borderTopColor: colors.border }]}>
-              {card.translation ? <Text variant="bodyStrong">{card.translation}</Text> : null}
-              {card.explanation ? (
-                <Text variant="body" tone="muted">
-                  {card.explanation}
-                </Text>
-              ) : (
-                <Text variant="caption" tone="faint">
-                  No explanation yet.
-                </Text>
-              )}
-            </View>
-          ) : null}
-        </Card>
+            {card.sentence ? (
+              <Text variant="reading" tone="muted">
+                {card.sentence}
+              </Text>
+            ) : null}
+            {state.revealed ? (
+              <View style={[styles.answer, { borderTopColor: colors.border }]}>
+                {card.translation ? <Text variant="bodyStrong">{card.translation}</Text> : null}
+                {card.explanation ? (
+                  <Text variant="body" tone="muted">
+                    {card.explanation}
+                  </Text>
+                ) : (
+                  <Text variant="caption" tone="faint">
+                    No explanation yet.
+                  </Text>
+                )}
+              </View>
+            ) : null}
+          </Card>
+        </View>
         {state.revealed ? (
           <View style={styles.grades}>
             <Button label="Again" variant="secondary" onPress={() => props.onGrade('again')} />
@@ -118,7 +120,8 @@ const styles = StyleSheet.create({
   body: { flex: 1, gap: space.lg, padding: gutter },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   centered: { gap: space.md, alignItems: 'center' },
-  face: { flex: 1, gap: space.md },
+  stage: { flex: 1, justifyContent: 'center' },
+  face: { gap: space.md },
   answer: { gap: space.sm, paddingTop: space.md, borderTopWidth: StyleSheet.hairlineWidth },
   grades: { flexDirection: 'row', gap: space.md },
 });

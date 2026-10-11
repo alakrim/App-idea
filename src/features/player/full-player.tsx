@@ -1,6 +1,13 @@
 import { setStringAsync } from 'expo-clipboard';
 import { router } from 'expo-router';
-import { AudioLines, ChevronDown, CloudRain, Gauge, Headphones, Repeat1 } from 'lucide-react-native';
+import {
+  AudioLines,
+  ChevronDown,
+  CloudRain,
+  Gauge,
+  Headphones,
+  Repeat1,
+} from 'lucide-react-native';
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
@@ -174,7 +181,9 @@ function ReadyPlayer() {
   const tickMs = useMemo(
     () =>
       timeline
-        ? Array.from({ length: timeline.sentenceCount }, (_, idx) => timeline.sentenceToPosition(idx))
+        ? Array.from({ length: timeline.sentenceCount }, (_, idx) =>
+            timeline.sentenceToPosition(idx),
+          )
         : [],
     [timeline],
   );
@@ -312,7 +321,11 @@ function ReadyPlayer() {
 
       <SpeedSheet visible={sheet === 'speed'} onClose={closeSheet} />
       <SleepSheet visible={sheet === 'sleep'} onClose={closeSheet} />
-      <AmbienceSheet visible={sheet === 'ambience'} onClose={closeSheet} activeNames={activeNames} />
+      <AmbienceSheet
+        visible={sheet === 'ambience'}
+        onClose={closeSheet}
+        activeNames={activeNames}
+      />
       <SentenceSheet
         sentence={actionSentence}
         onClose={() => setActionSentence(null)}

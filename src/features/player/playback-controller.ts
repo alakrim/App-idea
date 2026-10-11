@@ -19,7 +19,6 @@ import { containsMs, sentenceRange } from './sentence-range';
 
 import type { PlaybackData } from './playback-data';
 
-
 /** Bed levels the engine accepts. */
 const MIN_BED_LEVEL_DB = -40;
 const MAX_BED_LEVEL_DB = 0;
@@ -169,7 +168,8 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
 
   function handleEnded(): void {
     const { loopSentenceIdx, timeline } = readContent();
-    const range = loopSentenceIdx !== null && timeline ? sentenceRange(timeline, loopSentenceIdx) : null;
+    const range =
+      loopSentenceIdx !== null && timeline ? sentenceRange(timeline, loopSentenceIdx) : null;
     if (range) {
       // play() first: after an end, the engine treats a play as a restart from zero.
       engine.play();
@@ -323,7 +323,8 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
   function seekToSentence(idx: number): void {
     const { timeline, loopSentenceIdx } = readContent();
     if (!timeline || !timeline.isSentenceAvailable(idx)) return;
-    if (loopSentenceIdx !== null && loopSentenceIdx !== idx) writeContent({ loopSentenceIdx: null });
+    if (loopSentenceIdx !== null && loopSentenceIdx !== idx)
+      writeContent({ loopSentenceIdx: null });
     player.seekTo(timeline.sentenceToPosition(idx));
   }
 

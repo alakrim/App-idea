@@ -5,7 +5,6 @@ import { playbackRepo, type ChapterForPlayback } from '@/db/repos/playback-repo'
 import { positionRepo } from '@/db/repos/position-repo';
 import type { Db } from '@/db/types';
 
-
 /**
  * What the playback controller needs from storage. Production wires it to the repos over the app
  * database; tests pass an in-memory version, so the controller never imports the database.

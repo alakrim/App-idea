@@ -1,4 +1,4 @@
-import { Stack, useLocalSearchParams , router } from 'expo-router';
+import { Stack, useLocalSearchParams, router } from 'expo-router';
 
 import { AddChapterScreen } from '@/features/chapter/add-chapter-screen';
 import { ErrorState } from '@/ui/error-state';

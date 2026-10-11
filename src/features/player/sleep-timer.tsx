@@ -101,11 +101,7 @@ export function SleepSheet({ visible, onClose }: SleepSheetProps) {
             accessibilityHint={row.selected ? 'Selected' : undefined}
             trailing={
               row.selected ? (
-                <Check
-                  size={iconSize.sm}
-                  strokeWidth={iconStrokeWidth}
-                  color={colors.accent}
-                />
+                <Check size={iconSize.sm} strokeWidth={iconStrokeWidth} color={colors.accent} />
               ) : null
             }
           />

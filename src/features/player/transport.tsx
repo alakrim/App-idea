@@ -79,10 +79,7 @@ function SkipButton({ label, hint, icon: Icon, seconds, onPress, onLongPress }: 
         delayLongPress={350}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
-        style={[
-          styles.skip,
-          { backgroundColor: colors.surfaceRaised, borderColor: colors.border },
-        ]}
+        style={[styles.skip, { backgroundColor: colors.surfaceRaised, borderColor: colors.border }]}
       >
         <Icon size={PLAYER.skipIconSize} strokeWidth={iconStrokeWidth} color={colors.text} />
         <Text variant="micro" style={styles.skipSeconds} importantForAccessibility="no">

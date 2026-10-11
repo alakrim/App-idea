@@ -65,6 +65,7 @@ const QUESTION_MAX_LENGTH = 500;
 /** Presentational Ask screen. Every render state is decided by its props. */
 export function AskView(props: AskViewProps) {
   const { options, data } = props;
+  const { colors } = useTheme();
 
   if (options.length === 0) {
     return (
@@ -85,12 +86,14 @@ export function AskView(props: AskViewProps) {
 
   return (
     <Screen title="Ask" scrollable={false}>
-      <SeriesChips
-        options={options}
-        selectedId={props.selectedId}
-        onSelect={props.onSelectSeries}
-      />
-      {data?.cutoff ? <SpoilerShield cutoff={data.cutoff} /> : null}
+      <View style={[styles.header, { borderBottomColor: colors.border }]}>
+        <SeriesChips
+          options={options}
+          selectedId={props.selectedId}
+          onSelect={props.onSelectSeries}
+        />
+        {data?.cutoff ? <SpoilerShield cutoff={data.cutoff} /> : null}
+      </View>
       {data === null ? <ThreadSkeleton /> : null}
       {data !== null && data.cutoff === null ? (
         <NotStartedCard onOpenLibrary={props.onOpenLibrary} />
@@ -131,6 +134,7 @@ function SeriesChips({ options, selectedId, onSelect }: SeriesChipsProps) {
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
+      style={styles.chipScroll}
       contentContainerStyle={styles.chipRow}
       accessibilityRole="radiogroup"
       accessibilityLabel="Series to ask about"
@@ -147,13 +151,13 @@ function SeriesChips({ options, selectedId, onSelect }: SeriesChipsProps) {
             style={({ pressed }) => [
               styles.seriesChip,
               {
-                borderColor: selected ? colors.accent : colors.border,
-                backgroundColor: selected ? colors.accentSoft : colors.surface,
+                borderColor: selected ? colors.textMuted : colors.border,
+                backgroundColor: selected ? colors.surfaceRaised : colors.surface,
               },
               pressed && styles.pressed,
             ]}
           >
-            <Text variant="caption" style={{ color: selected ? colors.accent : colors.text }}>
+            <Text variant="caption" style={{ color: colors.text }}>
               {option.title}
             </Text>
           </Pressable>
@@ -387,6 +391,9 @@ function Composer({ draft, busy, onChange, onSend }: ComposerProps) {
 }
 
 const styles = StyleSheet.create({
+  header: { gap: space.sm, paddingBottom: space.md, borderBottomWidth: hairline },
+  /* A horizontal ScrollView grows by default, which would push the composer off the screen. */
+  chipScroll: { flexGrow: 0 },
   chipRow: { gap: space.sm, paddingVertical: space.xs },
   seriesChip: {
     minHeight: minTouchTarget,
@@ -398,7 +405,7 @@ const styles = StyleSheet.create({
   pressed: { opacity: opacity.pressed },
   threadPad: { gap: space.md, paddingTop: space.lg },
   centered: { gap: space.md, alignItems: 'center' },
-  thread: { flex: 1 },
+  thread: { flex: 1, minHeight: 0 },
   threadContent: { gap: space.md, paddingVertical: space.lg, paddingHorizontal: gutter },
   userRow: { flexDirection: 'row', justifyContent: 'flex-end' },
   userBubble: {

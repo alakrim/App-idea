@@ -10,7 +10,6 @@ import {
   tierForHourlyCost,
 } from './voice-tiers';
 
-
 function speech(id: string, prompt: number, completion: number, voices = 10): OpenRouterModel {
   return {
     id,

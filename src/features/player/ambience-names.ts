@@ -5,7 +5,10 @@ import type { AmbienceCue } from '@/core/domain';
  * are stable and stored, so only the display text changes here.
  */
 export function humanizeCategory(categoryId: string): string {
-  const words = categoryId.split('_').filter((word) => word.length > 0).join(' ');
+  const words = categoryId
+    .split('_')
+    .filter((word) => word.length > 0)
+    .join(' ');
   return words.charAt(0).toUpperCase() + words.slice(1);
 }
 

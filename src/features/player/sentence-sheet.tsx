@@ -19,7 +19,13 @@ export interface SentenceSheetProps {
 }
 
 /** What a learner can do with one sentence: repeat it, copy it, or save it to Vocab. */
-export function SentenceSheet({ sentence, onClose, onRepeat, onCopy, onSaveVocab }: SentenceSheetProps) {
+export function SentenceSheet({
+  sentence,
+  onClose,
+  onRepeat,
+  onCopy,
+  onSaveVocab,
+}: SentenceSheetProps) {
   return (
     <Sheet visible={sentence !== null} onClose={onClose} title="Sentence" snapPoints={['46%']}>
       {sentence ? (

@@ -44,11 +44,11 @@ export function AnswerCard({ text, chapters, onOpenChapter }: AnswerCardProps) {
                 }
                 style={({ pressed }) => [
                   styles.chip,
-                  { borderColor: colors.border, backgroundColor: colors.accentSoft },
+                  { borderColor: colors.border, backgroundColor: colors.surfaceRaised },
                   pressed && styles.pressed,
                 ]}
               >
-                <Text variant="caption" style={{ color: colors.accent }}>
+                <Text variant="caption" style={{ color: colors.text }}>
                   {`Ch. ${number}`}
                 </Text>
               </Pressable>

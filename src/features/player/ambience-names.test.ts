@@ -2,7 +2,12 @@ import type { AmbienceCue } from '@/core/domain';
 
 import { activeAmbienceNames, humanizeCategory } from './ambience-names';
 
-function cue(category: string, startSentence: number, endSentence: number, enabled = true): AmbienceCue {
+function cue(
+  category: string,
+  startSentence: number,
+  endSentence: number,
+  enabled = true,
+): AmbienceCue {
   return {
     id: `${category}-${startSentence}`,
     chapterId: '01HZX00000000000000000000C',

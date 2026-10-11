@@ -23,8 +23,7 @@ export function AmbienceSheet({ visible, onClose, activeNames }: AmbienceSheetPr
   const { colors } = useTheme();
   const controller = usePlayback();
   const ambience = usePlaybackContent((content) => content.ambience);
-  const status =
-    activeNames.length > 0 ? activeNames.join(' · ') : 'Nothing sounds at this point';
+  const status = activeNames.length > 0 ? activeNames.join(' · ') : 'Nothing sounds at this point';
 
   return (
     <Sheet visible={visible} onClose={onClose} title="Ambience" snapPoints={['54%']}>

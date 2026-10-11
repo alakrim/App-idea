@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { StyleSheet, View, type AccessibilityActionEvent, type LayoutChangeEvent } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  type AccessibilityActionEvent,
+  type LayoutChangeEvent,
+} from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
@@ -144,7 +149,6 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
     ],
   }));
 
-   
   /* eslint-disable react-hooks/immutability */
   const onLayout = (event: LayoutChangeEvent) => {
     width.value = event.nativeEvent.layout.width;

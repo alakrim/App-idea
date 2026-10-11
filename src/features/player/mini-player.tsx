@@ -8,7 +8,15 @@ import { CoverImage } from '@/ui/cover-image';
 import { clampProgress } from '@/ui/progress-ring';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
-import { gutter, hairline, iconSize, iconStrokeWidth, minTouchTarget, radius, space } from '@/ui/tokens';
+import {
+  gutter,
+  hairline,
+  iconSize,
+  iconStrokeWidth,
+  minTouchTarget,
+  radius,
+  space,
+} from '@/ui/tokens';
 
 import { useGlide } from './motion';
 import { usePlayback, usePlaybackContent, usePlayerState } from './player-provider';
@@ -71,10 +79,7 @@ export function MiniPlayerView({ nowPlaying, onOpen, onTogglePlay }: MiniPlayerV
         accessibilityHint="Swipe up to open the full player"
         onPress={open}
         testID="mini-player"
-        style={[
-          styles.bar,
-          { backgroundColor: colors.surfaceRaised, borderColor: colors.border },
-        ]}
+        style={[styles.bar, { backgroundColor: colors.surfaceRaised, borderColor: colors.border }]}
       >
         <View style={styles.row}>
           <CoverImage uri={nowPlaying.coverUri} title={nowPlaying.title} style={styles.cover} />

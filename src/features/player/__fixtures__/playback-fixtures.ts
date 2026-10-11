@@ -1,5 +1,12 @@
 import { createFakeEngine, type FakeAudioEngine } from '@/audio/fake-engine';
-import type { AmbienceCue, Chapter, ChapterStatus, PlaybackPoint, Sentence, Series } from '@/core/domain';
+import type {
+  AmbienceCue,
+  Chapter,
+  ChapterStatus,
+  PlaybackPoint,
+  Sentence,
+  Series,
+} from '@/core/domain';
 import type { ChapterForPlayback } from '@/db/repos/playback-repo';
 import type { ChapterProgress, PipelineFacade } from '@/features/pipeline/facade';
 
@@ -169,7 +176,10 @@ export const NO_TIMERS = {
   clearInterval: () => undefined,
 };
 
-export function setupController(chapters: ChapterForPlayback[], current: PlaybackPoint | null = null) {
+export function setupController(
+  chapters: ChapterForPlayback[],
+  current: PlaybackPoint | null = null,
+) {
   const fixture: Fixture = {
     chapters: new Map(chapters.map((c) => [c.chapter.id, c])),
     saved: [],
@@ -187,4 +197,3 @@ export function setupController(chapters: ChapterForPlayback[], current: Playbac
 }
 
 export const flush = () => new Promise<void>((resolve) => setImmediate(resolve));
-

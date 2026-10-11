@@ -87,7 +87,7 @@ export function VocabCard({ card, status, onDelete, onOpenSource, onRetry }: Voc
               </Text>
               <Button
                 label="Retry explanation"
-                variant="ghost"
+                variant="secondary"
                 size="md"
                 onPress={onRetry}
                 accessibilityHint={`Asks again for an explanation of ${item.term}`}
@@ -101,7 +101,7 @@ export function VocabCard({ card, status, onDelete, onOpenSource, onRetry }: Voc
               accessibilityLabel="Open the sentence in its chapter"
               style={({ pressed }) => [
                 styles.source,
-                { borderLeftColor: colors.accent },
+                { borderLeftColor: colors.textFaint },
                 pressed && styles.pressed,
               ]}
             >
@@ -125,7 +125,7 @@ export function VocabCard({ card, status, onDelete, onOpenSource, onRetry }: Voc
 const styles = StyleSheet.create({
   card: { gap: space.sm },
   pending: { gap: space.xs },
-  retry: { gap: space.xs, alignItems: 'flex-start' },
+  retry: { gap: space.sm, alignItems: 'flex-start' },
   source: {
     borderLeftWidth: space.xxs,
     paddingLeft: space.md,

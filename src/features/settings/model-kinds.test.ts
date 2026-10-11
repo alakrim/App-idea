@@ -1,9 +1,8 @@
-import { DEFAULT_MODELS, DEFAULT_NARRATION , DEFAULT_SETTINGS } from '@/core/defaults';
+import { DEFAULT_MODELS, DEFAULT_NARRATION, DEFAULT_SETTINGS } from '@/core/defaults';
 import type { OpenRouterModel } from '@/services/openrouter';
 
 import { isModelMissing, readCachedCatalog } from './model-catalog';
 import { modelKindConfig, parseModelKind } from './model-kinds';
-
 
 function text(id: string, parameters: string[]): OpenRouterModel {
   return {

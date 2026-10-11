@@ -49,7 +49,7 @@ export function SpoilerShield({ cutoff }: SpoilerShieldProps) {
         <ShieldCheck
           size={iconSize.sm}
           strokeWidth={iconStrokeWidth}
-          color={colors.accent}
+          color={colors.textMuted}
           accessibilityElementsHidden
         />
         <Text variant="caption" style={{ color: colors.text }}>

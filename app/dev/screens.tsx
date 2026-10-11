@@ -1,5 +1,5 @@
 import { Redirect, useLocalSearchParams } from 'expo-router';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import { AddChapterForm } from '@/features/chapter/add-chapter-screen';
 import { ChapterView } from '@/features/chapter/chapter-view';
@@ -81,12 +81,13 @@ function Screens() {
 
 function LibraryGallery() {
   const entries = useMemo(() => libraryEntriesFixture(), []);
+  const [sort, setSort] = useState<LibrarySort>('recent');
   return (
     <Screen title="Library" scrollable={false}>
       <LibraryView
         entries={entries}
-        sort={'recent' as LibrarySort}
-        onSortChange={() => undefined}
+        sort={sort}
+        onSortChange={setSort}
         onOpenSeries={() => undefined}
         onSeriesMenu={() => undefined}
         onPlay={() => undefined}

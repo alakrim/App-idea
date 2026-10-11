@@ -30,10 +30,11 @@ describe('playChapter', () => {
   });
 
   it('resumes the saved sentence when it belongs to the chapter', async () => {
-    const { controller } = setupController(
-      [fixtureChapter(1, 1, 'ready')],
-      { chapterId: id(1), chapterOrder: 1, sentenceIdx: 2 },
-    );
+    const { controller } = setupController([fixtureChapter(1, 1, 'ready')], {
+      chapterId: id(1),
+      chapterOrder: 1,
+      sentenceIdx: 2,
+    });
 
     await controller.playChapter(id(1));
 
@@ -42,10 +43,11 @@ describe('playChapter', () => {
   });
 
   it('starts from the beginning when the saved position is in another chapter', async () => {
-    const { controller } = setupController(
-      [fixtureChapter(1, 1, 'ready')],
-      { chapterId: id(7), chapterOrder: 2, sentenceIdx: 3 },
-    );
+    const { controller } = setupController([fixtureChapter(1, 1, 'ready')], {
+      chapterId: id(7),
+      chapterOrder: 2,
+      sentenceIdx: 3,
+    });
 
     await controller.playChapter(id(1));
 
