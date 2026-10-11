@@ -26,6 +26,8 @@ export interface TextFieldProps extends Omit<
   error?: string;
   /** Adds a show/hide control and starts masked. */
   secure?: boolean;
+  /** Sizes a multi-line field to this many text lines. Ignored unless `multiline` is set. */
+  lines?: number;
 }
 
 export function TextField({
@@ -34,6 +36,7 @@ export function TextField({
   error,
   secure = false,
   editable = true,
+  lines,
   ...inputProps
 }: TextFieldProps) {
   const { colors } = useTheme();
@@ -74,7 +77,14 @@ export function TextField({
             inputProps.onBlur?.(event);
           }}
           maxFontSizeMultiplier={maxFontScale}
-          style={[styles.input, { color: colors.text }]}
+          style={[
+            styles.input,
+            { color: colors.text },
+            inputProps.multiline ? styles.multiline : null,
+            inputProps.multiline && lines !== undefined
+              ? { minHeight: multilineHeight(lines) }
+              : null,
+          ]}
         />
         {secure ? (
           <IconButton
@@ -119,7 +129,15 @@ const styles = StyleSheet.create({
     lineHeight: typography.body.lineHeight,
     paddingVertical: space.sm,
   },
+  multiline: {
+    textAlignVertical: 'top',
+  },
   disabled: {
     opacity: opacity.disabled,
   },
 });
+
+/** Height of a field that shows `lines` lines of body text, padding included. */
+function multilineHeight(lines: number): number {
+  return lines * typography.body.lineHeight + space.sm * 2;
+}

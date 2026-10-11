@@ -6,7 +6,7 @@ import { vocabRepo } from '@/db/repos/vocab-repo';
 import type { VocabItem } from '@/db/repos/vocab-repo';
 import { chapters, series, sentences, vocab } from '@/db/schema';
 import type { Db } from '@/db/types';
-import { LANGUAGE_OPTIONS } from '@/features/settings/languages';
+import { LANGUAGES } from '@/features/shared/languages';
 
 /** Tables the Vocab screen reads. A write to any of them re-runs the read. */
 export const VOCAB_TABLES = [
@@ -44,7 +44,7 @@ export interface ReviewCard {
 
 /** Native name for a known language tag, or the tag itself in capitals. */
 export function languageLabel(tag: string): string {
-  const option = LANGUAGE_OPTIONS.find((o) => o.code.toLowerCase() === tag.toLowerCase());
+  const option = LANGUAGES.find((o) => o.code.toLowerCase() === tag.toLowerCase());
   return option?.nativeName ?? tag.toUpperCase();
 }
 

@@ -24,6 +24,8 @@ const MIN_BED_LEVEL_DB = -40;
 const MAX_BED_LEVEL_DB = 0;
 /** Going back within this many ms of a sentence start restarts that sentence instead of stepping back. */
 const RESTART_SENTENCE_MS = 2000;
+/** How long a settings sample of one bed plays. */
+export const BED_PREVIEW_MS = 8000;
 
 export type PlaybackStatus = 'idle' | 'loading' | 'ready' | 'unavailable' | 'error';
 
@@ -96,6 +98,8 @@ export interface PlaybackController {
   /** Repeats one sentence until it is set to null or the listener seeks out of it. */
   setLoopSentence(idx: number | null): void;
   setAmbience(patch: Partial<AmbienceSettings>): void;
+  /** Plays one ambience bed for a few seconds at `levelDb`, for the settings sample. */
+  previewBed(category: string, levelDb: number): void;
   dispose(): void;
 }
 
@@ -389,6 +393,14 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       };
       writeContent({ ambience: next });
       engine.setAmbienceMaster(next.enabled, next.levelDb);
+    },
+
+    previewBed(category, levelDb) {
+      engine.previewBed(
+        category,
+        clamp(levelDb, MIN_BED_LEVEL_DB, MAX_BED_LEVEL_DB),
+        BED_PREVIEW_MS,
+      );
     },
 
     dispose() {

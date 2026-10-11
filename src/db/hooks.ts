@@ -26,13 +26,14 @@ type Read<K, T> = (db: Db, key: K) => T;
 
 /**
  * Re-runs `read(db, key)` whenever a table in `tables` changes, and returns its result. The reads
- * are synchronous, so the first render already has data.
+ * are synchronous, so the first render already has data. `read` must be a stable function (module
+ * level), because it is part of the memo key. Screens that combine several repositories use it too.
  *
  * It listens to the same expo-sqlite change event that drizzle's `useLiveQuery` uses. drizzle needs
  * a query builder, but the repositories return validated rows (JSON columns parsed), so the SQL
  * stays in the repositories and the hooks re-run the repository read instead.
  */
-function useLiveRead<K, T>(read: Read<K, T>, tables: readonly string[], key: K): T {
+export function useLiveRead<K, T>(read: Read<K, T>, tables: readonly string[], key: K): T {
   const db = useDb();
   const [revision, setRevision] = useState(0);
   const watched = tables.join(',');

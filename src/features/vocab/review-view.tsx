@@ -105,11 +105,20 @@ export function ReviewView(props: ReviewViewProps) {
         </View>
         {state.revealed ? (
           <View style={styles.grades}>
-            <Button label="Again" variant="secondary" onPress={() => props.onGrade('again')} />
-            <Button label="Known" onPress={() => props.onGrade('known')} />
+            <View style={styles.grade}>
+              <Button
+                label="Again"
+                variant="secondary"
+                fullWidth
+                onPress={() => props.onGrade('again')}
+              />
+            </View>
+            <View style={styles.grade}>
+              <Button label="Known" fullWidth onPress={() => props.onGrade('known')} />
+            </View>
           </View>
         ) : (
-          <Button label="Show answer" onPress={props.onReveal} />
+          <Button label="Show answer" fullWidth onPress={props.onReveal} />
         )}
       </View>
     </Screen>
@@ -124,4 +133,5 @@ const styles = StyleSheet.create({
   face: { gap: space.md },
   answer: { gap: space.sm, paddingTop: space.md, borderTopWidth: StyleSheet.hairlineWidth },
   grades: { flexDirection: 'row', gap: space.md },
+  grade: { flex: 1 },
 });

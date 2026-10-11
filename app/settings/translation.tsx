@@ -3,11 +3,7 @@ import { useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View, type ListRenderItem } from 'react-native';
 
 import { useOpenRouter } from '@/app-shell/openrouter-provider';
-import {
-  filterLanguages,
-  LANGUAGE_OPTIONS,
-  type LanguageOption,
-} from '@/features/settings/languages';
+import { filterLanguages, LANGUAGES, type LanguageOption } from '@/features/shared/languages';
 import { isModelMissing, useModelCatalog } from '@/features/settings/model-catalog';
 import { modelKindConfig } from '@/features/settings/model-kinds';
 import { ModelRow } from '@/features/settings/model-row';
@@ -30,7 +26,7 @@ export default function TranslationScreen() {
   const config = modelKindConfig('translation', settings);
   const [query, setQuery] = useState('');
   const choices = useMemo<LanguageChoice[]>(
-    () => [null, ...filterLanguages(LANGUAGE_OPTIONS, query)],
+    () => [null, ...filterLanguages(LANGUAGES, query)],
     [query],
   );
 
@@ -99,13 +95,13 @@ function LanguageRow({
 }) {
   const { colors } = useTheme();
   const title = choice?.nativeName ?? 'Off';
-  const detail = choice ? choice.englishName : 'No translation';
+  const detail = choice ? choice.name : 'No translation';
 
   return (
     <Pressable
       accessibilityRole="radio"
       accessibilityLabel={
-        choice ? `${choice.nativeName}, ${choice.englishName}` : 'Off, no translation'
+        choice ? `${choice.nativeName}, ${choice.name}` : 'Off, no translation'
       }
       accessibilityState={{ checked: selected }}
       onPress={onSelect}

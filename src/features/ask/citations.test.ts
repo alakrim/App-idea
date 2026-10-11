@@ -1,4 +1,4 @@
-import { citedChapterNumbers, splitAnswer } from './citations';
+import { isNotRevealedAnswer, citedChapterNumbers, splitAnswer } from './citations';
 
 describe('splitAnswer', () => {
   it('splits prose and citation markers in reading order', () => {
@@ -37,5 +37,18 @@ describe('citedChapterNumbers', () => {
 
   it('returns nothing when the answer cites no chapter', () => {
     expect(citedChapterNumbers('No citation here.')).toEqual([]);
+  });
+});
+
+describe('not-revealed answers carry no citations', () => {
+  it('detects the not-revealed wording, with or without "been"', () => {
+    expect(isNotRevealedAnswer('That has not been revealed yet.')).toBe(true);
+    expect(isNotRevealedAnswer('It is not revealed yet (Ch. 4).')).toBe(true);
+    expect(isNotRevealedAnswer('The duke rides north (Ch. 2).')).toBe(false);
+  });
+
+  it('returns no cited chapters for a not-revealed answer, even one with a stray marker', () => {
+    expect(citedChapterNumbers('That has not been revealed yet (Ch. 4).')).toEqual([]);
+    expect(citedChapterNumbers('The duke rides north (Ch. 2).')).toEqual([2]);
   });
 });

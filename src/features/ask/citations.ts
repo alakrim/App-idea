@@ -21,8 +21,19 @@ export function splitAnswer(text: string): AnswerPart[] {
   return parts;
 }
 
-/** Distinct chapter numbers cited in an answer, in first-cited order. */
+/**
+ * The Q&A prompt has the model say the answer "has not been revealed yet" when the notes do not
+ * answer. Such an answer rests on no chapter, so it carries no citations.
+ */
+const NOT_REVEALED_PATTERN = /\bnot\s+(?:been\s+)?revealed\s+yet\b/iu;
+
+export function isNotRevealedAnswer(text: string): boolean {
+  return NOT_REVEALED_PATTERN.test(text);
+}
+
+/** Distinct chapter numbers cited in an answer, in first-cited order. None for a not-revealed answer. */
 export function citedChapterNumbers(text: string): number[] {
+  if (isNotRevealedAnswer(text)) return [];
   const seen = new Set<number>();
   for (const part of splitAnswer(text)) {
     if (part.kind === 'cite') seen.add(part.chapterNumber);

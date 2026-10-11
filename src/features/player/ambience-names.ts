@@ -1,6 +1,6 @@
 import { getCategory, type AmbienceIconName } from '@/core/analysis/ambience-taxonomy';
 import type { AmbienceCue } from '@/core/domain';
-import { ambienceLabel } from '@/features/shared/ambience-display';
+import { ambienceLabel } from '@/features/shared/ambience-labels';
 
 export interface ActiveAmbience {
   /** The category id, unique within the list. */
@@ -10,7 +10,10 @@ export interface ActiveAmbience {
 }
 
 /** The enabled cues sounding at a sentence, one entry per category, in cue order. */
-export function activeAmbience(cues: readonly AmbienceCue[], sentenceIdx: number): ActiveAmbience[] {
+export function activeAmbience(
+  cues: readonly AmbienceCue[],
+  sentenceIdx: number,
+): ActiveAmbience[] {
   const active: ActiveAmbience[] = [];
   for (const cue of cues) {
     if (!cue.enabled || sentenceIdx < cue.startSentence || sentenceIdx > cue.endSentence) continue;

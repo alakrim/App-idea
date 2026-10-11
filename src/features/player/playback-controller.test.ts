@@ -6,6 +6,7 @@ import {
   id,
   setupController,
 } from './__fixtures__/playback-fixtures';
+import { BED_PREVIEW_MS } from './playback-controller';
 
 describe('playChapter', () => {
   it('loads the chapter, exposes its content and starts at the beginning', async () => {
@@ -247,5 +248,18 @@ describe('ambience settings', () => {
 
     expect(master).toHaveBeenLastCalledWith(false, 0);
     expect(controller.content.getState().ambience).toEqual({ enabled: false, levelDb: 0 });
+  });
+});
+
+describe('bed preview', () => {
+  it('plays the bed through the engine for the preview length, with the level kept in range', () => {
+    const { controller, engine } = setupController([fixtureChapter(1, 1, 'ready')]);
+    const preview = jest.spyOn(engine, 'previewBed');
+
+    controller.previewBed('base_rain', -12);
+    controller.previewBed('base_rain', 9);
+
+    expect(preview).toHaveBeenNthCalledWith(1, 'base_rain', -12, BED_PREVIEW_MS);
+    expect(preview).toHaveBeenNthCalledWith(2, 'base_rain', 0, BED_PREVIEW_MS);
   });
 });

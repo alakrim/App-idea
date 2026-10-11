@@ -5,10 +5,10 @@ import { usageLedger } from '../schema';
 import type { UsageEntry } from '../../core/domain';
 import type { Db } from '../types';
 
-export type UsageDimension = 'day' | 'model' | 'chapter';
+export type UsageDimension = 'day' | 'model' | 'chapter' | 'stage';
 
 export interface UsageTotal {
-  /** UTC day (YYYY-MM-DD), model id, or chapter id. Null for usage that has no chapter. */
+  /** UTC day (YYYY-MM-DD), model id, chapter id or stage. Null for usage that has no chapter. */
   key: string | null;
   calls: number;
   promptTokens: number;
@@ -21,6 +21,7 @@ const KEY_EXPRESSIONS = {
   day: sql`strftime('%Y-%m-%d', ${usageLedger.at} / 1000, 'unixepoch')`,
   model: sql`${usageLedger.model}`,
   chapter: sql`${usageLedger.chapterId}`,
+  stage: sql`${usageLedger.stage}`,
 } as const;
 
 export const usageRepo = {
@@ -28,7 +29,7 @@ export const usageRepo = {
     db.insert(usageLedger).values(entry).run();
   },
 
-  /** Totals grouped by day, model or chapter. `sinceMs` limits the window (inclusive). */
+  /** Totals grouped by day, model, chapter or stage. `sinceMs` limits the window (inclusive). */
   totalsBy(db: Db, dimension: UsageDimension, options: { sinceMs?: number } = {}): UsageTotal[] {
     const key = KEY_EXPRESSIONS[dimension];
     return db

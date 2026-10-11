@@ -3,8 +3,6 @@ import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { router } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-
-
 import { VocabActionsProvider } from '@/features/vocab/vocab-provider';
 import type { VocabActions } from '@/features/vocab/vocab-actions';
 import { ThemeProvider } from '@/ui/theme';
@@ -54,14 +52,15 @@ async function renderPhone(ui: ReactElement, vocab: VocabActions = fakeVocabActi
 /** Renders the player on a fixture series. With chapters, the first one is loaded, as a tap would. */
 async function renderPlayer(chapters = [fixtureChapter(1, 1, 'ready')]) {
   const setup = setupController(chapters);
-  if (chapters.length > 0) await act(async () => {
-   await setup.controller.playChapter(id(1));
- });
+  if (chapters.length > 0)
+    await act(async () => {
+      await setup.controller.playChapter(id(1));
+    });
   await renderPhone(
-      <PlaybackProvider controller={setup.controller}>
-        <FullPlayer />
-      </PlaybackProvider>
-    );
+    <PlaybackProvider controller={setup.controller}>
+      <FullPlayer />
+    </PlaybackProvider>,
+  );
   return setup;
 }
 
@@ -80,9 +79,9 @@ describe('FullPlayer states', () => {
       await setup.controller.playChapter(id(1));
     });
     await renderPhone(
-        <PlaybackProvider controller={setup.controller}>
-          <FullPlayer />
-        </PlaybackProvider>
+      <PlaybackProvider controller={setup.controller}>
+        <FullPlayer />
+      </PlaybackProvider>,
     );
 
     expect(screen.getByRole('header', { name: 'Not narrated yet' })).toBeOnTheScreen();
@@ -108,7 +107,9 @@ describe('FullPlayer loaded', () => {
     expect(screen.getByText('Chapter 1')).toBeOnTheScreen();
     expect(screen.getByText('The Night Harbour')).toBeOnTheScreen();
     expect(screen.getByRole('button', { name: 'Speed 1.0×' })).toBeOnTheScreen();
-    expect(screen.getByRole('adjustable', { name: 'Chapter position' }).props.accessibilityValue).toMatchObject({
+    expect(
+      screen.getByRole('adjustable', { name: 'Chapter position' }).props.accessibilityValue,
+    ).toMatchObject({
       text: '0 seconds of 10 seconds',
     });
   });

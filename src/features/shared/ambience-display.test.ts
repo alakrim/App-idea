@@ -1,27 +1,28 @@
-import { ambienceIconOf, ambienceLabel, humanizeCategory } from './ambience-display';
+import { AMBIENCE_CATEGORIES, AMBIENCE_ICON_NAMES } from '@/core/analysis/ambience-taxonomy';
 
-import { AMBIENCE_CATEGORIES } from '@/core/analysis/ambience-taxonomy';
+import { AMBIENCE_ICONS, ambienceIconOf } from './ambience-display';
 
-describe('ambienceLabel', () => {
-  it('uses the taxonomy label for a known category', () => {
-    expect(ambienceLabel('tavern_crowd')).toBe('Tavern');
-    expect(ambienceLabel('light_rain')).toBe('Light Rain');
-  });
-
-  it('humanizes an id the taxonomy does not know', () => {
-    expect(humanizeCategory('unknown_thing')).toBe('Unknown thing');
-    expect(ambienceLabel('unknown_thing')).toBe('Unknown thing');
-  });
+// Lucide ships untransformed ESM, so the icon components are stubbed. The names are checked here;
+// the typecheck checks that every name is a real export.
+jest.mock('lucide-react-native', () => {
+  // One stub per icon name, so the same icon is the same object wherever it is read.
+  const stubs: Record<string, () => null> = {};
+  return new Proxy({}, { get: (_target, name: string) => (stubs[name] ??= () => null) });
 });
 
-describe('ambienceIconOf', () => {
-  it('returns a component for every taxonomy category, so every icon name is mapped', () => {
+describe('ambience icons', () => {
+  it('maps every icon name the taxonomy uses, and nothing else', () => {
+    expect(Object.keys(AMBIENCE_ICONS).sort()).toEqual([...AMBIENCE_ICON_NAMES].sort());
+  });
+
+  it('gives every category an icon from that map', () => {
     for (const category of AMBIENCE_CATEGORIES) {
-      expect(typeof ambienceIconOf(category.id)).toBe('function');
+      expect(AMBIENCE_ICONS).toHaveProperty([category.icon]);
     }
   });
 
   it('gives the generic sparkle for an unknown id', () => {
-    expect(ambienceIconOf('unknown_thing')).toBe(ambienceIconOf('ritual_chant'));
+    expect(ambienceIconOf('unknown_thing')).toBe(AMBIENCE_ICONS.Sparkles);
+    expect(ambienceIconOf('tavern_crowd')).toBe(AMBIENCE_ICONS.Wine);
   });
 });

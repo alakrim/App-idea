@@ -26,15 +26,17 @@ export function Card({
   style,
   testID,
 }: CardProps) {
-  const { colors } = useTheme();
+  const { colors, scheme } = useTheme();
   const { animatedStyle, onPressIn, onPressOut } = usePressScale();
+  // A white highlight is invisible on a light surface, so light raised cards use a hairline instead.
+  const raisedTop = scheme === 'dark' ? topHighlight : colors.border;
 
   const surface = [
     styles.base,
     {
       backgroundColor: raised ? colors.surfaceRaised : colors.surface,
       borderColor: colors.border,
-      borderTopColor: raised ? topHighlight : colors.border,
+      borderTopColor: raised ? raisedTop : colors.border,
     },
     style,
   ];

@@ -3,9 +3,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useOpenRouter } from '@/app-shell/openrouter-provider';
 import { newId } from '@/core/domain';
-import { useDb } from '@/db/hooks';
+import { useDb, useLiveRead } from '@/db/hooks';
 import { useSettings } from '@/features/settings/settings-store';
-import { useDbRead } from '@/features/shared/use-db-read';
 
 import { ASK_TABLES, readAskSeriesData, readAskSeriesOptions } from './ask-data';
 import { askErrorCopy } from './ask-errors';
@@ -19,14 +18,14 @@ export function AskScreen() {
   const db = useDb();
   const openrouter = useOpenRouter();
   const { settings } = useSettings();
-  const options = useDbRead(readAskSeriesOptions, ASK_TABLES, '');
+  const options = useLiveRead(readAskSeriesOptions, ASK_TABLES, '');
 
   const [picked, setPicked] = useState<string | null>(null);
   const selectedId =
     picked !== null && options.some((option) => option.id === picked)
       ? picked
       : (options[0]?.id ?? null);
-  const data = useDbRead(readAskSeriesData, ASK_TABLES, selectedId ?? '');
+  const data = useLiveRead(readAskSeriesData, ASK_TABLES, selectedId ?? '');
 
   const [draft, setDraft] = useState('');
   const [sending, setSending] = useState<string | null>(null);

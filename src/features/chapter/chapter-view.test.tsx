@@ -90,14 +90,10 @@ describe('ChapterView ambience cues', () => {
     const onToggleCue = jest.fn();
     await renderThemed(<ChapterView {...props({ onToggleCue })} />);
 
-    expect(screen.getByText('Tavern crowd')).toBeOnTheScreen();
+    expect(screen.getByText('Tavern')).toBeOnTheScreen();
     expect(screen.getByText('Sentences 1–2')).toBeOnTheScreen();
 
-    await fireEvent(
-      screen.getByRole('switch', { name: 'Ambience: Tavern crowd' }),
-      'valueChange',
-      false,
-    );
+    await fireEvent(screen.getByRole('switch', { name: 'Ambience: Tavern' }), 'valueChange', false);
 
     expect(onToggleCue).toHaveBeenCalledWith(id(90), false);
   });

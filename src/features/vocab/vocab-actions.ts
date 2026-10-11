@@ -1,7 +1,11 @@
 import { createContext, useContext } from 'react';
 
 import type { IdGenerator, Lang } from '@/core/domain';
-import { buildVocabPrompt, VOCAB_JSON_SCHEMA_NAME, VocabExplanationSchema } from '@/core/vocab/prompts';
+import {
+  buildVocabPrompt,
+  VOCAB_JSON_SCHEMA_NAME,
+  VocabExplanationSchema,
+} from '@/core/vocab/prompts';
 import type { Settings } from '@/core/settings';
 import { chapterRepo } from '@/db/repos/chapter-repo';
 import { seriesRepo } from '@/db/repos/series-repo';

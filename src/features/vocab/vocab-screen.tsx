@@ -1,9 +1,8 @@
 import { router } from 'expo-router';
 import { useCallback, useState, useSyncExternalStore } from 'react';
 
-import { useDb } from '@/db/hooks';
+import { useDb, useLiveRead } from '@/db/hooks';
 import { vocabRepo } from '@/db/repos/vocab-repo';
-import { useDbRead } from '@/features/shared/use-db-read';
 import { selectionHaptic, impactHaptic } from '@/ui/haptics';
 import { useToast } from '@/ui/toast';
 
@@ -21,8 +20,8 @@ export function VocabScreen() {
   const actions = useVocabActions();
   const toast = useToast();
   const [query, setQuery] = useState('');
-  const groups = useDbRead(readVocabGroups, VOCAB_TABLES, query);
-  const total = useDbRead(readVocabTotal, VOCAB_TABLES, '');
+  const groups = useLiveRead(readVocabGroups, VOCAB_TABLES, query);
+  const total = useLiveRead(readVocabTotal, VOCAB_TABLES, '');
 
   const [session, setSession] = useState<{ state: ReviewState; cards: ReviewCard[] } | null>(null);
 

@@ -1,10 +1,9 @@
 import { router } from 'expo-router';
 
-import { useDb } from '@/db/hooks';
+import { useDb, useLiveRead } from '@/db/hooks';
 import { cueRepo } from '@/db/repos/cue-repo';
 import { usePipeline } from '@/features/pipeline/facade';
 import { useChapterProgressMap } from '@/features/pipeline/use-chapter-progress';
-import { useDbRead } from '@/features/shared/use-db-read';
 import { ErrorState } from '@/ui/error-state';
 import { Screen } from '@/ui/screen';
 
@@ -13,11 +12,13 @@ import { ChapterView } from './chapter-view';
 
 export interface ChapterScreenProps {
   chapterId: string;
+  /** A sentence to scroll to and highlight (0-based), from a deep link. */
+  focusSentence?: number | null;
 }
 
 /** The chapter screen: reads the chapter, its text and cues, and writes cue switches straight to the DB. */
-export function ChapterScreen({ chapterId }: ChapterScreenProps) {
-  const data = useDbRead(readChapterScreen, CHAPTER_SCREEN_TABLES, chapterId);
+export function ChapterScreen({ chapterId, focusSentence = null }: ChapterScreenProps) {
+  const data = useLiveRead(readChapterScreen, CHAPTER_SCREEN_TABLES, chapterId);
   const progress = useChapterProgressMap([chapterId])[chapterId] ?? null;
   const pipeline = usePipeline();
   const db = useDb();
@@ -50,6 +51,7 @@ export function ChapterScreen({ chapterId }: ChapterScreenProps) {
       onPlay={(id) => router.push({ pathname: '/player', params: { chapterId: id } })}
       onRetry={(id) => pipeline.retry(id)}
       onToggleCue={(cueId, enabled) => cueRepo.setEnabled(db, cueId, enabled)}
+      focusSentence={focusSentence}
     />
   );
 }

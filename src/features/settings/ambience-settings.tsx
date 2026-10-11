@@ -14,8 +14,13 @@ import { formatDb } from './summaries';
 export const AMBIENCE_LEVEL_RANGE = { min: -30, max: -14 } as const;
 export const DUCKING_RANGE = { min: 0, max: 16 } as const;
 
+export interface AmbienceSettingsProps {
+  /** Plays the sample bed at the given level. Omitted, the sample is not offered. */
+  onPlaySample?: (levelDb: number) => void;
+}
+
 /** Ambience beds: on or off, level and ducking. Sliders keep a local draft and save when released. */
-export function AmbienceSettings() {
+export function AmbienceSettings({ onPlaySample }: AmbienceSettingsProps) {
   const { settings, patch } = useSettings();
   const ambience = settings.ambience;
   // While a slider is dragged it shows its draft. The saved value is written once, on release.
@@ -82,12 +87,15 @@ export function AmbienceSettings() {
           <Button
             label="Play a sample"
             variant="secondary"
-            disabled
-            onPress={() => undefined}
-            accessibilityHint="Available with the player"
+            fullWidth
+            disabled={!ambience.enabled || onPlaySample === undefined}
+            onPress={() => onPlaySample?.(ambience.levelDb)}
+            accessibilityHint="Plays rain for eight seconds at the level you set"
           />
           <Text variant="caption" tone="muted">
-            Available with the player. Play a chapter to hear the beds.
+            {ambience.enabled
+              ? 'Plays rain for eight seconds at the level you set.'
+              : 'Turn ambience on to hear a sample.'}
           </Text>
         </Card>
       </View>

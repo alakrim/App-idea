@@ -1,7 +1,6 @@
 import { Check } from 'lucide-react-native';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import { Badge } from '@/ui/badge';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { hairline, iconSize, iconStrokeWidth, radius, space } from '@/ui/tokens';
@@ -49,7 +48,6 @@ export function VoiceTierCard({ tier, selected, onSelect }: VoiceTierCardProps) 
           <Text variant="micro" tone={selected ? 'accent' : 'faint'}>
             {TIER_NAMES[tier.id]}
           </Text>
-          {tier.id === 'recommended' ? <Badge label="Default" tone="neutral" /> : null}
         </View>
         <Text variant="heading" numberOfLines={1}>
           {name}

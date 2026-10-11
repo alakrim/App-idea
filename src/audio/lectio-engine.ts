@@ -1,6 +1,7 @@
 import type { AmbienceCue } from '@/core/domain/analysis';
 import {
   type BedTarget,
+  bedGainDb,
   DEFAULT_BED_LEVEL_DB,
   diffBeds,
   planBeds,
@@ -53,6 +54,11 @@ interface LoadedChapter {
   final: boolean;
 }
 
+/** The cue a preview plays on. Chapter cues are ids from the analysis, so this never collides. */
+const PREVIEW_CUE_ID = 'preview';
+const PREVIEW_FADE_MS = 400;
+const PREVIEW_INTENSITY = 'medium';
+
 const MIN_RATE = 0.5;
 const MAX_RATE = 2;
 const MIN_LEVEL_DB = -40;
@@ -93,6 +99,7 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
   let sentenceIdx = -1;
   let beds: BedTarget[] = [];
   let levelDb = DEFAULT_BED_LEVEL_DB;
+  let previewTimer: ReturnType<typeof setTimeout> | null = null;
   let ducked = false;
   let interruptedWhilePlaying = false;
   let lastSnapshot: VoiceSnapshot | null = null;
@@ -277,6 +284,30 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
       if (chapter && sentenceIdx >= 0) planAt(sentenceIdx);
     },
 
+    previewBed(category: string, previewLevelDb: number, durationMs: number) {
+      if (disposed) return;
+      if (!(previewLevelDb >= MIN_LEVEL_DB && previewLevelDb <= MAX_LEVEL_DB)) {
+        throw new RangeError(
+          `levelDb must be between ${MIN_LEVEL_DB} and ${MAX_LEVEL_DB}, got ${previewLevelDb}`,
+        );
+      }
+      const gainDb = bedGainDb(
+        previewLevelDb,
+        PREVIEW_INTENSITY,
+        deps.bedLufs?.(category) ?? undefined,
+      );
+      mixer.apply([
+        { type: 'start', cueId: PREVIEW_CUE_ID, category, gainDb, fadeMs: PREVIEW_FADE_MS },
+      ]);
+      if (previewTimer !== null) clearTimeout(previewTimer);
+      previewTimer = setTimeout(() => {
+        previewTimer = null;
+        if (!disposed) {
+          mixer.apply([{ type: 'stop', cueId: PREVIEW_CUE_ID, fadeMs: PREVIEW_FADE_MS }]);
+        }
+      }, durationMs);
+    },
+
     onPosition(callback) {
       positionListeners.add(callback);
       return () => {
@@ -304,6 +335,8 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
       unsubscribeVoice();
       unsubscribeInterruptions();
       unsubscribeRemote();
+      if (previewTimer !== null) clearTimeout(previewTimer);
+      previewTimer = null;
       voice.dispose();
       mixer.dispose();
       positionListeners.clear();

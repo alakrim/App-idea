@@ -49,6 +49,10 @@ const config: ExpoConfig = {
     typedRoutes: true,
     reactCompiler: true,
   },
+  // Build identity for the Diagnostics screen. CI or a local build sets GIT_SHA; 'dev' otherwise.
+  extra: {
+    gitSha: process.env.GIT_SHA ?? 'dev',
+  },
 };
 
 export default config;

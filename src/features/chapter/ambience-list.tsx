@@ -1,7 +1,8 @@
 import { Switch, StyleSheet, View } from 'react-native';
 
 import type { AmbienceCue } from '@/core/domain';
-import { ambienceIconOf, ambienceLabel } from '@/features/shared/ambience-display';
+import { ambienceIconOf } from '@/features/shared/ambience-display';
+import { ambienceLabel } from '@/features/shared/ambience-labels';
 import { Card } from '@/ui/card';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';

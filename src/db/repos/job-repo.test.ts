@@ -91,4 +91,30 @@ describe('jobRepo', () => {
     });
     expect(jobRepo.get(db, id(1), 'segment')?.status).toBe('cancelled');
   });
+
+  it('counts jobs per status, with zero for statuses that have none', () => {
+    const { db } = setup();
+    jobRepo.upsert(db, job(1, 'extract', { status: 'done' }));
+    jobRepo.upsert(db, job(2, 'clean', { status: 'done' }));
+    jobRepo.upsert(db, job(3, 'segment', { status: 'failed' }));
+
+    expect(jobRepo.countByStatus(db)).toEqual({
+      pending: 0,
+      running: 0,
+      done: 2,
+      failed: 1,
+      skipped: 0,
+      cancelled: 0,
+    });
+  });
+
+  it('lists the most recent failures first, up to the limit', () => {
+    const { db } = setup();
+    jobRepo.upsert(db, job(1, 'extract', { status: 'failed', finishedAt: T0 + 1 }));
+    jobRepo.upsert(db, job(2, 'clean', { status: 'failed', finishedAt: T0 + 3 }));
+    jobRepo.upsert(db, job(3, 'segment', { status: 'failed', finishedAt: T0 + 2 }));
+    jobRepo.upsert(db, job(4, 'analyze', { status: 'done', finishedAt: T0 + 9 }));
+
+    expect(jobRepo.recentFailures(db, 2).map((j) => j.stage)).toEqual(['clean', 'segment']);
+  });
 });

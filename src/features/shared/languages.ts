@@ -1,10 +1,10 @@
 /**
- * Languages offered in series and chapter pickers. Shared by the series form, the chapter screen
- * and (once it lands) settings. Codes are BCP-47 tags, matching `LangSchema` in the domain.
+ * Languages offered in the series, chapter, translation and vocab pickers. One list for the whole
+ * app. Codes are BCP-47 tags, matching `LangSchema` in the domain.
  */
 export interface LanguageOption {
   code: string;
-  /** English name, for screen readers and secondary copy. */
+  /** English name, for screen readers, search and secondary copy. */
   name: string;
   /** The language's own name, which is what badges show. */
   nativeName: string;
@@ -20,17 +20,18 @@ export const LANGUAGES: readonly LanguageOption[] = [
   { code: 'es', name: 'Spanish', nativeName: 'Español' },
   { code: 'fr', name: 'French', nativeName: 'Français' },
   { code: 'de', name: 'German', nativeName: 'Deutsch' },
-  { code: 'pt-BR', name: 'Portuguese (Brazil)', nativeName: 'Português' },
+  { code: 'pt-BR', name: 'Portuguese (Brazil)', nativeName: 'Português (Brasil)' },
+  { code: 'nl', name: 'Dutch', nativeName: 'Nederlands' },
+  { code: 'sv', name: 'Swedish', nativeName: 'Svenska' },
+  { code: 'pl', name: 'Polish', nativeName: 'Polski' },
   { code: 'ru', name: 'Russian', nativeName: 'Русский' },
+  { code: 'uk', name: 'Ukrainian', nativeName: 'Українська' },
+  { code: 'tr', name: 'Turkish', nativeName: 'Türkçe' },
   { code: 'ar', name: 'Arabic', nativeName: 'العربية' },
   { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी' },
-  { code: 'nl', name: 'Dutch', nativeName: 'Nederlands' },
-  { code: 'pl', name: 'Polish', nativeName: 'Polski' },
-  { code: 'tr', name: 'Turkish', nativeName: 'Türkçe' },
-  { code: 'vi', name: 'Vietnamese', nativeName: 'Tiếng Việt' },
   { code: 'th', name: 'Thai', nativeName: 'ไทย' },
+  { code: 'vi', name: 'Vietnamese', nativeName: 'Tiếng Việt' },
   { code: 'id', name: 'Indonesian', nativeName: 'Bahasa Indonesia' },
-  { code: 'sv', name: 'Swedish', nativeName: 'Svenska' },
 ];
 
 export function findLanguage(code: string | null): LanguageOption | null {
@@ -50,4 +51,26 @@ export function languagePairLabel(
 ): string | null {
   if (sourceLang === null || targetLang === null) return null;
   return `${nativeLanguageName(sourceLang)} → ${nativeLanguageName(targetLang)}`;
+}
+
+/**
+ * Case-insensitive match on the native name, the English name and the code. Every word in the
+ * query must match somewhere, so "port bra" finds Português (Brazil).
+ */
+export function filterLanguages(
+  options: readonly LanguageOption[],
+  query: string,
+): readonly LanguageOption[] {
+  const words = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  if (words.length === 0) return options;
+  return options.filter((option) => {
+    const haystack = `${option.nativeName} ${option.name} ${option.code}`.toLowerCase();
+    return words.every((word) => haystack.includes(word));
+  });
+}
+
+/** The native name for a target language, or Off when translation is switched off. */
+export function languageLabel(code: string | null): string {
+  if (code === null) return 'Off';
+  return nativeLanguageName(code);
 }

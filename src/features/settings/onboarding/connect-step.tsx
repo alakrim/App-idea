@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
 
 import { KeyForm } from '@/features/settings/key-form';
 import { useKeyConnection } from '@/features/settings/use-key-connection';
@@ -18,41 +18,55 @@ export function ConnectStep({ onDone, onSkip }: ConnectStepProps) {
   const { connection, connect, reset } = useKeyConnection();
   const connected = connection.status === 'connected';
 
+  // Android resizes the window for the keyboard, so only iOS needs the padding behaviour here.
   return (
-    <View style={styles.container}>
-      <View style={styles.copy}>
-        <Text variant="title" accessibilityRole="header">
-          Connect OpenRouter
-        </Text>
-        <Text variant="body" tone="muted">
-          Lectio runs the models with your own OpenRouter key. It is kept in this device&apos;s
-          secure storage and sent only to OpenRouter. You can skip this and connect later.
-        </Text>
-      </View>
+    <KeyboardAvoidingView
+      style={styles.root}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <ScrollView
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.copy}>
+          <Text variant="title" accessibilityRole="header">
+            Connect OpenRouter
+          </Text>
+          <Text variant="body" tone="muted">
+            Lectio runs the models with your own OpenRouter key. It is kept in this device&apos;s
+            secure storage and sent only to OpenRouter. You can skip this and connect later.
+          </Text>
+        </View>
 
-      <KeyForm connection={connection} onSubmit={connect} onReset={reset} />
+        <KeyForm connection={connection} onSubmit={connect} onReset={reset} />
 
-      <View style={styles.footer}>
-        {connected ? (
-          <Button label="Continue" size="lg" fullWidth onPress={onDone} />
-        ) : (
-          <Button
-            label="Skip for now"
-            variant="ghost"
-            onPress={onSkip}
-            disabled={connection.status === 'checking'}
-          />
-        )}
-      </View>
-    </View>
+        <View style={styles.footer}>
+          {connected ? (
+            <Button label="Continue" size="lg" fullWidth onPress={onDone} />
+          ) : (
+            <Button
+              label="Skip for now"
+              variant="ghost"
+              onPress={onSkip}
+              disabled={connection.status === 'checking'}
+            />
+          )}
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  root: {
     flex: 1,
+  },
+  content: {
+    flexGrow: 1,
     paddingHorizontal: space.lg,
     paddingTop: space.xxl,
+    paddingBottom: space.xl,
     gap: space.lg,
   },
   copy: {

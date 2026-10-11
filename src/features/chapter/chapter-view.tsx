@@ -1,11 +1,12 @@
 import { ChevronLeft, Play } from 'lucide-react-native';
-import { useState, type ReactNode } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { ScrollView, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import type { AmbienceCue, Chapter, Job, PipelineError, Series, Stage } from '@/core/domain';
 import type { ChapterProgress } from '@/features/pipeline/facade';
 import { formatDuration, formatUsd, formatWordCount } from '@/features/shared/format';
+import { useMotion } from '@/ui/motion';
 import { Badge, type BadgeTone } from '@/ui/badge';
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
@@ -20,8 +21,10 @@ import { AmbienceList } from './ambience-list';
 import { isTranslated, type ReadingParagraph } from './chapter-data';
 import { rowStateOf, statusLine } from './chapter-status';
 import { READING_MODES, ReadingText, type ReadingMode } from './reading-text';
+import { paragraphOfSentence } from './sentence-focus';
 import { StageStepper } from './stage-stepper';
 import { stepStates } from './stage-steps';
+import { useSentenceFocus } from './use-sentence-focus';
 
 const STATE_BADGE: Record<ReturnType<typeof rowStateOf>, { label: string; tone: BadgeTone }> = {
   draft: { label: 'Not processed', tone: 'neutral' },
@@ -51,6 +54,8 @@ export interface ChapterViewProps {
   onPlay: (chapterId: string) => void;
   onRetry: (chapterId: string) => void;
   onToggleCue: (cueId: string, enabled: boolean) => void;
+  /** A sentence to scroll to and highlight, from a deep link. Null for none. */
+  focusSentence?: number | null;
 }
 
 /** A chapter: its state and processing, the reading view with its modes, and the ambience cues. */
@@ -66,9 +71,24 @@ export function ChapterView({
   onPlay,
   onRetry,
   onToggleCue,
+  focusSentence = null,
 }: ChapterViewProps) {
   const { colors } = useTheme();
+  const { reduced } = useMotion();
   const [mode, setMode] = useState<ReadingMode>('translation');
+  const scrollRef = useRef<ScrollView>(null);
+  // Offsets inside the scroll content. Each one arrives from onLayout, in no fixed order.
+  const offsets = useRef<{
+    section: number | null;
+    reading: number | null;
+    paragraphs: Map<number, number>;
+  }>({
+    section: null,
+    reading: null,
+    paragraphs: new Map(),
+  });
+  const pendingSentence = useRef<number | null>(null);
+  const highlight = useSentenceFocus(focusSentence, reduced);
   const state = rowStateOf(chapter, progress);
   const badge = STATE_BADGE[state];
   const translated = isTranslated(paragraphs);
@@ -77,13 +97,41 @@ export function ChapterView({
   const steps = stepStates(progress?.stages ?? jobsAsStages(jobs));
   const words = chapter.wordCount;
 
+  // Scrolls to the pending sentence once its paragraph and the text's position are both known.
+  const scrollToPending = useCallback(() => {
+    const sentenceIdx = pendingSentence.current;
+    if (sentenceIdx === null) return;
+    const paragraphIdx = paragraphOfSentence(paragraphs, sentenceIdx);
+    if (paragraphIdx === null) {
+      pendingSentence.current = null;
+      return;
+    }
+    const { section, reading, paragraphs: known } = offsets.current;
+    const paragraphY = known.get(paragraphIdx);
+    if (section === null || reading === null || paragraphY === undefined) return;
+    pendingSentence.current = null;
+    scrollRef.current?.scrollTo({
+      y: Math.max(0, section + reading + paragraphY - space.xl),
+      animated: !reduced,
+    });
+  }, [paragraphs, reduced]);
+
+  useEffect(() => {
+    pendingSentence.current = focusSentence;
+    scrollToPending();
+  }, [focusSentence, scrollToPending]);
+
   return (
     <SafeAreaView edges={['top', 'bottom']} style={[styles.root, { backgroundColor: colors.bg }]}>
       <View style={styles.bar}>
         <IconButton label="Back" icon={ChevronLeft} onPress={onBack} />
       </View>
 
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        ref={scrollRef}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.header}>
           {series ? (
             <Text variant="micro" tone="accent" numberOfLines={1}>
@@ -160,7 +208,13 @@ export function ChapterView({
         ) : null}
 
         {paragraphs.length > 0 ? (
-          <Section title="Text">
+          <Section
+            title="Text"
+            onLayout={(event) => {
+              offsets.current.section = event.nativeEvent.layout.y;
+              scrollToPending();
+            }}
+          >
             {translated ? (
               <SegmentedControl
                 label="Reading mode"
@@ -169,11 +223,23 @@ export function ChapterView({
                 onChange={setMode}
               />
             ) : null}
-            <ReadingText
-              paragraphs={paragraphs}
-              mode={effectiveMode}
-              sourceLang={chapter.sourceLang}
-            />
+            <View
+              onLayout={(event: LayoutChangeEvent) => {
+                offsets.current.reading = event.nativeEvent.layout.y;
+                scrollToPending();
+              }}
+            >
+              <ReadingText
+                paragraphs={paragraphs}
+                mode={effectiveMode}
+                sourceLang={chapter.sourceLang}
+                highlight={highlight}
+                onParagraphLayout={(paragraphIdx, y) => {
+                  offsets.current.paragraphs.set(paragraphIdx, y);
+                  scrollToPending();
+                }}
+              />
+            </View>
           </Section>
         ) : null}
 
@@ -198,11 +264,12 @@ interface SectionProps {
   title: string;
   trailing?: string;
   children: ReactNode;
+  onLayout?: (event: LayoutChangeEvent) => void;
 }
 
-function Section({ title, trailing, children }: SectionProps) {
+function Section({ title, trailing, children, onLayout }: SectionProps) {
   return (
-    <View style={styles.section}>
+    <View style={styles.section} onLayout={onLayout}>
       <View style={styles.sectionHead}>
         <Text variant="heading" accessibilityRole="header">
           {title}

@@ -1,6 +1,6 @@
 /**
  * Usage summaries for the Usage & costs screen. The aggregation is pure so it can be tested on
- * fixed rows. The database query lives in usage-query.ts.
+ * fixed rows. The database reads live in usageRepo; usage-query.ts composes them.
  */
 
 export const DAY_MS = 24 * 60 * 60 * 1000;

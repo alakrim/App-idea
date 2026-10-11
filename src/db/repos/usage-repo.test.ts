@@ -56,4 +56,19 @@ describe('usageRepo', () => {
 
     expect(total.map((t) => t.costUsd)).toEqual([2]);
   });
+
+  it('totals spend by pipeline stage, so the usage screen can show where money went', () => {
+    const { db } = createTestDb();
+    usageRepo.insert(db, entry(1, { at: T0, stage: 'analyze', costUsd: 0.5 }));
+    usageRepo.insert(db, entry(2, { at: T0, stage: 'narrate', costUsd: 1.25 }));
+    usageRepo.insert(db, entry(3, { at: T0 + DAY, stage: 'analyze', costUsd: 0.25 }));
+
+    expect(usageRepo.totalsBy(db, 'stage').map((t) => [t.key, t.calls, t.costUsd])).toEqual([
+      ['analyze', 2, 0.75],
+      ['narrate', 1, 1.25],
+    ]);
+    expect(
+      usageRepo.totalsBy(db, 'stage', { sinceMs: T0 + 1 }).map((t) => [t.key, t.costUsd]),
+    ).toEqual([['analyze', 0.25]]);
+  });
 });

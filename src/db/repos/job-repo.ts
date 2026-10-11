@@ -1,4 +1,4 @@
-import { and, eq, inArray } from 'drizzle-orm';
+import { and, desc, eq, inArray, sql } from 'drizzle-orm';
 
 import { PipelineErrorSchema } from '../../core/domain';
 import { parseJsonColumn } from '../json-column';
@@ -25,6 +25,16 @@ function toJob(row: JobRow): Job {
 
 const UNFINISHED: JobStatus[] = ['pending', 'running'];
 
+/** Every status, so a count is 0 rather than missing when no job has it. */
+const ALL_STATUSES: readonly JobStatus[] = [
+  'pending',
+  'running',
+  'done',
+  'failed',
+  'skipped',
+  'cancelled',
+];
+
 export const jobRepo = {
   /** One job per (chapter, stage). Writing again replaces the row, so each stage is resumable. */
   upsert(db: Db, job: Job): void {
@@ -49,6 +59,33 @@ export const jobRepo = {
 
   listForChapter(db: Db, chapterId: string): Job[] {
     return db.select().from(jobs).where(eq(jobs.chapterId, chapterId)).all().map(toJob);
+  },
+
+  /** How many jobs sit in each status. Every status is present, so zero is explicit. */
+  countByStatus(db: Db): Record<JobStatus, number> {
+    const rows = db
+      .select({ status: jobs.status, count: sql<number>`count(*)` })
+      .from(jobs)
+      .groupBy(jobs.status)
+      .all();
+    const counts = Object.fromEntries(ALL_STATUSES.map((status) => [status, 0])) as Record<
+      JobStatus,
+      number
+    >;
+    for (const row of rows) counts[row.status] = row.count;
+    return counts;
+  },
+
+  /** The most recent failed jobs, newest first. Diagnostics shows them to help with bug reports. */
+  recentFailures(db: Db, limit: number): Job[] {
+    return db
+      .select()
+      .from(jobs)
+      .where(eq(jobs.status, 'failed'))
+      .orderBy(desc(jobs.finishedAt))
+      .limit(limit)
+      .all()
+      .map(toJob);
   },
 
   /** Marks a chapter's pending and running jobs as cancelled, for user cancellation. */

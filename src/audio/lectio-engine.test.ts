@@ -1,4 +1,5 @@
 import type { AmbienceCue } from '@/core/domain/analysis';
+import { bedGainDb } from '@/core/playback/ambience-scheduler';
 import type { RemoteEvent } from '@/core/playback/remote-commands';
 
 import { type InterruptionEvent, type LectioEngineDeps, createLectioEngine } from './lectio-engine';
@@ -442,5 +443,66 @@ describe('lectio-engine: play from the end and disposal', () => {
     interruptions.emit({ type: 'began', shouldResume: false });
     remote.emit({ name: 'pause' });
     expect(voice.pause).not.toHaveBeenCalled();
+  });
+});
+
+describe('lectio-engine: bed preview', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('starts the bed on its own cue at the level-derived gain, then fades it out after the duration', () => {
+    const { engine, mixer } = setup();
+    engine.previewBed('base_rain', -22, 8000);
+
+    expect(mixer.apply).toHaveBeenLastCalledWith([
+      {
+        type: 'start',
+        cueId: 'preview',
+        category: 'base_rain',
+        gainDb: bedGainDb(-22, 'medium', undefined),
+        fadeMs: 400,
+      },
+    ]);
+
+    mixer.apply.mockClear();
+    jest.advanceTimersByTime(7999);
+    expect(mixer.apply).not.toHaveBeenCalled();
+
+    jest.advanceTimersByTime(1);
+    expect(mixer.apply).toHaveBeenCalledWith([{ type: 'stop', cueId: 'preview', fadeMs: 400 }]);
+  });
+
+  it('restarts the timer when a second preview comes in, so the first stop does not cut it short', () => {
+    const { engine, mixer } = setup();
+    engine.previewBed('base_rain', -22, 8000);
+    jest.advanceTimersByTime(5000);
+    engine.previewBed('base_rain', -22, 8000);
+    mixer.apply.mockClear();
+
+    jest.advanceTimersByTime(5000);
+    expect(mixer.apply).not.toHaveBeenCalled();
+
+    jest.advanceTimersByTime(3000);
+    expect(mixer.apply).toHaveBeenCalledWith([{ type: 'stop', cueId: 'preview', fadeMs: 400 }]);
+  });
+
+  it('cancels a pending stop on dispose, so no command reaches a closed mixer', () => {
+    const { engine, mixer } = setup();
+    engine.previewBed('base_rain', -22, 8000);
+    engine.dispose();
+    mixer.apply.mockClear();
+
+    jest.advanceTimersByTime(10_000);
+    expect(mixer.apply).not.toHaveBeenCalled();
+  });
+
+  it('rejects a level outside -40 to 0 dB', () => {
+    const { engine } = setup();
+    expect(() => engine.previewBed('base_rain', 3, 8000)).toThrow(RangeError);
   });
 });

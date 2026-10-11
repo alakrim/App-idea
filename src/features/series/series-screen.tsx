@@ -7,7 +7,6 @@ import { useChapterProgressMap } from '@/features/pipeline/use-chapter-progress'
 import { ConfirmSheet } from '@/features/shared/confirm-sheet';
 import { formatUsd } from '@/features/shared/format';
 import { SeriesActionsSheet } from '@/features/shared/series-actions-sheet';
-import { useDbRead } from '@/features/shared/use-db-read';
 import { ErrorState } from '@/ui/error-state';
 import { Screen } from '@/ui/screen';
 
@@ -17,6 +16,7 @@ import { deleteChapter, deleteSeries, moveChapter } from './series-service';
 import { SeriesView, type SeriesChapterItem } from './series-view';
 import { useOcrPrices } from './use-ocr-prices';
 import { useSeriesDeps } from './use-series-deps';
+import { useLiveRead } from '@/db/hooks';
 
 export interface SeriesScreenProps {
   seriesId: string;
@@ -24,7 +24,7 @@ export interface SeriesScreenProps {
 
 /** The series screen: live rows, chapter progress, and every action that changes the series. */
 export function SeriesScreen({ seriesId }: SeriesScreenProps) {
-  const data = useDbRead(readSeriesScreen, SERIES_SCREEN_TABLES, seriesId);
+  const data = useLiveRead(readSeriesScreen, SERIES_SCREEN_TABLES, seriesId);
   const deps = useSeriesDeps();
   const pipeline = usePipeline();
   const chapterIds = useMemo(

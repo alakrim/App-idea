@@ -20,6 +20,7 @@ import { PipelineLifecycle } from '@/features/pipeline/pipeline-lifecycle';
 import { PipelineProvider } from '@/features/pipeline/pipeline-provider';
 import { PlayerEngineProvider } from '@/features/player/player-provider';
 import { useSettings } from '@/features/settings/settings-store';
+import { VocabActionsProvider } from '@/features/vocab/vocab-provider';
 import { fontAssets } from '@/ui/fonts';
 import { ThemeProvider, useTheme } from '@/ui/theme';
 import { ToastProvider } from '@/ui/toast';
@@ -48,9 +49,11 @@ export default function RootLayout() {
             <PipelineProvider>
               <ToastProvider>
                 <PipelineLifecycle />
-                <PlayerEngineProvider>
-                  <RootNavigator />
-                </PlayerEngineProvider>
+                <VocabActionsProvider>
+                  <PlayerEngineProvider>
+                    <RootNavigator />
+                  </PlayerEngineProvider>
+                </VocabActionsProvider>
               </ToastProvider>
             </PipelineProvider>
           </OpenRouterProvider>

@@ -3,12 +3,26 @@ import { act, render, screen } from '@testing-library/react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { VocabActionsProvider } from '@/features/vocab/vocab-provider';
 import { ThemeProvider } from '@/ui/theme';
 import { ToastProvider } from '@/ui/toast';
 
 import { fixtureChapter, id, setupController } from './__fixtures__/playback-fixtures';
 import { PlaybackProvider } from './player-provider';
 import PlayerScreen from '../../../app/player';
+
+// The vocab provider reads the database and OpenRouter before it uses the injected actions.
+jest.mock('@/db/hooks', () => ({ useDb: () => ({}) }));
+jest.mock('@/app-shell/openrouter-provider', () => ({ useOpenRouter: () => ({}) }));
+
+const noVocabActions = {
+  saveToVocab: () => 'unused',
+  retryExplanation: () => undefined,
+  isPending: () => false,
+  failureOf: () => null,
+  getVersion: () => 0,
+  subscribe: () => () => undefined,
+};
 
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
 jest.mock('react-native-gesture-handler', () => require('./__fixtures__/gesture-stub'));
@@ -34,9 +48,11 @@ describe('/player route', () => {
       <ThemeProvider initialMode="dark">
         <SafeAreaProvider initialMetrics={PHONE_FRAME}>
           <ToastProvider>
-            <PlaybackProvider controller={controller}>
-              <PlayerScreen />
-            </PlaybackProvider>
+            <VocabActionsProvider actions={noVocabActions}>
+              <PlaybackProvider controller={controller}>
+                <PlayerScreen />
+              </PlaybackProvider>
+            </VocabActionsProvider>
           </ToastProvider>
         </SafeAreaProvider>
       </ThemeProvider>,

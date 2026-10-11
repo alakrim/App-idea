@@ -62,6 +62,12 @@ export interface AudioEngine {
    * narration, so a bed sits that far below the narration whatever its own file loudness.
    */
   setAmbienceMaster(enabled: boolean, levelDb: number): void;
+  /**
+   * Plays one bed through the mixer for `durationMs`, then fades it out, so settings can audition a
+   * sound. It runs on its own cue, beside the chapter's beds. `levelDb` is relative to the narration,
+   * as in setAmbienceMaster. A second call while a preview plays restarts its timer.
+   */
+  previewBed(category: string, levelDb: number, durationMs: number): void;
   /** About 4 Hz while playing, plus on every sentence change and seek. */
   onPosition(callback: (update: PositionUpdate) => void): Unsubscribe;
   onState(callback: (state: PlaybackState) => void): Unsubscribe;

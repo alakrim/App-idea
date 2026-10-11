@@ -227,9 +227,9 @@ export function NarrationPanel() {
             value={styleText}
             onChangeText={setStyleDraft}
             onBlur={commitStyle}
-            onSubmitEditing={commitStyle}
+            multiline
+            lines={3}
             maxLength={STYLE_MAX_LENGTH}
-            returnKeyType="done"
           />
         </View>
       ) : null}

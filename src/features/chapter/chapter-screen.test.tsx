@@ -64,11 +64,7 @@ describe('ChapterScreen ambience switches', () => {
       pipeline: createFakePipeline({ db }),
     });
 
-    await fireEvent(
-      screen.getByRole('switch', { name: /Ambience: Harbor port/ }),
-      'valueChange',
-      false,
-    );
+    await fireEvent(screen.getByRole('switch', { name: /Ambience: Harbor/ }), 'valueChange', false);
 
     expect(cueRepo.listForChapter(db, id(1))[0]?.enabled).toBe(false);
   });
