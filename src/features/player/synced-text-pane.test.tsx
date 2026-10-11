@@ -1,12 +1,12 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- jest.mock factories load the stand-ins with require() */
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
-import { palette } from '@/ui/tokens';
 import { ThemeProvider } from '@/ui/theme';
+import { palette } from '@/ui/tokens';
 
-import { SyncedTextPane, type SyncedTextPaneProps } from './synced-text-pane';
 import { sentences } from './__fixtures__/playback-fixtures';
+import { SyncedTextPane, type SyncedTextPaneProps } from './synced-text-pane';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
 jest.mock('react-native-gesture-handler', () => require('./__fixtures__/gesture-stub'));
 jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));

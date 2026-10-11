@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- jest.mock factories load the stand-ins with require() */
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
-import type { ReactElement, ReactNode } from 'react';
 import { router } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -8,14 +8,15 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from '@/ui/theme';
 import { ToastProvider } from '@/ui/toast';
 
-import { VocabActionsContext } from './vocab-actions';
-import { PlaybackProvider } from './player-provider';
-import { FullPlayer } from './full-player';
 import { fixtureChapter, id, setupController } from './__fixtures__/playback-fixtures';
+import { FullPlayer } from './full-player';
+import { PlaybackProvider } from './player-provider';
+import { VocabActionsContext } from './vocab-actions';
+
+import type { ReactElement } from 'react';
 
 // Jest cannot load Reanimated's worklet runtime or gesture-handler's native detectors, and the
 // bottom sheet needs both. The stand-ins keep the behaviour the tests check.
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
 jest.mock('react-native-gesture-handler', () => require('./__fixtures__/gesture-stub'));
 jest.mock('@gorhom/bottom-sheet', () => require('./__fixtures__/bottom-sheet-stub'));

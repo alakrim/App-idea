@@ -35,6 +35,9 @@ const previewPipeline: PipelineFacade = {
 };
 
 /** Dev-only visual QA of the populated feature screens, with fake data. Redirects in release builds. */
+/** Forms bring their own gutter, so the screen adds none. */
+const FLUSH = { paddingHorizontal: 0, paddingBottom: 0, gap: 0 } as const;
+
 export default function ScreensRoute() {
   if (!__DEV__) {
     return <Redirect href="/" />;
@@ -53,14 +56,14 @@ function Screens() {
     case 'add':
       return (
         <PipelineContext.Provider value={previewPipeline}>
-          <Screen edges={['bottom']} scrollable={false}>
+          <Screen edges={['bottom']} scrollable={false} contentStyle={FLUSH}>
             <AddChapterForm seriesId="gallery" sourceLang="en" targetLang="it" />
           </Screen>
         </PipelineContext.Provider>
       );
     case 'new':
       return (
-        <Screen edges={['bottom']} scrollable={false}>
+        <Screen edges={['bottom']} scrollable={false} contentStyle={FLUSH}>
           <SeriesForm
             initial={{
               title: '',

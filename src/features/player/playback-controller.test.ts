@@ -1,7 +1,4 @@
-import type { PlaybackPoint } from '@/core/domain';
-
 import {
-  CUE,
   SEGMENT_ONE,
   SEGMENT_TWO,
   fixtureChapter,

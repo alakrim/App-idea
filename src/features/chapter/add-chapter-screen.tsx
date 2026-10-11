@@ -392,7 +392,8 @@ export function AddChapterForm({ seriesId, sourceLang, targetLang }: AddChapterF
             </View>
           </Card>
         ) : null}
-
+      </ScrollView>
+      <View style={[styles.footer, { borderTopColor: colors.border }]}>
         <Button
           label="Create & process"
           size="lg"
@@ -402,7 +403,7 @@ export function AddChapterForm({ seriesId, sourceLang, targetLang }: AddChapterF
           onPress={() => void create()}
           accessibilityHint="Creates the chapter and starts processing it"
         />
-      </ScrollView>
+      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -478,8 +479,14 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: gutter,
     paddingTop: space.lg,
-    paddingBottom: space.xxl,
+    paddingBottom: space.xl,
     gap: space.xl,
+  },
+  footer: {
+    paddingHorizontal: gutter,
+    paddingTop: space.md,
+    paddingBottom: space.lg,
+    borderTopWidth: hairline,
   },
   section: {
     gap: space.md,

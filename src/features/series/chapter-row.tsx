@@ -2,17 +2,20 @@ import { Play } from 'lucide-react-native';
 import { memo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import type { Chapter, PipelineError } from '@/core/domain';
-import { rowStateOf, isScannedPdfFailure, statusLine } from '@/features/chapter/chapter-status';
+import { isScannedPdfFailure, rowStateOf, statusLine } from '@/features/chapter/chapter-status';
 import { StageStepper } from '@/features/chapter/stage-stepper';
 import { stepStates } from '@/features/chapter/stage-steps';
-import type { ChapterProgress } from '@/features/pipeline/facade';
 import { formatUsd } from '@/features/shared/format';
 import { Button } from '@/ui/button';
 import { IconButton } from '@/ui/icon-button';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { hairline, minTouchTarget, space } from '@/ui/tokens';
+
+import type { Chapter, PipelineError } from '@/core/domain';
+import type { ChapterProgress } from '@/features/pipeline/facade';
+
+const NUMBER_WIDTH = space.xl;
 
 export interface ChapterRowProps {
   /** 1-based position in the series. */
@@ -31,7 +34,10 @@ export interface ChapterRowProps {
   onOcr: (chapterId: string) => void;
 }
 
-/** One chapter in the series list: number, title, status, live stepper, and the failure actions. */
+/**
+ * One chapter in the series list. The title area opens the chapter and the play button sits beside
+ * it, so no interactive control is nested inside another.
+ */
 export const ChapterRow = memo(function ChapterRow({
   number,
   chapter,
@@ -52,31 +58,38 @@ export const ChapterRow = memo(function ChapterRow({
   const showSteps = state === 'processing' || state === 'failed';
 
   return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={`Chapter ${number}, ${chapter.title}, ${line}`}
-      accessibilityHint="Opens the chapter. Long press for more actions."
-      delayLongPress={350}
-      onPress={() => onOpen(chapter.id)}
-      onLongPress={() => onMenu(chapter.id)}
-      style={({ pressed }) => [
+    <View
+      style={[
         styles.row,
         divided ? { borderTopWidth: hairline, borderTopColor: colors.border } : null,
-        pressed ? { backgroundColor: colors.surfaceRaised } : null,
       ]}
     >
       <View style={styles.head}>
-        <Text variant="caption" tone="faint" style={styles.number} importantForAccessibility="no">
-          {String(number).padStart(2, '0')}
-        </Text>
-        <View style={styles.copy}>
-          <Text variant="bodyStrong" numberOfLines={2}>
-            {chapter.title}
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={`Chapter ${number}, ${chapter.title}, ${line}`}
+          accessibilityHint="Opens the chapter. Long press for more actions."
+          delayLongPress={350}
+          onPress={() => onOpen(chapter.id)}
+          onLongPress={() => onMenu(chapter.id)}
+          style={({ pressed }) => [styles.press, pressed ? { opacity: 0.85 } : null]}
+        >
+          <Text variant="caption" tone="faint" style={styles.number} importantForAccessibility="no">
+            {String(number).padStart(2, '0')}
           </Text>
-          <Text variant="caption" tone={state === 'failed' ? 'danger' : 'muted'} numberOfLines={2}>
-            {line}
-          </Text>
-        </View>
+          <View style={styles.copy}>
+            <Text variant="bodyStrong" numberOfLines={2}>
+              {chapter.title}
+            </Text>
+            <Text
+              variant="caption"
+              tone={state === 'failed' ? 'danger' : 'muted'}
+              numberOfLines={2}
+            >
+              {line}
+            </Text>
+          </View>
+        </Pressable>
         {state === 'ready' ? (
           <IconButton
             label={`Play chapter ${number}`}
@@ -107,7 +120,7 @@ export const ChapterRow = memo(function ChapterRow({
           ) : null}
         </View>
       ) : null}
-    </Pressable>
+    </View>
   );
 });
 
@@ -123,8 +136,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: space.md,
   },
+  press: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.md,
+    minHeight: minTouchTarget,
+  },
   number: {
-    width: space.xl,
+    width: NUMBER_WIDTH,
     fontVariant: ['tabular-nums'],
   },
   copy: {
@@ -132,13 +152,13 @@ const styles = StyleSheet.create({
     gap: space.xxs,
   },
   steps: {
-    paddingLeft: space.xl + space.md,
+    paddingLeft: NUMBER_WIDTH + space.md,
     paddingRight: space.sm,
   },
   actions: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: space.sm,
-    paddingLeft: space.xl + space.md,
+    paddingLeft: NUMBER_WIDTH + space.md,
   },
 });

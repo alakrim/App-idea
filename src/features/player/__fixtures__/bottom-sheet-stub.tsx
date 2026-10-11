@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
+ 
 /**
  * Unit-test stand-in for @gorhom/bottom-sheet. A sheet renders its contents only while open, the
  * way the real one does, so closed sheets contribute nothing to the queries.

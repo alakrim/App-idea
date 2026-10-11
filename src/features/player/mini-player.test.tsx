@@ -1,14 +1,14 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- jest.mock factories load the stand-ins with require() */
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { router } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { ThemeProvider } from '@/ui/theme';
 
+import { fixtureChapter, id, setupController } from './__fixtures__/playback-fixtures';
 import { MiniPlayer, MiniPlayerView } from './mini-player';
 import { PlaybackProvider } from './player-provider';
-import { fixtureChapter, id, setupController } from './__fixtures__/playback-fixtures';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
 jest.mock('react-native-gesture-handler', () => require('./__fixtures__/gesture-stub'));
 jest.mock('lucide-react-native', () => new Proxy({}, { get: () => () => null }));

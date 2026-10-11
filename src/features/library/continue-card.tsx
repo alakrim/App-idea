@@ -77,7 +77,10 @@ export function ContinueCard({
               {listening.chapterTitle}
             </Text>
             <Text variant="caption" tone="muted" numberOfLines={1}>
-              {`${seriesTitle} · ${position}`}
+              {seriesTitle}
+            </Text>
+            <Text variant="caption" tone="faint" numberOfLines={1}>
+              {position}
             </Text>
             <View style={styles.footer}>
               <View style={[styles.track, { backgroundColor: colors.border }]}>
