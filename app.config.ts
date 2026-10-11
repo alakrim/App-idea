@@ -53,6 +53,8 @@ const config: ExpoConfig = {
     ],
     'expo-font',
     './plugins/with-android-release-size',
+    // Crash reports survive a native or JavaScript crash and show on the next launch (brief X2).
+    './plugins/with-crash-reporter',
     // Ambience beds (ADR-0002). Voice owns the media session via expo-audio.
     ['react-native-audio-api', { iosBackgroundMode: true, androidForegroundService: false }],
   ],

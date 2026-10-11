@@ -22,8 +22,26 @@ export interface IdGeneratorOptions {
 
 /** Creates a monotonic generator: IDs from one generator always sort in creation order. */
 export function createIdGenerator(options: IdGeneratorOptions = {}): IdGenerator {
-  const next = monotonicFactory(options.prng);
+  const next = monotonicFactory(options.prng ?? defaultPrng());
   return () => next(options.now?.()) as Id;
+}
+
+/**
+ * The randomness for the ID's random part. The ulid package throws when no Web Crypto is present,
+ * and Hermes (the release JS engine on Android) has none, so that throw crashed the app at startup.
+ * IDs are row keys, not secrets, so Math.random is an acceptable source where Web Crypto is absent.
+ */
+function defaultPrng(): PRNG {
+  const source = (globalThis as { crypto?: { getRandomValues?: (bytes: Uint8Array) => Uint8Array } })
+    .crypto;
+  if (typeof source?.getRandomValues === 'function') {
+    const getRandomValues = source.getRandomValues.bind(source);
+    return () => {
+      const [byte = 0] = getRandomValues(new Uint8Array(1));
+      return byte / 256;
+    };
+  }
+  return Math.random;
 }
 
 const defaultGenerator = createIdGenerator();

@@ -16,6 +16,7 @@ import { useBridgeProbe } from './bridge-probe';
 import { deviceDiagnosticsDeps } from './device-deps';
 import { readEnvironment, type EnvironmentInfo } from './environment';
 import { resultHeadline, valueLines } from './format';
+import { LastCrashCard } from './last-crash-card';
 import { buildReport, reportToJson, summarize } from './report';
 import { PROBES, runDiagnostics } from './run-all';
 
@@ -87,6 +88,10 @@ export function DiagnosticsScreen() {
           <Row label="Platform" value={`${environment.platform} ${environment.osVersion}`} />
           <Row label="Model" value={environment.deviceModel ?? 'unknown'} />
         </Card>
+      </SettingsSection>
+
+      <SettingsSection title="Last crash">
+        <LastCrashCard />
       </SettingsSection>
 
       <View style={styles.actions}>
