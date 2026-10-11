@@ -43,6 +43,11 @@ const SYNTH_SECONDS = 75;
 const EDGE_TRIM_SECONDS = 6;
 const CROSSFADE_SECONDS = 3;
 const SAMPLES_PER_AAC_FRAME = 1024;
+/**
+ * A loose LRA target keeps loudnorm in linear (constant-gain) mode. With a tight target (11 LU) the
+ * ocean swell measured 11.1 LU, loudnorm switched to dynamic mode, and it reshaped the envelopes.
+ */
+const LRA_TARGET = 20;
 
 // AAC-LC encodes whole 1024-sample frames. A loop that is a whole number of frames decodes back to
 // exactly its own length (priming skip and end padding cancel). A 60 s loop is not a whole number
@@ -148,7 +153,7 @@ async function measureLoudnorm(file) {
     '-i',
     file,
     '-af',
-    `loudnorm=I=${TARGET_LUFS}:TP=${TRUE_PEAK_MAX_DBTP}:LRA=11:print_format=json`,
+    `loudnorm=I=${TARGET_LUFS}:TP=${TRUE_PEAK_MAX_DBTP}:LRA=${LRA_TARGET}:print_format=json`,
     '-f',
     'null',
     '-',
@@ -167,7 +172,7 @@ async function measureLoudnorm(file) {
 
 function loudnormPass2(m) {
   return [
-    `loudnorm=I=${TARGET_LUFS}:TP=${TRUE_PEAK_MAX_DBTP}:LRA=11`,
+    `loudnorm=I=${TARGET_LUFS}:TP=${TRUE_PEAK_MAX_DBTP}:LRA=${LRA_TARGET}`,
     `measured_I=${m.I}:measured_TP=${m.TP}:measured_LRA=${m.LRA}:measured_thresh=${m.thresh}`,
     `offset=${m.offset}:linear=true:print_format=summary`,
   ].join(':');
