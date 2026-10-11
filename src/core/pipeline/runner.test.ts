@@ -1,12 +1,16 @@
+import type { Stage } from '@/core/domain';
+import type { LlmRequest } from '@/core/llm/transport';
+
 import { CHAPTER_ID, createFakePorts, MODELS, mp3Bytes } from './__fixtures__/fake-ports';
 import { articleHtml, extractFixture, longText } from './__fixtures__/pages';
 import { runChapter } from './runner';
 
 import type { PipelineEvent } from './context';
-import type { Stage } from '@/core/domain';
-import type { LlmRequest } from '@/core/llm/transport';
 
-const URL_SOURCE = { kind: 'url', url: 'https://coastalcourier.example/weather/harbour-storm' } as const;
+const URL_SOURCE = {
+  kind: 'url',
+  url: 'https://coastalcourier.example/weather/harbour-storm',
+} as const;
 const PASTED = 'The sea was calm. The boats came in at dusk. Ada waited on the quay for the post.';
 
 /** Collects events in order, for assertions on the sequence of stages. */
@@ -78,7 +82,12 @@ describe('runChapter: the happy path', () => {
     const pages = [page(1), page(2), page(3), page(4)];
     const fake = createFakePorts({
       source: { kind: 'pdf', fileUri: 'file:///notes.pdf', fileName: 'Harbour Notes.pdf' },
-      pdf: { text: pages.join('\n'), pages, model: 'pdf/parser', usage: { promptTokens: 1, completionTokens: 1, costUsd: 0.002 } },
+      pdf: {
+        text: pages.join('\n'),
+        pages,
+        model: 'pdf/parser',
+        usage: { promptTokens: 1, completionTokens: 1, costUsd: 0.002 },
+      },
     });
 
     const outcome = await runChapter(CHAPTER_ID, fake.ports);
@@ -101,7 +110,9 @@ describe('runChapter: the happy path', () => {
     expect(outcome.status).toBe('ready');
     expect(fake.chapter().title).toBe('Pasted');
     expect(fake.state.fetched).toEqual([]);
-    expect(fake.state.llmCalls.map((c) => c.request.jsonSchema?.name)).toEqual(['chapter_analysis']);
+    expect(fake.state.llmCalls.map((c) => c.request.jsonSchema?.name)).toEqual([
+      'chapter_analysis',
+    ]);
   });
 
   it('keeps a title the user typed', async () => {
@@ -113,7 +124,10 @@ describe('runChapter: the happy path', () => {
   it('reports a missing chapter as a failure without touching any job', async () => {
     const fake = createFakePorts();
     const outcome = await runChapter('0'.repeat(26), fake.ports);
-    expect(outcome).toMatchObject({ status: 'failed', error: { code: 'UNKNOWN', retryable: false } });
+    expect(outcome).toMatchObject({
+      status: 'failed',
+      error: { code: 'UNKNOWN', retryable: false },
+    });
     expect(fake.state.jobs.size).toBe(0);
   });
 });
@@ -154,7 +168,10 @@ describe('runChapter: extraction routes', () => {
       html: articleHtml(6),
       llm: (request) =>
         request.jsonSchema?.name === 'index_selection'
-          ? { text: '{"keep":[0,1,2]}', usage: { promptTokens: 50, completionTokens: 5, costUsd: 0.0001 } }
+          ? {
+              text: '{"keep":[0,1,2]}',
+              usage: { promptTokens: 50, completionTokens: 5, costUsd: 0.0001 },
+            }
           : undefined,
     });
 
@@ -166,7 +183,9 @@ describe('runChapter: extraction routes', () => {
     expect(text).toContain('day 2');
     expect(text).not.toContain('day 4');
     expect(fake.job('clean')).toMatchObject({ status: 'done', model: MODELS.cleanup });
-    const selection = fake.state.llmCalls.find((c) => c.request.jsonSchema?.name === 'index_selection');
+    const selection = fake.state.llmCalls.find(
+      (c) => c.request.jsonSchema?.name === 'index_selection',
+    );
     expect(selection?.model).toBe(MODELS.cleanup);
     expect(fake.state.ledger.filter((e) => e.stage === 'extract')).toHaveLength(1);
   });
@@ -176,7 +195,9 @@ describe('runChapter: extraction routes', () => {
       source: URL_SOURCE,
       html: articleHtml(6),
       llm: (request) =>
-        request.jsonSchema?.name === 'index_selection' ? { text: 'not json at all', usage: { promptTokens: 1, completionTokens: 1, costUsd: 0 } } : undefined,
+        request.jsonSchema?.name === 'index_selection'
+          ? { text: 'not json at all', usage: { promptTokens: 1, completionTokens: 1, costUsd: 0 } }
+          : undefined,
     });
     const outcome = await runChapter(CHAPTER_ID, fake.ports);
     expect(outcome.status).toBe('ready');
@@ -184,8 +205,18 @@ describe('runChapter: extraction routes', () => {
   });
 
   it('fails a scanned PDF with a typed error, then re-runs it with OCR when asked', async () => {
-    const scan = { text: 'Scan 1', pages: ['Scan 1', '', ''], model: 'pdf/parser', usage: { promptTokens: 1, completionTokens: 1, costUsd: 0 } };
-    const ocr = { text: longText(6, 300), pages: [longText(6, 300)], model: 'pdf/ocr', usage: { promptTokens: 1, completionTokens: 1, costUsd: 0.5 } };
+    const scan = {
+      text: 'Scan 1',
+      pages: ['Scan 1', '', ''],
+      model: 'pdf/parser',
+      usage: { promptTokens: 1, completionTokens: 1, costUsd: 0 },
+    };
+    const ocr = {
+      text: longText(6, 300),
+      pages: [longText(6, 300)],
+      model: 'pdf/ocr',
+      usage: { promptTokens: 1, completionTokens: 1, costUsd: 0.5 },
+    };
     const fake = createFakePorts({
       source: { kind: 'pdf', fileUri: 'file:///scan.pdf', fileName: 'Scan.pdf' },
       pdf: (engine) => (engine === 'mistral-ocr' ? ocr : scan),
@@ -221,13 +252,18 @@ describe('runChapter: translation', () => {
       sourceText: PASTED,
       targetLang: 'it',
       llm: (request) => {
-        if (request.jsonSchema?.name === 'chapter_translation' && failTranslation) throw networkFailure();
+        if (request.jsonSchema?.name === 'chapter_translation' && failTranslation)
+          throw networkFailure();
         return undefined;
       },
     });
 
     const first = await runChapter(CHAPTER_ID, fake.ports);
-    expect(first).toMatchObject({ status: 'failed', stage: 'translate', error: { code: 'NETWORK' } });
+    expect(first).toMatchObject({
+      status: 'failed',
+      stage: 'translate',
+      error: { code: 'NETWORK' },
+    });
     expect(fake.chapter().status).toBe('failed');
     expect(callsNamed(fake.state, 'chapter_analysis')).toBe(1);
 
@@ -256,7 +292,9 @@ describe('runChapter: changing settings', () => {
     const llmCallsBefore = fake.state.llmCalls.length;
 
     const unchanged = recorder();
-    expect((await runChapter(CHAPTER_ID, fake.ports, { onEvent: unchanged.onEvent })).status).toBe('ready');
+    expect((await runChapter(CHAPTER_ID, fake.ports, { onEvent: unchanged.onEvent })).status).toBe(
+      'ready',
+    );
     expect(fake.state.ttsCalls).toHaveLength(firstTtsCalls);
     expect(stageStatuses(unchanged.events)).toEqual([
       'extract:skipped',
@@ -268,7 +306,9 @@ describe('runChapter: changing settings', () => {
 
     fake.state.narration = { ...fake.state.narration, voice: 'Puck' };
     const changed = recorder();
-    expect((await runChapter(CHAPTER_ID, fake.ports, { onEvent: changed.onEvent })).status).toBe('ready');
+    expect((await runChapter(CHAPTER_ID, fake.ports, { onEvent: changed.onEvent })).status).toBe(
+      'ready',
+    );
 
     expect(fake.state.llmCalls).toHaveLength(llmCallsBefore);
     expect(fake.state.fetched).toHaveLength(0);
@@ -353,7 +393,9 @@ describe('runChapter: usage and cost accounting', () => {
       completionTokens: 40,
       costUsd: 0.001,
     });
-    expect(ledgerByStage('narrate')).toHaveLength(fake.state.segments.get(CHAPTER_ID)?.length ?? -1);
+    expect(ledgerByStage('narrate')).toHaveLength(
+      fake.state.segments.get(CHAPTER_ID)?.length ?? -1,
+    );
     for (const entry of ledgerByStage('narrate')) {
       expect(entry.audioSeconds).toBeGreaterThan(0);
       expect(entry.costUsd).toBeGreaterThan(0);

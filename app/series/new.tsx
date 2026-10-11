@@ -1,28 +1,25 @@
-import { Stack } from 'expo-router';
-import { useState } from 'react';
+import { router, Stack } from 'expo-router';
 
-import { Button } from '@/ui/button';
-import { CoverImage } from '@/ui/cover-image';
+import { SeriesForm } from '@/features/series/series-form';
+import { createSeries } from '@/features/series/series-service';
+import { useSeriesDeps } from '@/features/series/use-series-deps';
 import { Screen } from '@/ui/screen';
-import { TextField } from '@/ui/text-field';
 
 export default function NewSeriesScreen() {
-  const [name, setName] = useState('');
+  const deps = useSeriesDeps();
 
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: 'New series', presentation: 'modal' }} />
-      <Screen edges={['bottom']}>
-        <CoverImage uri={null} title={name || 'New series'} />
-        <TextField
-          label="Series name"
-          helper="You can change this later."
-          value={name}
-          onChangeText={setName}
-          returnKeyType="done"
-          maxLength={80}
+      <Screen edges={['bottom']} scrollable={false}>
+        <SeriesForm
+          initial={{ title: '', coverUri: null, coverTint: null, sourceLang: null, targetLang: null }}
+          submitLabel="Create series"
+          onSubmit={(values) => {
+            const seriesId = createSeries(deps, values);
+            router.replace({ pathname: '/series/[seriesId]', params: { seriesId } });
+          }}
         />
-        <Button label="Create series" onPress={() => undefined} disabled={name.trim() === ''} />
       </Screen>
     </>
   );

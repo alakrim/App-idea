@@ -486,4 +486,3 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     job: (stage, id = CHAPTER_ID) => state.jobs.get(jobKey(id, stage)),
   };
 }
-

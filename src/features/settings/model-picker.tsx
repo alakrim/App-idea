@@ -177,7 +177,6 @@ export function ModelPicker({
 
 const styles = StyleSheet.create({
   content: {
-    paddingHorizontal: space.lg,
     paddingBottom: space.xxl,
     gap: space.xs,
   },

@@ -7,7 +7,7 @@ import { usePressScale } from '@/ui/use-press-scale';
 import { CoverImage } from '@/ui/cover-image';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
-import { minTouchTarget, space } from '@/ui/tokens';
+import { radius, space } from '@/ui/tokens';
 
 import type { SeriesSummary } from '@/db/repos/series-repo';
 
@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
   cell: {
     flex: 1,
     gap: space.sm,
-    minHeight: minTouchTarget,
   },
   coverFrame: {
     width: '100%',
@@ -85,7 +84,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   coverEdge: {
-    borderRadius: 10,
+    borderRadius: radius.md,
     borderWidth: StyleSheet.hairlineWidth,
   },
   track: {

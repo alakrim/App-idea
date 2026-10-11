@@ -110,3 +110,12 @@ export function useModelCatalog(
 
   return { state, reload: () => setAttempt((current) => current + 1) };
 }
+
+/**
+ * True when a catalog has loaded and does not offer `modelId`. The saved model then needs a
+ * replacement. Unloaded or offline-without-cache states never count as missing.
+ */
+export function isModelMissing(state: CatalogState, modelId: string): boolean {
+  if (state.status !== 'live' && state.status !== 'cached') return false;
+  return !state.models.some((model) => model.id === modelId);
+}

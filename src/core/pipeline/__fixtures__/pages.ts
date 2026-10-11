@@ -23,6 +23,9 @@ export function articleHtml(paragraphs: number): string {
 export function longText(count: number, chars: number): string {
   return Array.from({ length: count }, (_, n) => {
     const sentence = `Paragraph ${n} describes the sea, the harbour and the people who walk along the quay at dusk. `;
-    return sentence.repeat(Math.ceil(chars / sentence.length)).slice(0, chars).trim();
+    return sentence
+      .repeat(Math.ceil(chars / sentence.length))
+      .slice(0, chars)
+      .trim();
   }).join('\n\n');
 }

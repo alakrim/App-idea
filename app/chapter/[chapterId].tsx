@@ -1,20 +1,14 @@
-import { Stack } from 'expo-router';
-import { BookOpen } from 'lucide-react-native';
+import { Stack, useLocalSearchParams } from 'expo-router';
 
-import { EmptyState } from '@/ui/empty-state';
-import { Screen } from '@/ui/screen';
+import { ChapterScreen } from '@/features/chapter/chapter-screen';
 
-export default function ChapterScreen() {
+export default function ChapterRoute() {
+  const { chapterId } = useLocalSearchParams<{ chapterId: string }>();
+
   return (
     <>
-      <Stack.Screen options={{ headerShown: true, title: 'Chapter' }} />
-      <Screen edges={['bottom']} scrollable={false}>
-        <EmptyState
-          icon={BookOpen}
-          title="Nothing to read yet"
-          description="Extraction and narration progress show up here once the chapter is processed."
-        />
-      </Screen>
+      <Stack.Screen options={{ headerShown: false }} />
+      <ChapterScreen chapterId={chapterId} />
     </>
   );
 }
