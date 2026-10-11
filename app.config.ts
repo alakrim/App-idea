@@ -52,6 +52,7 @@ const config: ExpoConfig = {
       },
     ],
     'expo-font',
+    './plugins/with-android-release-size',
     // Ambience beds (ADR-0002). Voice owns the media session via expo-audio.
     ['react-native-audio-api', { iosBackgroundMode: true, androidForegroundService: false }],
   ],
