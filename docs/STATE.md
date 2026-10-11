@@ -76,3 +76,5 @@ _Last updated: 2026-10-11 by architect_
 
 ## Verified wave-2 results
 - B2 UI shell: 27 app tests, visually reviewed via web export + Playwright (dark/light). B3 DB: 47 tests; B4 text: 218 tests; B5 OpenRouter: 84 tests; B6 extract: 171 tests; B7 analysis/memory: 117 tests (all re-run by architect).
+- [F5+B7] **LLM transport v2** (for the pipeline brief): create `src/core/llm/transport.ts` with `LlmTransport = (req: {system, user, jsonSchema?: {name, schema}, signal?}) => Promise<{text, usage: {promptTokens, completionTokens, costUsd|null}}>`. Move the shared `stripCodeFence`/tolerant parse there. Migrate analysis and translate to it so real usage flows to the ledger and in-flight calls are abortable. The app adapter wraps `openrouter.chatJson`/`chatText`.
+- [F5] Persist `partialIdx` (untranslated sentences), e.g. `sentences.translated = null` plus a chapter-level flag, so the UI can show it.
