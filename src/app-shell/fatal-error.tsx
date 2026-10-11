@@ -1,6 +1,7 @@
+import * as Clipboard from 'expo-clipboard';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
-import { Clipboard, Platform, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 
 import { ErrorState } from '@/ui/error-state';
 import { useTheme } from '@/ui/theme';
@@ -46,7 +47,7 @@ export function FatalError({ title, message, details, onRetry }: FatalErrorProps
   }, [copied]);
 
   const copyDetails = () => {
-    Clipboard.setString(details);
+    void Clipboard.setStringAsync(details);
     setCopied(true);
   };
 

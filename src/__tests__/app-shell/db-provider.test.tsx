@@ -1,7 +1,8 @@
 import { act, fireEvent, screen, waitFor } from '@testing-library/react-native';
+import * as Clipboard from 'expo-clipboard';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { Clipboard, Text } from 'react-native';
+import { Text } from 'react-native';
 
 import { renderThemed } from '@/__tests__/helpers/render-themed';
 import { DbProvider, useDb } from '@/app-shell/db-provider';
@@ -125,7 +126,9 @@ describe('DbProvider', () => {
 
   it('copies diagnostics that name the failure but never echo settings', async () => {
     migrationsMock.mockReturnValue({ success: false, error: new Error('locked') });
-    const setString = jest.spyOn(Clipboard, 'setString').mockImplementation(() => undefined);
+    const setString = jest
+      .spyOn(Clipboard, 'setStringAsync')
+      .mockImplementation(() => Promise.resolve(true));
 
     try {
       await renderThemed(
