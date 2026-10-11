@@ -80,33 +80,39 @@ export function KeyForm({
 
   return (
     <View style={styles.form}>
-      <Button
-        label="Get a key on openrouter.ai"
-        variant="ghost"
-        icon={ExternalLink}
-        onPress={openKeysPage}
-        accessibilityHint="Opens the OpenRouter keys page in your browser"
-      />
+      {connected ? null : (
+        <View style={styles.linkRow}>
+          <Button
+            label="Get a key on openrouter.ai"
+            variant="ghost"
+            icon={ExternalLink}
+            onPress={openKeysPage}
+            accessibilityHint="Opens the OpenRouter keys page in your browser"
+          />
+        </View>
+      )}
 
-      <TextField
-        label="OpenRouter key"
-        placeholder="sk-or-…"
-        value={draft}
-        onChangeText={(next) => {
-          setDraft(next);
-          if (connection.status === 'failed') onReset();
-        }}
-        secure
-        editable={!checking && !connected}
-        autoCorrect={false}
-        autoCapitalize="none"
-        returnKeyType="done"
-        onSubmitEditing={() => {
-          if (canSubmit) void submit();
-        }}
-        error={connection.status === 'failed' ? connection.message : undefined}
-        helper={connected ? undefined : 'Keys start with sk-or-. Lectio checks it before saving.'}
-      />
+      {connected ? null : (
+        <TextField
+          label="OpenRouter key"
+          placeholder="sk-or-…"
+          value={draft}
+          onChangeText={(next) => {
+            setDraft(next);
+            if (connection.status === 'failed') onReset();
+          }}
+          secure
+          editable={!checking && !connected}
+          autoCorrect={false}
+          autoCapitalize="none"
+          returnKeyType="done"
+          onSubmitEditing={() => {
+            if (canSubmit) void submit();
+          }}
+          error={connection.status === 'failed' ? connection.message : undefined}
+          helper={connected ? undefined : 'Keys start with sk-or-. Lectio checks it before saving.'}
+        />
+      )}
 
       {connected ? null : (
         <View style={styles.actions}>
@@ -188,6 +194,9 @@ export function limitLine(account: KeyAccount): string {
 const styles = StyleSheet.create({
   form: {
     gap: space.md,
+  },
+  linkRow: {
+    alignSelf: 'flex-start',
   },
   actions: {
     gap: space.sm,

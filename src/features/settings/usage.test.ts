@@ -2,7 +2,12 @@ import { breakdown, buildUsageSummary, DAY_MS, sumCounts, utcDayStart } from './
 
 describe('usage aggregation', () => {
   it('sums calls and cost, and gives zeros for no rows', () => {
-    expect(sumCounts([{ calls: 2, costUsd: 0.25 }, { calls: 1, costUsd: 0.5 }])).toEqual({ calls: 3, costUsd: 0.75 });
+    expect(
+      sumCounts([
+        { calls: 2, costUsd: 0.25 },
+        { calls: 1, costUsd: 0.5 },
+      ]),
+    ).toEqual({ calls: 3, costUsd: 0.75 });
     expect(sumCounts([])).toEqual({ calls: 0, costUsd: 0 });
   });
 

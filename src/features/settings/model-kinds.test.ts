@@ -1,10 +1,9 @@
-import { DEFAULT_MODELS, DEFAULT_NARRATION } from '@/core/defaults';
-import { DEFAULT_SETTINGS } from '@/core/defaults';
-
-import { modelKindConfig, parseModelKind } from './model-kinds';
-import { isModelMissing, readCachedCatalog } from './model-catalog';
-
+import { DEFAULT_MODELS, DEFAULT_NARRATION , DEFAULT_SETTINGS } from '@/core/defaults';
 import type { OpenRouterModel } from '@/services/openrouter';
+
+import { isModelMissing, readCachedCatalog } from './model-catalog';
+import { modelKindConfig, parseModelKind } from './model-kinds';
+
 
 function text(id: string, parameters: string[]): OpenRouterModel {
   return {
@@ -34,18 +33,30 @@ describe('model picker kinds', () => {
 
   it('writes the picked model into the matching setting only', () => {
     const picked = text('vendor/new-model', ['structured_outputs']);
-    expect(modelKindConfig('translation', DEFAULT_SETTINGS).patchFor(picked)).toEqual({ translationModel: 'vendor/new-model' });
-    expect(modelKindConfig('cleanup', DEFAULT_SETTINGS).patchFor(picked)).toEqual({ cleanupModel: 'vendor/new-model' });
+    expect(modelKindConfig('translation', DEFAULT_SETTINGS).patchFor(picked)).toEqual({
+      translationModel: 'vendor/new-model',
+    });
+    expect(modelKindConfig('cleanup', DEFAULT_SETTINGS).patchFor(picked)).toEqual({
+      cleanupModel: 'vendor/new-model',
+    });
   });
 
   it('recommends the defaults from core/defaults', () => {
-    expect(modelKindConfig('translation', DEFAULT_SETTINGS).recommendedId).toBe(DEFAULT_MODELS.translation);
-    expect(modelKindConfig('narration', DEFAULT_SETTINGS).recommendedId).toBe(DEFAULT_NARRATION.model);
+    expect(modelKindConfig('translation', DEFAULT_SETTINGS).recommendedId).toBe(
+      DEFAULT_MODELS.translation,
+    );
+    expect(modelKindConfig('narration', DEFAULT_SETTINGS).recommendedId).toBe(
+      DEFAULT_NARRATION.model,
+    );
   });
 
   it('keeps the saved narration voice when the picked model offers it', () => {
     const config = modelKindConfig('narration', DEFAULT_SETTINGS);
-    const model: OpenRouterModel = { ...text('google/gemini-3.8-flash-lite-tts', []), outputModalities: ['speech'], supportedVoices: ['Kore', 'Puck'] };
+    const model: OpenRouterModel = {
+      ...text('google/gemini-3.8-flash-lite-tts', []),
+      outputModalities: ['speech'],
+      supportedVoices: ['Kore', 'Puck'],
+    };
     expect(config.patchFor(model).narration?.voice).toBe('Kore');
   });
 });

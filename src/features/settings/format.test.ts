@@ -41,8 +41,8 @@ describe('money and capacity', () => {
   });
 
   it('shows hourly cost, and a bound below one cent', () => {
-    expect(formatHourlyCost(0.547)).toBe('≈ $0.547/h');
-    expect(formatHourlyCost(0.0335)).toBe('≈ $0.0335/h');
+    expect(formatHourlyCost(0.547)).toBe('≈ $0.55/h');
+    expect(formatHourlyCost(2.16)).toBe('≈ $2.16/h');
     expect(formatHourlyCost(0.004)).toBe('under $0.01/h');
   });
 

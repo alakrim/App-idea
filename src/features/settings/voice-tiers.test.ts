@@ -1,4 +1,5 @@
 import { DEFAULT_NARRATION } from '@/core/defaults';
+import type { OpenRouterModel } from '@/services/openrouter';
 
 import {
   buildVoiceTiers,
@@ -9,7 +10,6 @@ import {
   tierForHourlyCost,
 } from './voice-tiers';
 
-import type { OpenRouterModel } from '@/services/openrouter';
 
 function speech(id: string, prompt: number, completion: number, voices = 10): OpenRouterModel {
   return {
@@ -38,7 +38,10 @@ describe('hourly narration cost', () => {
 
   it('prices a token-priced model by audio tokens (25 a second) plus text tokens', () => {
     // 54k chars = 3600 s = 90k audio tokens at $6e-6, plus 13.5k text tokens at $5e-7.
-    expect(hourlyNarrationCost(GEMINI_FLASH_LITE)).toBeCloseTo(90_000 * 0.000006 + 13_500 * 0.0000005, 6);
+    expect(hourlyNarrationCost(GEMINI_FLASH_LITE)).toBeCloseTo(
+      90_000 * 0.000006 + 13_500 * 0.0000005,
+      6,
+    );
   });
 });
 
@@ -61,7 +64,9 @@ describe('tiers', () => {
 
   it('falls back to the cheapest mid-band model when the default has disappeared', () => {
     const tiers = buildVoiceTiers([KOKORO, ORPHEUS, ELEVEN_V3], 'google/gemini-3.8-flash-lite-tts');
-    expect(tiers.find((tier) => tier.id === 'recommended')?.model.id).toBe('canopylabs/orpheus-3b-0.1-ft');
+    expect(tiers.find((tier) => tier.id === 'recommended')?.model.id).toBe(
+      'canopylabs/orpheus-3b-0.1-ft',
+    );
   });
 
   it('leaves out a tier with no candidate instead of guessing', () => {
@@ -76,10 +81,16 @@ describe('tiers', () => {
 });
 
 describe('narration settings for a model', () => {
-  const current = { provider: 'openrouter' as const, model: 'hexgrad/kokoro-82m', voice: 'voice-3', style: 'calm', speed: 1 };
+  const current = {
+    provider: 'openrouter' as const,
+    model: 'hexgrad/kokoro-82m',
+    voice: 'voice-9',
+    style: 'calm',
+    speed: 1,
+  };
 
   it('keeps the voice when the new model has it', () => {
-    expect(narrationForModel(current, GEMINI_FLASH_LITE).voice).toBe('voice-3');
+    expect(narrationForModel(current, GEMINI_FLASH_LITE).voice).toBe('voice-9');
   });
 
   it('uses the first voice of the new model otherwise', () => {

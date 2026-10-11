@@ -19,7 +19,7 @@ export default function TabsLayout() {
       screenOptions={{ headerShown: false }}
       tabBar={(props) => (
         <View>
-          <MiniPlayer nowPlaying={null} />
+          <MiniPlayer />
           <TabBar {...props} />
         </View>
       )}

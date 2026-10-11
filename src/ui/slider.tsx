@@ -77,9 +77,8 @@ export function Slider({
   useEffect(() => {
     lastEmitted.current = value;
     // Follow external changes (presets, resets) with a spring, not a jump.
-     
+
     fraction.value = springTo(toFraction(value, min, max), 'gentle');
-     
   }, [value, min, max, fraction, springTo]);
 
   const emit = useMemo(

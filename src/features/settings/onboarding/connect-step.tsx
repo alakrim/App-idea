@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: space.lg,
+    paddingTop: space.xxl,
     gap: space.lg,
   },
   copy: {
