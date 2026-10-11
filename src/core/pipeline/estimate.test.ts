@@ -92,6 +92,7 @@ describe('translationExpansion', () => {
 describe('narration cost by script on a token-priced model', () => {
   // Audio is billed per second, so the same character count costs more when it is slower to speak.
   const tokenPricedNarration = {
+    id: MODELS.narration,
     pricing: { prompt: 0.0000005, completion: 0.000006 },
     supportsStyle: true,
   };

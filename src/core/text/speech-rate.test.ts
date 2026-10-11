@@ -81,9 +81,10 @@ describe('estimateSpeechSecondsForChars', () => {
     expect(estimateSpeechSecondsForChars(14_000, 'en')).toBeCloseTo(1_000, 6);
   });
 
-  it('falls back to the Latin rate for an unknown or missing language', () => {
-    expect(estimateSpeechSecondsForChars(14_000)).toBeCloseTo(1_000, 6);
-    expect(estimateSpeechSecondsForChars(14_000, 'xx')).toBeCloseTo(1_000, 6);
+  it('uses the ADR-0003 hour (15 a second) for an unknown or missing language', () => {
+    expect(estimateSpeechSecondsForChars(54_000)).toBeCloseTo(3_600, 6);
+    expect(estimateSpeechSecondsForChars(15_000, 'xx')).toBeCloseTo(1_000, 6);
+    expect(estimateSpeechSecondsForChars(15_000, null)).toBeCloseTo(1_000, 6);
   });
 
   it('makes a zh chapter about three times as long as the same count of en characters', () => {

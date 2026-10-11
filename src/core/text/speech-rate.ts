@@ -18,6 +18,7 @@
  * Only letters, digits and combining marks are counted. Whitespace, punctuation and symbols take
  * no narration time. Calibrate these against measured WAV durations once live narration runs.
  * Callers that only have a character count, such as the cost preview, pass a language to pick a rate.
+ * With no language they use the ADR-0003 hour (54,000 characters, 15 a second).
  */
 
 export type SpeechRate = 'latin' | 'han' | 'japanese' | 'hangul' | 'thai' | 'other';
@@ -146,10 +147,16 @@ export function estimateSpeechSeconds(text: string, lang?: string | null): numbe
 }
 
 /**
- * Estimated narration seconds for a count of characters whose script is not known, such as a
- * translated chapter's length. Unknown languages use the Latin rate, which is the common case.
+ * Characters a second for a count with no language. It is the ADR-0003 convention of 54,000
+ * characters per hour of narration. The settings voice tiers are priced on that hour, so they keep
+ * it. Chapters always pass their spoken language, which selects a script-aware rate.
  */
+export const HOUR_CONVENTION_CHARS_PER_SECOND = 15;
+
+/** Estimated narration seconds for a count of characters, where the language is known or not. */
 export function estimateSpeechSecondsForChars(count: number, lang?: string | null): number {
-  const rate = speechRateForLanguage(lang) ?? 'latin';
-  return count / SPEECH_CHARS_PER_SECOND[rate];
+  const rate = speechRateForLanguage(lang);
+  return rate === null
+    ? count / HOUR_CONVENTION_CHARS_PER_SECOND
+    : count / SPEECH_CHARS_PER_SECOND[rate];
 }

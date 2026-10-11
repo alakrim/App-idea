@@ -88,6 +88,8 @@ export function ChapterView({
     paragraphs: new Map(),
   });
   const pendingSentence = useRef<number | null>(null);
+  // The deep-linked sentence already scrolled to. A later re-read of the chapter must not scroll again.
+  const scrolledSentence = useRef<number | null>(null);
   const highlight = useSentenceFocus(focusSentence, reduced);
   const state = rowStateOf(chapter, progress);
   const badge = STATE_BADGE[state];
@@ -110,6 +112,7 @@ export function ChapterView({
     const paragraphY = known.get(paragraphIdx);
     if (section === null || reading === null || paragraphY === undefined) return;
     pendingSentence.current = null;
+    scrolledSentence.current = sentenceIdx;
     scrollRef.current?.scrollTo({
       y: Math.max(0, section + reading + paragraphY - space.xl),
       animated: !reduced,
@@ -117,6 +120,12 @@ export function ChapterView({
   }, [paragraphs, reduced]);
 
   useEffect(() => {
+    if (focusSentence === null) {
+      pendingSentence.current = null;
+      scrolledSentence.current = null;
+      return;
+    }
+    if (scrolledSentence.current === focusSentence) return;
     pendingSentence.current = focusSentence;
     scrollToPending();
   }, [focusSentence, scrollToPending]);
@@ -210,6 +219,7 @@ export function ChapterView({
         {paragraphs.length > 0 ? (
           <Section
             title="Text"
+            testID="chapter-text-section"
             onLayout={(event) => {
               offsets.current.section = event.nativeEvent.layout.y;
               scrollToPending();
@@ -224,6 +234,7 @@ export function ChapterView({
               />
             ) : null}
             <View
+              testID="chapter-reading-text"
               onLayout={(event: LayoutChangeEvent) => {
                 offsets.current.reading = event.nativeEvent.layout.y;
                 scrollToPending();
@@ -265,11 +276,12 @@ interface SectionProps {
   trailing?: string;
   children: ReactNode;
   onLayout?: (event: LayoutChangeEvent) => void;
+  testID?: string;
 }
 
-function Section({ title, trailing, children, onLayout }: SectionProps) {
+function Section({ title, trailing, children, onLayout, testID }: SectionProps) {
   return (
-    <View style={styles.section} onLayout={onLayout}>
+    <View style={styles.section} onLayout={onLayout} testID={testID}>
       <View style={styles.sectionHead}>
         <Text variant="heading" accessibilityRole="header">
           {title}

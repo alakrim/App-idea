@@ -28,10 +28,10 @@ describe('estimateSpeechCost', () => {
     expect(estimateSpeechCost(tokenPriced, 54_000, 3_600)).toBeCloseTo(0.54675, 5);
   });
 
-  it('times characters at the Latin rate (14 a second) when no seconds are given', () => {
-    // 14,000 characters = 1,000 s = 25,000 audio tokens at $6/M, plus 3,500 text tokens at $0.50/M.
-    const expected = 25_000 * 0.000006 + 3_500 * 0.0000005;
-    expect(estimateSpeechCost(tokenPriced, 14_000)).toBeCloseTo(expected, 10);
+  it('bills an hour of characters as 3,600 s when no seconds are given (ADR-0003)', () => {
+    // 54,000 characters = 3,600 s, the same hour the settings voice tiers are priced on.
+    const expected = 90_000 * 0.000006 + 13_500 * 0.0000005;
+    expect(estimateSpeechCost(tokenPriced, 54_000)).toBeCloseTo(expected, 10);
   });
 
   it('prices the seconds it is given, so a slow script costs more per character', () => {

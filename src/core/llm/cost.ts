@@ -38,7 +38,8 @@ export function estimateChatCost(
  * a per-second price (for example Seed Audio) would be misestimated.
  *
  * `seconds` is the narration length. Pass it whenever it is known (measured audio, or the
- * script-aware estimate). When it is omitted, the length is estimated from `chars` at the Latin rate.
+ * script-aware estimate). When it is omitted, the length is the ADR-0003 hour: 54,000 characters
+ * are 3,600 s, which the settings voice tiers rely on.
  */
 export function estimateSpeechCost(
   model: PricedModel,
