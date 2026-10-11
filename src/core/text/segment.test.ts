@@ -42,7 +42,7 @@ describe('segmentSentences', () => {
   it('splits a Latin paragraph and keeps abbreviations together', () => {
     expect(
       segmentSentences(
-        'Mr. Hollis stood at the window of the old post office on St. Mary\'s Road. He waited for the rain to stop.',
+        "Mr. Hollis stood at the window of the old post office on St. Mary's Road. He waited for the rain to stop.",
         'en',
         { segmenter: null },
       ),
@@ -53,10 +53,11 @@ describe('segmentSentences', () => {
   });
 
   it('normalises internal whitespace before splitting', () => {
-    expect(segmentSentences('First   sentence here.\n  Second one follows now.', undefined, { segmenter: null })).toEqual([
-      'First sentence here.',
-      'Second one follows now.',
-    ]);
+    expect(
+      segmentSentences('First   sentence here.\n  Second one follows now.', undefined, {
+        segmenter: null,
+      }),
+    ).toEqual(['First sentence here.', 'Second one follows now.']);
   });
 
   it('splits a sentence longer than 400 characters at a secondary break', () => {
@@ -76,16 +77,17 @@ describe('segmentSentences', () => {
       { segmenter: overSplittingSegmenter(calls) },
     );
     expect(calls).toHaveLength(1);
-    expect(sentences).toEqual([
-      'Mr. Hollis left.',
-      'He was very tired after the long trip home.',
-    ]);
+    expect(sentences).toEqual(['Mr. Hollis left.', 'He was very tired after the long trip home.']);
   });
 
   it('refines native output with the rule splitter, so dialogue dashes that ICU keeps are split', () => {
-    const sentences = segmentSentences('— Ciao, disse lui. — Come stai oggi? Bene, grazie a tutti.', 'it', {
-      segmenter: wholeTextSegmenter(),
-    });
+    const sentences = segmentSentences(
+      '— Ciao, disse lui. — Come stai oggi? Bene, grazie a tutti.',
+      'it',
+      {
+        segmenter: wholeTextSegmenter(),
+      },
+    );
     expect(sentences).toEqual(['— Ciao, disse lui.', '— Come stai oggi?', 'Bene, grazie a tutti.']);
   });
 
@@ -99,7 +101,9 @@ describe('segmentSentences', () => {
 
   it('falls back to the rule splitter when the native segmenter is null', () => {
     expect(
-      segmentSentences('Hello there, my friend. Good morning to everyone.', undefined, { segmenter: null }),
+      segmentSentences('Hello there, my friend. Good morning to everyone.', undefined, {
+        segmenter: null,
+      }),
     ).toEqual(['Hello there, my friend.', 'Good morning to everyone.']);
   });
 
@@ -114,9 +118,10 @@ describe('segmentSentences', () => {
   it('detects Intl.Segmenter at runtime when no segmenter option is given', () => {
     expect(typeof resolveIntlSegmenter()).toBe('function');
     expect(resolveIntlSegmenter({})).toBeNull();
-    expect(
-      segmentSentences('Mr. Hollis left. He was tired after the long trip.', 'en'),
-    ).toEqual(['Mr. Hollis left.', 'He was tired after the long trip.']);
+    expect(segmentSentences('Mr. Hollis left. He was tired after the long trip.', 'en')).toEqual([
+      'Mr. Hollis left.',
+      'He was tired after the long trip.',
+    ]);
   });
 
   it('keeps the concatenation of its sentences equal to the paragraph, modulo whitespace', () => {
@@ -130,7 +135,9 @@ describe('segmentSentences', () => {
       for (const segmenter of [null, overSplittingSegmenter([]), undefined]) {
         const sentences = segmentSentences(paragraph, undefined, { segmenter });
         expect(sentences.join('').replace(/\s/gu, '')).toBe(paragraph.replace(/\s/gu, ''));
-        expect(sentences.every((sentence) => sentence === normalizeWhitespace(sentence))).toBe(true);
+        expect(sentences.every((sentence) => sentence === normalizeWhitespace(sentence))).toBe(
+          true,
+        );
         expect(sentences.every((sentence) => sentence.length > 0)).toBe(true);
       }
     }

@@ -1,4 +1,9 @@
-import { MAX_SENTENCE_CHARS, mergeShortFragments, repairNativeFragments, splitLongSentence } from './fragments';
+import {
+  MAX_SENTENCE_CHARS,
+  mergeShortFragments,
+  repairNativeFragments,
+  splitLongSentence,
+} from './fragments';
 
 describe('mergeShortFragments', () => {
   it('attaches a Latin fragment of fewer than three words to the previous sentence', () => {

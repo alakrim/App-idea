@@ -24,7 +24,10 @@ describe('estimateSentenceOffsets', () => {
   });
 
   it('gives longer sentences a longer share of the time', () => {
-    const offsets = estimateSentenceOffsets(['Hi.', 'This sentence is much, much longer than the first.'], 10_000);
+    const offsets = estimateSentenceOffsets(
+      ['Hi.', 'This sentence is much, much longer than the first.'],
+      10_000,
+    );
     const firstShare = (offsets[1] ?? 0) - (offsets[0] ?? 0);
     expect(firstShare).toBeLessThan(10_000 / 2);
   });
@@ -43,7 +46,10 @@ describe('estimateSentenceOffsets', () => {
   });
 
   it('weights CJK sentences by their characters, ignoring spaces', () => {
-    const offsets = estimateSentenceOffsets(['雨下了整整一夜。', '林默站在破庙的门口，看着远处。'], 1000);
+    const offsets = estimateSentenceOffsets(
+      ['雨下了整整一夜。', '林默站在破庙的门口，看着远处。'],
+      1000,
+    );
     // 8 characters in the first sentence, 15 in the second (punctuation counts as a character).
     expect(offsets[1]).toBe(Math.floor((1000 * 8) / (8 + 15)));
   });

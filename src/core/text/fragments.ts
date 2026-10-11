@@ -33,7 +33,8 @@ function joinFragments(left: string, right: string): string {
   const lastOfLeft = Array.from(left).at(-1) ?? '';
   const firstOfRight = right.charAt(0);
   const cjkBoundary =
-    isUnspacedCjk(lastOfLeft.codePointAt(0) ?? 0) || isUnspacedCjk(firstOfRight.codePointAt(0) ?? 0);
+    isUnspacedCjk(lastOfLeft.codePointAt(0) ?? 0) ||
+    isUnspacedCjk(firstOfRight.codePointAt(0) ?? 0);
   return cjkBoundary ? `${left}${right}` : `${left} ${right}`;
 }
 
@@ -76,7 +77,11 @@ export function repairNativeFragments(fragments: readonly string[]): string[] {
   for (const fragment of fragments) {
     const last = out.length - 1;
     const previous = out[last];
-    if (previous !== undefined && previous.endsWith('.') && isNonTerminalPeriod(previous.slice(0, -1))) {
+    if (
+      previous !== undefined &&
+      previous.endsWith('.') &&
+      isNonTerminalPeriod(previous.slice(0, -1))
+    ) {
       out[last] = joinFragments(previous, fragment);
     } else {
       out.push(fragment);

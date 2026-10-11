@@ -13,7 +13,10 @@ export function normalizeWhitespace(s: string): string {
 const LINE_SEPARATORS = new RegExp('\\r\\n?|[\\u2028\\u2029]', 'gu');
 // Soft hyphens, zero-width spaces, bidi marks and the BOM. ZWNJ (U+200C) and ZWJ (U+200D) are kept
 // on purpose: they carry meaning in Persian, Indic scripts and emoji sequences.
-const INVISIBLE_CHARS = new RegExp('[\\u00AD\\u200B\\u200E\\u200F\\u202A-\\u202E\\u2060\\u2066-\\u2069\\uFEFF]', 'gu');
+const INVISIBLE_CHARS = new RegExp(
+  '[\\u00AD\\u200B\\u200E\\u200F\\u202A-\\u202E\\u2060\\u2066-\\u2069\\uFEFF]',
+  'gu',
+);
 const SPACE_VARIANTS = new RegExp('[\\u00A0\\u1680\\u2000-\\u200A\\u202F\\u205F\\u3000]', 'gu');
 const HORIZONTAL_SPACE_RUN = /[^\S\n]+/gu;
 const SPACES_AROUND_NEWLINE = / ?\n ?/gu;
@@ -21,7 +24,7 @@ const EXCESS_NEWLINES = /\n{3,}/gu;
 // Only prime marks are mapped: they are unambiguously quotes or apostrophes. Curly quotes are left
 // alone because they mean different things in English and CJK dialogue, and CJK punctuation is
 // never touched.
-const PRIME_QUOTES: ReadonlyArray<readonly [RegExp, string]> = [
+const PRIME_QUOTES: readonly (readonly [RegExp, string])[] = [
   [new RegExp('\\u2032', 'gu'), "'"],
   [new RegExp('\\u2033', 'gu'), '"'],
 ];
@@ -39,10 +42,13 @@ export function normalizeText(input: string): string {
     .replace(HORIZONTAL_SPACE_RUN, ' ')
     .replace(SPACES_AROUND_NEWLINE, '\n')
     .replace(EXCESS_NEWLINES, '\n\n');
-  return PRIME_QUOTES.reduce((acc, [pattern, replacement]) => acc.replace(pattern, replacement), cleaned).trim();
+  return PRIME_QUOTES.reduce(
+    (acc, [pattern, replacement]) => acc.replace(pattern, replacement),
+    cleaned,
+  ).trim();
 }
 
-const CJK_RANGES: ReadonlyArray<readonly [number, number]> = [
+const CJK_RANGES: readonly (readonly [number, number])[] = [
   [0x1100, 0x11ff], // Hangul Jamo
   [0x2e80, 0x2fdf], // CJK radicals
   [0x3040, 0x30ff], // Hiragana and Katakana
@@ -56,7 +62,7 @@ const CJK_RANGES: ReadonlyArray<readonly [number, number]> = [
   [0x20000, 0x2fa1f], // CJK extensions B to F and compatibility supplement
 ];
 
-const inRanges = (cp: number, ranges: ReadonlyArray<readonly [number, number]>): boolean =>
+const inRanges = (cp: number, ranges: readonly (readonly [number, number])[]): boolean =>
   ranges.some(([from, to]) => cp >= from && cp <= to);
 
 /** Script of a single code point, or null for spaces, digits, punctuation and symbols. */
@@ -85,7 +91,11 @@ export function scriptOfCodePoint(cp: number): Script | null {
 
 /** Hangul syllables and Jamo. Korean is word-spaced, unlike Han and kana. */
 export function isHangul(cp: number): boolean {
-  return (cp >= 0x1100 && cp <= 0x11ff) || (cp >= 0x3130 && cp <= 0x318f) || (cp >= 0xac00 && cp <= 0xd7af);
+  return (
+    (cp >= 0x1100 && cp <= 0x11ff) ||
+    (cp >= 0x3130 && cp <= 0x318f) ||
+    (cp >= 0xac00 && cp <= 0xd7af)
+  );
 }
 
 /**

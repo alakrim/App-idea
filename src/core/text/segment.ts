@@ -19,7 +19,9 @@ export interface SegmentOptions {
 }
 
 /** The `Intl.Segmenter` constructor when the runtime provides one, otherwise null. */
-export function resolveIntlSegmenter(intl: unknown = globalThis.Intl): SentenceSegmenterCtor | null {
+export function resolveIntlSegmenter(
+  intl: unknown = globalThis.Intl,
+): SentenceSegmenterCtor | null {
   const candidate = (intl as { Segmenter?: unknown } | undefined)?.Segmenter;
   return typeof candidate === 'function' ? (candidate as SentenceSegmenterCtor) : null;
 }
@@ -41,7 +43,8 @@ export function segmentSentences(
   if (text === '') return [];
 
   const ctor = options.segmenter === undefined ? resolveIntlSegmenter() : options.segmenter;
-  const native = ctor !== null && detectScript(text) !== 'cjk' ? nativeSplit(text, lang, ctor) : null;
+  const native =
+    ctor !== null && detectScript(text) !== 'cjk' ? nativeSplit(text, lang, ctor) : null;
   // Native output is refined with the rule splitter, so dialogue dashes and other breaks that ICU
   // keeps together are still split. Abbreviation repair runs first to undo ICU's over-splits.
   const pieces =

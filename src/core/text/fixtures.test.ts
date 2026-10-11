@@ -106,7 +106,9 @@ describe('fixture spot checks', () => {
     const sentences = sentenceTexts(loadChapter('it-racconto', rules));
     expect(sentences).toContain("— Chi c'è là fuori? — chiese il figlio, senza alzarsi dal letto.");
     expect(sentences).toContain("— Il Dott. Ferri passa sempre a quest'ora, con il cane.");
-    expect(sentences).toContain('«Non fidarti di lui», disse la vecchia Teresa, mettendo le mani in tasca.');
+    expect(sentences).toContain(
+      '«Non fidarti di lui», disse la vecchia Teresa, mettendo le mani in tasca.',
+    );
   });
 
   it('Brazilian Portuguese: honorifics and the URL end at the right places', () => {
@@ -122,6 +124,8 @@ describe('fixture spot checks', () => {
     expect(sentences).toContain('身后传来一个沙哑的声音。');
     expect(sentences).toContain('“再等等。”');
     expect(sentences).toContain('（本章完）');
+    expect(sentences).toContain('他在心里默念了一遍那三个字：「活下去。」');
+    expect(sentences).toContain('一遍，又一遍。');
   });
 
   it('Japanese: 「」 quotations keep their brackets and the dash-free dialogue splits', () => {

@@ -70,7 +70,11 @@ describe('buildChapterText', () => {
       '第一話　雨の日\n\n「もう帰ろう。」\n「まだだ。」彼女は首を振った。',
       'ja',
     );
-    expect(paragraphs.map((paragraph) => paragraph.kind)).toEqual(['heading', 'dialogue', 'dialogue']);
+    expect(paragraphs.map((paragraph) => paragraph.kind)).toEqual([
+      'heading',
+      'dialogue',
+      'dialogue',
+    ]);
     expect(sentences.map((sentence) => sentence.text)).toEqual([
       '第一話 雨の日',
       '「もう帰ろう。」',

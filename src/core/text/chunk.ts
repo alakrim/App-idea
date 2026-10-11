@@ -73,9 +73,7 @@ export function planTtsSegments(
     if (open && sentence.paragraphIdx !== open.paragraphIdx) {
       const previousIsTiny = (paragraphChars.get(open.paragraphIdx) ?? 0) < minChars;
       const mayContinue =
-        previousIsTiny &&
-        sentence.kind === 'text' &&
-        open.chars + sentence.charCount <= maxChars;
+        previousIsTiny && sentence.kind === 'text' && open.chars + sentence.charCount <= maxChars;
       if (!mayContinue) {
         segments.push(toSegment(open));
         open = undefined;
@@ -86,7 +84,12 @@ export function planTtsSegments(
       open = undefined;
     }
     if (!open) {
-      open = { start: sentence.idx, end: sentence.idx, chars: 0, paragraphIdx: sentence.paragraphIdx };
+      open = {
+        start: sentence.idx,
+        end: sentence.idx,
+        chars: 0,
+        paragraphIdx: sentence.paragraphIdx,
+      };
     }
     open.end = sentence.idx;
     open.chars += sentence.charCount;

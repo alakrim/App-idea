@@ -5,7 +5,19 @@ import { detectScript } from './normalize';
 const FULLWIDTH_TERMINATORS: ReadonlySet<string> = new Set(['。', '！', '？', '‼', '⁇', '⁈', '⁉']);
 /** Closing marks that stay with the sentence they end, e.g. `."` or `」`. */
 const CLOSERS_AFTER_TERMINATOR: ReadonlySet<string> = new Set([
-  '”', '’', '"', "'", '）', ')', '】', '〉', '》', '」', '』', '»', ']',
+  '”',
+  '’',
+  '"',
+  "'",
+  '）',
+  ')',
+  '】',
+  '〉',
+  '》',
+  '」',
+  '』',
+  '»',
+  ']',
 ]);
 /** Opening quote or bracket and the mark that closes it. ASCII `"` toggles and is handled apart. */
 const PAIRS: ReadonlyMap<string, string> = new Map([
@@ -19,7 +31,17 @@ const PAIRS: ReadonlyMap<string, string> = new Map([
 ]);
 /** Characters that can open a new sentence in Latin text, besides capitals and caseless letters. */
 const SENTENCE_OPENERS: ReadonlySet<string> = new Set([
-  '"', '“', '„', '«', '「', '『', '‘', '¿', '¡', '（', '(',
+  '"',
+  '“',
+  '„',
+  '«',
+  '「',
+  '『',
+  '‘',
+  '¿',
+  '¡',
+  '（',
+  '(',
 ]);
 const CASED_OR_CASELESS_LETTER = /^[\p{Lu}\p{Lt}\p{Lo}]$/u;
 const WHITESPACE = /\s/u;
@@ -56,7 +78,9 @@ export function splitByRules(paragraph: string): string[] {
     }
     const inQuote = depthBefore > 0;
     const closesQuote = inQuote && expectedClosers.length < depthBefore;
-    if (isBoundary({ text: paragraph, run, i, k, cjkMode, inQuote, closesQuote, expectedClosers })) {
+    if (
+      isBoundary({ text: paragraph, run, i, k, cjkMode, inQuote, closesQuote, expectedClosers })
+    ) {
       cuts.push(k);
     }
     i = k;
@@ -102,7 +126,8 @@ interface BoundaryContext {
 function isBoundary(c: BoundaryContext): boolean {
   // Fullwidth marks, and `!?…` in CJK text, end a sentence without a following space.
   // An ASCII period always follows the Latin rules, because Korean uses it with spaces.
-  const spaceFree = [...c.run].some((ch) => FULLWIDTH_TERMINATORS.has(ch)) || (c.cjkMode && c.run !== '.');
+  const spaceFree =
+    [...c.run].some((ch) => FULLWIDTH_TERMINATORS.has(ch)) || (c.cjkMode && c.run !== '.');
   if (spaceFree) {
     if (!c.inQuote || c.closesQuote) return true;
     return restOfOpenQuote(c) > CJK_QUOTE_MIN_REST;

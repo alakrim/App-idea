@@ -35,7 +35,8 @@ describe('toParagraphs: splitting', () => {
   });
 
   it('joins hard-wrapped prose whose lines do not end sentences', () => {
-    const text = 'the rain kept falling over the\nharbour while the boats waited\nfor the tide to turn';
+    const text =
+      'the rain kept falling over the\nharbour while the boats waited\nfor the tide to turn';
     expect(toParagraphs(text)).toHaveLength(1);
   });
 

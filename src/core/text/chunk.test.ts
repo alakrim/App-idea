@@ -5,9 +5,7 @@ import type { TtsPlanInput } from './chunk';
 import type { ParagraphKind } from './paragraphs';
 
 /** Builds plan input directly, so a test controls every paragraph length and kind. */
-function plan(
-  paragraphs: { kind: ParagraphKind; sentences: number[] }[],
-): TtsPlanInput[] {
+function plan(paragraphs: { kind: ParagraphKind; sentences: number[] }[]): TtsPlanInput[] {
   const out: TtsPlanInput[] = [];
   paragraphs.forEach((paragraph, paragraphIdx) => {
     for (const charCount of paragraph.sentences) {
@@ -122,7 +120,8 @@ describe('planTtsSegments', () => {
       return range;
     });
     expect(covered).toEqual(sentences.map((sentence) => sentence.idx));
-    for (const segment of segments) expect(segment.sentenceStart).toBeLessThanOrEqual(segment.sentenceEnd);
+    for (const segment of segments)
+      expect(segment.sentenceStart).toBeLessThanOrEqual(segment.sentenceEnd);
   });
 
   it('rejects a non-positive maxChars and a negative minChars', () => {
@@ -209,7 +208,11 @@ describe('planLlmChunks', () => {
   });
 
   it('rejects an invalid budget or overlap', () => {
-    expect(() => planLlmChunks(words(2), { maxTokens: 0, overlapSentences: 0 })).toThrow(RangeError);
-    expect(() => planLlmChunks(words(2), { maxTokens: 5, overlapSentences: -1 })).toThrow(RangeError);
+    expect(() => planLlmChunks(words(2), { maxTokens: 0, overlapSentences: 0 })).toThrow(
+      RangeError,
+    );
+    expect(() => planLlmChunks(words(2), { maxTokens: 5, overlapSentences: -1 })).toThrow(
+      RangeError,
+    );
   });
 });

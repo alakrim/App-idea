@@ -62,12 +62,21 @@ describe('splitByRules: Latin', () => {
   });
 
   it('keeps a closing quote attached to the sentence it ends', () => {
-    expect(splitByRules('He said "Stop." Then he ran.')).toEqual(['He said "Stop."', 'Then he ran.']);
-    expect(splitByRules('He said “Stop.” Then he ran.')).toEqual(['He said “Stop.”', 'Then he ran.']);
+    expect(splitByRules('He said "Stop." Then he ran.')).toEqual([
+      'He said "Stop."',
+      'Then he ran.',
+    ]);
+    expect(splitByRules('He said “Stop.” Then he ran.')).toEqual([
+      'He said “Stop.”',
+      'Then he ran.',
+    ]);
   });
 
   it('splits when a new quotation opens after a sentence end', () => {
-    expect(splitByRules('"Hello." "Goodbye," she said.')).toEqual(['"Hello."', '"Goodbye," she said.']);
+    expect(splitByRules('"Hello." "Goodbye," she said.')).toEqual([
+      '"Hello."',
+      '"Goodbye," she said.',
+    ]);
   });
 
   it('does not split an ellipsis inside an open quotation', () => {
@@ -140,10 +149,7 @@ describe('splitByRules: CJK', () => {
 
   it('splits inside a long quotation when more than forty characters follow the sentence end', () => {
     const rest = `${'あ'.repeat(45)}。`;
-    expect(splitByRules(`「それは長い。${rest}」`)).toEqual([
-      '「それは長い。',
-      `${rest}」`,
-    ]);
+    expect(splitByRules(`「それは長い。${rest}」`)).toEqual(['「それは長い。', `${rest}」`]);
   });
 
   it('splits ASCII exclamation and question marks in CJK text without a space', () => {
