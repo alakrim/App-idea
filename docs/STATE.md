@@ -10,25 +10,22 @@ _Last updated: 2026-10-11 by architect_
 |---|---|---|
 | M0 | Protocol docs, research R1–R4, architecture v1, stack decision | ✅ done (ADRs 0001–0005) |
 | M1 | Scaffold, design system + shell, domain + DB, text engine, OpenRouter client, extraction, analysis + memory | ✅ done (664 tests, verify green) |
-| M2 | Settings (API key validate + usage), Library (Series CRUD + cover), Chapter add (URL/PDF/share-intent) | not started |
+| M2 | Settings (API key validate + usage), Library (Series CRUD + cover), Chapter add (URL/PDF/text) | ✅ done (U1, U2); share-intent deferred |
 | M3 | Pipeline orchestrator: job graph, extract→clean→segment wiring, WebView fallback, PDF | not started |
 | M4 | Analysis wiring: cues + memory + codex persisted, cost preview | not started |
 | M5 | Translation + narration (TTS) + voice picker with previews + usage ledger | not started |
 | M6 | Player: AudioEngine (expo-audio voice + react-native-audio-api ambience), mixer, synced text, learner mode; procedural sound pack build | not started |
-| M7 | Ask (spoiler-safe Q&A), Vocab | not started |
+| M7 | Ask (spoiler-safe Q&A), Vocab | ✅ done (U4) |
 | M8 | Polish, accessibility, performance, EAS build, device spike S1 + probes P1/P2, Maestro E2E | not started |
 
 ## Work in flight
 | Task | Brief | Status |
 |---|---|---|
-| P1 Pipeline core (transport v2, stages, runner, queue, cost preview) | docs/briefs/P1-pipeline-core.md | running |
 | U3 Player experience (full player, synced text, learner mode) | docs/briefs/U3-player-ui.md | running |
-| U4 Ask (spoiler-safe Q&A) + Vocab | docs/briefs/U4-ask-vocab.md | running |
-| U1 Settings + onboarding UI | docs/briefs/U1-settings-onboarding.md | running |
-| U2 Library, series, add chapter, chapter view | docs/briefs/U2-library-series-chapters.md | running |
+| P2 Pipeline services: real ports + facade, end-to-end slice | docs/briefs/P2-pipeline-services.md | running |
 
 ## Next up
-- **P2** pipeline services: implement the ports (DB repos, OpenRouter transport v2 adapter, fetcher, hidden WebView extractor, PDF via file-parser, TTS, audio files), a real `PipelineFacade`, keep-awake while processing, a completion notification.
+- **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.
 - **S1 device spike** checklist (from A2): lock-screen next/prev/seek is not exposed by expo-audio 57; segment swap gap; pitch at 2×; audio session ownership expo-audio vs audio-api; interruptions; ducking latency < 100 ms; 45 min background ambience.
 
 ## UI review notes (architect, from web screenshots of B2), for the M2 feature UI brief
@@ -97,6 +94,7 @@ _Last updated: 2026-10-11 by architect_
   - Persist per-chapter run options (`from`/`force`/`pdfEngine`) with the queue.
   - Dedupe JSON parsing: `core/extract/select.ts` and `services/openrouter/json.ts` → `core/llm/json.ts`.
 - [U1] ✅ Settings + onboarding accepted (112 tests; screenshots reviewed). M8 polish: drop the duplicate "Default" badge when it equals "Recommended"; multi-line style field; ScrollView + keyboard handling on onboarding step 2 (small phones); ambience "Play a sample" once the player exposes a sample API; move the usage stage query into `usageRepo`; export the catalog snapshot schema from `services/openrouter/models.ts`.
+- [U2] ✅ Library/series/chapters accepted (74 tests; screenshots reviewed: shelf, series hero + stepper, add-chapter preview + estimate, bilingual reading). Android HBC bundle is now 11 MB.
 - [U4] ✅ Ask + Vocab accepted (89 UI + 88 repo tests; a spoiler mutation test proved the cutoff tests bite).
   **Integration (I2, after U2/U3):**
   - mount `VocabActionsProvider` in `app/_layout.tsx` (under DB + OpenRouter) so the player can save vocab
