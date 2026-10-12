@@ -422,7 +422,8 @@ describe('runChapter: usage and cost accounting', () => {
 describe('runChapter: job timing', () => {
   it('stamps a running job with its start and no finish, and a finished job with both', async () => {
     const fake = createFakePorts({ sourceText: longText(4, 300), targetLang: 'en' });
-    const seenRunning: { stage: string; startedAt: number | null; finishedAt: number | null }[] = [];
+    const seenRunning: { stage: string; startedAt: number | null; finishedAt: number | null }[] =
+      [];
 
     await runChapter(CHAPTER_ID, fake.ports, {
       onEvent: (event) => {

@@ -5,11 +5,10 @@
  * each, and the two clips are joined into one. Anything else keeps the original failure, so a
  * half-made passage is never saved.
  */
+import type { ErrorCode } from '@/core/domain';
 import { joinMp3, joinWav } from '@/core/narration/formats';
 
 import { toPipelineError } from '../errors';
-
-import type { ErrorCode } from '@/core/domain';
 
 /** Codes whose failure can change when the passage is shorter: a server error or a network failure. */
 const SPLITTABLE_CODES: readonly ErrorCode[] = ['UNKNOWN', 'NETWORK'];

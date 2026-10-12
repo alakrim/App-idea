@@ -3,7 +3,11 @@ import { runOrdered } from './ordered-pool';
 const wait = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
 
 /** A promise that the test settles by hand, so the order of completion is exact. */
-function deferred<T>(): { promise: Promise<T>; resolve: (value: T) => void; reject: (e: unknown) => void } {
+function deferred<T>(): {
+  promise: Promise<T>;
+  resolve: (value: T) => void;
+  reject: (e: unknown) => void;
+} {
   let resolve: (value: T) => void = () => undefined;
   let reject: (e: unknown) => void = () => undefined;
   const promise = new Promise<T>((res, rej) => {

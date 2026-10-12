@@ -325,14 +325,14 @@ describe('narrate stage: split-and-join fallback for one stubborn passage', () =
       detail: 'voice removed',
     });
   });
-
 });
 
 describe('narrate stage: a retry resumes at the first missing passage', () => {
   it('synthesizes no passage that was saved, and finishes the rest', async () => {
     let failing = true;
     const fake = createFakePorts({
-      sourceText: 'Alpha opens the old wooden door of the bookshop and the whole street smells of rain. Bravo follows her inside to the counter, and the lamps are lit.',
+      sourceText:
+        'Alpha opens the old wooden door of the bookshop and the whole street smells of rain. Bravo follows her inside to the counter, and the lamps are lit.',
       targetLang: null,
       tts: (text) => {
         if (failing && text.includes('Bravo')) {

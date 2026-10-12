@@ -57,3 +57,20 @@ export const SEAM_RMS_PERCENTILE = 0.99;
 export const SEAM_SPIKE_RATIO = 6;
 export const SEAM_JUMP_PERCENTILE = 0.999;
 export const MAX_PACK_BYTES = 3_000_000;
+
+// Freesound beds (A3). Real recordings are CC0 only; the curation and overrides are reviewed in git.
+export const REAL_DIR = join(REPO_ROOT, 'assets', 'ambience', 'real');
+export const REAL_MANIFEST_PATH = join(REAL_DIR, 'manifest.json');
+export const CURATION_DIR = join(REPO_ROOT, 'assets', 'ambience', 'curation');
+export const OVERRIDES_PATH = join(CURATION_DIR, 'overrides.json');
+/** Downloaded HQ previews. Git-ignored: the build re-fetches them when missing. */
+export const PREVIEW_CACHE_DIR = join(REPO_ROOT, '.cache', 'freesound');
+export const FREESOUND_BUILD_SCRIPT = 'scripts/sounds/build-freesound-pack.mjs';
+export const FREESOUND_RECIPE_VERSION = 'freesound-v1';
+/** The exact licence value Freesound reports for CC0 (the search filter name is "Creative Commons 0"). */
+export const CC0_LICENSE_URL = 'http://creativecommons.org/publicdomain/zero/1.0/';
+export const CC0_FILTER = 'license:"Creative Commons 0" duration:[30 TO 600]';
+export const MAX_REAL_PACK_BYTES = 15_000_000;
+/** Freesound allows 60 requests a minute and 2,000 a day. One request per 1.1 s keeps a safe margin. */
+export const FREESOUND_MIN_INTERVAL_MS = 1100;
+export const FREESOUND_MAX_RETRIES = 3;

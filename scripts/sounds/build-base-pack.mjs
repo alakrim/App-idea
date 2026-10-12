@@ -20,13 +20,14 @@ import { mkdir, mkdtemp, readFile, copyFile, rm, stat, writeFile } from 'node:fs
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
+import { decodeMono, measureLoudness, runFfmpeg, sha256File } from './ffmpeg-tools.mjs';
 import {
-  decodeMono,
-  measureLoudness,
-  runFfmpeg,
-  runFfmpegCapture,
-  sha256File,
-} from './ffmpeg-tools.mjs';
+  encodeLoopAac,
+  loopGraph,
+  measureLoudnorm,
+  rollLoop,
+  WINDOW_SAMPLES,
+} from './loop-recipe.mjs';
 import {
   BASE_BED_IDS,
   BUILD_SCRIPT,
@@ -46,18 +47,9 @@ import {
 const SYNTH_SECONDS = 75;
 /** The loop window starts this far into the synthesis, past the filter start-up transients. */
 const EDGE_TRIM_SECONDS = 6;
-const CROSSFADE_SECONDS = 3;
-/**
- * A loose LRA target keeps loudnorm in linear (constant-gain) mode. With a tight target (11 LU) the
- * ocean swell measured 11.1 LU, loudnorm switched to dynamic mode, and it reshaped the envelopes.
- */
-const LRA_TARGET = 20;
 
 // LOOP_SAMPLES is a whole number of AAC frames (see pack-spec.mjs), so the loop decodes to its own length.
-const CROSSFADE_SAMPLES = CROSSFADE_SECONDS * SAMPLE_RATE;
 const EDGE_SAMPLES = EDGE_TRIM_SECONDS * SAMPLE_RATE;
-/** Loop source window: LOOP + CROSSFADE. The R4 recipe returns window - crossfade = LOOP. */
-const WINDOW_SAMPLES = LOOP_SAMPLES + CROSSFADE_SAMPLES;
 if (EDGE_SAMPLES + WINDOW_SAMPLES > SYNTH_SECONDS * SAMPLE_RATE) {
   throw new Error('loop window does not fit inside the synthesis');
 }
@@ -165,61 +157,6 @@ function finish(fragments) {
   );
 }
 
-/** Equal-power loop: tail fades out while head fades in, then the head is replaced by the crossfade. */
-function loopGraph() {
-  const x = CROSSFADE_SECONDS;
-  return [
-    `[0:a]atrim=start_sample=${EDGE_SAMPLES}:end_sample=${EDGE_SAMPLES + WINDOW_SAMPLES},asetpts=PTS-STARTPTS,asplit=3[w1][w2][w3]`,
-    `[w1]atrim=start_sample=${LOOP_SAMPLES},asetpts=PTS-STARTPTS,afade=t=out:st=0:d=${x}:curve=qsin[tail]`,
-    `[w2]atrim=end_sample=${CROSSFADE_SAMPLES},asetpts=PTS-STARTPTS,afade=t=in:st=0:d=${x}:curve=qsin[head]`,
-    '[tail][head]amix=inputs=2:duration=first:weights=1 1:normalize=0[xf]',
-    `[w3]atrim=start_sample=${CROSSFADE_SAMPLES}:end_sample=${LOOP_SAMPLES},asetpts=PTS-STARTPTS[rest]`,
-    '[xf][rest]concat=n=2:v=0:a=1[out]',
-  ].join(';');
-}
-
-/** Adds ROLL_SAMPLES of loop audio before and after the loop, so the encoder sees no onset at its edges. */
-function rollGraph() {
-  return [
-    '[0:a]asplit=3[s1][s2][s3]',
-    `[s1]atrim=start_sample=${LOOP_SAMPLES - ROLL_SAMPLES},asetpts=PTS-STARTPTS[pre]`,
-    '[s2]asetpts=PTS-STARTPTS[body]',
-    `[s3]atrim=end_sample=${ROLL_SAMPLES},asetpts=PTS-STARTPTS[post]`,
-    '[pre][body][post]concat=n=3:v=0:a=1[out]',
-  ].join(';');
-}
-
-/** Pass 1 of two-pass loudnorm: measure the loop. */
-async function measureLoudnorm(file) {
-  const stderr = await runFfmpegCapture([
-    '-i',
-    file,
-    '-af',
-    `loudnorm=I=${TARGET_LUFS}:TP=${TRUE_PEAK_MAX_DBTP}:LRA=${LRA_TARGET}:print_format=json`,
-    '-f',
-    'null',
-    '-',
-  ]);
-  const match = /\{[^{}]*"input_i"[^{}]*\}/.exec(stderr);
-  if (!match) throw new Error(`loudnorm pass 1 produced no JSON for ${file}`);
-  const m = JSON.parse(match[0]);
-  return {
-    I: m.input_i,
-    TP: m.input_tp,
-    LRA: m.input_lra,
-    thresh: m.input_thresh,
-    offset: m.target_offset,
-  };
-}
-
-function loudnormPass2(m) {
-  return [
-    `loudnorm=I=${TARGET_LUFS}:TP=${TRUE_PEAK_MAX_DBTP}:LRA=${LRA_TARGET}`,
-    `measured_I=${m.I}:measured_TP=${m.TP}:measured_LRA=${m.LRA}:measured_thresh=${m.thresh}`,
-    `offset=${m.offset}:linear=true:print_format=summary`,
-  ].join(':');
-}
-
 async function buildBed(id, workDir) {
   const recipe = RECIPES[id];
   if (!recipe) throw new Error(`no recipe for ${id}`);
@@ -248,7 +185,7 @@ async function buildBed(id, workDir) {
     '-i',
     synth,
     '-filter_complex',
-    loopGraph(),
+    loopGraph({ startSample: EDGE_SAMPLES }),
     '-map',
     '[out]',
     '-c:a',
@@ -276,43 +213,11 @@ async function buildBed(id, workDir) {
   }
 
   const rolled = join(workDir, `${id}.rolled.wav`);
-  await runFfmpeg([
-    '-y',
-    '-i',
-    source,
-    '-filter_complex',
-    rollGraph(),
-    '-map',
-    '[out]',
-    '-c:a',
-    'pcm_f32le',
-    rolled,
-  ]);
+  await rollLoop(source, rolled);
 
   // Pass 1 measures the loop; the linear gain it implies is applied to the rolled file.
   const measured = await measureLoudnorm(source);
-  await runFfmpeg([
-    '-y',
-    '-i',
-    rolled,
-    '-af',
-    loudnormPass2(measured),
-    '-ac',
-    '1',
-    '-ar',
-    String(SAMPLE_RATE),
-    '-c:a',
-    'aac',
-    '-profile:a',
-    'aac_low',
-    '-b:a',
-    '64k',
-    '-movflags',
-    '+faststart',
-    '-f',
-    'ipod',
-    encoded,
-  ]);
+  await encodeLoopAac(rolled, measured, encoded);
 
   const samples = await decodeMono(encoded);
   if (samples.length !== 2 * ROLL_SAMPLES + LOOP_SAMPLES) {

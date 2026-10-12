@@ -104,8 +104,8 @@ export function planTtsSegments(
       segments.push({ sentenceStart: sentence.idx, sentenceEnd: sentence.idx });
       continue;
     }
-    // A sentence over a limit on its own gets a segment of its own. That segment is never the first
-    // one while a segment is open, because the open one is closed before it.
+    // A sentence over a limit on its own gets a segment of its own. If a segment is open, it is
+    // closed first, so the sentence's segment comes later and gets the full budget.
     const ownBudget = open ? maxSeconds : secondsBudget();
     if (sentence.charCount > maxChars || seconds > ownBudget + SECONDS_TOLERANCE) {
       close();

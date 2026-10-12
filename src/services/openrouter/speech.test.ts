@@ -44,9 +44,9 @@ describe('synthesizeSpeech timeout', () => {
 
   it('waits 180 seconds for a passage, which is longer than the 120-second chat timeout', async () => {
     const { client, calls } = makeClient(hangUntilAborted);
-    const outcome = client.synthesizeSpeech({ ...speechInput, input: 'Chapter one.' }).catch(
-      (caught: unknown) => caught,
-    );
+    const outcome = client
+      .synthesizeSpeech({ ...speechInput, input: 'Chapter one.' })
+      .catch((caught: unknown) => caught);
 
     await jest.advanceTimersByTimeAsync(0);
     expect(calls).toHaveLength(1);

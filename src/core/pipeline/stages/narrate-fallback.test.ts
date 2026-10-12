@@ -1,7 +1,6 @@
 import { pcmToWav, wavDurationMs } from '@/core/narration/formats';
 
 import { StageFailure } from '../errors';
-
 import {
   audioContainer,
   isSplittableFailure,
@@ -39,7 +38,9 @@ describe('isSplittableFailure', () => {
     expect(isSplittableFailure(retryable('NETWORK'))).toBe(true);
     expect(isSplittableFailure(retryable('RATE_LIMITED'))).toBe(false);
     expect(isSplittableFailure(new StageFailure('UNKNOWN', 'x', { retryable: false }))).toBe(false);
-    expect(isSplittableFailure(new StageFailure('CANCELLED', 'x', { retryable: false }))).toBe(false);
+    expect(isSplittableFailure(new StageFailure('CANCELLED', 'x', { retryable: false }))).toBe(
+      false,
+    );
     expect(isSplittableFailure(new Error('plain'))).toBe(false);
   });
 
@@ -211,6 +212,11 @@ describe('joinClips', () => {
 
   it('refuses clips of different MIME types, and clips it cannot join', () => {
     expect(joinClips(wavClip(1), mp3Clip(1_000))).toBeNull();
-    expect(joinClips({ bytes: new Uint8Array(4), mime: 'audio/x', durationMs: 1 }, { bytes: new Uint8Array(4), mime: 'audio/x', durationMs: 1 })).toBeNull();
+    expect(
+      joinClips(
+        { bytes: new Uint8Array(4), mime: 'audio/x', durationMs: 1 },
+        { bytes: new Uint8Array(4), mime: 'audio/x', durationMs: 1 },
+      ),
+    ).toBeNull();
   });
 });

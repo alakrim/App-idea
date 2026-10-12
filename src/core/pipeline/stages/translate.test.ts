@@ -1,7 +1,7 @@
+import type { LlmRequest } from '@/core/llm/transport';
+
 import { CHAPTER_ID, createFakePorts } from '../__fixtures__/fake-ports';
 import { runChapter } from '../runner';
-
-import type { LlmRequest } from '@/core/llm/transport';
 
 const wait = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
 

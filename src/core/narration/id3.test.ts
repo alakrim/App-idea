@@ -6,10 +6,7 @@ function id3v2(payload: number, options: { footer?: boolean } = {}): Uint8Array 
   const footer = options.footer === true ? 10 : 0;
   const out = new Uint8Array(10 + payload + footer);
   out.set([0x49, 0x44, 0x33, 4, 0, options.footer === true ? 0x10 : 0], 0);
-  out.set(
-    [(size >> 21) & 0x7f, (size >> 14) & 0x7f, (size >> 7) & 0x7f, size & 0x7f],
-    6,
-  );
+  out.set([(size >> 21) & 0x7f, (size >> 14) & 0x7f, (size >> 7) & 0x7f, size & 0x7f], 6);
   return out;
 }
 

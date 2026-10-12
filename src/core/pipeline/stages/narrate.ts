@@ -23,7 +23,6 @@ import { estimateSentenceOffsets } from '@/core/text/timing';
 import { StageFailure, toPipelineError } from '../errors';
 import { stableHash } from '../hash';
 import { mp3DurationMs } from '../mp3-duration';
-
 import { audioContainer, synthesizeWithFallback } from './narrate-fallback';
 
 import type { StageContext, StageDefinition } from '../context';
@@ -213,7 +212,8 @@ async function execute(ctx: StageContext, plan: Plan): Promise<void> {
 
 /**
  * Synthesizes one segment and writes its audio file. A retryable failure that survives the
- * split-and-join fallback is reported with the passage number, and its progress is kept.
+ * split-and-join fallback is reported with the passage number. The passages saved before it stay
+ * saved, so a retry resumes at this one.
  */
 async function narrateSegment(
   ctx: StageContext,

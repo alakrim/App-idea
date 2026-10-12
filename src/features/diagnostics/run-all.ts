@@ -9,7 +9,7 @@ import {
   checkSentenceSegmentation,
   type LanguageEnv,
 } from './checks-language';
-import { checkPipelineQueue } from './checks-pipeline';
+import { checkPipelineQueue, checkRecentChapters } from './checks-pipeline';
 import {
   checkFts5Trigram,
   checkSqliteVersion,
@@ -24,6 +24,7 @@ import {
   type RenderDeps,
 } from './checks-webview';
 import { runProbe } from './probe';
+import { RECENT_CHAPTERS_PROBE_ID } from './recent-chapters';
 
 import type { ProbeOutcome, ProbeResult, ProbeSpec } from './probe';
 
@@ -140,6 +141,15 @@ export const PROBES: readonly ProbeDef[] = [
       timeoutMs: SHORT,
     },
     run: (deps) => checkPipelineQueue(deps.db),
+  },
+  {
+    spec: {
+      id: RECENT_CHAPTERS_PROBE_ID,
+      group: 'pipeline',
+      label: 'Recent chapters: stage timings',
+      timeoutMs: SHORT,
+    },
+    run: (deps) => checkRecentChapters(deps.db),
   },
 ];
 
