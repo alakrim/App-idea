@@ -149,8 +149,7 @@ function fits(
   maxSeconds: number,
 ): boolean {
   return (
-    open.chars + charCount <= maxChars &&
-    open.seconds + seconds <= maxSeconds + SECONDS_TOLERANCE
+    open.chars + charCount <= maxChars && open.seconds + seconds <= maxSeconds + SECONDS_TOLERANCE
   );
 }
 

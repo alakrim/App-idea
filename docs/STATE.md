@@ -19,8 +19,7 @@ _Last updated: 2026-10-11 (night) by architect_
 | M8 | Polish, accessibility, performance, EAS build, device spike S1 + probes P1/P2, Maestro E2E | not started |
 
 ## Work in flight
-- **N2** narration reliability and speed (`docs/briefs/N2-narration-reliability-speed.md`): a haiku-worker is implementing it.
-- **R5** ambience sources beyond Freesound, and **R6** character voices plus a model-agnostic delivery layer: haiku-workers are researching them.
+- **A3** real ambience pack from Freesound CC0 (unblocked): a haiku-worker is building it.
 - Incident 3 (choppy narration) APK `lectio-0.1.0-0a238dd-arm64.apk` (apk-builds 1f0c103) went to the user, who has not reported back on it yet.
 
 ## Next up
@@ -171,3 +170,30 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
 - **Bug:** a Chinese chapter ("Ascending Jade Palace", ch. 1) failed at **narrate** with "OpenRouter is having trouble right now" (a 5xx after 3 retries). **Diagnosis:** TTS segments are cut at 600 chars for every script, and 600 Han chars is ~240 s of audio in one request, which runs into upstream gateway timeouts. Our 60 s client timeout is also too short for that. → N2.
 - **Slowness:** "even flash models take long". The pipeline is serial: analysis chunks one at a time, translation at concurrency 1, narration at 2, and first audio waits for full analysis and translation. → N2 (parallelism + stage timings in Diagnostics). Streaming and stage reordering is Phase 2 and needs an ADR.
 - **Requests:** keep researching and building real ambience from many sources (→ R5, then an implementation brief). Explore character voices and intonation independent of the TTS model (→ R6, feasibility first).
+
+## N2 accepted (2026-10-12)
+- **What it changed:**
+  - TTS segments are sized by **speech seconds** (Best/Budget 40 s, Free 120 s; first segment 12 s). Chars stay as an upper bound.
+  - Timeouts: speech 180 s, chat 120 s (per-request override in the transport).
+  - **Split-and-join fallback**: a stubborn passage of 2+ sentences that fails with a retryable error is spoken as two halves, then joined (`joinWav`/`joinMp3`).
+  - Narrate failures now name the passage: "didn't answer for passage N of M… Tap Retry".
+  - Concurrency 3 for analysis chunks, translation and narration (Free narrator: 1), through an **ordered pool** that still saves and streams segments in order.
+  - Diagnostics gets a **"Recent chapters"** block: stage durations, segment count, audio seconds.
+- **Plans** (from the fixture passages):
+  - 600-char Mandarin passage: 3 segments of 52–83 s before, 8 segments of ≤ 36 s after (first 6.8 s).
+  - 600-char English passage: 2 segments (47.6 s + 4.8 s) before, 3 segments (8.4 s + 39.2 s + 4.8 s) after.
+- **Evidence:**
+  - Worker: 24/24 mutation checks caught.
+  - Architect re-ran typecheck, lint (excluding A3's in-progress scripts), worklet:check and jest (190 suites, 1,825 tests), all green.
+  - Architect's own mutation check: the seconds budget removed gives 11 failures; restored, 66/66 pass.
+- **Accepted trade-off:** with translation concurrency 3, a chunk whose previous chunk is still in flight sees that chunk's source text but not its translation. The glossary keeps names consistent. Check quality on a real chapter.
+- **Phase 2 (needs an ADR):** stream translation into narration, or reorder stages, so first audio doesn't wait for full analysis and translation. Keep segments finished after a failure.
+- **Backlog:** after a translate failure, in-flight chunk calls may still record usage. `src/core/async/` is a new core folder; add it to CONVENTIONS.
+- **R5 done** (`docs/research/R5-ambience-sources.md`):
+  - In-app redistribution is clear for Freesound CC0, BigSoundBank (only files labelled CC0) and OpenGameArt (only files labelled CC0).
+  - ElevenLabs SFX is the only AI option that loops (paid plan).
+  - OpenRouter has no SFX model.
+- **R6 done** (`docs/research/R6-character-voices.md`):
+  - Feasible. Phases: P1 delivery directions → P2 narrator + 2–4 voices (Gemini 2-speaker) → P3 full cast.
+  - Prerequisites: hash-keyed resume, and a planner change for dialogue paragraphs (needs a listening test).
+  - Live risk: the app sends `speed` to every model. Probe it.
