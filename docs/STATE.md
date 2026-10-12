@@ -19,7 +19,9 @@ _Last updated: 2026-10-11 (night) by architect_
 | M8 | Polish, accessibility, performance, EAS build, device spike S1 + probes P1/P2, Maestro E2E | not started |
 
 ## Work in flight
-_Incident 3 (choppy narration) is fixed (254fbad). APK `lectio-0.1.0-0a238dd-arm64.apk` is on branch `apk-builds` (1f0c103): 45,770,742 bytes, SHA-256 `b0018eba…83a9`, the same debug key (`fac61745…3b9c`), Hermes bundle. Waiting on the user's device test. A3 (Freesound) is blocked by Freesound itself; the user has to choose a way forward (see "Freesound, 2026-10-11 night")._
+- **N2** narration reliability and speed (`docs/briefs/N2-narration-reliability-speed.md`): a haiku-worker is implementing it.
+- **R5** ambience sources beyond Freesound, and **R6** character voices plus a model-agnostic delivery layer: haiku-workers are researching them.
+- Incident 3 (choppy narration) APK `lectio-0.1.0-0a238dd-arm64.apk` (apk-builds 1f0c103) went to the user, who has not reported back on it yet.
 
 ## Next up
 - **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.
@@ -164,3 +166,8 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
 - Every `freesound.org`, `cdn.freesound.org` and `labs.freesound.org` URL still returns **403**. This is **Freesound refusing this cloud IP, not our network policy**: the proxy passes the tunnel through, the TLS certificate is Freesound's own (Let's Encrypt, not the proxy's interception CA), and the 403 has an empty body and no server header. Other hosts (example.com, Openverse) work.
 - Reachable alternative: **Openverse** (`api.openverse.org`) indexes Freesound's CC0 catalogue (240 CC0 results for "rain", with author, licence and landing URL). But its audio URLs point at `cdn.freesound.org`, so the files still can't be downloaded from here.
 - Options for the user: (a) run the A3 download step on their own computer (a residential IP), then push the files; (b) use other CC0 sources reachable from here (Wikimedia Commons public-domain/CC0 field recordings; quality varies); (c) keep the procedural pack for now.
+
+## 2026-10-12: user report and requests
+- **Bug:** a Chinese chapter ("Ascending Jade Palace", ch. 1) failed at **narrate** with "OpenRouter is having trouble right now" (a 5xx after 3 retries). **Diagnosis:** TTS segments are cut at 600 chars for every script, and 600 Han chars is ~240 s of audio in one request, which runs into upstream gateway timeouts. Our 60 s client timeout is also too short for that. → N2.
+- **Slowness:** "even flash models take long". The pipeline is serial: analysis chunks one at a time, translation at concurrency 1, narration at 2, and first audio waits for full analysis and translation. → N2 (parallelism + stage timings in Diagnostics). Streaming and stage reordering is Phase 2 and needs an ADR.
+- **Requests:** keep researching and building real ambience from many sources (→ R5, then an implementation brief). Explore character voices and intonation independent of the TTS model (→ R6, feasibility first).
