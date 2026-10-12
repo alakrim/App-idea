@@ -238,3 +238,59 @@ describe('analysis calls and the prompt cache', () => {
     expect(seen).toEqual([true, true]);
   });
 });
+
+describe('analyzeChapter: chunk calls in parallel', () => {
+  /** The chunk a call is for, from the index of its first sentence. */
+  const chunkOf = (user: string, size: number): number =>
+    Math.floor(Number(/^\[(\d+)\] /m.exec(user)?.[1] ?? 0) / size);
+
+  it('runs three chunk calls at once, and merges the replies in chunk order', async () => {
+    // Forty sentences of about 1,000 tokens each make four chunks of twelve sentences.
+    const long = sentences(40, 4000);
+    let inFlight = 0;
+    let maxInFlight = 0;
+    const transport: LlmTransport = async (req) => {
+      inFlight += 1;
+      maxInFlight = Math.max(maxInFlight, inFlight);
+      const chunk = chunkOf(req.user, 12);
+      // Later chunks finish first, so only the order of the merge keeps the summaries in sequence.
+      await new Promise((resolve) => setTimeout(resolve, (4 - chunk) * 5));
+      inFlight -= 1;
+      return replyWith(memoryJson(`Part ${chunk}.`));
+    };
+
+    const result = await analyzeChapter({
+      ...BASE_INPUT,
+      sentences: long,
+      callLlm: transport,
+      reduceSummary: false,
+    });
+
+    expect(result.chunkCount).toBe(4);
+    expect(maxInFlight).toBe(3);
+    const summary = result.memory.summary;
+    const positions = [0, 1, 2, 3].map((chunk) => summary.indexOf(`Part ${chunk}.`));
+    expect(positions.every((position) => position >= 0)).toBe(true);
+    expect(positions).toEqual([...positions].sort((a, b) => a - b));
+  });
+
+  it('makes no new chunk call once the signal is aborted', async () => {
+    const long = sentences(40, 4000);
+    const controller = new AbortController();
+    const { transport, calls } = scriptedTransport(() => {
+      controller.abort();
+      return memoryJson('Part.');
+    });
+
+    await expect(
+      analyzeChapter({
+        ...BASE_INPUT,
+        sentences: long,
+        callLlm: transport,
+        signal: controller.signal,
+        reduceSummary: false,
+      }),
+    ).rejects.toMatchObject({ code: 'CANCELLED' });
+    expect(calls).toHaveLength(1);
+  });
+});

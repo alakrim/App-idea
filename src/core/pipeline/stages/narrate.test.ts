@@ -7,7 +7,12 @@ import {
 import { estimateSpeechSeconds } from '@/core/text/speech-rate';
 
 import { CHAPTER_ID, createFakePorts, mp3Bytes } from '../__fixtures__/fake-ports';
+import { EN_PASSAGE_600, ZH_PASSAGE_600 } from '../__fixtures__/narration-passages';
+import { StageFailure } from '../errors';
 import { runChapter } from '../runner';
+
+import type { PipelineEvent } from '../context';
+import type { TtsResult } from '../ports';
 
 const PCM_MODEL = 'google/gemini-3.8-flash-lite-tts';
 
@@ -180,5 +185,238 @@ describe('narrate stage: a narrator that cannot speak the chapter language', () 
 
     expect(fake.job('narrate')?.status).toBe('done');
     expect(fake.state.ttsCalls.length).toBeGreaterThan(0);
+  });
+});
+
+/** The seconds the narrator is estimated to speak for one request, in the chapter's language. */
+const secondsOf = (text: string, lang: string): number => estimateSpeechSeconds(text, lang);
+
+describe('narrate stage: passages sized by speech time', () => {
+  it('splits the 600-character Mandarin passage into eight passages, the first at most 12 seconds', async () => {
+    const fake = createFakePorts({ sourceText: ZH_PASSAGE_600, targetLang: null });
+    fake.state.chapters.set(CHAPTER_ID, { ...fake.chapter(), sourceLang: 'zh' });
+
+    await runChapter(CHAPTER_ID, fake.ports);
+
+    const texts = fake.state.ttsCalls.map((call) => call.text);
+    expect(texts).toHaveLength(8);
+    expect(secondsOf(texts[0] ?? '', 'zh')).toBeLessThanOrEqual(12);
+    for (const text of texts.slice(1)) {
+      expect(secondsOf(text, 'zh')).toBeLessThanOrEqual(40);
+    }
+  });
+
+  it('splits the 600-character English passage into three passages, the first at most 12 seconds', async () => {
+    const fake = createFakePorts({ sourceText: EN_PASSAGE_600, targetLang: null });
+    fake.state.chapters.set(CHAPTER_ID, { ...fake.chapter(), sourceLang: 'en' });
+
+    await runChapter(CHAPTER_ID, fake.ports);
+
+    const texts = fake.state.ttsCalls.map((call) => call.text);
+    expect(texts).toHaveLength(3);
+    expect(secondsOf(texts[0] ?? '', 'en')).toBeLessThanOrEqual(12);
+    for (const text of texts.slice(1)) {
+      expect(secondsOf(text, 'en')).toBeLessThanOrEqual(40);
+    }
+  });
+});
+
+describe('narrate stage: split-and-join fallback for one stubborn passage', () => {
+  const OPENING =
+    'Alpha opens the old wooden door of the bookshop, and the whole street smells of wet stone and rain.';
+  const SECOND = 'Bravo follows her inside to the counter.';
+  const THIRD = 'Charlie hangs the wet coat by the stove.';
+  const FOURTH = 'Delta lights the lamp that hangs above the table.';
+  const TEXT = [OPENING, SECOND, THIRD, FOURTH].join(' ');
+  const oneSecondWav = (): TtsResult => ({
+    bytes: pcmToWav(new Uint8Array(24_000 * 2), { rate: 24_000, channels: 1 }),
+    mime: 'audio/wav',
+    costUsd: null,
+  });
+
+  it('joins the two halves of a failing passage into one saved passage, with the sum of their lengths', async () => {
+    const fake = createFakePorts({
+      sourceText: TEXT,
+      targetLang: null,
+      tts: (text) => {
+        // Only the whole passage fails. Its halves, each without both names, succeed.
+        if (text.includes('Bravo') && text.includes('Delta')) {
+          throw new StageFailure('UNKNOWN', 'The narrator is busy.', {
+            retryable: true,
+            detail: 'HTTP 502',
+          });
+        }
+        return oneSecondWav();
+      },
+    });
+    fake.state.chapters.set(CHAPTER_ID, { ...fake.chapter(), sourceLang: 'en' });
+
+    expect((await runChapter(CHAPTER_ID, fake.ports)).status).toBe('ready');
+
+    const segments = fake.state.segments.get(CHAPTER_ID) ?? [];
+    expect(segments.map((s) => [s.sentenceStart, s.sentenceEnd])).toEqual([
+      [0, 0],
+      [1, 3],
+    ]);
+    const joined = segments[1];
+    expect(joined?.fileUri.endsWith('.wav')).toBe(true);
+    expect(joined?.durationMs).toBe(2_000);
+    // One header and two seconds of samples: 44 + 2 * 48,000 bytes.
+    expect(fake.state.written.some((entry) => entry.endsWith(':96044'))).toBe(true);
+    // The passage is split where its characters are nearest the middle: after the third sentence's
+    // predecessor, so the first half holds Bravo and Charlie, and the second holds Delta.
+    const halves = fake.state.ttsCalls.slice(-2);
+    expect(halves[0]?.text).toBe(`${SECOND} ${THIRD}`);
+    expect(halves[1]?.text).toBe(FOURTH);
+    // The failed whole-passage request costs nothing, so only the three answered calls are recorded.
+    const narrated = fake.state.ledger.filter((entry) => entry.stage === 'narrate');
+    expect(narrated).toHaveLength(3);
+  });
+
+  it('keeps the original failure when a half fails too, and says which passage failed', async () => {
+    const fake = createFakePorts({
+      sourceText: TEXT,
+      targetLang: null,
+      tts: (text) => {
+        if (text.includes('Bravo')) {
+          throw new StageFailure('NETWORK', 'No connection.', {
+            retryable: true,
+            detail: 'timeout',
+          });
+        }
+        return oneSecondWav();
+      },
+    });
+    fake.state.chapters.set(CHAPTER_ID, { ...fake.chapter(), sourceLang: 'en' });
+
+    await runChapter(CHAPTER_ID, fake.ports);
+
+    const job = fake.job('narrate');
+    expect(job?.status).toBe('failed');
+    expect(job?.error).toEqual({
+      code: 'NETWORK',
+      message:
+        "The narrator service didn't answer for passage 2 of 2. Your progress is saved. Tap Retry to continue.",
+      retryable: true,
+      detail: 'timeout',
+    });
+    expect(fake.chapter().status).toBe('failed');
+  });
+
+  it('keeps a non-retryable failure as it is, with no passage wording', async () => {
+    const fake = createFakePorts({
+      sourceText: TEXT,
+      targetLang: null,
+      tts: () => {
+        throw new StageFailure('MODEL_UNAVAILABLE', 'This voice is gone.', {
+          retryable: false,
+          detail: 'voice removed',
+        });
+      },
+    });
+    fake.state.chapters.set(CHAPTER_ID, { ...fake.chapter(), sourceLang: 'en' });
+
+    await runChapter(CHAPTER_ID, fake.ports);
+
+    expect(fake.job('narrate')?.error).toEqual({
+      code: 'MODEL_UNAVAILABLE',
+      message: 'This voice is gone.',
+      retryable: false,
+      detail: 'voice removed',
+    });
+  });
+
+});
+
+describe('narrate stage: a retry resumes at the first missing passage', () => {
+  it('synthesizes no passage that was saved, and finishes the rest', async () => {
+    let failing = true;
+    const fake = createFakePorts({
+      sourceText: 'Alpha opens the old wooden door of the bookshop and the whole street smells of rain. Bravo follows her inside to the counter, and the lamps are lit.',
+      targetLang: null,
+      tts: (text) => {
+        if (failing && text.includes('Bravo')) {
+          throw new StageFailure('RATE_LIMITED', 'The narrator is busy.', {
+            retryable: true,
+            detail: 'HTTP 429',
+          });
+        }
+        return { bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null };
+      },
+    });
+    fake.state.chapters.set(CHAPTER_ID, { ...fake.chapter(), sourceLang: 'en' });
+
+    expect((await runChapter(CHAPTER_ID, fake.ports)).status).toBe('failed');
+    const saved = fake.state.segments.get(CHAPTER_ID)?.map((s) => s.idx) ?? [];
+    expect(saved).toEqual([0]);
+
+    failing = false;
+    const before = fake.state.ttsCalls.length;
+    expect((await runChapter(CHAPTER_ID, fake.ports)).status).toBe('ready');
+
+    const retried = fake.state.ttsCalls.slice(before).map((call) => call.text);
+    const total = fake.state.segments.get(CHAPTER_ID)?.length ?? 0;
+    expect(retried.every((text) => text.includes('Bravo'))).toBe(true);
+    expect(retried).toHaveLength(total - saved.length);
+  });
+});
+
+describe('narrate stage: parallel passages, saved in order', () => {
+  it('saves and announces the passages in order, even when a later one is ready first', async () => {
+    let call = 0;
+    const events: PipelineEvent[] = [];
+    const fake = createFakePorts({
+      sourceText: ZH_PASSAGE_600,
+      targetLang: null,
+      tts: () => {
+        call += 1;
+        // The first request is the slowest, so the later ones are ready before it.
+        const delay = call === 1 ? 40 : 2;
+        return new Promise<TtsResult>((resolve) =>
+          setTimeout(
+            () => resolve({ bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null }),
+            delay,
+          ),
+        );
+      },
+    });
+    fake.state.chapters.set(CHAPTER_ID, { ...fake.chapter(), sourceLang: 'zh' });
+
+    await runChapter(CHAPTER_ID, fake.ports, { onEvent: (event) => events.push(event) });
+
+    const ready = events.flatMap((event) =>
+      event.type === 'segmentReady' ? [event.segment.idx] : [],
+    );
+    expect(ready).toEqual([...ready].sort((a, b) => a - b));
+    expect(ready).toHaveLength(8);
+  });
+
+  it('keeps three passages in flight for the Best narrator, and one for the Free narrator', async () => {
+    const measure = async (model: string, sourceText: string): Promise<number> => {
+      let inFlight = 0;
+      let maxInFlight = 0;
+      const fake = createFakePorts({
+        sourceText,
+        targetLang: null,
+        narration: { model, voice: model === FREE_NARRATOR_MODEL_ID ? '' : 'Kore' },
+        tts: () => {
+          inFlight += 1;
+          maxInFlight = Math.max(maxInFlight, inFlight);
+          return new Promise<TtsResult>((resolve) =>
+            setTimeout(() => {
+              inFlight -= 1;
+              resolve({ bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null });
+            }, 5),
+          );
+        },
+      });
+      fake.state.chapters.set(CHAPTER_ID, { ...fake.chapter(), sourceLang: 'zh' });
+      await runChapter(CHAPTER_ID, fake.ports);
+      expect(fake.state.ttsCalls.length).toBeGreaterThanOrEqual(3);
+      return maxInFlight;
+    };
+
+    expect(await measure(GEMINI_NARRATOR_MODEL_ID, ZH_PASSAGE_600)).toBe(3);
+    expect(await measure(FREE_NARRATOR_MODEL_ID, ZH_PASSAGE_600)).toBe(1);
   });
 });

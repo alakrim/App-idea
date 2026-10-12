@@ -118,3 +118,24 @@ describe('jobRepo', () => {
     expect(jobRepo.recentFailures(db, 2).map((j) => j.stage)).toEqual(['clean', 'segment']);
   });
 });
+
+describe('jobRepo.recentChapterIds', () => {
+  it('lists the chapters by their latest job activity, newest first, up to the limit', () => {
+    const { db } = setup();
+    chapterRepo.insert(db, chapterRow(2, 1, 2));
+    chapterRepo.insert(db, chapterRow(3, 1, 3));
+    jobRepo.upsert(db, job(1, 'extract', { status: 'done', startedAt: T0 + 10, finishedAt: T0 + 20 }));
+    jobRepo.upsert(
+      db,
+      job(2, 'extract', { chapterId: id(2), status: 'done', startedAt: T0 + 50, finishedAt: T0 + 60 }),
+    );
+    jobRepo.upsert(
+      db,
+      job(3, 'narrate', { chapterId: id(2), status: 'running', startedAt: T0 + 70, finishedAt: null }),
+    );
+    jobRepo.upsert(db, job(4, 'extract', { chapterId: id(3), status: 'pending' }));
+
+    expect(jobRepo.recentChapterIds(db, 5)).toEqual([id(2), id(1), id(3)].slice(0, 2).concat(id(3)).slice(0, 3));
+    expect(jobRepo.recentChapterIds(db, 1)).toEqual([id(2)]);
+  });
+});
