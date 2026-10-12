@@ -51,6 +51,8 @@ const FRAME_SAMPLES = Math.round(FRAME_SECONDS * SAMPLE_RATE);
 /** Whole analysis frames that cover one loop window. */
 const WINDOW_FRAMES = Math.ceil(WINDOW_SAMPLES / FRAME_SAMPLES);
 const HIGH_PASS_HZ = 25;
+/** Half a dB of headroom below the verify ceiling for AAC overshoot (river_stream measured -2.9 at -3). */
+const ENCODE_TRUE_PEAK_DBTP = -3.5;
 const FREESOUND_LEDGER_PREFIX = 'https://freesound.org/';
 
 const curationSchema = z.object({
@@ -175,7 +177,7 @@ async function buildBed({ client, target, sound, how, workDir }) {
   ]);
   await rollLoop(loop, rolled);
   const measured = await measureLoudnorm(loop);
-  await encodeLoopAac(rolled, measured, encoded);
+  await encodeLoopAac(rolled, measured, encoded, ENCODE_TRUE_PEAK_DBTP);
 
   const samples = await decodeMono(encoded);
   if (samples.length !== 2 * ROLL_SAMPLES + LOOP_SAMPLES) {

@@ -72,10 +72,13 @@ export async function measureLoudnorm(file) {
   };
 }
 
-/** Pass 2 of two-pass loudnorm: applies the measured linear gain to the target. */
-export function loudnormPass2(m) {
+/**
+ * Pass 2 of two-pass loudnorm: applies the measured linear gain to the target. `truePeakDbtp` is the
+ * ceiling the gain must respect before encoding (the base pack uses the verify limit itself).
+ */
+export function loudnormPass2(m, truePeakDbtp = TRUE_PEAK_MAX_DBTP) {
   return [
-    `loudnorm=I=${TARGET_LUFS}:TP=${TRUE_PEAK_MAX_DBTP}:LRA=${LRA_TARGET}`,
+    `loudnorm=I=${TARGET_LUFS}:TP=${truePeakDbtp}:LRA=${LRA_TARGET}`,
     `measured_I=${m.I}:measured_TP=${m.TP}:measured_LRA=${m.LRA}:measured_thresh=${m.thresh}`,
     `offset=${m.offset}:linear=true:print_format=summary`,
   ].join(':');
@@ -97,14 +100,17 @@ export async function rollLoop(loopWav, rolledWav) {
   ]);
 }
 
-/** Pass 2: normalizes the rolled loop with the measured gain and encodes AAC-LC mono 64 kbps .m4a. */
-export async function encodeLoopAac(rolledWav, measured, encodedM4a) {
+/**
+ * Pass 2: normalizes the rolled loop with the measured gain and encodes AAC-LC mono 64 kbps .m4a.
+ * AAC can overshoot the true peak by a few tenths of a dB, so a caller may ask for more headroom.
+ */
+export async function encodeLoopAac(rolledWav, measured, encodedM4a, truePeakDbtp) {
   await runFfmpeg([
     '-y',
     '-i',
     rolledWav,
     '-af',
-    loudnormPass2(measured),
+    loudnormPass2(measured, truePeakDbtp),
     '-ac',
     '1',
     '-ar',
