@@ -4,6 +4,7 @@ import { mergeMemoryDrafts } from './merge-memory';
 import { buildAnalysisPrompt, buildSummaryReducePrompt } from './prompts';
 import { truncateWords } from './schemas';
 import { validateCues } from './validate-cues';
+import { runOrdered } from '../async/ordered-pool';
 import { addUsage, throwIfCancelled, ZERO_USAGE } from '../llm/transport';
 import { planLlmChunks } from '../text/chunk';
 import { normalizeWhitespace } from '../text/normalize';
@@ -12,6 +13,9 @@ import type { AnalysisCallResult } from './analysis-call';
 import type { Lang, MemoryFields, SentenceInput, ValidatedCue } from './types';
 import type { DroppedCue } from './validate-cues';
 import type { LlmTransport, LlmUsage } from '../llm/transport';
+
+/** Chunk calls in flight at once. Chunks are independent, so they run in parallel. */
+export const ANALYSIS_CONCURRENCY = 3;
 
 /** Splits a chapter into LLM chunks. The engine takes the planner as an argument, so tests can script it. */
 export type ChunkPlanner = (sentences: readonly SentenceInput[]) => SentenceInput[][];
@@ -38,6 +42,8 @@ export interface AnalyzeChapterInput {
   /** Aborts between chunks and is passed to every model call. */
   readonly signal?: AbortSignal;
   readonly planChunks?: ChunkPlanner;
+  /** Chunk calls in flight at once. Defaults to ANALYSIS_CONCURRENCY. */
+  readonly concurrency?: number;
   /**
    * For multi-chunk chapters, rewrite the summary with one extra call (default true). When false
    * the joined chunk summaries are kept, capped.
@@ -56,7 +62,8 @@ export interface ChapterAnalysis {
 
 /**
  * Runs the single analysis call per chunk, then merges the memories, runs the optional summary
- * reduce and validates the combined cues against the whole chapter. Chunks run one after another.
+ * reduce and validates the combined cues against the whole chapter. Chunks run a few at a time, and
+ * their replies are kept in chunk order, because the memory merge depends on that order.
  */
 export async function analyzeChapter(input: AnalyzeChapterInput): Promise<ChapterAnalysis> {
   if (input.sentences.some((s, i) => s.idx !== i)) {
@@ -67,10 +74,10 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
   const chunks = plan(input.sentences);
 
   const responses: AnalysisCallResult[] = [];
-  for (const chunk of chunks) {
-    throwIfCancelled(input.signal);
-    responses.push(
-      await runAnalysisCall(
+  await runOrdered(
+    chunks,
+    (chunk, _index, signal) =>
+      runAnalysisCall(
         input.callLlm,
         buildAnalysisPrompt({
           sentences: chunk,
@@ -79,10 +86,16 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
           priorContext: input.priorContext,
           lang: input.lang,
         }),
-        input.signal,
+        signal,
       ),
-    );
-  }
+    {
+      concurrency: input.concurrency ?? ANALYSIS_CONCURRENCY,
+      signal: input.signal,
+      onResult: (response) => {
+        responses.push(response);
+      },
+    },
+  );
 
   let usage = responses.reduce((sum, r) => addUsage(sum, r.usage), ZERO_USAGE);
   const merged = mergeMemoryDrafts(responses.map((r) => r.memory));

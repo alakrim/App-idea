@@ -359,14 +359,15 @@ describe('runChapter: cancellation and resume', () => {
     expect(fake.job('analyze')?.status).toBe('done');
     const saved = fake.state.segments.get(CHAPTER_ID)?.length ?? 0;
     expect(saved).toBeGreaterThan(0);
-    expect(saved).toBeLessThan(12);
 
     const ttsBefore = fake.state.ttsCalls.length;
     const resumed = await runChapter(CHAPTER_ID, fake.ports);
 
+    // The planned total is read from the finished chapter, since the first-segment budget decides it.
+    const total = fake.state.segments.get(CHAPTER_ID)?.length ?? 0;
     expect(resumed.status).toBe('ready');
-    expect(fake.state.ttsCalls.length - ttsBefore).toBe(12 - saved);
-    expect(fake.state.segments.get(CHAPTER_ID)).toHaveLength(12);
+    expect(total).toBeGreaterThan(saved);
+    expect(fake.state.ttsCalls.length - ttsBefore).toBe(total - saved);
   });
 
   it('reports cancellation of a stage before it starts as a cancelled run', async () => {

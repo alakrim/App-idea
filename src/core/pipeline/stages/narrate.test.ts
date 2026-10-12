@@ -126,7 +126,7 @@ describe('narrate stage: segment size per narrator', () => {
     for (const text of texts) expect(text.length).toBeLessThanOrEqual(600);
   });
 
-  it('sends the free narrator a passage of up to 1,800 characters in one request', async () => {
+  it('sends the free narrator the rest of the chapter in one request of up to 1,800 characters', async () => {
     const fake = createFakePorts({
       sourceText: LONG_PARAGRAPH,
       targetLang: null,
@@ -135,10 +135,12 @@ describe('narrate stage: segment size per narrator', () => {
 
     await runChapter(CHAPTER_ID, fake.ports);
 
-    expect(fake.state.ttsCalls).toHaveLength(1);
-    expect(fake.state.ttsCalls[0]?.text.length).toBeGreaterThan(600);
-    expect(fake.state.ttsCalls[0]?.text.length).toBeLessThanOrEqual(1_800);
-    expect(fake.state.ttsCalls[0]?.voice).toBe('');
+    // A 12-second opening comes first, so the first audio is quick. Then one request takes the rest.
+    expect(fake.state.ttsCalls).toHaveLength(2);
+    const rest = fake.state.ttsCalls[1];
+    expect(rest?.text.length).toBeGreaterThan(600);
+    expect(rest?.text.length).toBeLessThanOrEqual(1_800);
+    expect(fake.state.ttsCalls.every((call) => call.voice === '')).toBe(true);
   });
 });
 

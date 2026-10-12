@@ -48,7 +48,8 @@ export interface OpenRouterClient {
 
 const defaults = {
   baseUrl: 'https://openrouter.ai/api/v1',
-  timeoutMs: 60_000,
+  /** Chat and JSON calls. Analysis prompts run to about 5k tokens, so the old 60 s was too short. */
+  timeoutMs: 120_000,
   maxRetries: 3,
   maxSpeechChars: 4_000,
   modelCacheTtlMs: 60 * 60 * 1000,

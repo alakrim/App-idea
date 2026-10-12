@@ -15,6 +15,12 @@ import type { StageDefinition } from '../context';
 /** Glossary budget for one chapter, in estimated tokens. */
 export const GLOSSARY_TOKENS = 800;
 
+/**
+ * Translation requests in flight at once. Each chunk still sees the translations of the chunks
+ * before it when they are done, and reads "(translation pending)" for the rest.
+ */
+export const TRANSLATE_CONCURRENCY = 3;
+
 export const translateStage: StageDefinition = {
   stage: 'translate',
   async prepare(ctx) {
@@ -69,6 +75,7 @@ export const translateStage: StageDefinition = {
           targetLang,
           glossary,
           llm: transport,
+          concurrency: TRANSLATE_CONCURRENCY,
           signal: ctx.signal,
           onProgress: ({ translated, total }) =>
             ctx.emit({

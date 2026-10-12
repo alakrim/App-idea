@@ -8,6 +8,12 @@ import type { Transport } from './transport';
 export type { SpeechFormat } from '@/core/narration/formats';
 
 /**
+ * A speech request waits for the whole passage to be synthesized before the first byte arrives. The
+ * longest passage is about 120 s of speech (the Free narrator), so this allows for a slow render.
+ */
+export const SPEECH_TIMEOUT_MS = 180_000;
+
+/**
  * A 400 that names the one format a speech model accepts, for example `only supports
  * response_format="pcm"` (Gemini TTS) or `only supports response_format=wav`. The first group
  * that matches gives the format for the single retry.
@@ -94,6 +100,7 @@ export async function synthesizeSpeech(
         },
         accept: 'audio/*',
         signal: input.signal,
+        timeoutMs: SPEECH_TIMEOUT_MS,
         dailyLimitMessage: FREE_NARRATOR_DAILY_LIMIT_MESSAGE,
       },
       async (res) => {

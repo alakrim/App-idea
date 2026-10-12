@@ -26,6 +26,8 @@ export interface TransportRequest {
   body?: unknown;
   accept: string;
   signal?: AbortSignal;
+  /** Overrides the client's timeout for this call, for requests that carry long work, such as speech. */
+  timeoutMs?: number;
   /** The copy shown when the free model's daily allowance is used up. */
   dailyLimitMessage?: string;
 }
@@ -127,7 +129,7 @@ async function attemptOnce<T>(
   const timer = setTimeout(() => {
     timedOut = true;
     controller.abort();
-  }, config.timeoutMs);
+  }, req.timeoutMs ?? config.timeoutMs);
   const forwardAbort = () => controller.abort();
   req.signal?.addEventListener('abort', forwardAbort);
 
