@@ -39,6 +39,33 @@ describe('resolveBed', () => {
     expect(resolveBed('base_fire', NONE)).toBeNull();
   });
 
+  describe('with real (Freesound) beds installed under their category ids', () => {
+    it('plays the real bed for the exact category ahead of the base pack', () => {
+      expect(resolveBed('light_rain', new Set(['light_rain', 'base_rain']))).toBe('light_rain');
+    });
+
+    it('prefers the exact real bed over a real bed further along the chain', () => {
+      // heavy_rain -> light_rain -> base_rain
+      expect(resolveBed('heavy_rain', new Set(['heavy_rain', 'light_rain', 'base_rain']))).toBe(
+        'heavy_rain',
+      );
+      expect(resolveBed('heavy_rain', new Set(['light_rain', 'base_rain']))).toBe('light_rain');
+    });
+
+    it('takes a real bed on the chain before the base pack that follows it', () => {
+      // jungle_insects -> forest_day_birds -> open_field_wind -> base_wind
+      expect(resolveBed('jungle_insects', new Set(['forest_day_birds', 'base_wind']))).toBe(
+        'forest_day_birds',
+      );
+    });
+
+    it('falls past a category with no real bed to the next installed link', () => {
+      // ship_deck -> ocean_waves -> base_ocean
+      expect(resolveBed('ship_deck', new Set(['base_ocean']))).toBe('base_ocean');
+      expect(resolveBed('ship_deck', new Set(['ocean_waves', 'base_ocean']))).toBe('ocean_waves');
+    });
+  });
+
   it('resolves every category that has a fallback chain once the base pack is installed', () => {
     for (const category of AMBIENCE_CATEGORIES) {
       const hasChain = fallbackChain(category.id).length > 0;

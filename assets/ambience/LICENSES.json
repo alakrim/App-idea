@@ -46,5 +46,149 @@
     "source": "scripts/sounds/build-base-pack.mjs",
     "author": "Lectio",
     "date": "2026-10-11"
+  },
+  {
+    "id": "light_rain",
+    "file": "light_rain.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/conleec/sounds/171980/",
+    "author": "conleec",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "heavy_rain",
+    "file": "heavy_rain.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/Danjocross/sounds/164206/",
+    "author": "Danjocross",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "rain_on_window",
+    "file": "rain_on_window.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/bastipictures/sounds/243781/",
+    "author": "bastipictures",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "storm_wind",
+    "file": "storm_wind.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/ecfike/sounds/515886/",
+    "author": "ecfike",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "forest_day_birds",
+    "file": "forest_day_birds.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/newlocknew/sounds/856018/",
+    "author": "newlocknew",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "forest_night",
+    "file": "forest_night.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/hdfreema/sounds/333221/",
+    "author": "hdfreema",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "ocean_waves",
+    "file": "ocean_waves.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/Profispiesser/sounds/550915/",
+    "author": "Profispiesser",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "river_stream",
+    "file": "river_stream.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/jackthemurray/sounds/433589/",
+    "author": "jackthemurray",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "open_field_wind",
+    "file": "open_field_wind.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/felix.blume/sounds/167684/",
+    "author": "felix.blume",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "city_street_day",
+    "file": "city_street_day.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/BonnyOrbit/sounds/645851/",
+    "author": "BonnyOrbit",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "city_night",
+    "file": "city_night.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/leonelmail/sounds/427841/",
+    "author": "leonelmail",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "market_crowd",
+    "file": "market_crowd.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/blukotek/sounds/412824/",
+    "author": "blukotek",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "cafe_soft",
+    "file": "cafe_soft.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/waweee/sounds/370973/",
+    "author": "waweee",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "train_interior",
+    "file": "train_interior.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/pblzr/sounds/785389/",
+    "author": "pblzr",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "mountain_wind",
+    "file": "mountain_wind.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/BotanicalVan/sounds/577263/",
+    "author": "BotanicalVan",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "tavern_crowd",
+    "file": "tavern_crowd.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/domasmo/sounds/376456/",
+    "author": "domasmo",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "war_drums",
+    "file": "war_drums.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/madmanmusic/sounds/347981/",
+    "author": "madmanmusic",
+    "date": "2026-10-12"
+  },
+  {
+    "id": "horse_trot",
+    "file": "horse_trot.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/craigsmith/sounds/481917/",
+    "author": "craigsmith",
+    "date": "2026-10-12"
   }
 ]

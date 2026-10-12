@@ -11,6 +11,7 @@
 // trimmed of silent or noisy edges, cut to the steadiest 63 s window, high-passed at 25 Hz and run
 // through the base pack's loop recipe (scripts/sounds/loop-recipe.mjs). The key is read from the env only.
 
+import { Buffer } from 'node:buffer';
 import { copyFile, mkdir, mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -18,7 +19,12 @@ import { join } from 'node:path';
 import { z } from 'zod';
 
 import { createFreesoundClient } from './freesound-api.mjs';
-import { frameLevelsDb, steadiestWindow, usableFrameRange, FRAME_SECONDS } from './freesound-window.mjs';
+import {
+  frameLevelsDb,
+  steadiestWindow,
+  usableFrameRange,
+  FRAME_SECONDS,
+} from './freesound-window.mjs';
 import { FREESOUND_TARGETS } from './freesound-targets.mjs';
 import { decodeMono, measureLoudness, runFfmpeg, sha256File } from './ffmpeg-tools.mjs';
 import { checkSeam, seamPasses } from './seam.mjs';
@@ -57,7 +63,9 @@ const FREESOUND_LEDGER_PREFIX = 'https://freesound.org/';
 
 const curationSchema = z.object({
   category: z.string(),
-  candidates: z.array(z.object({ rank: z.number().int().positive(), freesoundId: z.number().int() })),
+  candidates: z.array(
+    z.object({ rank: z.number().int().positive(), freesoundId: z.number().int() }),
+  ),
 });
 
 const overridesSchema = z.record(
@@ -155,7 +163,10 @@ async function buildBed({ client, target, sound, how, workDir }) {
   const loop = join(workDir, `${id}.loop.wav`);
   const rolled = join(workDir, `${id}.rolled.wav`);
   const encoded = join(workDir, `${id}.m4a`);
-  await writeFile(raw, Buffer.from(cut.samples.buffer, cut.samples.byteOffset, cut.samples.byteLength));
+  await writeFile(
+    raw,
+    Buffer.from(cut.samples.buffer, cut.samples.byteOffset, cut.samples.byteLength),
+  );
 
   await runFfmpeg([
     '-y',
@@ -181,7 +192,9 @@ async function buildBed({ client, target, sound, how, workDir }) {
 
   const samples = await decodeMono(encoded);
   if (samples.length !== 2 * ROLL_SAMPLES + LOOP_SAMPLES) {
-    throw new Error(`${id}: decoded ${samples.length} samples, expected ${2 * ROLL_SAMPLES + LOOP_SAMPLES}`);
+    throw new Error(
+      `${id}: decoded ${samples.length} samples, expected ${2 * ROLL_SAMPLES + LOOP_SAMPLES}`,
+    );
   }
   const { integratedLufs, truePeakDbtp } = await measureLoudness(encoded);
   if (Math.abs(integratedLufs - TARGET_LUFS) > LUFS_TOLERANCE) {
@@ -238,7 +251,12 @@ async function updateLedger(entries) {
 function onlyFilter(args) {
   const flag = args.find((arg) => arg.startsWith('--only='));
   if (!flag) return null;
-  return new Set(flag.slice('--only='.length).split(',').filter((id) => id.length > 0));
+  return new Set(
+    flag
+      .slice('--only='.length)
+      .split(',')
+      .filter((id) => id.length > 0),
+  );
 }
 
 function assertNoDuplicateSounds(choices) {
@@ -275,7 +293,9 @@ async function main() {
     for (const choice of choices) {
       const sound = await client.sound(choice.freesoundId);
       if (sound.license !== CC0_LICENSE_URL) {
-        throw new Error(`${choice.id}: Freesound ${sound.id} is "${sound.license}", not CC0; rejected`);
+        throw new Error(
+          `${choice.id}: Freesound ${sound.id} is "${sound.license}", not CC0; rejected`,
+        );
       }
       console.log(`building ${choice.id} from Freesound ${sound.id} (${choice.how})`);
       const { entry, seam } = await buildBed({
@@ -302,7 +322,9 @@ async function main() {
   await writeFile(REAL_MANIFEST_PATH, `${JSON.stringify(manifest, null, 2)}\n`);
   await updateLedger(manifest);
   const total = manifest.reduce((sum, entry) => sum + entry.bytes, 0);
-  console.log(`wrote ${manifest.length} real beds, ${total} bytes total (${FREESOUND_BUILD_SCRIPT})`);
+  console.log(
+    `wrote ${manifest.length} real beds, ${total} bytes total (${FREESOUND_BUILD_SCRIPT})`,
+  );
 }
 
 main().catch((err) => {

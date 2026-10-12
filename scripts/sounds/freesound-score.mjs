@@ -91,8 +91,8 @@ export function scoreSound(sound, target) {
   };
 
   const { avg_rating: avg, num_ratings: count, num_downloads: downloads } = sound;
-  const bayes = (avg * count + PRIOR_MEAN_RATING * PRIOR_WEIGHT_RATINGS) /
-    (count + PRIOR_WEIGHT_RATINGS);
+  const bayes =
+    (avg * count + PRIOR_MEAN_RATING * PRIOR_WEIGHT_RATINGS) / (count + PRIOR_WEIGHT_RATINGS);
   add(3 * clamp01((bayes - 1) / 4), `rating ${round2(avg)} from ${count} ratings`);
   add(2 * clamp01(Math.log10(downloads + 1) / 4), `${downloads} downloads`);
 
@@ -141,7 +141,11 @@ export function rankCandidates(sounds, target, limit = 5) {
   return sounds
     .map((sound) => ({ sound, result: scoreSound(sound, target) }))
     .filter((entry) => entry.result.excluded === undefined)
-    .map((entry) => ({ sound: entry.sound, score: entry.result.score, reasons: entry.result.reasons }))
+    .map((entry) => ({
+      sound: entry.sound,
+      score: entry.result.score,
+      reasons: entry.result.reasons,
+    }))
     .sort((a, b) => b.score - a.score || a.sound.id - b.sound.id)
     .slice(0, limit);
 }

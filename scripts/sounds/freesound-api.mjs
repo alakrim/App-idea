@@ -2,6 +2,8 @@
 // sent as an Authorization header and never placed in a URL or an error message. Preview downloads
 // are plain CDN GETs with no key. Every API call is throttled and retried on 429 and 5xx.
 
+import { Buffer } from 'node:buffer';
+
 import { z } from 'zod';
 
 import { FREESOUND_MAX_RETRIES, FREESOUND_MIN_INTERVAL_MS } from './pack-spec.mjs';
@@ -48,6 +50,7 @@ const searchResponseSchema = z.object({
 });
 
 const defaultSleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const defaultLog = (message) => console.warn(message);
 
 /** Milliseconds to wait before a retry: the server's Retry-After when given, else exponential backoff. */
 function retryDelayMs(response, attempt) {
@@ -68,6 +71,7 @@ export function createFreesoundClient({
   now = Date.now,
   minIntervalMs = FREESOUND_MIN_INTERVAL_MS,
   maxRetries = FREESOUND_MAX_RETRIES,
+  log = defaultLog,
 }) {
   if (!apiKey) {
     throw new Error(
@@ -95,7 +99,11 @@ export function createFreesoundClient({
       if (response.ok) return schema.parse(await response.json());
       const retryable = response.status === 429 || response.status >= 500;
       if (retryable && attempt < maxRetries) {
-        await sleep(retryDelayMs(response, attempt));
+        const waitMs = retryDelayMs(response, attempt);
+        log(
+          `Freesound ${path} returned HTTP ${response.status}; retrying in ${Math.round(waitMs / 1000)} s`,
+        );
+        await sleep(waitMs);
         continue;
       }
       const hint =

@@ -58,7 +58,12 @@ async function curateTarget(client, target) {
 function onlyFilter(args) {
   const flag = args.find((arg) => arg.startsWith('--only='));
   if (!flag) return null;
-  return new Set(flag.slice('--only='.length).split(',').filter((id) => id.length > 0));
+  return new Set(
+    flag
+      .slice('--only='.length)
+      .split(',')
+      .filter((id) => id.length > 0),
+  );
 }
 
 async function main() {
@@ -70,7 +75,10 @@ async function main() {
   let exitCode = 0;
   for (const target of targets) {
     const record = await curateTarget(client, target);
-    await writeFile(join(CURATION_DIR, `${target.id}.json`), `${JSON.stringify(record, null, 2)}\n`);
+    await writeFile(
+      join(CURATION_DIR, `${target.id}.json`),
+      `${JSON.stringify(record, null, 2)}\n`,
+    );
     const top = record.candidates[0];
     if (top === undefined) {
       exitCode = 1;

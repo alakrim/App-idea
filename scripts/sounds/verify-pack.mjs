@@ -1,7 +1,9 @@
 #!/usr/bin/env node
-// Verifies the procedural base pack against its manifest and ledger. Run: npm run sounds:verify
-// Exits non-zero if any check fails. Checks per file: exists, sha256/bytes match, duration within
-// tolerance, integrated loudness, true peak, seam continuity (RMS and sample-jump), and licence row.
+// Verifies the ambience packs against their manifests and the licence ledger. Run: npm run sounds:verify
+// Covers the procedural base pack (assets/ambience/base) and the Freesound CC0 beds (assets/ambience/real).
+// Exits non-zero if any check fails. Checks per file: exists, sha256/bytes match, duration, integrated
+// loudness, true peak, seam continuity (RMS and sample jump), and a licence row. Real beds also need a
+// CC0 ledger row that matches their manifest entry, and the app must require every one of them.
 
 import { readFile, stat } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -9,38 +11,52 @@ import { join } from 'node:path';
 import { z } from 'zod';
 
 import { decodeMono, measureLoudness, sha256File } from './ffmpeg-tools.mjs';
+import { FREESOUND_TARGETS } from './freesound-targets.mjs';
+import { checkSeam } from './seam.mjs';
 import {
   BASE_BED_IDS,
+  CC0_LICENSE_URL,
   DURATION_TOLERANCE_MS,
   LEDGER_PATH,
   LOOP_SAMPLES,
   LUFS_TOLERANCE,
   MANIFEST_PATH,
   MAX_PACK_BYTES,
+  MAX_REAL_PACK_BYTES,
   PACK_DIR,
+  REAL_DIR,
+  REAL_MANIFEST_PATH,
+  REPO_ROOT,
   SAMPLE_RATE,
-  SEAM_RMS_FLOOR_DB,
-  SEAM_RMS_PERCENTILE,
-  SEAM_JUMP_PERCENTILE,
-  SEAM_SPIKE_RATIO,
-  SEAM_WINDOW_SECONDS,
   TARGET_LUFS,
   TRUE_PEAK_MAX_DBTP,
 } from './pack-spec.mjs';
 
-const manifestSchema = z.array(
+const APP_BED_SOURCE = join(REPO_ROOT, 'src', 'audio', 'ambience-pack.ts');
+const FREESOUND_LEDGER_PREFIX = 'https://freesound.org/';
+
+const commonFields = {
+  id: z.string(),
+  file: z.string(),
+  durationMs: z.number().int().positive(),
+  loopStartMs: z.number().nonnegative(),
+  loopEndMs: z.number().positive(),
+  lufs: z.number(),
+  bytes: z.number().int().positive(),
+  sha256: z.string().regex(/^[0-9a-f]{64}$/),
+  kind: z.literal('bed'),
+  recipeVersion: z.string(),
+};
+
+const baseManifestSchema = z.array(z.object({ ...commonFields, source: z.literal('procedural') }));
+
+const realManifestSchema = z.array(
   z.object({
-    id: z.string(),
-    file: z.string(),
-    durationMs: z.number().int().positive(),
-    loopStartMs: z.number().nonnegative(),
-    loopEndMs: z.number().positive(),
-    lufs: z.number(),
-    bytes: z.number().int().positive(),
-    sha256: z.string().regex(/^[0-9a-f]{64}$/),
-    kind: z.literal('bed'),
-    source: z.literal('procedural'),
-    recipeVersion: z.string(),
+    ...commonFields,
+    source: z.literal('freesound'),
+    freesoundId: z.number().int().positive(),
+    author: z.string().min(1),
+    url: z.string().url(),
   }),
 );
 
@@ -55,54 +71,10 @@ const ledgerSchema = z.array(
   }),
 );
 
-const rms = (x, from, to) => {
-  let sum = 0;
-  for (let i = from; i < to; i++) sum += x[i] * x[i];
-  return Math.sqrt(sum / (to - from));
-};
-
-/**
- * Seam checks on decoded PCM.
- * - Level: |dRMS| between the last and first 50 ms windows. The limit is max(floor, p99) where p99 is
- *   taken over |dRMS| between adjacent non-overlapping 50 ms windows elsewhere in the same file.
- *   Low-frequency beds vary that much naturally, so a fixed 2 dB limit alone is too strict for them.
- * - Jump: the wrap sample step against the median sample step. The limit is max(6x, p99.9 of the
- *   internal sample steps / median), the same statistical treatment as the level rule.
- */
-function checkSeam(x) {
-  const win = Math.round(SEAM_WINDOW_SECONDS * SAMPLE_RATE);
-  const dbOf = (from, to) => 20 * Math.log10(Math.max(rms(x, from, to), 1e-9));
-
-  const windows = Math.floor(x.length / win);
-  const levels = new Float64Array(windows);
-  for (let k = 0; k < windows; k++) levels[k] = dbOf(k * win, (k + 1) * win);
-  const internal = new Float64Array(windows - 1);
-  for (let k = 0; k + 1 < windows; k++) internal[k] = Math.abs(levels[k + 1] - levels[k]);
-  internal.sort();
-  const p99 = internal[Math.ceil(SEAM_RMS_PERCENTILE * (internal.length - 1))];
-
-  const rmsDiffDb = Math.abs(dbOf(x.length - win, x.length) - dbOf(0, win));
-  const limitDb = Math.max(SEAM_RMS_FLOOR_DB, p99);
-
-  const deltas = new Float32Array(x.length - 1);
-  for (let i = 1; i < x.length; i++) deltas[i - 1] = Math.abs(x[i] - x[i - 1]);
-  const sortedDeltas = Float32Array.from(deltas).sort();
-  const medianDelta = sortedDeltas[sortedDeltas.length >> 1];
-  const wrapJump = Math.abs(x[0] - x[x.length - 1]);
-  const jumpRatio = medianDelta > 0 ? wrapJump / medianDelta : Number.POSITIVE_INFINITY;
-  const jumpP999Ratio =
-    medianDelta > 0
-      ? sortedDeltas[Math.ceil(SEAM_JUMP_PERCENTILE * (sortedDeltas.length - 1))] / medianDelta
-      : Number.POSITIVE_INFINITY;
-  // A silent loop has no median step, so the jump limit is 0 and the seam fails.
-  const jumpLimit = medianDelta > 0 ? Math.max(SEAM_SPIKE_RATIO, jumpP999Ratio) : 0;
-
-  return { rmsDiffDb, p99Db: p99, limitDb, jumpRatio, jumpP999Ratio, jumpLimit };
-}
-
-async function verifyBed(entry, ledgerIds) {
+/** Checks one bed file against its manifest row. Returns the failures and the printed metrics. */
+async function verifyBed(entry, dir, ledgerIds) {
   const failures = [];
-  const path = join(PACK_DIR, entry.file);
+  const path = join(dir, entry.file);
 
   try {
     const { size } = await stat(path);
@@ -165,34 +137,101 @@ async function verifyBed(entry, ledgerIds) {
   };
 }
 
+/** Licence rows for real beds: exact CC0 and the same source and author as the manifest. */
+function checkRealLedger(entry, ledger) {
+  const row = ledger.find((candidate) => candidate.id === entry.id);
+  if (!row) return ['no licence ledger row'];
+  const failures = [];
+  if (!row.license.includes(CC0_LICENSE_URL))
+    failures.push(`ledger licence "${row.license}" is not CC0`);
+  if (row.source !== entry.url) failures.push('ledger source differs from the manifest URL');
+  if (row.author !== entry.author) failures.push('ledger author differs from the manifest author');
+  return failures;
+}
+
+/** Each real bed must be required by the app bundle, or Metro never ships it. */
+async function checkAppCoverage(entries) {
+  const source = await readFile(APP_BED_SOURCE, 'utf8');
+  return entries
+    .filter((entry) => !source.includes(`require('../../assets/ambience/real/${entry.file}')`))
+    .map((entry) => `${entry.id}: src/audio/ambience-pack.ts does not require ${entry.file}`);
+}
+
+/** Prints one bed's result and returns the running failure flag. */
+function recordResult(result, failed) {
+  const status = result.failures.length === 0 ? 'PASS' : 'FAIL';
+  console.log(`${status} ${result.id} ${JSON.stringify(result.metrics)}`);
+  for (const failure of result.failures) console.log(`     - ${failure}`);
+  return failed || result.failures.length > 0;
+}
+
 async function main() {
-  const manifest = manifestSchema.parse(JSON.parse(await readFile(MANIFEST_PATH, 'utf8')));
+  const baseManifest = baseManifestSchema.parse(JSON.parse(await readFile(MANIFEST_PATH, 'utf8')));
+  const realManifest = realManifestSchema.parse(
+    JSON.parse(await readFile(REAL_MANIFEST_PATH, 'utf8')),
+  );
   const ledger = ledgerSchema.parse(JSON.parse(await readFile(LEDGER_PATH, 'utf8')));
   const ledgerIds = new Set(ledger.map((row) => row.id));
-  let exitCode = 0;
+  let failed = false;
 
-  const manifestIds = manifest.map((e) => e.id).sort();
-  const expectedIds = [...BASE_BED_IDS].sort();
-  if (manifestIds.join(',') !== expectedIds.join(',')) {
-    console.log(`FAIL manifest ids ${manifestIds.join(',')} != expected ${expectedIds.join(',')}`);
-    exitCode = 1;
+  // Base pack: the same ids, total size and per-bed checks as before.
+  const baseIds = baseManifest.map((e) => e.id).sort();
+  const expectedBaseIds = [...BASE_BED_IDS].sort();
+  if (baseIds.join(',') !== expectedBaseIds.join(',')) {
+    console.log(
+      `FAIL base manifest ids ${baseIds.join(',')} != expected ${expectedBaseIds.join(',')}`,
+    );
+    failed = true;
+  }
+  const baseBytes = baseManifest.reduce((sum, e) => sum + e.bytes, 0);
+  const baseSizeOk = baseBytes < MAX_PACK_BYTES;
+  console.log(
+    `${baseSizeOk ? 'PASS' : 'FAIL'} base pack total ${baseBytes} bytes (limit ${MAX_PACK_BYTES})`,
+  );
+  if (!baseSizeOk) failed = true;
+  for (const entry of baseManifest) {
+    failed = recordResult(await verifyBed(entry, PACK_DIR, ledgerIds), failed);
   }
 
-  const totalBytes = manifest.reduce((sum, e) => sum + e.bytes, 0);
-  const sizeOk = totalBytes < MAX_PACK_BYTES;
-  console.log(`${sizeOk ? 'PASS' : 'FAIL'} total ${totalBytes} bytes (limit ${MAX_PACK_BYTES})`);
-  if (!sizeOk) exitCode = 1;
+  // Freesound beds: one per target, CC0 ledger rows, app coverage, size budget.
+  const realIds = realManifest.map((e) => e.id).sort();
+  const expectedRealIds = FREESOUND_TARGETS.map((t) => t.id).sort();
+  if (realIds.join(',') !== expectedRealIds.join(',')) {
+    console.log(
+      `FAIL real manifest ids ${realIds.join(',')} != targets ${expectedRealIds.join(',')}`,
+    );
+    failed = true;
+  }
+  const realBytes = realManifest.reduce((sum, e) => sum + e.bytes, 0);
+  const realSizeOk = realBytes <= MAX_REAL_PACK_BYTES;
+  console.log(
+    `${realSizeOk ? 'PASS' : 'FAIL'} real beds total ${realBytes} bytes (budget ${MAX_REAL_PACK_BYTES})`,
+  );
+  if (!realSizeOk) failed = true;
 
-  for (const entry of manifest) {
-    const result = await verifyBed(entry, ledgerIds);
-    const status = result.failures.length === 0 ? 'PASS' : 'FAIL';
-    console.log(`${status} ${entry.file} ${JSON.stringify(result.metrics)}`);
-    for (const failure of result.failures) console.log(`     - ${failure}`);
-    if (result.failures.length > 0) exitCode = 1;
+  const orphanRows = ledger.filter(
+    (row) =>
+      row.source.startsWith(FREESOUND_LEDGER_PREFIX) &&
+      !realManifest.some((entry) => entry.id === row.id),
+  );
+  for (const row of orphanRows) {
+    console.log(`FAIL ledger row ${row.id} is a Freesound row with no manifest entry`);
+    failed = true;
   }
 
-  console.log(exitCode === 0 ? 'verify-pack: all checks passed' : 'verify-pack: FAILED');
-  process.exitCode = exitCode;
+  for (const entry of realManifest) {
+    const ledgerFailures = checkRealLedger(entry, ledger);
+    const result = await verifyBed(entry, REAL_DIR, ledgerIds);
+    failed = recordResult({ ...result, failures: [...ledgerFailures, ...result.failures] }, failed);
+  }
+  const coverage = await checkAppCoverage(realManifest);
+  for (const message of coverage) {
+    console.log(`FAIL ${message}`);
+    failed = true;
+  }
+
+  console.log(failed ? 'verify-pack: FAILED' : 'verify-pack: all checks passed');
+  process.exitCode = failed ? 1 : 0;
 }
 
 main().catch((err) => {

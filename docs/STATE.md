@@ -19,7 +19,7 @@ _Last updated: 2026-10-11 (night) by architect_
 | M8 | Polish, accessibility, performance, EAS build, device spike S1 + probes P1/P2, Maestro E2E | not started |
 
 ## Work in flight
-- **A3** real ambience pack from Freesound CC0 (unblocked): a haiku-worker is building it.
+- **A3** real ambience pack: built and verified. **Waiting on the user's listening verdict** (audition page https://claude.ai/artifact/W5NE2v8GKkjuj3gEu1Xv1c). Then it ships in the next APK.
 - APK **`lectio-0.1.0-23ac9d0-arm64.apk`** (N2 + the incident-3 fix) is on `apk-builds`: 45,788,860 bytes, SHA-256 `74272531…cb1a`, the same debug key, built from a clean worktree (no A3 work in it), and the bundle contains the new strings. Waiting on the user's device test (the failed Chinese chapter, then a 10-minute listen).
 
 ## Next up
@@ -197,3 +197,28 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
   - Feasible. Phases: P1 delivery directions → P2 narrator + 2–4 voices (Gemini 2-speaker) → P3 full cast.
   - Prerequisites: hash-keyed resume, and a planner change for dialogue paragraphs (needs a listening test).
   - Live risk: the app sends `speed` to every model. Probe it.
+
+## A3 built (2026-10-12), pending the user's ears
+- **18 real CC0 Freesound beds**:
+  - weather: light/heavy rain, rain on window, storm
+  - nature: forest by day and night, ocean, river, open field, mountain wind
+  - urban: city by day and night, market
+  - interiors: cafe, tavern
+  - transport: train, horse trot
+  - combat: war drums
+
+  Each is a 60 s seamless loop at −28 LUFS, AAC 64 kbps mono, about 495 KB. The real pack is 8.94 MB (budget 15 MB); with the base pack, about 11.9 MB of ambience is bundled.
+- **Tooling**: `npm run sounds:curate` / `sounds:build-real` / `sounds:test`. `verify` now also runs `sounds:test` and `sounds:verify`. Licence gate: exactly CC0, re-checked at build. Every file has a row in `LICENSES.json`. To replace a bed, set `assets/ambience/curation/overrides.json` and run `npm run sounds:build-real -- --only=<id>`. The key is read from the env and sent as a header only; a grep finds it in 0 repo files.
+- **App**: `ambience-pack.ts` requires the 18 real beds. `resolve-bed` prefers the exact real bed before the fallback chain (tests added).
+- **Evidence**: architect re-ran `npm run verify`, exit 0 (191 suites, 1,839 tests, `verify-pack: all checks passed`, sounds:test 39/39). Worker mutation: removing a require fails 4 tests.
+- **Risky beds to listen to first**:
+  - horse_trot: hoof rhythm at the seam
+  - war_drums: may be music
+  - storm_wind: has sirens
+  - heavy_rain: thunder
+  - market_crowd: only 3 ratings
+  - tavern and cafe: voices by design
+- **Backlog**:
+  - The A1 seam rule is lenient for rhythmic beds (a per-bed p99 limit).
+  - Diagnostics' audio probe now decodes 24 beds (measure the time).
+  - The 6 AI-generated beds from R5 (fireplace, castle hall, battlefield, gallop, ship deck, temple) need an ElevenLabs paid plan: the user's decision.

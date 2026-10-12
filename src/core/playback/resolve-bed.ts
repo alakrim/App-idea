@@ -1,11 +1,11 @@
 import { fallbackChain, getCategory } from '../analysis/ambience-taxonomy';
 
 /**
- * Picks the bed to play for an ambience category (ADR-0005). If the category has no installed
- * sound, the taxonomy fallback chain is walked until an installed id is found. The chain ends in a
- * base-pack id, or in null, which skips the cue.
+ * Picks the bed to play for an ambience category (ADR-0005). Order: the category's own bed first (a
+ * real Freesound recording is installed under its category id, A3), then the taxonomy fallback chain
+ * in order. The chain ends in a base-pack id, or in null, which skips the cue.
  *
- * `installed` holds every playable bed id: base-pack ids and any sampled bed ids.
+ * `installed` holds every playable bed id: base-pack ids and real bed ids (category ids).
  * Returns the id to play, or null when nothing on the chain is installed or the id is unknown.
  */
 export function resolveBed(categoryId: string, installed: ReadonlySet<string>): string | null {
