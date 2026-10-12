@@ -1,0 +1,127 @@
+{
+  "category": "city_street_day",
+  "rank": 10,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "city street ambience",
+    "busy street traffic"
+  ],
+  "poolSize": 60,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 645851,
+      "name": "City streets from far away.wav",
+      "url": "https://freesound.org/people/BonnyOrbit/sounds/645851/",
+      "author": "BonnyOrbit",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 156.02,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.66,
+      "numRatings": 29,
+      "numDownloads": 1830,
+      "previewUrl": "https://cdn.freesound.org/previews/645/645851_5902878-hq.mp3",
+      "score": 10.25,
+      "reasons": [
+        "+2.61 rating 4.66 from 29 ratings",
+        "+1.63 1830 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic",
+        "+1 name matches city"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 417388,
+      "name": "Amazing street ambience sounds.wav",
+      "url": "https://freesound.org/people/dersinnsspace/sounds/417388/",
+      "author": "dersinnsspace",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 153.59,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.21,
+      "numRatings": 34,
+      "numDownloads": 2832,
+      "previewUrl": "https://cdn.freesound.org/previews/417/417388_8224400-hq.mp3",
+      "score": 10.06,
+      "reasons": [
+        "+2.34 rating 4.21 from 34 ratings",
+        "+1.73 2832 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic",
+        "+1 name matches street"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 608158,
+      "name": "Street People Cars City Fantasy Traffic Noise Ambience Atmosphere - Mastered ST.wav",
+      "url": "https://freesound.org/people/szegvari/sounds/608158/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 123.94,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 10,
+      "numDownloads": 667,
+      "previewUrl": "https://cdn.freesound.org/previews/608/608158_2282212-hq.mp3",
+      "score": 9.94,
+      "reasons": [
+        "+2.52 rating 4.8 from 10 ratings",
+        "+1.41 667 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic",
+        "+1 name matches city, street, traffic"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 384475,
+      "name": "Cologne City, Tarffic on a street with barking dog (Surround)",
+      "url": "https://freesound.org/people/Pfannkuchn/sounds/384475/",
+      "author": "Pfannkuchn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 200.54,
+      "samplerate": 48000,
+      "channels": 4,
+      "avgRating": 4.73,
+      "numRatings": 11,
+      "numDownloads": 528,
+      "previewUrl": "https://cdn.freesound.org/previews/384/384475_627541-hq.mp3",
+      "score": 9.87,
+      "reasons": [
+        "+2.51 rating 4.73 from 11 ratings",
+        "+1.36 528 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic, urban",
+        "+1 name matches city, street"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 561463,
+      "name": "Ambience from 5th floor balcony in Sao Paulo Brazil traffic construction machine pile driver foundation walla",
+      "url": "https://freesound.org/people/anapb/sounds/561463/",
+      "author": "anapb",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 162.13,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 7,
+      "numDownloads": 363,
+      "previewUrl": "https://cdn.freesound.org/previews/561/561463_2886338-hq.mp3",
+      "score": 9.81,
+      "reasons": [
+        "+2.53 rating 5 from 7 ratings",
+        "+1.28 363 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic, urban",
+        "+1 name matches traffic"
+      ]
+    }
+  ]
+}

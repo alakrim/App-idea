@@ -1,0 +1,127 @@
+{
+  "category": "storm_wind",
+  "rank": 4,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "thunderstorm ambience",
+    "storm wind rain"
+  ],
+  "poolSize": 60,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 515886,
+      "name": "Summer Storm, Wind, Thunder, Sirens",
+      "url": "https://freesound.org/people/ecfike/sounds/515886/",
+      "author": "ecfike",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 448,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.96,
+      "numRatings": 27,
+      "numDownloads": 627,
+      "previewUrl": "https://cdn.freesound.org/previews/515/515886_2337290-hq.mp3",
+      "score": 10.2,
+      "reasons": [
+        "+2.8 rating 4.96 from 27 ratings",
+        "+1.4 627 downloads",
+        "+2 at least 90 s",
+        "+3 tags storm, thunder, wind",
+        "+1 name matches storm, thunder, wind"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 700358,
+      "name": "Rain and Thunder Ambience",
+      "url": "https://freesound.org/people/sagamusix/sounds/700358/",
+      "author": "sagamusix",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 190.94,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.94,
+      "numRatings": 18,
+      "numDownloads": 432,
+      "previewUrl": "https://cdn.freesound.org/previews/700/700358_9398458-hq.mp3",
+      "score": 10.04,
+      "reasons": [
+        "+2.72 rating 4.94 from 18 ratings",
+        "+1.32 432 downloads",
+        "+2 at least 90 s",
+        "+3 tags storm, thunder, wind",
+        "+1 name matches thunder"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 90092,
+      "name": "large-storm-merged.mp3",
+      "url": "https://freesound.org/people/al-wa7sh/sounds/90092/",
+      "author": "al-wa7sh",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 234.9,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.28,
+      "numRatings": 25,
+      "numDownloads": 1844,
+      "previewUrl": "https://cdn.freesound.org/previews/90/90092_1445223-hq.mp3",
+      "score": 10,
+      "reasons": [
+        "+2.36 rating 4.28 from 25 ratings",
+        "+1.63 1844 downloads",
+        "+2 at least 90 s",
+        "+3 tags storm, thunder, wind",
+        "+1 name matches storm"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 275346,
+      "name": "Rainstorm and Thunder",
+      "url": "https://freesound.org/people/Durkhelek/sounds/275346/",
+      "author": "Durkhelek",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 432.23,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.67,
+      "numRatings": 9,
+      "numDownloads": 601,
+      "previewUrl": "https://cdn.freesound.org/previews/275/275346_3044892-hq.mp3",
+      "score": 9.83,
+      "reasons": [
+        "+2.44 rating 4.67 from 9 ratings",
+        "+1.39 601 downloads",
+        "+2 at least 90 s",
+        "+3 tags storm, thunder, wind",
+        "+1 name matches thunder"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 447809,
+      "name": "Light Rain and Thunder.wav",
+      "url": "https://freesound.org/people/florianreichelt/sounds/447809/",
+      "author": "florianreichelt",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 63.48,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.81,
+      "numRatings": 26,
+      "numDownloads": 1239,
+      "previewUrl": "https://cdn.freesound.org/previews/447/447809_6253486-hq.mp3",
+      "score": 9.74,
+      "reasons": [
+        "+2.7 rating 4.81 from 26 ratings",
+        "+1.55 1239 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags storm, thunder, wind",
+        "+1 name matches thunder"
+      ]
+    }
+  ]
+}

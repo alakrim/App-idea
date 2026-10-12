@@ -1,0 +1,127 @@
+{
+  "category": "tavern_crowd",
+  "rank": 16,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "tavern ambience",
+    "pub crowd ambience"
+  ],
+  "poolSize": 31,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 376456,
+      "name": "Pub in Cambridge",
+      "url": "https://freesound.org/people/domasmo/sounds/376456/",
+      "author": "domasmo",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 121.49,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 32,
+      "numDownloads": 4354,
+      "previewUrl": "https://cdn.freesound.org/previews/376/376456_4339600-hq.mp3",
+      "score": 10.51,
+      "reasons": [
+        "+2.69 rating 4.75 from 32 ratings",
+        "+1.82 4354 downloads",
+        "+2 at least 90 s",
+        "+3 tags pub, bar, crowd",
+        "+1 name matches pub"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 212094,
+      "name": "Small_Town_Bar_007.wav",
+      "url": "https://freesound.org/people/conleec/sounds/212094/",
+      "author": "conleec",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 371.37,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.9,
+      "numRatings": 20,
+      "numDownloads": 1990,
+      "previewUrl": "https://cdn.freesound.org/previews/212/212094_221578-hq.mp3",
+      "score": 10.36,
+      "reasons": [
+        "+2.72 rating 4.9 from 20 ratings",
+        "+1.65 1990 downloads",
+        "+2 at least 90 s",
+        "+3 tags tavern, bar, crowd",
+        "+1 name matches bar"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 237398,
+      "name": "General Chatter In Bar",
+      "url": "https://freesound.org/people/squareal/sounds/237398/",
+      "author": "squareal",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 233.5,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.4,
+      "numRatings": 25,
+      "numDownloads": 4411,
+      "previewUrl": "https://cdn.freesound.org/previews/237/237398_1502374-hq.mp3",
+      "score": 10.26,
+      "reasons": [
+        "+2.44 rating 4.4 from 25 ratings",
+        "+1.82 4411 downloads",
+        "+2 at least 90 s",
+        "+3 tags pub, bar, crowd",
+        "+1 name matches bar"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 212096,
+      "name": "Small_Town_Bar_004.wav",
+      "url": "https://freesound.org/people/conleec/sounds/212096/",
+      "author": "conleec",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 166.01,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.4,
+      "numRatings": 5,
+      "numDownloads": 1001,
+      "previewUrl": "https://cdn.freesound.org/previews/212/212096_221578-hq.mp3",
+      "score": 9.71,
+      "reasons": [
+        "+2.21 rating 4.4 from 5 ratings",
+        "+1.5 1001 downloads",
+        "+2 at least 90 s",
+        "+3 tags tavern, bar, crowd",
+        "+1 name matches bar"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 695295,
+      "name": "Pirate Tavern",
+      "url": "https://freesound.org/people/brunoboselli/sounds/695295/",
+      "author": "brunoboselli",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 61,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.87,
+      "numRatings": 89,
+      "numDownloads": 2890,
+      "previewUrl": "https://cdn.freesound.org/previews/695/695295_300738-hq.mp3",
+      "score": 9.57,
+      "reasons": [
+        "+2.84 rating 4.87 from 89 ratings",
+        "+1.73 2890 downloads",
+        "+1 at least 60 s",
+        "+3 tags tavern, pub, bar",
+        "+1 name matches tavern"
+      ]
+    }
+  ]
+}

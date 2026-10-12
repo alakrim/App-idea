@@ -1,0 +1,127 @@
+{
+  "category": "mountain_wind",
+  "rank": 15,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "mountain wind ambience",
+    "wind mountain ridge"
+  ],
+  "poolSize": 30,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 577263,
+      "name": "Mountain Soundscape.wav",
+      "url": "https://freesound.org/people/BotanicalVan/sounds/577263/",
+      "author": "BotanicalVan",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 179.38,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.86,
+      "numRatings": 28,
+      "numDownloads": 995,
+      "previewUrl": "https://cdn.freesound.org/previews/577/577263_9827221-hq.mp3",
+      "score": 9.24,
+      "reasons": [
+        "+2.74 rating 4.86 from 28 ratings",
+        "+1.5 995 downloads",
+        "+2 at least 90 s",
+        "+2 tags mountain, wind",
+        "+1 name matches mountain"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 288899,
+      "name": "Rocky Mountain Outdoors:  wind and birds",
+      "url": "https://freesound.org/people/petebuchwald/sounds/288899/",
+      "author": "petebuchwald",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 89.72,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.73,
+      "numRatings": 81,
+      "numDownloads": 8177,
+      "previewUrl": "https://cdn.freesound.org/previews/288/288899_2367139-hq.mp3",
+      "score": 9.2,
+      "reasons": [
+        "+2.74 rating 4.73 from 81 ratings",
+        "+1.96 8177 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags mountain, wind",
+        "+1 name matches mountain, wind"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 647658,
+      "name": "Ambience - night atmosphere - mountains - provence - south France - insects - crickets - light wind.wav",
+      "url": "https://freesound.org/people/ValentinPetiteau/sounds/647658/",
+      "author": "ValentinPetiteau",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 355.01,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.88,
+      "numRatings": 17,
+      "numDownloads": 710,
+      "previewUrl": "https://cdn.freesound.org/previews/647/647658_10443988-hq.mp3",
+      "score": 9.1,
+      "reasons": [
+        "+2.68 rating 4.88 from 17 ratings",
+        "+1.43 710 downloads",
+        "+2 at least 90 s",
+        "+2 tags mountain, wind",
+        "+1 name matches wind"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 486891,
+      "name": "Ambience Mountain Outdoor Mirador Horta",
+      "url": "https://freesound.org/people/bitlab_coop/sounds/486891/",
+      "author": "bitlab_coop",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 277.77,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.38,
+      "numRatings": 13,
+      "numDownloads": 1594,
+      "previewUrl": "https://cdn.freesound.org/previews/486/486891_9872712-hq.mp3",
+      "score": 8.96,
+      "reasons": [
+        "+2.35 rating 4.38 from 13 ratings",
+        "+1.6 1594 downloads",
+        "+2 at least 90 s",
+        "+2 tags mountain, wind",
+        "+1 name matches mountain"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 757868,
+      "name": "Morning in swiss mountain",
+      "url": "https://freesound.org/people/xkeril/sounds/757868/",
+      "author": "xkeril",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 117.7,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.56,
+      "numRatings": 18,
+      "numDownloads": 631,
+      "previewUrl": "https://cdn.freesound.org/previews/757/757868_13504080-hq.mp3",
+      "score": 8.89,
+      "reasons": [
+        "+2.49 rating 4.56 from 18 ratings",
+        "+1.4 631 downloads",
+        "+2 at least 90 s",
+        "+2 tags mountain, wind",
+        "+1 name matches mountain"
+      ]
+    }
+  ]
+}

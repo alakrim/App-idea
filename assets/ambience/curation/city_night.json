@@ -1,0 +1,127 @@
+{
+  "category": "city_night",
+  "rank": 11,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "city night ambience",
+    "night city atmosphere"
+  ],
+  "poolSize": 52,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 427841,
+      "name": "Ambience City Quiet Night Air Tone",
+      "url": "https://freesound.org/people/leonelmail/sounds/427841/",
+      "author": "leonelmail",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 139.46,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.86,
+      "numRatings": 49,
+      "numDownloads": 4771,
+      "previewUrl": "https://cdn.freesound.org/previews/427/427841_4437257-hq.mp3",
+      "score": 9.64,
+      "reasons": [
+        "+2.8 rating 4.86 from 49 ratings",
+        "+1.84 4771 downloads",
+        "+2 at least 90 s",
+        "+2 tags city, night",
+        "+1 name matches city, night"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 752436,
+      "name": "Walking through the bustling night market in the downtown area",
+      "url": "https://freesound.org/people/lastraindrop/sounds/752436/",
+      "author": "lastraindrop",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 485.81,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.44,
+      "numRatings": 9,
+      "numDownloads": 282,
+      "previewUrl": "https://cdn.freesound.org/previews/752/752436_12768873-hq.mp3",
+      "score": 9.56,
+      "reasons": [
+        "+2.33 rating 4.44 from 9 ratings",
+        "+1.23 282 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, night, urban",
+        "+1 name matches night"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 332783,
+      "name": "city ambience, pedestrian subway, outside, night, distant traffic, trains and railway station announcements - Stereo preview.wav",
+      "url": "https://freesound.org/people/be_a_hero_not_a_patriot/sounds/332783/",
+      "author": "be_a_hero_not_a_patriot",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 270.89,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.93,
+      "numRatings": 28,
+      "numDownloads": 2254,
+      "previewUrl": "https://cdn.freesound.org/previews/332/332783_5804919-hq.mp3",
+      "score": 9.46,
+      "reasons": [
+        "+2.78 rating 4.93 from 28 ratings",
+        "+1.68 2254 downloads",
+        "+2 at least 90 s",
+        "+2 tags city, night",
+        "+1 name matches city, night"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 237329,
+      "name": "Night city atmosphere",
+      "url": "https://freesound.org/people/Soundkrampf/sounds/237329/",
+      "author": "Soundkrampf",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 67.72,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 107,
+      "numDownloads": 18771,
+      "previewUrl": "https://cdn.freesound.org/previews/237/237329_3435865-hq.mp3",
+      "score": 9.31,
+      "reasons": [
+        "+2.81 rating 4.8 from 107 ratings",
+        "+2 18771 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags city, night",
+        "+1 name matches city, night"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 556228,
+      "name": "Silent City Evening Atmosphere",
+      "url": "https://freesound.org/people/Basbazooka/sounds/556228/",
+      "author": "Basbazooka",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 148.2,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.94,
+      "numRatings": 16,
+      "numDownloads": 1273,
+      "previewUrl": "https://cdn.freesound.org/previews/556/556228_3123050-hq.mp3",
+      "score": 9.25,
+      "reasons": [
+        "+2.7 rating 4.94 from 16 ratings",
+        "+1.55 1273 downloads",
+        "+2 at least 90 s",
+        "+2 tags city, night",
+        "+1 name matches city"
+      ]
+    }
+  ]
+}

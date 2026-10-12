@@ -1,0 +1,127 @@
+{
+  "category": "river_stream",
+  "rank": 8,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "river stream water",
+    "flowing stream water"
+  ],
+  "poolSize": 55,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 433589,
+      "name": "Stream River Water Up Close",
+      "url": "https://freesound.org/people/jackthemurray/sounds/433589/",
+      "author": "jackthemurray",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 68.89,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.74,
+      "numRatings": 223,
+      "numDownloads": 20013,
+      "previewUrl": "https://cdn.freesound.org/previews/433/433589_5618682-hq.mp3",
+      "score": 10.28,
+      "reasons": [
+        "+2.78 rating 4.74 from 223 ratings",
+        "+2 20013 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags river, stream, water, creek",
+        "+1 name matches river, stream"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 446019,
+      "name": "Gentle Stream Natural Stream Sound",
+      "url": "https://freesound.org/people/BurghRecords/sounds/446019/",
+      "author": "BurghRecords",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 63.68,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.62,
+      "numRatings": 125,
+      "numDownloads": 5874,
+      "previewUrl": "https://cdn.freesound.org/previews/446/446019_7241289-hq.mp3",
+      "score": 10.06,
+      "reasons": [
+        "+2.68 rating 4.62 from 125 ratings",
+        "+1.88 5874 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags river, stream, water, creek",
+        "+1 name matches stream"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 275627,
+      "name": "water stream river sma",
+      "url": "https://freesound.org/people/hanneswannerberger/sounds/275627/",
+      "author": "hanneswannerberger",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 111.03,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.65,
+      "numRatings": 20,
+      "numDownloads": 835,
+      "previewUrl": "https://cdn.freesound.org/previews/275/275627_5286375-hq.mp3",
+      "score": 10.03,
+      "reasons": [
+        "+2.57 rating 4.65 from 20 ratings",
+        "+1.46 835 downloads",
+        "+2 at least 90 s",
+        "+3 tags river, stream, water",
+        "+1 name matches river, stream"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 557170,
+      "name": "River water stream with high flow",
+      "url": "https://freesound.org/people/klau78/sounds/557170/",
+      "author": "klau78",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 417.21,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.38,
+      "numRatings": 13,
+      "numDownloads": 590,
+      "previewUrl": "https://cdn.freesound.org/previews/557/557170_12184473-hq.mp3",
+      "score": 9.74,
+      "reasons": [
+        "+2.35 rating 4.38 from 13 ratings",
+        "+1.39 590 downloads",
+        "+2 at least 90 s",
+        "+3 tags river, stream, water, creek",
+        "+1 name matches river, stream"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 869104,
+      "name": "Mountain Stream Flowing Past from the Riverbank, Boscoverde, Dolomites - Torrente Pettorina",
+      "url": "https://freesound.org/people/bassimat/sounds/869104/",
+      "author": "bassimat",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 418.67,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 6,
+      "numDownloads": 170,
+      "previewUrl": "https://cdn.freesound.org/previews/869/869104_15636277-hq.mp3",
+      "score": 9.61,
+      "reasons": [
+        "+2.49 rating 5 from 6 ratings",
+        "+1.12 170 downloads",
+        "+2 at least 90 s",
+        "+3 tags river, stream, water",
+        "+1 name matches stream"
+      ]
+    }
+  ]
+}

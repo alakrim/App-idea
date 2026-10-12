@@ -1,0 +1,127 @@
+{
+  "category": "heavy_rain",
+  "rank": 2,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "heavy rain downpour",
+    "heavy rain ambience"
+  ],
+  "poolSize": 56,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 164206,
+      "name": "Rain very heavy with thunder.wav",
+      "url": "https://freesound.org/people/Danjocross/sounds/164206/",
+      "author": "Danjocross",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 122.85,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 18,
+      "numDownloads": 951,
+      "previewUrl": "https://cdn.freesound.org/previews/164/164206_2977885-hq.mp3",
+      "score": 10.15,
+      "reasons": [
+        "+2.66 rating 4.83 from 18 ratings",
+        "+1.49 951 downloads",
+        "+2 at least 90 s",
+        "+3 tags rain, downpour, storm",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 826025,
+      "name": "RAIN_Summer Rain.City Yard.Entrance Canopy.Eaves Leaking.Drops On Plants And Asphalt 3_EM",
+      "url": "https://freesound.org/people/newlocknew/sounds/826025/",
+      "author": "newlocknew",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 205.18,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.74,
+      "numRatings": 34,
+      "numDownloads": 492,
+      "previewUrl": "https://cdn.freesound.org/previews/826/826025_5828667-hq.mp3",
+      "score": 10.03,
+      "reasons": [
+        "+2.68 rating 4.74 from 34 ratings",
+        "+1.35 492 downloads",
+        "+2 at least 90 s",
+        "+3 tags rain, heavy, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 435222,
+      "name": "Heavy rain with thuder",
+      "url": "https://freesound.org/people/dersinnsspace/sounds/435222/",
+      "author": "dersinnsspace",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 100,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.43,
+      "numRatings": 14,
+      "numDownloads": 590,
+      "previewUrl": "https://cdn.freesound.org/previews/435/435222_8224400-hq.mp3",
+      "score": 9.77,
+      "reasons": [
+        "+2.39 rating 4.43 from 14 ratings",
+        "+1.39 590 downloads",
+        "+2 at least 90 s",
+        "+3 tags rain, heavy, downpour, storm",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 717843,
+      "name": "230405 Rain heavy, concrete, trees, M10 ParaEM272s, Toronto 7am",
+      "url": "https://freesound.org/people/TRP/sounds/717843/",
+      "author": "TRP",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 116.99,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 12,
+      "numDownloads": 156,
+      "previewUrl": "https://cdn.freesound.org/previews/717/717843_97550-hq.mp3",
+      "score": 9.63,
+      "reasons": [
+        "+2.54 rating 4.75 from 12 ratings",
+        "+1.1 156 downloads",
+        "+2 at least 90 s",
+        "+3 tags rain, heavy, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 616446,
+      "name": "Heavy rain pouring with water stream on concrete",
+      "url": "https://freesound.org/people/AdrianoAnjos/sounds/616446/",
+      "author": "AdrianoAnjos",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 110.26,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.63,
+      "numRatings": 8,
+      "numDownloads": 222,
+      "previewUrl": "https://cdn.freesound.org/previews/616/616446_6801313-hq.mp3",
+      "score": 9.57,
+      "reasons": [
+        "+2.39 rating 4.63 from 8 ratings",
+        "+1.17 222 downloads",
+        "+2 at least 90 s",
+        "+3 tags rain, heavy, downpour, storm",
+        "+1 name matches rain"
+      ]
+    }
+  ]
+}

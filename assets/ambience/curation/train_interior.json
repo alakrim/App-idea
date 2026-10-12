@@ -1,0 +1,127 @@
+{
+  "category": "train_interior",
+  "rank": 14,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "train interior ambience",
+    "train carriage rail"
+  ],
+  "poolSize": 52,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 785389,
+      "name": "AMBIENCE_INTERIOR_TRAIN-STATION_LISBOA_SANTA-APOLONIA_4824_01",
+      "url": "https://freesound.org/people/pblzr/sounds/785389/",
+      "author": "pblzr",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 382.24,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 165,
+      "previewUrl": "https://cdn.freesound.org/previews/785/785389_962598-hq.mp3",
+      "score": 9.31,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.11 165 downloads",
+        "+2 at least 90 s",
+        "+3 tags train, interior, rail",
+        "+1 name matches train"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 785388,
+      "name": "AMBIENCE_INTERIOR_TRAIN-STATION_LISBOA_SANTA-APOLONIA_4824_02",
+      "url": "https://freesound.org/people/pblzr/sounds/785388/",
+      "author": "pblzr",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 467.4,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 144,
+      "previewUrl": "https://cdn.freesound.org/previews/785/785388_962598-hq.mp3",
+      "score": 9.28,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.08 144 downloads",
+        "+2 at least 90 s",
+        "+3 tags train, interior, rail",
+        "+1 name matches train"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 333944,
+      "name": "Moscow subway train ride - interior ambience - Kaluzhsko-Rizhskaya subway line OMNI mics.flac",
+      "url": "https://freesound.org/people/gladkiy/sounds/333944/",
+      "author": "gladkiy",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 587.37,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.91,
+      "numRatings": 23,
+      "numDownloads": 721,
+      "previewUrl": "https://cdn.freesound.org/previews/333/333944_2364707-hq.mp3",
+      "score": 9.17,
+      "reasons": [
+        "+2.75 rating 4.91 from 23 ratings",
+        "+1.43 721 downloads",
+        "+2 at least 90 s",
+        "+2 tags train, interior",
+        "+1 name matches train"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 525058,
+      "name": "Riding Train interior recording",
+      "url": "https://freesound.org/people/gecop/sounds/525058/",
+      "author": "gecop",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.96,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.38,
+      "numRatings": 8,
+      "numDownloads": 617,
+      "previewUrl": "https://cdn.freesound.org/previews/525/525058_3562198-hq.mp3",
+      "score": 9.17,
+      "reasons": [
+        "+2.28 rating 4.38 from 8 ratings",
+        "+1.4 617 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags train, interior, rail",
+        "+1 name matches train"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 785398,
+      "name": "AMBIENCE_INTERIOR_TRAIN_PORTUGAL_INTERCIDADES_4824_03",
+      "url": "https://freesound.org/people/pblzr/sounds/785398/",
+      "author": "pblzr",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 434.81,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 4,
+      "numDownloads": 68,
+      "previewUrl": "https://cdn.freesound.org/previews/785/785398_962598-hq.mp3",
+      "score": 8.96,
+      "reasons": [
+        "+2.04 rating 4 from 4 ratings",
+        "+0.92 68 downloads",
+        "+2 at least 90 s",
+        "+3 tags train, interior, rail",
+        "+1 name matches train"
+      ]
+    }
+  ]
+}

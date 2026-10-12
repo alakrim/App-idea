@@ -1,0 +1,127 @@
+{
+  "category": "ocean_waves",
+  "rank": 7,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "ocean waves beach",
+    "sea waves shore"
+  ],
+  "poolSize": 60,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 550915,
+      "name": "BGSaSc Water Beach Ocean Waves Constant Splashing Rocks Many Small Waves Greece 16",
+      "url": "https://freesound.org/people/Profispiesser/sounds/550915/",
+      "author": "Profispiesser",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 102.7,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 276,
+      "numDownloads": 9325,
+      "previewUrl": "https://cdn.freesound.org/previews/550/550915_6667441-hq.mp3",
+      "score": 10.82,
+      "reasons": [
+        "+2.83 rating 4.8 from 276 ratings",
+        "+1.98 9325 downloads",
+        "+2 at least 90 s",
+        "+3 tags ocean, waves, beach",
+        "+1 name matches ocean, waves, beach"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 518637,
+      "name": "Gentle ocean waves birdsong and gull.WAV",
+      "url": "https://freesound.org/people/jackmichaelking/sounds/518637/",
+      "author": "jackmichaelking",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 115.09,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.84,
+      "numRatings": 99,
+      "numDownloads": 4720,
+      "previewUrl": "https://cdn.freesound.org/previews/518/518637_6089496-hq.mp3",
+      "score": 10.67,
+      "reasons": [
+        "+2.83 rating 4.84 from 99 ratings",
+        "+1.84 4720 downloads",
+        "+2 at least 90 s",
+        "+3 tags ocean, waves, sea, beach, shore",
+        "+1 name matches ocean, waves"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 155641,
+      "name": "Ocean waves crushing on the chilean shore. ",
+      "url": "https://freesound.org/people/felix.blume/sounds/155641/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 180.39,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 65,
+      "numDownloads": 3543,
+      "previewUrl": "https://cdn.freesound.org/previews/155/155641_1661766-hq.mp3",
+      "score": 10.52,
+      "reasons": [
+        "+2.75 rating 4.75 from 65 ratings",
+        "+1.77 3543 downloads",
+        "+2 at least 90 s",
+        "+3 tags ocean, waves, sea, shore",
+        "+1 name matches ocean, waves"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 425632,
+      "name": "Sea waves",
+      "url": "https://freesound.org/people/molkko/sounds/425632/",
+      "author": "molkko",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 122.93,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.81,
+      "numRatings": 37,
+      "numDownloads": 3536,
+      "previewUrl": "https://cdn.freesound.org/previews/425/425632_3683160-hq.mp3",
+      "score": 10.52,
+      "reasons": [
+        "+2.74 rating 4.81 from 37 ratings",
+        "+1.77 3536 downloads",
+        "+2 at least 90 s",
+        "+3 tags ocean, waves, sea, beach, shore",
+        "+1 name matches waves, sea"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 827530,
+      "name": "Ocean_coast_04_092025_0659AM",
+      "url": "https://freesound.org/people/YevgVerh/sounds/827530/",
+      "author": "YevgVerh",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 181.18,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 122,
+      "numDownloads": 3501,
+      "previewUrl": "https://cdn.freesound.org/previews/827/827530_2718606-hq.mp3",
+      "score": 10.52,
+      "reasons": [
+        "+2.75 rating 4.71 from 122 ratings",
+        "+1.77 3501 downloads",
+        "+2 at least 90 s",
+        "+3 tags ocean, waves, beach",
+        "+1 name matches ocean"
+      ]
+    }
+  ]
+}

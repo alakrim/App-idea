@@ -1,0 +1,127 @@
+{
+  "category": "market_crowd",
+  "rank": 12,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "market crowd ambience",
+    "bazaar market people"
+  ],
+  "poolSize": 35,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 412824,
+      "name": "market bazaar.wav",
+      "url": "https://freesound.org/people/blukotek/sounds/412824/",
+      "author": "blukotek",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 80.12,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.33,
+      "numRatings": 3,
+      "numDownloads": 484,
+      "previewUrl": "https://cdn.freesound.org/previews/412/412824_4451798-hq.mp3",
+      "score": 8.95,
+      "reasons": [
+        "+2.11 rating 4.33 from 3 ratings",
+        "+1.34 484 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags market, crowd, bazaar",
+        "+1 name matches market, bazaar"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 755969,
+      "name": "Evening food market atmosphere at street side",
+      "url": "https://freesound.org/people/lastraindrop/sounds/755969/",
+      "author": "lastraindrop",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 340.33,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.9,
+      "numRatings": 10,
+      "numDownloads": 307,
+      "previewUrl": "https://cdn.freesound.org/previews/755/755969_12768873-hq.mp3",
+      "score": 8.82,
+      "reasons": [
+        "+2.58 rating 4.9 from 10 ratings",
+        "+1.24 307 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 700436,
+      "name": "Le Cheylard outside summer market.wav",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/700436/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 132.47,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 6,
+      "numDownloads": 255,
+      "previewUrl": "https://cdn.freesound.org/previews/700/700436_11519060-hq.mp3",
+      "score": 8.69,
+      "reasons": [
+        "+2.49 rating 5 from 6 ratings",
+        "+1.2 255 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 545756,
+      "name": "CROWD",
+      "url": "https://freesound.org/people/SamuelGremaud/sounds/545756/",
+      "author": "SamuelGremaud",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 167.27,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 4,
+      "numDownloads": 539,
+      "previewUrl": "https://cdn.freesound.org/previews/545/545756_8031303-hq.mp3",
+      "score": 8.57,
+      "reasons": [
+        "+2.21 rating 4.5 from 4 ratings",
+        "+1.37 539 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches crowd"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 782314,
+      "name": "sophia open air vegetable market",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/782314/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 144.73,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 10,
+      "numDownloads": 121,
+      "previewUrl": "https://cdn.freesound.org/previews/782/782314_11519060-hq.mp3",
+      "score": 8.57,
+      "reasons": [
+        "+2.52 rating 4.8 from 10 ratings",
+        "+1.04 121 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    }
+  ]
+}

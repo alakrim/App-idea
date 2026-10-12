@@ -1,0 +1,127 @@
+{
+  "category": "cafe_soft",
+  "rank": 13,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "cafe ambience",
+    "coffee shop ambience"
+  ],
+  "poolSize": 57,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 370973,
+      "name": "coffee shop ambience",
+      "url": "https://freesound.org/people/waweee/sounds/370973/",
+      "author": "waweee",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 296,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.47,
+      "numRatings": 32,
+      "numDownloads": 3402,
+      "previewUrl": "https://cdn.freesound.org/previews/370/370973_5835751-hq.mp3",
+      "score": 10.27,
+      "reasons": [
+        "+2.5 rating 4.47 from 32 ratings",
+        "+1.77 3402 downloads",
+        "+2 at least 90 s",
+        "+3 tags cafe, coffee, restaurant",
+        "+1 name matches coffee"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 260062,
+      "name": "Busy Coffee Shop Counter Field Recording",
+      "url": "https://freesound.org/people/mhtaylor67/sounds/260062/",
+      "author": "mhtaylor67",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 236,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 570,
+      "previewUrl": "https://cdn.freesound.org/previews/260/260062_2258946-hq.mp3",
+      "score": 9.58,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+1.38 570 downloads",
+        "+2 at least 90 s",
+        "+3 tags cafe, coffee, restaurant",
+        "+1 name matches coffee"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 453074,
+      "name": "370973__waweee__coffee-shop-ambience_remastered.mp3",
+      "url": "https://freesound.org/people/C_Rogers/sounds/453074/",
+      "author": "C_Rogers",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 296,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.73,
+      "numRatings": 44,
+      "numDownloads": 4083,
+      "previewUrl": "https://cdn.freesound.org/previews/453/453074_3569783-hq.mp3",
+      "score": 9.51,
+      "reasons": [
+        "+2.7 rating 4.73 from 44 ratings",
+        "+1.81 4083 downloads",
+        "+2 at least 90 s",
+        "+2 tags coffee, restaurant",
+        "+1 name matches coffee"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 437461,
+      "name": "QUIET CAFE, CHATTER, MILK FROTHING MACHINE, atmos atmosphere wildtrack ambience.mp3",
+      "url": "https://freesound.org/people/Anya_Media/sounds/437461/",
+      "author": "Anya_Media",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120.69,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.78,
+      "numRatings": 37,
+      "numDownloads": 2443,
+      "previewUrl": "https://cdn.freesound.org/previews/437/437461_2010973-hq.mp3",
+      "score": 9.42,
+      "reasons": [
+        "+2.72 rating 4.78 from 37 ratings",
+        "+1.69 2443 downloads",
+        "+2 at least 90 s",
+        "+2 tags cafe, restaurant",
+        "+1 name matches cafe"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 746428,
+      "name": "Miss Michelle's cafe in Discovery Mountain -- small cafe ambience - room tone - small crowd",
+      "url": "https://freesound.org/people/douglasbruce@look.ca/sounds/746428/",
+      "author": "douglasbruce@look.ca",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 151.22,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.91,
+      "numRatings": 11,
+      "numDownloads": 628,
+      "previewUrl": "https://cdn.freesound.org/previews/746/746428_7581660-hq.mp3",
+      "score": 9,
+      "reasons": [
+        "+2.6 rating 4.91 from 11 ratings",
+        "+1.4 628 downloads",
+        "+2 at least 90 s",
+        "+2 tags cafe, restaurant",
+        "+1 name matches cafe"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "category": "rain_on_window",
+  "rank": 3,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "rain on window glass",
+    "rain against window"
+  ],
+  "poolSize": 30,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 243781,
+      "name": "rain against window 2",
+      "url": "https://freesound.org/people/bastipictures/sounds/243781/",
+      "author": "bastipictures",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.03,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.79,
+      "numRatings": 28,
+      "numDownloads": 1343,
+      "previewUrl": "https://cdn.freesound.org/previews/243/243781_997601-hq.mp3",
+      "score": 9.76,
+      "reasons": [
+        "+2.69 rating 4.79 from 28 ratings",
+        "+1.56 1343 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags window, glass, rain",
+        "+1 name matches window, rain"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 158691,
+      "name": "Distant Thunder and Rain from Half Open Window 2.aif",
+      "url": "https://freesound.org/people/RutgerMuller/sounds/158691/",
+      "author": "RutgerMuller",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 104,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.94,
+      "numRatings": 18,
+      "numDownloads": 960,
+      "previewUrl": "https://cdn.freesound.org/previews/158/158691_179538-hq.mp3",
+      "score": 9.21,
+      "reasons": [
+        "+2.72 rating 4.94 from 18 ratings",
+        "+1.49 960 downloads",
+        "+2 at least 90 s",
+        "+2 tags window, rain",
+        "+1 name matches window, rain"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 158690,
+      "name": "Rain from Half Open Window 1.aif",
+      "url": "https://freesound.org/people/RutgerMuller/sounds/158690/",
+      "author": "RutgerMuller",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 308,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.88,
+      "numRatings": 17,
+      "numDownloads": 777,
+      "previewUrl": "https://cdn.freesound.org/previews/158/158690_179538-hq.mp3",
+      "score": 9.12,
+      "reasons": [
+        "+2.68 rating 4.88 from 17 ratings",
+        "+1.45 777 downloads",
+        "+2 at least 90 s",
+        "+2 tags window, rain",
+        "+1 name matches window, rain"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 158689,
+      "name": "Rain from Half Open Window 2.aif",
+      "url": "https://freesound.org/people/RutgerMuller/sounds/158689/",
+      "author": "RutgerMuller",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 208,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 12,
+      "numDownloads": 600,
+      "previewUrl": "https://cdn.freesound.org/previews/158/158689_179538-hq.mp3",
+      "score": 9.06,
+      "reasons": [
+        "+2.67 rating 5 from 12 ratings",
+        "+1.39 600 downloads",
+        "+2 at least 90 s",
+        "+2 tags window, rain",
+        "+1 name matches window, rain"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 158692,
+      "name": "Distant Thunder and Rain from Half Open Window 1.aif",
+      "url": "https://freesound.org/people/RutgerMuller/sounds/158692/",
+      "author": "RutgerMuller",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 88,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 27,
+      "numDownloads": 1588,
+      "previewUrl": "https://cdn.freesound.org/previews/158/158692_179538-hq.mp3",
+      "score": 8.71,
+      "reasons": [
+        "+2.61 rating 4.67 from 27 ratings",
+        "+1.6 1588 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags window, rain",
+        "+1 name matches window, rain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "category": "forest_night",
+  "rank": 6,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "forest night crickets",
+    "night forest ambience"
+  ],
+  "poolSize": 52,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 333221,
+      "name": "Night Crickets Back Porch.aiff",
+      "url": "https://freesound.org/people/hdfreema/sounds/333221/",
+      "author": "hdfreema",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 220.06,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.82,
+      "numRatings": 196,
+      "numDownloads": 19048,
+      "previewUrl": "https://cdn.freesound.org/previews/333/333221_2098408-hq.mp3",
+      "score": 10.84,
+      "reasons": [
+        "+2.84 rating 4.82 from 196 ratings",
+        "+2 19048 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 328293,
+      "name": "Forest at night, crickets, cicadas and insects in the Sian Ka'an Biosphere Reserve",
+      "url": "https://freesound.org/people/felix.blume/sounds/328293/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 300.63,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.76,
+      "numRatings": 286,
+      "numDownloads": 21485,
+      "previewUrl": "https://cdn.freesound.org/previews/328/328293_1661766-hq.mp3",
+      "score": 10.81,
+      "reasons": [
+        "+2.81 rating 4.76 from 286 ratings",
+        "+2 21485 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets, forest"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 466955,
+      "name": "Night close to a river, crickets and frogs, bird sometimes.",
+      "url": "https://freesound.org/people/felix.blume/sounds/466955/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 171.61,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.49,
+      "numRatings": 115,
+      "numDownloads": 11569,
+      "previewUrl": "https://cdn.freesound.org/previews/466/466955_1661766-hq.mp3",
+      "score": 10.58,
+      "reasons": [
+        "+2.58 rating 4.49 from 115 ratings",
+        "+2 11569 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 751465,
+      "name": "Crickets chirping in the Night at the Forest 001",
+      "url": "https://freesound.org/people/Borgory/sounds/751465/",
+      "author": "Borgory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 180.63,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.81,
+      "numRatings": 26,
+      "numDownloads": 799,
+      "previewUrl": "https://cdn.freesound.org/previews/751/751465_801011-hq.mp3",
+      "score": 10.15,
+      "reasons": [
+        "+2.7 rating 4.81 from 26 ratings",
+        "+1.45 799 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets, forest"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 809851,
+      "name": "Night forest #2",
+      "url": "https://freesound.org/people/deleted_user_9900733/sounds/809851/",
+      "author": "deleted_user_9900733",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 491.66,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.92,
+      "numRatings": 13,
+      "numDownloads": 483,
+      "previewUrl": "https://cdn.freesound.org/previews/809/809851_9900733-hq.mp3",
+      "score": 9.99,
+      "reasons": [
+        "+2.65 rating 4.92 from 13 ratings",
+        "+1.34 483 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, forest"
+      ]
+    }
+  ]
+}

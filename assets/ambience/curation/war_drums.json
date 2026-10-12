@@ -1,0 +1,123 @@
+{
+  "category": "war_drums",
+  "rank": 17,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "war drums",
+    "battle drums ambience"
+  ],
+  "poolSize": 21,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 347981,
+      "name": "Battle preparations.wav",
+      "url": "https://freesound.org/people/madmanmusic/sounds/347981/",
+      "author": "madmanmusic",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 113.5,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.6,
+      "numRatings": 65,
+      "numDownloads": 5087,
+      "previewUrl": "https://cdn.freesound.org/previews/347/347981_6075465-hq.mp3",
+      "score": 9.49,
+      "reasons": [
+        "+2.64 rating 4.6 from 65 ratings",
+        "+1.85 5087 downloads",
+        "+2 at least 90 s",
+        "+2 tags drums, battle",
+        "+1 name matches battle"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 125933,
+      "name": "reenactment3.aif",
+      "url": "https://freesound.org/people/alienistcog/sounds/125933/",
+      "author": "alienistcog",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 74.5,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.93,
+      "numRatings": 14,
+      "numDownloads": 1634,
+      "previewUrl": "https://cdn.freesound.org/previews/125/125933_296888-hq.mp3",
+      "score": 7.77,
+      "reasons": [
+        "+2.66 rating 4.93 from 14 ratings",
+        "+1.61 1634 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags drums, war"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 125932,
+      "name": "reenactment2.aif",
+      "url": "https://freesound.org/people/alienistcog/sounds/125932/",
+      "author": "alienistcog",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 345.93,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.64,
+      "numRatings": 39,
+      "numDownloads": 3998,
+      "previewUrl": "https://cdn.freesound.org/previews/125/125932_296888-hq.mp3",
+      "score": 7.43,
+      "reasons": [
+        "+2.63 rating 4.64 from 39 ratings",
+        "+1.8 3998 downloads",
+        "+2 at least 90 s",
+        "+1 tags war"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 125931,
+      "name": "reenactment1.aif",
+      "url": "https://freesound.org/people/alienistcog/sounds/125931/",
+      "author": "alienistcog",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 73.69,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 3.67,
+      "numRatings": 6,
+      "numDownloads": 525,
+      "previewUrl": "https://cdn.freesound.org/previews/125/125931_296888-hq.mp3",
+      "score": 6.8,
+      "reasons": [
+        "+1.94 rating 3.67 from 6 ratings",
+        "+1.36 525 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags drums, war"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 366659,
+      "name": "Poorsyria.wav",
+      "url": "https://freesound.org/people/vumseplutten1709/sounds/366659/",
+      "author": "vumseplutten1709",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 176.08,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 160,
+      "previewUrl": "https://cdn.freesound.org/previews/366/366659_3406193-hq.mp3",
+      "score": 6.31,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+1.1 160 downloads",
+        "+2 at least 90 s",
+        "+1 tags war"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "category": "forest_day_birds",
+  "rank": 5,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "forest birds ambience",
+    "birdsong woodland daytime"
+  ],
+  "poolSize": 32,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 856018,
+      "name": "AMBForst_Late Spring.A Quiet Forest Edge.Hot.Sunny.Birds.Mosquitoes 2_EM",
+      "url": "https://freesound.org/people/newlocknew/sounds/856018/",
+      "author": "newlocknew",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 366.75,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.85,
+      "numRatings": 34,
+      "numDownloads": 538,
+      "previewUrl": "https://cdn.freesound.org/previews/856/856018_5828667-hq.mp3",
+      "score": 10.13,
+      "reasons": [
+        "+2.76 rating 4.85 from 34 ratings",
+        "+1.37 538 downloads",
+        "+2 at least 90 s",
+        "+3 tags birds, forest, birdsong",
+        "+1 name matches birds, forest"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 745273,
+      "name": "Bird ambience. Coniferous forest dawn chorus.",
+      "url": "https://freesound.org/people/SamsterBirdies/sounds/745273/",
+      "author": "SamsterBirdies",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 589.1,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.89,
+      "numRatings": 35,
+      "numDownloads": 430,
+      "previewUrl": "https://cdn.freesound.org/previews/745/745273_5487341-hq.mp3",
+      "score": 10.1,
+      "reasons": [
+        "+2.78 rating 4.89 from 35 ratings",
+        "+1.32 430 downloads",
+        "+2 at least 90 s",
+        "+3 tags birds, forest, birdsong",
+        "+1 name matches forest"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 456123,
+      "name": "Birds In The Forest",
+      "url": "https://freesound.org/people/BurghRecords/sounds/456123/",
+      "author": "BurghRecords",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 74.39,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.43,
+      "numRatings": 46,
+      "numDownloads": 4946,
+      "previewUrl": "https://cdn.freesound.org/previews/456/456123_7241289-hq.mp3",
+      "score": 9.85,
+      "reasons": [
+        "+2.51 rating 4.43 from 46 ratings",
+        "+1.85 4946 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags birds, forest, birdsong",
+        "+1 name matches birds, forest"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 546521,
+      "name": "birds on morning",
+      "url": "https://freesound.org/people/trezz77/sounds/546521/",
+      "author": "trezz77",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 122.6,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.88,
+      "numRatings": 8,
+      "numDownloads": 413,
+      "previewUrl": "https://cdn.freesound.org/previews/546/546521_5637404-hq.mp3",
+      "score": 9.82,
+      "reasons": [
+        "+2.51 rating 4.88 from 8 ratings",
+        "+1.31 413 downloads",
+        "+2 at least 90 s",
+        "+3 tags birds, forest, birdsong",
+        "+1 name matches birds"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 855650,
+      "name": "AMBForst_Late spring.A Quiet Forest Edge.Hot.Sunny.Birds.Raven.Wood Pigeon.Mosquitoes 1_EM",
+      "url": "https://freesound.org/people/newlocknew/sounds/855650/",
+      "author": "newlocknew",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 213.71,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 8,
+      "numDownloads": 96,
+      "previewUrl": "https://cdn.freesound.org/previews/855/855650_5828667-hq.mp3",
+      "score": 9.33,
+      "reasons": [
+        "+2.34 rating 4.5 from 8 ratings",
+        "+0.99 96 downloads",
+        "+2 at least 90 s",
+        "+3 tags birds, forest, birdsong",
+        "+1 name matches birds, forest"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "category": "open_field_wind",
+  "rank": 9,
+  "curatedOn": "2026-10-12",
+  "queries": [
+    "wind grass field",
+    "field wind ambience"
+  ],
+  "poolSize": 59,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 167684,
+      "name": "Strong wind blowing in the plain in Anatolia (Turkey)",
+      "url": "https://freesound.org/people/felix.blume/sounds/167684/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 181,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.77,
+      "numRatings": 101,
+      "numDownloads": 5570,
+      "previewUrl": "https://cdn.freesound.org/previews/167/167684_1661766-hq.mp3",
+      "score": 10.66,
+      "reasons": [
+        "+2.78 rating 4.77 from 101 ratings",
+        "+1.87 5570 downloads",
+        "+2 at least 90 s",
+        "+3 tags wind, field, grass",
+        "+1 name matches wind"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 139337,
+      "name": "Wind is blowing in the grass of a patagonian plain. Wind is blowing in the trees in background. (Tierra del fuego, Argentina). ",
+      "url": "https://freesound.org/people/felix.blume/sounds/139337/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 181,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.72,
+      "numRatings": 54,
+      "numDownloads": 3584,
+      "previewUrl": "https://cdn.freesound.org/previews/139/139337_1661766-hq.mp3",
+      "score": 10.49,
+      "reasons": [
+        "+2.71 rating 4.72 from 54 ratings",
+        "+1.78 3584 downloads",
+        "+2 at least 90 s",
+        "+3 tags wind, field, grass",
+        "+1 name matches wind, grass"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 620099,
+      "name": "Field ambience 01.wav",
+      "url": "https://freesound.org/people/szelestamas/sounds/620099/",
+      "author": "szelestamas",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 114.49,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.9,
+      "numRatings": 39,
+      "numDownloads": 1925,
+      "previewUrl": "https://cdn.freesound.org/previews/620/620099_13130621-hq.mp3",
+      "score": 10.45,
+      "reasons": [
+        "+2.8 rating 4.9 from 39 ratings",
+        "+1.64 1925 downloads",
+        "+2 at least 90 s",
+        "+3 tags wind, field, grass",
+        "+1 name matches field"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 176252,
+      "name": "wind in the grass small town",
+      "url": "https://freesound.org/people/strangy/sounds/176252/",
+      "author": "strangy",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 90,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.24,
+      "numRatings": 144,
+      "numDownloads": 15513,
+      "previewUrl": "https://cdn.freesound.org/previews/176/176252_1222472-hq.mp3",
+      "score": 10.41,
+      "reasons": [
+        "+2.41 rating 4.24 from 144 ratings",
+        "+2 15513 downloads",
+        "+2 at least 90 s",
+        "+3 tags wind, field, grass",
+        "+1 name matches wind, grass"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 164656,
+      "name": "meadow_insects_sunny_afternoon.wav",
+      "url": "https://freesound.org/people/DanGasior/sounds/164656/",
+      "author": "DanGasior",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 207.47,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.85,
+      "numRatings": 20,
+      "numDownloads": 1564,
+      "previewUrl": "https://cdn.freesound.org/previews/164/164656_428137-hq.mp3",
+      "score": 10.28,
+      "reasons": [
+        "+2.69 rating 4.85 from 20 ratings",
+        "+1.6 1564 downloads",
+        "+2 at least 90 s",
+        "+3 tags wind, field, grass, meadow",
+        "+1 name matches meadow"
+      ]
+    }
+  ]
+}
