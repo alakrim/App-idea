@@ -20,7 +20,7 @@ _Last updated: 2026-10-11 (night) by architect_
 
 ## Work in flight
 - **A3** real ambience pack from Freesound CC0 (unblocked): a haiku-worker is building it.
-- Incident 3 (choppy narration) APK `lectio-0.1.0-0a238dd-arm64.apk` (apk-builds 1f0c103) went to the user, who has not reported back on it yet.
+- APK **`lectio-0.1.0-23ac9d0-arm64.apk`** (N2 + the incident-3 fix) is on `apk-builds`: 45,788,860 bytes, SHA-256 `74272531…cb1a`, the same debug key, built from a clean worktree (no A3 work in it), and the bundle contains the new strings. Waiting on the user's device test (the failed Chinese chapter, then a 10-minute listen).
 
 ## Next up
 - **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.
