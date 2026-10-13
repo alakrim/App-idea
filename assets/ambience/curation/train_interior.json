@@ -1,7 +1,6 @@
 {
   "category": "train_interior",
-  "rank": 14,
-  "curatedOn": "2026-10-12",
+  "curatedOn": "2026-10-13",
   "queries": [
     "train interior ambience",
     "train carriage rail"
@@ -66,12 +65,12 @@
       "channels": 2,
       "avgRating": 4.91,
       "numRatings": 23,
-      "numDownloads": 721,
+      "numDownloads": 722,
       "previewUrl": "https://cdn.freesound.org/previews/333/333944_2364707-hq.mp3",
-      "score": 9.17,
+      "score": 9.18,
       "reasons": [
         "+2.75 rating 4.91 from 23 ratings",
-        "+1.43 721 downloads",
+        "+1.43 722 downloads",
         "+2 at least 90 s",
         "+2 tags train, interior",
         "+1 name matches train"
@@ -89,12 +88,12 @@
       "channels": 2,
       "avgRating": 4.38,
       "numRatings": 8,
-      "numDownloads": 617,
+      "numDownloads": 619,
       "previewUrl": "https://cdn.freesound.org/previews/525/525058_3562198-hq.mp3",
-      "score": 9.17,
+      "score": 9.18,
       "reasons": [
         "+2.28 rating 4.38 from 8 ratings",
-        "+1.4 617 downloads",
+        "+1.4 619 downloads",
         "+1.5 at least 63 s",
         "+3 tags train, interior, rail",
         "+1 name matches train"
@@ -112,14 +111,83 @@
       "channels": 2,
       "avgRating": 4,
       "numRatings": 4,
-      "numDownloads": 68,
+      "numDownloads": 69,
       "previewUrl": "https://cdn.freesound.org/previews/785/785398_962598-hq.mp3",
       "score": 8.96,
       "reasons": [
         "+2.04 rating 4 from 4 ratings",
-        "+0.92 68 downloads",
+        "+0.92 69 downloads",
         "+2 at least 90 s",
         "+3 tags train, interior, rail",
+        "+1 name matches train"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 349148,
+      "name": "Train Trip Loud 2",
+      "url": "https://freesound.org/people/Yoyodaman234/sounds/349148/",
+      "author": "Yoyodaman234",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 462.91,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.36,
+      "numRatings": 11,
+      "numDownloads": 503,
+      "previewUrl": "https://cdn.freesound.org/previews/349/349148_2792951-hq.mp3",
+      "score": 8.67,
+      "reasons": [
+        "+2.32 rating 4.36 from 11 ratings",
+        "+1.35 503 downloads",
+        "+2 at least 90 s",
+        "+2 tags train, rail",
+        "+1 name matches train"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 333943,
+      "name": "Moscow subway train ride - interior ambience - Kaluzhsko-Rizhskaya subway line XY mics.flac",
+      "url": "https://freesound.org/people/gladkiy/sounds/333943/",
+      "author": "gladkiy",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 587.37,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.33,
+      "numRatings": 6,
+      "numDownloads": 534,
+      "previewUrl": "https://cdn.freesound.org/previews/333/333943_2364707-hq.mp3",
+      "score": 8.58,
+      "reasons": [
+        "+2.22 rating 4.33 from 6 ratings",
+        "+1.36 534 downloads",
+        "+2 at least 90 s",
+        "+2 tags train, interior",
+        "+1 name matches train"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 420659,
+      "name": "Atmo_Train-Station_Night.wav",
+      "url": "https://freesound.org/people/LamaMakesMusic/sounds/420659/",
+      "author": "LamaMakesMusic",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 156.89,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 218,
+      "previewUrl": "https://cdn.freesound.org/previews/420/420659_3012788-hq.mp3",
+      "score": 8.47,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.17 218 downloads",
+        "+2 at least 90 s",
+        "+2 tags train, interior",
         "+1 name matches train"
       ]
     }

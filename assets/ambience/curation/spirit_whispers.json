@@ -1,0 +1,77 @@
+{
+  "category": "spirit_whispers",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "ghost whispers ambience",
+    "eerie whispers air"
+  ],
+  "poolSize": 3,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 837985,
+      "name": "Textural SFX – Bubbling  & Fire",
+      "url": "https://freesound.org/people/Artem_Zaitsev/sounds/837985/",
+      "author": "Artem_Zaitsev",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 60.06,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.25,
+      "numRatings": 4,
+      "numDownloads": 100,
+      "previewUrl": "https://cdn.freesound.org/previews/837/837985_15618458-hq.mp3",
+      "score": 4.13,
+      "reasons": [
+        "+2.13 rating 4.25 from 4 ratings",
+        "+1 100 downloads",
+        "+1 at least 60 s"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 530683,
+      "name": "ambient ghost",
+      "url": "https://freesound.org/people/s-light/sounds/530683/",
+      "author": "s-light",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 300,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.9,
+      "numRatings": 10,
+      "numDownloads": 488,
+      "previewUrl": "https://cdn.freesound.org/previews/530/530683_2154914-hq.mp3",
+      "score": 0.92,
+      "reasons": [
+        "+2.58 rating 4.9 from 10 ratings",
+        "+1.34 488 downloads",
+        "+2 at least 90 s",
+        "+1 name matches ghost",
+        "-6 music (remix)"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 725604,
+      "name": "Winter Winds Leaving The Front Yard",
+      "url": "https://freesound.org/people/WhiteNoiseSleeper/sounds/725604/",
+      "author": "WhiteNoiseSleeper",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 476.99,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.29,
+      "numRatings": 17,
+      "numDownloads": 283,
+      "previewUrl": "https://cdn.freesound.org/previews/725/725604_15753134-hq.mp3",
+      "score": -0.44,
+      "reasons": [
+        "+2.34 rating 4.29 from 17 ratings",
+        "+1.23 283 downloads",
+        "+2 at least 90 s",
+        "-6 music (soundtrack, instrumental)"
+      ]
+    }
+  ]
+}

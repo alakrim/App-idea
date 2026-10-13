@@ -1,0 +1,195 @@
+{
+  "category": "waterfall",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "waterfall ambience",
+    "waterfall nature recording"
+  ],
+  "poolSize": 49,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 632107,
+      "name": "Hidden waterfall.WAV",
+      "url": "https://freesound.org/people/BassmanJourney/sounds/632107/",
+      "author": "BassmanJourney",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 136.87,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.73,
+      "numRatings": 30,
+      "numDownloads": 1020,
+      "previewUrl": "https://cdn.freesound.org/previews/632/632107_11993891-hq.mp3",
+      "score": 9.17,
+      "reasons": [
+        "+2.67 rating 4.73 from 30 ratings",
+        "+1.5 1020 downloads",
+        "+2 at least 90 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 853107,
+      "name": "Waterfall",
+      "url": "https://freesound.org/people/chiara_____/sounds/853107/",
+      "author": "chiara_____",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 127.25,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 36,
+      "previewUrl": "https://cdn.freesound.org/previews/853/853107_8660576-hq.mp3",
+      "score": 8.99,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+0.78 36 downloads",
+        "+2 at least 90 s",
+        "+3 tags waterfall, water, cascade",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 442475,
+      "name": "Big waterfall in forest.wav",
+      "url": "https://freesound.org/people/BonnyOrbit/sounds/442475/",
+      "author": "BonnyOrbit",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 115.2,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 10,
+      "numDownloads": 388,
+      "previewUrl": "https://cdn.freesound.org/previews/442/442475_5902878-hq.mp3",
+      "score": 8.92,
+      "reasons": [
+        "+2.63 rating 5 from 10 ratings",
+        "+1.29 388 downloads",
+        "+2 at least 90 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 872740,
+      "name": "Waterfall_Ambience_Risan_Montenegro",
+      "url": "https://freesound.org/people/SignatureSoundsOrg/sounds/872740/",
+      "author": "SignatureSoundsOrg",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 215.75,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 23,
+      "previewUrl": "https://cdn.freesound.org/previews/872/872740_19205925-hq.mp3",
+      "score": 8.75,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.69 23 downloads",
+        "+2 at least 90 s",
+        "+3 tags waterfall, water, cascade",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 623797,
+      "name": "Waterfall in La Palma island (Bosque de Los Tilos)",
+      "url": "https://freesound.org/people/nomadas/sounds/623797/",
+      "author": "nomadas",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 118.05,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 4,
+      "numDownloads": 386,
+      "previewUrl": "https://cdn.freesound.org/previews/623/623797_938246-hq.mp3",
+      "score": 8.67,
+      "reasons": [
+        "+2.38 rating 5 from 4 ratings",
+        "+1.29 386 downloads",
+        "+2 at least 90 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 415997,
+      "name": "field recording atmo waterfall weir zoom h2n",
+      "url": "https://freesound.org/people/Garuda1982/sounds/415997/",
+      "author": "Garuda1982",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 118.71,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 8,
+      "numDownloads": 136,
+      "previewUrl": "https://cdn.freesound.org/previews/415/415997_2061858-hq.mp3",
+      "score": 8.52,
+      "reasons": [
+        "+2.45 rating 4.75 from 8 ratings",
+        "+1.07 136 downloads",
+        "+2 at least 90 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 614702,
+      "name": "waterfall reservoir field recording",
+      "url": "https://freesound.org/people/Garuda1982/sounds/614702/",
+      "author": "Garuda1982",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 240.31,
+      "samplerate": 96000,
+      "channels": 1,
+      "avgRating": 4.5,
+      "numRatings": 6,
+      "numDownloads": 143,
+      "previewUrl": "https://cdn.freesound.org/previews/614/614702_2061858-hq.mp3",
+      "score": 8.36,
+      "reasons": [
+        "+2.28 rating 4.5 from 6 ratings",
+        "+1.08 143 downloads",
+        "+2 at least 90 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 855904,
+      "name": "Waterfall at Boise Creek CA",
+      "url": "https://freesound.org/people/CVLTIV8R/sounds/855904/",
+      "author": "CVLTIV8R",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 307.5,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.31,
+      "numRatings": 16,
+      "numDownloads": 107,
+      "previewUrl": "https://cdn.freesound.org/previews/855/855904_2520418-hq.mp3",
+      "score": 8.36,
+      "reasons": [
+        "+2.34 rating 4.31 from 16 ratings",
+        "+1.02 107 downloads",
+        "+2 at least 90 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "category": "office_hum",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "office ambience hum",
+    "open plan office background"
+  ],
+  "poolSize": 8,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 725718,
+      "name": "Typing Office chatter in background",
+      "url": "https://freesound.org/people/SduggySounds/sounds/725718/",
+      "author": "SduggySounds",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 101.05,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.14,
+      "numRatings": 7,
+      "numDownloads": 321,
+      "previewUrl": "https://cdn.freesound.org/previews/725/725718_12565192-hq.mp3",
+      "score": 8.41,
+      "reasons": [
+        "+2.16 rating 4.14 from 7 ratings",
+        "+1.25 321 downloads",
+        "+2 at least 90 s",
+        "+2 tags keyboard, typing",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 862604,
+      "name": "Office Ambience",
+      "url": "https://freesound.org/people/BeaconStudio/sounds/862604/",
+      "author": "BeaconStudio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.8,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 82,
+      "previewUrl": "https://cdn.freesound.org/previews/862/862604_18689440-hq.mp3",
+      "score": 7.66,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.96 82 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags office, typing",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 708021,
+      "name": "Empty Office Space Room Tone with Aircon SFX",
+      "url": "https://freesound.org/people/Soup_UnderScore/sounds/708021/",
+      "author": "Soup_UnderScore",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 128,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.72,
+      "numRatings": 32,
+      "numDownloads": 1223,
+      "previewUrl": "https://cdn.freesound.org/previews/708/708021_14714083-hq.mp3",
+      "score": 7.21,
+      "reasons": [
+        "+2.67 rating 4.72 from 32 ratings",
+        "+1.54 1223 downloads",
+        "+2 at least 90 s",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 609250,
+      "name": "Journey To The Interweb",
+      "url": "https://freesound.org/people/Aemyn/sounds/609250/",
+      "author": "Aemyn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 508,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.33,
+      "numRatings": 294,
+      "numDownloads": 5573,
+      "previewUrl": "https://cdn.freesound.org/previews/609/609250_1445263-hq.mp3",
+      "score": 6.36,
+      "reasons": [
+        "+2.49 rating 4.33 from 294 ratings",
+        "+1.87 5573 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 474832,
+      "name": "RoomTone07",
+      "url": "https://freesound.org/people/richwise/sounds/474832/",
+      "author": "richwise",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 599.75,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 35,
+      "numDownloads": 1451,
+      "previewUrl": "https://cdn.freesound.org/previews/474/474832_1481531-hq.mp3",
+      "score": 6.33,
+      "reasons": [
+        "+2.75 rating 4.83 from 35 ratings",
+        "+1.58 1451 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 564166,
+      "name": "Crashing Starship",
+      "url": "https://freesound.org/people/Aemyn/sounds/564166/",
+      "author": "Aemyn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 307.95,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.35,
+      "numRatings": 143,
+      "numDownloads": 4484,
+      "previewUrl": "https://cdn.freesound.org/previews/564/564166_1445263-hq.mp3",
+      "score": 6.32,
+      "reasons": [
+        "+2.49 rating 4.35 from 143 ratings",
+        "+1.83 4484 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 661435,
+      "name": "Defensible Twister",
+      "url": "https://freesound.org/people/Brazilio123/sounds/661435/",
+      "author": "Brazilio123",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 433,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.14,
+      "numRatings": 86,
+      "numDownloads": 2707,
+      "previewUrl": "https://cdn.freesound.org/previews/661/661435_14509684-hq.mp3",
+      "score": 6.04,
+      "reasons": [
+        "+2.33 rating 4.14 from 86 ratings",
+        "+1.72 2707 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 556390,
+      "name": "Quiet City Atmos.mp3",
+      "url": "https://freesound.org/people/Anya_Media/sounds/556390/",
+      "author": "Anya_Media",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 409.05,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 6,
+      "numDownloads": 463,
+      "previewUrl": "https://cdn.freesound.org/previews/556/556390_2010973-hq.mp3",
+      "score": 5.82,
+      "reasons": [
+        "+2.49 rating 5 from 6 ratings",
+        "+1.33 463 downloads",
+        "+2 at least 90 s"
+      ]
+    }
+  ]
+}

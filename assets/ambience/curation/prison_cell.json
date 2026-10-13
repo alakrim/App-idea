@@ -1,0 +1,33 @@
+{
+  "category": "prison_cell",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "prison cell ambience",
+    "dungeon dripping water ambience"
+  ],
+  "poolSize": 1,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 516566,
+      "name": "Dark Dungeon Ambience",
+      "url": "https://freesound.org/people/Kinoton/sounds/516566/",
+      "author": "Kinoton",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 180.04,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.84,
+      "numRatings": 64,
+      "numDownloads": 2066,
+      "previewUrl": "https://cdn.freesound.org/previews/516/516566_2247456-hq.mp3",
+      "score": 7.47,
+      "reasons": [
+        "+2.81 rating 4.84 from 64 ratings",
+        "+1.66 2066 downloads",
+        "+2 at least 90 s",
+        "+1 name matches dungeon"
+      ]
+    }
+  ]
+}

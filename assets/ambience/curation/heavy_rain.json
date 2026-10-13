@@ -1,7 +1,6 @@
 {
   "category": "heavy_rain",
-  "rank": 2,
-  "curatedOn": "2026-10-12",
+  "curatedOn": "2026-10-13",
   "queries": [
     "heavy rain downpour",
     "heavy rain ambience"
@@ -10,29 +9,6 @@
   "candidates": [
     {
       "rank": 1,
-      "freesoundId": 164206,
-      "name": "Rain very heavy with thunder.wav",
-      "url": "https://freesound.org/people/Danjocross/sounds/164206/",
-      "author": "Danjocross",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 122.85,
-      "samplerate": 48000,
-      "channels": 2,
-      "avgRating": 4.83,
-      "numRatings": 18,
-      "numDownloads": 951,
-      "previewUrl": "https://cdn.freesound.org/previews/164/164206_2977885-hq.mp3",
-      "score": 10.15,
-      "reasons": [
-        "+2.66 rating 4.83 from 18 ratings",
-        "+1.49 951 downloads",
-        "+2 at least 90 s",
-        "+3 tags rain, downpour, storm",
-        "+1 name matches rain"
-      ]
-    },
-    {
-      "rank": 2,
       "freesoundId": 826025,
       "name": "RAIN_Summer Rain.City Yard.Entrance Canopy.Eaves Leaking.Drops On Plants And Asphalt 3_EM",
       "url": "https://freesound.org/people/newlocknew/sounds/826025/",
@@ -43,19 +19,19 @@
       "channels": 2,
       "avgRating": 4.74,
       "numRatings": 34,
-      "numDownloads": 492,
+      "numDownloads": 494,
       "previewUrl": "https://cdn.freesound.org/previews/826/826025_5828667-hq.mp3",
       "score": 10.03,
       "reasons": [
         "+2.68 rating 4.74 from 34 ratings",
-        "+1.35 492 downloads",
+        "+1.35 494 downloads",
         "+2 at least 90 s",
         "+3 tags rain, heavy, downpour",
         "+1 name matches rain"
       ]
     },
     {
-      "rank": 3,
+      "rank": 2,
       "freesoundId": 435222,
       "name": "Heavy rain with thuder",
       "url": "https://freesound.org/people/dersinnsspace/sounds/435222/",
@@ -66,19 +42,19 @@
       "channels": 2,
       "avgRating": 4.43,
       "numRatings": 14,
-      "numDownloads": 590,
+      "numDownloads": 592,
       "previewUrl": "https://cdn.freesound.org/previews/435/435222_8224400-hq.mp3",
       "score": 9.77,
       "reasons": [
         "+2.39 rating 4.43 from 14 ratings",
-        "+1.39 590 downloads",
+        "+1.39 592 downloads",
         "+2 at least 90 s",
-        "+3 tags rain, heavy, downpour, storm",
+        "+3 tags rain, heavy, downpour",
         "+1 name matches rain"
       ]
     },
     {
-      "rank": 4,
+      "rank": 3,
       "freesoundId": 717843,
       "name": "230405 Rain heavy, concrete, trees, M10 ParaEM272s, Toronto 7am",
       "url": "https://freesound.org/people/TRP/sounds/717843/",
@@ -89,19 +65,19 @@
       "channels": 2,
       "avgRating": 4.75,
       "numRatings": 12,
-      "numDownloads": 156,
+      "numDownloads": 158,
       "previewUrl": "https://cdn.freesound.org/previews/717/717843_97550-hq.mp3",
-      "score": 9.63,
+      "score": 9.64,
       "reasons": [
         "+2.54 rating 4.75 from 12 ratings",
-        "+1.1 156 downloads",
+        "+1.1 158 downloads",
         "+2 at least 90 s",
         "+3 tags rain, heavy, downpour",
         "+1 name matches rain"
       ]
     },
     {
-      "rank": 5,
+      "rank": 4,
       "freesoundId": 616446,
       "name": "Heavy rain pouring with water stream on concrete",
       "url": "https://freesound.org/people/AdrianoAnjos/sounds/616446/",
@@ -112,14 +88,106 @@
       "channels": 2,
       "avgRating": 4.63,
       "numRatings": 8,
-      "numDownloads": 222,
+      "numDownloads": 223,
       "previewUrl": "https://cdn.freesound.org/previews/616/616446_6801313-hq.mp3",
       "score": 9.57,
       "reasons": [
         "+2.39 rating 4.63 from 8 ratings",
-        "+1.17 222 downloads",
+        "+1.18 223 downloads",
         "+2 at least 90 s",
-        "+3 tags rain, heavy, downpour, storm",
+        "+3 tags rain, heavy, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 512965,
+      "name": "Heavy rain Larnaca",
+      "url": "https://freesound.org/people/ratdh9/sounds/512965/",
+      "author": "ratdh9",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 108.79,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 159,
+      "previewUrl": "https://cdn.freesound.org/previews/512/512965_2008778-hq.mp3",
+      "score": 9.39,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+1.1 159 downloads",
+        "+2 at least 90 s",
+        "+3 tags rain, heavy, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 592996,
+      "name": "heavy rain on a small tent hq",
+      "url": "https://freesound.org/people/Petrosilia/sounds/592996/",
+      "author": "Petrosilia",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 67.02,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 8,
+      "numDownloads": 235,
+      "previewUrl": "https://cdn.freesound.org/previews/592/592996_11710404-hq.mp3",
+      "score": 9.25,
+      "reasons": [
+        "+2.57 rating 5 from 8 ratings",
+        "+1.19 235 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags rain, heavy, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 581639,
+      "name": "rain and thunder.m4a",
+      "url": "https://freesound.org/people/KayGood/sounds/581639/",
+      "author": "KayGood",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 263.42,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 109,
+      "previewUrl": "https://cdn.freesound.org/previews/581/581639_3071307-hq.mp3",
+      "score": 9.22,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.02 109 downloads",
+        "+2 at least 90 s",
+        "+3 tags rain, heavy, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 501007,
+      "name": "Ambience - Living Room with Exterior Rain Falling",
+      "url": "https://freesound.org/people/RavenWolfProds/sounds/501007/",
+      "author": "RavenWolfProds",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 268.76,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.94,
+      "numRatings": 17,
+      "numDownloads": 1020,
+      "previewUrl": "https://cdn.freesound.org/previews/501/501007_9619518-hq.mp3",
+      "score": 9.21,
+      "reasons": [
+        "+2.71 rating 4.94 from 17 ratings",
+        "+1.5 1020 downloads",
+        "+2 at least 90 s",
+        "+2 tags rain, heavy",
         "+1 name matches rain"
       ]
     }

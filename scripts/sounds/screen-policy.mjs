@@ -94,6 +94,11 @@ export function labelsFor(policy) {
   return [...new Set([...policy.deny, ...policy.required.flat()])];
 }
 
+/** Maps each AudioSet label to its column in a tag file's `perFrame` rows. */
+function columnOf(labels) {
+  return new Map(labels.map((label, index) => [label, index]));
+}
+
 /** For each frame, the denied classes at or above the frame threshold (empty when the frame is clean). */
 export function deniedByFrame(tags, deny) {
   const column = columnOf(tags.labels);

@@ -156,6 +156,8 @@ describe('PipelineQueue', () => {
   });
 
   it('restores the persisted queue after a restart and resumes the interrupted chapter', async () => {
+    // The abandoned queue's stall watchdog runs on fake timers, so it leaves no timer behind.
+    jest.useFakeTimers();
     // While `dying` is set, every model call hangs, as if the app was killed mid-call.
     let dying = true;
     const fake = createFakePorts({
@@ -167,7 +169,10 @@ describe('PipelineQueue', () => {
     await before.enqueue(A);
     await before.enqueue(B);
     expect(fake.state.queue.map((item) => item.chapterId)).toEqual([A, B]);
-    await until(() => fake.job('analyze', A)?.status === 'running');
+    for (let i = 0; i < 100 && fake.job('analyze', A)?.status !== 'running'; i += 1) {
+      await jest.advanceTimersByTimeAsync(0);
+    }
+    expect(fake.job('analyze', A)?.status).toBe('running');
 
     // The new session reads the same stores once the old one is gone.
     dying = false;
@@ -188,6 +193,7 @@ describe('PipelineQueue', () => {
     ).toBe(true);
     expect(fake.state.queue).toEqual([]);
     expect(fake.chapter(A).status).toBe('ready');
+    jest.useRealTimers();
   });
 
   it("persists each chapter's run options, and a restored chapter runs from its saved stage", async () => {

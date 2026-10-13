@@ -4,19 +4,16 @@ import type { RemoteEvent } from '@/core/playback/remote-commands';
 
 import { type ResolveBed, createAmbienceMixer } from './ambience-mixer';
 import { resolveInstalledBed } from './ambience-pack';
-import {
-  type InterruptionEvent,
-  createLectioEngine,
-  type PlatformEventSource,
-} from './lectio-engine';
+import { createLectioEngine, type PlatformEventSource } from './lectio-engine';
 import { createVoicePlayer } from './voice-player';
 
 import type { AudioEngine } from './engine';
 
 /**
  * Phone calls and other focus losses are handled by expo-audio itself, so the engine listens to
- * nothing here. expo-audio owns audio focus for the whole app: it pauses the narration when focus is
- * lost and resumes it after a transient loss, and the engine follows through the voice snapshots.
+ * nothing for them. expo-audio owns audio focus for the whole app: it pauses the narration when
+ * focus is lost and resumes it after a transient loss, and the engine follows through the voice
+ * snapshots.
  *
  * Do not subscribe through react-native-audio-api's `AudioManager.observeAudioInterruptions`. On
  * Android that call requests audio focus for a second client inside this app. The two clients then
@@ -25,11 +22,6 @@ import type { AudioEngine } from './engine';
  * reported the interruption over with "resume", and the engine played again. The narration stopped
  * and started in a loop, like a scratched CD (incident 3 in docs/STATE.md).
  */
-const noInterruptions: PlatformEventSource<InterruptionEvent> = {
-  subscribe() {
-    return () => undefined;
-  },
-};
 
 /**
  * Lock-screen transport events are not in the expo-audio 57.0.5 typings. The native Media3
@@ -73,7 +65,6 @@ export function createNativeAudioEngine(options: NativeEngineOptions = {}): Audi
       resolveBed,
       createContext: () => new AudioContext(),
     }),
-    interruptions: noInterruptions,
     remote: noRemoteEvents,
     bedLufs: (category) => resolveBed(category)?.lufs ?? null,
   });

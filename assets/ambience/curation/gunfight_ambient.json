@@ -1,0 +1,33 @@
+{
+  "category": "gunfight_ambient",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "distant gunfire ambience",
+    "gunfire echo battle"
+  ],
+  "poolSize": 1,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 125932,
+      "name": "reenactment2.aif",
+      "url": "https://freesound.org/people/alienistcog/sounds/125932/",
+      "author": "alienistcog",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 345.93,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.64,
+      "numRatings": 39,
+      "numDownloads": 4000,
+      "previewUrl": "https://cdn.freesound.org/previews/125/125932_296888-hq.mp3",
+      "score": 7.43,
+      "reasons": [
+        "+2.63 rating 4.64 from 39 ratings",
+        "+1.8 4000 downloads",
+        "+2 at least 90 s",
+        "+1 tags gunfire"
+      ]
+    }
+  ]
+}

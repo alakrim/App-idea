@@ -1,11 +1,20 @@
 import type { AmbienceCue } from '@/core/domain/analysis';
-import type { BedCommand } from '@/core/playback/ambience-scheduler';
 import type { RemoteCommand } from '@/core/playback/remote-commands';
 import type { TimelineSegment } from '@/core/playback/timeline';
 
 /** Everything features may observe about playback. `error` is terminal until the next load. */
 export type PlaybackState =
   'idle' | 'loading' | 'playing' | 'paused' | 'buffering' | 'ended' | 'error';
+
+/** The ambience settings the engine applies to the beds. */
+export interface AmbienceMix {
+  /** The master switch for every bed. */
+  enabled: boolean;
+  /** Bed level relative to the narration, in dB (BED_LEVEL_RANGE_DB). */
+  levelDb: number;
+  /** How far beds dip under the voice while it plays, in dB (DUCKING_RANGE_DB). */
+  duckingDb: number;
+}
 
 /** A narration file plus its sentence timing. Offsets are relative to the segment start. */
 export interface LoadedSegment extends TimelineSegment {
@@ -48,24 +57,19 @@ export interface AudioEngine {
   seekTo(ms: number): void;
   /** Playback rate in 0.5 to 2. Pitch is preserved. Throws RangeError outside that range. */
   setRate(rate: number): void;
-  /** Voice output volume in 0 to 1. The sleep timer uses it for the fade-out. */
+  /** Volume in 0 to 1, applied to the narration and the beds. The sleep timer uses it for the fade-out. */
   setVolume(volume: number): void;
   /** Adds segments for progressive playback. `final` marks the last one. */
   appendSegments(segments: readonly LoadedSegment[], final: boolean): void;
   /**
-   * Applies bed commands to the mixer. The engine normally drives this itself from sentence
-   * changes. Callers outside the engine (for example a preview) should not mix with it.
+   * Applies the ambience settings: whether beds play, their level relative to the narration, and
+   * how far they dip under the voice. Beds sound only while the voice plays or buffers.
    */
-  setAmbience(commands: readonly BedCommand[]): void;
-  /**
-   * Turns the ambience master on or off. `levelDb` (-40 to 0) is the bed level relative to the
-   * narration, so a bed sits that far below the narration whatever its own file loudness.
-   */
-  setAmbienceMaster(enabled: boolean, levelDb: number): void;
+  setAmbienceMix(mix: AmbienceMix): void;
   /**
    * Plays one bed through the mixer for `durationMs`, then fades it out, so settings can audition a
    * sound. It runs on its own cue, beside the chapter's beds. `levelDb` is relative to the narration,
-   * as in setAmbienceMaster. A second call while a preview plays restarts its timer.
+   * as in setAmbienceMix. A second call while a preview plays restarts its timer.
    */
   previewBed(category: string, levelDb: number, durationMs: number): void;
   /** About 4 Hz while playing, plus on every sentence change and seek. */

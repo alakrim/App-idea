@@ -1,0 +1,194 @@
+{
+  "category": "ominous_drone",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "dark drone ambience",
+    "low drone horror"
+  ],
+  "poolSize": 60,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 421826,
+      "name": "Dark Cave Drone",
+      "url": "https://freesound.org/people/Kinoton/sounds/421826/",
+      "author": "Kinoton",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 256.85,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.92,
+      "numRatings": 113,
+      "numDownloads": 7472,
+      "previewUrl": "https://cdn.freesound.org/previews/421/421826_2247456-hq.mp3",
+      "score": 10.83,
+      "reasons": [
+        "+2.9 rating 4.92 from 113 ratings",
+        "+1.94 7472 downloads",
+        "+2 at least 90 s",
+        "+3 tags drone, dark, horror",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 266412,
+      "name": "Drone_OminousDistortion.wav",
+      "url": "https://freesound.org/people/ceich93/sounds/266412/",
+      "author": "ceich93",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 103.85,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.89,
+      "numRatings": 35,
+      "numDownloads": 3165,
+      "previewUrl": "https://cdn.freesound.org/previews/266/266412_4457609-hq.mp3",
+      "score": 10.53,
+      "reasons": [
+        "+2.78 rating 4.89 from 35 ratings",
+        "+1.75 3165 downloads",
+        "+2 at least 90 s",
+        "+3 tags drone, dark, horror",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 534018,
+      "name": "Sci-fi Ambient Drone.wav",
+      "url": "https://freesound.org/people/LookIMadeAThing/sounds/534018/",
+      "author": "LookIMadeAThing",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 165,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.93,
+      "numRatings": 69,
+      "numDownloads": 1962,
+      "previewUrl": "https://cdn.freesound.org/previews/534/534018_3968707-hq.mp3",
+      "score": 10.52,
+      "reasons": [
+        "+2.87 rating 4.93 from 69 ratings",
+        "+1.65 1962 downloads",
+        "+2 at least 90 s",
+        "+3 tags drone, dark, horror",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 266413,
+      "name": "Drone_DarkEmptiness.wav",
+      "url": "https://freesound.org/people/ceich93/sounds/266413/",
+      "author": "ceich93",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 87.21,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 46,
+      "numDownloads": 3374,
+      "previewUrl": "https://cdn.freesound.org/previews/266/266413_4457609-hq.mp3",
+      "score": 10.04,
+      "reasons": [
+        "+2.77 rating 4.83 from 46 ratings",
+        "+1.76 3374 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags drone, dark, horror",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 612645,
+      "name": "Slow Time Winter Temple Atmo Asia Ambience Fantasy Dark Drone Cinematic Surround.wav",
+      "url": "https://freesound.org/people/szegvari/sounds/612645/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 103.5,
+      "samplerate": 96000,
+      "channels": 6,
+      "avgRating": 4.62,
+      "numRatings": 21,
+      "numDownloads": 808,
+      "previewUrl": "https://cdn.freesound.org/previews/612/612645_2282212-hq.mp3",
+      "score": 10.01,
+      "reasons": [
+        "+2.55 rating 4.62 from 21 ratings",
+        "+1.45 808 downloads",
+        "+2 at least 90 s",
+        "+3 tags drone, dark, horror",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 860781,
+      "name": "Low Frequency Vibrating Drone with Heart Pressure Rumbles and Booms",
+      "url": "https://freesound.org/people/bassimat/sounds/860781/",
+      "author": "bassimat",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 423.18,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.68,
+      "numRatings": 19,
+      "numDownloads": 425,
+      "previewUrl": "https://cdn.freesound.org/previews/860/860781_15636277-hq.mp3",
+      "score": 9.89,
+      "reasons": [
+        "+2.58 rating 4.68 from 19 ratings",
+        "+1.31 425 downloads",
+        "+2 at least 90 s",
+        "+3 tags drone, dark, horror",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 466567,
+      "name": "Electronic Minute No 262 - cinematic doomsday drone.wav",
+      "url": "https://freesound.org/people/gis_sweden/sounds/466567/",
+      "author": "gis_sweden",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 107.69,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.4,
+      "numRatings": 10,
+      "numDownloads": 312,
+      "previewUrl": "https://cdn.freesound.org/previews/466/466567_1391542-hq.mp3",
+      "score": 9.57,
+      "reasons": [
+        "+2.32 rating 4.4 from 10 ratings",
+        "+1.25 312 downloads",
+        "+2 at least 90 s",
+        "+3 tags drone, dark, horror",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 516566,
+      "name": "Dark Dungeon Ambience",
+      "url": "https://freesound.org/people/Kinoton/sounds/516566/",
+      "author": "Kinoton",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 180.04,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.84,
+      "numRatings": 64,
+      "numDownloads": 2066,
+      "previewUrl": "https://cdn.freesound.org/previews/516/516566_2247456-hq.mp3",
+      "score": 9.47,
+      "reasons": [
+        "+2.81 rating 4.84 from 64 ratings",
+        "+1.66 2066 downloads",
+        "+2 at least 90 s",
+        "+3 tags drone, dark, horror"
+      ]
+    }
+  ]
+}

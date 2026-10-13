@@ -1,0 +1,190 @@
+{
+  "category": "qi_hum",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "low hum ambience loop",
+    "resonant hum drone"
+  ],
+  "poolSize": 15,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 512174,
+      "name": "Resonating Analog Drone",
+      "url": "https://freesound.org/people/Nielsvdb/sounds/512174/",
+      "author": "Nielsvdb",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 322.05,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.25,
+      "numRatings": 8,
+      "numDownloads": 560,
+      "previewUrl": "https://cdn.freesound.org/previews/512/512174_3315462-hq.mp3",
+      "score": 8.6,
+      "reasons": [
+        "+2.22 rating 4.25 from 8 ratings",
+        "+1.37 560 downloads",
+        "+2 at least 90 s",
+        "+2 tags hum, drone",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 870670,
+      "name": "Drone, Low Frequency, Very Distorted",
+      "url": "https://freesound.org/people/CHallSmith/sounds/870670/",
+      "author": "CHallSmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 491.05,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 14,
+      "previewUrl": "https://cdn.freesound.org/previews/870/870670_18412227-hq.mp3",
+      "score": 8.46,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.59 14 downloads",
+        "+2 at least 90 s",
+        "+3 tags hum, drone, resonant",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 870671,
+      "name": "SciFi Low Drone, Slowed Computer Noise",
+      "url": "https://freesound.org/people/CHallSmith/sounds/870671/",
+      "author": "CHallSmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 64.76,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 19,
+      "previewUrl": "https://cdn.freesound.org/previews/870/870671_18412227-hq.mp3",
+      "score": 8.35,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+0.65 19 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags hum, drone, resonant",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 869334,
+      "name": "Deep Electromagnetic Low-Frequency Drone with Electrical Resonances",
+      "url": "https://freesound.org/people/bassimat/sounds/869334/",
+      "author": "bassimat",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 123.35,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 14,
+      "previewUrl": "https://cdn.freesound.org/previews/869/869334_15636277-hq.mp3",
+      "score": 7.65,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.59 14 downloads",
+        "+2 at least 90 s",
+        "+2 tags hum, drone",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 843484,
+      "name": "Large Floor Fan - Steady Deep Hum - 2 Minutes",
+      "url": "https://freesound.org/people/FansAreCoolAndRelaxing16/sounds/843484/",
+      "author": "FansAreCoolAndRelaxing16",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 121.37,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 2,
+      "numDownloads": 73,
+      "previewUrl": "https://cdn.freesound.org/previews/843/843484_18398043-hq.mp3",
+      "score": 7.02,
+      "reasons": [
+        "+2.09 rating 4.5 from 2 ratings",
+        "+0.93 73 downloads",
+        "+2 at least 90 s",
+        "+1 tags hum",
+        "+1 name matches hum"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 870675,
+      "name": "Scraping Glass Disk, Half Speed, Contact",
+      "url": "https://freesound.org/people/CHallSmith/sounds/870675/",
+      "author": "CHallSmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 113.35,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 1,
+      "numDownloads": 0,
+      "previewUrl": "https://cdn.freesound.org/previews/870/870675_18412227-hq.mp3",
+      "score": 6.94,
+      "reasons": [
+        "+1.94 rating 4 from 1 ratings",
+        "+0 0 downloads",
+        "+2 at least 90 s",
+        "+3 tags hum, drone, resonant"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 609250,
+      "name": "Journey To The Interweb",
+      "url": "https://freesound.org/people/Aemyn/sounds/609250/",
+      "author": "Aemyn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 508,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.33,
+      "numRatings": 294,
+      "numDownloads": 5573,
+      "previewUrl": "https://cdn.freesound.org/previews/609/609250_1445263-hq.mp3",
+      "score": 6.36,
+      "reasons": [
+        "+2.49 rating 4.33 from 294 ratings",
+        "+1.87 5573 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 564166,
+      "name": "Crashing Starship",
+      "url": "https://freesound.org/people/Aemyn/sounds/564166/",
+      "author": "Aemyn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 307.95,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.35,
+      "numRatings": 143,
+      "numDownloads": 4484,
+      "previewUrl": "https://cdn.freesound.org/previews/564/564166_1445263-hq.mp3",
+      "score": 6.32,
+      "reasons": [
+        "+2.49 rating 4.35 from 143 ratings",
+        "+1.83 4484 downloads",
+        "+2 at least 90 s"
+      ]
+    }
+  ]
+}

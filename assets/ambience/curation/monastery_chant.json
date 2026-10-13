@@ -1,0 +1,55 @@
+{
+  "category": "monastery_chant",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "monastery chant ambience",
+    "gregorian chant church"
+  ],
+  "poolSize": 2,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 468041,
+      "name": "Buddhist temple hum 02",
+      "url": "https://freesound.org/people/rucisko/sounds/468041/",
+      "author": "rucisko",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 147.52,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 263,
+      "previewUrl": "https://cdn.freesound.org/previews/468/468041_2978883-hq.mp3",
+      "score": 7.51,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.21 263 downloads",
+        "+2 at least 90 s",
+        "+2 tags monastery, chant"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 390290,
+      "name": "052016 maruyama shrine.mp3",
+      "url": "https://freesound.org/people/pflanigan/sounds/390290/",
+      "author": "pflanigan",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 200.14,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 84,
+      "previewUrl": "https://cdn.freesound.org/previews/390/390290_6132202-hq.mp3",
+      "score": 7.03,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.96 84 downloads",
+        "+2 at least 90 s",
+        "+2 tags monastery, chant"
+      ]
+    }
+  ]
+}

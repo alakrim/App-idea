@@ -1,0 +1,195 @@
+{
+  "category": "library_quiet",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "library room tone",
+    "quiet library ambience"
+  ],
+  "poolSize": 27,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 635727,
+      "name": "room tone medium quiet library carpeted empty with heavy building ambience +distant sounds.flac",
+      "url": "https://freesound.org/people/kyles/sounds/635727/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 121.37,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 12,
+      "numDownloads": 325,
+      "previewUrl": "https://cdn.freesound.org/previews/635/635727_612689-hq.mp3",
+      "score": 9.75,
+      "reasons": [
+        "+2.49 rating 4.67 from 12 ratings",
+        "+1.26 325 downloads",
+        "+2 at least 90 s",
+        "+3 tags library, room, tone, quiet",
+        "+1 name matches library, room, tone"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 620683,
+      "name": "Quiet library ambience",
+      "url": "https://freesound.org/people/xkeril/sounds/620683/",
+      "author": "xkeril",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 580.61,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.94,
+      "numRatings": 34,
+      "numDownloads": 1130,
+      "previewUrl": "https://cdn.freesound.org/previews/620/620683_13504080-hq.mp3",
+      "score": 9.34,
+      "reasons": [
+        "+2.82 rating 4.94 from 34 ratings",
+        "+1.53 1130 downloads",
+        "+2 at least 90 s",
+        "+2 tags library, quiet",
+        "+1 name matches library"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 406497,
+      "name": "public library ground floor quiet distant voices1 echo woman heel steps around room waiting for rain to go away Gaza 2016.wav",
+      "url": "https://freesound.org/people/kyles/sounds/406497/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 193.61,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 7,
+      "numDownloads": 287,
+      "previewUrl": "https://cdn.freesound.org/previews/406/406497_612689-hq.mp3",
+      "score": 8.76,
+      "reasons": [
+        "+2.53 rating 5 from 7 ratings",
+        "+1.23 287 downloads",
+        "+2 at least 90 s",
+        "+2 tags library, quiet",
+        "+1 name matches library, room"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 742477,
+      "name": "Students at the Library, Whispering at Bibliothèque Nationale de France - Richelieu (Oval Room)",
+      "url": "https://freesound.org/people/alberto_cendra_woodman/sounds/742477/",
+      "author": "alberto_cendra_woodman",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 424.51,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 12,
+      "numDownloads": 495,
+      "previewUrl": "https://cdn.freesound.org/previews/742/742477_3312507-hq.mp3",
+      "score": 7.93,
+      "reasons": [
+        "+2.58 rating 4.83 from 12 ratings",
+        "+1.35 495 downloads",
+        "+2 at least 90 s",
+        "+1 tags library",
+        "+1 name matches library, room"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 400849,
+      "name": "A small library in Korea",
+      "url": "https://freesound.org/people/mindhealer/sounds/400849/",
+      "author": "mindhealer",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 242.89,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.27,
+      "numRatings": 15,
+      "numDownloads": 658,
+      "previewUrl": "https://cdn.freesound.org/previews/400/400849_5827623-hq.mp3",
+      "score": 7.72,
+      "reasons": [
+        "+2.31 rating 4.27 from 15 ratings",
+        "+1.41 658 downloads",
+        "+2 at least 90 s",
+        "+1 tags library",
+        "+1 name matches library"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 154640,
+      "name": "Roomtone_Garage.aif",
+      "url": "https://freesound.org/people/crcavol/sounds/154640/",
+      "author": "crcavol",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 198.33,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.4,
+      "numRatings": 5,
+      "numDownloads": 667,
+      "previewUrl": "https://cdn.freesound.org/previews/154/154640_2592500-hq.mp3",
+      "score": 7.62,
+      "reasons": [
+        "+2.21 rating 4.4 from 5 ratings",
+        "+1.41 667 downloads",
+        "+2 at least 90 s",
+        "+2 tags room, tone"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 427851,
+      "name": "Empty Room Tone 4 - Large room background traffic",
+      "url": "https://freesound.org/people/leonelmail/sounds/427851/",
+      "author": "leonelmail",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 266.01,
+      "samplerate": 22050,
+      "channels": 2,
+      "avgRating": 1.97,
+      "numRatings": 68,
+      "numDownloads": 3545,
+      "previewUrl": "https://cdn.freesound.org/previews/427/427851_4437257-hq.mp3",
+      "score": 7.58,
+      "reasons": [
+        "+0.81 rating 1.97 from 68 ratings",
+        "+1.77 3545 downloads",
+        "+2 at least 90 s",
+        "-1 sample rate 22050 Hz",
+        "+3 tags library, room, tone",
+        "+1 name matches room, tone"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 708234,
+      "name": "quiet library",
+      "url": "https://freesound.org/people/Bathulile231236/sounds/708234/",
+      "author": "Bathulile231236",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 227.5,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 147,
+      "previewUrl": "https://cdn.freesound.org/previews/708/708234_15366717-hq.mp3",
+      "score": 7.45,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+1.09 147 downloads",
+        "+2 at least 90 s",
+        "+1 tags library",
+        "+1 name matches library"
+      ]
+    }
+  ]
+}

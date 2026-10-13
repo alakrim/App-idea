@@ -1,0 +1,193 @@
+{
+  "category": "meadow_insects",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "summer meadow crickets",
+    "grasshoppers field ambience"
+  ],
+  "poolSize": 13,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 639459,
+      "name": "summer meadow with wind",
+      "url": "https://freesound.org/people/Garuda1982/sounds/639459/",
+      "author": "Garuda1982",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 133.44,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.91,
+      "numRatings": 11,
+      "numDownloads": 555,
+      "previewUrl": "https://cdn.freesound.org/previews/639/639459_2061858-hq.mp3",
+      "score": 9.97,
+      "reasons": [
+        "+2.6 rating 4.91 from 11 ratings",
+        "+1.37 555 downloads",
+        "+2 at least 90 s",
+        "+3 tags crickets, meadow, insects",
+        "+1 name matches meadow"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 414907,
+      "name": "Summer afternoon Meadow ATM birds and crickets.wav",
+      "url": "https://freesound.org/people/DanGasior/sounds/414907/",
+      "author": "DanGasior",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 121.26,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.91,
+      "numRatings": 11,
+      "numDownloads": 649,
+      "previewUrl": "https://cdn.freesound.org/previews/414/414907_428137-hq.mp3",
+      "score": 9.01,
+      "reasons": [
+        "+2.6 rating 4.91 from 11 ratings",
+        "+1.41 649 downloads",
+        "+2 at least 90 s",
+        "+2 tags meadow, insects",
+        "+1 name matches crickets, meadow"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 692842,
+      "name": "insects pasture.wav",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/692842/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 512.28,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 7,
+      "numDownloads": 186,
+      "previewUrl": "https://cdn.freesound.org/previews/692/692842_11519060-hq.mp3",
+      "score": 8.54,
+      "reasons": [
+        "+2.41 rating 4.71 from 7 ratings",
+        "+1.14 186 downloads",
+        "+2 at least 90 s",
+        "+3 tags crickets, meadow, insects"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 576367,
+      "name": "Field, meadow, insects, crickets, summer day, NOTL, 10.mp3",
+      "url": "https://freesound.org/people/TRP/sounds/576367/",
+      "author": "TRP",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 111.78,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 115,
+      "previewUrl": "https://cdn.freesound.org/previews/576/576367_97550-hq.mp3",
+      "score": 8.33,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.03 115 downloads",
+        "+2 at least 90 s",
+        "+2 tags meadow, insects",
+        "+1 name matches crickets, meadow"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 585318,
+      "name": "Indian summer evening Norway Crickets and Birds.wav",
+      "url": "https://freesound.org/people/LarsErikErtzgaardRingen/sounds/585318/",
+      "author": "LarsErikErtzgaardRingen",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 107.18,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 127,
+      "previewUrl": "https://cdn.freesound.org/previews/585/585318_11576705-hq.mp3",
+      "score": 8.12,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1.05 127 downloads",
+        "+2 at least 90 s",
+        "+2 tags crickets, insects",
+        "+1 name matches crickets"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 717573,
+      "name": "220611 Field meadow summer, busy birds insects distant traffic, EM272st, NOTL 9pm",
+      "url": "https://freesound.org/people/TRP/sounds/717573/",
+      "author": "TRP",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 133.52,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 8,
+      "numDownloads": 198,
+      "previewUrl": "https://cdn.freesound.org/previews/717/717573_97550-hq.mp3",
+      "score": 7.72,
+      "reasons": [
+        "+2.57 rating 5 from 8 ratings",
+        "+1.15 198 downloads",
+        "+2 at least 90 s",
+        "+1 tags meadow",
+        "+1 name matches meadow"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 203598,
+      "name": "CricketsandTawnyOwl.wav",
+      "url": "https://freesound.org/people/raoul_slayer/sounds/203598/",
+      "author": "raoul_slayer",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 140.35,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 30,
+      "numDownloads": 2087,
+      "previewUrl": "https://cdn.freesound.org/previews/203/203598_548893-hq.mp3",
+      "score": 7.39,
+      "reasons": [
+        "+2.73 rating 4.83 from 30 ratings",
+        "+1.66 2087 downloads",
+        "+2 at least 90 s",
+        "+1 tags crickets"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 59103,
+      "name": "emmentaler farm ambience-crickets at dusk.wav",
+      "url": "https://freesound.org/people/Zozzy/sounds/59103/",
+      "author": "Zozzy",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 90.81,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 3.5,
+      "numRatings": 4,
+      "numDownloads": 684,
+      "previewUrl": "https://cdn.freesound.org/previews/59/59103_91975-hq.mp3",
+      "score": 7.29,
+      "reasons": [
+        "+1.88 rating 3.5 from 4 ratings",
+        "+1.42 684 downloads",
+        "+2 at least 90 s",
+        "+1 tags crickets",
+        "+1 name matches crickets"
+      ]
+    }
+  ]
+}

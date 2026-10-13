@@ -1,7 +1,6 @@
 {
   "category": "tavern_crowd",
-  "rank": 16,
-  "curatedOn": "2026-10-12",
+  "curatedOn": "2026-10-13",
   "queries": [
     "tavern ambience",
     "pub crowd ambience"
@@ -20,12 +19,12 @@
       "channels": 2,
       "avgRating": 4.75,
       "numRatings": 32,
-      "numDownloads": 4354,
+      "numDownloads": 4355,
       "previewUrl": "https://cdn.freesound.org/previews/376/376456_4339600-hq.mp3",
       "score": 10.51,
       "reasons": [
         "+2.69 rating 4.75 from 32 ratings",
-        "+1.82 4354 downloads",
+        "+1.82 4355 downloads",
         "+2 at least 90 s",
         "+3 tags pub, bar, crowd",
         "+1 name matches pub"
@@ -43,12 +42,12 @@
       "channels": 1,
       "avgRating": 4.9,
       "numRatings": 20,
-      "numDownloads": 1990,
+      "numDownloads": 1992,
       "previewUrl": "https://cdn.freesound.org/previews/212/212094_221578-hq.mp3",
       "score": 10.36,
       "reasons": [
         "+2.72 rating 4.9 from 20 ratings",
-        "+1.65 1990 downloads",
+        "+1.65 1992 downloads",
         "+2 at least 90 s",
         "+3 tags tavern, bar, crowd",
         "+1 name matches bar"
@@ -112,15 +111,83 @@
       "channels": 2,
       "avgRating": 4.87,
       "numRatings": 89,
-      "numDownloads": 2890,
+      "numDownloads": 2896,
       "previewUrl": "https://cdn.freesound.org/previews/695/695295_300738-hq.mp3",
-      "score": 9.57,
+      "score": 9.58,
       "reasons": [
         "+2.84 rating 4.87 from 89 ratings",
-        "+1.73 2890 downloads",
+        "+1.73 2896 downloads",
         "+1 at least 60 s",
         "+3 tags tavern, pub, bar",
         "+1 name matches tavern"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 829383,
+      "name": "Family Restaurant/Bar/Grill - Chatter/Ambience",
+      "url": "https://freesound.org/people/ChristopherJngs/sounds/829383/",
+      "author": "ChristopherJngs",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 111.06,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 179,
+      "previewUrl": "https://cdn.freesound.org/previews/829/829383_8154783-hq.mp3",
+      "score": 9.32,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.13 179 downloads",
+        "+2 at least 90 s",
+        "+3 tags tavern, bar, crowd",
+        "+1 name matches bar"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 651364,
+      "name": "background_chatter_tavern.wav",
+      "url": "https://freesound.org/people/dazzamoo/sounds/651364/",
+      "author": "dazzamoo",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.93,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.35,
+      "numRatings": 20,
+      "numDownloads": 526,
+      "previewUrl": "https://cdn.freesound.org/previews/651/651364_4219647-hq.mp3",
+      "score": 9.25,
+      "reasons": [
+        "+2.38 rating 4.35 from 20 ratings",
+        "+1.36 526 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags tavern, pub, crowd",
+        "+1 name matches tavern"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 232175,
+      "name": "talking people 2.MP3",
+      "url": "https://freesound.org/people/szalonegacie/sounds/232175/",
+      "author": "szalonegacie",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 81.23,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 117,
+      "numDownloads": 20247,
+      "previewUrl": "https://cdn.freesound.org/previews/232/232175_823913-hq.mp3",
+      "score": 9.09,
+      "reasons": [
+        "+2.59 rating 4.5 from 117 ratings",
+        "+2 20247 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags pub, bar, crowd"
       ]
     }
   ]

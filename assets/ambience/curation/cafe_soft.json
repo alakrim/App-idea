@@ -1,7 +1,6 @@
 {
   "category": "cafe_soft",
-  "rank": 13,
-  "curatedOn": "2026-10-12",
+  "curatedOn": "2026-10-13",
   "queries": [
     "cafe ambience",
     "coffee shop ambience"
@@ -20,12 +19,12 @@
       "channels": 1,
       "avgRating": 4.47,
       "numRatings": 32,
-      "numDownloads": 3402,
+      "numDownloads": 3404,
       "previewUrl": "https://cdn.freesound.org/previews/370/370973_5835751-hq.mp3",
       "score": 10.27,
       "reasons": [
         "+2.5 rating 4.47 from 32 ratings",
-        "+1.77 3402 downloads",
+        "+1.77 3404 downloads",
         "+2 at least 90 s",
         "+3 tags cafe, coffee, restaurant",
         "+1 name matches coffee"
@@ -89,12 +88,12 @@
       "channels": 2,
       "avgRating": 4.78,
       "numRatings": 37,
-      "numDownloads": 2443,
+      "numDownloads": 2445,
       "previewUrl": "https://cdn.freesound.org/previews/437/437461_2010973-hq.mp3",
       "score": 9.42,
       "reasons": [
         "+2.72 rating 4.78 from 37 ratings",
-        "+1.69 2443 downloads",
+        "+1.69 2445 downloads",
         "+2 at least 90 s",
         "+2 tags cafe, restaurant",
         "+1 name matches cafe"
@@ -120,6 +119,74 @@
         "+1.4 628 downloads",
         "+2 at least 90 s",
         "+2 tags cafe, restaurant",
+        "+1 name matches cafe"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 540299,
+      "name": "Cofee shop Ambience .wav",
+      "url": "https://freesound.org/people/aidansamuel/sounds/540299/",
+      "author": "aidansamuel",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 136.59,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.89,
+      "numRatings": 9,
+      "numDownloads": 541,
+      "previewUrl": "https://cdn.freesound.org/previews/540/540299_10965608-hq.mp3",
+      "score": 8.91,
+      "reasons": [
+        "+2.54 rating 4.89 from 9 ratings",
+        "+1.37 541 downloads",
+        "+2 at least 90 s",
+        "+3 tags cafe, coffee, restaurant"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 813868,
+      "name": "Coffee Shop Ambience , Northtown Coffee, Arcata, CA",
+      "url": "https://freesound.org/people/CVLTIV8R/sounds/813868/",
+      "author": "CVLTIV8R",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 144.74,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.69,
+      "numRatings": 16,
+      "numDownloads": 374,
+      "previewUrl": "https://cdn.freesound.org/previews/813/813868_2520418-hq.mp3",
+      "score": 8.84,
+      "reasons": [
+        "+2.55 rating 4.69 from 16 ratings",
+        "+1.29 374 downloads",
+        "+2 at least 90 s",
+        "+2 tags cafe, coffee",
+        "+1 name matches coffee"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 214993,
+      "name": "Ambient sound inside cafe dining.aif",
+      "url": "https://freesound.org/people/4team/sounds/214993/",
+      "author": "4team",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 301.74,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.88,
+      "numRatings": 33,
+      "numDownloads": 4497,
+      "previewUrl": "https://cdn.freesound.org/previews/214/214993_4023529-hq.mp3",
+      "score": 8.6,
+      "reasons": [
+        "+2.77 rating 4.88 from 33 ratings",
+        "+1.83 4497 downloads",
+        "+2 at least 90 s",
+        "+1 tags cafe",
         "+1 name matches cafe"
       ]
     }

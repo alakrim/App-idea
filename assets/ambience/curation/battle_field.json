@@ -1,0 +1,99 @@
+{
+  "category": "battle_field",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "battle ambience distant",
+    "medieval battle sounds"
+  ],
+  "poolSize": 4,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 568790,
+      "name": "sword against sword.wav",
+      "url": "https://freesound.org/people/Fenodyrie/sounds/568790/",
+      "author": "Fenodyrie",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 78.74,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.64,
+      "numRatings": 129,
+      "numDownloads": 11050,
+      "previewUrl": "https://cdn.freesound.org/previews/568/568790_6371307-hq.mp3",
+      "score": 8.19,
+      "reasons": [
+        "+2.69 rating 4.64 from 129 ratings",
+        "+2 11050 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags battle, medieval"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 694371,
+      "name": "Fireworks/ Warzone 3",
+      "url": "https://freesound.org/people/NearTheAtmoshphere/sounds/694371/",
+      "author": "NearTheAtmoshphere",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 43.52,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 107,
+      "previewUrl": "https://cdn.freesound.org/previews/694/694371_2578040-hq.mp3",
+      "score": 2.31,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.02 107 downloads",
+        "-3 only 43.52 s",
+        "+2 tags battle, war"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 694373,
+      "name": "Fireworks/ Warzone 5",
+      "url": "https://freesound.org/people/NearTheAtmoshphere/sounds/694373/",
+      "author": "NearTheAtmoshphere",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 38.22,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 119,
+      "previewUrl": "https://cdn.freesound.org/previews/694/694373_2578040-hq.mp3",
+      "score": 2.1,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1.04 119 downloads",
+        "-3 only 38.22 s",
+        "+2 tags battle, war"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 675137,
+      "name": "S19-18 Distant pistol gun battle.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/675137/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 32.73,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 80,
+      "previewUrl": "https://cdn.freesound.org/previews/675/675137_2524442-hq.mp3",
+      "score": 1.15,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.95 80 downloads",
+        "-3 only 32.73 s",
+        "+1 name matches battle"
+      ]
+    }
+  ]
+}

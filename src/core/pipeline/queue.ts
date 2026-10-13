@@ -237,6 +237,7 @@ export class PipelineQueue {
     this.options.onEvent?.({ type: 'stall', chapterId, stage: run.stage, count: stalls });
     if (stalls >= MAX_STALLS) {
       run.stopError = STALLED_ERROR;
+      run.watchdog.stop();
       run.item.controller?.abort();
       return;
     }

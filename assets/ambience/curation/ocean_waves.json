@@ -1,7 +1,6 @@
 {
   "category": "ocean_waves",
-  "rank": 7,
-  "curatedOn": "2026-10-12",
+  "curatedOn": "2026-10-13",
   "queries": [
     "ocean waves beach",
     "sea waves shore"
@@ -42,13 +41,13 @@
       "samplerate": 44100,
       "channels": 2,
       "avgRating": 4.84,
-      "numRatings": 99,
-      "numDownloads": 4720,
+      "numRatings": 100,
+      "numDownloads": 4723,
       "previewUrl": "https://cdn.freesound.org/previews/518/518637_6089496-hq.mp3",
       "score": 10.67,
       "reasons": [
-        "+2.83 rating 4.84 from 99 ratings",
-        "+1.84 4720 downloads",
+        "+2.83 rating 4.84 from 100 ratings",
+        "+1.84 4723 downloads",
         "+2 at least 90 s",
         "+3 tags ocean, waves, sea, beach, shore",
         "+1 name matches ocean, waves"
@@ -66,12 +65,12 @@
       "channels": 2,
       "avgRating": 4.75,
       "numRatings": 65,
-      "numDownloads": 3543,
+      "numDownloads": 3545,
       "previewUrl": "https://cdn.freesound.org/previews/155/155641_1661766-hq.mp3",
       "score": 10.52,
       "reasons": [
         "+2.75 rating 4.75 from 65 ratings",
-        "+1.77 3543 downloads",
+        "+1.77 3545 downloads",
         "+2 at least 90 s",
         "+3 tags ocean, waves, sea, shore",
         "+1 name matches ocean, waves"
@@ -89,12 +88,12 @@
       "channels": 2,
       "avgRating": 4.81,
       "numRatings": 37,
-      "numDownloads": 3536,
+      "numDownloads": 3537,
       "previewUrl": "https://cdn.freesound.org/previews/425/425632_3683160-hq.mp3",
       "score": 10.52,
       "reasons": [
         "+2.74 rating 4.81 from 37 ratings",
-        "+1.77 3536 downloads",
+        "+1.77 3537 downloads",
         "+2 at least 90 s",
         "+3 tags ocean, waves, sea, beach, shore",
         "+1 name matches waves, sea"
@@ -110,17 +109,86 @@
       "durationSec": 181.18,
       "samplerate": 48000,
       "channels": 2,
-      "avgRating": 4.71,
-      "numRatings": 122,
-      "numDownloads": 3501,
+      "avgRating": 4.72,
+      "numRatings": 123,
+      "numDownloads": 3519,
       "previewUrl": "https://cdn.freesound.org/previews/827/827530_2718606-hq.mp3",
       "score": 10.52,
       "reasons": [
-        "+2.75 rating 4.71 from 122 ratings",
-        "+1.77 3501 downloads",
+        "+2.75 rating 4.72 from 123 ratings",
+        "+1.77 3519 downloads",
         "+2 at least 90 s",
         "+3 tags ocean, waves, beach",
         "+1 name matches ocean"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 450755,
+      "name": "Waves of Hawaii",
+      "url": "https://freesound.org/people/florianreichelt/sounds/450755/",
+      "author": "florianreichelt",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 92.83,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.37,
+      "numRatings": 263,
+      "numDownloads": 40459,
+      "previewUrl": "https://cdn.freesound.org/previews/450/450755_6253486-hq.mp3",
+      "score": 10.51,
+      "reasons": [
+        "+2.51 rating 4.37 from 263 ratings",
+        "+2 40459 downloads",
+        "+2 at least 90 s",
+        "+3 tags ocean, waves, sea, beach, shore",
+        "+1 name matches waves"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 659001,
+      "name": "Waves Crashing on shore.",
+      "url": "https://freesound.org/people/Tom_Kaszuba/sounds/659001/",
+      "author": "Tom_Kaszuba",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 109.97,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.97,
+      "numRatings": 38,
+      "numDownloads": 1732,
+      "previewUrl": "https://cdn.freesound.org/previews/659/659001_11673893-hq.mp3",
+      "score": 10.47,
+      "reasons": [
+        "+2.85 rating 4.97 from 38 ratings",
+        "+1.62 1732 downloads",
+        "+2 at least 90 s",
+        "+3 tags ocean, waves, sea, beach, shore",
+        "+1 name matches waves"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 254857,
+      "name": "Waves Against Shore ",
+      "url": "https://freesound.org/people/Afeeto/sounds/254857/",
+      "author": "Afeeto",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 208.64,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.93,
+      "numRatings": 28,
+      "numDownloads": 1795,
+      "previewUrl": "https://cdn.freesound.org/previews/254/254857_4708226-hq.mp3",
+      "score": 10.41,
+      "reasons": [
+        "+2.78 rating 4.93 from 28 ratings",
+        "+1.63 1795 downloads",
+        "+2 at least 90 s",
+        "+3 tags ocean, waves, sea, beach, shore",
+        "+1 name matches waves"
       ]
     }
   ]

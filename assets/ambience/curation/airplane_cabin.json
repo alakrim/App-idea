@@ -1,0 +1,195 @@
+{
+  "category": "airplane_cabin",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "airplane cabin ambience",
+    "aircraft cabin engine hum"
+  ],
+  "poolSize": 30,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 433002,
+      "name": "amb, airplane cabin, passenger chatter, seatbelt announcement, fuma-bformat.wav",
+      "url": "https://freesound.org/people/drewhalasz/sounds/433002/",
+      "author": "drewhalasz",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 189.37,
+      "samplerate": 48000,
+      "channels": 4,
+      "avgRating": 4.64,
+      "numRatings": 11,
+      "numDownloads": 396,
+      "previewUrl": "https://cdn.freesound.org/previews/433/433002_138-hq.mp3",
+      "score": 9.76,
+      "reasons": [
+        "+2.46 rating 4.64 from 11 ratings",
+        "+1.3 396 downloads",
+        "+2 at least 90 s",
+        "+3 tags airplane, cabin, plane",
+        "+1 name matches airplane, cabin"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 456092,
+      "name": "Airplane cabin ambience / atmosphere Airbus A330-300",
+      "url": "https://freesound.org/people/FillSoko/sounds/456092/",
+      "author": "FillSoko",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 154.79,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 495,
+      "previewUrl": "https://cdn.freesound.org/previews/456/456092_3025911-hq.mp3",
+      "score": 8.79,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.35 495 downloads",
+        "+2 at least 90 s",
+        "+2 tags airplane, cabin",
+        "+1 name matches airplane, cabin"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 433003,
+      "name": "amb, airplane cabin, fuma-bformat.wav",
+      "url": "https://freesound.org/people/drewhalasz/sounds/433003/",
+      "author": "drewhalasz",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 170,
+      "samplerate": 48000,
+      "channels": 4,
+      "avgRating": 4.67,
+      "numRatings": 6,
+      "numDownloads": 199,
+      "previewUrl": "https://cdn.freesound.org/previews/433/433003_138-hq.mp3",
+      "score": 8.5,
+      "reasons": [
+        "+2.35 rating 4.67 from 6 ratings",
+        "+1.15 199 downloads",
+        "+2 at least 90 s",
+        "+2 tags airplane, plane",
+        "+1 name matches airplane, cabin"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 433012,
+      "name": "amb, airplane cabin, announcement, 5.0 (LCRLsRs).wav",
+      "url": "https://freesound.org/people/drewhalasz/sounds/433012/",
+      "author": "drewhalasz",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 189.37,
+      "samplerate": 48000,
+      "channels": 5,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 237,
+      "previewUrl": "https://cdn.freesound.org/previews/433/433012_138-hq.mp3",
+      "score": 8.49,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.19 237 downloads",
+        "+2 at least 90 s",
+        "+2 tags airplane, plane",
+        "+1 name matches airplane, cabin"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 487604,
+      "name": "Airplane Landing - Inside Cabin.WAV",
+      "url": "https://freesound.org/people/Bpianoholic/sounds/487604/",
+      "author": "Bpianoholic",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 250.92,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 140,
+      "previewUrl": "https://cdn.freesound.org/previews/487/487604_8342372-hq.mp3",
+      "score": 8.28,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+1.07 140 downloads",
+        "+2 at least 90 s",
+        "+2 tags airplane, cabin",
+        "+1 name matches airplane, cabin"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 627056,
+      "name": "Airplane_Cabine ambiance (during flight).wav",
+      "url": "https://freesound.org/people/KaleidacousticsAudio/sounds/627056/",
+      "author": "KaleidacousticsAudio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 295.4,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 143,
+      "previewUrl": "https://cdn.freesound.org/previews/627/627056_13875907-hq.mp3",
+      "score": 8.28,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.08 143 downloads",
+        "+2 at least 90 s",
+        "+2 tags aircraft, cabin",
+        "+1 name matches airplane"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 868887,
+      "name": "Airplane_Inside_Sitting_PA_Speaker_SafetyInstructions_1",
+      "url": "https://freesound.org/people/SMKoski02/sounds/868887/",
+      "author": "SMKoski02",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 184.72,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 3,
+      "previewUrl": "https://cdn.freesound.org/previews/868/868887_9892794-hq.mp3",
+      "score": 8.18,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.3 3 downloads",
+        "+2 at least 90 s",
+        "+3 tags airplane, aircraft, cabin, plane",
+        "+1 name matches airplane"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 853742,
+      "name": "Airplane Cabin (near ground)",
+      "url": "https://freesound.org/people/jasonm911/sounds/853742/",
+      "author": "jasonm911",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 63,
+      "previewUrl": "https://cdn.freesound.org/previews/853/853742_1800474-hq.mp3",
+      "score": 8.11,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+0.9 63 downloads",
+        "+2 at least 90 s",
+        "+2 tags cabin, plane",
+        "+1 name matches airplane, cabin"
+      ]
+    }
+  ]
+}

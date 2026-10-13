@@ -1,0 +1,55 @@
+{
+  "category": "harbor_port",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "harbour ambience seagulls boats",
+    "old port harbor water boats"
+  ],
+  "poolSize": 2,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 561815,
+      "name": "Genaral Habour Ambience",
+      "url": "https://freesound.org/people/Kinoton/sounds/561815/",
+      "author": "Kinoton",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 180,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.79,
+      "numRatings": 24,
+      "numDownloads": 904,
+      "previewUrl": "https://cdn.freesound.org/previews/561/561815_2247456-hq.mp3",
+      "score": 9.16,
+      "reasons": [
+        "+2.68 rating 4.79 from 24 ratings",
+        "+1.48 904 downloads",
+        "+2 at least 90 s",
+        "+3 tags harbour, port, boats, seagulls"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 837974,
+      "name": "Saint Nazaire rooftop ambiance",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/837974/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 205.71,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 30,
+      "previewUrl": "https://cdn.freesound.org/previews/837/837974_11519060-hq.mp3",
+      "score": 6.18,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+0.75 30 downloads",
+        "+2 at least 90 s",
+        "+1 tags harbour"
+      ]
+    }
+  ]
+}

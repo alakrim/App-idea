@@ -1,0 +1,193 @@
+{
+  "category": "kitchen_busy",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "kitchen ambience cooking",
+    "kitchen sizzling pots"
+  ],
+  "poolSize": 22,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 512511,
+      "name": "Kitchen Ambience",
+      "url": "https://freesound.org/people/brunoboselli/sounds/512511/",
+      "author": "brunoboselli",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 62.95,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.9,
+      "numRatings": 21,
+      "numDownloads": 1569,
+      "previewUrl": "https://cdn.freesound.org/previews/512/512511_300738-hq.mp3",
+      "score": 8.32,
+      "reasons": [
+        "+2.73 rating 4.9 from 21 ratings",
+        "+1.6 1569 downloads",
+        "+1 at least 60 s",
+        "+2 tags kitchen, cooking",
+        "+1 name matches kitchen"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 271443,
+      "name": "Fast Food Restaurant",
+      "url": "https://freesound.org/people/lauramellis/sounds/271443/",
+      "author": "lauramellis",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 351.95,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.87,
+      "numRatings": 15,
+      "numDownloads": 1815,
+      "previewUrl": "https://cdn.freesound.org/previews/271/271443_672090-hq.mp3",
+      "score": 8.27,
+      "reasons": [
+        "+2.64 rating 4.87 from 15 ratings",
+        "+1.63 1815 downloads",
+        "+2 at least 90 s",
+        "+2 tags kitchen, cooking"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 514176,
+      "name": "Bowl knife cooking dishes mixing-bowl.wav",
+      "url": "https://freesound.org/people/shachory/sounds/514176/",
+      "author": "shachory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 115.98,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 1,
+      "numDownloads": 273,
+      "previewUrl": "https://cdn.freesound.org/previews/514/514176_4499820-hq.mp3",
+      "score": 8.16,
+      "reasons": [
+        "+1.94 rating 4 from 1 ratings",
+        "+1.22 273 downloads",
+        "+2 at least 90 s",
+        "+2 tags kitchen, cooking",
+        "+1 name matches cooking"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 138048,
+      "name": "cooking_onions_in_oil_ambience.wav",
+      "url": "https://freesound.org/people/daboy291/sounds/138048/",
+      "author": "daboy291",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 64,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 3.8,
+      "numRatings": 5,
+      "numDownloads": 819,
+      "previewUrl": "https://cdn.freesound.org/previews/138/138048_1839281-hq.mp3",
+      "score": 7.94,
+      "reasons": [
+        "+1.99 rating 3.8 from 5 ratings",
+        "+1.46 819 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags kitchen, cooking",
+        "+1 name matches cooking"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 176033,
+      "name": "ambience_rural_kitchen_silence.aiff",
+      "url": "https://freesound.org/people/patobottos/sounds/176033/",
+      "author": "patobottos",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 310.32,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.63,
+      "numRatings": 8,
+      "numDownloads": 500,
+      "previewUrl": "https://cdn.freesound.org/previews/176/176033_881494-hq.mp3",
+      "score": 7.74,
+      "reasons": [
+        "+2.39 rating 4.63 from 8 ratings",
+        "+1.35 500 downloads",
+        "+2 at least 90 s",
+        "+1 tags kitchen",
+        "+1 name matches kitchen"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 178506,
+      "name": "woman_cooking_rural_kitchen.aiff",
+      "url": "https://freesound.org/people/patobottos/sounds/178506/",
+      "author": "patobottos",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 182.42,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.43,
+      "numRatings": 7,
+      "numDownloads": 599,
+      "previewUrl": "https://cdn.freesound.org/previews/178/178506_881494-hq.mp3",
+      "score": 7.67,
+      "reasons": [
+        "+2.28 rating 4.43 from 7 ratings",
+        "+1.39 599 downloads",
+        "+2 at least 90 s",
+        "+1 tags kitchen",
+        "+1 name matches kitchen, cooking"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 554583,
+      "name": "Apartman ambience - Making tea",
+      "url": "https://freesound.org/people/Frigus_XIII/sounds/554583/",
+      "author": "Frigus_XIII",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 146.1,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 162,
+      "previewUrl": "https://cdn.freesound.org/previews/554/554583_1505134-hq.mp3",
+      "score": 7.4,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.11 162 downloads",
+        "+2 at least 90 s",
+        "+2 tags kitchen, cooking"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 862622,
+      "name": "Sausages Sizzling in a Pan with Boiling Eggs Kitchen Ambience",
+      "url": "https://freesound.org/people/bassimat/sounds/862622/",
+      "author": "bassimat",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 61.1,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 4,
+      "numDownloads": 86,
+      "previewUrl": "https://cdn.freesound.org/previews/862/862622_15636277-hq.mp3",
+      "score": 7.34,
+      "reasons": [
+        "+2.38 rating 5 from 4 ratings",
+        "+0.97 86 downloads",
+        "+1 at least 60 s",
+        "+2 tags kitchen, cooking",
+        "+1 name matches kitchen"
+      ]
+    }
+  ]
+}

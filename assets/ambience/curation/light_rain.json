@@ -1,7 +1,6 @@
 {
   "category": "light_rain",
-  "rank": 1,
-  "curatedOn": "2026-10-12",
+  "curatedOn": "2026-10-13",
   "queries": [
     "light rain ambience",
     "gentle rain on leaves"
@@ -20,12 +19,12 @@
       "channels": 1,
       "avgRating": 4.53,
       "numRatings": 49,
-      "numDownloads": 2689,
+      "numDownloads": 2691,
       "previewUrl": "https://cdn.freesound.org/previews/171/171980_221578-hq.mp3",
       "score": 10.29,
       "reasons": [
         "+2.58 rating 4.53 from 49 ratings",
-        "+1.71 2689 downloads",
+        "+1.72 2691 downloads",
         "+2 at least 90 s",
         "+3 tags rain, light, drizzle",
         "+1 name matches rain"
@@ -66,12 +65,12 @@
       "channels": 2,
       "avgRating": 4.62,
       "numRatings": 73,
-      "numDownloads": 4995,
+      "numDownloads": 4997,
       "previewUrl": "https://cdn.freesound.org/previews/380/380651_5902878-hq.mp3",
       "score": 9.51,
       "reasons": [
         "+2.66 rating 4.62 from 73 ratings",
-        "+1.85 4995 downloads",
+        "+1.85 4997 downloads",
         "+2 at least 90 s",
         "+2 tags rain, light",
         "+1 name matches rain"
@@ -79,29 +78,6 @@
     },
     {
       "rank": 4,
-      "freesoundId": 422052,
-      "name": "Light Rain - Atmosphere - Jungle Rain",
-      "url": "https://freesound.org/people/florianreichelt/sounds/422052/",
-      "author": "florianreichelt",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 500.84,
-      "samplerate": 48000,
-      "channels": 2,
-      "avgRating": 4.91,
-      "numRatings": 53,
-      "numDownloads": 2117,
-      "previewUrl": "https://cdn.freesound.org/previews/422/422052_6253486-hq.mp3",
-      "score": 9.5,
-      "reasons": [
-        "+2.84 rating 4.91 from 53 ratings",
-        "+1.66 2117 downloads",
-        "+2 at least 90 s",
-        "+2 tags rain, light",
-        "+1 name matches rain"
-      ]
-    },
-    {
-      "rank": 5,
       "freesoundId": 759562,
       "name": "Light Forest Rain Ambience with Village Sounds in the Background",
       "url": "https://freesound.org/people/Garuda1982/sounds/759562/",
@@ -112,12 +88,104 @@
       "channels": 2,
       "avgRating": 4.61,
       "numRatings": 67,
-      "numDownloads": 1597,
+      "numDownloads": 1598,
       "previewUrl": "https://cdn.freesound.org/previews/759/759562_2061858-hq.mp3",
       "score": 9.25,
       "reasons": [
         "+2.65 rating 4.61 from 67 ratings",
-        "+1.6 1597 downloads",
+        "+1.6 1598 downloads",
+        "+2 at least 90 s",
+        "+2 tags rain, light",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 392304,
+      "name": "Rain recorded inside with open window.WAV",
+      "url": "https://freesound.org/people/BonnyOrbit/sounds/392304/",
+      "author": "BonnyOrbit",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 277.88,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.7,
+      "numRatings": 30,
+      "numDownloads": 1300,
+      "previewUrl": "https://cdn.freesound.org/previews/392/392304_5902878-hq.mp3",
+      "score": 9.2,
+      "reasons": [
+        "+2.65 rating 4.7 from 30 ratings",
+        "+1.56 1300 downloads",
+        "+2 at least 90 s",
+        "+2 tags rain, light",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 592482,
+      "name": "Medium Light Rain",
+      "url": "https://freesound.org/people/Baconation/sounds/592482/",
+      "author": "Baconation",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 319.9,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.68,
+      "numRatings": 19,
+      "numDownloads": 846,
+      "previewUrl": "https://cdn.freesound.org/previews/592/592482_10870880-hq.mp3",
+      "score": 9.04,
+      "reasons": [
+        "+2.58 rating 4.68 from 19 ratings",
+        "+1.46 846 downloads",
+        "+2 at least 90 s",
+        "+2 tags rain, light",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 557376,
+      "name": "Rain sounds from a first floor window in city building at night",
+      "url": "https://freesound.org/people/khenshom/sounds/557376/",
+      "author": "khenshom",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 106.46,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 8,
+      "numDownloads": 493,
+      "previewUrl": "https://cdn.freesound.org/previews/557/557376_6652872-hq.mp3",
+      "score": 8.8,
+      "reasons": [
+        "+2.45 rating 4.75 from 8 ratings",
+        "+1.35 493 downloads",
+        "+2 at least 90 s",
+        "+2 tags rain, light",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 575378,
+      "name": "Light rain in the garden",
+      "url": "https://freesound.org/people/Cinetony/sounds/575378/",
+      "author": "Cinetony",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 545.48,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.1,
+      "numRatings": 10,
+      "numDownloads": 576,
+      "previewUrl": "https://cdn.freesound.org/previews/575/575378_5985747-hq.mp3",
+      "score": 8.56,
+      "reasons": [
+        "+2.17 rating 4.1 from 10 ratings",
+        "+1.38 576 downloads",
         "+2 at least 90 s",
         "+2 tags rain, light",
         "+1 name matches rain"

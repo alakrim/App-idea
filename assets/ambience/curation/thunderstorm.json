@@ -1,0 +1,195 @@
+{
+  "category": "thunderstorm",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "thunderstorm rain ambience",
+    "distant thunder rain"
+  ],
+  "poolSize": 60,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 319568,
+      "name": "distant storm 1.WAV",
+      "url": "https://freesound.org/people/Soojay/sounds/319568/",
+      "author": "Soojay",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 178.35,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.77,
+      "numRatings": 35,
+      "numDownloads": 1947,
+      "previewUrl": "https://cdn.freesound.org/previews/319/319568_2752236-hq.mp3",
+      "score": 10.35,
+      "reasons": [
+        "+2.71 rating 4.77 from 35 ratings",
+        "+1.64 1947 downloads",
+        "+2 at least 90 s",
+        "+3 tags thunder, thunderstorm, rain",
+        "+1 name matches storm"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 319566,
+      "name": "distant storm 3.WAV",
+      "url": "https://freesound.org/people/Soojay/sounds/319566/",
+      "author": "Soojay",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 179.66,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.62,
+      "numRatings": 21,
+      "numDownloads": 2309,
+      "previewUrl": "https://cdn.freesound.org/previews/319/319566_2752236-hq.mp3",
+      "score": 10.23,
+      "reasons": [
+        "+2.55 rating 4.62 from 21 ratings",
+        "+1.68 2309 downloads",
+        "+2 at least 90 s",
+        "+3 tags thunder, thunderstorm, rain",
+        "+1 name matches storm"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 158691,
+      "name": "Distant Thunder and Rain from Half Open Window 2.aif",
+      "url": "https://freesound.org/people/RutgerMuller/sounds/158691/",
+      "author": "RutgerMuller",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 104,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.94,
+      "numRatings": 18,
+      "numDownloads": 960,
+      "previewUrl": "https://cdn.freesound.org/previews/158/158691_179538-hq.mp3",
+      "score": 10.21,
+      "reasons": [
+        "+2.72 rating 4.94 from 18 ratings",
+        "+1.49 960 downloads",
+        "+2 at least 90 s",
+        "+3 tags thunder, thunderstorm, rain",
+        "+1 name matches thunder"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 241335,
+      "name": "Thunderstorm",
+      "url": "https://freesound.org/people/konkreteruser/sounds/241335/",
+      "author": "konkreteruser",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 112,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 14,
+      "numDownloads": 1216,
+      "previewUrl": "https://cdn.freesound.org/previews/241/241335_3151807-hq.mp3",
+      "score": 10.09,
+      "reasons": [
+        "+2.55 rating 4.71 from 14 ratings",
+        "+1.54 1216 downloads",
+        "+2 at least 90 s",
+        "+3 tags thunder, thunderstorm, rain",
+        "+1 name matches thunderstorm"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 157002,
+      "name": "Thunderstorm Ambience 2.wav",
+      "url": "https://freesound.org/people/chrscrwfrd18/sounds/157002/",
+      "author": "chrscrwfrd18",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 600,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 15,
+      "numDownloads": 852,
+      "previewUrl": "https://cdn.freesound.org/previews/157/157002_2394175-hq.mp3",
+      "score": 10.07,
+      "reasons": [
+        "+2.61 rating 4.8 from 15 ratings",
+        "+1.47 852 downloads",
+        "+2 at least 90 s",
+        "+3 tags thunder, thunderstorm, rain",
+        "+1 name matches thunderstorm"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 157001,
+      "name": "Thunderstorm Ambience.wav",
+      "url": "https://freesound.org/people/chrscrwfrd18/sounds/157001/",
+      "author": "chrscrwfrd18",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 600,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 3.83,
+      "numRatings": 59,
+      "numDownloads": 7829,
+      "previewUrl": "https://cdn.freesound.org/previews/157/157001_2394175-hq.mp3",
+      "score": 10.05,
+      "reasons": [
+        "+2.1 rating 3.83 from 59 ratings",
+        "+1.95 7829 downloads",
+        "+2 at least 90 s",
+        "+3 tags thunder, thunderstorm, rain",
+        "+1 name matches thunderstorm"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 700358,
+      "name": "Rain and Thunder Ambience",
+      "url": "https://freesound.org/people/sagamusix/sounds/700358/",
+      "author": "sagamusix",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 190.94,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.94,
+      "numRatings": 18,
+      "numDownloads": 434,
+      "previewUrl": "https://cdn.freesound.org/previews/700/700358_9398458-hq.mp3",
+      "score": 10.04,
+      "reasons": [
+        "+2.72 rating 4.94 from 18 ratings",
+        "+1.32 434 downloads",
+        "+2 at least 90 s",
+        "+3 tags thunder, thunderstorm, rain",
+        "+1 name matches thunder"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 581232,
+      "name": "Distant Thunder at dawn",
+      "url": "https://freesound.org/people/richwise/sounds/581232/",
+      "author": "richwise",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 229.77,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.93,
+      "numRatings": 15,
+      "numDownloads": 473,
+      "previewUrl": "https://cdn.freesound.org/previews/581/581232_1481531-hq.mp3",
+      "score": 10.02,
+      "reasons": [
+        "+2.68 rating 4.93 from 15 ratings",
+        "+1.34 473 downloads",
+        "+2 at least 90 s",
+        "+3 tags thunder, thunderstorm, rain",
+        "+1 name matches thunder"
+      ]
+    }
+  ]
+}

@@ -1,7 +1,6 @@
 {
   "category": "city_street_day",
-  "rank": 10,
-  "curatedOn": "2026-10-12",
+  "curatedOn": "2026-10-13",
   "queries": [
     "city street ambience",
     "busy street traffic"
@@ -20,12 +19,12 @@
       "channels": 2,
       "avgRating": 4.66,
       "numRatings": 29,
-      "numDownloads": 1830,
+      "numDownloads": 1831,
       "previewUrl": "https://cdn.freesound.org/previews/645/645851_5902878-hq.mp3",
       "score": 10.25,
       "reasons": [
         "+2.61 rating 4.66 from 29 ratings",
-        "+1.63 1830 downloads",
+        "+1.63 1831 downloads",
         "+2 at least 90 s",
         "+3 tags city, street, traffic",
         "+1 name matches city"
@@ -121,6 +120,75 @@
         "+2 at least 90 s",
         "+3 tags city, street, traffic, urban",
         "+1 name matches traffic"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 727873,
+      "name": "ambience, city, preobrazhenskaya street, traffic, winter, moscow",
+      "url": "https://freesound.org/people/AlexanderChe/sounds/727873/",
+      "author": "AlexanderChe",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 118.05,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.73,
+      "numRatings": 11,
+      "numDownloads": 379,
+      "previewUrl": "https://cdn.freesound.org/previews/727/727873_6598647-hq.mp3",
+      "score": 9.8,
+      "reasons": [
+        "+2.51 rating 4.73 from 11 ratings",
+        "+1.29 379 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic",
+        "+1 name matches city, street, traffic"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 608157,
+      "name": "Street People Cars City Fantasy Traffic Noise Ambience Atmosphere - Mastered Surround.wav",
+      "url": "https://freesound.org/people/szegvari/sounds/608157/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 123.94,
+      "samplerate": 48000,
+      "channels": 6,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 613,
+      "previewUrl": "https://cdn.freesound.org/previews/608/608157_2282212-hq.mp3",
+      "score": 9.76,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+1.39 613 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic",
+        "+1 name matches city, street, traffic"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 406871,
+      "name": "traffic medium Middle East busy street echo throaty cars motorcycles horn honks2 Gaza 2016.wav",
+      "url": "https://freesound.org/people/kyles/sounds/406871/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 166.04,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 392,
+      "previewUrl": "https://cdn.freesound.org/previews/406/406871_612689-hq.mp3",
+      "score": 9.73,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.3 392 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic",
+        "+1 name matches street, traffic"
       ]
     }
   ]

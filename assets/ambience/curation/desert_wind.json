@@ -1,0 +1,194 @@
+{
+  "category": "desert_wind",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "desert wind ambience",
+    "wind desert sand"
+  ],
+  "poolSize": 30,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 825860,
+      "name": "Desert sand - Dune atmosphere",
+      "url": "https://freesound.org/people/Vrymaa/sounds/825860/",
+      "author": "Vrymaa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 128.21,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.58,
+      "numRatings": 43,
+      "numDownloads": 1458,
+      "previewUrl": "https://cdn.freesound.org/previews/825/825860_13973196-hq.mp3",
+      "score": 10.18,
+      "reasons": [
+        "+2.6 rating 4.58 from 43 ratings",
+        "+1.58 1458 downloads",
+        "+2 at least 90 s",
+        "+3 tags desert, sand, wind",
+        "+1 name matches desert, sand"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 574397,
+      "name": "Semi desert insects ravens birds quiet with bad mic noise BADLANDS AB 190818.flac",
+      "url": "https://freesound.org/people/TRP/sounds/574397/",
+      "author": "TRP",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 125.78,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.86,
+      "numRatings": 69,
+      "numDownloads": 3517,
+      "previewUrl": "https://cdn.freesound.org/previews/574/574397_97550-hq.mp3",
+      "score": 9.6,
+      "reasons": [
+        "+2.82 rating 4.86 from 69 ratings",
+        "+1.77 3517 downloads",
+        "+2 at least 90 s",
+        "+2 tags desert, wind",
+        "+1 name matches desert"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 796194,
+      "name": "Wind in the desert countryside 2",
+      "url": "https://freesound.org/people/fran_marenco/sounds/796194/",
+      "author": "fran_marenco",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 165.26,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 29,
+      "numDownloads": 650,
+      "previewUrl": "https://cdn.freesound.org/previews/796/796194_3557494-hq.mp3",
+      "score": 9.13,
+      "reasons": [
+        "+2.72 rating 4.83 from 29 ratings",
+        "+1.41 650 downloads",
+        "+2 at least 90 s",
+        "+2 tags desert, wind",
+        "+1 name matches desert"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 796193,
+      "name": "Wind in the desert countryside 1",
+      "url": "https://freesound.org/people/fran_marenco/sounds/796193/",
+      "author": "fran_marenco",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 446,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 20,
+      "numDownloads": 577,
+      "previewUrl": "https://cdn.freesound.org/previews/796/796193_3557494-hq.mp3",
+      "score": 9.01,
+      "reasons": [
+        "+2.63 rating 4.75 from 20 ratings",
+        "+1.38 577 downloads",
+        "+2 at least 90 s",
+        "+2 tags desert, wind",
+        "+1 name matches desert"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 557552,
+      "name": "Dark Sahara Egypt",
+      "url": "https://freesound.org/people/szegvari/sounds/557552/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 78.93,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.93,
+      "numRatings": 27,
+      "numDownloads": 1200,
+      "previewUrl": "https://cdn.freesound.org/previews/557/557552_2282212-hq.mp3",
+      "score": 8.82,
+      "reasons": [
+        "+2.78 rating 4.93 from 27 ratings",
+        "+1.54 1200 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags desert, sand, wind"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 701185,
+      "name": "Slight wind whistle, city hum and plane passing near the desert in 29Palms outskirts",
+      "url": "https://freesound.org/people/felix.blume/sounds/701185/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 298.71,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 7,
+      "numDownloads": 281,
+      "previewUrl": "https://cdn.freesound.org/previews/701/701185_1661766-hq.mp3",
+      "score": 8.76,
+      "reasons": [
+        "+2.53 rating 5 from 7 ratings",
+        "+1.23 281 downloads",
+        "+2 at least 90 s",
+        "+2 tags desert, wind",
+        "+1 name matches desert"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 705515,
+      "name": "Footsteps on dirt, gravel and sand, with slight wind and city hum",
+      "url": "https://freesound.org/people/felix.blume/sounds/705515/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 179.78,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.89,
+      "numRatings": 9,
+      "numDownloads": 205,
+      "previewUrl": "https://cdn.freesound.org/previews/705/705515_1661766-hq.mp3",
+      "score": 8.7,
+      "reasons": [
+        "+2.54 rating 4.89 from 9 ratings",
+        "+1.16 205 downloads",
+        "+2 at least 90 s",
+        "+2 tags sand, wind",
+        "+1 name matches sand"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 705747,
+      "name": "Footsteps wearing sneakers walking on sand gravel in the desert with road hum",
+      "url": "https://freesound.org/people/felix.blume/sounds/705747/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 90.06,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.57,
+      "numRatings": 14,
+      "numDownloads": 288,
+      "previewUrl": "https://cdn.freesound.org/previews/705/705747_1661766-hq.mp3",
+      "score": 8.7,
+      "reasons": [
+        "+2.47 rating 4.57 from 14 ratings",
+        "+1.23 288 downloads",
+        "+2 at least 90 s",
+        "+2 tags sand, wind",
+        "+1 name matches desert, sand"
+      ]
+    }
+  ]
+}

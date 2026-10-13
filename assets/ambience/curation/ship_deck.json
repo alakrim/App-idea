@@ -1,0 +1,56 @@
+{
+  "category": "ship_deck",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "sailing ship deck ambience",
+    "wooden ship creaking sails"
+  ],
+  "poolSize": 2,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 648653,
+      "name": "PIRATE SHIP SAILING AMBIENCE",
+      "url": "https://freesound.org/people/Elenalostale/sounds/648653/",
+      "author": "Elenalostale",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 62.46,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.46,
+      "numRatings": 26,
+      "numDownloads": 1111,
+      "previewUrl": "https://cdn.freesound.org/previews/648/648653_10933546-hq.mp3",
+      "score": 9,
+      "reasons": [
+        "+2.48 rating 4.46 from 26 ratings",
+        "+1.52 1111 downloads",
+        "+1 at least 60 s",
+        "+3 tags ship, sailing, boat",
+        "+1 name matches ship, sailing"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 616774,
+      "name": "NOISY_ENGINE_INTERIOR.wav",
+      "url": "https://freesound.org/people/MattDale/sounds/616774/",
+      "author": "MattDale",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 30.91,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.33,
+      "numRatings": 3,
+      "numDownloads": 318,
+      "previewUrl": "https://cdn.freesound.org/previews/616/616774_7477400-hq.mp3",
+      "score": 2.36,
+      "reasons": [
+        "+2.11 rating 4.33 from 3 ratings",
+        "+1.25 318 downloads",
+        "-3 only 30.91 s",
+        "+2 tags ship, boat"
+      ]
+    }
+  ]
+}

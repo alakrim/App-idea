@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { LangSchema, NarrationProfileSchema } from './domain';
+import { BED_LEVEL_RANGE_DB, DUCKING_RANGE_DB, PLAYBACK_RATE_RANGE } from './playback/ranges';
 
 /** OpenRouter model ids look like `vendor/model`, optionally with a `:variant` suffix. */
 export const ModelIdSchema = z
@@ -19,10 +20,10 @@ export type NarrationSettings = z.infer<typeof NarrationSettingsSchema>;
 
 export const AmbienceSettingsSchema = z.object({
   enabled: z.boolean(),
-  /** Bed level in dB, relative to full scale. */
-  levelDb: z.number().min(-60).max(0),
+  /** Bed level in dB, relative to the narration. */
+  levelDb: z.number().min(BED_LEVEL_RANGE_DB.min).max(BED_LEVEL_RANGE_DB.max),
   /** How far beds dip under the voice, in dB. */
-  duckingDb: z.number().min(0).max(24),
+  duckingDb: z.number().min(DUCKING_RANGE_DB.min).max(DUCKING_RANGE_DB.max),
 });
 
 export const ReadingSettingsSchema = z.object({
@@ -41,6 +42,8 @@ export const SettingsSchema = z.object({
   narration: NarrationSettingsSchema,
   ambience: AmbienceSettingsSchema,
   reading: ReadingSettingsSchema,
+  /** The listening speed, kept across launches. */
+  playbackRate: z.number().min(PLAYBACK_RATE_RANGE.min).max(PLAYBACK_RATE_RANGE.max),
   onboardingDone: z.boolean(),
   contentNoticeAccepted: z.boolean(),
   /** Set once the app has told the user that chapter preparation pauses in the background. */

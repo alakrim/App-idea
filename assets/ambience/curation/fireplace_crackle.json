@@ -1,0 +1,189 @@
+{
+  "category": "fireplace_crackle",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "fireplace crackle ambience",
+    "crackling fire loop"
+  ],
+  "poolSize": 11,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 447818,
+      "name": "Crackeling Fireplace.mp3",
+      "url": "https://freesound.org/people/courter/sounds/447818/",
+      "author": "courter",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 403.19,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 35,
+      "numDownloads": 1994,
+      "previewUrl": "https://cdn.freesound.org/previews/447/447818_1224849-hq.mp3",
+      "score": 10.38,
+      "reasons": [
+        "+2.73 rating 4.8 from 35 ratings",
+        "+1.65 1994 downloads",
+        "+2 at least 90 s",
+        "+3 tags fireplace, fire, crackle",
+        "+1 name matches fireplace"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 414482,
+      "name": "Fireplace burning",
+      "url": "https://freesound.org/people/giddster/sounds/414482/",
+      "author": "giddster",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 72.46,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 56,
+      "numDownloads": 4983,
+      "previewUrl": "https://cdn.freesound.org/previews/414/414482_1738686-hq.mp3",
+      "score": 10.06,
+      "reasons": [
+        "+2.71 rating 4.71 from 56 ratings",
+        "+1.85 4983 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags fireplace, fire, crackle",
+        "+1 name matches fireplace"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 729396,
+      "name": "Campfire 02",
+      "url": "https://freesound.org/people/HECKFRICKER/sounds/729396/",
+      "author": "HECKFRICKER",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 267.61,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.89,
+      "numRatings": 104,
+      "numDownloads": 2059,
+      "previewUrl": "https://cdn.freesound.org/previews/729/729396_12863902-hq.mp3",
+      "score": 9.53,
+      "reasons": [
+        "+2.87 rating 4.89 from 104 ratings",
+        "+1.66 2059 downloads",
+        "+2 at least 90 s",
+        "+3 tags fireplace, fire, crackle"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 729395,
+      "name": "Campfire 01",
+      "url": "https://freesound.org/people/HECKFRICKER/sounds/729395/",
+      "author": "HECKFRICKER",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 109,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.68,
+      "numRatings": 56,
+      "numDownloads": 1320,
+      "previewUrl": "https://cdn.freesound.org/previews/729/729395_12863902-hq.mp3",
+      "score": 9.25,
+      "reasons": [
+        "+2.69 rating 4.68 from 56 ratings",
+        "+1.56 1320 downloads",
+        "+2 at least 90 s",
+        "+3 tags fireplace, fire, crackle"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 797669,
+      "name": "Sauna fireplace loop",
+      "url": "https://freesound.org/people/HenKonen/sounds/797669/",
+      "author": "HenKonen",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 122.3,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 7,
+      "numDownloads": 223,
+      "previewUrl": "https://cdn.freesound.org/previews/797/797669_10938187-hq.mp3",
+      "score": 8.58,
+      "reasons": [
+        "+2.41 rating 4.71 from 7 ratings",
+        "+1.18 223 downloads",
+        "+2 at least 90 s",
+        "+2 tags fireplace, fire",
+        "+1 name matches fireplace"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 836535,
+      "name": "Hearthfire (Louder)",
+      "url": "https://freesound.org/people/SilverIllusionist/sounds/836535/",
+      "author": "SilverIllusionist",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 80,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.85,
+      "numRatings": 20,
+      "numDownloads": 528,
+      "previewUrl": "https://cdn.freesound.org/previews/836/836535_7395592-hq.mp3",
+      "score": 8.55,
+      "reasons": [
+        "+2.69 rating 4.85 from 20 ratings",
+        "+1.36 528 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags fireplace, fire, crackle"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 52762,
+      "name": "cauldron.mp3",
+      "url": "https://freesound.org/people/billyzenn/sounds/52762/",
+      "author": "billyzenn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 257.87,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.45,
+      "numRatings": 44,
+      "numDownloads": 3176,
+      "previewUrl": "https://cdn.freesound.org/previews/52/52762_371070-hq.mp3",
+      "score": 7.27,
+      "reasons": [
+        "+2.52 rating 4.45 from 44 ratings",
+        "+1.75 3176 downloads",
+        "+2 at least 90 s",
+        "+1 tags fire"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 465064,
+      "name": "Water in pan.wav",
+      "url": "https://freesound.org/people/Kiarand/sounds/465064/",
+      "author": "Kiarand",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 134.66,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 154,
+      "previewUrl": "https://cdn.freesound.org/previews/465/465064_8946496-hq.mp3",
+      "score": 5.16,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1.1 154 downloads",
+        "+2 at least 90 s"
+      ]
+    }
+  ]
+}

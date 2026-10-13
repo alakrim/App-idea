@@ -1,7 +1,6 @@
 {
   "category": "river_stream",
-  "rank": 8,
-  "curatedOn": "2026-10-12",
+  "curatedOn": "2026-10-13",
   "queries": [
     "river stream water",
     "flowing stream water"
@@ -20,12 +19,12 @@
       "channels": 2,
       "avgRating": 4.74,
       "numRatings": 223,
-      "numDownloads": 20013,
+      "numDownloads": 20018,
       "previewUrl": "https://cdn.freesound.org/previews/433/433589_5618682-hq.mp3",
       "score": 10.28,
       "reasons": [
         "+2.78 rating 4.74 from 223 ratings",
-        "+2 20013 downloads",
+        "+2 20018 downloads",
         "+1.5 at least 63 s",
         "+3 tags river, stream, water, creek",
         "+1 name matches river, stream"
@@ -43,12 +42,12 @@
       "channels": 2,
       "avgRating": 4.62,
       "numRatings": 125,
-      "numDownloads": 5874,
+      "numDownloads": 5882,
       "previewUrl": "https://cdn.freesound.org/previews/446/446019_7241289-hq.mp3",
       "score": 10.06,
       "reasons": [
         "+2.68 rating 4.62 from 125 ratings",
-        "+1.88 5874 downloads",
+        "+1.88 5882 downloads",
         "+1.5 at least 63 s",
         "+3 tags river, stream, water, creek",
         "+1 name matches stream"
@@ -66,12 +65,12 @@
       "channels": 2,
       "avgRating": 4.65,
       "numRatings": 20,
-      "numDownloads": 835,
+      "numDownloads": 836,
       "previewUrl": "https://cdn.freesound.org/previews/275/275627_5286375-hq.mp3",
       "score": 10.03,
       "reasons": [
         "+2.57 rating 4.65 from 20 ratings",
-        "+1.46 835 downloads",
+        "+1.46 836 downloads",
         "+2 at least 90 s",
         "+3 tags river, stream, water",
         "+1 name matches river, stream"
@@ -89,12 +88,12 @@
       "channels": 2,
       "avgRating": 4.38,
       "numRatings": 13,
-      "numDownloads": 590,
+      "numDownloads": 591,
       "previewUrl": "https://cdn.freesound.org/previews/557/557170_12184473-hq.mp3",
       "score": 9.74,
       "reasons": [
         "+2.35 rating 4.38 from 13 ratings",
-        "+1.39 590 downloads",
+        "+1.39 591 downloads",
         "+2 at least 90 s",
         "+3 tags river, stream, water, creek",
         "+1 name matches river, stream"
@@ -112,15 +111,84 @@
       "channels": 2,
       "avgRating": 5,
       "numRatings": 6,
-      "numDownloads": 170,
+      "numDownloads": 177,
       "previewUrl": "https://cdn.freesound.org/previews/869/869104_15636277-hq.mp3",
       "score": 9.61,
       "reasons": [
         "+2.49 rating 5 from 6 ratings",
-        "+1.12 170 downloads",
+        "+1.13 177 downloads",
         "+2 at least 90 s",
         "+3 tags river, stream, water",
         "+1 name matches stream"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 857693,
+      "name": "Forest Mountain Stream - Intense Flow in the Far East Taiga",
+      "url": "https://freesound.org/people/laymiko/sounds/857693/",
+      "author": "laymiko",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 295.82,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.73,
+      "numRatings": 11,
+      "numDownloads": 131,
+      "previewUrl": "https://cdn.freesound.org/previews/857/857693_18894767-hq.mp3",
+      "score": 9.57,
+      "reasons": [
+        "+2.51 rating 4.73 from 11 ratings",
+        "+1.06 131 downloads",
+        "+2 at least 90 s",
+        "+3 tags river, stream, water",
+        "+1 name matches stream"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 674078,
+      "name": "River small water stream, with lapping, insect, bird, flies, cicada, traffic hum recorded in Amazon rainforest",
+      "url": "https://freesound.org/people/felix.blume/sounds/674078/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 177.71,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 8,
+      "numDownloads": 167,
+      "previewUrl": "https://cdn.freesound.org/previews/674/674078_1661766-hq.mp3",
+      "score": 9.56,
+      "reasons": [
+        "+2.45 rating 4.75 from 8 ratings",
+        "+1.11 167 downloads",
+        "+2 at least 90 s",
+        "+3 tags river, stream, water",
+        "+1 name matches river, stream"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 454283,
+      "name": "water river large stream small over rocks wide.flac",
+      "url": "https://freesound.org/people/kyles/sounds/454283/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 92.21,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 224,
+      "previewUrl": "https://cdn.freesound.org/previews/454/454283_612689-hq.mp3",
+      "score": 9.54,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+1.18 224 downloads",
+        "+2 at least 90 s",
+        "+3 tags river, stream, water",
+        "+1 name matches river, stream"
       ]
     }
   ]

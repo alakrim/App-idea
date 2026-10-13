@@ -5,6 +5,7 @@
 // loudness, true peak, seam continuity (RMS and sample jump), and a licence row. Real beds also need a
 // CC0 ledger row that matches their manifest entry, and the app must require every one of them.
 
+import { readFileSync } from 'node:fs';
 import { readFile, stat } from 'node:fs/promises';
 import { join } from 'node:path';
 
@@ -16,6 +17,7 @@ import { checkSeam } from './seam.mjs';
 import {
   BASE_BED_IDS,
   CC0_LICENSE_URL,
+  CURATION_DIR,
   DURATION_TOLERANCE_MS,
   LEDGER_PATH,
   LOOP_SAMPLES,
@@ -157,6 +159,11 @@ async function checkAppCoverage(entries) {
     .map((entry) => `${entry.id}: src/audio/ambience-pack.ts does not require ${entry.file}`);
 }
 
+/** The screening record of one category's curation file, or undefined when it has none. */
+function readScreening(id) {
+  return JSON.parse(readFileSync(join(CURATION_DIR, `${id}.json`), 'utf8')).screening;
+}
+
 /** Prints one bed's result and returns the running failure flag. */
 function recordResult(result, failed) {
   const status = result.failures.length === 0 ? 'PASS' : 'FAIL';
@@ -193,15 +200,37 @@ async function main() {
     failed = recordResult(await verifyBed(entry, PACK_DIR, ledgerIds), failed);
   }
 
-  // Freesound beds: one per target, CC0 ledger rows, app coverage, size budget.
-  const realIds = realManifest.map((e) => e.id).sort();
-  const expectedRealIds = FREESOUND_TARGETS.map((t) => t.id).sort();
-  if (realIds.join(',') !== expectedRealIds.join(',')) {
-    console.log(
-      `FAIL real manifest ids ${realIds.join(',')} != targets ${expectedRealIds.join(',')}`,
+  // Freesound beds (A4): every built bed is a target whose screen passed on the exact candidate it
+  // names, and every target without a bed has a recorded reason (the screen's unfilled verdict).
+  const targetIds = new Set(FREESOUND_TARGETS.map((t) => t.id));
+  for (const entry of realManifest) {
+    if (!targetIds.has(entry.id)) {
+      console.log(`FAIL real manifest row ${entry.id} is not a bed target`);
+      failed = true;
+      continue;
+    }
+    const screening = readScreening(entry.id);
+    const passed = screening?.candidates?.some(
+      (c) => c.freesoundId === entry.freesoundId && c.verdict === 'pass',
     );
-    failed = true;
+    if (!passed) {
+      console.log(`FAIL ${entry.id}: Freesound ${entry.freesoundId} has no passing screen record`);
+      failed = true;
+    }
   }
+  const built = new Set(realManifest.map((e) => e.id));
+  const unfilled = [];
+  for (const target of FREESOUND_TARGETS) {
+    if (built.has(target.id)) continue;
+    const reason = readScreening(target.id)?.unfilledReason ?? null;
+    if (reason === null || readScreening(target.id)?.verdict !== 'unfilled') {
+      console.log(`FAIL ${target.id}: no bed and no unfilled screening record`);
+      failed = true;
+    } else {
+      unfilled.push(`${target.id} (${reason})`);
+    }
+  }
+  console.log(`unfilled beds: ${unfilled.length ? unfilled.join('; ') : 'none'}`);
   const realBytes = realManifest.reduce((sum, e) => sum + e.bytes, 0);
   const realSizeOk = realBytes <= MAX_REAL_PACK_BYTES;
   console.log(

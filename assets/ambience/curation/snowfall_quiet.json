@@ -1,0 +1,192 @@
+{
+  "category": "snowfall_quiet",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "falling snow ambience",
+    "snowfall quiet winter"
+  ],
+  "poolSize": 10,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 719961,
+      "name": "Snowfall Ambience, City",
+      "url": "https://freesound.org/people/Kinoton/sounds/719961/",
+      "author": "Kinoton",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 180,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.93,
+      "numRatings": 15,
+      "numDownloads": 578,
+      "previewUrl": "https://cdn.freesound.org/previews/719/719961_2247456-hq.mp3",
+      "score": 10.06,
+      "reasons": [
+        "+2.68 rating 4.93 from 15 ratings",
+        "+1.38 578 downloads",
+        "+2 at least 90 s",
+        "+3 tags snow, snowfall, winter",
+        "+1 name matches snowfall"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 551118,
+      "name": "Snow Falling In Scotland.wav",
+      "url": "https://freesound.org/people/BurghRecords/sounds/551118/",
+      "author": "BurghRecords",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 122.54,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.38,
+      "numRatings": 13,
+      "numDownloads": 932,
+      "previewUrl": "https://cdn.freesound.org/previews/551/551118_7241289-hq.mp3",
+      "score": 9.84,
+      "reasons": [
+        "+2.35 rating 4.38 from 13 ratings",
+        "+1.48 932 downloads",
+        "+2 at least 90 s",
+        "+3 tags snow, snowfall, winter",
+        "+1 name matches snow"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 845502,
+      "name": "Quiet Winter Night with Light Snow & Wind – Altenthann Ambience - 260215_001",
+      "url": "https://freesound.org/people/TSP-Talk/sounds/845502/",
+      "author": "TSP-Talk",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 466.63,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.63,
+      "numRatings": 8,
+      "numDownloads": 288,
+      "previewUrl": "https://cdn.freesound.org/previews/845/845502_14079354-hq.mp3",
+      "score": 9.62,
+      "reasons": [
+        "+2.39 rating 4.63 from 8 ratings",
+        "+1.23 288 downloads",
+        "+2 at least 90 s",
+        "+3 tags snow, snowfall, winter",
+        "+1 name matches snow"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 610317,
+      "name": "Snow falling in the city",
+      "url": "https://freesound.org/people/xkeril/sounds/610317/",
+      "author": "xkeril",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 93.69,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.2,
+      "numRatings": 5,
+      "numDownloads": 220,
+      "previewUrl": "https://cdn.freesound.org/previews/610/610317_13504080-hq.mp3",
+      "score": 8.31,
+      "reasons": [
+        "+2.14 rating 4.2 from 5 ratings",
+        "+1.17 220 downloads",
+        "+2 at least 90 s",
+        "+2 tags snow, winter",
+        "+1 name matches snow"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 450237,
+      "name": "village winter ambience light quiet Quaqtaq, Nunavik +nearby construction and SNOW falling on recorder and jacket.flac",
+      "url": "https://freesound.org/people/kyles/sounds/450237/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 143.23,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 2,
+      "numDownloads": 107,
+      "previewUrl": "https://cdn.freesound.org/previews/450/450237_612689-hq.mp3",
+      "score": 7.11,
+      "reasons": [
+        "+2.09 rating 4.5 from 2 ratings",
+        "+1.02 107 downloads",
+        "+2 at least 90 s",
+        "+1 tags winter",
+        "+1 name matches snow"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 609250,
+      "name": "Journey To The Interweb",
+      "url": "https://freesound.org/people/Aemyn/sounds/609250/",
+      "author": "Aemyn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 508,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.33,
+      "numRatings": 294,
+      "numDownloads": 5573,
+      "previewUrl": "https://cdn.freesound.org/previews/609/609250_1445263-hq.mp3",
+      "score": 6.36,
+      "reasons": [
+        "+2.49 rating 4.33 from 294 ratings",
+        "+1.87 5573 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 669484,
+      "name": "Light rain on roof",
+      "url": "https://freesound.org/people/xkeril/sounds/669484/",
+      "author": "xkeril",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 61.23,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.88,
+      "numRatings": 17,
+      "numDownloads": 517,
+      "previewUrl": "https://cdn.freesound.org/previews/669/669484_13504080-hq.mp3",
+      "score": 6.03,
+      "reasons": [
+        "+2.68 rating 4.88 from 17 ratings",
+        "+1.36 517 downloads",
+        "+1 at least 60 s",
+        "+1 tags snow"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 666748,
+      "name": "fine_snow_falling_at_minus_7c_02.wav",
+      "url": "https://freesound.org/people/cyclic/sounds/666748/",
+      "author": "cyclic",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 42.69,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 115,
+      "previewUrl": "https://cdn.freesound.org/previews/666/666748_559067-hq.mp3",
+      "score": 2.33,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.03 115 downloads",
+        "-3 only 42.69 s",
+        "+1 tags snow",
+        "+1 name matches snow"
+      ]
+    }
+  ]
+}

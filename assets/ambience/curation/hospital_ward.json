@@ -1,0 +1,10 @@
+{
+  "category": "hospital_ward",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "hospital ward ambience",
+    "hospital background monitors"
+  ],
+  "poolSize": 0,
+  "candidates": []
+}

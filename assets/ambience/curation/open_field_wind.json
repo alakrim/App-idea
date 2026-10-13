@@ -1,7 +1,6 @@
 {
   "category": "open_field_wind",
-  "rank": 9,
-  "curatedOn": "2026-10-12",
+  "curatedOn": "2026-10-13",
   "queries": [
     "wind grass field",
     "field wind ambience"
@@ -20,12 +19,12 @@
       "channels": 2,
       "avgRating": 4.77,
       "numRatings": 101,
-      "numDownloads": 5570,
+      "numDownloads": 5573,
       "previewUrl": "https://cdn.freesound.org/previews/167/167684_1661766-hq.mp3",
       "score": 10.66,
       "reasons": [
         "+2.78 rating 4.77 from 101 ratings",
-        "+1.87 5570 downloads",
+        "+1.87 5573 downloads",
         "+2 at least 90 s",
         "+3 tags wind, field, grass",
         "+1 name matches wind"
@@ -43,12 +42,12 @@
       "channels": 2,
       "avgRating": 4.72,
       "numRatings": 54,
-      "numDownloads": 3584,
+      "numDownloads": 3587,
       "previewUrl": "https://cdn.freesound.org/previews/139/139337_1661766-hq.mp3",
       "score": 10.49,
       "reasons": [
         "+2.71 rating 4.72 from 54 ratings",
-        "+1.78 3584 downloads",
+        "+1.78 3587 downloads",
         "+2 at least 90 s",
         "+3 tags wind, field, grass",
         "+1 name matches wind, grass"
@@ -66,12 +65,12 @@
       "channels": 2,
       "avgRating": 4.9,
       "numRatings": 39,
-      "numDownloads": 1925,
+      "numDownloads": 1928,
       "previewUrl": "https://cdn.freesound.org/previews/620/620099_13130621-hq.mp3",
       "score": 10.45,
       "reasons": [
         "+2.8 rating 4.9 from 39 ratings",
-        "+1.64 1925 downloads",
+        "+1.64 1928 downloads",
         "+2 at least 90 s",
         "+3 tags wind, field, grass",
         "+1 name matches field"
@@ -89,12 +88,12 @@
       "channels": 2,
       "avgRating": 4.24,
       "numRatings": 144,
-      "numDownloads": 15513,
+      "numDownloads": 15515,
       "previewUrl": "https://cdn.freesound.org/previews/176/176252_1222472-hq.mp3",
       "score": 10.41,
       "reasons": [
         "+2.41 rating 4.24 from 144 ratings",
-        "+2 15513 downloads",
+        "+2 15515 downloads",
         "+2 at least 90 s",
         "+3 tags wind, field, grass",
         "+1 name matches wind, grass"
@@ -121,6 +120,75 @@
         "+2 at least 90 s",
         "+3 tags wind, field, grass, meadow",
         "+1 name matches meadow"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 197232,
+      "name": "Wind is blowing in the grass of a patagonian plain. Wind is blowing in the trees in background. (Tierra del fuego, Argentina)",
+      "url": "https://freesound.org/people/felix.blume/sounds/197232/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 179.3,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 20,
+      "numDownloads": 1119,
+      "previewUrl": "https://cdn.freesound.org/previews/197/197232_1661766-hq.mp3",
+      "score": 10.18,
+      "reasons": [
+        "+2.66 rating 4.8 from 20 ratings",
+        "+1.52 1119 downloads",
+        "+2 at least 90 s",
+        "+3 tags wind, field, grass",
+        "+1 name matches wind, grass"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 215414,
+      "name": "Wind blowing in the countryside during spring, Tall Grass Prairie, Oklahoma, USA",
+      "url": "https://freesound.org/people/felix.blume/sounds/215414/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 275.87,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.57,
+      "numRatings": 21,
+      "numDownloads": 845,
+      "previewUrl": "https://cdn.freesound.org/previews/215/215414_1661766-hq.mp3",
+      "score": 9.99,
+      "reasons": [
+        "+2.52 rating 4.57 from 21 ratings",
+        "+1.46 845 downloads",
+        "+2 at least 90 s",
+        "+3 tags wind, field, grass",
+        "+1 name matches wind, grass"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 215853,
+      "name": "Wind blowing in dry grass, in a field in Texas, USA.",
+      "url": "https://freesound.org/people/felix.blume/sounds/215853/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 361,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.4,
+      "numRatings": 20,
+      "numDownloads": 1060,
+      "previewUrl": "https://cdn.freesound.org/previews/215/215853_1661766-hq.mp3",
+      "score": 9.93,
+      "reasons": [
+        "+2.42 rating 4.4 from 20 ratings",
+        "+1.51 1060 downloads",
+        "+2 at least 90 s",
+        "+3 tags wind, field, grass",
+        "+1 name matches wind, field, grass"
       ]
     }
   ]

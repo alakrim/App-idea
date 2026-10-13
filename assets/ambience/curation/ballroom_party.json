@@ -1,0 +1,189 @@
+{
+  "category": "ballroom_party",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "ballroom party ambience",
+    "party crowd glasses"
+  ],
+  "poolSize": 30,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 102157,
+      "name": "Party Crowd Walla_Fiona Thraille(2).mp3",
+      "url": "https://freesound.org/people/UltraRob/sounds/102157/",
+      "author": "UltraRob",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 170.49,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.37,
+      "numRatings": 15,
+      "numDownloads": 415,
+      "previewUrl": "https://cdn.freesound.org/previews/102/102157_154214-hq.mp3",
+      "score": 7.67,
+      "reasons": [
+        "+2.36 rating 4.37 from 15 ratings",
+        "+1.31 415 downloads",
+        "+2 at least 90 s",
+        "+1 tags party",
+        "+1 name matches party"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 102163,
+      "name": "russ party walla.mp3",
+      "url": "https://freesound.org/people/UltraRob/sounds/102163/",
+      "author": "UltraRob",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 91.18,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 3.13,
+      "numRatings": 34,
+      "numDownloads": 730,
+      "previewUrl": "https://cdn.freesound.org/previews/102/102163_154214-hq.mp3",
+      "score": 7.07,
+      "reasons": [
+        "+1.63 rating 3.13 from 34 ratings",
+        "+1.43 730 downloads",
+        "+2 at least 90 s",
+        "+1 tags party",
+        "+1 name matches party"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 102155,
+      "name": "Danar walla.mp3",
+      "url": "https://freesound.org/people/UltraRob/sounds/102155/",
+      "author": "UltraRob",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 301.57,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.92,
+      "numRatings": 6,
+      "numDownloads": 283,
+      "previewUrl": "https://cdn.freesound.org/previews/102/102155_154214-hq.mp3",
+      "score": 6.68,
+      "reasons": [
+        "+2.45 rating 4.92 from 6 ratings",
+        "+1.23 283 downloads",
+        "+2 at least 90 s",
+        "+1 tags party"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 180938,
+      "name": "Wedding Cutting the Cake Utensils on Glasses",
+      "url": "https://freesound.org/people/toonothing/sounds/180938/",
+      "author": "toonothing",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 90.09,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 4,
+      "numDownloads": 856,
+      "previewUrl": "https://cdn.freesound.org/previews/180/180938_1512122-hq.mp3",
+      "score": 6.67,
+      "reasons": [
+        "+2.21 rating 4.5 from 4 ratings",
+        "+1.47 856 downloads",
+        "+2 at least 90 s",
+        "+1 tags crowd"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 102161,
+      "name": "kim_walla.mp3",
+      "url": "https://freesound.org/people/UltraRob/sounds/102161/",
+      "author": "UltraRob",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 155.13,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.38,
+      "numRatings": 8,
+      "numDownloads": 314,
+      "previewUrl": "https://cdn.freesound.org/previews/102/102161_154214-hq.mp3",
+      "score": 6.53,
+      "reasons": [
+        "+2.28 rating 4.38 from 8 ratings",
+        "+1.25 314 downloads",
+        "+2 at least 90 s",
+        "+1 tags party"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 102160,
+      "name": "gene T_walla.mp3",
+      "url": "https://freesound.org/people/UltraRob/sounds/102160/",
+      "author": "UltraRob",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 268.68,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 182,
+      "previewUrl": "https://cdn.freesound.org/previews/102/102160_154214-hq.mp3",
+      "score": 6.42,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+1.13 182 downloads",
+        "+2 at least 90 s",
+        "+1 tags party"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 102158,
+      "name": "Walla_JZ.mp3",
+      "url": "https://freesound.org/people/UltraRob/sounds/102158/",
+      "author": "UltraRob",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120.15,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 117,
+      "previewUrl": "https://cdn.freesound.org/previews/102/102158_154214-hq.mp3",
+      "score": 6.33,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.04 117 downloads",
+        "+2 at least 90 s",
+        "+1 tags party"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 102162,
+      "name": "reynaud walla.mp3",
+      "url": "https://freesound.org/people/UltraRob/sounds/102162/",
+      "author": "UltraRob",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 176.71,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 143,
+      "previewUrl": "https://cdn.freesound.org/previews/102/102162_154214-hq.mp3",
+      "score": 6.28,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.08 143 downloads",
+        "+2 at least 90 s",
+        "+1 tags party"
+      ]
+    }
+  ]
+}

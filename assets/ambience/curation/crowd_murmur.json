@@ -1,0 +1,192 @@
+{
+  "category": "crowd_murmur",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "crowd murmur ambience",
+    "crowd chatter room"
+  ],
+  "poolSize": 57,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 138118,
+      "name": "Small Crowd Chatter",
+      "url": "https://freesound.org/people/snakebarney/sounds/138118/",
+      "author": "snakebarney",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 92.81,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.81,
+      "numRatings": 36,
+      "numDownloads": 6277,
+      "previewUrl": "https://cdn.freesound.org/previews/138/138118_1572282-hq.mp3",
+      "score": 9.63,
+      "reasons": [
+        "+2.73 rating 4.81 from 36 ratings",
+        "+1.9 6277 downloads",
+        "+2 at least 90 s",
+        "+2 tags crowd, chatter",
+        "+1 name matches crowd, chatter"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 640254,
+      "name": "geroezemoes.wav",
+      "url": "https://freesound.org/people/gecop/sounds/640254/",
+      "author": "gecop",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120.84,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.78,
+      "numRatings": 18,
+      "numDownloads": 1185,
+      "previewUrl": "https://cdn.freesound.org/previews/640/640254_3562198-hq.mp3",
+      "score": 9.16,
+      "reasons": [
+        "+2.63 rating 4.78 from 18 ratings",
+        "+1.54 1185 downloads",
+        "+2 at least 90 s",
+        "+3 tags crowd, murmur, chatter"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 608996,
+      "name": "5 min of crowd chatter.  40 people.wav",
+      "url": "https://freesound.org/people/Psykophobia/sounds/608996/",
+      "author": "Psykophobia",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 311.89,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 16,
+      "numDownloads": 1448,
+      "previewUrl": "https://cdn.freesound.org/previews/608/608996_10476-hq.mp3",
+      "score": 9.03,
+      "reasons": [
+        "+2.45 rating 4.5 from 16 ratings",
+        "+1.58 1448 downloads",
+        "+2 at least 90 s",
+        "+2 tags crowd, chatter",
+        "+1 name matches crowd, chatter"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 204911,
+      "name": "Voices",
+      "url": "https://freesound.org/people/unfa/sounds/204911/",
+      "author": "unfa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 300.91,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.49,
+      "numRatings": 114,
+      "numDownloads": 9071,
+      "previewUrl": "https://cdn.freesound.org/previews/204/204911_1038806-hq.mp3",
+      "score": 8.57,
+      "reasons": [
+        "+2.59 rating 4.49 from 114 ratings",
+        "+1.98 9071 downloads",
+        "+2 at least 90 s",
+        "+2 tags crowd, chatter"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 69308,
+      "name": "crowd  sm conf rm  jumbled conversations.wav",
+      "url": "https://freesound.org/people/cognito%20perceptu/sounds/69308/",
+      "author": "cognito perceptu",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 76.32,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.13,
+      "numRatings": 8,
+      "numDownloads": 946,
+      "previewUrl": "https://cdn.freesound.org/previews/69/69308_57789-hq.mp3",
+      "score": 8.15,
+      "reasons": [
+        "+2.16 rating 4.13 from 8 ratings",
+        "+1.49 946 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags crowd, chatter",
+        "+1 name matches crowd"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 848088,
+      "name": "London tube train at rush hour",
+      "url": "https://freesound.org/people/andrewfordham/sounds/848088/",
+      "author": "andrewfordham",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 177.08,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 62,
+      "previewUrl": "https://cdn.freesound.org/previews/848/848088_10041677-hq.mp3",
+      "score": 8.1,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.9 62 downloads",
+        "+2 at least 90 s",
+        "+3 tags crowd, murmur, chatter"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 445228,
+      "name": "Crowd Noise.m4a",
+      "url": "https://freesound.org/people/keus92/sounds/445228/",
+      "author": "keus92",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 100.45,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 1,
+      "numDownloads": 194,
+      "previewUrl": "https://cdn.freesound.org/previews/445/445228_3972347-hq.mp3",
+      "score": 8.08,
+      "reasons": [
+        "+1.94 rating 4 from 1 ratings",
+        "+1.15 194 downloads",
+        "+2 at least 90 s",
+        "+2 tags crowd, chatter",
+        "+1 name matches crowd"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 546676,
+      "name": "Crowd talking / murmur",
+      "url": "https://freesound.org/people/trezz77/sounds/546676/",
+      "author": "trezz77",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 62.88,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 18,
+      "numDownloads": 1568,
+      "previewUrl": "https://cdn.freesound.org/previews/546/546676_5637404-hq.mp3",
+      "score": 8.06,
+      "reasons": [
+        "+2.46 rating 4.5 from 18 ratings",
+        "+1.6 1568 downloads",
+        "+1 at least 60 s",
+        "+2 tags crowd, chatter",
+        "+1 name matches crowd, murmur"
+      ]
+    }
+  ]
+}

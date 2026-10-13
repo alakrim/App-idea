@@ -1,0 +1,193 @@
+{
+  "category": "blizzard_wind",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "blizzard wind ambience",
+    "snow storm wind"
+  ],
+  "poolSize": 21,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 719561,
+      "name": "Wind whooshing through vent",
+      "url": "https://freesound.org/people/giddster/sounds/719561/",
+      "author": "giddster",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 99.19,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.57,
+      "numRatings": 21,
+      "numDownloads": 688,
+      "previewUrl": "https://cdn.freesound.org/previews/719/719561_1738686-hq.mp3",
+      "score": 9.94,
+      "reasons": [
+        "+2.52 rating 4.57 from 21 ratings",
+        "+1.42 688 downloads",
+        "+2 at least 90 s",
+        "+3 tags blizzard, snow, wind",
+        "+1 name matches wind"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 505999,
+      "name": "Howling winter storm ambient sounds",
+      "url": "https://freesound.org/people/DBlover/sounds/505999/",
+      "author": "DBlover",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 336.64,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.78,
+      "numRatings": 148,
+      "numDownloads": 7572,
+      "previewUrl": "https://cdn.freesound.org/previews/505/505999_7846219-hq.mp3",
+      "score": 9.75,
+      "reasons": [
+        "+2.81 rating 4.78 from 148 ratings",
+        "+1.94 7572 downloads",
+        "+2 at least 90 s",
+        "+3 tags blizzard, snow, wind"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 473815,
+      "name": "Wind during snow storm #1.m4a",
+      "url": "https://freesound.org/people/guyburns/sounds/473815/",
+      "author": "guyburns",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 208.74,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.98,
+      "numRatings": 42,
+      "numDownloads": 2039,
+      "previewUrl": "https://cdn.freesound.org/previews/473/473815_5454234-hq.mp3",
+      "score": 9.52,
+      "reasons": [
+        "+2.86 rating 4.98 from 42 ratings",
+        "+1.65 2039 downloads",
+        "+2 at least 90 s",
+        "+2 tags snow, wind",
+        "+1 name matches snow, wind"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 35480,
+      "name": "DMP013016 HEAVY SNOW STORM MS.wav",
+      "url": "https://freesound.org/people/martypinso/sounds/35480/",
+      "author": "martypinso",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 213.29,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.42,
+      "numRatings": 80,
+      "numDownloads": 7492,
+      "previewUrl": "https://cdn.freesound.org/previews/35/35480_85523-hq.mp3",
+      "score": 9.46,
+      "reasons": [
+        "+2.52 rating 4.42 from 80 ratings",
+        "+1.94 7492 downloads",
+        "+2 at least 90 s",
+        "+2 tags snow, wind",
+        "+1 name matches snow"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 473816,
+      "name": "Wind during snow storm #2.m4a",
+      "url": "https://freesound.org/people/guyburns/sounds/473816/",
+      "author": "guyburns",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 104.74,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.76,
+      "numRatings": 29,
+      "numDownloads": 1569,
+      "previewUrl": "https://cdn.freesound.org/previews/473/473816_5454234-hq.mp3",
+      "score": 9.28,
+      "reasons": [
+        "+2.68 rating 4.76 from 29 ratings",
+        "+1.6 1569 downloads",
+        "+2 at least 90 s",
+        "+2 tags snow, wind",
+        "+1 name matches snow, wind"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 574552,
+      "name": "WInter storm wind lashing snow DISTILERY 190212.flac",
+      "url": "https://freesound.org/people/TRP/sounds/574552/",
+      "author": "TRP",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 126.42,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.93,
+      "numRatings": 15,
+      "numDownloads": 1148,
+      "previewUrl": "https://cdn.freesound.org/previews/574/574552_97550-hq.mp3",
+      "score": 9.21,
+      "reasons": [
+        "+2.68 rating 4.93 from 15 ratings",
+        "+1.53 1148 downloads",
+        "+2 at least 90 s",
+        "+2 tags snow, wind",
+        "+1 name matches snow, wind"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 678893,
+      "name": "16th. fl. At the Top of the Stairs, the entrance to the Roof... during a Blizzard B.aif",
+      "url": "https://freesound.org/people/JohnLaVine333/sounds/678893/",
+      "author": "JohnLaVine333",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 438.42,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 41,
+      "previewUrl": "https://cdn.freesound.org/previews/678/678893_450294-hq.mp3",
+      "score": 9.01,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.81 41 downloads",
+        "+2 at least 90 s",
+        "+3 tags blizzard, snow, wind",
+        "+1 name matches blizzard"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 117136,
+      "name": "Wind__Artic__Cold.wav",
+      "url": "https://freesound.org/people/cobratronik/sounds/117136/",
+      "author": "cobratronik",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 59,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.69,
+      "numRatings": 175,
+      "numDownloads": 20792,
+      "previewUrl": "https://cdn.freesound.org/previews/117/117136_732072-hq.mp3",
+      "score": 8.74,
+      "reasons": [
+        "+2.74 rating 4.69 from 175 ratings",
+        "+2 20792 downloads",
+        "+3 tags blizzard, snow, wind",
+        "+1 name matches wind"
+      ]
+    }
+  ]
+}

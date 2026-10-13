@@ -1,7 +1,6 @@
 {
   "category": "rain_on_window",
-  "rank": 3,
-  "curatedOn": "2026-10-12",
+  "curatedOn": "2026-10-13",
   "queries": [
     "rain on window glass",
     "rain against window"
@@ -20,12 +19,12 @@
       "channels": 2,
       "avgRating": 4.79,
       "numRatings": 28,
-      "numDownloads": 1343,
+      "numDownloads": 1347,
       "previewUrl": "https://cdn.freesound.org/previews/243/243781_997601-hq.mp3",
       "score": 9.76,
       "reasons": [
         "+2.69 rating 4.79 from 28 ratings",
-        "+1.56 1343 downloads",
+        "+1.56 1347 downloads",
         "+1.5 at least 63 s",
         "+3 tags window, glass, rain",
         "+1 name matches window, rain"
@@ -119,6 +118,75 @@
         "+2.61 rating 4.67 from 27 ratings",
         "+1.6 1588 downloads",
         "+1.5 at least 63 s",
+        "+2 tags window, rain",
+        "+1 name matches window, rain"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 324497,
+      "name": "INT Rain on window C.wav",
+      "url": "https://freesound.org/people/deleted_user_2104797/sounds/324497/",
+      "author": "deleted_user_2104797",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 552.67,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.5,
+      "numRatings": 4,
+      "numDownloads": 388,
+      "previewUrl": "https://cdn.freesound.org/previews/324/324497_2104797-hq.mp3",
+      "score": 8.5,
+      "reasons": [
+        "+2.21 rating 4.5 from 4 ratings",
+        "+1.29 388 downloads",
+        "+2 at least 90 s",
+        "+2 tags window, rain",
+        "+1 name matches window, rain"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 324499,
+      "name": "INT Rain on window A.wav",
+      "url": "https://freesound.org/people/deleted_user_2104797/sounds/324499/",
+      "author": "deleted_user_2104797",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 165.27,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 4,
+      "numDownloads": 167,
+      "previewUrl": "https://cdn.freesound.org/previews/324/324499_2104797-hq.mp3",
+      "score": 8.49,
+      "reasons": [
+        "+2.38 rating 5 from 4 ratings",
+        "+1.11 167 downloads",
+        "+2 at least 90 s",
+        "+2 tags window, rain",
+        "+1 name matches window, rain"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 324502,
+      "name": "INT Rain on window D.wav",
+      "url": "https://freesound.org/people/deleted_user_2104797/sounds/324502/",
+      "author": "deleted_user_2104797",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 172.85,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 302,
+      "previewUrl": "https://cdn.freesound.org/previews/324/324502_2104797-hq.mp3",
+      "score": 8.44,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.24 302 downloads",
+        "+2 at least 90 s",
         "+2 tags window, rain",
         "+1 name matches window, rain"
       ]

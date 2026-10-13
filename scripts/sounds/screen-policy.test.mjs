@@ -116,9 +116,11 @@ describe('screenCandidate', () => {
   });
 
   it('rejects when a required sound is absent from most of the clip', () => {
-    const tags = tagsWith(WINDOW_FRAMES, { [`0:${RAIN}`]: 0 });
     const frames = WINDOW_FRAMES;
-    for (let f = 0; f < frames; f++) tags.perFrame[f][RAIN] = f < frames * REQUIRED_FRACTION - 1 ? 0 : 0.9;
+    const tags = tagsWith(frames);
+    // Rain in only 20 of 64 seconds: below the required share.
+    for (let f = 0; f < frames; f++) tags.perFrame[f][RAIN] = f >= frames - 20 ? 0.9 : 0;
+    assert.ok(20 / frames < REQUIRED_FRACTION);
     const result = screenCandidate({ tags, levelsDb: LEVELS(frames), policy: RAIN_POLICY });
     assert.equal(result.verdict, 'reject');
     assert.match(result.reason, /required sound absent: Rain/);

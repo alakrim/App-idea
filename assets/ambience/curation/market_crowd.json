@@ -1,7 +1,6 @@
 {
   "category": "market_crowd",
-  "rank": 12,
-  "curatedOn": "2026-10-12",
+  "curatedOn": "2026-10-13",
   "queries": [
     "market crowd ambience",
     "bazaar market people"
@@ -66,12 +65,12 @@
       "channels": 2,
       "avgRating": 5,
       "numRatings": 6,
-      "numDownloads": 255,
+      "numDownloads": 256,
       "previewUrl": "https://cdn.freesound.org/previews/700/700436_11519060-hq.mp3",
       "score": 8.69,
       "reasons": [
         "+2.49 rating 5 from 6 ratings",
-        "+1.2 255 downloads",
+        "+1.2 256 downloads",
         "+2 at least 90 s",
         "+2 tags market, crowd",
         "+1 name matches market"
@@ -89,12 +88,12 @@
       "channels": 2,
       "avgRating": 4.5,
       "numRatings": 4,
-      "numDownloads": 539,
+      "numDownloads": 540,
       "previewUrl": "https://cdn.freesound.org/previews/545/545756_8031303-hq.mp3",
       "score": 8.57,
       "reasons": [
         "+2.21 rating 4.5 from 4 ratings",
-        "+1.37 539 downloads",
+        "+1.37 540 downloads",
         "+2 at least 90 s",
         "+2 tags market, crowd",
         "+1 name matches crowd"
@@ -118,6 +117,75 @@
       "reasons": [
         "+2.52 rating 4.8 from 10 ratings",
         "+1.04 121 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 752436,
+      "name": "Walking through the bustling night market in the downtown area",
+      "url": "https://freesound.org/people/lastraindrop/sounds/752436/",
+      "author": "lastraindrop",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 485.81,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.44,
+      "numRatings": 9,
+      "numDownloads": 282,
+      "previewUrl": "https://cdn.freesound.org/previews/752/752436_12768873-hq.mp3",
+      "score": 8.56,
+      "reasons": [
+        "+2.33 rating 4.44 from 9 ratings",
+        "+1.23 282 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 705302,
+      "name": "Market fair ambience with crowd hubbub far and cars passing",
+      "url": "https://freesound.org/people/felix.blume/sounds/705302/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 99.89,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 164,
+      "previewUrl": "https://cdn.freesound.org/previews/705/705302_1661766-hq.mp3",
+      "score": 8.47,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+1.11 164 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market, crowd"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 659634,
+      "name": "2022-11-12-binaural-london-market-ambience.wav",
+      "url": "https://freesound.org/people/ilmari_freesound/sounds/659634/",
+      "author": "ilmari_freesound",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 144.59,
+      "samplerate": 192000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 159,
+      "previewUrl": "https://cdn.freesound.org/previews/659/659634_12458758-hq.mp3",
+      "score": 8.46,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+1.1 159 downloads",
         "+2 at least 90 s",
         "+2 tags market, crowd",
         "+1 name matches market"

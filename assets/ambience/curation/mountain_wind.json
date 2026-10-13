@@ -1,7 +1,6 @@
 {
   "category": "mountain_wind",
-  "rank": 15,
-  "curatedOn": "2026-10-12",
+  "curatedOn": "2026-10-13",
   "queries": [
     "mountain wind ambience",
     "wind mountain ridge"
@@ -43,12 +42,12 @@
       "channels": 2,
       "avgRating": 4.73,
       "numRatings": 81,
-      "numDownloads": 8177,
+      "numDownloads": 8181,
       "previewUrl": "https://cdn.freesound.org/previews/288/288899_2367139-hq.mp3",
       "score": 9.2,
       "reasons": [
         "+2.74 rating 4.73 from 81 ratings",
-        "+1.96 8177 downloads",
+        "+1.96 8181 downloads",
         "+1.5 at least 63 s",
         "+2 tags mountain, wind",
         "+1 name matches mountain, wind"
@@ -112,12 +111,81 @@
       "channels": 2,
       "avgRating": 4.56,
       "numRatings": 18,
-      "numDownloads": 631,
+      "numDownloads": 634,
       "previewUrl": "https://cdn.freesound.org/previews/757/757868_13504080-hq.mp3",
-      "score": 8.89,
+      "score": 8.9,
       "reasons": [
         "+2.49 rating 4.56 from 18 ratings",
-        "+1.4 631 downloads",
+        "+1.4 634 downloads",
+        "+2 at least 90 s",
+        "+2 tags mountain, wind",
+        "+1 name matches mountain"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 647660,
+      "name": "Ambience - dawn atmosphere -  air - light wind - south France - provence - far village - no insects.wav",
+      "url": "https://freesound.org/people/ValentinPetiteau/sounds/647660/",
+      "author": "ValentinPetiteau",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 590.67,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.64,
+      "numRatings": 11,
+      "numDownloads": 475,
+      "previewUrl": "https://cdn.freesound.org/previews/647/647660_10443988-hq.mp3",
+      "score": 8.8,
+      "reasons": [
+        "+2.46 rating 4.64 from 11 ratings",
+        "+1.34 475 downloads",
+        "+2 at least 90 s",
+        "+2 tags mountain, wind",
+        "+1 name matches wind"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 486895,
+      "name": "Ambience Mountain Outdoor Muntanya Forat del Vent Torrebaro",
+      "url": "https://freesound.org/people/bitlab_coop/sounds/486895/",
+      "author": "bitlab_coop",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 164,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 428,
+      "previewUrl": "https://cdn.freesound.org/previews/486/486895_9872712-hq.mp3",
+      "score": 8.61,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+1.32 428 downloads",
+        "+2 at least 90 s",
+        "+2 tags mountain, wind",
+        "+1 name matches mountain"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 486894,
+      "name": "Ambience Mountain Outdoor Mirador Torrebaro",
+      "url": "https://freesound.org/people/bitlab_coop/sounds/486894/",
+      "author": "bitlab_coop",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 171.51,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 3.47,
+      "numRatings": 15,
+      "numDownloads": 1726,
+      "previewUrl": "https://cdn.freesound.org/previews/486/486894_9872712-hq.mp3",
+      "score": 8.47,
+      "reasons": [
+        "+1.86 rating 3.47 from 15 ratings",
+        "+1.62 1726 downloads",
         "+2 at least 90 s",
         "+2 tags mountain, wind",
         "+1 name matches mountain"

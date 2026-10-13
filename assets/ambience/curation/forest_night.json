@@ -1,7 +1,6 @@
 {
   "category": "forest_night",
-  "rank": 6,
-  "curatedOn": "2026-10-12",
+  "curatedOn": "2026-10-13",
   "queries": [
     "forest night crickets",
     "night forest ambience"
@@ -20,12 +19,12 @@
       "channels": 2,
       "avgRating": 4.82,
       "numRatings": 196,
-      "numDownloads": 19048,
+      "numDownloads": 19060,
       "previewUrl": "https://cdn.freesound.org/previews/333/333221_2098408-hq.mp3",
       "score": 10.84,
       "reasons": [
         "+2.84 rating 4.82 from 196 ratings",
-        "+2 19048 downloads",
+        "+2 19060 downloads",
         "+2 at least 90 s",
         "+3 tags night, crickets, forest",
         "+1 name matches night, crickets"
@@ -43,12 +42,12 @@
       "channels": 2,
       "avgRating": 4.76,
       "numRatings": 286,
-      "numDownloads": 21485,
+      "numDownloads": 21491,
       "previewUrl": "https://cdn.freesound.org/previews/328/328293_1661766-hq.mp3",
       "score": 10.81,
       "reasons": [
         "+2.81 rating 4.76 from 286 ratings",
-        "+2 21485 downloads",
+        "+2 21491 downloads",
         "+2 at least 90 s",
         "+3 tags night, crickets, forest",
         "+1 name matches night, crickets, forest"
@@ -56,29 +55,6 @@
     },
     {
       "rank": 3,
-      "freesoundId": 466955,
-      "name": "Night close to a river, crickets and frogs, bird sometimes.",
-      "url": "https://freesound.org/people/felix.blume/sounds/466955/",
-      "author": "felix.blume",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 171.61,
-      "samplerate": 48000,
-      "channels": 2,
-      "avgRating": 4.49,
-      "numRatings": 115,
-      "numDownloads": 11569,
-      "previewUrl": "https://cdn.freesound.org/previews/466/466955_1661766-hq.mp3",
-      "score": 10.58,
-      "reasons": [
-        "+2.58 rating 4.49 from 115 ratings",
-        "+2 11569 downloads",
-        "+2 at least 90 s",
-        "+3 tags night, crickets, forest",
-        "+1 name matches night, crickets"
-      ]
-    },
-    {
-      "rank": 4,
       "freesoundId": 751465,
       "name": "Crickets chirping in the Night at the Forest 001",
       "url": "https://freesound.org/people/Borgory/sounds/751465/",
@@ -89,19 +65,19 @@
       "channels": 2,
       "avgRating": 4.81,
       "numRatings": 26,
-      "numDownloads": 799,
+      "numDownloads": 801,
       "previewUrl": "https://cdn.freesound.org/previews/751/751465_801011-hq.mp3",
       "score": 10.15,
       "reasons": [
         "+2.7 rating 4.81 from 26 ratings",
-        "+1.45 799 downloads",
+        "+1.45 801 downloads",
         "+2 at least 90 s",
         "+3 tags night, crickets, forest",
         "+1 name matches night, crickets, forest"
       ]
     },
     {
-      "rank": 5,
+      "rank": 4,
       "freesoundId": 809851,
       "name": "Night forest #2",
       "url": "https://freesound.org/people/deleted_user_9900733/sounds/809851/",
@@ -112,15 +88,107 @@
       "channels": 2,
       "avgRating": 4.92,
       "numRatings": 13,
-      "numDownloads": 483,
+      "numDownloads": 484,
       "previewUrl": "https://cdn.freesound.org/previews/809/809851_9900733-hq.mp3",
       "score": 9.99,
       "reasons": [
         "+2.65 rating 4.92 from 13 ratings",
-        "+1.34 483 downloads",
+        "+1.34 484 downloads",
         "+2 at least 90 s",
         "+3 tags night, crickets, forest",
         "+1 name matches night, forest"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 819503,
+      "name": "Night ambience near a farm",
+      "url": "https://freesound.org/people/LukaCafuka/sounds/819503/",
+      "author": "LukaCafuka",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 179.28,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 25,
+      "numDownloads": 403,
+      "previewUrl": "https://cdn.freesound.org/previews/819/819503_16236894-hq.mp3",
+      "score": 9.99,
+      "reasons": [
+        "+2.69 rating 4.8 from 25 ratings",
+        "+1.3 403 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 376815,
+      "name": "Toads and frogs in the amazonian forest at night",
+      "url": "https://freesound.org/people/felix.blume/sounds/376815/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 181,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.92,
+      "numRatings": 12,
+      "numDownloads": 317,
+      "previewUrl": "https://cdn.freesound.org/previews/376/376815_1661766-hq.mp3",
+      "score": 9.88,
+      "reasons": [
+        "+2.63 rating 4.92 from 12 ratings",
+        "+1.25 317 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, forest"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 751467,
+      "name": "Crickets chirping in the Night at the Forest 003 Crickets stopps chirping",
+      "url": "https://freesound.org/people/Borgory/sounds/751467/",
+      "author": "Borgory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 175.96,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 9,
+      "numDownloads": 586,
+      "previewUrl": "https://cdn.freesound.org/previews/751/751467_801011-hq.mp3",
+      "score": 9.82,
+      "reasons": [
+        "+2.44 rating 4.67 from 9 ratings",
+        "+1.38 586 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets, forest"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 699141,
+      "name": "Night_Breeze_Crickets_Kuipto_Forrest_adelaide_Australia_ambience 01.wav",
+      "url": "https://freesound.org/people/roisin.gleeson/sounds/699141/",
+      "author": "roisin.gleeson",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 82.15,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.89,
+      "numRatings": 36,
+      "numDownloads": 1095,
+      "previewUrl": "https://cdn.freesound.org/previews/699/699141_12896641-hq.mp3",
+      "score": 9.81,
+      "reasons": [
+        "+2.79 rating 4.89 from 36 ratings",
+        "+1.52 1095 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets"
       ]
     }
   ]

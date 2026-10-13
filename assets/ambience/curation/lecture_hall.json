@@ -1,0 +1,124 @@
+{
+  "category": "lecture_hall",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "lecture hall ambience",
+    "classroom room tone"
+  ],
+  "poolSize": 5,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 238710,
+      "name": "Classroom.mp3",
+      "url": "https://freesound.org/people/musicace17/sounds/238710/",
+      "author": "musicace17",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 66.23,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 12,
+      "numDownloads": 2313,
+      "previewUrl": "https://cdn.freesound.org/previews/238/238710_4291285-hq.mp3",
+      "score": 7.85,
+      "reasons": [
+        "+2.67 rating 5 from 12 ratings",
+        "+1.68 2313 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags classroom",
+        "+1 name matches classroom"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 850559,
+      "name": "Clase de universidad",
+      "url": "https://freesound.org/people/Mariayolanda511/sounds/850559/",
+      "author": "Mariayolanda511",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 60.59,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 34,
+      "previewUrl": "https://cdn.freesound.org/previews/850/850559_18454513-hq.mp3",
+      "score": 6.65,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.77 34 downloads",
+        "+1 at least 60 s",
+        "+3 tags lecture, classroom, hall"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 478346,
+      "name": "Museum Corridor 1, Children's Classroom Access",
+      "url": "https://freesound.org/people/ecfike/sounds/478346/",
+      "author": "ecfike",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 391.5,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 91,
+      "previewUrl": "https://cdn.freesound.org/previews/478/478346_2337290-hq.mp3",
+      "score": 5.86,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.98 91 downloads",
+        "+2 at least 90 s",
+        "+1 name matches classroom"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 417041,
+      "name": "Classroom Ambience - High School Class.wav",
+      "url": "https://freesound.org/people/okieactor/sounds/417041/",
+      "author": "okieactor",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 37.43,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.44,
+      "numRatings": 34,
+      "numDownloads": 3875,
+      "previewUrl": "https://cdn.freesound.org/previews/417/417041_7107077-hq.mp3",
+      "score": 3.28,
+      "reasons": [
+        "+2.49 rating 4.44 from 34 ratings",
+        "+1.79 3875 downloads",
+        "-3 only 37.43 s",
+        "+1 tags classroom",
+        "+1 name matches classroom"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 205184,
+      "name": "ROOM_TONE_QUIET_CLASSROOM_01.wav",
+      "url": "https://freesound.org/people/justingregoire/sounds/205184/",
+      "author": "justingregoire",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 40,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.6,
+      "numRatings": 10,
+      "numDownloads": 1597,
+      "previewUrl": "https://cdn.freesound.org/previews/205/205184_2328350-hq.mp3",
+      "score": 3.03,
+      "reasons": [
+        "+2.42 rating 4.6 from 10 ratings",
+        "+1.6 1597 downloads",
+        "-3 only 40 s",
+        "+1 tags classroom",
+        "+1 name matches classroom"
+      ]
+    }
+  ]
+}

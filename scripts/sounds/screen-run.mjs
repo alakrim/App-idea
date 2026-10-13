@@ -11,7 +11,7 @@
 // Optional: -- --only=light_rain,heavy_rain   -- --no-clap (rank by curation order only)
 
 import { execFile } from 'node:child_process';
-import { mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { promisify } from 'node:util';
 
@@ -50,6 +50,10 @@ const execFileAsync = promisify(execFile);
 const MODEL_SAMPLE_RATE = 32000;
 const LEVEL_SAMPLE_RATE = 44100;
 const MAX_BUFFER = 64 * 1024 * 1024;
+/** Clips tagged per Python process. Each decoded clip is held on disk only for its batch. */
+const TAG_BATCH = 12;
+/** Parallel preview downloads (the Freesound CDN is slow per connection). */
+const PREVIEW_CONCURRENCY = 12;
 
 const curationSchema = z
   .object({
@@ -125,29 +129,56 @@ async function ensurePreview(candidate) {
   throw lastError;
 }
 
-/** AudioSet tags per second for one preview. Cached per Freesound id; re-tagged when a label is missing. */
-async function tagsFor(candidate, preview, labels) {
-  const cachePath = join(SCREEN_WORK_DIR, 'tags', `${candidate.freesoundId}.json`);
-  if (await fileExists(cachePath)) {
-    const cached = tagsSchema.parse(await readJson(cachePath));
-    if (labels.every((label) => cached.labels.includes(label))) return cached;
+/**
+ * AudioSet tags for many clips, in batches: one Python process per batch loads the model once. Each
+ * clip is decoded to 32 kHz mono, tagged and cached under .cache/screen-work/tags/<id>.json. The cache
+ * is reused when it holds every label the policies read.
+ */
+async function tagClips(clips, labels) {
+  const pending = [];
+  for (const clip of clips) {
+    const cachePath = join(SCREEN_WORK_DIR, 'tags', `${clip.freesoundId}.json`);
+    const cached = (await fileExists(cachePath))
+      ? tagsSchema.parse(await readJson(cachePath))
+      : null;
+    if (cached && labels.every((label) => cached.labels.includes(label))) continue;
+    pending.push({ ...clip, cachePath });
   }
-  const pcm = await decodeMono(preview, MODEL_SAMPLE_RATE);
-  const raw = join(SCREEN_WORK_DIR, `${candidate.freesoundId}.32k.f32`);
-  await writeFile(raw, Buffer.from(pcm.buffer, pcm.byteOffset, pcm.byteLength));
+  if (pending.length === 0) return;
+  await mkdir(join(SCREEN_WORK_DIR, 'tags'), { recursive: true });
   const labelsPath = join(SCREEN_WORK_DIR, 'labels.json');
   await writeFile(labelsPath, JSON.stringify(labels));
-  const outPath = join(SCREEN_WORK_DIR, `${candidate.freesoundId}.tags.tmp.json`);
-  try {
-    await runPython([SCREEN_TAG_SCRIPT, raw, labelsPath, outPath]);
-    const tags = tagsSchema.parse(await readJson(outPath));
-    await mkdir(join(SCREEN_WORK_DIR, 'tags'), { recursive: true });
-    await writeFile(cachePath, JSON.stringify(tags));
-    return tags;
-  } finally {
-    await rm(raw, { force: true });
-    await rm(outPath, { force: true });
+  for (let start = 0; start < pending.length; start += TAG_BATCH) {
+    const batch = pending.slice(start, start + TAG_BATCH);
+    console.log(`  tagging ${start + 1}-${start + batch.length} of ${pending.length} clips`);
+    const requests = [];
+    for (const clip of batch) {
+      const pcm = await decodeMono(clip.preview, MODEL_SAMPLE_RATE);
+      const raw = join(SCREEN_WORK_DIR, `${clip.freesoundId}.32k.f32`);
+      await writeFile(raw, Buffer.from(pcm.buffer, pcm.byteOffset, pcm.byteLength));
+      requests.push({ input: raw, output: `${clip.cachePath}.tmp` });
+    }
+    const requestsPath = join(SCREEN_WORK_DIR, 'tag-requests.json');
+    await writeFile(requestsPath, JSON.stringify(requests));
+    try {
+      await runPython([SCREEN_TAG_SCRIPT, labelsPath, requestsPath]);
+      for (const clip of batch) {
+        const tmp = `${clip.cachePath}.tmp`;
+        tagsSchema.parse(await readJson(tmp));
+        await rename(tmp, clip.cachePath);
+      }
+    } finally {
+      for (const request of requests) {
+        await rm(request.input, { force: true });
+        await rm(request.output, { force: true });
+      }
+    }
   }
+}
+
+/** Tags for a clip once tagClips has run: from the cache, which tagClips filled. */
+async function readTags(freesoundId) {
+  return tagsSchema.parse(await readJson(join(SCREEN_WORK_DIR, 'tags', `${freesoundId}.json`)));
 }
 
 /** The dB level of every whole second of the clip (the same time base as the tags). */
@@ -161,9 +192,29 @@ function summarizeRejects(candidates) {
   return reasons.slice(0, 2).join('; ');
 }
 
-/** Screens every candidate of one target. Returns one record per candidate, in curation order. */
-async function screenTarget(target, curation, names, unionLabels) {
-  const policy = policyFor(target, names);
+/**
+ * Fetches the previews of every candidate in parallel. The CDN is slow per connection, so a single
+ * stream is about 80 KB/s and twelve streams together are several times faster. A failed fetch is
+ * retried when its target is prepared, and reported there.
+ */
+async function prefetchPreviews(entries) {
+  let next = 0;
+  const worker = async () => {
+    while (next < entries.length) {
+      const entry = entries[next];
+      next += 1;
+      try {
+        await ensurePreview(entry);
+      } catch {
+        // Reported by prepareTarget, which retries once more.
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: PREVIEW_CONCURRENCY }, worker));
+}
+
+/** Downloads and levels every candidate of one target. Screening itself runs after tagging. */
+async function prepareTarget(curation) {
   const candidates = [];
   for (const entry of curation.candidates.slice(0, SCREEN_CANDIDATES)) {
     const base = {
@@ -176,31 +227,40 @@ async function screenTarget(target, curation, names, unionLabels) {
     };
     try {
       const preview = await ensurePreview(entry);
-      const tags = await tagsFor(entry, preview, unionLabels);
-      const result = screenCandidate({ tags, levelsDb: await levelsOf(preview), policy });
-      candidates.push({ ...base, ...result, preview, clapScore: null });
+      candidates.push({ ...base, preview, levelsDb: await levelsOf(preview), error: null });
     } catch (err) {
-      candidates.push({
-        ...base,
-        verdict: 'reject',
-        reason: `could not be screened: ${err.message.split('\n')[0]}`,
-        window: null,
-        evidence: null,
-        preview: null,
-        clapScore: null,
-      });
+      candidates.push({ ...base, preview: null, levelsDb: null, error: err.message.split('\n')[0] });
     }
   }
-  return { target, policy, candidates };
+  return candidates;
+}
+
+/** Applies the policy to the prepared candidates of one target, using the cached tags. */
+async function screenTarget(target, candidates, names) {
+  const policy = policyFor(target, names);
+  const out = [];
+  for (const c of candidates) {
+    if (c.error !== null) {
+      out.push({ ...c, verdict: 'reject', reason: `could not be screened: ${c.error}`, window: null, evidence: null, clapScore: null });
+      continue;
+    }
+    const tags = await readTags(c.freesoundId);
+    const result = screenCandidate({ tags, levelsDb: c.levelsDb, policy });
+    out.push({ ...c, ...result, clapScore: null });
+  }
+  return { target, policy, candidates: out };
 }
 
 function screeningRecord({ target, policy, candidates, clapModel, screenedOn }) {
   const chosen = chooseCandidate(candidates);
   const verdict = chosen ? 'filled' : 'unfilled';
-  const unfilledReason =
-    chosen || candidates.length === 0
-      ? null
-      : summarizeRejects(candidates) || 'no candidate passed the screen';
+  let unfilledReason = null;
+  if (!chosen) {
+    unfilledReason =
+      candidates.length === 0
+        ? 'no CC0 candidates found on Freesound'
+        : summarizeRejects(candidates) || 'no candidate passed the screen';
+  }
   return {
     screenedOn,
     tagger: 'PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames',
@@ -260,11 +320,30 @@ async function main() {
   const screenedOn = new Date().toISOString().slice(0, 10);
   await mkdir(SCREEN_WORK_DIR, { recursive: true });
 
-  const screened = [];
+  const curations = [];
   for (const target of targets) {
-    const curation = curationSchema.parse(await readJson(join(CURATION_DIR, `${target.id}.json`)));
-    console.log(`screening ${target.id} (${Math.min(curation.candidates.length, SCREEN_CANDIDATES)} candidates)`);
-    screened.push(await screenTarget(target, curation, names, unionLabels));
+    curations.push({
+      target,
+      curation: curationSchema.parse(await readJson(join(CURATION_DIR, `${target.id}.json`))),
+    });
+  }
+  console.log(`fetching previews for ${curations.length} categories`);
+  await prefetchPreviews(
+    curations.flatMap(({ curation }) => curation.candidates.slice(0, SCREEN_CANDIDATES)),
+  );
+
+  const prepared = [];
+  for (const { target, curation } of curations) {
+    console.log(`preparing ${target.id} (${Math.min(curation.candidates.length, SCREEN_CANDIDATES)} candidates)`);
+    prepared.push({ target, candidates: await prepareTarget(curation) });
+  }
+
+  const clips = [...new Map(prepared.flatMap((p) => p.candidates).filter((c) => c.preview).map((c) => [c.freesoundId, c])).values()];
+  await tagClips(clips, unionLabels);
+
+  const screened = [];
+  for (const { target, candidates } of prepared) {
+    screened.push(await screenTarget(target, candidates, names));
   }
 
   const clapScores = {};

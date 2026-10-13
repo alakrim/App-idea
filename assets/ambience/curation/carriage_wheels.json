@@ -1,0 +1,125 @@
+{
+  "category": "carriage_wheels",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "horse carriage wheels",
+    "wooden cart wheels road"
+  ],
+  "poolSize": 5,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 137843,
+      "name": "Horse and Carriage.aif",
+      "url": "https://freesound.org/people/thefilmbakery/sounds/137843/",
+      "author": "thefilmbakery",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 89.4,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.76,
+      "numRatings": 34,
+      "numDownloads": 3626,
+      "previewUrl": "https://cdn.freesound.org/previews/137/137843_977564-hq.mp3",
+      "score": 8.98,
+      "reasons": [
+        "+2.7 rating 4.76 from 34 ratings",
+        "+1.78 3626 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags cart, horse",
+        "+1 name matches carriage"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 437077,
+      "name": "G52-06-Buckboard Wagon.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/437077/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 49.66,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 6,
+      "numDownloads": 227,
+      "previewUrl": "https://cdn.freesound.org/previews/437/437077_2524442-hq.mp3",
+      "score": 5.67,
+      "reasons": [
+        "+2.49 rating 5 from 6 ratings",
+        "+1.18 227 downloads",
+        "+1 tags horse",
+        "+1 name matches wagon"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 538438,
+      "name": "horse with old cart.wav",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/538438/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 33.36,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.82,
+      "numRatings": 92,
+      "numDownloads": 4044,
+      "previewUrl": "https://cdn.freesound.org/previews/538/538438_11519060-hq.mp3",
+      "score": 5.61,
+      "reasons": [
+        "+2.81 rating 4.82 from 92 ratings",
+        "+1.8 4044 downloads",
+        "-3 only 33.36 s",
+        "+3 tags carriage, cart, horse",
+        "+1 name matches cart"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 841364,
+      "name": "🐎 Horse Carriage Sounds in Zakopane - Kuźnice | ASMR Ambience, Field Recording",
+      "url": "https://freesound.org/people/GirlWithSoundRecorder/sounds/841364/",
+      "author": "GirlWithSoundRecorder",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 39.89,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 60,
+      "previewUrl": "https://cdn.freesound.org/previews/841/841364_7834424-hq.mp3",
+      "score": 3.18,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+0.89 60 downloads",
+        "-3 only 39.89 s",
+        "+2 tags carriage, horse",
+        "+1 name matches carriage"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 437076,
+      "name": "G52-07-Horse Drawn Carriage.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/437076/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 41.66,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.38,
+      "numRatings": 8,
+      "numDownloads": 635,
+      "previewUrl": "https://cdn.freesound.org/previews/437/437076_2524442-hq.mp3",
+      "score": 2.68,
+      "reasons": [
+        "+2.28 rating 4.38 from 8 ratings",
+        "+1.4 635 downloads",
+        "-3 only 41.66 s",
+        "+1 tags horse",
+        "+1 name matches carriage"
+      ]
+    }
+  ]
+}

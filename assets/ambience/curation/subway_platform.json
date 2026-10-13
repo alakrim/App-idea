@@ -1,0 +1,195 @@
+{
+  "category": "subway_platform",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "subway station ambience",
+    "underground metro platform"
+  ],
+  "poolSize": 57,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 516481,
+      "name": "Paris Covid19 METRO SUBWAY Station empty",
+      "url": "https://freesound.org/people/davidmenke/sounds/516481/",
+      "author": "davidmenke",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 370.83,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 6,
+      "numDownloads": 310,
+      "previewUrl": "https://cdn.freesound.org/previews/516/516481_1934467-hq.mp3",
+      "score": 9.67,
+      "reasons": [
+        "+2.42 rating 4.83 from 6 ratings",
+        "+1.25 310 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, underground, station",
+        "+1 name matches subway, metro"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 361913,
+      "name": "Japan_Train_Station_Kashiwa_Platform_Annoucements_24Bit_96Khz_MS-Stereo.wav",
+      "url": "https://freesound.org/people/RutgerMuller/sounds/361913/",
+      "author": "RutgerMuller",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 309.92,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.44,
+      "numRatings": 9,
+      "numDownloads": 415,
+      "previewUrl": "https://cdn.freesound.org/previews/361/361913_179538-hq.mp3",
+      "score": 9.64,
+      "reasons": [
+        "+2.33 rating 4.44 from 9 ratings",
+        "+1.31 415 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, platform, station",
+        "+1 name matches platform"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 835507,
+      "name": "Vienna U6 Metro – Onboard & Platform Ambience (Michelbeuern → Währingerstraße)",
+      "url": "https://freesound.org/people/Marschal/sounds/835507/",
+      "author": "Marschal",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 197.16,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 96,
+      "previewUrl": "https://cdn.freesound.org/previews/835/835507_1315742-hq.mp3",
+      "score": 9.2,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+0.99 96 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, platform, station",
+        "+1 name matches metro, platform"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 857105,
+      "name": "Moscow Metro's 1st (Sokolnicheskaya) line inside a train car, both ways",
+      "url": "https://freesound.org/people/Trautwein/sounds/857105/",
+      "author": "Trautwein",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 153.81,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 4,
+      "numDownloads": 41,
+      "previewUrl": "https://cdn.freesound.org/previews/857/857105_525245-hq.mp3",
+      "score": 9.19,
+      "reasons": [
+        "+2.38 rating 5 from 4 ratings",
+        "+0.81 41 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, underground, platform, station",
+        "+1 name matches metro"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 518735,
+      "name": "Metro Underground",
+      "url": "https://freesound.org/people/TeTeNoise/sounds/518735/",
+      "author": "TeTeNoise",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 416,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.2,
+      "numRatings": 5,
+      "numDownloads": 94,
+      "previewUrl": "https://cdn.freesound.org/previews/518/518735_8140496-hq.mp3",
+      "score": 9.13,
+      "reasons": [
+        "+2.14 rating 4.2 from 5 ratings",
+        "+0.99 94 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, underground, platform, station",
+        "+1 name matches metro"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 727841,
+      "name": "ambience, city, metro, Komsomolskaya, subway, Moscow",
+      "url": "https://freesound.org/people/AlexanderChe/sounds/727841/",
+      "author": "AlexanderChe",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 130,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 70,
+      "previewUrl": "https://cdn.freesound.org/previews/727/727841_6598647-hq.mp3",
+      "score": 9.12,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.93 70 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, station",
+        "+1 name matches subway, metro"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 663788,
+      "name": "[ MPooman ] Subway Sounds (SE468) (High Quality)",
+      "url": "https://freesound.org/people/MPooman/sounds/663788/",
+      "author": "MPooman",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 287.9,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 62,
+      "previewUrl": "https://cdn.freesound.org/previews/663/663788_14220990-hq.mp3",
+      "score": 9.1,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.9 62 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, underground, platform, station",
+        "+1 name matches subway"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 547672,
+      "name": "Vishali Metro Station",
+      "url": "https://freesound.org/people/kalhan/sounds/547672/",
+      "author": "kalhan",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 63.07,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 4,
+      "numDownloads": 255,
+      "previewUrl": "https://cdn.freesound.org/previews/547/547672_2161107-hq.mp3",
+      "score": 9.08,
+      "reasons": [
+        "+2.38 rating 5 from 4 ratings",
+        "+1.2 255 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags subway, metro, platform, station",
+        "+1 name matches metro"
+      ]
+    }
+  ]
+}

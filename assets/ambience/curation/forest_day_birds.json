@@ -1,7 +1,6 @@
 {
   "category": "forest_day_birds",
-  "rank": 5,
-  "curatedOn": "2026-10-12",
+  "curatedOn": "2026-10-13",
   "queries": [
     "forest birds ambience",
     "birdsong woodland daytime"
@@ -20,12 +19,12 @@
       "channels": 2,
       "avgRating": 4.85,
       "numRatings": 34,
-      "numDownloads": 538,
+      "numDownloads": 541,
       "previewUrl": "https://cdn.freesound.org/previews/856/856018_5828667-hq.mp3",
       "score": 10.13,
       "reasons": [
         "+2.76 rating 4.85 from 34 ratings",
-        "+1.37 538 downloads",
+        "+1.37 541 downloads",
         "+2 at least 90 s",
         "+3 tags birds, forest, birdsong",
         "+1 name matches birds, forest"
@@ -43,12 +42,12 @@
       "channels": 2,
       "avgRating": 4.89,
       "numRatings": 35,
-      "numDownloads": 430,
+      "numDownloads": 431,
       "previewUrl": "https://cdn.freesound.org/previews/745/745273_5487341-hq.mp3",
       "score": 10.1,
       "reasons": [
         "+2.78 rating 4.89 from 35 ratings",
-        "+1.32 430 downloads",
+        "+1.32 431 downloads",
         "+2 at least 90 s",
         "+3 tags birds, forest, birdsong",
         "+1 name matches forest"
@@ -66,12 +65,12 @@
       "channels": 2,
       "avgRating": 4.43,
       "numRatings": 46,
-      "numDownloads": 4946,
+      "numDownloads": 4951,
       "previewUrl": "https://cdn.freesound.org/previews/456/456123_7241289-hq.mp3",
       "score": 9.85,
       "reasons": [
         "+2.51 rating 4.43 from 46 ratings",
-        "+1.85 4946 downloads",
+        "+1.85 4951 downloads",
         "+1.5 at least 63 s",
         "+3 tags birds, forest, birdsong",
         "+1 name matches birds, forest"
@@ -120,6 +119,74 @@
         "+0.99 96 downloads",
         "+2 at least 90 s",
         "+3 tags birds, forest, birdsong",
+        "+1 name matches birds, forest"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 490846,
+      "name": "Birds In Forest (Scotland)",
+      "url": "https://freesound.org/people/BurghRecords/sounds/490846/",
+      "author": "BurghRecords",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 113.02,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.7,
+      "numRatings": 33,
+      "numDownloads": 2126,
+      "previewUrl": "https://cdn.freesound.org/previews/490/490846_7241289-hq.mp3",
+      "score": 9.32,
+      "reasons": [
+        "+2.65 rating 4.7 from 33 ratings",
+        "+1.66 2126 downloads",
+        "+2 at least 90 s",
+        "+2 tags birds, forest",
+        "+1 name matches birds, forest"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 434712,
+      "name": "Woodland Ambience Sound Effect - Duddingston Village.wav",
+      "url": "https://freesound.org/people/BurghRecords/sounds/434712/",
+      "author": "BurghRecords",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 376.22,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.69,
+      "numRatings": 26,
+      "numDownloads": 1277,
+      "previewUrl": "https://cdn.freesound.org/previews/434/434712_7241289-hq.mp3",
+      "score": 9.18,
+      "reasons": [
+        "+2.63 rating 4.69 from 26 ratings",
+        "+1.55 1277 downloads",
+        "+2 at least 90 s",
+        "+3 tags birds, forest, birdsong, woodland"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 629003,
+      "name": "birds chirping forest light rain ambience",
+      "url": "https://freesound.org/people/larspriebe/sounds/629003/",
+      "author": "larspriebe",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 209.12,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.91,
+      "numRatings": 23,
+      "numDownloads": 751,
+      "previewUrl": "https://cdn.freesound.org/previews/629/629003_6342935-hq.mp3",
+      "score": 9.18,
+      "reasons": [
+        "+2.75 rating 4.91 from 23 ratings",
+        "+1.44 751 downloads",
+        "+2 at least 90 s",
+        "+2 tags birds, forest",
         "+1 name matches birds, forest"
       ]
     }

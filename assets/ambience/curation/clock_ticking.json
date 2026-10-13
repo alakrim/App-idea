@@ -1,0 +1,195 @@
+{
+  "category": "clock_ticking",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "clock ticking ambience",
+    "pendulum clock ticking room"
+  ],
+  "poolSize": 33,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 726603,
+      "name": "Ticking clock rhythm percussion 1",
+      "url": "https://freesound.org/people/Jim-Bretherick/sounds/726603/",
+      "author": "Jim-Bretherick",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 144,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.64,
+      "numRatings": 14,
+      "numDownloads": 261,
+      "previewUrl": "https://cdn.freesound.org/previews/726/726603_10983022-hq.mp3",
+      "score": 9.72,
+      "reasons": [
+        "+2.51 rating 4.64 from 14 ratings",
+        "+1.21 261 downloads",
+        "+2 at least 90 s",
+        "+3 tags clock, tick, ticking",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 380300,
+      "name": "Clock Ticking",
+      "url": "https://freesound.org/people/shazzakip/sounds/380300/",
+      "author": "shazzakip",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 91.66,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 6,
+      "numDownloads": 485,
+      "previewUrl": "https://cdn.freesound.org/previews/380/380300_2660178-hq.mp3",
+      "score": 9.7,
+      "reasons": [
+        "+2.35 rating 4.67 from 6 ratings",
+        "+1.34 485 downloads",
+        "+2 at least 90 s",
+        "+3 tags clock, tick, ticking",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 211192,
+      "name": "small clock in room",
+      "url": "https://freesound.org/people/Yuval/sounds/211192/",
+      "author": "Yuval",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 60.04,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.85,
+      "numRatings": 52,
+      "numDownloads": 5797,
+      "previewUrl": "https://cdn.freesound.org/previews/211/211192_770707-hq.mp3",
+      "score": 9.68,
+      "reasons": [
+        "+2.8 rating 4.85 from 52 ratings",
+        "+1.88 5797 downloads",
+        "+1 at least 60 s",
+        "+3 tags clock, tick, ticking",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 517682,
+      "name": "Clock ticking, natural room verb",
+      "url": "https://freesound.org/people/janbezouska/sounds/517682/",
+      "author": "janbezouska",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 199.58,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.27,
+      "numRatings": 11,
+      "numDownloads": 470,
+      "previewUrl": "https://cdn.freesound.org/previews/517/517682_3287894-hq.mp3",
+      "score": 9.61,
+      "reasons": [
+        "+2.27 rating 4.27 from 11 ratings",
+        "+1.34 470 downloads",
+        "+2 at least 90 s",
+        "+3 tags clock, tick, ticking",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 659391,
+      "name": "Digital Clock World1.wav",
+      "url": "https://freesound.org/people/Jim-Bretherick/sounds/659391/",
+      "author": "Jim-Bretherick",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 140.39,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 97,
+      "previewUrl": "https://cdn.freesound.org/previews/659/659391_10983022-hq.mp3",
+      "score": 9.19,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1 97 downloads",
+        "+2 at least 90 s",
+        "+3 tags clock, ticking, pendulum",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 676288,
+      "name": "Ticking wall clock in kitchen",
+      "url": "https://freesound.org/people/Fauxtogramme/sounds/676288/",
+      "author": "Fauxtogramme",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 140,
+      "samplerate": 96000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 101,
+      "previewUrl": "https://cdn.freesound.org/previews/676/676288_1534382-hq.mp3",
+      "score": 9.07,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1 101 downloads",
+        "+2 at least 90 s",
+        "+3 tags clock, tick, ticking",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 520467,
+      "name": "BGSaSc Room Tone Workshop Birds Hum Clock Ticking",
+      "url": "https://freesound.org/people/Profispiesser/sounds/520467/",
+      "author": "Profispiesser",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 146,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 15,
+      "numDownloads": 634,
+      "previewUrl": "https://cdn.freesound.org/previews/520/520467_6667441-hq.mp3",
+      "score": 9.01,
+      "reasons": [
+        "+2.61 rating 4.8 from 15 ratings",
+        "+1.4 634 downloads",
+        "+2 at least 90 s",
+        "+2 tags clock, ticking",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 341375,
+      "name": "muted clock[Foolishfool].MP3",
+      "url": "https://freesound.org/people/foolishfool/sounds/341375/",
+      "author": "foolishfool",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 92.75,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 3.5,
+      "numRatings": 2,
+      "numDownloads": 157,
+      "previewUrl": "https://cdn.freesound.org/previews/341/341375_4750083-hq.mp3",
+      "score": 8.97,
+      "reasons": [
+        "+1.88 rating 3.5 from 2 ratings",
+        "+1.1 157 downloads",
+        "+2 at least 90 s",
+        "+3 tags clock, tick, ticking",
+        "+1 name matches clock"
+      ]
+    }
+  ]
+}

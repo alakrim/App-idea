@@ -1,7 +1,6 @@
 {
   "category": "war_drums",
-  "rank": 17,
-  "curatedOn": "2026-10-12",
+  "curatedOn": "2026-10-13",
   "queries": [
     "war drums",
     "battle drums ambience"
@@ -20,12 +19,12 @@
       "channels": 2,
       "avgRating": 4.6,
       "numRatings": 65,
-      "numDownloads": 5087,
+      "numDownloads": 5088,
       "previewUrl": "https://cdn.freesound.org/previews/347/347981_6075465-hq.mp3",
       "score": 9.49,
       "reasons": [
         "+2.64 rating 4.6 from 65 ratings",
-        "+1.85 5087 downloads",
+        "+1.85 5088 downloads",
         "+2 at least 90 s",
         "+2 tags drums, battle",
         "+1 name matches battle"
@@ -43,12 +42,12 @@
       "channels": 2,
       "avgRating": 4.93,
       "numRatings": 14,
-      "numDownloads": 1634,
+      "numDownloads": 1635,
       "previewUrl": "https://cdn.freesound.org/previews/125/125933_296888-hq.mp3",
       "score": 7.77,
       "reasons": [
         "+2.66 rating 4.93 from 14 ratings",
-        "+1.61 1634 downloads",
+        "+1.61 1635 downloads",
         "+1.5 at least 63 s",
         "+2 tags drums, war"
       ]
@@ -65,12 +64,12 @@
       "channels": 2,
       "avgRating": 4.64,
       "numRatings": 39,
-      "numDownloads": 3998,
+      "numDownloads": 4000,
       "previewUrl": "https://cdn.freesound.org/previews/125/125932_296888-hq.mp3",
       "score": 7.43,
       "reasons": [
         "+2.63 rating 4.64 from 39 ratings",
-        "+1.8 3998 downloads",
+        "+1.8 4000 downloads",
         "+2 at least 90 s",
         "+1 tags war"
       ]
@@ -116,6 +115,73 @@
         "+2.2 rating 4.67 from 3 ratings",
         "+1.1 160 downloads",
         "+2 at least 90 s",
+        "+1 tags war"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 871671,
+      "name": "cinematic_drum_loop_shellshock_143",
+      "url": "https://freesound.org/people/harrisonlace/sounds/871671/",
+      "author": "harrisonlace",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 60.42,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 37,
+      "previewUrl": "https://cdn.freesound.org/previews/871/871671_9839964-hq.mp3",
+      "score": 5.99,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.79 37 downloads",
+        "+1 at least 60 s",
+        "+2 tags war, battle"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 632099,
+      "name": "war_drums.mp3",
+      "url": "https://freesound.org/people/nicovize/sounds/632099/",
+      "author": "nicovize",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 38.72,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.88,
+      "numRatings": 17,
+      "numDownloads": 662,
+      "previewUrl": "https://cdn.freesound.org/previews/632/632099_13943755-hq.mp3",
+      "score": 4.09,
+      "reasons": [
+        "+2.68 rating 4.88 from 17 ratings",
+        "+1.41 662 downloads",
+        "-3 only 38.72 s",
+        "+2 tags drums, war",
+        "+1 name matches drums, war"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 396324,
+      "name": "HeavyMachineGun.wav",
+      "url": "https://freesound.org/people/SuperPhat/sounds/396324/",
+      "author": "SuperPhat",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 36.48,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.7,
+      "numRatings": 73,
+      "numDownloads": 4376,
+      "previewUrl": "https://cdn.freesound.org/previews/396/396324_7542558-hq.mp3",
+      "score": 2.54,
+      "reasons": [
+        "+2.72 rating 4.7 from 73 ratings",
+        "+1.82 4376 downloads",
+        "-3 only 36.48 s",
         "+1 tags war"
       ]
     }

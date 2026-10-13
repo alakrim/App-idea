@@ -1,0 +1,191 @@
+{
+  "category": "cave_drip",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "cave ambience drips",
+    "cave water drip echo"
+  ],
+  "poolSize": 23,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 177958,
+      "name": "Water Dripping in Cave.wav",
+      "url": "https://freesound.org/people/Sclolex/sounds/177958/",
+      "author": "Sclolex",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 89.82,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 399,
+      "numDownloads": 30829,
+      "previewUrl": "https://cdn.freesound.org/previews/177/177958_985466-hq.mp3",
+      "score": 10.34,
+      "reasons": [
+        "+2.84 rating 4.8 from 399 ratings",
+        "+2 30829 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags cave, drip, cavern",
+        "+1 name matches cave"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 516566,
+      "name": "Dark Dungeon Ambience",
+      "url": "https://freesound.org/people/Kinoton/sounds/516566/",
+      "author": "Kinoton",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 180.04,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.84,
+      "numRatings": 64,
+      "numDownloads": 2066,
+      "previewUrl": "https://cdn.freesound.org/previews/516/516566_2247456-hq.mp3",
+      "score": 8.47,
+      "reasons": [
+        "+2.81 rating 4.84 from 64 ratings",
+        "+1.66 2066 downloads",
+        "+2 at least 90 s",
+        "+2 tags cave, drips"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 381418,
+      "name": "Water Through Drain (With Reverb).wav",
+      "url": "https://freesound.org/people/clif_creates/sounds/381418/",
+      "author": "clif_creates",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.62,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 554,
+      "previewUrl": "https://cdn.freesound.org/previews/381/381418_3530854-hq.mp3",
+      "score": 8.16,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+1.37 554 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags cave, drips, cavern"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 162116,
+      "name": "Water Dripping (Large Echo)",
+      "url": "https://freesound.org/people/editor_adp/sounds/162116/",
+      "author": "editor_adp",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 64.11,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.97,
+      "numRatings": 33,
+      "numDownloads": 3789,
+      "previewUrl": "https://cdn.freesound.org/previews/162/162116_2155835-hq.mp3",
+      "score": 8.12,
+      "reasons": [
+        "+2.83 rating 4.97 from 33 ratings",
+        "+1.79 3789 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags cave, drip"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 535048,
+      "name": "ambient noise.wav",
+      "url": "https://freesound.org/people/patchytherat/sounds/535048/",
+      "author": "patchytherat",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 362.06,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.88,
+      "numRatings": 16,
+      "numDownloads": 788,
+      "previewUrl": "https://cdn.freesound.org/previews/535/535048_5911297-hq.mp3",
+      "score": 8.11,
+      "reasons": [
+        "+2.66 rating 4.88 from 16 ratings",
+        "+1.45 788 downloads",
+        "+2 at least 90 s",
+        "+2 tags cave, drips"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 843938,
+      "name": "Teufelsfelsen Forest Ambience – Distant Cave Drips with Aircraft & Dog (Pirmasens Field Recording) - 20250814_007",
+      "url": "https://freesound.org/people/TSP-Talk/sounds/843938/",
+      "author": "TSP-Talk",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 520,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 2,
+      "numDownloads": 42,
+      "previewUrl": "https://cdn.freesound.org/previews/843/843938_14079354-hq.mp3",
+      "score": 7.91,
+      "reasons": [
+        "+2.09 rating 4.5 from 2 ratings",
+        "+0.82 42 downloads",
+        "+2 at least 90 s",
+        "+2 tags cave, drips",
+        "+1 name matches cave"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 740041,
+      "name": "Cave Ambience",
+      "url": "https://freesound.org/people/pointlessperson1/sounds/740041/",
+      "author": "pointlessperson1",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 479.99,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 12,
+      "numDownloads": 602,
+      "previewUrl": "https://cdn.freesound.org/previews/740/740041_13151007-hq.mp3",
+      "score": 7.88,
+      "reasons": [
+        "+2.49 rating 4.67 from 12 ratings",
+        "+1.39 602 downloads",
+        "+2 at least 90 s",
+        "+1 tags cave",
+        "+1 name matches cave"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 843936,
+      "name": "Teufelsfelsen Cave Dripping Water – Distant Aircraft Overflight (Pirmasens Field Recording) - 20250814_006",
+      "url": "https://freesound.org/people/TSP-Talk/sounds/843936/",
+      "author": "TSP-Talk",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 496.63,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 54,
+      "previewUrl": "https://cdn.freesound.org/previews/843/843936_14079354-hq.mp3",
+      "score": 7.75,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.87 54 downloads",
+        "+2 at least 90 s",
+        "+2 tags cave, drips",
+        "+1 name matches cave"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "category": "seabird_cliffs",
+  "curatedOn": "2026-10-13",
+  "queries": [
+    "seabirds cliffs ambience",
+    "seagulls sea cliff"
+  ],
+  "poolSize": 3,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 317676,
+      "name": "STC_moewen.flac",
+      "url": "https://freesound.org/people/nikitralala/sounds/317676/",
+      "author": "nikitralala",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 90.55,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 17,
+      "numDownloads": 803,
+      "previewUrl": "https://cdn.freesound.org/previews/317/317676_2352202-hq.mp3",
+      "score": 8.03,
+      "reasons": [
+        "+2.57 rating 4.71 from 17 ratings",
+        "+1.45 803 downloads",
+        "+2 at least 90 s",
+        "+2 tags seagull, cliff"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 630433,
+      "name": "Sea_Seagulls on cliff.wav",
+      "url": "https://freesound.org/people/KaleidacousticsAudio/sounds/630433/",
+      "author": "KaleidacousticsAudio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 70.21,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.63,
+      "numRatings": 8,
+      "numDownloads": 560,
+      "previewUrl": "https://cdn.freesound.org/previews/630/630433_13875907-hq.mp3",
+      "score": 7.27,
+      "reasons": [
+        "+2.39 rating 4.63 from 8 ratings",
+        "+1.37 560 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags cliff",
+        "+1 name matches cliff"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 570906,
+      "name": "foghorn.wav",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/570906/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 46.48,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.93,
+      "numRatings": 27,
+      "numDownloads": 928,
+      "previewUrl": "https://cdn.freesound.org/previews/570/570906_11519060-hq.mp3",
+      "score": 4.26,
+      "reasons": [
+        "+2.78 rating 4.93 from 27 ratings",
+        "+1.48 928 downloads"
+      ]
+    }
+  ]
+}
