@@ -25,6 +25,7 @@ _Last updated: 2026-10-11 (night) by architect_
 - **Q1 AAA QA audit: done.** Four reports in `docs/qa/2026-10-13-QA-{A,B,C,D}-*.md`, each spot-verified by the architect. Fix waves:
   - **F1** player/audio (`docs/briefs/F1-player-audio-fixes.md`): running now (no overlap with N3/A4).
   - **F2** UI/a11y, **F3** data integrity (alias spoiler leak, playability, stale translations, ledger, storage, keep paid passages, PDF cap) and **F4** performance (catalogue snapshot writes, DOM re-parsing, N+1 queries, lazy extraction stack): queued after N3 lands, because they overlap its files.
+  - **L1 listening model** (per-chapter resume, bookmarks, speed per series): **user-approved 2026-10-13**, the only bigger jump approved for now. Brief `docs/briefs/L1-listening-model.md`; it runs after N3 and F1. The others (gapless media session, real sentence timing, checkpoints, sound packs) are **not approved yet**.
   - Architect size decision: A4 beds are encoded at 48 kbps (24 MB budget).
 - APK `lectio-0.1.0-23ac9d0-arm64.apk` is with the user. They report it is quicker, but that a chapter sometimes stays stuck on Narrating after they leave the app (→ N3).
 
