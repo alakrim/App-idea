@@ -20,7 +20,7 @@ export const KEEP_AWAKE_TAG = 'lectio-pipeline';
 export const CONNECT_ROUTE = '/settings/api-key';
 /** Shown once, the first time the user leaves the app while a chapter is being prepared. */
 export const BACKGROUND_NOTICE =
-  'Lectio pauses chapter preparation while it\'s in the background. Keep it open to finish faster.';
+  "Lectio pauses chapter preparation while it's in the background. Keep it open to finish faster.";
 
 export function PipelineLifecycle() {
   const runtime = usePipelineRuntime();
@@ -67,7 +67,7 @@ export function PipelineLifecycle() {
         if (processing && !settingsStore.getSettings().backgroundNoticeShown) noticeDue = true;
         return;
       }
-      if (noticeDue && !settingsStore.getSettings().backgroundNoticeShown) {
+      if (noticeDue) {
         noticeDue = false;
         toast.show({ message: BACKGROUND_NOTICE, tone: 'neutral' });
         settingsStore.patch({ backgroundNoticeShown: true });

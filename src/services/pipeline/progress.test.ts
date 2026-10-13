@@ -211,7 +211,13 @@ describe('reduceEvent', () => {
   it('carries the passage count of narration, and keeps it through progress with none', () => {
     const tracked = run([
       stage('narrate', 'running'),
-      { type: 'progress', chapterId: ID, stage: 'narrate', progress: 0.2, passages: { done: 3, total: 15 } },
+      {
+        type: 'progress',
+        chapterId: ID,
+        stage: 'narrate',
+        progress: 0.2,
+        passages: { done: 3, total: 15 },
+      },
       { type: 'progress', chapterId: ID, stage: 'narrate', progress: 0.3 },
     ]);
     expect(tracked.stages.narrate.passages).toEqual({ done: 3, total: 15 });
@@ -241,7 +247,10 @@ describe('reduceEvent', () => {
     const fresh = startRun(run([{ type: 'reconnecting', chapterId: ID }]), 0);
     expect(fresh.reconnecting).toBe(false);
 
-    const ready = run([{ type: 'reconnecting', chapterId: ID }, { type: 'done', chapterId: ID }]);
+    const ready = run([
+      { type: 'reconnecting', chapterId: ID },
+      { type: 'done', chapterId: ID },
+    ]);
     expect(toChapterProgress(ID, ready).reconnecting).toBe(false);
   });
 

@@ -22,6 +22,7 @@ import { FREESOUND_TARGETS } from './freesound-targets.mjs';
 import { decodeMono } from './ffmpeg-tools.mjs';
 import {
   chooseCandidate,
+  ALARM_FRAME_PROBABILITY,
   DENY_FRAME_PROBABILITY,
   familiesFor,
   labelsFor,
@@ -53,7 +54,7 @@ const MAX_BUFFER = 64 * 1024 * 1024;
 /** Clips tagged per Python process. Each decoded clip is held on disk only for its batch. */
 const TAG_BATCH = 12;
 /** Parallel preview downloads (the Freesound CDN is slow per connection). */
-const PREVIEW_CONCURRENCY = 12;
+const PREVIEW_CONCURRENCY = 24;
 
 const curationSchema = z
   .object({
@@ -267,6 +268,7 @@ function screeningRecord({ target, policy, candidates, clapModel, screenedOn }) 
     reranker: clapModel,
     thresholds: {
       denyFrameProbability: DENY_FRAME_PROBABILITY,
+      alarmFrameProbability: ALARM_FRAME_PROBABILITY,
       requiredFrameProbability: REQUIRED_FRAME_PROBABILITY,
       requiredFraction: REQUIRED_FRACTION,
       windowSeconds: WINDOW_FRAMES,

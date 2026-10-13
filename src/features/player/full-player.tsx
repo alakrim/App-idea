@@ -1,6 +1,6 @@
 import { setStringAsync } from 'expo-clipboard';
 import { router } from 'expo-router';
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -27,11 +27,11 @@ import { Chip } from './chip';
 import { formatRate } from './format';
 import { PLAYER } from './layout';
 import { usePlayback, usePlaybackContent, usePlayerState } from './player-provider';
-import { Scrubber } from './scrubber';
+import { PlayerScrubber } from './scrubber';
 import { SentenceSheet } from './sentence-sheet';
 import { SleepChip, SleepSheet } from './sleep-timer';
 import { SpeedSheet } from './speed-sheet';
-import { SyncedTextPane, displayText } from './synced-text-pane';
+import { SyncedTextPane, displayText, type SentenceAction } from './synced-text-pane';
 import { Transport } from './transport';
 
 type OpenSheet = 'speed' | 'sleep' | 'ambience' | null;
@@ -123,14 +123,28 @@ function UnavailablePlayer() {
   );
 }
 
+/** The copy names what failed. None of it blames the connection: playback reads files on this phone. */
+const FAILURE_COPY = {
+  load: {
+    title: "Couldn't open this chapter",
+    message: 'Its narration could not be read from this phone. Your place is saved.',
+  },
+  playback: {
+    title: 'Playback stopped',
+    message: 'The audio player hit a problem. Your place is saved.',
+  },
+} as const;
+
 function FailedPlayer() {
   const controller = usePlayback();
   const chapterId = usePlaybackContent((content) => content.chapterId);
+  const failure = usePlaybackContent((content) => content.failure);
+  const copy = FAILURE_COPY[failure ?? 'load'];
   return (
     <PlayerFrame>
       <ErrorState
-        title="Couldn't start this chapter"
-        message="Check your connection and try again. Your place is saved."
+        title={copy.title}
+        message={copy.message}
         retryLabel="Try again"
         onRetry={() => {
           if (chapterId) void controller.playChapter(chapterId);
@@ -152,12 +166,13 @@ function ReadyPlayer() {
   const [actionSentence, setActionSentence] = useState<Sentence | null>(null);
   const [centerHeight, setCenterHeight] = useState(0);
 
+  // The full player does not subscribe to the position: the scrubber and the text pane that need
+  // it do, so the rest of the screen only re-renders when the sentence or the play state changes.
   const title = usePlayerState((state) => state.nowPlaying?.title ?? '');
   const seriesTitle = usePlayerState((state) => state.nowPlaying?.seriesTitle ?? '');
   const seriesId = usePlaybackContent((content) => content.seriesId);
   const coverUri = usePlayerState((state) => state.nowPlaying?.coverUri ?? null);
   const playState = usePlayerState((state) => state.state);
-  const positionMs = usePlayerState((state) => state.positionMs);
   const sentenceIdx = usePlayerState((state) => state.sentenceIdx);
   const rate = usePlayerState((state) => state.rate);
   const timeline = usePlaybackContent((content) => content.timeline);
@@ -167,21 +182,14 @@ function ReadyPlayer() {
   const coverTint = usePlaybackContent((content) => content.coverTint);
   const loopIdx = usePlaybackContent((content) => content.loopSentenceIdx);
   const ambience = usePlaybackContent((content) => content.ambience);
+  const narrationPaused = usePlaybackContent((content) => content.narrationPaused);
 
-  const durationMs = timeline?.totalDurationMs ?? 0;
   const availableCount = timeline?.sentenceCount ?? 0;
   const busy = playState === 'loading' || playState === 'buffering';
   const playing = playState === 'playing';
+  /** Out of audio while processing is stopped: calm copy, not a spinner (P1-5). */
+  const showPaused = narrationPaused && playState === 'buffering';
 
-  const tickMs = useMemo(
-    () =>
-      timeline
-        ? Array.from({ length: timeline.sentenceCount }, (_, idx) =>
-            timeline.sentenceToPosition(idx),
-          )
-        : [],
-    [timeline],
-  );
   const activeCues = useMemo(() => activeAmbience(cues, sentenceIdx), [cues, sentenceIdx]);
   const activeNames = activeCues.map((entry) => entry.label);
 
@@ -206,32 +214,61 @@ function ReadyPlayer() {
       : 'Ambience';
 
   const closeSheet = () => setSheet(null);
-  const repeat = (sentence: Sentence) => {
-    controller.setLoopSentence(sentence.idx);
-    setActionSentence(null);
-  };
-  const copy = (sentence: Sentence) => {
-    void setStringAsync(displayText(sentence));
-    toast.show({ message: 'Sentence copied', tone: 'success' });
-    setActionSentence(null);
-  };
+  const repeat = useCallback(
+    (sentence: Sentence) => {
+      controller.setLoopSentence(sentence.idx);
+      setActionSentence(null);
+    },
+    [controller],
+  );
+  const copy = useCallback(
+    (sentence: Sentence) => {
+      void setStringAsync(displayText(sentence));
+      toast.show({ message: 'Sentence copied', tone: 'success' });
+      setActionSentence(null);
+    },
+    [toast],
+  );
   /** Saves the sentence. The toast confirms only a save that happened. */
-  const saveVocab = (sentence: Sentence) => {
-    if (seriesId === null) return;
-    try {
-      vocab.saveToVocab({
-        seriesId,
-        chapterId: sentence.chapterId,
-        sentenceIdx: sentence.idx,
-        text: displayText(sentence),
-      });
-    } catch {
-      toast.show({ message: 'Nothing to save in this sentence', tone: 'danger' });
-      return;
-    }
-    toast.show({ message: 'Saved to Vocab' });
-    setActionSentence(null);
-  };
+  const saveVocab = useCallback(
+    (sentence: Sentence) => {
+      if (seriesId === null) return;
+      try {
+        vocab.saveToVocab({
+          seriesId,
+          chapterId: sentence.chapterId,
+          sentenceIdx: sentence.idx,
+          text: displayText(sentence),
+        });
+      } catch {
+        toast.show({ message: 'Nothing to save in this sentence', tone: 'danger' });
+        return;
+      }
+      toast.show({ message: 'Saved to Vocab' });
+      setActionSentence(null);
+    },
+    [seriesId, vocab, toast],
+  );
+
+  const seekSentence = useCallback((idx: number) => controller.seekToSentence(idx), [controller]);
+  const openSentenceActions = useCallback(
+    (idx: number) => {
+      const sentence = sentences[idx];
+      if (sentence) setActionSentence(sentence);
+    },
+    [sentences],
+  );
+  /** The same actions as the long press, for screen readers: repeat, copy and save to Vocab. */
+  const runSentenceAction = useCallback(
+    (idx: number, action: SentenceAction) => {
+      const sentence = sentences[idx];
+      if (!sentence) return;
+      if (action === 'repeat') controller.setLoopSentence(idx);
+      else if (action === 'copy') copy(sentence);
+      else saveVocab(sentence);
+    },
+    [controller, sentences, copy, saveVocab],
+  );
 
   const panelOpenHeight = windowHeight * PLAYER.paneHeightRatio;
   const peekHeight = PLAYER.peekHeight + insets.bottom;
@@ -275,12 +312,7 @@ function ReadyPlayer() {
 
         <View style={styles.controls}>
           <View style={styles.inset}>
-            <Scrubber
-              positionMs={positionMs}
-              durationMs={durationMs}
-              tickMs={tickMs}
-              onSeek={(ms) => controller.seekToMs(ms)}
-            />
+            <PlayerScrubber />
           </View>
           <Transport
             playing={playing}
@@ -289,6 +321,13 @@ function ReadyPlayer() {
             onSkip={(deltaMs) => controller.seekBy(deltaMs)}
             onSentence={(direction) => controller.stepSentence(direction)}
           />
+          {showPaused ? (
+            <View style={styles.inset}>
+              <Text variant="caption" tone="muted" align="center" accessibilityLiveRegion="polite">
+                Narration paused. More audio will appear when processing continues.
+              </Text>
+            </View>
+          ) : null}
           <View style={[styles.inset, styles.chips]}>
             <Chip
               label={formatRate(rate)}
@@ -320,11 +359,9 @@ function ReadyPlayer() {
         loopIdx={loopIdx}
         openHeight={panelOpenHeight}
         peekHeight={peekHeight}
-        onSeekSentence={(idx) => controller.seekToSentence(idx)}
-        onLongPressSentence={(idx) => {
-          const sentence = sentences[idx];
-          if (sentence) setActionSentence(sentence);
-        }}
+        onSeekSentence={seekSentence}
+        onLongPressSentence={openSentenceActions}
+        onSentenceAction={runSentenceAction}
       />
 
       <SpeedSheet visible={sheet === 'speed'} onClose={closeSheet} />

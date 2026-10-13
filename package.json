@@ -17,6 +17,7 @@
     "boot:check": "node scripts/smoke/boot-bundle.mjs",
     "sounds:build": "node scripts/sounds/build-base-pack.mjs",
     "sounds:curate": "node scripts/sounds/freesound-curate.mjs",
+    "sounds:screen": "node scripts/sounds/screen-run.mjs",
     "sounds:build-real": "node scripts/sounds/build-freesound-pack.mjs",
     "sounds:verify": "node scripts/sounds/verify-pack.mjs",
     "sounds:test": "node --test scripts/sounds/*.test.mjs",

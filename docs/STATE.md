@@ -23,7 +23,7 @@ _Last updated: 2026-10-11 (night) by architect_
 - **A4** clean ambience v2: 50+ single-purpose, era-aware beds with AudioSet/CLAP screening (`docs/briefs/A4-clean-ambience-v2.md`). A worker is on it. It replaces A3's contaminated picks (storm with sirens, etc.). **A3 must not ship as is.**
 - **N4** background chapter preparation via a foreground service (dataSync) plus a headless JS task (`react-native-background-actions@4.1.0`, installed). **User-approved 2026-10-13.** Brief `docs/briefs/N4-background-preparation.md`; it starts after N3 lands.
 - **Q1 AAA QA audit: done.** Four reports in `docs/qa/2026-10-13-QA-{A,B,C,D}-*.md`, each spot-verified by the architect. Fix waves:
-  - **F1** player/audio (`docs/briefs/F1-player-audio-fixes.md`): running now (no overlap with N3/A4).
+  - **F1** player/audio: ✅ **accepted**. All 6 P1s fixed, plus P2-1–4, P2-8–12, P2-14, P2-17–18 and the P3s.
   - **F2** UI/a11y, **F3** data integrity (alias spoiler leak, playability, stale translations, ledger, storage, keep paid passages, PDF cap) and **F4** performance (catalogue snapshot writes, DOM re-parsing, N+1 queries, lazy extraction stack): queued after N3 lands, because they overlap its files.
   - **L1 listening model** (per-chapter resume, bookmarks, speed per series): **user-approved 2026-10-13**, the only bigger jump approved for now. Brief `docs/briefs/L1-listening-model.md`; it runs after N3 and F1. The others (gapless media session, real sentence timing, checkpoints, sound packs) are **not approved yet**.
   - Architect size decision: A4 beds are encoded at 48 kbps (24 MB budget).
@@ -229,3 +229,30 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
   - The A1 seam rule is lenient for rhythmic beds (a per-bed p99 limit).
   - Diagnostics' audio probe now decodes 24 beds (measure the time).
   - The 6 AI-generated beds from R5 (fireplace, castle hall, battlefield, gallop, ship deck, temple) need an ElevenLabs paid plan: the user's decision.
+
+## F1 accepted (2026-10-13)
+- **Fixed:**
+  - Auto-advance no longer bounces back, and it **autoplays** the next chapter (architect confirmed: audiobook norm).
+  - Beds follow the transport: a 350 ms debounce then a 600 ms fade, ducking only while the voice plays, the context suspended ~2 s after silence, and the sleep fade covers the beds.
+  - Settings drive ambience: one range, `core/playback/ranges.ts` (level −40…0, ducking 0…24, default 7).
+  - The playback error state with resume.
+  - `final` only on ready/failed, with a "Narration paused" end state.
+  - One sample output, which pauses and resumes the narration.
+  - Load sequence and dispose guards; seek before the segment is ready is kept.
+  - Decoded-bed cache sized by bytes (48 MB).
+  - 4 Hz render isolation.
+  - Follow fallback in the synced text.
+  - Predictive repeat.
+  - Copy per error cause.
+  - Screen-reader actions.
+  - Sleep ticker and "Sleep fading out".
+  - Preview cache capped at 20.
+  - Dead interruption path deleted.
+  - ADR-0002 amendment: `doNotMix` kept.
+- **Evidence:**
+  - Worker: mutation checks on P1-1/2/3/5 and P2-1/3/4.
+  - Architect: typecheck green; F1 scope lint clean; 45 suites, 398 tests green; reverting `app/player.tsx` fails `player-route` (1 failed), restoring it gives 2/2.
+- **Open:**
+  - `estimate.test.ts` fails (N3's area; it predates F1).
+  - P2-10 needs a profiler on a device.
+  - `.cache/` added to the eslint ignores (the A4 venv).

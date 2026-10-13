@@ -8,6 +8,7 @@ import { estimateSpeechSeconds } from '@/core/text/speech-rate';
 
 import { CHAPTER_ID, createFakePorts, mp3Bytes } from '../__fixtures__/fake-ports';
 import { EN_PASSAGE_600, ZH_PASSAGE_600 } from '../__fixtures__/narration-passages';
+import { longText } from '../__fixtures__/pages';
 import { StageFailure } from '../errors';
 import { runChapter } from '../runner';
 
@@ -418,5 +419,50 @@ describe('narrate stage: parallel passages, saved in order', () => {
 
     expect(await measure(GEMINI_NARRATOR_MODEL_ID, ZH_PASSAGE_600)).toBe(3);
     expect(await measure(FREE_NARRATOR_MODEL_ID, ZH_PASSAGE_600)).toBe(1);
+  });
+});
+
+describe('narrate stage: passage counts for the progress line', () => {
+  it('announces zero passages done, then counts each passage as it is saved', async () => {
+    const fake = createFakePorts({ sourceText: longText(12, 250), targetLang: 'en' });
+    const events: PipelineEvent[] = [];
+
+    await runChapter(CHAPTER_ID, fake.ports, { onEvent: (event) => events.push(event) });
+
+    const total = fake.state.segments.get(CHAPTER_ID)?.length ?? 0;
+    const counts = events.flatMap((e) =>
+      e.type === 'progress' && e.stage === 'narrate' && e.passages !== undefined
+        ? [e.passages]
+        : [],
+    );
+    expect(total).toBeGreaterThan(1);
+    expect(counts).toEqual([
+      { done: 0, total },
+      ...Array.from({ length: total }, (_, n) => ({ done: n + 1, total })),
+    ]);
+  });
+
+  it('starts a resumed run at the passages already saved', async () => {
+    const controller = new AbortController();
+    let abortOnce = true;
+    const fake = createFakePorts({
+      sourceText: longText(12, 250),
+      targetLang: 'en',
+      tts: () => {
+        if (abortOnce) {
+          abortOnce = false;
+          controller.abort();
+        }
+        return { bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null };
+      },
+    });
+    await runChapter(CHAPTER_ID, fake.ports, { signal: controller.signal });
+    const saved = fake.state.segments.get(CHAPTER_ID)?.length ?? 0;
+    const events: PipelineEvent[] = [];
+
+    await runChapter(CHAPTER_ID, fake.ports, { onEvent: (event) => events.push(event) });
+
+    const first = events.find((e) => e.type === 'progress' && e.stage === 'narrate');
+    expect(first).toMatchObject({ passages: { done: saved } });
   });
 });

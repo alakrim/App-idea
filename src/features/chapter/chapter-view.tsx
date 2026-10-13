@@ -202,7 +202,9 @@ export function ChapterView({
             ) : null}
             <View
               testID="chapter-reading-text"
-              onLayout={(event: LayoutChangeEvent) => scroll.onReadingLayout(event.nativeEvent.layout.y)}
+              onLayout={(event: LayoutChangeEvent) =>
+                scroll.onReadingLayout(event.nativeEvent.layout.y)
+              }
             >
               <ReadingText
                 paragraphs={paragraphs}

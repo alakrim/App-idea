@@ -42,7 +42,7 @@ export const FREESOUND_TARGETS = [
     names: ['wind', 'field', 'grass', 'meadow'],
     allowsVoices: false,
     screen: {
-      required: [['Wind']],
+      required: [['Wind', 'Wind noise (microphone)']],
       exempt: [],
       clap: 'steady wind through open grassland, no birds, no people',
     },
@@ -54,7 +54,7 @@ export const FREESOUND_TARGETS = [
     names: ['mountain', 'wind', 'ridge'],
     allowsVoices: false,
     screen: {
-      required: [['Wind']],
+      required: [['Wind', 'Wind noise (microphone)']],
       exempt: [],
       clap: 'high mountain wind with cold gusts and a sparse echo',
     },
@@ -126,7 +126,7 @@ export const FREESOUND_TARGETS = [
     names: ['desert', 'sand'],
     allowsVoices: false,
     screen: {
-      required: [['Wind']],
+      required: [['Wind', 'Wind noise (microphone)']],
       exempt: [],
       clap: 'wind hissing over an empty desert of sand, no people',
     },
@@ -138,7 +138,7 @@ export const FREESOUND_TARGETS = [
     names: ['trees', 'wind', 'forest'],
     allowsVoices: false,
     screen: {
-      required: [['Wind', 'Rustling leaves']],
+      required: [['Wind', 'Wind noise (microphone)', 'Rustling leaves']],
       exempt: [],
       clap: 'wind moving through a tall forest canopy, branches creaking, no birds',
     },
@@ -186,7 +186,7 @@ export const FREESOUND_TARGETS = [
     names: ['sea', 'storm', 'waves'],
     allowsVoices: false,
     screen: {
-      required: [['Wind'], ['Ocean', 'Waves, surf', 'Water']],
+      required: [['Wind', 'Wind noise (microphone)'], ['Ocean', 'Waves, surf', 'Water']],
       exempt: [],
       clap: 'a rough sea in strong wind, heavy waves breaking and spray, no thunder',
     },
@@ -271,7 +271,7 @@ export const FREESOUND_TARGETS = [
     names: ['storm', 'wind', 'gust'],
     allowsVoices: false,
     screen: {
-      required: [['Wind']],
+      required: [['Wind', 'Wind noise (microphone)']],
       exempt: [],
       clap: 'gusting storm wind through trees, no thunder, no sirens, no people',
     },
@@ -295,7 +295,7 @@ export const FREESOUND_TARGETS = [
     names: ['blizzard', 'snow', 'wind'],
     allowsVoices: false,
     screen: {
-      required: [['Wind']],
+      required: [['Wind', 'Wind noise (microphone)']],
       exempt: [],
       clap: 'howling blizzard wind, harsh and cold',
     },

@@ -61,6 +61,7 @@ describe('fake engine', () => {
   it('applies the correct beds after a seek across cue boundaries', async () => {
     const engine = createFakeEngine();
     await engine.load(CHAPTER, 0);
+    engine.play();
     engine.seekTo(6000);
     expect(engine.soundingBedIds()).toEqual(['cue-city']);
     engine.seekTo(500);
@@ -68,14 +69,56 @@ describe('fake engine', () => {
     engine.dispose();
   });
 
-  it('ducks the beds while the voice plays and releases when it pauses', async () => {
+  it('ducks the beds while the voice plays, and releases once the beds have faded after a pause', async () => {
     const engine = createFakeEngine();
     await engine.load(CHAPTER, 0);
     engine.play();
     engine.advance(250);
+    expect(engine.duckRamps.at(-1)).toEqual({ gainDb: -7, rampMs: 30 });
     engine.pause();
-    expect(engine.duckRamps.at(-2)).toEqual({ gainDb: -7, rampMs: 30 });
+    engine.advance(900);
+    expect(engine.duckRamps.at(-1)).toEqual({ gainDb: -7, rampMs: 30 });
+    engine.advance(100);
     expect(engine.duckRamps.at(-1)).toEqual({ gainDb: 0, rampMs: 550 });
+    engine.dispose();
+  });
+
+  it('fades the beds out a short delay after a pause, and suspends the clock once they are silent', async () => {
+    const engine = createFakeEngine();
+    await engine.load(CHAPTER, 0);
+    engine.play();
+    expect(engine.soundingBedIds()).toEqual(['cue-rain']);
+    engine.pause();
+    engine.advance(300);
+    expect(engine.soundingBedIds()).toEqual(['cue-rain']);
+    engine.advance(100);
+    expect(engine.soundingBedIds()).toEqual([]);
+    expect(engine.clockSuspended).toBe(false);
+    engine.advance(2600);
+    expect(engine.clockSuspended).toBe(true);
+    engine.dispose();
+  });
+
+  it('applies the sleep volume to the voice and to the master gain of the beds', async () => {
+    const engine = createFakeEngine();
+    await engine.load(CHAPTER, 0);
+    engine.setVolume(0.4);
+    expect(engine.voiceVolume).toBe(0.4);
+    expect(engine.masterGain).toBe(0.4);
+    engine.dispose();
+  });
+
+  it('injects a playback error that the engine reports, until the next load', async () => {
+    const engine = createFakeEngine();
+    const states: string[] = [];
+    engine.onState((s) => states.push(s));
+    await engine.load(CHAPTER, 0);
+    engine.play();
+    engine.injectError('decoder stalled');
+    expect(states.at(-1)).toBe('error');
+
+    await engine.load(CHAPTER, 0);
+    expect(states.at(-1)).toBe('paused');
     engine.dispose();
   });
 

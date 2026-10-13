@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports -- jest.mock factories load the stand-ins with require() */
 import { fireEvent, render, screen } from '@testing-library/react-native';
+import { FlatList } from 'react-native';
 
 import { ThemeProvider } from '@/ui/theme';
 import { palette } from '@/ui/tokens';
@@ -101,5 +102,57 @@ describe('SyncedTextPane', () => {
 
     expect(screen.getByText('Deuxieme phrase.')).toBeOnTheScreen();
     expect(screen.getByText('Sentence 1 of chapter 1.')).toBeOnTheScreen();
+  });
+});
+
+describe('SyncedTextPane follow after a long jump (P2-12)', () => {
+  it('moves to the estimated offset first, then retries the jump to the sentence', async () => {
+    jest.useFakeTimers();
+    const toOffset = jest.spyOn(FlatList.prototype, 'scrollToOffset');
+    const toIndex = jest.spyOn(FlatList.prototype, 'scrollToIndex');
+    try {
+      await renderPane({ currentIdx: 0 });
+      await openPane();
+      toIndex.mockClear();
+
+      await fireEvent(screen.getByTestId('synced-text-list'), 'scrollToIndexFailed', {
+        index: 0,
+        averageItemLength: 240,
+        highestMeasuredFrameIndex: 0,
+      });
+      expect(toOffset).toHaveBeenLastCalledWith({ offset: 0, animated: false });
+      expect(toIndex).not.toHaveBeenCalled();
+
+      jest.advanceTimersByTime(200);
+      expect(toIndex).toHaveBeenCalledWith(expect.objectContaining({ index: 0 }));
+    } finally {
+      toOffset.mockRestore();
+      toIndex.mockRestore();
+      jest.useRealTimers();
+    }
+  });
+});
+
+describe('SyncedTextPane sentence actions (P2-18)', () => {
+  it('offers repeat, copy and save to Vocab to a screen reader, and runs the one chosen', async () => {
+    const onSentenceAction = jest.fn();
+    await renderPane({ onSentenceAction });
+
+    await fireEvent(
+      screen.getByText(/Sentence 2 of chapter/, { includeHiddenElements: true }),
+      'accessibilityAction',
+      {
+        nativeEvent: { actionName: 'saveToVocab' },
+      },
+    );
+
+    expect(onSentenceAction).toHaveBeenCalledWith(2, 'saveToVocab');
+  });
+
+  it('offers no sentence actions when the pane has no handler', async () => {
+    await renderPane();
+
+    const span = screen.getByText(/Sentence 2 of chapter/, { includeHiddenElements: true });
+    expect(span.props.accessibilityActions).toBeUndefined();
   });
 });

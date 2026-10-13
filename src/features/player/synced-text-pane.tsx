@@ -1,6 +1,15 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text as RNText, View } from 'react-native';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text as RNText,
+  View,
+  type AccessibilityActionEvent,
+  type FlatListProps,
+  type ListRenderItemInfo,
+} from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
@@ -26,10 +35,23 @@ import { useFollowPause } from './follow-pause';
 import { PLAYER } from './layout';
 import { useGlide } from './motion';
 
-import type { ListRenderItemInfo } from 'react-native';
-
 /** Velocity (px/s) past which a flick decides the snap, whatever the pane's position. */
 const FLICK_VELOCITY = 500;
+/** How long the list gets to lay out the rows an index jump could not reach. */
+const FOLLOW_RETRY_MS = 120;
+
+/** What a screen reader can ask of a sentence without a long press (P2-18). */
+export type SentenceAction = 'repeat' | 'copy' | 'saveToVocab';
+
+const SENTENCE_ACTIONS: readonly { name: SentenceAction; label: string }[] = [
+  { name: 'repeat', label: 'Repeat sentence' },
+  { name: 'copy', label: 'Copy sentence' },
+  { name: 'saveToVocab', label: 'Save to Vocab' },
+];
+
+function isSentenceAction(name: string): name is SentenceAction {
+  return SENTENCE_ACTIONS.some((action) => action.name === name);
+}
 
 export interface SyncedTextPaneProps {
   paragraphs: readonly Paragraph[];
@@ -46,6 +68,8 @@ export interface SyncedTextPaneProps {
   peekHeight: number;
   onSeekSentence: (idx: number) => void;
   onLongPressSentence: (idx: number) => void;
+  /** Runs a sentence action picked from the screen reader's actions. Omitted, no actions are offered. */
+  onSentenceAction?: (idx: number, action: SentenceAction) => void;
 }
 
 interface ParagraphItem {
@@ -63,19 +87,22 @@ export function displayText(sentence: Sentence): string {
  * The chapter text as a pane you pull up from the bottom. Closed, it shows the sentence being read.
  * Open, it follows the narration and pauses following for 5 s after the listener scrolls by hand.
  * Tap a sentence to seek there; hold it for the sentence actions. Bilingual shows the original under
- * each translation.
+ * each translation. It is memoised: the player passes stable callbacks, so it does not re-render
+ * with the position, only when the sentence in view changes (P2-10).
  */
-export function SyncedTextPane({
-  paragraphs,
-  sentences,
-  availableCount,
-  currentIdx,
-  loopIdx,
-  openHeight,
-  peekHeight,
-  onSeekSentence,
-  onLongPressSentence,
-}: SyncedTextPaneProps) {
+export const SyncedTextPane = memo(function SyncedTextPane(props: SyncedTextPaneProps) {
+  const {
+    paragraphs,
+    sentences,
+    availableCount,
+    currentIdx,
+    loopIdx,
+    openHeight,
+    peekHeight,
+    onSeekSentence,
+    onLongPressSentence,
+    onSentenceAction,
+  } = props;
   const { colors } = useTheme();
   const { springTo } = useMotion();
   const collapsedOffset = openHeight - peekHeight;
@@ -84,7 +111,15 @@ export function SyncedTextPane({
   const offset = useSharedValue(collapsedOffset);
   const startOffset = useSharedValue(collapsedOffset);
   const listRef = useRef<FlatList<ParagraphItem>>(null);
+  const retryRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const follow = useFollowPause(PLAYER.autoScrollPauseMs);
+
+  useEffect(
+    () => () => {
+      if (retryRef.current !== null) clearTimeout(retryRef.current);
+    },
+    [],
+  );
 
   const snap = useCallback(
     (nextOpen: boolean) => {
@@ -165,6 +200,27 @@ export function SyncedTextPane({
     });
   }, [currentIdx, follow.paused, open, paragraphOf]);
 
+  /**
+   * A jump to a row the list has not measured yet fails. Move to the estimated offset first, which
+   * brings the row into the measured range, then try the jump again (P2-12). Without this the
+   * text stopped following after a long seek.
+   */
+  const onScrollToIndexFailed: FlatListProps<ParagraphItem>['onScrollToIndexFailed'] = (info) => {
+    listRef.current?.scrollToOffset({
+      offset: info.averageItemLength * info.index,
+      animated: false,
+    });
+    if (retryRef.current !== null) clearTimeout(retryRef.current);
+    retryRef.current = setTimeout(() => {
+      retryRef.current = null;
+      listRef.current?.scrollToIndex({
+        index: info.index,
+        viewPosition: PLAYER.followAnchor,
+        animated: true,
+      });
+    }, FOLLOW_RETRY_MS);
+  };
+
   const renderItem = ({ item }: ListRenderItemInfo<ParagraphItem>) => (
     <ParagraphView
       paragraph={item.paragraph}
@@ -175,6 +231,7 @@ export function SyncedTextPane({
       bilingual={bilingual}
       onSeek={onSeekSentence}
       onLongPress={onLongPressSentence}
+      onAction={onSentenceAction}
     />
   );
 
@@ -251,6 +308,7 @@ export function SyncedTextPane({
       <View style={styles.listWrap}>
         <FlatList
           ref={listRef}
+          testID="synced-text-list"
           data={items}
           renderItem={renderItem}
           keyExtractor={(item) => item.key}
@@ -259,7 +317,7 @@ export function SyncedTextPane({
           accessibilityElementsHidden={!open}
           importantForAccessibility={open ? 'auto' : 'no-hide-descendants'}
           onScrollBeginDrag={follow.pause}
-          onScrollToIndexFailed={() => undefined}
+          onScrollToIndexFailed={onScrollToIndexFailed}
           scrollEnabled={open}
         />
         <LinearGradient
@@ -270,7 +328,7 @@ export function SyncedTextPane({
       </View>
     </Animated.View>
   );
-}
+});
 
 interface SentenceProps {
   sentence: Sentence;
@@ -279,12 +337,25 @@ interface SentenceProps {
   availableCount: number;
   onSeek: (idx: number) => void;
   onLongPress: (idx: number) => void;
+  onAction?: (idx: number, action: SentenceAction) => void;
 }
 
 interface ParagraphViewProps extends Omit<SentenceProps, 'sentence'> {
   paragraph: Paragraph;
   sentences: readonly Sentence[];
   bilingual: boolean;
+}
+
+/** The screen-reader actions for a sentence, or none when the pane has no action handler. */
+function sentenceAccessibility(onAction: SentenceProps['onAction'], idx: number) {
+  if (!onAction) return {};
+  return {
+    accessibilityActions: SENTENCE_ACTIONS,
+    onAccessibilityAction: (event: AccessibilityActionEvent) => {
+      const { actionName: name } = event.nativeEvent;
+      if (isSentenceAction(name)) onAction(idx, name);
+    },
+  };
 }
 
 function ParagraphView(props: ParagraphViewProps) {
@@ -332,6 +403,7 @@ function SentenceSpan({
   availableCount,
   onSeek,
   onLongPress,
+  onAction,
 }: SentenceProps) {
   const { colors } = useTheme();
   const isCurrent = sentence.idx === currentIdx;
@@ -339,6 +411,8 @@ function SentenceSpan({
   const available = sentence.idx < availableCount;
   return (
     <RNText
+      accessibilityRole="button"
+      {...sentenceAccessibility(onAction, sentence.idx)}
       onPress={available ? () => onSeek(sentence.idx) : undefined}
       onLongPress={() => onLongPress(sentence.idx)}
       style={[
@@ -360,6 +434,7 @@ function SentenceBlock({
   availableCount,
   onSeek,
   onLongPress,
+  onAction,
 }: SentenceProps) {
   const { colors } = useTheme();
   const isCurrent = sentence.idx === currentIdx;
@@ -373,6 +448,7 @@ function SentenceBlock({
       accessibilityRole="button"
       accessibilityLabel={displayText(sentence)}
       accessibilityState={{ selected: isCurrent }}
+      {...sentenceAccessibility(onAction, sentence.idx)}
       onPress={available ? () => onSeek(sentence.idx) : undefined}
       onLongPress={() => onLongPress(sentence.idx)}
       style={styles.block}

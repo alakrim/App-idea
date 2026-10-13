@@ -2,15 +2,17 @@
  * A serial queue of chapters. One chapter runs at a time, in queue order. The user can move a
  * pending chapter or cancel one. The queue is persisted through the JobStore, so it resumes after an
  * app restart: the chapter that was running is first in the restored queue, and its jobs resume.
+ * While a chapter runs, a stall watchdog watches for a chapter that stops moving: the first stalls
+ * retire its requests in flight, and a stall beyond MAX_STALLS fails the chapter, keeping its saved
+ * passages.
  */
-import type { Clock } from './ports';
 import { toPipelineError } from './errors';
 import { runChapter } from './runner';
 import { MAX_STALLS, STALLED_ERROR, StallWatchdog } from './stall-watchdog';
 
 import type { PipelineError, Stage } from '../domain';
 import type { PipelineEvent } from './context';
-import type { NetworkEvent, PersistedQueueItem, PipelinePorts } from './ports';
+import type { Clock, NetworkEvent, PersistedQueueItem, PipelinePorts } from './ports';
 import type { RunOptions, RunOutcome } from './runner';
 
 /** Per-chapter options. They are persisted with the queue, so a restored chapter keeps them. */

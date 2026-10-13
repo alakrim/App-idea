@@ -1,11 +1,10 @@
-import { createConnection } from '../network/connection';
-
 import { chatJson, chatRaw, chatText } from './chat';
 import { validateKey } from './key';
 import { createModelCatalog } from './models';
 import { parsePdf } from './pdf';
 import { synthesizeSpeech } from './speech';
 import { createTransport } from './transport';
+import { createConnection } from '../network/connection';
 
 import type {
   ChatJsonInput,
@@ -15,11 +14,11 @@ import type {
   ChatTextInput,
   ChatTextResult,
 } from './chat';
-import type { Connection } from '../network/connection';
 import type { KeyCheck } from './key';
 import type { ModelCatalog } from './models';
 import type { PdfInput, PdfResult } from './pdf';
 import type { SpeechInput, SpeechResult } from './speech';
+import type { Connection } from '../network/connection';
 
 export interface OpenRouterClientOptions {
   /** Returns the user's key, or null when none is saved. Called before every request. */

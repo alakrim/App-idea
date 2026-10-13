@@ -3,6 +3,7 @@ import { type StoreApi, type UseBoundStore, create } from 'zustand';
 import type { AudioEngine, ChapterLoad, LoadedSegment, PlaybackState } from '@/audio/engine';
 import type { PlaybackPoint } from '@/core/domain/library';
 import { createPositionSaver } from '@/core/playback/position-saver';
+import { PLAYBACK_RATE_RANGE, isInRange } from '@/core/playback/ranges';
 import {
   END_OF_CHAPTER_SLEEP_TIMER,
   SLEEP_TIMER_OFF,
@@ -10,25 +11,13 @@ import {
   minutesSleepTimer,
   sleepPhase,
 } from '@/core/playback/sleep-timer';
+import { systemTimers, type TimerPort } from '@/core/playback/timers';
 
 export const SLEEP_TICK_MS = 250;
 export const POSITION_SAVE_WINDOW_MS = 5000;
-const MIN_RATE = 0.5;
-const MAX_RATE = 2;
 
-export interface PlayerTimers {
-  setTimeout(callback: () => void, ms: number): unknown;
-  clearTimeout(handle: unknown): void;
-  setInterval(callback: () => void, ms: number): unknown;
-  clearInterval(handle: unknown): void;
-}
-
-const systemTimers: PlayerTimers = {
-  setTimeout: (callback, ms) => setTimeout(callback, ms),
-  clearTimeout: (handle) => clearTimeout(handle as ReturnType<typeof setTimeout>),
-  setInterval: (callback, ms) => setInterval(callback, ms),
-  clearInterval: (handle) => clearInterval(handle as ReturnType<typeof setInterval>),
-};
+/** The timers the store schedules its sleep fade and position saves with. */
+export type PlayerTimers = TimerPort;
 
 export interface NowPlaying {
   chapterId: string;
@@ -104,9 +93,16 @@ export function createPlayerStore(deps: PlayerStoreDeps): PlayerStore {
 
   let durationMs = 0;
   let final = true;
+  /** Wakes the sleep fade when a minutes timer's fade starts. Idle until then. */
+  let sleepArm: unknown = null;
+  /** Ticks the fade, only while it runs. */
   let sleepTicker: unknown = null;
 
   function stopSleepTicker(): void {
+    if (sleepArm !== null) {
+      timers.clearTimeout(sleepArm);
+      sleepArm = null;
+    }
     if (sleepTicker !== null) {
       timers.clearInterval(sleepTicker);
       sleepTicker = null;
@@ -119,12 +115,21 @@ export function createPlayerStore(deps: PlayerStoreDeps): PlayerStore {
     store.setState({ sleepTimer: SLEEP_TIMER_OFF });
   }
 
+  /**
+   * Applies the sleep timer at this moment: the fade gain, or the pause. A minutes timer fades on
+   * its own ticker from the moment it is due. An end-of-chapter timer is checked on each position
+   * update, because the chapter length it needs moves as narration arrives.
+   */
   function sleepTick(): void {
     const { sleepTimer, positionMs } = store.getState();
+    if (sleepTimer.mode === 'off') return;
     const remainingChapterMs = final ? durationMs - positionMs : null;
     const phase = sleepPhase(sleepTimer, now(), remainingChapterMs);
     if (phase.kind === 'fading') {
       engine.setVolume(phase.gain);
+      if (sleepTimer.mode === 'minutes' && sleepTicker === null) {
+        sleepTicker = timers.setInterval(sleepTick, SLEEP_TICK_MS);
+      }
     } else if (phase.kind === 'pause') {
       engine.pause();
       endSleepTimer();
@@ -134,6 +139,7 @@ export function createPlayerStore(deps: PlayerStoreDeps): PlayerStore {
   const unsubscribes = [
     engine.onPosition(({ positionMs, sentenceIdx }) => {
       store.setState({ positionMs, sentenceIdx });
+      if (store.getState().sleepTimer.mode === 'endOfChapter') sleepTick();
       const chapter = store.getState().nowPlaying;
       if (chapter && sentenceIdx >= 0) {
         saver.push({
@@ -199,8 +205,10 @@ export function createPlayerStore(deps: PlayerStoreDeps): PlayerStore {
     },
 
     setRate(rate) {
-      if (!(rate >= MIN_RATE && rate <= MAX_RATE)) {
-        throw new RangeError(`rate must be between ${MIN_RATE} and ${MAX_RATE}, got ${rate}`);
+      if (!isInRange(rate, PLAYBACK_RATE_RANGE)) {
+        throw new RangeError(
+          `rate must be between ${PLAYBACK_RATE_RANGE.min} and ${PLAYBACK_RATE_RANGE.max}, got ${rate}`,
+        );
       }
       engine.setRate(rate);
       store.setState({ rate });
@@ -215,9 +223,16 @@ export function createPlayerStore(deps: PlayerStoreDeps): PlayerStore {
         request.mode === 'minutes'
           ? minutesSleepTimer(now(), request.minutes)
           : END_OF_CHAPTER_SLEEP_TIMER;
+      stopSleepTicker();
       store.setState({ sleepTimer: timer });
-      if (sleepTicker === null) {
-        sleepTicker = timers.setInterval(sleepTick, SLEEP_TICK_MS);
+      if (timer.mode === 'minutes' && timer.endsAt !== null) {
+        sleepArm = timers.setTimeout(
+          () => {
+            sleepArm = null;
+            sleepTick();
+          },
+          Math.max(0, timer.endsAt - now()),
+        );
       }
     },
 

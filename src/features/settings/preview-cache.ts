@@ -3,6 +3,8 @@ import { File } from 'expo-file-system';
 import type { StorableAudio } from '@/core/narration/formats';
 import { previewsDirectory, writeBytes } from '@/services/storage';
 
+import type { Directory } from 'expo-file-system';
+
 /**
  * Preview audio lives in the previews/ library directory, keyed by previewCacheKey(). MP3 clips
  * keep the `.mp3` name and WAV clips (PCM and WAV narrators) the `.wav` one. A consent marker in
@@ -12,6 +14,8 @@ import { previewsDirectory, writeBytes } from '@/services/storage';
 
 const CONSENT_FILE_NAME = 'paid-preview-consent';
 const EXTENSIONS = ['mp3', 'wav'] as const;
+/** Clips kept on the phone. The newest are kept; older ones are synthesized again if asked for (P3). */
+export const PREVIEW_CACHE_LIMIT = 20;
 
 function previewFile(key: string, extension: (typeof EXTENSIONS)[number]): File {
   return new File(previewsDirectory(), `${key}.${extension}`);
@@ -30,11 +34,29 @@ export function cachedPreview(key: string): File | null {
   return null;
 }
 
-/** Saves a clip under the key, in the container it is stored in. */
+/** Saves a clip under the key, in the container it is stored in, then trims the cache. */
 export function savePreview(key: string, audio: StorableAudio): File {
   const file = previewFile(key, audio.mime === 'audio/wav' ? 'wav' : 'mp3');
   writeBytes(file, audio.bytes);
+  prunePreviews(previewsDirectory());
   return file;
+}
+
+/**
+ * Deletes all but the `keep` newest clips in the directory. The consent marker is not a clip and is
+ * never removed. A failure leaves the cache as it is, because a clip can always be made again.
+ */
+export function prunePreviews(directory: Directory, keep: number = PREVIEW_CACHE_LIMIT): void {
+  try {
+    const clips = directory
+      .list()
+      .filter((entry) => EXTENSIONS.some((extension) => entry.name.endsWith(`.${extension}`)))
+      .map((entry) => ({ entry, modified: entry.info().modificationTime ?? 0 }))
+      .sort((a, b) => b.modified - a.modified);
+    for (const { entry } of clips.slice(keep)) entry.delete();
+  } catch {
+    // Pruning is housekeeping. The next save tries again.
+  }
 }
 
 export function hasPaidPreviewConsent(): boolean {

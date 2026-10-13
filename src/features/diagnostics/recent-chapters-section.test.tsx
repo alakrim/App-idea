@@ -67,9 +67,7 @@ describe('RecentChaptersSection', () => {
   it('shows the last activity and the stall and stale-abort counts of a stage that moved', async () => {
     await renderThemed(<RecentChaptersSection result={resultWith([CHAPTER])} />);
 
-    expect(
-      screen.getByText('last activity 14:02:11 · 1 stall · 2 stale aborts'),
-    ).toBeOnTheScreen();
+    expect(screen.getByText('last activity 14:02:11 · 1 stall · 2 stale aborts')).toBeOnTheScreen();
   });
 
   it('names a chapter with no title', async () => {
@@ -93,18 +91,22 @@ describe('activityText', () => {
   });
 
   it('leaves out a count that is zero, and uses the singular for one', () => {
-    expect(activityText({ ...base, lastActivityAt: LAST_ACTIVITY, stallCount: 0, staleAbortCount: 1 })).toBe(
-      'last activity 14:02:11 · 1 stale abort',
-    );
-    expect(activityText({ ...base, lastActivityAt: LAST_ACTIVITY, stallCount: 1, staleAbortCount: 0 })).toBe(
-      'last activity 14:02:11 · 1 stall',
-    );
+    expect(
+      activityText({ ...base, lastActivityAt: LAST_ACTIVITY, stallCount: 0, staleAbortCount: 1 }),
+    ).toBe('last activity 14:02:11 · 1 stale abort');
+    expect(
+      activityText({ ...base, lastActivityAt: LAST_ACTIVITY, stallCount: 1, staleAbortCount: 0 }),
+    ).toBe('last activity 14:02:11 · 1 stall');
   });
 });
 
 describe('stageText', () => {
   it('shows the status with the time when there is one, and the status alone when there is not', () => {
-    expect(stageText({ stage: 'narrate', status: 'done', seconds: 12.34 })).toBe('done · 12.3 s');
-    expect(stageText({ stage: 'analyze', status: 'skipped', seconds: null })).toBe('skipped');
+    expect(stageText({ stage: 'narrate', status: 'done', seconds: 12.34, ...NO_ACTIVITY })).toBe(
+      'done · 12.3 s',
+    );
+    expect(stageText({ stage: 'analyze', status: 'skipped', seconds: null, ...NO_ACTIVITY })).toBe(
+      'skipped',
+    );
   });
 });

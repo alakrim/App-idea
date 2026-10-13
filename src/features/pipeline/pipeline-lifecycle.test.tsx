@@ -8,11 +8,12 @@ import type { PipelineEvent } from '@/core/pipeline/context';
 import type { QueueSnapshot } from '@/core/pipeline/queue';
 import { createTestDb } from '@/db/__fixtures__/test-db';
 import { DbContext } from '@/db/hooks';
+import { settingsStore } from '@/features/settings/settings-store';
 import type { PipelineRuntime } from '@/services/pipeline';
 import { ThemeProvider } from '@/ui/theme';
 import { ToastProvider } from '@/ui/toast';
 
-import { PipelineLifecycle } from './pipeline-lifecycle';
+import { BACKGROUND_NOTICE, PipelineLifecycle } from './pipeline-lifecycle';
 import { PipelineProvider } from './pipeline-provider';
 
 import type { ReactElement } from 'react';
@@ -50,7 +51,7 @@ const RUNNING: QueueSnapshot = { running: CHAPTER, pending: [] };
 
 /** A runtime whose queue and events the test drives by hand. */
 function fakeRuntime() {
-  let snapshotListener: ((snapshot: QueueSnapshot) => void) | null = null;
+  const snapshotListeners = new Set<(snapshot: QueueSnapshot) => void>();
   let eventListener: ((event: PipelineEvent) => void) | null = null;
   let paused = false;
   const runtime = {
@@ -62,9 +63,9 @@ function fakeRuntime() {
     isPaused: () => paused,
     idle: () => Promise.resolve(),
     subscribeQueue: (listener: (snapshot: QueueSnapshot) => void) => {
-      snapshotListener = listener;
+      snapshotListeners.add(listener);
       return () => {
-        snapshotListener = null;
+        snapshotListeners.delete(listener);
       };
     },
     subscribeEvents: (listener: (event: PipelineEvent) => void) => {
@@ -81,7 +82,7 @@ function fakeRuntime() {
     },
     queue: async (snapshot: QueueSnapshot) => {
       await act(async () => {
-        snapshotListener?.(snapshot);
+        for (const listener of snapshotListeners) listener(snapshot);
       });
     },
     event: async (event: PipelineEvent) => {
@@ -175,5 +176,88 @@ describe('PipelineLifecycle', () => {
       view.rerender(tree(fake.runtime, db));
     });
     expect(fake.runtime.resume).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('PipelineLifecycle: the background notice', () => {
+  /** The AppState listeners the lifecycle has subscribed, by subscription. */
+  let listeners: Map<object, (state: string) => void>;
+
+  function changeAppState(state: string): Promise<void> {
+    return act(async () => {
+      for (const listener of [...listeners.values()]) listener(state);
+    });
+  }
+
+  beforeEach(() => {
+    listeners = new Map();
+    jest.spyOn(AppState, 'addEventListener').mockImplementation((_type, listener) => {
+      const subscription = {};
+      listeners.set(subscription, listener as (state: string) => void);
+      return {
+        remove: () => {
+          listeners.delete(subscription);
+        },
+      } as ReturnType<typeof AppState.addEventListener>;
+    });
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  async function mountWithSettings(fake: ReturnType<typeof fakeRuntime>) {
+    const { db } = await mount(fake.runtime);
+    settingsStore.hydrate(db);
+    return db;
+  }
+
+  it('shows the notice when the app is left while a chapter is being prepared, and only then', async () => {
+    const fake = fakeRuntime();
+    await mountWithSettings(fake);
+    await fake.queue(RUNNING);
+
+    await changeAppState('background');
+    await changeAppState('active');
+
+    expect(screen.getByText(BACKGROUND_NOTICE)).toBeTruthy();
+    expect(settingsStore.getSettings().backgroundNoticeShown).toBe(true);
+  });
+
+  it('shows it once: a later return with work in flight stays quiet', async () => {
+    const fake = fakeRuntime();
+    await mountWithSettings(fake);
+    await fake.queue(RUNNING);
+    await changeAppState('background');
+    await changeAppState('active');
+    const patch = jest.spyOn(settingsStore, 'patch');
+
+    await changeAppState('background');
+    await changeAppState('active');
+
+    expect(patch).not.toHaveBeenCalled();
+  });
+
+  it('stays quiet when nothing was being prepared', async () => {
+    const fake = fakeRuntime();
+    await mountWithSettings(fake);
+    await fake.queue(IDLE);
+
+    await changeAppState('background');
+    await changeAppState('active');
+
+    expect(screen.queryByText(BACKGROUND_NOTICE)).toBeNull();
+    expect(settingsStore.getSettings().backgroundNoticeShown).toBe(false);
+  });
+
+  it('counts a chapter waiting in the queue as work in flight', async () => {
+    const fake = fakeRuntime();
+    await mountWithSettings(fake);
+    await fake.queue({ running: null, pending: [CHAPTER] });
+
+    await changeAppState('background');
+    await changeAppState('active');
+
+    expect(screen.getByText(BACKGROUND_NOTICE)).toBeTruthy();
   });
 });

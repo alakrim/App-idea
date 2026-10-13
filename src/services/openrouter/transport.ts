@@ -1,10 +1,9 @@
-import { untilAborted } from '../network/abort';
-import { createConnection } from '../network/connection';
-
 import { failureFromHttp } from './error-mapping';
 import { PipelineFailure, pipelineFailure, redactFailure } from './errors';
 import { isDailyLimit } from './rate-limit';
 import { backoffDelayMs, parseRetryAfter } from './retry';
+import { untilAborted } from '../network/abort';
+import { createConnection } from '../network/connection';
 
 import type { Connection } from '../network/connection';
 import type { ZodType } from 'zod';
@@ -132,11 +131,13 @@ async function withRetries<T>(
   apiKey: string,
   readBody: BodyReader<T>,
 ): Promise<T> {
-  for (let attempt = 0; ; ) {
+  let attempt = 0;
+  for (;;) {
     try {
       return await attemptOnce(config, req, apiKey, readBody);
     } catch (error) {
       const failure = asFailure(error);
+      // A retired attempt is retried at once: it is not a server failure, so it spends no retry.
       if (failure.stale) continue;
       if (!failure.error.retryable || attempt >= config.maxRetries) throw failure;
       const delay = backoffDelayMs(attempt, config.random, failure.retryAfterMs);

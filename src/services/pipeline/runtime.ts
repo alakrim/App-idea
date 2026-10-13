@@ -11,9 +11,9 @@ import type { QueueSnapshot } from '@/core/pipeline/queue';
 import { settingsRepo } from '@/db/repos/settings-repo';
 import type { Db } from '@/db/types';
 import type { PipelineFacade } from '@/features/pipeline/facade';
-import type { OpenRouterClient } from '@/services/openrouter';
 import { createConnection } from '@/services/network/connection';
 import type { Connection } from '@/services/network/connection';
+import type { OpenRouterClient } from '@/services/openrouter';
 
 import { createAudioFiles } from './adapters/audio-files';
 import { createCatalog } from './adapters/catalog';

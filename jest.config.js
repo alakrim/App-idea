@@ -40,6 +40,7 @@ module.exports = {
       displayName: 'node',
       testEnvironment: 'node',
       testMatch: [
+        '<rootDir>/src/services/network/**/*.test.ts',
         '<rootDir>/src/services/openrouter/**/*.test.ts',
         '<rootDir>/src/services/pipeline/**/*.test.ts',
         '<rootDir>/src/db/**/*.test.ts',
@@ -70,6 +71,7 @@ module.exports = {
       testPathIgnorePatterns: [
         '/node_modules/',
         '<rootDir>/src/core/',
+        '<rootDir>/src/services/network/',
         '<rootDir>/src/services/openrouter/',
         '<rootDir>/src/services/pipeline/',
         '<rootDir>/src/db/',

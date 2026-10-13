@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { LangSchema, NarrationProfileSchema } from './domain';
-import { BED_LEVEL_RANGE_DB, DUCKING_RANGE_DB, PLAYBACK_RATE_RANGE } from './playback/ranges';
+import { BED_LEVEL_RANGE_DB, DUCKING_RANGE_DB } from './playback/ranges';
 
 /** OpenRouter model ids look like `vendor/model`, optionally with a `:variant` suffix. */
 export const ModelIdSchema = z
@@ -42,8 +42,6 @@ export const SettingsSchema = z.object({
   narration: NarrationSettingsSchema,
   ambience: AmbienceSettingsSchema,
   reading: ReadingSettingsSchema,
-  /** The listening speed, kept across launches. */
-  playbackRate: z.number().min(PLAYBACK_RATE_RANGE.min).max(PLAYBACK_RATE_RANGE.max),
   onboardingDone: z.boolean(),
   contentNoticeAccepted: z.boolean(),
   /** Set once the app has told the user that chapter preparation pauses in the background. */

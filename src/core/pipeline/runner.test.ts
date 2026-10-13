@@ -469,3 +469,61 @@ describe('runChapter: job timing', () => {
     expect(job?.finishedAt).not.toBeNull();
   });
 });
+
+describe('runChapter: a run its owner stops', () => {
+  it('fails the chapter with the owner’s error instead of reporting a cancellation', async () => {
+    const controller = new AbortController();
+    const stopError = {
+      code: 'NETWORK' as const,
+      message: 'Lectio lost its connection while preparing this chapter.',
+      retryable: true,
+    };
+    let stopped: typeof stopError | null = null;
+    const fake = createFakePorts({
+      sourceText: longText(12, 250),
+      targetLang: 'en',
+      // The owner gives up while the first passage is being narrated, and the call honours the abort.
+      tts: (_text, _profile, signal) => {
+        const aborted = new Promise<never>((_resolve, reject) => {
+          signal.addEventListener('abort', () =>
+            reject(Object.assign(new Error('aborted'), { name: 'AbortError' })),
+          );
+        });
+        stopped = stopError;
+        controller.abort();
+        return aborted;
+      },
+    });
+    const { events, onEvent } = recorder();
+
+    const outcome = await runChapter(CHAPTER_ID, fake.ports, {
+      signal: controller.signal,
+      stopped: () => stopped,
+      onEvent,
+    });
+
+    expect(outcome).toEqual({ status: 'failed', stage: 'narrate', error: stopError });
+    expect(fake.chapter().status).toBe('failed');
+    expect(fake.job('narrate')?.status).toBe('failed');
+    expect(events).toContainEqual({
+      type: 'error',
+      chapterId: CHAPTER_ID,
+      stage: 'narrate',
+      error: stopError,
+    });
+    expect(events.some((e) => e.type === 'error' && e.error.code === 'CANCELLED')).toBe(false);
+  });
+
+  it('still reports a plain cancellation as cancelled when the owner has no error to give', async () => {
+    const controller = new AbortController();
+    controller.abort();
+    const fake = createFakePorts({ sourceText: PASTED });
+
+    const outcome = await runChapter(CHAPTER_ID, fake.ports, {
+      signal: controller.signal,
+      stopped: () => null,
+    });
+
+    expect(outcome.status).toBe('cancelled');
+  });
+});

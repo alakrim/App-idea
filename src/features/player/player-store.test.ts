@@ -239,6 +239,20 @@ describe('player store: sleep timer', () => {
     store.dispose();
   });
 
+  it('does not tick until the fade is due, then ticks only while it fades', async () => {
+    const { store, run, clock } = setup();
+    await store.load({ ...CHAPTER, segments: LONG_SEGMENTS }, 0);
+    store.play();
+    store.setSleepTimer({ mode: 'minutes', minutes: 1 });
+
+    run(59_000);
+    expect(clock.intervalCount()).toBe(0);
+
+    run(1000);
+    expect(clock.intervalCount()).toBe(1);
+    store.dispose();
+  });
+
   it('pauses at the end of the chapter with an end-of-chapter timer', async () => {
     const { store, engine, run } = setup();
     await store.load({ ...CHAPTER, segments: LONG_SEGMENTS }, 0);

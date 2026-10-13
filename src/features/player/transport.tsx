@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View, type AccessibilityActionEvent } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { impactHaptic } from '@/ui/haptics';
@@ -35,7 +35,7 @@ export function Transport({ playing, busy, onTogglePlay, onSkip, onSentence }: T
         onPress={() => onSkip(-BACK_MS)}
         onLongPress={() => onSentence('previous')}
       />
-      <PlayButton playing={playing} busy={busy} onPress={onTogglePlay} />
+      <PlayButton playing={playing} busy={busy} onPress={onTogglePlay} onSentence={onSentence} />
       <SkipButton
         label="Forward 30 seconds"
         hint="Hold to go to the next sentence"
@@ -93,9 +93,16 @@ interface PlayButtonProps {
   playing: boolean;
   busy: boolean;
   onPress: () => void;
+  onSentence: (direction: 'next' | 'previous') => void;
 }
 
-function PlayButton({ playing, busy, onPress }: PlayButtonProps) {
+/** Screen readers step by sentence from this button, since the long press is invisible to them (P2-18). */
+const SENTENCE_STEP_ACTIONS = [
+  { name: 'previous', label: 'Previous sentence' },
+  { name: 'next', label: 'Next sentence' },
+] as const;
+
+function PlayButton({ playing, busy, onPress, onSentence }: PlayButtonProps) {
   const { colors } = useTheme();
   const { animatedStyle, onPressIn, onPressOut } = usePressScale();
   const Icon: LucideIcon = playing ? Pause : Play;
@@ -107,6 +114,11 @@ function PlayButton({ playing, busy, onPress }: PlayButtonProps) {
         accessibilityRole="button"
         accessibilityLabel={label}
         accessibilityState={{ busy, disabled: false }}
+        accessibilityActions={SENTENCE_STEP_ACTIONS}
+        onAccessibilityAction={(event: AccessibilityActionEvent) => {
+          const { actionName: name } = event.nativeEvent;
+          if (name === 'previous' || name === 'next') onSentence(name);
+        }}
         onPress={() => {
           impactHaptic();
           onPress();

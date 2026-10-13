@@ -5,7 +5,6 @@
 import { getOpenRouter } from '@/app-shell/openrouter-provider';
 import { getDatabase } from '@/db/client';
 import type { Db } from '@/db/types';
-
 import { getAppConnection } from '@/services/network/app-connection';
 
 import { createExpoLibraryFiles } from './expo-library-files';

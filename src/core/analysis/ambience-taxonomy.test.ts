@@ -94,7 +94,8 @@ describe('ambience taxonomy integrity', () => {
 
   it('keeps every mustNotContain list clean: trimmed, lower case, non-empty and without duplicates', () => {
     for (const c of AMBIENCE_CATEGORIES) {
-      const clean = c.mustNotContain.every((item) => item === item.trim().toLowerCase() && item !== '');
+      const items: readonly string[] = c.mustNotContain;
+      const clean = items.every((item) => item === item.trim().toLowerCase() && item !== '');
       const unique = new Set(c.mustNotContain).size === c.mustNotContain.length;
       expect({ id: c.id, clean, unique }).toEqual({ id: c.id, clean: true, unique: true });
     }

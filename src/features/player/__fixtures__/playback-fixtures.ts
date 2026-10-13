@@ -7,12 +7,19 @@ import type {
   Sentence,
   Series,
 } from '@/core/domain';
+import type { VirtualTimers } from '@/core/playback/timers';
 import type { ChapterForPlayback } from '@/db/repos/playback-repo';
 import type { ChapterProgress, PipelineFacade } from '@/features/pipeline/facade';
 
-import { createPlaybackController, type PlaybackController } from '../playback-controller';
+import {
+  createPlaybackController,
+  type AmbiencePort,
+  type AmbienceSettings,
+  type PlaybackController,
+} from '../playback-controller';
 
 import type { PlaybackData } from '../playback-data';
+import type { SampleOutput, SampleRequest } from '../sample-output';
 
 export const SERIES_ID = 'S';
 export const PROFILE = 'P';
@@ -121,7 +128,7 @@ export function fixtureChapter(
 export function createData(fixture: Fixture): PlaybackData {
   return {
     loadChapter: (chapterId) => fixture.chapters.get(chapterId) ?? null,
-    currentPoint: () => fixture.current,
+    currentPoint: () => fixture.saved.at(-1) ?? fixture.current,
     nextReadyChapterId(_seriesId, afterOrder) {
       const next = [...fixture.chapters.values()]
         .filter((c) => c.chapter.order > afterOrder && c.chapter.status === 'ready')
@@ -169,6 +176,74 @@ export function fakePipeline() {
   };
 }
 
+/** The saved ambience settings, as a port. `write` notifies subscribers, like the settings store. */
+export function fakeAmbience(initial: AmbienceSettings = DEFAULT_AMBIENCE) {
+  let current = initial;
+  const listeners = new Set<(next: AmbienceSettings) => void>();
+  const written: AmbienceSettings[] = [];
+  const port: AmbiencePort = {
+    read: () => current,
+    write(next) {
+      current = next;
+      written.push(next);
+      for (const listener of [...listeners]) listener(next);
+    },
+    subscribe(listener) {
+      listeners.add(listener);
+      return () => {
+        listeners.delete(listener);
+      };
+    },
+  };
+  return {
+    port,
+    written,
+    /** Changes the saved settings from outside the player, as the settings screen does. */
+    saveFromSettings(next: AmbienceSettings) {
+      port.write(next);
+    },
+    /** Changes the saved settings without telling subscribers, as a missed update would. */
+    saveSilently(next: AmbienceSettings) {
+      current = next;
+    },
+  };
+}
+
+export const DEFAULT_AMBIENCE: AmbienceSettings = { enabled: true, levelDb: -22, duckingDb: 7 };
+
+/** A sample output that records what was asked to play. `finish` ends the playing sample. */
+export function fakeSamples() {
+  const requests: SampleRequest[] = [];
+  let current: (() => void) | null = null;
+  let stops = 0;
+  const output: SampleOutput = {
+    play(request, onEnd) {
+      requests.push(request);
+      current = onEnd;
+    },
+    stop() {
+      stops += 1;
+      current = null;
+    },
+    dispose() {
+      current = null;
+    },
+  };
+  return {
+    output,
+    requests,
+    get stops() {
+      return stops;
+    },
+    /** The playing sample reaches its end on its own. */
+    finish() {
+      const end = current;
+      current = null;
+      end?.();
+    },
+  };
+}
+
 /** No real timers: position saves in these tests flush on pause and on end. */
 export const NO_TIMERS = {
   setTimeout: () => 0,
@@ -177,9 +252,15 @@ export const NO_TIMERS = {
   clearInterval: () => undefined,
 };
 
+export interface SetupOptions {
+  /** Virtual timers for the controller. By default they never fire, as before. */
+  timers?: VirtualTimers;
+}
+
 export function setupController(
   chapters: ChapterForPlayback[],
   current: PlaybackPoint | null = null,
+  options: SetupOptions = {},
 ) {
   const fixture: Fixture = {
     chapters: new Map(chapters.map((c) => [c.chapter.id, c])),
@@ -188,13 +269,17 @@ export function setupController(
   };
   const engine: FakeAudioEngine = createFakeEngine();
   const pipe = fakePipeline();
+  const ambience = fakeAmbience();
+  const samples = fakeSamples();
   const controller: PlaybackController = createPlaybackController({
     data: createData(fixture),
     engine,
     pipeline: pipe.pipeline,
-    timers: NO_TIMERS,
+    ambience: ambience.port,
+    samples: samples.output,
+    timers: options.timers ?? NO_TIMERS,
   });
-  return { fixture, engine, controller, pipe };
+  return { fixture, engine, controller, pipe, ambience, samples };
 }
 
 export const flush = () => new Promise<void>((resolve) => setImmediate(resolve));

@@ -19,6 +19,8 @@ export interface SettingsStore {
   patch(patch: SettingsPatch): void;
   /** The settings as last published. For code that is not a React component. */
   getSettings(): Settings;
+  /** Calls the listener whenever the published settings change. Returns the unsubscribe. */
+  subscribe(listener: (settings: Settings) => void): () => void;
   /** React hook over the current settings. */
   useSettingsState<T>(selector: (state: SettingsState) => T): T;
 }
@@ -39,6 +41,11 @@ export function createSettingsStore(now: () => number = Date.now): SettingsStore
       store.setState({ settings: settingsRepo.patchSettings(database, patch, now()) });
     },
     getSettings: () => store.getState().settings,
+    subscribe(listener) {
+      return store.subscribe((state, previous) => {
+        if (state.settings !== previous.settings) listener(state.settings);
+      });
+    },
     useSettingsState: store,
   };
 }

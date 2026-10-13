@@ -2,8 +2,11 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
 import {
+  ALARM_FRAME_PROBABILITY,
   chooseCandidate,
+  DENY_FRAME_PROBABILITY,
   denyLabelsFor,
+  denyThresholdOf,
   familiesFor,
   parseAudiosetNames,
   policyFor,
@@ -71,6 +74,14 @@ describe('deny families', () => {
     assert.ok(!familiesFor(exempt).includes('engines'));
   });
 
+  it('denies a siren at the lower alarm-family threshold, and other classes at the general one', () => {
+    const near = { tags: { labels: ['Civil defense siren', 'Engine'], frames: 1, perFrame: [[0.1, 0.1]], topClasses: [] }, levelsDb: [-30], policy: { deny: ['Civil defense siren', 'Engine'], required: [], clap: '' } };
+    const r = screenCandidate(near);
+    assert.deepEqual(r.evidence.deniedMax.map((d) => d.label), ['Civil defense siren']);
+    assert.equal(denyThresholdOf('Civil defense siren'), ALARM_FRAME_PROBABILITY);
+    assert.equal(denyThresholdOf('Engine'), DENY_FRAME_PROBABILITY);
+  });
+
   it('refuses a required name that is not an AudioSet label', () => {
     const target = { id: 'x', ...base, screen: { exempt: [], required: [['Gull']], clap: '' } };
     assert.throws(() => policyFor(target, NAMES), /"Gull" is not an AudioSet label/);
@@ -102,17 +113,13 @@ describe('screenCandidate', () => {
     assert.ok(result.window.startSeconds > 5, 'the window starts after the siren second');
   });
 
-  it('rejects a deny class at exactly the frame threshold, and passes just under it', () => {
-    const at = tagsWith(WINDOW_FRAMES, { [`3:${CIVIL}`]: 0.15 });
-    assert.equal(
-      screenCandidate({ tags: at, levelsDb: LEVELS(WINDOW_FRAMES), policy: RAIN_POLICY }).verdict,
-      'reject',
-    );
-    const under = tagsWith(WINDOW_FRAMES, { [`3:${CIVIL}`]: 0.149 });
-    assert.equal(
-      screenCandidate({ tags: under, levelsDb: LEVELS(WINDOW_FRAMES), policy: RAIN_POLICY }).verdict,
-      'pass',
-    );
+  it('rejects a general deny class at exactly the frame threshold, and passes just under it', () => {
+    const SPEECH = 3;
+    const policy = { deny: ['Speech'], required: [['Rain']], clap: 'rain' };
+    const at = tagsWith(WINDOW_FRAMES, { [`3:${SPEECH}`]: DENY_FRAME_PROBABILITY });
+    assert.equal(screenCandidate({ tags: at, levelsDb: LEVELS(WINDOW_FRAMES), policy }).verdict, 'reject');
+    const under = tagsWith(WINDOW_FRAMES, { [`3:${SPEECH}`]: 0.149 });
+    assert.equal(screenCandidate({ tags: under, levelsDb: LEVELS(WINDOW_FRAMES), policy }).verdict, 'pass');
   });
 
   it('rejects when a required sound is absent from most of the clip', () => {

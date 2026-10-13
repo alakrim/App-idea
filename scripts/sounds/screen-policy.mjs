@@ -11,8 +11,14 @@
 import { WINDOW_SAMPLES } from './loop-recipe.mjs';
 import { SAMPLE_RATE } from './pack-spec.mjs';
 
-/** Denied when any frame reaches this AudioSet probability. Calibrated on the A3 siren clip (see the report). */
+/**
+ * Denied when any frame reaches this AudioSet probability. The alarm family (sirens, alarms, horns,
+ * whistles) has its own, lower threshold: the tagger scores real sirens low at one-second frames (the
+ * A3 siren clip peaks at 0.16 on `Civil defense siren`), while clean beds stay near 0.001 on every siren
+ * class. Calibrated on the A3 siren clip 515886 and the clean forest and rain clips (see the report).
+ */
 export const DENY_FRAME_PROBABILITY = 0.15;
+export const ALARM_FRAME_PROBABILITY = 0.05;
 export const REQUIRED_FRAME_PROBABILITY = 0.2;
 export const REQUIRED_FRACTION = 0.5;
 /** The 63 s window of the loop recipe, rounded up to whole one-second frames. */
@@ -99,11 +105,16 @@ function columnOf(labels) {
   return new Map(labels.map((label, index) => [label, index]));
 }
 
-/** For each frame, the denied classes at or above the frame threshold (empty when the frame is clean). */
+/** The probability at which a denied class counts in a frame. */
+export function denyThresholdOf(label) {
+  return FAMILY_PATTERNS.alarms.test(label) ? ALARM_FRAME_PROBABILITY : DENY_FRAME_PROBABILITY;
+}
+
+/** For each frame, the denied classes at or above their frame threshold (empty when the frame is clean). */
 export function deniedByFrame(tags, deny) {
   const column = columnOf(tags.labels);
   return tags.perFrame.map((row) =>
-    deny.filter((label) => row[column.get(label)] >= DENY_FRAME_PROBABILITY),
+    deny.filter((label) => row[column.get(label)] >= denyThresholdOf(label)),
   );
 }
 
@@ -199,7 +210,7 @@ function deniedMaxima(clip, deny) {
         at = f;
       }
     }
-    if (max >= DENY_FRAME_PROBABILITY) out.push({ label, max: round(max), atSecond: at });
+    if (max >= denyThresholdOf(label)) out.push({ label, max: round(max), atSecond: at });
   }
   return out.sort((a, b) => b.max - a.max);
 }

@@ -2,7 +2,12 @@ import type { PipelineError } from '@/core/domain';
 import { chapterRow, id } from '@/db/__fixtures__/factories';
 import type { ChapterProgress } from '@/features/pipeline/facade';
 
-import { ELAPSED_SHOWN_AFTER_MS, isScannedPdfFailure, rowStateOf, statusLine } from './chapter-status';
+import {
+  ELAPSED_SHOWN_AFTER_MS,
+  isScannedPdfFailure,
+  rowStateOf,
+  statusLine,
+} from './chapter-status';
 
 const idle: ChapterProgress | null = null;
 const NOW = 1_700_000_100_000;

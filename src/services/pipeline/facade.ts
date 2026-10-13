@@ -32,6 +32,7 @@ import type {
   SourcePreview,
 } from '@/features/pipeline/facade';
 
+import { activityOf } from './activity';
 import { reduceEvent, emptyTracked, startRun, STAGE_ORDER, toChapterProgress } from './progress';
 import { excerptOf, findNextChapterUrl, qualityOf } from './source-preview';
 
@@ -187,25 +188,21 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
 
   /** What Diagnostics keeps: when each stage last moved, and how often it stalled or went stale. */
   function recordActivity(event: PipelineEvent, at: number): void {
-    switch (event.type) {
-      case 'stage':
-        if (event.status === 'running') {
-          stageActivityRepo.startStage(db, event.chapterId, event.stage, at);
-        } else {
-          stageActivityRepo.touch(db, event.chapterId, event.stage, at);
-        }
+    const update = activityOf(event);
+    if (update === null) return;
+    const { chapterId, stage } = update;
+    switch (update.kind) {
+      case 'start':
+        stageActivityRepo.startStage(db, chapterId, stage, at);
         return;
-      case 'progress':
-      case 'cost':
-        stageActivityRepo.touch(db, event.chapterId, event.stage, at);
+      case 'touch':
+        stageActivityRepo.touch(db, chapterId, stage, at);
         return;
       case 'stall':
-        stageActivityRepo.countStall(db, event.chapterId, event.stage, at);
+        stageActivityRepo.countStall(db, chapterId, stage, at);
         return;
       case 'staleAbort':
-        stageActivityRepo.countStaleAbort(db, event.chapterId, event.stage, at);
-        return;
-      default:
+        stageActivityRepo.countStaleAbort(db, chapterId, stage, at);
         return;
     }
   }

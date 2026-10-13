@@ -8,7 +8,7 @@ import { VocabActionsProvider } from '@/features/vocab/vocab-provider';
 import { ThemeProvider } from '@/ui/theme';
 import { ToastProvider } from '@/ui/toast';
 
-import { fixtureChapter, id, setupController } from './__fixtures__/playback-fixtures';
+import { SEGMENT_ONE, fixtureChapter, id, setupController } from './__fixtures__/playback-fixtures';
 import { FullPlayer } from './full-player';
 import { PlaybackProvider } from './player-provider';
 
@@ -269,3 +269,74 @@ function fakeVocabActions(overrides: Partial<VocabActions>): VocabActions {
     ...overrides,
   };
 }
+
+describe('FullPlayer failure copy (P1-4, P2-17)', () => {
+  it('names a playback failure as one, without blaming the connection, and offers a retry', async () => {
+    const { controller } = await renderPlayer();
+    await act(async () => {
+      controller.content.setState({ status: 'error', failure: 'playback' });
+    });
+
+    expect(screen.getByRole('header', { name: 'Playback stopped' })).toBeOnTheScreen();
+    expect(screen.queryByText(/connection/i)).toBeNull();
+    expect(screen.getByRole('button', { name: 'Try again' })).toBeOnTheScreen();
+  });
+
+  it('names a chapter that cannot be read from the phone as a load failure, without the connection', async () => {
+    const { controller } = await renderPlayer();
+    await act(async () => {
+      controller.content.setState({ status: 'error', failure: 'load' });
+    });
+
+    expect(screen.getByRole('header', { name: "Couldn't open this chapter" })).toBeOnTheScreen();
+    expect(screen.queryByText(/connection/i)).toBeNull();
+  });
+});
+
+describe('FullPlayer narration paused (P1-5)', () => {
+  it('says narration is paused when the audio runs out and processing has stopped', async () => {
+    const setup = setupController([fixtureChapter(4, 4, 'processing', [SEGMENT_ONE])]);
+    await act(async () => {
+      await setup.controller.playChapter(id(4));
+    });
+    await renderPhone(
+      <PlaybackProvider controller={setup.controller}>
+        <FullPlayer />
+      </PlaybackProvider>,
+    );
+    setup.pipe.emit(id(4), 'idle', 1);
+    await act(async () => {
+      setup.controller.player.play();
+      setup.engine.advance(10_000);
+    });
+    await flush();
+
+    expect(
+      screen.getByText('Narration paused. More audio will appear when processing continues.'),
+    ).toBeOnTheScreen();
+  });
+});
+
+describe('FullPlayer screen-reader actions (P2-18)', () => {
+  it('steps to the next sentence from the play button action', async () => {
+    const { controller } = await renderPlayer();
+
+    await fireEvent(screen.getByRole('button', { name: 'Play' }), 'accessibilityAction', {
+      nativeEvent: { actionName: 'next' },
+    });
+
+    expect(controller.player.getState().sentenceIdx).toBe(1);
+  });
+
+  it('repeats a sentence from the sentence action', async () => {
+    const { controller } = await renderPlayer();
+
+    // The pane is closed, so its text is hidden from the accessibility tree; the action is still there.
+    const sentence = screen.getByText(/Sentence 1 of chapter 1\./, { includeHiddenElements: true });
+    await fireEvent(sentence, 'accessibilityAction', {
+      nativeEvent: { actionName: 'repeat' },
+    });
+
+    expect(controller.content.getState().loopSentenceIdx).toBe(1);
+  });
+});

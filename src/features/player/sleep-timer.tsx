@@ -37,7 +37,9 @@ export function SleepChip({ onPress }: { onPress: () => void }) {
   let label = 'Sleep off';
   if (timer.mode === 'endOfChapter') label = 'Sleep at chapter end';
   if (timer.mode === 'minutes' && timer.endsAt !== null) {
-    label = `Sleep in ${formatClock(Math.max(0, timer.endsAt - now))}`;
+    const remainingMs = timer.endsAt - now;
+    // The countdown reaches zero when the fade starts, so say so instead of showing 0:00 (P3).
+    label = remainingMs > 0 ? `Sleep in ${formatClock(remainingMs)}` : 'Sleep fading out';
   }
 
   return (

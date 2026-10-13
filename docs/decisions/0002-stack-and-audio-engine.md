@@ -19,3 +19,11 @@
 
 ## Spike S1 (needs the user's Android device)
 On a dev build, run two engines on one audio session for 45 minutes in the background. Check lock-screen control and measure ducking latency. Until then, all feature code programs against `AudioEngine` and its fake.
+
+## Amendment (F1, 2026-10-13): interruptions, focus and beds
+
+- **Focus is owned by expo-audio alone.** The native engine listens to no interruption feed. Phone calls and other focus losses pause the narration in expo-audio, and the engine follows the voice snapshots. Subscribing to react-native-audio-api's interruptions requested a second focus client and caused the stop-start loop (incident 3). The dead interruption path was deleted, not kept.
+- **`doNotMix` stays (decision, F1 item 7).** The narration's audio mode is `interruptionMode: 'doNotMix'`, so a navigation prompt pauses the narration instead of ducking under it. The trade-off is deliberate: the lock-screen controls depend on that mode, and a prompt that pauses the narration is clearer than one that talks over it. Ducking applies only to the beds, never to the prompt. Revisit with the S1 device check on navigation prompts, and with J1 (native media session).
+- **Beds follow the transport.** Beds sound only while the voice plays or buffers. They fade out 350 ms after the voice stops (so a segment swap does not flicker them) over 600 ms, and they fade back in on play. Ducking dips the beds only while the voice plays, and it holds until the beds have faded, so a pause never makes them louder. The audio clock is suspended 2 s after the beds go silent, and resumed by the next bed start.
+- **One level range.** Bed levels are −40…0 dB relative to the narration, ducking is 0…24 dB, and both the settings and the player sheet use these ranges from `src/core/playback/ranges.ts`. The default ducking stays 7 dB.
+- **Decoded beds are bounded by bytes** (48 MB by default), not by count.

@@ -113,7 +113,6 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
   let positionMs = 0;
   let sentenceIdx = -1;
   let mix: AmbienceMix = DEFAULT_MIX;
-  let volume = 1;
   /** The beds the current sentence wants. */
   let desired: BedTarget[] = [];
   /** The beds the mixer is playing, or fading out. */
@@ -171,7 +170,9 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
     cancel(stopTimer);
     stopTimer = null;
     if (applied.length === 0) return;
-    mixer.apply(applied.map((bed) => ({ type: 'stop', cueId: bed.cueId, fadeMs: BED_FADE_OUT_MS })));
+    mixer.apply(
+      applied.map((bed) => ({ type: 'stop', cueId: bed.cueId, fadeMs: BED_FADE_OUT_MS })),
+    );
     applied = [];
     duckHeld = true;
     updateDucking();
@@ -227,8 +228,7 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
   /** Plans the beds for a sentence and, while the transport wants them, sounds the plan. */
   function planAt(idx: number): void {
     sentenceIdx = idx;
-    desired =
-      idx < 0 ? [] : planBeds(cues, idx, { levelDb: mix.levelDb, bedLufs: deps.bedLufs });
+    desired = idx < 0 ? [] : planBeds(cues, idx, { levelDb: mix.levelDb, bedLufs: deps.bedLufs });
     syncBeds();
   }
 
@@ -334,7 +334,6 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
       if (!(nextVolume >= 0 && nextVolume <= 1)) {
         throw new RangeError(`volume must be between 0 and 1, got ${nextVolume}`);
       }
-      volume = nextVolume;
       voice.setVolume(nextVolume);
       // The beds share the fade, so a sleep timer takes the whole mix down together.
       mixer.setMasterGain(nextVolume);

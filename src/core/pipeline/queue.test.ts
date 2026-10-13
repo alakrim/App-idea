@@ -44,13 +44,22 @@ function holdFirstCall(): {
   };
 }
 
-/** Waits until the predicate holds, yielding to the event loop between checks. */
+/** Waits until the predicate holds, letting pending work run between checks. */
 async function until(predicate: () => boolean): Promise<void> {
   for (let i = 0; i < 1000 && !predicate(); i += 1) {
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    await jest.advanceTimersByTimeAsync(0);
   }
   if (!predicate()) throw new Error('condition never held');
 }
+
+// Every queue runs on fake timers: a stall watchdog left armed by a test would otherwise keep the
+// test run waiting for its real timer.
+beforeEach(() => {
+  jest.useFakeTimers();
+});
+afterEach(() => {
+  jest.useRealTimers();
+});
 
 function doneOrder(events: PipelineEvent[]): Id[] {
   return events.flatMap((e) => (e.type === 'done' ? [e.chapterId] : []));
@@ -156,8 +165,6 @@ describe('PipelineQueue', () => {
   });
 
   it('restores the persisted queue after a restart and resumes the interrupted chapter', async () => {
-    // The abandoned queue's stall watchdog runs on fake timers, so it leaves no timer behind.
-    jest.useFakeTimers();
     // While `dying` is set, every model call hangs, as if the app was killed mid-call.
     let dying = true;
     const fake = createFakePorts({
@@ -169,10 +176,7 @@ describe('PipelineQueue', () => {
     await before.enqueue(A);
     await before.enqueue(B);
     expect(fake.state.queue.map((item) => item.chapterId)).toEqual([A, B]);
-    for (let i = 0; i < 100 && fake.job('analyze', A)?.status !== 'running'; i += 1) {
-      await jest.advanceTimersByTimeAsync(0);
-    }
-    expect(fake.job('analyze', A)?.status).toBe('running');
+    await until(() => fake.job('analyze', A)?.status === 'running');
 
     // The new session reads the same stores once the old one is gone.
     dying = false;
@@ -193,7 +197,6 @@ describe('PipelineQueue', () => {
     ).toBe(true);
     expect(fake.state.queue).toEqual([]);
     expect(fake.chapter(A).status).toBe('ready');
-    jest.useRealTimers();
   });
 
   it("persists each chapter's run options, and a restored chapter runs from its saved stage", async () => {
@@ -316,13 +319,6 @@ function networkEvents(events: PipelineEvent[]): PipelineEvent[] {
 }
 
 describe('PipelineQueue: stalls and the network', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-  afterEach(() => {
-    jest.useRealTimers();
-  });
-
   it('retires the requests in flight on a stall, and the stalled passage then completes', async () => {
     let retired: () => void = () => undefined;
     const retirement = new Promise<void>((resolve) => {
@@ -431,6 +427,9 @@ describe('PipelineQueue: stalls and the network', () => {
 
     fake.network.emit({ type: 'resumed' });
     expect(events).toContainEqual({ type: 'reconnecting', chapterId: A });
+    // Watching resumes on return: a silent chapter still stalls one quiet period later.
+    await jest.advanceTimersByTimeAsync(STALL_AFTER_MS);
+    expect(events.filter((e) => e.type === 'stall')).toHaveLength(1);
     release();
     await queue.idle();
     expect(doneOrder(events)).toEqual([A]);

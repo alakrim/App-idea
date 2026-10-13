@@ -1,5 +1,6 @@
 import { StageFailure } from '@/core/pipeline/errors';
 import type { FetchLimits } from '@/core/pipeline/ports';
+import { createConnection } from '@/services/network/connection';
 
 import { createFetcher, isReadableContentType, MOBILE_USER_AGENT } from './fetcher';
 
@@ -158,5 +159,66 @@ describe('isReadableContentType', () => {
     expect(isReadableContentType(null)).toBe(true);
     expect(isReadableContentType('application/pdf')).toBe(false);
     expect(isReadableContentType('image/png')).toBe(false);
+  });
+});
+
+describe('createFetcher: a page request retired by the connection', () => {
+  const URL = 'https://example.com/a';
+
+  /** A fetch that hangs on its first call, until the signal aborts, and answers the rest. */
+  function hangFirst(onAbortIgnored: boolean) {
+    let attempts = 0;
+    return {
+      get attempts() {
+        return attempts;
+      },
+      fetchImpl: ((_url: string, init?: RequestInit) => {
+        attempts += 1;
+        if (attempts > 1) return Promise.resolve(htmlResponse(HTML));
+        if (onAbortIgnored) return new Promise<Response>(() => undefined);
+        return new Promise<Response>((_resolve, reject) => {
+          init?.signal?.addEventListener('abort', () =>
+            reject(Object.assign(new Error('aborted'), { name: 'AbortError' })),
+          );
+        });
+      }) as typeof fetch,
+    };
+  }
+
+  it('is fetched again at once, and the retirement is not reported as a failure', async () => {
+    const connection = createConnection();
+    const page = hangFirst(false);
+    const fetcher = createFetcher({ connection, fetchImpl: page.fetchImpl });
+
+    const pending = fetcher.fetch(URL, new AbortController().signal, LIMITS);
+    expect(connection.retireInFlight()).toBe(1);
+
+    await expect(pending).resolves.toMatchObject({ contentType: 'text/html; charset=utf-8' });
+    expect(page.attempts).toBe(2);
+  });
+
+  it('settles even when the fetch ignores its abort, as a dead socket can', async () => {
+    const connection = createConnection();
+    const page = hangFirst(true);
+    const fetcher = createFetcher({ connection, fetchImpl: page.fetchImpl });
+
+    const pending = fetcher.fetch(URL, new AbortController().signal, LIMITS);
+    connection.retireInFlight();
+
+    await expect(pending).resolves.toMatchObject({ contentType: 'text/html; charset=utf-8' });
+    expect(page.attempts).toBe(2);
+  });
+
+  it('still reports the caller’s cancellation, not a retirement', async () => {
+    const connection = createConnection();
+    const caller = new AbortController();
+    const page = hangFirst(false);
+    const fetcher = createFetcher({ connection, fetchImpl: page.fetchImpl });
+
+    const pending = fetcher.fetch(URL, caller.signal, LIMITS);
+    caller.abort();
+
+    await expect(pending).rejects.toMatchObject({ name: 'AbortError' });
+    expect(page.attempts).toBe(1);
   });
 });

@@ -1,9 +1,9 @@
 import { createContext, useContext, useMemo, type ReactNode } from 'react';
 
 import { readCatalogSnapshot, writeCatalogSnapshot } from '@/services/catalog-cache';
+import { getAppConnection } from '@/services/network/app-connection';
 import { createOpenRouterClient } from '@/services/openrouter';
 import type { OpenRouterClient, OpenRouterClientOptions } from '@/services/openrouter';
-import { getAppConnection } from '@/services/network/app-connection';
 import { getApiKey } from '@/services/secrets';
 
 export const LECTIO_APP_URL = 'https://lectio.app';

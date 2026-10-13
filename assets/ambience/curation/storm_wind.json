@@ -190,5 +190,687 @@
         "+3 tags storm, wind, gusts"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-13",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Wind"
+        ]
+      ],
+      "clapPrompt": "gusting storm wind through trees, no thunder, no sirens, no people"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Wind; no 64 s window is free of denied sounds: Vehicle reaches 0.603 (at 296 s)",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 405601,
+        "name": "Howling Wind Ambience",
+        "url": "https://freesound.org/people/DBlover/sounds/405601/",
+        "author": "DBlover",
+        "durationSec": 85.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 85,
+          "cleanSeconds": 3,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.6403
+            },
+            {
+              "label": "Train",
+              "max": 0.4845
+            },
+            {
+              "label": "Field recording",
+              "max": 0.4347
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.3466
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.333
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.64,
+              "atSecond": 70
+            },
+            {
+              "label": "Train",
+              "max": 0.484,
+              "atSecond": 6
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.347,
+              "atSecond": 6
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.333,
+              "atSecond": 6
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.24,
+              "atSecond": 21
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.194,
+              "atSecond": 80
+            },
+            {
+              "label": "Ship",
+              "max": 0.181,
+              "atSecond": 21
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.18,
+              "atSecond": 15
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 656680,
+        "name": "Heavy Wind, Through Grass & Bushes",
+        "url": "https://freesound.org/people/Kinoton/sounds/656680/",
+        "author": "Kinoton",
+        "durationSec": 200,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 200,
+          "cleanSeconds": 52,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.8388
+            },
+            {
+              "label": "Ocean",
+              "max": 0.8002
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.7348
+            },
+            {
+              "label": "Wind",
+              "max": 0.5429
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5379
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.538,
+              "atSecond": 77
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.481,
+              "atSecond": 173
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.323,
+              "atSecond": 79
+            },
+            {
+              "label": "Thunder",
+              "max": 0.277,
+              "atSecond": 0
+            },
+            {
+              "label": "Ship",
+              "max": 0.237,
+              "atSecond": 22
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.196,
+              "atSecond": 0
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.191,
+              "atSecond": 79
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.162,
+              "atSecond": 77
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind"
+              ],
+              "fraction": 0.155
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 735350,
+        "name": "Wind - Hurricane Typhoon Storm",
+        "url": "https://freesound.org/people/Vrymaa/sounds/735350/",
+        "author": "Vrymaa",
+        "durationSec": 80.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 80,
+          "cleanSeconds": 54,
+          "topClasses": [
+            {
+              "label": "Pink noise",
+              "max": 0.7907
+            },
+            {
+              "label": "Thunder",
+              "max": 0.6854
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.5775
+            },
+            {
+              "label": "Rain",
+              "max": 0.5308
+            },
+            {
+              "label": "Waves, surf",
+              "max": 0.3618
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.685,
+              "atSecond": 10
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.577,
+              "atSecond": 10
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.274,
+              "atSecond": 1
+            },
+            {
+              "label": "Music",
+              "max": 0.182,
+              "atSecond": 0
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind"
+              ],
+              "fraction": 0.013
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 402889,
+        "name": "Wind Heavy Gusts",
+        "url": "https://freesound.org/people/Kinoton/sounds/402889/",
+        "author": "Kinoton",
+        "durationSec": 300,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Vehicle reaches 0.603 (at 296 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 300,
+          "cleanSeconds": 3,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.8503
+            },
+            {
+              "label": "Ocean",
+              "max": 0.8156
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.6026
+            },
+            {
+              "label": "Wind",
+              "max": 0.5615
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.5469
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.603,
+              "atSecond": 296
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.547,
+              "atSecond": 268
+            },
+            {
+              "label": "Thunder",
+              "max": 0.519,
+              "atSecond": 46
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.428,
+              "atSecond": 273
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.352,
+              "atSecond": 46
+            },
+            {
+              "label": "Ship",
+              "max": 0.325,
+              "atSecond": 273
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.309,
+              "atSecond": 268
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.19,
+              "atSecond": 296
+            },
+            {
+              "label": "Car",
+              "max": 0.173,
+              "atSecond": 218
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.169,
+              "atSecond": 296
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind"
+              ],
+              "fraction": 0.5
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 632203,
+        "name": "storm or gusty wind in the city",
+        "url": "https://freesound.org/people/Garuda1982/sounds/632203/",
+        "author": "Garuda1982",
+        "durationSec": 198.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 198,
+          "cleanSeconds": 24,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.5689
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5015
+            },
+            {
+              "label": "Ocean",
+              "max": 0.4914
+            },
+            {
+              "label": "Wind",
+              "max": 0.2893
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.2545
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.502,
+              "atSecond": 139
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.255,
+              "atSecond": 181
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.232,
+              "atSecond": 181
+            },
+            {
+              "label": "Traffic noise, roadway noise",
+              "max": 0.23,
+              "atSecond": 139
+            },
+            {
+              "label": "Ship",
+              "max": 0.206,
+              "atSecond": 181
+            },
+            {
+              "label": "Car",
+              "max": 0.191,
+              "atSecond": 139
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind"
+              ],
+              "fraction": 0.051
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 735347,
+        "name": "Wind - Howling, digital",
+        "url": "https://freesound.org/people/Vrymaa/sounds/735347/",
+        "author": "Vrymaa",
+        "durationSec": 72,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 72,
+          "cleanSeconds": 40,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.6981
+            },
+            {
+              "label": "Theremin",
+              "max": 0.5329
+            },
+            {
+              "label": "Sonar",
+              "max": 0.4036
+            },
+            {
+              "label": "Synthesizer",
+              "max": 0.3968
+            },
+            {
+              "label": "Sine wave",
+              "max": 0.3702
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.698,
+              "atSecond": 19
+            },
+            {
+              "label": "Synthesizer",
+              "max": 0.397,
+              "atSecond": 19
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.313,
+              "atSecond": 19
+            },
+            {
+              "label": "Siren",
+              "max": 0.29,
+              "atSecond": 51
+            },
+            {
+              "label": "Keyboard (musical)",
+              "max": 0.197,
+              "atSecond": 19
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.156,
+              "atSecond": 56
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 735349,
+        "name": "Wind - Tornado, digital",
+        "url": "https://freesound.org/people/Vrymaa/sounds/735349/",
+        "author": "Vrymaa",
+        "durationSec": 77.6,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 77,
+          "cleanSeconds": 2,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.7043
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.5085
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.3112
+            },
+            {
+              "label": "Rain",
+              "max": 0.3021
+            },
+            {
+              "label": "Wind",
+              "max": 0.2591
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.704,
+              "atSecond": 20
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.508,
+              "atSecond": 20
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.311,
+              "atSecond": 72
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.238,
+              "atSecond": 72
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind"
+              ],
+              "fraction": 0.039
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 754256,
+        "name": "Winter Snowstorm Ambience",
+        "url": "https://freesound.org/people/HECKFRICKER/sounds/754256/",
+        "author": "HECKFRICKER",
+        "durationSec": 183.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 183,
+          "cleanSeconds": 61,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.5662
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.4344
+            },
+            {
+              "label": "Waves, surf",
+              "max": 0.3704
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.3691
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.3584
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.566,
+              "atSecond": 162
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.434,
+              "atSecond": 77
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.358,
+              "atSecond": 162
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.269,
+              "atSecond": 112
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.191,
+              "atSecond": 112
+            },
+            {
+              "label": "Ship",
+              "max": 0.173,
+              "atSecond": 112
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind"
+              ],
+              "fraction": 0.005
+            }
+          ]
+        }
+      }
+    ]
+  }
 }
