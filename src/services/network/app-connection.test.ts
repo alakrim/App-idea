@@ -11,6 +11,16 @@ jest.mock('react-native', () => ({
   },
 }));
 
+beforeAll(() => {
+  // The heartbeat is a 1 s interval; fake timers keep it from holding Jest open.
+  jest.useFakeTimers();
+});
+
+afterAll(() => {
+  jest.clearAllTimers();
+  jest.useRealTimers();
+});
+
 describe('getAppConnection', () => {
   it('is one connection, subscribed once to the app state', () => {
     const first = getAppConnection();
@@ -29,5 +39,18 @@ describe('getAppConnection', () => {
     mockListeners[0]?.('active');
 
     expect(events).toEqual(['backgrounded', 'resumed']);
+  });
+
+  it('runs a heartbeat, so a short trip away retires nothing', () => {
+    const connection = getAppConnection();
+    let retired = 0;
+    const unregister = connection.register({ timeoutMs: 1_000, retire: () => (retired += 1) });
+
+    mockListeners[0]?.('background');
+    jest.advanceTimersByTime(30_000);
+    mockListeners[0]?.('active');
+
+    expect(retired).toBe(0);
+    unregister();
   });
 });

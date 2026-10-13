@@ -19,7 +19,6 @@ _Last updated: 2026-10-11 (night) by architect_
 | M8 | Polish, accessibility, performance, EAS build, device spike S1 + probes P1/P2, Maestro E2E | not started |
 
 ## Work in flight
-- **N3** chapters stuck when leaving the app (`docs/briefs/N3-background-stalls.md`): a worker is on it.
 - **A4** clean ambience v2: 50+ single-purpose, era-aware beds with AudioSet/CLAP screening (`docs/briefs/A4-clean-ambience-v2.md`). A worker is on it. It replaces A3's contaminated picks (storm with sirens, etc.). **A3 must not ship as is.**
 - **N4** background chapter preparation via a foreground service (dataSync) plus a headless JS task (`react-native-background-actions@4.1.0`, installed). **User-approved 2026-10-13.** Brief `docs/briefs/N4-background-preparation.md`; it starts after N3 lands.
 - **Q1 AAA QA audit: done.** Four reports in `docs/qa/2026-10-13-QA-{A,B,C,D}-*.md`, each spot-verified by the architect. Fix waves:
@@ -256,3 +255,16 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
   - `estimate.test.ts` fails (N3's area; it predates F1).
   - P2-10 needs a profiler on a device.
   - `.cache/` added to the eslint ignores (the A4 venv).
+
+## N3 accepted (2026-10-13)
+- **Built:**
+  - **Connection epochs** (`src/services/network/`): returning to the app retires requests whose socket died while frozen. They retry at once and don't count against retries.
+  - **Stall watchdog** (`core/pipeline/stall-watchdog.ts`): 90 s plus the request's timeout. After 3 stalls the chapter fails with resumable copy, and saved passages are kept.
+  - "Narrating · passage N of M", elapsed time after 30 s, "Reconnecting…".
+  - A one-time background notice.
+  - Diagnostics: last activity, stalls, stale aborts.
+  - Migration `0003` (`stage_activity`, cascades with its chapter).
+- **Time from the user's return to the retry**: up to ~110 s before (a stuck passage could hold a chapter for ~21 min), 0 ms after.
+- **Architect change: freeze detection by heartbeat.** The app beats every 1 s, and a request is retired only if the beats stopped for more than 10 s (a real freeze). A short trip away (the notification shade), or a background stretch while N4's foreground service keeps JS alive, no longer retires live, possibly already-billed requests. A gap the heartbeat sees itself retires at once, even in the background. Tests added; mutation (always retire) → 3 failures; restored 14/14.
+- **Evidence (architect)**: typecheck green; full jest 2,012/2,013. The 1 failure is `estimate.test.ts`, whose expected cost moved with A4's prompt and taxonomy change; A4 must update it. Lint failures remain only in A4 in-progress files.
+- **For N4**: while the foreground service runs, the watchdog must keep running in the background (today it is suspended in the background).

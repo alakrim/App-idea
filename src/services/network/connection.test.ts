@@ -105,3 +105,61 @@ describe('events', () => {
     expect(events).toEqual([]);
   });
 });
+
+describe('connection heartbeat', () => {
+  function clocked() {
+    const clock = { t: 0 };
+    const connection = createConnection({ now: () => clock.t, freezeGapMs: 10_000 });
+    connection.heartbeat();
+    return { clock, connection };
+  }
+
+  it('retires nothing after a short trip away while JS kept running', () => {
+    const { clock, connection } = clocked();
+    const request = attempt(connection);
+
+    connection.setAppState('background');
+    for (let i = 0; i < 60; i += 1) {
+      clock.t += 1_000;
+      connection.heartbeat();
+    }
+    connection.setAppState('active');
+
+    expect(request.retired.count).toBe(0);
+  });
+
+  it('retires a request begun before a freeze, on return', () => {
+    const { clock, connection } = clocked();
+    const request = attempt(connection);
+
+    connection.setAppState('background');
+    clock.t += 60_000;
+    connection.setAppState('active');
+
+    expect(request.retired.count).toBe(1);
+  });
+
+  it('retires on the first beat after a freeze, even when that beat comes before the return', () => {
+    const { clock, connection } = clocked();
+    const request = attempt(connection);
+
+    connection.setAppState('background');
+    clock.t += 60_000;
+    connection.heartbeat();
+    expect(request.retired.count).toBe(1);
+    connection.setAppState('active');
+
+    expect(request.retired.count).toBe(1);
+  });
+
+  it('leaves a request begun after the freeze alone', () => {
+    const { clock, connection } = clocked();
+    clock.t += 60_000;
+    connection.heartbeat();
+    const after = attempt(connection);
+    connection.setAppState('background');
+    connection.setAppState('active');
+
+    expect(after.retired.count).toBe(0);
+  });
+});
