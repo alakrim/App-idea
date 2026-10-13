@@ -33,7 +33,8 @@ The user approved a foreground service, so chapters keep preparing when they lea
    - Then call `PermissionsAndroid.request`. Remember a refusal and don't nag; Settings → Notifications explains how to turn it on.
    - The service still runs without the permission; Android only hides the notification.
 4. **Remove N3's one-time "pauses in the background" toast** if the service started successfully; keep it only for the degraded path.
-5. **Diagnostics**: service state (running/stopped/failed to start, with the reason), whether notification permission is granted, and the time the last service started.
+5. **Watchdog and heartbeat while the service runs**: N3's stall watchdog is suspended in the background today. While the foreground service is running, keep it running in the background, because JS is alive. The connection heartbeat (`src/services/network/app-connection.ts`, 1 s) already retires requests only after a real freeze; do not change that logic.
+6. **Diagnostics**: service state (running/stopped/failed to start, with the reason), whether notification permission is granted, and the time the last service started.
 
 ## Tests
 Mock `react-native-background-actions` (add a Jest mock; the library ships one under `jest/`, so check it):
