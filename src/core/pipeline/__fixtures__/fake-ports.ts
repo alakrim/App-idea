@@ -109,7 +109,12 @@ export interface FakeOptions {
     request: LlmRequest,
     model: string,
   ) => LlmReply | undefined | Promise<LlmReply | undefined>;
-  readonly tts?: (text: string, profile: NarrationProfile) => TtsResult | Promise<TtsResult>;
+  /** Replaces the default narration. The signal is the one the stage passed to the call. */
+  readonly tts?: (
+    text: string,
+    profile: NarrationProfile,
+    signal: AbortSignal,
+  ) => TtsResult | Promise<TtsResult>;
   readonly catalog?: Record<string, CatalogModel>;
   /** Overrides fields of the chapter's narration profile. */
   readonly narration?: Partial<NarrationProfile>;
@@ -467,9 +472,9 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
       },
     },
     tts: {
-      async synthesize({ text, profile }) {
+      async synthesize({ text, profile, signal }) {
         state.ttsCalls.push({ text, style: profile.style, voice: profile.voice });
-        if (options.tts) return options.tts(text, profile);
+        if (options.tts) return options.tts(text, profile, signal);
         const frames = Math.max(1, Math.ceil(text.length / 200));
         return { bytes: mp3Bytes(frames), mime: 'audio/mpeg', costUsd: null };
       },

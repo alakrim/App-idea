@@ -101,10 +101,17 @@ export async function rollLoop(loopWav, rolledWav) {
 }
 
 /**
- * Pass 2: normalizes the rolled loop with the measured gain and encodes AAC-LC mono 64 kbps .m4a.
+ * Pass 2: normalizes the rolled loop with the measured gain and encodes AAC-LC mono .m4a at `bitrate`
+ * (64 kbps for the base pack; the A4 real beds use 48 kbps, see the architect's size decision).
  * AAC can overshoot the true peak by a few tenths of a dB, so a caller may ask for more headroom.
  */
-export async function encodeLoopAac(rolledWav, measured, encodedM4a, truePeakDbtp) {
+export async function encodeLoopAac(
+  rolledWav,
+  measured,
+  encodedM4a,
+  truePeakDbtp,
+  bitrate = '64k',
+) {
   await runFfmpeg([
     '-y',
     '-i',
@@ -120,7 +127,7 @@ export async function encodeLoopAac(rolledWav, measured, encodedM4a, truePeakDbt
     '-profile:a',
     'aac_low',
     '-b:a',
-    '64k',
+    bitrate,
     '-movflags',
     '+faststart',
     '-f',

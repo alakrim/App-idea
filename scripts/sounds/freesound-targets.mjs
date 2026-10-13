@@ -6,6 +6,9 @@
 // lifts AudioSet deny classes that the category itself is made of (the traffic in a city, the horns
 // of a battle). `clap` is the CLAP prompt for the re-rank. Ids match the taxonomy (ambience-taxonomy.ts).
 
+/** Sailing vessels: wood and canvas, not engines. Their boats and ships are exempt; motors are not. */
+const SAILING_EXEMPT = ['Sailboat, sailing ship', 'Rowboat, canoe, kayak', 'Ship', 'Boat, Water vehicle'];
+
 export const FREESOUND_TARGETS = [
   // timeless: nature
   {
@@ -15,7 +18,7 @@ export const FREESOUND_TARGETS = [
     names: ['birds', 'forest', 'birdsong'],
     allowsVoices: false,
     screen: {
-      required: [['Bird', 'Bird vocalization, bird call, bird song', 'Birdsong', 'Chirp, tweet']],
+      required: [['Bird', 'Bird vocalization, bird call, bird song', 'Chirp, tweet']],
       exempt: [],
       clap: 'daytime forest with birdsong and light leaf rustle, no people, no machines',
     },
@@ -63,7 +66,7 @@ export const FREESOUND_TARGETS = [
     names: ['ocean', 'waves', 'sea', 'beach', 'surf'],
     allowsVoices: false,
     screen: {
-      required: [['Ocean', 'Waves, surf', 'Sea']],
+      required: [['Ocean', 'Waves, surf']],
       exempt: [],
       clap: 'waves breaking on a beach with a slow swell, no people',
     },
@@ -171,7 +174,7 @@ export const FREESOUND_TARGETS = [
     names: ['seagull', 'gulls', 'cliff', 'cliffs', 'seabird'],
     allowsVoices: false,
     screen: {
-      required: [['Seagull', 'Bird', 'Gull, seagull']],
+      required: [['Bird', 'Bird vocalization, bird call, bird song', 'Fowl', 'Chirp, tweet']],
       exempt: [],
       clap: 'seabirds calling over the surf at sea cliffs, no people',
     },
@@ -184,7 +187,7 @@ export const FREESOUND_TARGETS = [
     allowsVoices: false,
     screen: {
       required: [['Wind'], ['Ocean', 'Waves, surf', 'Water']],
-      exempt: ['Thunder'],
+      exempt: [],
       clap: 'a rough sea in strong wind, heavy waves breaking and spray, no thunder',
     },
   },
@@ -257,7 +260,7 @@ export const FREESOUND_TARGETS = [
     allowsVoices: false,
     screen: {
       required: [['Thunder', 'Thunderstorm'], ['Rain', 'Raindrop', 'Rain on surface']],
-      exempt: ['Thunder', 'Thunderstorm'],
+      exempt: ['thunder'],
       clap: 'rain with distant rolling thunder, nothing else',
     },
   },
@@ -329,7 +332,7 @@ export const FREESOUND_TARGETS = [
     names: ['hum', 'drone'],
     allowsVoices: false,
     screen: {
-      required: [['Hum', 'Drone', 'Humming']],
+      required: [['Hum', 'Humming', 'Mains hum']],
       exempt: [],
       clap: 'a low resonant hum with soft wind and a faint shimmer',
     },
@@ -341,7 +344,7 @@ export const FREESOUND_TARGETS = [
     names: ['ghost', 'whisper'],
     allowsVoices: false,
     screen: {
-      required: [['Wind', 'Hum', 'Drone']],
+      required: [['Wind', 'Hum', 'Humming']],
       exempt: [],
       clap: 'faint eerie air with unplaceable low tones',
     },
@@ -353,7 +356,7 @@ export const FREESOUND_TARGETS = [
     names: ['heartbeat'],
     allowsVoices: false,
     screen: {
-      required: [['Heartbeat', 'Heart sounds, heartbeat']],
+      required: [['Heart sounds, heartbeat']],
       exempt: [],
       clap: 'a muffled heartbeat under near silence',
     },
@@ -365,12 +368,11 @@ export const FREESOUND_TARGETS = [
     names: ['drone'],
     allowsVoices: false,
     screen: {
-      required: [['Drone', 'Hum', 'Rumble']],
+      required: [['Hum', 'Humming', 'Mains hum', 'Sine wave']],
       exempt: [],
       clap: 'a low dark drone in a still, cold room',
     },
   },
-  // timeless: none of the above; historic below
   // historic: human scenes without machines
   {
     id: 'village_square',
@@ -488,7 +490,7 @@ export const FREESOUND_TARGETS = [
     allowsVoices: false,
     screen: {
       required: [['Wind', 'Water', 'Ocean', 'Waves, surf', 'Creak']],
-      exempt: [],
+      exempt: SAILING_EXEMPT,
       clap: 'a wooden sailing ship at sea, creaking hull and flapping sails, no engine',
     },
   },
@@ -499,8 +501,8 @@ export const FREESOUND_TARGETS = [
     names: ['harbor', 'harbour', 'port', 'boats'],
     allowsVoices: true,
     screen: {
-      required: [['Seagull', 'Gull, seagull', 'Bird', 'Waves, surf', 'Water']],
-      exempt: [],
+      required: [['Fowl', 'Bird', 'Bird vocalization, bird call, bird song', 'Waves, surf', 'Water']],
+      exempt: SAILING_EXEMPT,
       clap: 'an old harbour with gulls, ropes and water against wooden hulls, no engines',
     },
   },
@@ -512,7 +514,7 @@ export const FREESOUND_TARGETS = [
     allowsVoices: true,
     screen: {
       required: [['Shout', 'Yell', 'Bellow', 'Clang', 'Clatter', 'Crowd']],
-      exempt: ['Musical instrument', 'Brass instrument'],
+      exempt: ['brass', 'percussion'],
       clap: 'a distant medieval battle with shouts, clashing metal and horns',
     },
   },
@@ -524,7 +526,7 @@ export const FREESOUND_TARGETS = [
     allowsVoices: false,
     screen: {
       required: [['Drum', 'Snare drum', 'Bass drum', 'Drum roll']],
-      exempt: ['Musical instrument', 'Brass instrument'],
+      exempt: ['brass', 'percussion'],
       clap: 'drums and horns of an approaching army, tense, no melody',
     },
   },
@@ -548,7 +550,7 @@ export const FREESOUND_TARGETS = [
     allowsVoices: true,
     screen: {
       required: [['Bell', 'Church bell', 'Chant', 'Singing', 'Chime']],
-      exempt: [],
+      exempt: ['percussion'],
       clap: 'a temple interior with soft bells and hushed chanting',
     },
   },
@@ -607,8 +609,8 @@ export const FREESOUND_TARGETS = [
     names: ['blacksmith', 'forge', 'anvil', 'hammer'],
     allowsVoices: false,
     screen: {
-      required: [['Hammer', 'Anvil', 'Clang', 'Metal']],
-      exempt: ['Tools'],
+      required: [['Hammer', 'Clang', 'Clatter']],
+      exempt: [],
       clap: 'a blacksmith forge with hammer on anvil and a crackling fire',
     },
   },
@@ -621,7 +623,7 @@ export const FREESOUND_TARGETS = [
     allowsVoices: true,
     screen: {
       required: [['Traffic noise, roadway noise', 'Vehicle', 'Car', 'Motor vehicle (road)']],
-      exempt: ['Vehicle', 'Car', 'Engine', 'Motor vehicle (road)', 'Traffic noise, roadway noise'],
+      exempt: ['vehicles', 'engines'],
       clap: 'a busy city street by day with traffic and footsteps, no sirens',
     },
   },
@@ -633,7 +635,7 @@ export const FREESOUND_TARGETS = [
     allowsVoices: false,
     screen: {
       required: [['Traffic noise, roadway noise', 'Vehicle', 'Car', 'Motor vehicle (road)']],
-      exempt: ['Vehicle', 'Car', 'Engine', 'Motor vehicle (road)', 'Traffic noise, roadway noise'],
+      exempt: ['vehicles', 'engines'],
       clap: 'a city at night with light traffic and a humming sign, no sirens',
     },
   },
@@ -680,7 +682,7 @@ export const FREESOUND_TARGETS = [
     names: ['lecture', 'classroom', 'hall'],
     allowsVoices: false,
     screen: {
-      required: [['Air conditioning', 'Mechanical fan', 'Crowd']],
+      required: [['Air conditioning', 'Mechanical fan']],
       exempt: [],
       clap: 'a lecture hall with a quiet audience rustle and distant ventilation, no speech',
     },
@@ -693,7 +695,7 @@ export const FREESOUND_TARGETS = [
     allowsVoices: false,
     screen: {
       required: [['Train', 'Railroad car, train wagon', 'Rail transport']],
-      exempt: ['Train', 'Railroad car, train wagon', 'Rail transport'],
+      exempt: ['vehicles', 'engines', 'Train whistle', 'Train horn'],
       clap: 'a train carriage with rhythmic wheels on rail and a muffled cabin',
     },
   },
@@ -704,8 +706,8 @@ export const FREESOUND_TARGETS = [
     names: ['airplane', 'aircraft', 'cabin', 'plane'],
     allowsVoices: false,
     screen: {
-      required: [['Aircraft', 'Airplane', 'Engine', 'Jet engine']],
-      exempt: ['Aircraft', 'Airplane', 'Engine', 'Jet engine'],
+      required: [['Aircraft', 'Fixed-wing aircraft, airplane', 'Aircraft engine', 'Jet engine']],
+      exempt: ['vehicles', 'engines'],
       clap: 'an airplane cabin with a steady engine drone and muffled air',
     },
   },
@@ -717,7 +719,7 @@ export const FREESOUND_TARGETS = [
     allowsVoices: false,
     screen: {
       required: [['Train', 'Railroad car, train wagon', 'Rail transport']],
-      exempt: ['Train', 'Railroad car, train wagon', 'Rail transport'],
+      exempt: ['vehicles', 'engines', 'Train whistle', 'Train horn'],
       clap: 'an underground subway platform with a train far off and an echoing hall',
     },
   },
@@ -729,7 +731,7 @@ export const FREESOUND_TARGETS = [
     allowsVoices: true,
     screen: {
       required: [['Gunshot, gunfire', 'Machine gun', 'Artillery fire']],
-      exempt: ['Gunshot, gunfire', 'Machine gun', 'Artillery fire'],
+      exempt: ['gunfire'],
       clap: 'distant gunfire with echoes and shouting',
     },
   },

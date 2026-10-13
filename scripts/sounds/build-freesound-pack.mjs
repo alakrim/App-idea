@@ -1,30 +1,25 @@
 #!/usr/bin/env node
-// Builds the Freesound CC0 beds (A3): assets/ambience/real/<category>.m4a, real/manifest.json and the
+// Builds the Freesound CC0 beds: assets/ambience/real/<category>.m4a, real/manifest.json and the
 // freesound rows of assets/ambience/LICENSES.json.
 //
 // Run: FREESOUND_API_KEY=$(cat ~/.config/lectio/freesound.key) npm run sounds:build-real
 // Optional: -- --only=light_rain,heavy_rain to rebuild a subset (other manifest rows are kept).
 //
-// Per category: the chosen candidate is the top-scored one in assets/ambience/curation/<category>.json,
-// unless assets/ambience/curation/overrides.json names another Freesound id. The sound's licence is
-// re-checked against the API (exactly CC0). Its HQ MP3 preview is cached, decoded to mono 44.1 kHz,
-// trimmed of silent or noisy edges, cut to the steadiest 63 s window, high-passed at 25 Hz and run
-// through the base pack's loop recipe (scripts/sounds/loop-recipe.mjs). The key is read from the env only.
+// Per category, the candidate is the one the screen chose (curation/<category>.json, `screening.chosen`),
+// cut at the window the screen picked (A4). A candidate is only ever built when its screening passed:
+// an override in overrides.json must name a candidate that passed too. The sound's licence is re-checked
+// against the API (exactly CC0). Its HQ MP3 preview is decoded to mono 44.1 kHz, high-passed at 25 Hz and
+// run through the loop recipe (scripts/sounds/loop-recipe.mjs). Categories that are not filled get no
+// file. A full build replaces the manifest and removes stale files. The key is read from the env only.
 
 import { Buffer } from 'node:buffer';
-import { copyFile, mkdir, mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, mkdtemp, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 import { z } from 'zod';
 
 import { createFreesoundClient } from './freesound-api.mjs';
-import {
-  frameLevelsDb,
-  steadiestWindow,
-  usableFrameRange,
-  FRAME_SECONDS,
-} from './freesound-window.mjs';
 import { FREESOUND_TARGETS } from './freesound-targets.mjs';
 import { decodeMono, measureLoudness, runFfmpeg, sha256File } from './ffmpeg-tools.mjs';
 import { checkSeam, seamPasses } from './seam.mjs';
@@ -53,19 +48,37 @@ import {
   WINDOW_SAMPLES,
 } from './loop-recipe.mjs';
 
-const FRAME_SAMPLES = Math.round(FRAME_SECONDS * SAMPLE_RATE);
-/** Whole analysis frames that cover one loop window. */
-const WINDOW_FRAMES = Math.ceil(WINDOW_SAMPLES / FRAME_SAMPLES);
 const HIGH_PASS_HZ = 25;
+/** A4 size decision: beds sit about 22 dB under narration, so 48 kbps is transparent in this use. */
+const REAL_BITRATE = '48k';
 /** Half a dB of headroom below the verify ceiling for AAC overshoot (river_stream measured -2.9 at -3). */
 const ENCODE_TRUE_PEAK_DBTP = -3.5;
 const FREESOUND_LEDGER_PREFIX = 'https://freesound.org/';
 
+const screenedCandidate = z.object({
+  freesoundId: z.number().int().positive(),
+  verdict: z.enum(['pass', 'reject']),
+});
+const windowSchema = z.object({
+  startSeconds: z.number().nonnegative(),
+});
+
 const curationSchema = z.object({
   category: z.string(),
-  candidates: z.array(
-    z.object({ rank: z.number().int().positive(), freesoundId: z.number().int() }),
-  ),
+  candidates: z.array(z.object({ rank: z.number().int().positive(), freesoundId: z.number().int() })),
+  screening: z
+    .object({
+      verdict: z.enum(['filled', 'unfilled']),
+      unfilledReason: z.string().nullable(),
+      chosen: z
+        .object({
+          freesoundId: z.number().int().positive(),
+          windowStartSeconds: z.number().nonnegative(),
+        })
+        .nullable(),
+      candidates: z.array(screenedCandidate.extend({ window: windowSchema.nullable() }).passthrough()),
+    })
+    .optional(),
 });
 
 const overridesSchema = z.record(
@@ -106,16 +119,31 @@ async function readJsonIfExists(path, schema, fallback) {
 const today = () => new Date().toISOString().slice(0, 10);
 const round = (value, places) => Math.round(value * 10 ** places) / 10 ** places;
 
-/** The Freesound id to build for a category: the override when there is one, else the top candidate. */
-async function chooseSoundId(target, overrides) {
+/**
+ * The Freesound id and the window start to build for a category. The screen's choice is used unless
+ * the override names another candidate, which must have passed the screen too.
+ */
+function chooseSoundId(target, curation, overrides) {
+  const screening = curation.screening;
+  if (!screening) throw new Error(`${target.id}: not screened; run npm run sounds:screen first`);
   const override = overrides[target.id];
-  if (override) return { freesoundId: override.freesoundId, how: `override: ${override.reason}` };
-  const curation = curationSchema.parse(
-    JSON.parse(await readFile(join(CURATION_DIR, `${target.id}.json`), 'utf8')),
-  );
-  const top = curation.candidates.find((candidate) => candidate.rank === 1);
-  if (!top) throw new Error(`${target.id}: no curated candidate; run sounds:curate first`);
-  return { freesoundId: top.freesoundId, how: 'top curated score' };
+  if (override) {
+    const candidate = screening.candidates.find((c) => c.freesoundId === override.freesoundId);
+    if (!candidate || candidate.verdict !== 'pass' || candidate.window === null) {
+      throw new Error(`${target.id}: override ${override.freesoundId} did not pass the screen`);
+    }
+    return {
+      freesoundId: override.freesoundId,
+      windowStartSeconds: candidate.window.startSeconds,
+      how: `override: ${override.reason}`,
+    };
+  }
+  if (screening.verdict !== 'filled' || screening.chosen === null) return null;
+  return {
+    freesoundId: screening.chosen.freesoundId,
+    windowStartSeconds: screening.chosen.windowStartSeconds,
+    how: 'screened (AudioSet clean window, CLAP re-rank)',
+  };
 }
 
 async function fetchPreview(client, sound) {
@@ -133,31 +161,23 @@ async function fetchPreview(client, sound) {
   return cached;
 }
 
-/** Cuts the steadiest loop-length window out of a decoded clip, or fails with the usable length. */
-function cutWindow(id, samples) {
-  const levels = frameLevelsDb(samples, FRAME_SAMPLES);
-  const range = usableFrameRange(levels);
-  const window = steadiestWindow(levels, range, WINDOW_FRAMES);
-  if (window === null) {
-    const usableSeconds = ((range.end - range.start) * FRAME_SAMPLES) / SAMPLE_RATE;
-    throw new Error(
-      `${id}: only ${round(usableSeconds, 1)} s usable after trimming; the loop needs 63.1 s. ` +
-        'Choose another sound in overrides.json.',
-    );
+/** Cuts the loop-length window the screen chose out of the decoded clip. */
+function cutWindow(id, samples, windowStartSeconds) {
+  const startSample = Math.round(windowStartSeconds * SAMPLE_RATE);
+  if (startSample + WINDOW_SAMPLES > samples.length) {
+    throw new Error(`${id}: the screened window at ${windowStartSeconds} s runs past the clip`);
   }
-  const startSample = window.startFrame * FRAME_SAMPLES;
   return {
     samples: samples.subarray(startSample, startSample + WINDOW_SAMPLES),
     startSeconds: startSample / SAMPLE_RATE,
-    stdDb: window.stdDb,
   };
 }
 
-async function buildBed({ client, target, sound, how, workDir }) {
+async function buildBed({ client, target, sound, windowStartSeconds, how, workDir }) {
   const id = target.id;
   const preview = await fetchPreview(client, sound);
   const decoded = await decodeMono(preview);
-  const cut = cutWindow(id, decoded);
+  const cut = cutWindow(id, decoded, windowStartSeconds);
 
   const raw = join(workDir, `${id}.window.f32`);
   const loop = join(workDir, `${id}.loop.wav`);
@@ -188,7 +208,7 @@ async function buildBed({ client, target, sound, how, workDir }) {
   ]);
   await rollLoop(loop, rolled);
   const measured = await measureLoudnorm(loop);
-  await encodeLoopAac(rolled, measured, encoded, ENCODE_TRUE_PEAK_DBTP);
+  await encodeLoopAac(rolled, measured, encoded, ENCODE_TRUE_PEAK_DBTP, REAL_BITRATE);
 
   const samples = await decodeMono(encoded);
   if (samples.length !== 2 * ROLL_SAMPLES + LOOP_SAMPLES) {
@@ -230,7 +250,7 @@ async function buildBed({ client, target, sound, how, workDir }) {
     author: sound.username,
     url: sound.url,
   };
-  return { entry, seam, how, startSeconds: round(cut.startSeconds, 1), stdDb: round(cut.stdDb, 2) };
+  return { entry, seam, how, startSeconds: round(cut.startSeconds, 1) };
 }
 
 /** Freesound rows are replaced on each build. Base-pack and hand-added rows are kept. */
@@ -279,15 +299,21 @@ async function main() {
   const targets = FREESOUND_TARGETS.filter((target) => only === null || only.has(target.id));
 
   const choices = [];
+  const unfilled = [];
   for (const target of targets) {
-    const { freesoundId, how } = await chooseSoundId(target, overrides);
-    choices.push({ id: target.id, freesoundId, how, target });
+    const curation = curationSchema.parse(
+      JSON.parse(await readFile(join(CURATION_DIR, `${target.id}.json`), 'utf8')),
+    );
+    const choice = chooseSoundId(target, curation, overrides);
+    if (choice === null) unfilled.push(target.id);
+    else choices.push({ id: target.id, ...choice, target });
   }
   assertNoDuplicateSounds(choices);
 
   await mkdir(REAL_DIR, { recursive: true });
   const existing = await readJsonIfExists(REAL_MANIFEST_PATH, manifestSchema, []);
-  const rows = new Map(existing.map((entry) => [entry.id, entry]));
+  // A full build replaces the manifest; a subset build keeps the rows it does not rebuild.
+  const rows = new Map(only === null ? [] : existing.map((entry) => [entry.id, entry]));
   const workDir = await mkdtemp(join(tmpdir(), 'lectio-freesound-'));
   try {
     for (const choice of choices) {
@@ -302,6 +328,7 @@ async function main() {
         client,
         target: choice.target,
         sound,
+        windowStartSeconds: choice.windowStartSeconds,
         how: choice.how,
         workDir,
       });
@@ -319,12 +346,22 @@ async function main() {
   const manifest = FREESOUND_TARGETS.map((target) => rows.get(target.id)).filter(
     (entry) => entry !== undefined,
   );
+  if (only === null) await removeStaleFiles(manifest);
   await writeFile(REAL_MANIFEST_PATH, `${JSON.stringify(manifest, null, 2)}\n`);
   await updateLedger(manifest);
   const total = manifest.reduce((sum, entry) => sum + entry.bytes, 0);
   console.log(
     `wrote ${manifest.length} real beds, ${total} bytes total (${FREESOUND_BUILD_SCRIPT})`,
   );
+  if (only === null) console.log(`unfilled (no clean candidate): ${unfilled.join(', ') || 'none'}`);
+}
+
+/** A full build removes real/*.m4a files that no manifest row names, so nothing stale ships. */
+async function removeStaleFiles(manifest) {
+  const keep = new Set(manifest.map((entry) => entry.file));
+  for (const name of await readdir(REAL_DIR)) {
+    if (name.endsWith('.m4a') && !keep.has(name)) await rm(join(REAL_DIR, name));
+  }
 }
 
 main().catch((err) => {

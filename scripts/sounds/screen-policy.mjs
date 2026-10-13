@@ -18,59 +18,80 @@ export const REQUIRED_FRACTION = 0.5;
 /** The 63 s window of the loop recipe, rounded up to whole one-second frames. */
 export const WINDOW_FRAMES = Math.ceil(WINDOW_SAMPLES / SAMPLE_RATE);
 
-/** Speech-like classes: denied unless the category is made of voices (crowds, cafes, villages). */
-export const VOICE_CLASSES = [
-  'Speech',
-  'Male speech, man speaking',
-  'Female speech, woman speaking',
-  'Child speech, kid speaking',
-  'Conversation',
-  'Narration, monologue',
-  'Shout',
-  'Yell',
-  'Bellow',
-  'Screaming',
-  'Singing',
-];
+/**
+ * AudioSet families, matched on the display names. A family covers its parent class and every child
+ * (`Civil defense siren` is a child of `Siren`, and the tagger scores each child separately). A bed
+ * denies a family unless its target exempts the family or the single label (freesound-targets.mjs).
+ */
+export const FAMILY_PATTERNS = {
+  alarms: /siren|alarm|foghorn|air horn|vehicle horn|car horn|train horn|train whistle|steam whistle|whistle|honk|smoke detector/i,
+  percussion: /drum|cymbal|tambourine|rattle \(instrument\)|bell|chime|gong|xylophone|marimba|vibraphone|jingle/i,
+  brass: /brass|trumpet|trombone|tuba|french horn|saxophone|bugle/i,
+  music: /music|musical|instrument|guitar|piano|organ|synthesi|keyboard \(musical\)|string|violin|cello|bass(?! drum)|flute|harp|banjo|harmonica|accordion|bagpipe|ukulele|clarinet|woodwind|ringtone/i,
+  voices: /speech|speaking|talk|babbl|whisper|shout|yell|bellow|scream|laugh|singing|\bsing\b|choir|chant|conversation|narration|hubbub|chatter|cheer|crowd|applause|dialogue|monologue/i,
+  vehicles: /vehicle|\bcars?\b|car passing|trucks?|\bbus\b|motorcycle|motorboat|motor vehicle|\bboats?\b|\bships?\b|sailboat|rowboat|traffic|\btram\b|\btrains?\b|rail transport|railroad|subway|locomotive|aircraft|airplane|fixed-wing|helicopter|\bjet\b|propeller|race car|tyre|tire|skid|reversing/i,
+  engines: /engine/i,
+  tools: /jackhammer|chainsaw|power tool|drill|sawing|sewing|microwave|dental|generator|\btools\b|machine(?! gun)|mower|vacuum|blender|hair dryer/i,
+  phones_media: /telephone|phone|ringtone|dial|busy signal|television|radio|beep|bleep/i,
+  thunder: /thunder/i,
+  gunfire: /gunshot|gunfire|machine gun|artillery|explosion|fireworks|firecracker|cannon|bang/i,
+};
 
-/** Denied for every bed unless the category exempts it (see freesound-targets.mjs). */
-export const BASE_DENY_CLASSES = [
-  'Music',
-  'Musical instrument',
-  'Siren',
-  'Alarm',
-  'Beep, bleep',
-  'Television',
-  'Radio',
-  'Telephone',
-  'Vehicle',
-  'Car',
-  'Engine',
-  'Aircraft',
-  'Train',
-  'Motorcycle',
-  'Thunder',
-];
+/** Families every bed denies. `voices` is lifted for voice categories (crowds, cafes, chants). */
+const DENIED_FAMILIES = Object.keys(FAMILY_PATTERNS);
+
+/** The AudioSet display names from the label CSV (class_labels_indices.csv: index, mid, display_name). */
+export function parseAudiosetNames(csvText) {
+  return csvText
+    .split('\n')
+    .slice(1)
+    .map((line) => {
+      const quoted = /^\d+,[^,]*,"(.*)"\s*$/.exec(line);
+      return quoted ? quoted[1] : line.split(',').slice(2).join(',').trim();
+    })
+    .filter((name) => name.length > 0);
+}
 
 /**
- * The classes a target denies and requires, after its exemptions. `allowsVoices` lifts the voice
- * classes. Pure function of the target record.
+ * The labels a target's policy denies: every name whose family is denied for it, minus its exemptions.
+ * `exempt` holds family names and exact labels. Pure over the name list.
  */
-export function policyFor(target) {
+export function familiesFor(target) {
   const exempt = new Set(target.screen.exempt);
-  const denied = [...BASE_DENY_CLASSES, ...(target.allowsVoices ? [] : VOICE_CLASSES)];
-  const deny = [...new Set(denied)].filter((label) => !exempt.has(label));
-  return { deny, required: target.screen.required, clap: target.screen.clap };
+  return DENIED_FAMILIES.filter(
+    (family) => !exempt.has(family) && !(family === 'voices' && target.allowsVoices),
+  );
+}
+
+export function denyLabelsFor(target, names) {
+  const exempt = new Set(target.screen.exempt);
+  const active = new Set(familiesFor(target));
+  return names.filter((name) => {
+    if (exempt.has(name)) return false;
+    return DENIED_FAMILIES.some((family) => active.has(family) && FAMILY_PATTERNS[family].test(name));
+  });
+}
+
+/**
+ * A target's screening policy: the denied labels and the required groups, checked against the AudioSet
+ * name list. A required name that is not an AudioSet label is an error, so it can never be inert.
+ */
+export function policyFor(target, names) {
+  const known = new Set(names);
+  const required = target.screen.required;
+  for (const label of required.flat()) {
+    if (!known.has(label)) throw new Error(`${target.id}: "${label}" is not an AudioSet label`);
+  }
+  return {
+    deny: denyLabelsFor(target, names),
+    required,
+    clap: target.screen.clap,
+  };
 }
 
 /** Every AudioSet display name a target's policy reads. tag.py is asked for exactly these. */
 export function labelsFor(policy) {
   return [...new Set([...policy.deny, ...policy.required.flat()])];
-}
-
-/** Maps each AudioSet label to its column in a tag file's `perFrame` rows. */
-function columnOf(labels) {
-  return new Map(labels.map((label, index) => [label, index]));
 }
 
 /** For each frame, the denied classes at or above the frame threshold (empty when the frame is clean). */

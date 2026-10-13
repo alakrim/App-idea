@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// Searches Freesound for each A3 target and writes the top five CC0 candidates, with the reasons for
-// their scores, to assets/ambience/curation/<category>.json (reviewed in git).
+// Searches Freesound for each bed target and writes the top eight CC0 candidates, with the reasons for
+// their scores, to assets/ambience/curation/<category>.json (reviewed in git). A re-curate replaces the
+// candidates, so it drops any earlier `screening` record: run npm run sounds:screen again afterwards.
 //
 // Run: FREESOUND_API_KEY=$(cat ~/.config/lectio/freesound.key) npm run sounds:curate
 // Optional: -- --only=light_rain,heavy_rain to re-curate a subset.
@@ -15,7 +16,7 @@ import { rankCandidates } from './freesound-score.mjs';
 import { FREESOUND_TARGETS } from './freesound-targets.mjs';
 import { CC0_FILTER, CURATION_DIR } from './pack-spec.mjs';
 
-const TOP_CANDIDATES = 5;
+const TOP_CANDIDATES = 8;
 const PAGE_SIZE = 30;
 const CURATED_ON = new Date().toISOString().slice(0, 10);
 
@@ -31,7 +32,6 @@ async function curateTarget(client, target) {
   const ranked = rankCandidates([...pool.values()], target, TOP_CANDIDATES);
   return {
     category: target.id,
-    rank: target.rank,
     curatedOn: CURATED_ON,
     queries: target.queries,
     poolSize: pool.size,
