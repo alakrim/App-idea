@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { AmbienceCue, Chapter, Job, PipelineError, Series, Stage } from '@/core/domain';
 import type { ChapterProgress } from '@/features/pipeline/facade';
 import { formatDuration, formatUsd, formatWordCount } from '@/features/shared/format';
+import { useNow } from '@/features/shared/use-now';
 import { Badge, type BadgeTone } from '@/ui/badge';
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
@@ -32,6 +33,9 @@ const STATE_BADGE: Record<ReturnType<typeof rowStateOf>, { label: string; tone: 
   ready: { label: 'Ready', tone: 'success' },
   failed: { label: 'Stopped', tone: 'danger' },
 };
+
+/** How often the processing card refreshes its elapsed time. */
+const LIVE_TICK_MS = 1000;
 
 const STAGE_NAMES: Readonly<Record<Stage, string>> = {
   extract: 'Extract',
@@ -83,6 +87,7 @@ export function ChapterView({
   const scroll = useSentenceScroll({ focusSentence, paragraphs, reduced, scrollTo: scrollToY });
   const highlight = useSentenceFocus(focusSentence, reduced);
   const state = rowStateOf(chapter, progress);
+  const now = useNow(LIVE_TICK_MS, state === 'processing');
   const badge = STATE_BADGE[state];
   const translated = isTranslated(paragraphs);
   const effectiveMode: ReadingMode = translated ? mode : 'original';
@@ -137,7 +142,7 @@ export function ChapterView({
         {state === 'failed' ? (
           <ErrorState
             title="Processing stopped"
-            message={failure?.message ?? statusLine(state, chapter, progress, failure)}
+            message={failure?.message ?? statusLine(state, chapter, progress, failure, now)}
             retryLabel="Try again"
             onRetry={() => onRetry(chapter.id)}
           />
@@ -147,6 +152,11 @@ export function ChapterView({
           <Section title="Processing" trailing={`${formatUsd(spent)} spent`}>
             <Card>
               <StageStepper steps={steps} />
+              {state === 'processing' ? (
+                <Text variant="caption" tone="muted" style={styles.live}>
+                  {statusLine(state, chapter, progress, failure, now)}
+                </Text>
+              ) : null}
             </Card>
             <Card style={styles.flush}>
               {jobs
@@ -219,7 +229,13 @@ function stageOrder(stage: Stage): number {
 
 /** Once a chapter is no longer live, the stored jobs say where each stage ended. */
 function jobsAsStages(jobs: readonly Job[]): ChapterProgress['stages'] {
-  return jobs.map((job) => ({ stage: job.stage, status: job.status, progress: job.progress }));
+  return jobs.map((job) => ({
+    stage: job.stage,
+    status: job.status,
+    progress: job.progress,
+    since: null,
+    passages: null,
+  }));
 }
 
 interface SectionProps {
@@ -282,6 +298,9 @@ const styles = StyleSheet.create({
   flush: {
     padding: 0,
     overflow: 'hidden',
+  },
+  live: {
+    marginTop: space.md,
   },
   costRow: {
     flexDirection: 'row',

@@ -104,12 +104,12 @@ export function libraryEntriesFixture(): LibraryEntry[] {
 }
 
 const STAGES: StageProgress[] = [
-  { stage: 'extract', status: 'done', progress: 1 },
-  { stage: 'clean', status: 'done', progress: 1 },
-  { stage: 'segment', status: 'done', progress: 1 },
-  { stage: 'analyze', status: 'running', progress: 0.42 },
-  { stage: 'translate', status: 'pending', progress: 0 },
-  { stage: 'narrate', status: 'pending', progress: 0 },
+  { stage: 'extract', status: 'done', progress: 1, since: null, passages: null },
+  { stage: 'clean', status: 'done', progress: 1, since: null, passages: null },
+  { stage: 'segment', status: 'done', progress: 1, since: null, passages: null },
+  { stage: 'analyze', status: 'running', progress: 0.42, since: null, passages: null },
+  { stage: 'translate', status: 'pending', progress: 0, since: null, passages: null },
+  { stage: 'narrate', status: 'pending', progress: 0, since: null, passages: null },
 ];
 
 function live(
@@ -127,6 +127,7 @@ function live(
     totalSegments: 4,
     costUsdSoFar: 0.012,
     error,
+    reconnecting: false,
   };
 }
 

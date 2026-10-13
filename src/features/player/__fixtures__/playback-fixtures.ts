@@ -160,6 +160,7 @@ export function fakePipeline() {
         totalSegments: null,
         costUsdSoFar: 0,
         error: null,
+        reconnecting: false,
       };
       latest.set(chapterId, progress);
       for (const listener of [...(listeners.get(chapterId) ?? [])]) listener(progress);

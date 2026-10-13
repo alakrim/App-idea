@@ -20,6 +20,7 @@ import { chapterRepo } from '@/db/repos/chapter-repo';
 import { jobRepo } from '@/db/repos/job-repo';
 import { seriesRepo } from '@/db/repos/series-repo';
 import { settingsRepo } from '@/db/repos/settings-repo';
+import { stageActivityRepo } from '@/db/repos/stage-activity-repo';
 import { usageRepo } from '@/db/repos/usage-repo';
 import type { Db } from '@/db/types';
 import type {
@@ -136,7 +137,7 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
         const job = jobs.get(stage);
         const status: JobStatus = !job || job.status === 'running' ? 'pending' : job.status;
         const progress = status === 'done' || status === 'skipped' ? 1 : (job?.progress ?? 0);
-        return [stage, { status, progress }];
+        return [stage, { status, progress, since: null, passages: null }];
       }),
     ) as TrackedChapter['stages'];
     const failed = STAGE_ORDER.map((stage) => jobs.get(stage)).find(
@@ -152,6 +153,7 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
       costBaseUsd: ledgerTotalOf(chapterId),
       runCostUsd: 0,
       error: failed?.error ?? null,
+      reconnecting: false,
     };
   }
 
@@ -183,13 +185,40 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
     for (const listener of listeners) listener(current);
   }
 
+  /** What Diagnostics keeps: when each stage last moved, and how often it stalled or went stale. */
+  function recordActivity(event: PipelineEvent, at: number): void {
+    switch (event.type) {
+      case 'stage':
+        if (event.status === 'running') {
+          stageActivityRepo.startStage(db, event.chapterId, event.stage, at);
+        } else {
+          stageActivityRepo.touch(db, event.chapterId, event.stage, at);
+        }
+        return;
+      case 'progress':
+      case 'cost':
+        stageActivityRepo.touch(db, event.chapterId, event.stage, at);
+        return;
+      case 'stall':
+        stageActivityRepo.countStall(db, event.chapterId, event.stage, at);
+        return;
+      case 'staleAbort':
+        stageActivityRepo.countStaleAbort(db, event.chapterId, event.stage, at);
+        return;
+      default:
+        return;
+    }
+  }
+
   function handleEvent(event: PipelineEvent): void {
     const chapterId = event.chapterId;
     const current = trackedOf(chapterId);
+    const at = clock.now();
     tracked.set(
       chapterId,
-      reduceEvent(current, event, (stage) => jobStatusOf(chapterId, stage)),
+      reduceEvent(current, event, (stage) => jobStatusOf(chapterId, stage), at),
     );
+    recordActivity(event, at);
     if (
       event.type === 'done' ||
       (event.type === 'stage' && ['failed', 'cancelled'].includes(event.status))

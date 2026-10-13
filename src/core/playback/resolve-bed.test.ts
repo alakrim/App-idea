@@ -77,3 +77,62 @@ describe('resolveBed', () => {
     }
   });
 });
+
+describe('resolveBed with a chapter era (A4)', () => {
+  const EVERYTHING: ReadonlySet<string> = new Set([
+    'thunderstorm',
+    'heavy_rain',
+    'light_rain',
+    'base_rain',
+    'city_street_day',
+    'crowd_murmur',
+    'base_crowd',
+    'village_square',
+    'library_quiet',
+    'base_space_hum',
+  ]);
+
+  it('plays a timeless thunderstorm in a historic chapter, never a modern bed', () => {
+    expect(resolveBed('thunderstorm', EVERYTHING, 'historic')).toBe('thunderstorm');
+  });
+
+  it('plays the historic village square for a medieval town, never city_street_day', () => {
+    expect(resolveBed('village_square', EVERYTHING, 'historic')).toBe('village_square');
+    expect(resolveBed('city_street_day', EVERYTHING, 'historic')).not.toBe('city_street_day');
+  });
+
+  it('walks past a modern bed to an era-safe link on its chain, and never picks the modern bed', () => {
+    // city_street_day -> crowd_murmur (historic) -> base_crowd (historic); both fit a historic chapter.
+    expect(resolveBed('city_street_day', new Set(['city_street_day', 'crowd_murmur']), 'historic')).toBe(
+      'crowd_murmur',
+    );
+  });
+
+  it('skips a cue when no era-safe bed is installed on its chain', () => {
+    expect(resolveBed('office_hum', new Set(['office_hum']), 'historic')).toBeNull();
+  });
+
+  it('accepts a historic bed in a modern chapter, and a modern bed in a futuristic one', () => {
+    expect(resolveBed('crowd_murmur', new Set(['crowd_murmur']), 'modern')).toBe('crowd_murmur');
+    expect(resolveBed('city_street_day', new Set(['city_street_day']), 'futuristic')).toBe(
+      'city_street_day',
+    );
+  });
+
+  it('keeps a timeless bed in a timeless chapter and skips a historic one there', () => {
+    expect(resolveBed('heavy_rain', new Set(['heavy_rain']), 'timeless')).toBe('heavy_rain');
+    expect(resolveBed('crowd_murmur', new Set(['crowd_murmur']), 'timeless')).toBeNull();
+  });
+
+  it('treats an unknown chapter era as no constraint, the same as before A4', () => {
+    expect(resolveBed('city_street_day', new Set(['city_street_day']), null)).toBe(
+      'city_street_day',
+    );
+    expect(resolveBed('city_street_day', new Set(['city_street_day']))).toBe('city_street_day');
+  });
+
+  it('still returns null for an unknown id in an era-constrained chapter', () => {
+    expect(resolveBed('dragon_roar', EVERYTHING, 'historic')).toBeNull();
+  });
+});
+

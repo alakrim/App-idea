@@ -9,11 +9,21 @@ import type { PipelineError, Stage } from '@/core/domain';
 
 export type JobStatus = 'pending' | 'running' | 'done' | 'failed' | 'skipped' | 'cancelled';
 
+/** Passages of a stage that narrates in passages: how many are saved, and how many in total. */
+export interface PassageProgress {
+  done: number;
+  total: number;
+}
+
 export interface StageProgress {
   stage: Stage;
   status: JobStatus;
   /** 0..1 within the stage. */
   progress: number;
+  /** When the stage started running, in epoch milliseconds. Null unless it is running. */
+  since: number | null;
+  /** Passages of a narration stage, or null for a stage that has none. */
+  passages: PassageProgress | null;
 }
 
 export interface ChapterProgress {
@@ -28,6 +38,8 @@ export interface ChapterProgress {
   totalSegments: number | null;
   costUsdSoFar: number;
   error: PipelineError | null;
+  /** The app came back to the foreground while this chapter was running, and no progress has come since. */
+  reconnecting: boolean;
 }
 
 export interface CostLine {

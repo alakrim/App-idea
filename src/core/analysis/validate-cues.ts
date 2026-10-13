@@ -1,4 +1,4 @@
-import { getCategory, isEnabledKind } from './ambience-taxonomy';
+import { type AmbienceEra, bedFitsEra, getCategory, isEnabledKind } from './ambience-taxonomy';
 import { CUE_LIMITS } from './limits';
 import { ambienceCategoryIdSchema, rawCueSchema } from './schemas';
 import { estimateSpeechSeconds } from '../text/speech-rate';
@@ -10,6 +10,7 @@ export type CueDropReason =
   | 'malformed'
   | 'unknown_category'
   | 'category_not_enabled'
+  | 'era_conflict'
   | 'low_confidence'
   | 'invalid_span'
   | 'too_short'
@@ -28,6 +29,8 @@ export interface CueValidationContext {
   readonly sentenceCount: number;
   /** Chapter word count from estimateWordCount (CJK-aware), used by the density cap. */
   readonly wordCount: number;
+  /** The chapter's era (A4). Null or absent means unknown, so no cue is dropped for its era. */
+  readonly chapterEra?: AmbienceEra | null;
   /** The chapter's sentences (or every sentence of the chapter), used to estimate narration time. */
   readonly sentences: readonly SentenceInput[];
 }
@@ -106,6 +109,10 @@ export function validateCues(
     }
     if (!isEnabledKind(category.kind)) {
       drop(raw, 'category_not_enabled');
+      continue;
+    }
+    if (!bedFitsEra(category.era, ctx.chapterEra ?? null)) {
+      drop(raw, 'era_conflict');
       continue;
     }
 

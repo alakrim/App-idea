@@ -1,3 +1,5 @@
+import { createConnection } from '../network/connection';
+
 import { chatJson, chatRaw, chatText } from './chat';
 import { validateKey } from './key';
 import { createModelCatalog } from './models';
@@ -13,6 +15,7 @@ import type {
   ChatTextInput,
   ChatTextResult,
 } from './chat';
+import type { Connection } from '../network/connection';
 import type { KeyCheck } from './key';
 import type { ModelCatalog } from './models';
 import type { PdfInput, PdfResult } from './pdf';
@@ -34,6 +37,8 @@ export interface OpenRouterClientOptions {
   sleep?: (ms: number) => Promise<void>;
   random?: () => number;
   now?: () => number;
+  /** The connection whose stale requests are retried at once. Defaults to a private one. */
+  connection?: Pick<Connection, 'register'>;
 }
 
 export interface OpenRouterClient {
@@ -68,6 +73,7 @@ export function createOpenRouterClient(options: OpenRouterClientOptions): OpenRo
     sleep: options.sleep ?? ((ms) => new Promise<void>((resolve) => setTimeout(resolve, ms))),
     random: options.random ?? Math.random,
     now,
+    connection: options.connection ?? createConnection(),
   });
   const models = createModelCatalog({
     transport,

@@ -133,6 +133,12 @@ function describeEvent(event: PipelineEvent): string | null {
       return 'done';
     case 'progress':
       return null;
+    case 'stall':
+      return `stall ${event.stage} #${event.count}`;
+    case 'staleAbort':
+      return `staleAbort ${event.stage}`;
+    case 'reconnecting':
+      return 'reconnecting';
   }
 }
 

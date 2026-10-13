@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import type { BasePackId } from '@/core/analysis/ambience-taxonomy';
+import type { AmbienceEra, BasePackId } from '@/core/analysis/ambience-taxonomy';
 import { resolveBed } from '@/core/playback/resolve-bed';
 
 const sharedManifestFields = {
@@ -126,9 +126,13 @@ export const INSTALLED_BEDS: ReadonlyMap<string, InstalledBed> = loadInstalledBe
 
 /**
  * The bed to play for an ambience category. The category's own installed bed comes first, so a real
- * recording wins over the fallback chain (ADR-0005, A3). Null skips the cue.
+ * recording wins over the fallback chain (ADR-0005, A3). A bed whose era conflicts with the chapter's
+ * era is never picked (A4, see resolveBed). Null skips the cue.
  */
-export function resolveInstalledBed(categoryId: string): InstalledBed | null {
-  const id = resolveBed(categoryId, new Set(INSTALLED_BEDS.keys()));
+export function resolveInstalledBed(
+  categoryId: string,
+  chapterEra: AmbienceEra | null = null,
+): InstalledBed | null {
+  const id = resolveBed(categoryId, new Set(INSTALLED_BEDS.keys()), chapterEra);
   return id === null ? null : (INSTALLED_BEDS.get(id) ?? null);
 }

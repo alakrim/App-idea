@@ -84,12 +84,19 @@ function idleSnapshot(chapterId: string): ChapterProgress {
   return {
     chapterId,
     state: 'idle',
-    stages: STAGES.map((stage) => ({ stage, status: 'pending', progress: 0 })),
+    stages: STAGES.map((stage) => ({
+      stage,
+      status: 'pending',
+      progress: 0,
+      since: null,
+      passages: null,
+    })),
     overall: 0,
     readySegments: 0,
     totalSegments: null,
     costUsdSoFar: 0,
     error: null,
+    reconnecting: false,
   };
 }
 
@@ -137,6 +144,14 @@ export function createFakePipeline(options: FakePipelineOptions): PipelineFacade
       stage,
       status: run.slots[stage].status,
       progress: run.slots[stage].progress,
+      since: null,
+      passages:
+        stage === 'narrate' && run.slots[stage].status === 'running'
+          ? {
+              done: Math.floor(run.slots[stage].progress * NARRATION_SEGMENTS),
+              total: NARRATION_SEGMENTS,
+            }
+          : null,
     }));
     const narrate = run.slots.narrate;
     return {
@@ -154,6 +169,7 @@ export function createFakePipeline(options: FakePipelineOptions): PipelineFacade
         0,
       ),
       error: run.error,
+      reconnecting: false,
     };
   }
 

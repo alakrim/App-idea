@@ -3,6 +3,7 @@ import { stripNulls } from './strip-nulls';
 import { parseJsonReply } from '../llm/json';
 import { addUsage } from '../llm/transport';
 
+import type { AmbienceEra } from './ambience-taxonomy';
 import type { MemoryFields } from './types';
 import type { LlmTransport, LlmUsage } from '../llm/transport';
 import type { ZodError } from 'zod';
@@ -11,6 +12,8 @@ export interface AnalysisResponse {
   readonly memory: MemoryFields;
   /** Cues as the model sent them. validateCues decides which survive. */
   readonly cues: unknown[];
+  /** The era of this passage's setting, or null when the text does not say (A4). */
+  readonly era: AmbienceEra | null;
 }
 
 /** One analysis call's result, with the usage of every model call it made, repairs included. */
@@ -54,7 +57,11 @@ export function parseAnalysisReply(text: string): ParseOutcome {
   if (!parsed.success) return { ok: false, reason: summarizeIssues(parsed.error) };
   return {
     ok: true,
-    value: { memory: normalizeMemory(stripNulls(parsed.data.memory)), cues: parsed.data.cues },
+    value: {
+      memory: normalizeMemory(stripNulls(parsed.data.memory)),
+      cues: parsed.data.cues,
+      era: parsed.data.setting?.era ?? null,
+    },
   };
 }
 

@@ -43,6 +43,8 @@ export const SettingsSchema = z.object({
   reading: ReadingSettingsSchema,
   onboardingDone: z.boolean(),
   contentNoticeAccepted: z.boolean(),
+  /** Set once the app has told the user that chapter preparation pauses in the background. */
+  backgroundNoticeShown: z.boolean(),
 });
 export type Settings = z.infer<typeof SettingsSchema>;
 

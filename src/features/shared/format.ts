@@ -11,6 +11,13 @@ export function formatDuration(ms: number): string {
   return hours > 0 ? `${hours} h ${rest} m` : `${rest} m`;
 }
 
+/** A step's elapsed time: "42 s", or "1 m 05 s" from a minute on. */
+export function formatElapsed(ms: number): string {
+  const seconds = Math.max(0, Math.floor(ms / 1000));
+  if (seconds < 60) return `${seconds} s`;
+  return `${Math.floor(seconds / 60)} m ${String(seconds % 60).padStart(2, '0')} s`;
+}
+
 export function formatChapterCount(count: number): string {
   return count === 1 ? '1 chapter' : `${count} chapters`;
 }

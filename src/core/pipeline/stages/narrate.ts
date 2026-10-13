@@ -195,6 +195,14 @@ async function execute(ctx: StageContext, plan: Plan): Promise<void> {
   }
 
   const total = segments.length;
+  // Announce the passages already saved, so a resumed run starts at the right count.
+  ctx.emit({
+    type: 'progress',
+    chapterId: ctx.chapterId,
+    stage: 'narrate',
+    progress: firstStale / total,
+    passages: { done: firstStale, total },
+  });
   await runOrdered(
     segments.slice(firstStale),
     (segment, _index, signal) => narrateSegment(ctx, plan, segment, total, signal),
@@ -311,6 +319,7 @@ async function saveSegment(
     chapterId: ctx.chapterId,
     stage: 'narrate',
     progress: (segment.idx + 1) / total,
+    passages: { done: segment.idx + 1, total },
   });
 }
 

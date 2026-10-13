@@ -12,6 +12,8 @@ import { settingsRepo } from '@/db/repos/settings-repo';
 import type { Db } from '@/db/types';
 import type { PipelineFacade } from '@/features/pipeline/facade';
 import type { OpenRouterClient } from '@/services/openrouter';
+import { createConnection } from '@/services/network/connection';
+import type { Connection } from '@/services/network/connection';
 
 import { createAudioFiles } from './adapters/audio-files';
 import { createCatalog } from './adapters/catalog';
@@ -33,6 +35,8 @@ export interface PipelineRuntimeOptions {
   readonly webview: WebViewExtractor;
   /** The page fetcher's transport. Defaults to the global fetch. */
   readonly fetchImpl?: typeof fetch;
+  /** The app's connection, shared with the OpenRouter client. Defaults to a private one. */
+  readonly connection?: Connection;
   readonly clock?: Clock;
   readonly ids?: IdGenerator;
 }
@@ -54,12 +58,13 @@ export function createPipelinePorts(options: PipelineRuntimeOptions): PipelinePo
   const clock: Clock = options.clock ?? { now: () => Date.now() };
   const ids = options.ids ?? createIdGenerator({ now: clock.now });
   const { db, files, openrouter } = options;
+  const connection = options.connection ?? createConnection();
   const audio = createAudioFiles(files);
   return {
     chapters: createChapterStore({ db, clock, ids, files }),
     jobs: createJobStore({ db, clock }),
     ledger: createUsageLedger(db),
-    fetcher: createFetcher({ fetchImpl: options.fetchImpl }),
+    fetcher: createFetcher({ fetchImpl: options.fetchImpl, connection }),
     webview: options.webview,
     pdf: createPdfTextSource({
       openrouter,
@@ -69,6 +74,7 @@ export function createPipelinePorts(options: PipelineRuntimeOptions): PipelinePo
     tts: createTts({ openrouter }),
     audio,
     llm: createLlmPort({ openrouter }),
+    network: connection,
     catalog: createCatalog({ openrouter }),
     clock,
     ids,

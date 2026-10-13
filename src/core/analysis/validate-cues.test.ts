@@ -322,3 +322,37 @@ describe('validateCues: minimum span by script (text/speech-rate)', () => {
     expect(cues).toHaveLength(1);
   });
 });
+
+describe('validateCues: chapter era (A4)', () => {
+  it('drops a cue whose category era conflicts with the chapter era', () => {
+    const { cues, dropped } = validateCues(
+      [cue({ category: 'city_street_day' })],
+      ctx({ chapterEra: 'historic' }),
+    );
+    expect(cues).toEqual([]);
+    expect(dropped.map((d) => d.reason)).toEqual(['era_conflict']);
+  });
+
+  it('keeps a timeless cue in every chapter era', () => {
+    for (const era of ['timeless', 'historic', 'modern', 'futuristic'] as const) {
+      const { cues } = validateCues([cue({ category: 'thunderstorm' })], ctx({ chapterEra: era }));
+      expect({ era, kept: cues.length }).toEqual({ era, kept: 1 });
+    }
+  });
+
+  it('keeps a historic village cue in a historic chapter, and drops a modern street cue there', () => {
+    const { cues, dropped } = validateCues(
+      [cue({ category: 'village_square', startSentence: 0, endSentence: 3 }), cue({ category: 'city_street_day', startSentence: 10, endSentence: 13 })],
+      ctx({ chapterEra: 'historic' }),
+    );
+    expect(cues.map((c) => c.category)).toEqual(['village_square']);
+    expect(dropped.map((d) => d.reason)).toEqual(['era_conflict']);
+  });
+
+  it('keeps every cue when the chapter era is unknown', () => {
+    const { cues, dropped } = validateCues([cue({ category: 'city_street_day' })], ctx({ chapterEra: null }));
+    expect(dropped).toEqual([]);
+    expect(cues).toHaveLength(1);
+  });
+});
+

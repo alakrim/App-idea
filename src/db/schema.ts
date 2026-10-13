@@ -315,6 +315,24 @@ export const vocab = sqliteTable(
   ],
 );
 
+/**
+ * Live activity of a chapter's stage, for Diagnostics: when it last moved, and how often it stalled
+ * or had a request retired as stale. A stage's counts start again when the stage starts running.
+ */
+export const stageActivity = sqliteTable(
+  'stage_activity',
+  {
+    chapterId: text('chapter_id')
+      .notNull()
+      .references(() => chapters.id, { onDelete: 'cascade' }),
+    stage: text('stage').$type<Stage>().notNull(),
+    lastActivityAt: integer('last_activity_at').notNull(),
+    stallCount: integer('stall_count').notNull().default(0),
+    staleAbortCount: integer('stale_abort_count').notNull().default(0),
+  },
+  (t) => [primaryKey({ columns: [t.chapterId, t.stage] })],
+);
+
 export const settings = sqliteTable('settings', {
   key: text('key').primaryKey(),
   /** JSON: any value. Validated by the caller that owns the key. */
@@ -334,6 +352,7 @@ export const schema = {
   entityFacts,
   audioSegments,
   jobs,
+  stageActivity,
   usageLedger,
   listeningPositions,
   qaMessages,

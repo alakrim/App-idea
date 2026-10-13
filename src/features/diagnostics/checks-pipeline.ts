@@ -1,6 +1,7 @@
 import { audioSegmentRepo } from '@/db/repos/audio-segment-repo';
 import { chapterRepo } from '@/db/repos/chapter-repo';
 import { jobRepo } from '@/db/repos/job-repo';
+import { stageActivityRepo } from '@/db/repos/stage-activity-repo';
 import type { Db } from '@/db/types';
 
 import { RECENT_CHAPTER_LIMIT, summarizeRecentChapter } from './recent-chapters';
@@ -42,6 +43,7 @@ export function checkRecentChapters(db: Db): ProbeOutcome {
         chapter,
         jobs: jobRepo.listForChapter(db, chapterId),
         segments: audioSegmentRepo.listByChapter(db, chapterId),
+        activity: stageActivityRepo.listForChapter(db, chapterId),
       }),
     ];
   });

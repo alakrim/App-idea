@@ -6,7 +6,7 @@
 import { z } from 'zod';
 
 import { RUN_STAGES } from '@/core/domain';
-import type { ChapterStatus, Job } from '@/core/domain';
+import type { ChapterStatus, Job, Stage } from '@/core/domain';
 
 import type { JsonValue } from './probe';
 
@@ -20,6 +20,10 @@ export const StageTimingSchema = z.object({
   status: z.string(),
   /** Wall-clock seconds from start to finish, or null when the job has no finished run. */
   seconds: z.number().nullable(),
+  /** Epoch milliseconds of the stage's last activity, or null when it never moved. */
+  lastActivityAt: z.number().nullable(),
+  stallCount: z.number().int().nonnegative(),
+  staleAbortCount: z.number().int().nonnegative(),
 });
 
 export const RecentChapterSchema = z.object({
@@ -38,19 +42,35 @@ export const RecentChaptersValuesSchema = z.object({
 export type StageTiming = z.infer<typeof StageTimingSchema>;
 export type RecentChapter = z.infer<typeof RecentChapterSchema>;
 
+/** A stage's live activity, as the pipeline recorded it. */
+export interface StageActivityInput {
+  readonly stage: Stage;
+  readonly lastActivityAt: number;
+  readonly stallCount: number;
+  readonly staleAbortCount: number;
+}
+
 export interface RecentChapterInput {
   readonly chapter: { readonly id: string; readonly title: string; readonly status: ChapterStatus };
   readonly jobs: readonly Job[];
   readonly segments: readonly { readonly durationMs: number }[];
+  readonly activity: readonly StageActivityInput[];
 }
 
 /** One chapter's row in the block: every run stage in order, and the audio it has. */
 export function summarizeRecentChapter(input: RecentChapterInput): RecentChapter {
   const jobByStage = new Map(input.jobs.map((job) => [job.stage, job]));
+  const activityByStage = new Map(input.activity.map((entry) => [entry.stage, entry]));
   const stages = RUN_STAGES.map((stage): StageTiming => {
     const job = jobByStage.get(stage);
-    if (!job) return { stage, status: 'not run', seconds: null };
-    return { stage, status: job.status, seconds: stageSeconds(job) };
+    const activity = activityByStage.get(stage);
+    const live = {
+      lastActivityAt: activity?.lastActivityAt ?? null,
+      stallCount: activity?.stallCount ?? 0,
+      staleAbortCount: activity?.staleAbortCount ?? 0,
+    };
+    if (!job) return { stage, status: 'not run', seconds: null, ...live };
+    return { stage, status: job.status, seconds: stageSeconds(job), ...live };
   });
   const audioMs = input.segments.reduce((sum, segment) => sum + segment.durationMs, 0);
   return {

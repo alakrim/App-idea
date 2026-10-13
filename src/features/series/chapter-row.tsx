@@ -7,6 +7,7 @@ import { StageStepper } from '@/features/chapter/stage-stepper';
 import { stepStates } from '@/features/chapter/stage-steps';
 import type { ChapterProgress } from '@/features/pipeline/facade';
 import { formatUsd } from '@/features/shared/format';
+import { useNow } from '@/features/shared/use-now';
 import { Button } from '@/ui/button';
 import { IconButton } from '@/ui/icon-button';
 import { Play } from '@/ui/icons';
@@ -15,6 +16,8 @@ import { useTheme } from '@/ui/theme';
 import { hairline, minTouchTarget, space } from '@/ui/tokens';
 
 const NUMBER_WIDTH = space.xl;
+/** How often a processing row refreshes its elapsed time. */
+const LIVE_TICK_MS = 1000;
 
 export interface ChapterRowProps {
   /** 1-based position in the series. */
@@ -52,7 +55,8 @@ export const ChapterRow = memo(function ChapterRow({
 }: ChapterRowProps) {
   const { colors } = useTheme();
   const state = rowStateOf(chapter, progress);
-  const line = statusLine(state, chapter, progress, failure);
+  const now = useNow(LIVE_TICK_MS, state === 'processing');
+  const line = statusLine(state, chapter, progress, failure, now);
   const scanned = isScannedPdfFailure(chapter, failure);
   const showSteps = state === 'processing' || state === 'failed';
 

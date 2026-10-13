@@ -294,3 +294,45 @@ describe('analyzeChapter: chunk calls in parallel', () => {
     expect(calls).toHaveLength(1);
   });
 });
+
+describe('analyzeChapter: chapter era (A4)', () => {
+  const withSetting = (era: string | null, cues: unknown[] = []): string =>
+    JSON.stringify({ memory: { summary: 'Part.' }, cues, setting: { era } });
+
+  it('reports the chapter era from its passages and drops cues that conflict with it', async () => {
+    const cueOf = (category: string, start: number) => ({
+      category,
+      startSentence: start,
+      endSentence: start + 3,
+      intensity: 'medium',
+      confidence: 0.9,
+      reason: null,
+    });
+    const { transport } = scriptedTransport((_user, call) =>
+      call === 1
+        ? withSetting('historic', [cueOf('village_square', 0), cueOf('city_street_day', 10)])
+        : withSetting('historic'),
+    );
+    const result = await analyzeChapter({
+      ...BASE_INPUT,
+      sentences: sentences(40, 200),
+      callLlm: transport,
+      planChunks: (all) => [all.slice(0, 20), all.slice(20)],
+      reduceSummary: false,
+    });
+    expect(result.era).toBe('historic');
+    expect(result.cues.map((c) => c.category)).toEqual(['village_square']);
+    expect(result.dropped.map((d) => d.reason)).toContain('era_conflict');
+  });
+
+  it('leaves the chapter era unknown when no passage names one', async () => {
+    const { transport } = scriptedTransport(() => memoryJson('Plain.'));
+    const result = await analyzeChapter({
+      ...BASE_INPUT,
+      sentences: sentences(5, 100),
+      callLlm: transport,
+    });
+    expect(result.era).toBeNull();
+  });
+});
+

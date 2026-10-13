@@ -1,8 +1,12 @@
+import { untilAborted } from '../network/abort';
+import { createConnection } from '../network/connection';
+
 import { failureFromHttp } from './error-mapping';
 import { PipelineFailure, pipelineFailure, redactFailure } from './errors';
 import { isDailyLimit } from './rate-limit';
 import { backoffDelayMs, parseRetryAfter } from './retry';
 
+import type { Connection } from '../network/connection';
 import type { ZodType } from 'zod';
 
 export interface TransportConfig {
@@ -16,6 +20,8 @@ export interface TransportConfig {
   sleep: (ms: number) => Promise<void>;
   random: () => number;
   now: () => number;
+  /** Retires an attempt when the connection goes stale, so it is retried at once. */
+  connection?: Pick<Connection, 'register'>;
 }
 
 export interface TransportRequest {
@@ -39,7 +45,14 @@ export interface Transport {
   request<T>(req: TransportRequest, readBody: BodyReader<T>): Promise<T>;
 }
 
-export function createTransport(config: TransportConfig): Transport {
+/** The config once its defaults are filled in. */
+type ResolvedConfig = TransportConfig & { readonly connection: Pick<Connection, 'register'> };
+
+export function createTransport(options: TransportConfig): Transport {
+  const config: ResolvedConfig = {
+    ...options,
+    connection: options.connection ?? createConnection(),
+  };
   return {
     async request<T>(req: TransportRequest, readBody: BodyReader<T>): Promise<T> {
       const apiKey = await readApiKey(config.getApiKey);
@@ -80,6 +93,19 @@ function cancelledFailure(): PipelineFailure {
   return pipelineFailure('CANCELLED', 'Cancelled.', { retryable: false });
 }
 
+/**
+ * An attempt retired because the connection went stale. It is a retryable NETWORK failure, tagged
+ * `stale`, so the retry loop can tell it from a server or network failure: it is retried at once,
+ * without backoff, and it does not count against maxRetries.
+ */
+function staleFailure(): PipelineFailure {
+  return pipelineFailure('NETWORK', 'The connection was interrupted. Retrying…', {
+    retryable: true,
+    detail: 'stale connection',
+    stale: true,
+  });
+}
+
 async function readApiKey(getApiKey: () => Promise<string | null>): Promise<string> {
   let key: string | null;
   try {
@@ -101,48 +127,65 @@ async function readApiKey(getApiKey: () => Promise<string | null>): Promise<stri
 }
 
 async function withRetries<T>(
-  config: TransportConfig,
+  config: ResolvedConfig,
   req: TransportRequest,
   apiKey: string,
   readBody: BodyReader<T>,
 ): Promise<T> {
-  for (let attempt = 0; ; attempt += 1) {
+  for (let attempt = 0; ; ) {
     try {
       return await attemptOnce(config, req, apiKey, readBody);
     } catch (error) {
       const failure = asFailure(error);
+      if (failure.stale) continue;
       if (!failure.error.retryable || attempt >= config.maxRetries) throw failure;
       const delay = backoffDelayMs(attempt, config.random, failure.retryAfterMs);
       await waitBeforeRetry(config, delay, req.signal);
+      attempt += 1;
     }
   }
 }
 
 async function attemptOnce<T>(
-  config: TransportConfig,
+  config: ResolvedConfig,
   req: TransportRequest,
   apiKey: string,
   readBody: BodyReader<T>,
 ): Promise<T> {
   const controller = new AbortController();
+  const timeoutMs = req.timeoutMs ?? config.timeoutMs;
   let timedOut = false;
+  let retired = false;
   const timer = setTimeout(() => {
     timedOut = true;
     controller.abort();
-  }, req.timeoutMs ?? config.timeoutMs);
+  }, timeoutMs);
   const forwardAbort = () => controller.abort();
   req.signal?.addEventListener('abort', forwardAbort);
+  const unregister = config.connection.register({
+    timeoutMs,
+    retire: () => {
+      retired = true;
+      controller.abort();
+    },
+  });
 
   try {
     if (req.signal?.aborted) throw cancelledFailure();
-    const res = await config.fetchImpl(buildUrl(config.baseUrl, req), {
-      method: req.method,
-      headers: buildHeaders(config, req, apiKey),
-      body: req.body === undefined ? undefined : JSON.stringify(req.body),
-      signal: controller.signal,
-    });
+    const res = await untilAborted(
+      config.fetchImpl(buildUrl(config.baseUrl, req), {
+        method: req.method,
+        headers: buildHeaders(config, req, apiKey),
+        body: req.body === undefined ? undefined : JSON.stringify(req.body),
+        signal: controller.signal,
+      }),
+      controller.signal,
+    );
     if (!res.ok) {
-      const bodyText = await res.text().catch(() => '');
+      const bodyText = await untilAborted(
+        res.text().catch(() => ''),
+        controller.signal,
+      );
       throw failureFromHttp(
         res.status,
         bodyText,
@@ -153,10 +196,12 @@ async function attemptOnce<T>(
         },
       );
     }
-    return await readBody(res);
+    return await untilAborted(readBody(res), controller.signal);
   } catch (error) {
     if (error instanceof PipelineFailure) throw error;
+    // The caller's own cancellation wins over a retirement, so a cancelled call is never retried.
     if (req.signal?.aborted) throw cancelledFailure();
+    if (retired) throw staleFailure();
     if (timedOut) {
       throw pipelineFailure('NETWORK', 'OpenRouter took too long to answer. Try again.', {
         retryable: true,
@@ -172,6 +217,7 @@ async function attemptOnce<T>(
     );
   } finally {
     clearTimeout(timer);
+    unregister();
     req.signal?.removeEventListener('abort', forwardAbort);
   }
 }

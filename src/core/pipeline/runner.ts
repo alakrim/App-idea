@@ -24,6 +24,12 @@ export interface RunOptions {
   readonly force?: boolean;
   /** The PDF engine. Defaults to the free `cloudflare-ai`. Use `mistral-ocr` only after the user agrees to its cost. */
   readonly pdfEngine?: PdfEngine;
+  /**
+   * Why the owner stopped the run, when it was not the user: the stall watchdog after too many
+   * stalls. Read once the run is interrupted, so the chapter fails with that error instead of
+   * being reported as cancelled.
+   */
+  readonly stopped?: () => PipelineError | null;
 }
 
 export type RunOutcome =
@@ -104,7 +110,8 @@ export async function runChapter(
       emit({ type: 'stage', chapterId, stage, status: 'done' });
     } catch (thrown) {
       const spent = meter?.spentUsd ?? 0;
-      if (signal.aborted || isCancellation(thrown)) {
+      const stopError = options.stopped?.() ?? null;
+      if (stopError === null && (signal.aborted || isCancellation(thrown))) {
         await writeJob(ports, chapterId, stage, jobState(prepared, 'cancelled', 0, spent, null));
         await ports.jobs.cancelUnfinished(chapterId);
         await ports.chapters.setStatus(chapterId, 'draft');
@@ -117,7 +124,7 @@ export async function runChapter(
         });
         return { status: 'cancelled', stage };
       }
-      const error = toPipelineError(thrown);
+      const error = stopError ?? toPipelineError(thrown);
       await writeJob(ports, chapterId, stage, jobState(prepared, 'failed', 0, spent, error));
       await ports.chapters.setStatus(chapterId, 'failed');
       emit({ type: 'stage', chapterId, stage, status: 'failed' });

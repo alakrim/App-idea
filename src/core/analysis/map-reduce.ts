@@ -3,6 +3,7 @@ import { MAX_CHUNK_TOKENS, MEMORY_LIMITS } from './limits';
 import { mergeMemoryDrafts } from './merge-memory';
 import { buildAnalysisPrompt, buildSummaryReducePrompt } from './prompts';
 import { truncateWords } from './schemas';
+import { chapterEraOf } from './chapter-era';
 import { validateCues } from './validate-cues';
 import { runOrdered } from '../async/ordered-pool';
 import { addUsage, throwIfCancelled, ZERO_USAGE } from '../llm/transport';
@@ -10,6 +11,7 @@ import { planLlmChunks } from '../text/chunk';
 import { normalizeWhitespace } from '../text/normalize';
 
 import type { AnalysisCallResult } from './analysis-call';
+import type { AmbienceEra } from './ambience-taxonomy';
 import type { Lang, MemoryFields, SentenceInput, ValidatedCue } from './types';
 import type { DroppedCue } from './validate-cues';
 import type { LlmTransport, LlmUsage } from '../llm/transport';
@@ -58,6 +60,8 @@ export interface ChapterAnalysis {
   readonly chunkCount: number;
   /** Usage of every model call made for this chapter, repairs and the summary reduce included. */
   readonly usage: LlmUsage;
+  /** The chapter's era: the majority of its passages' eras, or null when none names one (A4). */
+  readonly era: AmbienceEra | null;
 }
 
 /**
@@ -111,16 +115,18 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
     if (reduced.summary) memory = { ...merged, summary: reduced.summary };
   }
 
+  const era = chapterEraOf(responses.map((r) => r.era));
   const { cues, dropped } = validateCues(
     responses.flatMap((r) => r.cues),
     {
       sentenceCount: input.sentences.length,
       wordCount: input.wordCount,
       sentences: input.sentences,
+      chapterEra: era,
     },
   );
 
-  return { memory, cues, dropped, chunkCount: chunks.length, usage };
+  return { memory, cues, dropped, chunkCount: chunks.length, usage, era };
 }
 
 /** One plain-text call. A null summary means the reply was empty, so the joined summary is kept. */

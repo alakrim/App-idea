@@ -55,14 +55,22 @@ function ChapterRow({ chapter }: { chapter: RecentChapter }) {
 }
 
 function StageLine({ stage }: { stage: StageTiming }) {
+  const activity = activityText(stage);
   return (
-    <View style={styles.stageRow}>
-      <Text variant="caption" tone="muted">
-        {STAGE_LABELS[stage.stage] ?? stage.stage}
-      </Text>
-      <Text variant="caption" selectable>
-        {stageText(stage)}
-      </Text>
+    <View>
+      <View style={styles.stageRow}>
+        <Text variant="caption" tone="muted">
+          {STAGE_LABELS[stage.stage] ?? stage.stage}
+        </Text>
+        <Text variant="caption" selectable>
+          {stageText(stage)}
+        </Text>
+      </View>
+      {activity === null ? null : (
+        <Text variant="caption" tone="faint" selectable style={styles.activity}>
+          {activity}
+        </Text>
+      )}
     </View>
   );
 }
@@ -70,6 +78,29 @@ function StageLine({ stage }: { stage: StageTiming }) {
 /** "done · 12.4 s", or the status alone when there is no time to show. */
 export function stageText(stage: StageTiming): string {
   return stage.seconds === null ? stage.status : `${stage.status} · ${stage.seconds.toFixed(1)} s`;
+}
+
+/**
+ * "last activity 14:02:11 · 2 stalls · 1 stale abort", or null for a stage that never moved. The
+ * stall and stale-abort counts appear only when they are not zero.
+ */
+export function activityText(stage: StageTiming): string | null {
+  if (stage.lastActivityAt === null) return null;
+  const parts = [`last activity ${clockTime(stage.lastActivityAt)}`];
+  if (stage.stallCount > 0) parts.push(countOf(stage.stallCount, 'stall', 'stalls'));
+  if (stage.staleAbortCount > 0) {
+    parts.push(countOf(stage.staleAbortCount, 'stale abort', 'stale aborts'));
+  }
+  return parts.join(' · ');
+}
+
+function countOf(count: number, one: string, many: string): string {
+  return `${count} ${count === 1 ? one : many}`;
+}
+
+/** Local time of day, to the second: "14:02:11". */
+function clockTime(epochMs: number): string {
+  return new Date(epochMs).toTimeString().slice(0, 8);
 }
 
 const styles = StyleSheet.create({
@@ -86,5 +117,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: space.md,
+  },
+  activity: {
+    textAlign: 'right',
   },
 });

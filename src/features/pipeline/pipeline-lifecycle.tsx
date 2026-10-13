@@ -9,6 +9,7 @@ import { useRouter } from 'expo-router';
 import { useEffect, useRef } from 'react';
 import { AppState } from 'react-native';
 
+import { settingsStore } from '@/features/settings/settings-store';
 import { WebViewHost } from '@/services/pipeline/webview-host';
 import { useApiKeyStatus } from '@/services/secrets';
 import { useToast } from '@/ui/toast';
@@ -17,6 +18,9 @@ import { usePipelineRuntime } from './pipeline-provider';
 
 export const KEEP_AWAKE_TAG = 'lectio-pipeline';
 export const CONNECT_ROUTE = '/settings/api-key';
+/** Shown once, the first time the user leaves the app while a chapter is being prepared. */
+export const BACKGROUND_NOTICE =
+  'Lectio pauses chapter preparation while it\'s in the background. Keep it open to finish faster.';
 
 export function PipelineLifecycle() {
   const runtime = usePipelineRuntime();
@@ -50,6 +54,30 @@ export function PipelineLifecycle() {
       if (awake) void deactivateKeepAwake(KEEP_AWAKE_TAG).catch(() => undefined);
     };
   }, [runtime]);
+
+  useEffect(() => {
+    if (!runtime) return undefined;
+    let processing = false;
+    let noticeDue = false;
+    const unsubscribeQueue = runtime.subscribeQueue((snapshot) => {
+      processing = snapshot.running !== null || snapshot.pending.length > 0;
+    });
+    const subscription = AppState.addEventListener('change', (state) => {
+      if (state !== 'active') {
+        if (processing && !settingsStore.getSettings().backgroundNoticeShown) noticeDue = true;
+        return;
+      }
+      if (noticeDue && !settingsStore.getSettings().backgroundNoticeShown) {
+        noticeDue = false;
+        toast.show({ message: BACKGROUND_NOTICE, tone: 'neutral' });
+        settingsStore.patch({ backgroundNoticeShown: true });
+      }
+    });
+    return () => {
+      unsubscribeQueue();
+      subscription.remove();
+    };
+  }, [runtime, toast]);
 
   useEffect(() => {
     if (!runtime) return undefined;

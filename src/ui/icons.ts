@@ -8,6 +8,7 @@
 import type { LucideIcon } from 'lucide-react-native';
 
 export { default as Anchor } from 'lucide-react-native/icons/anchor';
+export { default as Anvil } from 'lucide-react-native/icons/anvil';
 export { default as ArrowDown } from 'lucide-react-native/icons/arrow-down';
 export { default as ArrowUp } from 'lucide-react-native/icons/arrow-up';
 export { default as Atom } from 'lucide-react-native/icons/atom';
