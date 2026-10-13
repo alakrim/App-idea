@@ -19,8 +19,10 @@ _Last updated: 2026-10-11 (night) by architect_
 | M8 | Polish, accessibility, performance, EAS build, device spike S1 + probes P1/P2, Maestro E2E | not started |
 
 ## Work in flight
-- **A3** real ambience pack: built and verified. **Waiting on the user's listening verdict** (audition page https://claude.ai/artifact/W5NE2v8GKkjuj3gEu1Xv1c). Then it ships in the next APK.
-- APK **`lectio-0.1.0-23ac9d0-arm64.apk`** (N2 + the incident-3 fix) is on `apk-builds`: 45,788,860 bytes, SHA-256 `74272531…cb1a`, the same debug key, built from a clean worktree (no A3 work in it), and the bundle contains the new strings. Waiting on the user's device test (the failed Chinese chapter, then a 10-minute listen).
+- **N3** chapters stuck when leaving the app (`docs/briefs/N3-background-stalls.md`): a worker is on it.
+- **A4** clean ambience v2: 50+ single-purpose, era-aware beds with AudioSet/CLAP screening (`docs/briefs/A4-clean-ambience-v2.md`). A worker is on it. It replaces A3's contaminated picks (storm with sirens, etc.). **A3 must not ship as is.**
+- **Q1** AAA QA audit, four read-only tracks (pipeline/data, player/audio, UX/a11y, performance/health): workers are on it.
+- APK `lectio-0.1.0-23ac9d0-arm64.apk` is with the user. They report it is quicker, but that a chapter sometimes stays stuck on Narrating after they leave the app (→ N3).
 
 ## Next up
 - **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.
