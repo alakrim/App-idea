@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react-native';
 
-import { RecentChaptersSection, stageText } from './recent-chapters-section';
+import { activityText, RecentChaptersSection, stageText } from './recent-chapters-section';
 import { renderThemed } from '../../__tests__/helpers/render-themed';
 
 import type { ProbeResult } from './probe';
@@ -13,6 +13,10 @@ jest.mock('react-native-safe-area-context', () => ({
   useSafeAreaInsets: () => ({ top: 0, bottom: 0, left: 0, right: 0 }),
 }));
 
+const NO_ACTIVITY = { lastActivityAt: null, stallCount: 0, staleAbortCount: 0 };
+/** 2026-10-13 14:02:11 local time, so the clock text can be checked whatever the zone. */
+const LAST_ACTIVITY = new Date(2026, 9, 13, 14, 2, 11).getTime();
+
 const CHAPTER: RecentChapter = {
   chapterId: '00000000000000000000000001',
   title: 'The Lamp',
@@ -20,11 +24,18 @@ const CHAPTER: RecentChapter = {
   segmentCount: 7,
   audioSeconds: 412.5,
   stages: [
-    { stage: 'extract', status: 'done', seconds: 1.2 },
-    { stage: 'segment', status: 'done', seconds: 0.1 },
-    { stage: 'analyze', status: 'skipped', seconds: null },
-    { stage: 'translate', status: 'not run', seconds: null },
-    { stage: 'narrate', status: 'failed', seconds: 96.4 },
+    { stage: 'extract', status: 'done', seconds: 1.2, ...NO_ACTIVITY },
+    { stage: 'segment', status: 'done', seconds: 0.1, ...NO_ACTIVITY },
+    { stage: 'analyze', status: 'skipped', seconds: null, ...NO_ACTIVITY },
+    { stage: 'translate', status: 'not run', seconds: null, ...NO_ACTIVITY },
+    {
+      stage: 'narrate',
+      status: 'failed',
+      seconds: 96.4,
+      lastActivityAt: LAST_ACTIVITY,
+      stallCount: 1,
+      staleAbortCount: 2,
+    },
   ],
 };
 
@@ -53,6 +64,14 @@ describe('RecentChaptersSection', () => {
     expect(screen.getByText('Translate')).toBeOnTheScreen();
   });
 
+  it('shows the last activity and the stall and stale-abort counts of a stage that moved', async () => {
+    await renderThemed(<RecentChaptersSection result={resultWith([CHAPTER])} />);
+
+    expect(
+      screen.getByText('last activity 14:02:11 · 1 stall · 2 stale aborts'),
+    ).toBeOnTheScreen();
+  });
+
   it('names a chapter with no title', async () => {
     await renderThemed(
       <RecentChaptersSection result={resultWith([{ ...CHAPTER, title: '  ' }])} />,
@@ -63,6 +82,23 @@ describe('RecentChaptersSection', () => {
   it('says so when no chapter has run yet', async () => {
     await renderThemed(<RecentChaptersSection result={resultWith([])} />);
     expect(screen.getByText('No chapter has run yet')).toBeOnTheScreen();
+  });
+});
+
+describe('activityText', () => {
+  const base = { stage: 'narrate', status: 'done', seconds: 3 } as const;
+
+  it('is null for a stage that never moved', () => {
+    expect(activityText({ ...base, ...NO_ACTIVITY })).toBeNull();
+  });
+
+  it('leaves out a count that is zero, and uses the singular for one', () => {
+    expect(activityText({ ...base, lastActivityAt: LAST_ACTIVITY, stallCount: 0, staleAbortCount: 1 })).toBe(
+      'last activity 14:02:11 · 1 stale abort',
+    );
+    expect(activityText({ ...base, lastActivityAt: LAST_ACTIVITY, stallCount: 1, staleAbortCount: 0 })).toBe(
+      'last activity 14:02:11 · 1 stall',
+    );
   });
 });
 

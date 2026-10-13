@@ -5,6 +5,7 @@ import { audioSegmentRepo } from '@/db/repos/audio-segment-repo';
 import { chapterRepo } from '@/db/repos/chapter-repo';
 import { jobRepo } from '@/db/repos/job-repo';
 import { seriesRepo } from '@/db/repos/series-repo';
+import { stageActivityRepo } from '@/db/repos/stage-activity-repo';
 import { narrationProfiles } from '@/db/schema';
 
 import { checkRecentChapters } from './checks-pipeline';
@@ -54,6 +55,7 @@ describe('summarizeRecentChapter', () => {
       chapter: CHAPTER,
       jobs: [job('narrate', { startedAt: T0, finishedAt: T0 + 30_000 }), job('extract')],
       segments: [],
+      activity: [],
     });
 
     expect(summary.stages.map((s) => s.stage)).toEqual([
@@ -63,8 +65,36 @@ describe('summarizeRecentChapter', () => {
       'translate',
       'narrate',
     ]);
-    expect(summary.stages[1]).toEqual({ stage: 'segment', status: 'not run', seconds: null });
-    expect(summary.stages[4]).toEqual({ stage: 'narrate', status: 'done', seconds: 30 });
+    expect(summary.stages[1]).toEqual({
+      stage: 'segment',
+      status: 'not run',
+      seconds: null,
+      lastActivityAt: null,
+      stallCount: 0,
+      staleAbortCount: 0,
+    });
+    expect(summary.stages[4]).toMatchObject({ stage: 'narrate', status: 'done', seconds: 30 });
+  });
+
+  it('carries each stage’s last activity and its stall and stale-abort counts', () => {
+    const summary = summarizeRecentChapter({
+      chapter: CHAPTER,
+      jobs: [job('narrate', { startedAt: T0, finishedAt: T0 + 30_000 })],
+      segments: [],
+      activity: [
+        { stage: 'narrate', lastActivityAt: T0 + 29_000, stallCount: 2, staleAbortCount: 1 },
+      ],
+    });
+
+    expect(summary.stages[4]).toEqual({
+      stage: 'narrate',
+      status: 'done',
+      seconds: 30,
+      lastActivityAt: T0 + 29_000,
+      stallCount: 2,
+      staleAbortCount: 1,
+    });
+    expect(summary.stages[0]).toMatchObject({ lastActivityAt: null, stallCount: 0 });
   });
 
   it('reports the passage count and the audio seconds, summed from the stored passages', () => {
@@ -72,6 +102,7 @@ describe('summarizeRecentChapter', () => {
       chapter: CHAPTER,
       jobs: [],
       segments: [{ durationMs: 12_000 }, { durationMs: 40_250 }, { durationMs: 3_000 }],
+      activity: [],
     });
 
     expect(summary).toMatchObject({
@@ -90,6 +121,7 @@ describe('parseRecentChapters', () => {
       chapter: CHAPTER,
       jobs: [job('extract')],
       segments: [],
+      activity: [],
     });
     expect(parseRecentChapters({ chapters: [summary] })).toEqual([summary]);
   });
@@ -163,16 +195,35 @@ describe('checkRecentChapters', () => {
     const lamp = chapters.find((c) => c.title === 'The Lamp');
     expect(lamp?.segmentCount).toBe(1);
     expect(lamp?.audioSeconds).toBe(9);
-    expect(lamp?.stages.find((s) => s.stage === 'narrate')).toEqual({
+    expect(lamp?.stages.find((s) => s.stage === 'narrate')).toMatchObject({
       stage: 'narrate',
       status: 'done',
       seconds: 30,
     });
     const bell = chapters.find((c) => c.title === 'The Bell');
-    expect(bell?.stages.find((s) => s.stage === 'narrate')).toEqual({
+    expect(bell?.stages.find((s) => s.stage === 'narrate')).toMatchObject({
       stage: 'narrate',
       status: 'failed',
       seconds: 2,
+    });
+  });
+
+  it('reports the live activity the pipeline recorded for each stage', () => {
+    const db = setup();
+    stageActivityRepo.startStage(db, id(1), 'narrate', T0 + 1_000);
+    stageActivityRepo.countStall(db, id(1), 'narrate', T0 + 20_000);
+    stageActivityRepo.countStaleAbort(db, id(1), 'narrate', T0 + 21_000);
+    stageActivityRepo.touch(db, id(1), 'narrate', T0 + 30_000);
+
+    const chapters = parseRecentChapters(checkRecentChapters(db).values);
+    const narrate = chapters
+      .find((c) => c.title === 'The Lamp')
+      ?.stages.find((s) => s.stage === 'narrate');
+
+    expect(narrate).toMatchObject({
+      lastActivityAt: T0 + 30_000,
+      stallCount: 1,
+      staleAbortCount: 1,
     });
   });
 
