@@ -21,6 +21,7 @@ _Last updated: 2026-10-11 (night) by architect_
 ## Work in flight
 - **N3** chapters stuck when leaving the app (`docs/briefs/N3-background-stalls.md`): a worker is on it.
 - **A4** clean ambience v2: 50+ single-purpose, era-aware beds with AudioSet/CLAP screening (`docs/briefs/A4-clean-ambience-v2.md`). A worker is on it. It replaces A3's contaminated picks (storm with sirens, etc.). **A3 must not ship as is.**
+- **N4** background chapter preparation via a foreground service (dataSync) plus a headless JS task (`react-native-background-actions@4.1.0`, installed). **User-approved 2026-10-13.** Brief `docs/briefs/N4-background-preparation.md`; it starts after N3 lands.
 - **Q1** AAA QA audit, four read-only tracks (pipeline/data, player/audio, UX/a11y, performance/health): workers are on it.
 - APK `lectio-0.1.0-23ac9d0-arm64.apk` is with the user. They report it is quicker, but that a chapter sometimes stays stuck on Narrating after they leave the app (→ N3).
 
