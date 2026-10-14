@@ -83,7 +83,7 @@ async function extractPdf(
     engine: ctx.options.pdfEngine,
     signal: ctx.signal,
   });
-  await ctx.meter.recordChat(result.model, result.usage);
+  await ctx.meter.recordChat(result.model, result.usage, result.generationId);
 
   const pageCount = Math.max(1, result.pages.length);
   if (countCodePoints(result.text.trim()) < MIN_CHARS_PER_PAGE * pageCount) {

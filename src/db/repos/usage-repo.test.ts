@@ -58,8 +58,22 @@ describe('usageRepo', () => {
     usageRepo.insert(db, entry(3, { at: T0 + DAY, chapterId: id(1), costUsd: 0.125 }));
 
     expect(usageRepo.totalsBy(db, 'day')).toEqual([
-      { key: '2023-11-14', calls: 2, promptTokens: 200, completionTokens: 40, costUsd: 0.75 },
-      { key: '2023-11-15', calls: 1, promptTokens: 100, completionTokens: 20, costUsd: 0.125 },
+      {
+        key: '2023-11-14',
+        calls: 2,
+        promptTokens: 200,
+        completionTokens: 40,
+        costUsd: 0.75,
+        unknownCalls: 0,
+      },
+      {
+        key: '2023-11-15',
+        calls: 1,
+        promptTokens: 100,
+        completionTokens: 20,
+        costUsd: 0.125,
+        unknownCalls: 0,
+      },
     ]);
     expect(usageRepo.totalsBy(db, 'model').map((t) => [t.key, t.calls])).toEqual([
       ['openai/gpt-x', 2],
@@ -79,6 +93,23 @@ describe('usageRepo', () => {
     const total = usageRepo.totalsBy(db, 'model', { sinceMs: T0 + 1 });
 
     expect(total.map((t) => t.costUsd)).toEqual([2]);
+  });
+
+  it('stores an unknown cost as null and counts it apart from the known spend', () => {
+    const { db } = createTestDb();
+    usageRepo.insert(db, entry(1, { at: T0, stage: 'narrate', costUsd: 0.5 }));
+    usageRepo.insert(db, entry(2, { at: T0, stage: 'narrate', costUsd: null }));
+
+    expect(usageRepo.totalsBy(db, 'stage')).toEqual([
+      {
+        key: 'narrate',
+        calls: 2,
+        promptTokens: 200,
+        completionTokens: 40,
+        costUsd: 0.5,
+        unknownCalls: 1,
+      },
+    ]);
   });
 
   it('totals spend by pipeline stage, so the usage screen can show where money went', () => {

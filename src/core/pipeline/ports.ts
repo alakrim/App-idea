@@ -151,6 +151,7 @@ export interface PdfTextResult {
   /** The model that was billed for the parse. */
   readonly model: string;
   readonly usage: LlmUsage;
+  readonly generationId: string | null;
 }
 
 export interface PdfTextSource {
@@ -166,6 +167,7 @@ export interface TtsResult {
   readonly mime: string;
   /** Provider-reported cost in USD, or null when none was reported. */
   readonly costUsd: number | null;
+  readonly generationId: string | null;
 }
 
 export interface Tts {

@@ -30,6 +30,7 @@ export function createLlmPort({ openrouter }: LlmPortDeps): LlmPort {
             completionTokens: reply.usage.completionTokens,
             costUsd: reply.usage.costUsd,
           },
+          generationId: reply.generationId,
         };
       };
     },

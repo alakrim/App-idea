@@ -67,6 +67,28 @@ describe('createFetcher', () => {
     });
   });
 
+  it('refuses an unstreamed body over the limit when no stream reader is available', async () => {
+    // React Native's fetch exposes no body stream, so the whole body is read and then checked.
+    const unstreamed = new Response(new Uint8Array(2048).fill(97)) as Response;
+    Object.defineProperty(unstreamed, 'body', { value: null });
+    const fetcher = createFetcher({ fetchImpl: fetchOf(() => unstreamed).fetchImpl });
+    await expect(
+      fetcher.fetch('https://example.com/a', new AbortController().signal, LIMITS),
+    ).rejects.toMatchObject({ error: { code: 'INPUT_TOO_LONG', retryable: false } });
+  });
+
+  it('accepts an unstreamed body within the limit', async () => {
+    const unstreamed = htmlResponse(HTML);
+    Object.defineProperty(unstreamed, 'body', { value: null });
+    const fetcher = createFetcher({ fetchImpl: fetchOf(() => unstreamed).fetchImpl });
+    const result = await fetcher.fetch(
+      'https://example.com/a',
+      new AbortController().signal,
+      LIMITS,
+    );
+    expect(new TextDecoder().decode(result.bytes)).toBe(HTML);
+  });
+
   it('refuses a declared size over the limit before reading the body', async () => {
     const fetcher = createFetcher({
       fetchImpl: fetchOf(() => htmlResponse(HTML, { headers: { 'content-length': '999999' } }))

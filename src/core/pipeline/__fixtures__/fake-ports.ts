@@ -468,7 +468,7 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
         const result = options.pdf;
         if (typeof result === 'function') return result(engine);
         if (result) return result;
-        return { text: '', pages: [], model: 'pdf/parser', usage: FAKE_USAGE };
+        return { text: '', pages: [], model: 'pdf/parser', usage: FAKE_USAGE, generationId: null };
       },
     },
     tts: {
@@ -476,7 +476,7 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
         state.ttsCalls.push({ text, style: profile.style, voice: profile.voice });
         if (options.tts) return options.tts(text, profile, signal);
         const frames = Math.max(1, Math.ceil(text.length / 200));
-        return { bytes: mp3Bytes(frames), mime: 'audio/mpeg', costUsd: null };
+        return { bytes: mp3Bytes(frames), mime: 'audio/mpeg', costUsd: null, generationId: null };
       },
     },
     audio: {

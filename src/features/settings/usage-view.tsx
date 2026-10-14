@@ -9,7 +9,9 @@ import { hairline, radius, space } from '@/ui/tokens';
 
 import { formatUsdPrecise } from './format';
 
-import type { UsageShare, UsageSummary, UsageWindow } from './usage';
+import { spendStateOf } from './usage';
+
+import type { UsageCount, UsageShare, UsageSummary, UsageWindow } from './usage';
 
 const WINDOW_LABELS: Readonly<Record<UsageWindow['id'], string>> = {
   today: 'Today',
@@ -52,17 +54,23 @@ export function UsageView({ summary }: { summary: UsageSummary }) {
   );
 }
 
+/** The spend as the listener reads it: a figure, a floor marked "+ unknown", or "Unknown". */
+function spendLabel(row: Pick<UsageCount, 'calls' | 'costUsd' | 'unknownCalls'>): string {
+  const state = spendStateOf(row);
+  if (state === 'unknown') return 'Unknown';
+  if (state === 'partial') return `${formatUsdPrecise(row.costUsd)} + unknown`;
+  return formatUsdPrecise(row.costUsd);
+}
+
 function WindowCard({ window }: { window: UsageWindow }) {
+  const amount = spendLabel(window);
   return (
     <Card style={styles.windowCard}>
       <Text variant="micro" tone="faint">
         {WINDOW_LABELS[window.id]}
       </Text>
-      <Text
-        variant="heading"
-        accessibilityLabel={`${WINDOW_LABELS[window.id]}: ${formatUsdPrecise(window.costUsd)}`}
-      >
-        {formatUsdPrecise(window.costUsd)}
+      <Text variant="heading" accessibilityLabel={`${WINDOW_LABELS[window.id]}: ${amount}`}>
+        {amount}
       </Text>
       <Text variant="caption" tone="muted">
         {callsLabel(window.calls)}
@@ -110,10 +118,11 @@ function BreakdownSection({
 function BreakdownRow({ row }: { row: UsageShare }) {
   const { colors } = useTheme();
   const percent = Math.round(row.share * 100);
+  const amount = spendLabel(row);
   return (
     <View
       accessible
-      accessibilityLabel={`${row.label}: ${formatUsdPrecise(row.costUsd)}, ${callsLabel(row.calls)}, ${percent} percent of spend`}
+      accessibilityLabel={`${row.label}: ${amount}, ${callsLabel(row.calls)}, ${percent} percent of spend`}
       style={styles.row}
     >
       <View style={styles.rowLine}>
@@ -121,7 +130,7 @@ function BreakdownRow({ row }: { row: UsageShare }) {
           {row.label}
         </Text>
         <Text variant="caption" tone="muted">
-          {formatUsdPrecise(row.costUsd)}
+          {amount}
         </Text>
       </View>
       <View

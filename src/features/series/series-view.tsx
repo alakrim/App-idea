@@ -53,7 +53,7 @@ export interface SeriesViewProps {
   series: Series;
   chapters: readonly SeriesChapterItem[];
   /** Estimated OCR cost per scanned chapter, keyed by chapter id. */
-  ocrPrices: Readonly<Record<string, number>>;
+  ocrPrices: Readonly<Record<string, number | null>>;
   playTarget: PlayTarget | null;
   /** The chapter the listener is on, which gets the "Now" marker. */
   currentChapterId: string | null;

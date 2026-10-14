@@ -266,6 +266,7 @@ describe('askQuestion persistence', () => {
     });
     expect(usageRepo.totalsBy(db, 'model')).toEqual([
       {
+        unknownCalls: 0,
         key: 'anthropic/test',
         calls: 1,
         promptTokens: 120,

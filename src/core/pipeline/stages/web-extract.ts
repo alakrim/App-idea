@@ -16,12 +16,9 @@ import type { Block } from '@/core/extract/types';
 import type { JsonSchemaSpec } from '@/core/llm/transport';
 
 import { StageFailure } from '../errors';
+import { FETCH_LIMITS } from '../limits';
 
 import type { StageContext } from '../context';
-import type { FetchLimits } from '../ports';
-
-/** Pages above 5 MB are refused by the fetcher. A page this size is almost never an article. */
-export const FETCH_LIMITS: FetchLimits = { maxBytes: 5 * 1024 * 1024, timeoutMs: 30_000 };
 
 export const SELECTION_JSON_SCHEMA: JsonSchemaSpec = {
   name: 'index_selection',

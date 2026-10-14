@@ -9,13 +9,28 @@ export interface UsageCount {
   key: string;
   label: string;
   calls: number;
+  /** The known spend. Calls in `unknownCalls` add nothing here. */
   costUsd: number;
+  /** Calls whose cost could not be determined. */
+  unknownCalls: number;
 }
 
 export interface UsageWindow {
   id: 'today' | 'week' | 'month';
   calls: number;
   costUsd: number;
+  unknownCalls: number;
+}
+
+/**
+ * How complete a spend figure is. `unknown`: every call's cost is unknown, so there is no figure to
+ * show. `partial`: some calls are unknown, so the figure is a floor. `known`: every cost is known.
+ */
+export type SpendState = 'known' | 'partial' | 'unknown';
+
+export function spendStateOf(row: Pick<UsageCount, 'calls' | 'unknownCalls'>): SpendState {
+  if (row.unknownCalls === 0) return 'known';
+  return row.unknownCalls >= row.calls ? 'unknown' : 'partial';
 }
 
 export interface UsageShare extends UsageCount {
@@ -52,17 +67,21 @@ export function utcDayStart(now: number): number {
   return Math.floor(now / DAY_MS) * DAY_MS;
 }
 
-/** Sums rows of calls and cost. Empty input gives zeros. */
-export function sumCounts(rows: readonly Pick<UsageCount, 'calls' | 'costUsd'>[]): {
+/** Sums rows of calls, known cost and unknown calls. Empty input gives zeros. */
+export function sumCounts(
+  rows: readonly Pick<UsageCount, 'calls' | 'costUsd' | 'unknownCalls'>[],
+): {
   calls: number;
   costUsd: number;
+  unknownCalls: number;
 } {
   return rows.reduce(
     (total, row) => ({
       calls: total.calls + row.calls,
       costUsd: total.costUsd + row.costUsd,
+      unknownCalls: total.unknownCalls + row.unknownCalls,
     }),
-    { calls: 0, costUsd: 0 },
+    { calls: 0, costUsd: 0, unknownCalls: 0 },
   );
 }
 

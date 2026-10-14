@@ -264,6 +264,7 @@ async function speak(
     chars: countCodePoints(text),
     audioSeconds: durationMs / 1000,
     costUsd: result.costUsd,
+    generationId: result.generationId,
   });
   return { bytes: result.bytes, mime: result.mime, durationMs };
 }

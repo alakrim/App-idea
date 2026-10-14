@@ -8,6 +8,7 @@ import type {
   SentenceRef,
 } from '@/core/domain';
 import { buildPriorContext } from '@/core/memory/codex';
+import { paidCallEntry } from '@/core/llm/usage-entry';
 import { buildQaPrompt } from '@/core/memory/qa';
 import type { QaFtsHit } from '@/core/memory/qa';
 import { chapterRepo } from '@/db/repos/chapter-repo';
@@ -210,18 +211,20 @@ export async function askQuestion(deps: AskDeps, request: AskRequest): Promise<A
   db.transaction((tx) => {
     qaRepo.append(tx, user);
     qaRepo.append(tx, assistant);
-    usageRepo.insert(tx, {
-      id: deps.newId(),
-      at: createdAt,
-      chapterId: null,
-      stage: 'qa',
-      model: reply.model,
-      promptTokens: reply.usage.promptTokens,
-      completionTokens: reply.usage.completionTokens,
-      audioSeconds: null,
-      costUsd: reply.usage.costUsd ?? 0,
-      generationId: reply.generationId,
-    });
+    usageRepo.insert(
+      tx,
+      paidCallEntry({
+        id: deps.newId(),
+        at: createdAt,
+        chapterId: null,
+        stage: 'qa',
+        model: reply.model,
+        promptTokens: reply.usage.promptTokens,
+        completionTokens: reply.usage.completionTokens,
+        costUsd: reply.usage.costUsd,
+        generationId: reply.generationId,
+      }),
+    );
   });
 
   return { kind: 'answered', user, assistant };

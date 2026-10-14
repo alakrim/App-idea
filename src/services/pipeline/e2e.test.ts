@@ -292,7 +292,7 @@ describe('pipeline end to end (URL to playable chapter)', () => {
     expect(callsNamed(network, 'chapter_translation')).toBeGreaterThanOrEqual(1);
     expect(network.speechCount()).toBe(segments.length);
 
-    const totalUsd = usage.reduce((sum, u) => sum + u.costUsd, 0);
+    const totalUsd = usage.reduce((sum, u) => sum + (u.costUsd ?? 0), 0);
     const elapsedMs = Date.now() - world.startedAt;
     dumpTrace('URL chapter, Italian', world.trace);
     if (TRACE) {

@@ -41,10 +41,9 @@ export function formatUsd(usd: number): string {
 export function formatCostEstimate(
   estimate: Pick<CostEstimate, 'totalUsd' | 'lowUsd' | 'highUsd'>,
 ): string {
-  const total = formatUsd(estimate.totalUsd);
-  const low = estimate.lowUsd.toFixed(2);
-  const high = estimate.highUsd.toFixed(2);
-  return `≈ ${total} (${low}–${high})`;
+  const { totalUsd, lowUsd, highUsd } = estimate;
+  if (totalUsd === null || lowUsd === null || highUsd === null) return 'Price unknown';
+  return `≈ ${formatUsd(totalUsd)} (${lowUsd.toFixed(2)}–${highUsd.toFixed(2)})`;
 }
 
 export function formatFileSize(bytes: number): string {

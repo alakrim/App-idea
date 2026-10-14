@@ -13,6 +13,7 @@ import {
 
 import { useSeries } from '@/db/hooks';
 import { usePipeline, type CostEstimate, type SourcePreview } from '@/features/pipeline/facade';
+import { PDF_MAX_BYTES, pdfTooLargeMessage } from '@/core/pipeline/limits';
 import { ConfirmSheet } from '@/features/shared/confirm-sheet';
 import { isEstimateUnknown } from '@/features/shared/estimate-price';
 import { formatFileSize } from '@/features/shared/format';
@@ -250,6 +251,13 @@ export function AddChapterForm({ seriesId, sourceLang, targetLang }: AddChapterF
       });
       const asset = result.canceled ? undefined : result.assets[0];
       if (asset) {
+        // Refused here, before the file is read: a PDF over the limit never reaches the pipeline.
+        if (asset.size !== undefined && asset.size > PDF_MAX_BYTES) {
+          setFile(null);
+          setCreateError(pdfTooLargeMessage(asset.size));
+          return;
+        }
+        setCreateError(null);
         setFile({ uri: asset.uri, name: asset.name, size: asset.size ?? 0 });
         if (!titleEdited) setTitle(titleFromFileName(asset.name));
       }

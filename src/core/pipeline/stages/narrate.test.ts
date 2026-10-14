@@ -31,7 +31,7 @@ describe('narrate stage: WAV output from a PCM-only voice', () => {
     const fake = createFakePorts({
       sourceText: 'The boats came in at dusk. Ada waited on the quay. The lamps were lit.',
       targetLang: null,
-      tts: () => ({ bytes: wavOf(3), mime: 'audio/wav', costUsd: null }),
+      tts: () => ({ bytes: wavOf(3), mime: 'audio/wav', costUsd: null, generationId: null }),
     });
 
     expect((await runChapter(CHAPTER_ID, fake.ports)).status).toBe('ready');
@@ -50,7 +50,7 @@ describe('narrate stage: WAV output from a PCM-only voice', () => {
     const fake = createFakePorts({
       sourceText: 'The boats came in at dusk. Ada waited on the quay. The lamps were lit.',
       targetLang: null,
-      tts: () => ({ bytes: wavOf(2), mime: 'audio/wav', costUsd: null }),
+      tts: () => ({ bytes: wavOf(2), mime: 'audio/wav', costUsd: null, generationId: null }),
     });
 
     await runChapter(CHAPTER_ID, fake.ports);
@@ -67,7 +67,7 @@ describe('narrate stage: WAV output from a PCM-only voice', () => {
       tts: () => ({
         bytes: new Uint8Array([1, 2, 3]),
         mime: 'application/octet-stream',
-        costUsd: null,
+        costUsd: null, generationId: null,
       }),
     });
 
@@ -92,8 +92,8 @@ describe('narrate stage: a chapter whose voice changes format', () => {
       targetLang: null,
       tts: (_text, profile) =>
         profile.model === PCM_MODEL
-          ? { bytes: wavOf(1), mime: 'audio/wav', costUsd: null }
-          : { bytes: mp3Bytes(38), mime: 'audio/mpeg', costUsd: null },
+          ? { bytes: wavOf(1), mime: 'audio/wav', costUsd: null, generationId: null }
+          : { bytes: mp3Bytes(38), mime: 'audio/mpeg', costUsd: null, generationId: null },
     });
 
     await runChapter(CHAPTER_ID, fake.ports);
@@ -232,7 +232,7 @@ describe('narrate stage: split-and-join fallback for one stubborn passage', () =
   const oneSecondWav = (): TtsResult => ({
     bytes: pcmToWav(new Uint8Array(24_000 * 2), { rate: 24_000, channels: 1 }),
     mime: 'audio/wav',
-    costUsd: null,
+    costUsd: null, generationId: null,
   });
 
   it('joins the two halves of a failing passage into one saved passage, with the sum of their lengths', async () => {
@@ -342,7 +342,7 @@ describe('narrate stage: a retry resumes at the first missing passage', () => {
             detail: 'HTTP 429',
           });
         }
-        return { bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null };
+        return { bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null, generationId: null };
       },
     });
     fake.state.chapters.set(CHAPTER_ID, { ...fake.chapter(), sourceLang: 'en' });
@@ -375,7 +375,7 @@ describe('narrate stage: parallel passages, saved in order', () => {
         const delay = call === 1 ? 40 : 2;
         return new Promise<TtsResult>((resolve) =>
           setTimeout(
-            () => resolve({ bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null }),
+            () => resolve({ bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null, generationId: null }),
             delay,
           ),
         );
@@ -406,7 +406,7 @@ describe('narrate stage: parallel passages, saved in order', () => {
           return new Promise<TtsResult>((resolve) =>
             setTimeout(() => {
               inFlight -= 1;
-              resolve({ bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null });
+              resolve({ bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null, generationId: null });
             }, 5),
           );
         },
@@ -453,7 +453,7 @@ describe('narrate stage: passage counts for the progress line', () => {
           abortOnce = false;
           controller.abort();
         }
-        return { bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null };
+        return { bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null, generationId: null };
       },
     });
     await runChapter(CHAPTER_ID, fake.ports, { signal: controller.signal });

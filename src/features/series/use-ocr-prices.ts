@@ -9,9 +9,9 @@ import { OCR_QUOTE_CHARS } from './series-data';
 export function useOcrPrices(
   chapterIds: readonly string[],
   series: Series | null,
-): Readonly<Record<string, number>> {
+): Readonly<Record<string, number | null>> {
   const pipeline = usePipeline();
-  const [prices, setPrices] = useState<Readonly<Record<string, number>>>({});
+  const [prices, setPrices] = useState<Readonly<Record<string, number | null>>>({});
   const key = chapterIds.join(',');
   const sourceLang = series?.sourceLang ?? null;
   const targetLang = series?.targetLang ?? null;

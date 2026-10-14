@@ -42,9 +42,10 @@ describe('fake pipeline: estimates and previews', () => {
   it('splits an estimate into stages, with a range around the total', () => {
     const estimate = fakeEstimate({ chars: 36_000, sourceLang: 'en', targetLang: 'it' });
 
-    expect(estimate.totalUsd).toBeGreaterThan(0);
-    expect(estimate.lowUsd).toBeLessThan(estimate.totalUsd);
-    expect(estimate.highUsd).toBeGreaterThan(estimate.totalUsd);
+    const total = estimate.totalUsd ?? Number.NaN;
+    expect(total).toBeGreaterThan(0);
+    expect(estimate.lowUsd ?? Number.NaN).toBeLessThan(total);
+    expect(estimate.highUsd ?? Number.NaN).toBeGreaterThan(total);
     expect(estimate.lines.map((line) => line.stage)).toContain('translate');
     expect(
       fakeEstimate({ chars: 36_000, sourceLang: 'en', targetLang: null }).lines.map((l) => l.stage),

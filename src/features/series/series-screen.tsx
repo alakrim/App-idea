@@ -275,9 +275,13 @@ export function SeriesScreen({ seriesId }: SeriesScreenProps) {
   );
 }
 
-function ocrPriceLabel(chapterId: string | null, prices: Readonly<Record<string, number>>): string {
+function ocrPriceLabel(
+  chapterId: string | null,
+  prices: Readonly<Record<string, number | null>>,
+): string {
   const price = chapterId === null ? undefined : prices[chapterId];
-  return price === undefined ? 'being worked out' : `≈ ${formatUsd(price)}`;
+  if (price === undefined) return 'being worked out';
+  return price === null ? 'unknown' : `≈ ${formatUsd(price)}`;
 }
 
 function goBack(): void {

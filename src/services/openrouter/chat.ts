@@ -130,7 +130,15 @@ export interface ChatJsonInput<T> {
   cacheControl?: CacheControl;
   /** Skips the catalog lookup that decides whether the model gets json_schema output. */
   structuredOutput?: boolean;
+  /**
+   * Called with every call that completed, in order. The first call is reported even when the
+   * repair call fails, so its usage is recorded.
+   */
+  onCall?: (call: ChatCall) => void;
 }
+
+/** What a caller records for one completed call. */
+export type ChatCall = Pick<ChatCompletion, 'usage' | 'generationId' | 'model'>;
 
 export interface ChatJsonResult<T> {
   data: T;
@@ -176,6 +184,7 @@ export async function chatJson<T>(
     requestBody(input, [systemMessage, userMessage], responseFormat),
     input.signal,
   );
+  input.onCall?.(callOf(first));
   const firstCheck = validate(first.content, input.schema);
   if (firstCheck.ok) return finish([first], firstCheck.value);
 
@@ -193,6 +202,7 @@ export async function chatJson<T>(
     requestBody(input, repairMessages, responseFormat),
     input.signal,
   );
+  input.onCall?.(callOf(second));
   const secondCheck = validate(second.content, input.schema);
   if (!secondCheck.ok) {
     throw pipelineFailure(
@@ -364,6 +374,14 @@ function summarizeIssues(issues: readonly { path: PropertyKey[]; message: string
     .slice(0, 10)
     .map((issue) => `${issue.path.map(String).join('.') || 'root'}: ${issue.message}`)
     .join('; ');
+}
+
+function callOf(completion: ChatCompletion): ChatCall {
+  return {
+    usage: completion.usage,
+    generationId: completion.generationId,
+    model: completion.model,
+  };
 }
 
 function finish<T>(calls: ChatCompletion[], data: T): ChatJsonResult<T> {

@@ -7,6 +7,8 @@
  * as one page. The stage then judges scans by total length, and furniture removal needs at least
  * three pages, so it does not run on a PDF. Both are open issues until a live PDF is checked.
  */
+import { StageFailure } from '@/core/pipeline/errors';
+import { PDF_MAX_BYTES, pdfTooLargeMessage } from '@/core/pipeline/limits';
 import type { PdfEngine, PdfTextResult, PdfTextSource } from '@/core/pipeline/ports';
 import type { OpenRouterClient } from '@/services/openrouter';
 
@@ -14,7 +16,7 @@ import type { LibraryFiles } from '../library-files';
 
 export interface PdfTextSourceDeps {
   readonly openrouter: Pick<OpenRouterClient, 'parsePdf'>;
-  readonly files: Pick<LibraryFiles, 'readBase64'>;
+  readonly files: Pick<LibraryFiles, 'readBase64' | 'sizeOf'>;
   /** The model that receives the parsed text. Its reply is discarded, so a cheap model is right. */
   readonly parserModel: () => string;
 }
@@ -27,6 +29,14 @@ export function fileNameOf(uri: string): string {
 export function createPdfTextSource(deps: PdfTextSourceDeps): PdfTextSource {
   return {
     async extract({ fileUri, engine, signal }): Promise<PdfTextResult> {
+      // The size is checked before the file is read, so a huge PDF never goes into memory.
+      const size = await deps.files.sizeOf(fileUri);
+      if (size !== null && size > PDF_MAX_BYTES) {
+        throw new StageFailure('INPUT_TOO_LONG', pdfTooLargeMessage(size), {
+          retryable: false,
+          detail: 'pdf_over_size_limit',
+        });
+      }
       const base64 = await deps.files.readBase64(fileUri);
       const model = deps.parserModel();
       const result = await deps.openrouter.parsePdf({
@@ -45,6 +55,7 @@ export function createPdfTextSource(deps: PdfTextSourceDeps): PdfTextSource {
           completionTokens: result.usage.completionTokens,
           costUsd: result.usage.costUsd,
         },
+        generationId: result.generationId,
       };
     },
   };

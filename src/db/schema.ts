@@ -237,7 +237,8 @@ export const usageLedger = sqliteTable(
     promptTokens: integer('prompt_tokens').notNull(),
     completionTokens: integer('completion_tokens').notNull(),
     audioSeconds: real('audio_seconds'),
-    costUsd: real('cost_usd').notNull(),
+    /** Null when the call's cost is unknown. A zero here would read as a real price. */
+    costUsd: real('cost_usd'),
     generationId: text('generation_id'),
   },
   (t) => [

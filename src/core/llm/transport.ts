@@ -32,6 +32,8 @@ export interface LlmUsage {
 export interface LlmReply {
   readonly text: string;
   readonly usage: LlmUsage;
+  /** The provider's id for this call, which reconciles the ledger with its billing. Null when absent. */
+  readonly generationId: string | null;
 }
 
 export type LlmTransport = (request: LlmRequest) => Promise<LlmReply>;

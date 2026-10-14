@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react';
 
 import type { IdGenerator, Lang } from '@/core/domain';
+import { paidCallEntry } from '@/core/llm/usage-entry';
 import type { Settings } from '@/core/settings';
 import {
   buildVocabPrompt,
@@ -109,23 +110,27 @@ export function createVocabActions(deps: VocabActionsDeps): VocabActions {
         jsonSchemaName: VOCAB_JSON_SCHEMA_NAME,
         temperature: EXPLAIN_TEMPERATURE,
         maxTokens: EXPLAIN_MAX_TOKENS,
+        // Every completed call is recorded as it finishes, so a failed repair still counts.
+        onCall: (call) =>
+          usageRepo.insert(
+            db,
+            paidCallEntry({
+              id: newId(),
+              at: now(),
+              chapterId: item.chapterId,
+              stage: 'vocab',
+              model: call.model,
+              promptTokens: call.usage.promptTokens,
+              completionTokens: call.usage.completionTokens,
+              costUsd: call.usage.costUsd,
+              generationId: call.generationId,
+            }),
+          ),
       })
-      .then(({ data, usage, model, generationId }) => {
+      .then(({ data }) => {
         vocabRepo.setExplanation(db, id, {
           translation: data.translation,
           explanation: data.explanation,
-        });
-        usageRepo.insert(db, {
-          id: newId(),
-          at: now(),
-          chapterId: item.chapterId,
-          stage: 'vocab',
-          model,
-          promptTokens: usage.promptTokens,
-          completionTokens: usage.completionTokens,
-          audioSeconds: null,
-          costUsd: usage.costUsd ?? 0,
-          generationId,
         });
       })
       .catch((error: unknown) => {

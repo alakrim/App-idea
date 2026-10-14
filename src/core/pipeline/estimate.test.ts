@@ -36,9 +36,10 @@ describe('estimateChapterCost', () => {
     // Narration: 12,000 Italian tokens at four characters each, billed per character.
     expect(usd.narration).toBeCloseTo(48_000 * 0.00001, 12);
 
-    expect(estimate.totalUsd).toBeCloseTo(0.571482, 9);
-    expect(estimate.low).toBeLessThan(estimate.totalUsd);
-    expect(estimate.high).toBeGreaterThan(estimate.totalUsd);
+    const total = estimate.totalUsd ?? Number.NaN;
+    expect(total).toBeCloseTo(0.571482, 9);
+    expect(estimate.low ?? Number.NaN).toBeLessThan(total);
+    expect(estimate.high ?? Number.NaN).toBeGreaterThan(total);
     expect(estimate.low).toBeCloseTo(0.4959734, 6);
     expect(estimate.high).toBeCloseTo(0.6469906, 6);
   });
@@ -50,6 +51,7 @@ describe('estimateChapterCost', () => {
       stage: 'translation',
       usd: 0,
       basis: 'no translation for this chapter',
+      unknownReason: null,
     });
     // 5,000 English words at six characters each, billed as narration.
     const narration = estimate.perStage.find((s) => s.stage === 'narration');
@@ -71,16 +73,28 @@ describe('estimateChapterCost', () => {
     expect(estimate.perStage.find((s) => s.stage === 'narration')?.usd).toBeCloseTo(0.54, 12);
   });
 
-  it('shows zero and says why when a model is missing from the catalog', async () => {
+  it('marks a stage unknown, not zero, when a model is missing from the catalog', async () => {
     const estimate = await estimateChapterCost({
       ...BASE,
       models: { ...MODELS, analysis: 'vendor/removed' },
     });
     expect(estimate.perStage.find((s) => s.stage === 'analysis')).toEqual({
       stage: 'analysis',
-      usd: 0,
+      usd: null,
       basis: 'pricing unavailable for vendor/removed',
+      unknownReason: 'pricing unavailable for vendor/removed',
     });
+  });
+
+  it('leaves the total, low and high unknown when any stage is unknown', async () => {
+    const estimate = await estimateChapterCost({
+      ...BASE,
+      models: { ...MODELS, narration: 'vendor/removed' },
+    });
+    expect(estimate.totalUsd).toBeNull();
+    expect(estimate.low).toBeNull();
+    expect(estimate.high).toBeNull();
+    expect(estimate.perStage.find((s) => s.stage === 'cleanup')?.usd).not.toBeNull();
   });
 });
 

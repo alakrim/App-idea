@@ -334,7 +334,7 @@ describe('PipelineQueue: stalls and the network', () => {
           first = false;
           await Promise.race([retirement, abortedAt(signal)]);
         }
-        return { bytes: mp3Bytes(4), mime: 'audio/mpeg', costUsd: null };
+        return { bytes: mp3Bytes(4), mime: 'audio/mpeg', costUsd: null, generationId: null };
       },
     });
     const queue = createPipelineQueue(fake.ports, {
@@ -358,7 +358,7 @@ describe('PipelineQueue: stalls and the network', () => {
       sourceText: LONG_TEXT,
       tts: async (_text, _profile, signal) => {
         if (stuck && fake.state.ttsCalls.length > 1) await abortedAt(signal);
-        return { bytes: mp3Bytes(4), mime: 'audio/mpeg', costUsd: null };
+        return { bytes: mp3Bytes(4), mime: 'audio/mpeg', costUsd: null, generationId: null };
       },
     });
     const queue = createPipelineQueue(fake.ports, {
@@ -411,7 +411,7 @@ describe('PipelineQueue: stalls and the network', () => {
       sourceText: LONG_TEXT,
       tts: async () => {
         await gate;
-        return { bytes: mp3Bytes(4), mime: 'audio/mpeg', costUsd: null };
+        return { bytes: mp3Bytes(4), mime: 'audio/mpeg', costUsd: null, generationId: null };
       },
     });
     const queue = createPipelineQueue(fake.ports, {
@@ -445,7 +445,7 @@ describe('PipelineQueue: stalls and the network', () => {
       sourceText: LONG_TEXT,
       tts: async () => {
         await gate;
-        return { bytes: mp3Bytes(4), mime: 'audio/mpeg', costUsd: null };
+        return { bytes: mp3Bytes(4), mime: 'audio/mpeg', costUsd: null, generationId: null };
       },
     });
     const queue = createPipelineQueue(fake.ports, {
@@ -469,7 +469,7 @@ describe('PipelineQueue: stalls and the network', () => {
     const events: PipelineEvent[] = [];
     const fake = createFakePorts({
       sourceText: LONG_TEXT,
-      tts: () => gate.then(() => ({ bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null })),
+      tts: () => gate.then(() => ({ bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null, generationId: null })),
     });
     const queue = createPipelineQueue(fake.ports, {
       onEvent: (e) => events.push(e),

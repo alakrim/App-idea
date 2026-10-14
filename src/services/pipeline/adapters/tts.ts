@@ -37,7 +37,12 @@ export function createTts({ openrouter }: TtsDeps): Tts {
         reply.contentType,
         reply.formatUsed,
       );
-      return { bytes: stored.bytes, mime: stored.mime, costUsd: reply.costUsd };
+      return {
+        bytes: stored.bytes,
+        mime: stored.mime,
+        costUsd: reply.costUsd,
+        generationId: reply.generationId,
+      };
     },
   };
 }

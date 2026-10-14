@@ -44,15 +44,19 @@ export interface ChapterProgress {
 
 export interface CostLine {
   stage: Stage;
-  usd: number;
+  /** The stage's price in USD. Null when it cannot be priced: unknown, never zero. */
+  usd: number | null;
   /** Human explanation, e.g. "≈ 7.2k tokens with Claude Haiku 5.5". */
   basis: string;
+  /** Why the price is unknown. Null when `usd` is a number. */
+  unknownReason: string | null;
 }
 
 export interface CostEstimate {
-  totalUsd: number;
-  lowUsd: number;
-  highUsd: number;
+  /** Null when any stage is unknown. */
+  totalUsd: number | null;
+  lowUsd: number | null;
+  highUsd: number | null;
   lines: CostLine[];
 }
 

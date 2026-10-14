@@ -12,7 +12,7 @@ import type { CostStage } from '@/core/pipeline/estimate';
 import type { Clock, Fetcher, PipelinePorts } from '@/core/pipeline/ports';
 import { createPipelineQueue } from '@/core/pipeline/queue';
 import type { PipelineQueue, QueueRunOptions, QueueSnapshot } from '@/core/pipeline/queue';
-import { FETCH_LIMITS } from '@/core/pipeline/stages/web-extract';
+import { FETCH_LIMITS } from '@/core/pipeline/limits';
 import { estimateWordCount } from '@/core/text/word-count';
 import { guessLanguage } from '@/core/translate/detect';
 import { audioSegmentRepo } from '@/db/repos/audio-segment-repo';
@@ -296,6 +296,7 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
           stage: COST_STAGE_OF[line.stage],
           usd: line.usd,
           basis: line.basis,
+          unknownReason: line.unknownReason,
         }));
       return {
         totalUsd: estimate.totalUsd,

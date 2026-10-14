@@ -135,7 +135,14 @@ describe('chapterRepo', () => {
     expect(chapterRepo.get(db, id(1))).toBeNull();
     expect(textRepo.getRange(db, id(1), 0, 10)).toEqual([]);
     expect(usageRepo.totalsBy(db, 'chapter')).toEqual([
-      { key: null, calls: 1, promptTokens: 10, completionTokens: 5, costUsd: 0.01 },
+      {
+        key: null,
+        calls: 1,
+        promptTokens: 10,
+        completionTokens: 5,
+        costUsd: 0.01,
+        unknownCalls: 0,
+      },
     ]);
   });
 

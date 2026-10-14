@@ -134,7 +134,7 @@ function live(
 export interface SeriesScreenFixture {
   series: Series;
   chapters: SeriesChapterItem[];
-  ocrPrices: Record<string, number>;
+  ocrPrices: Record<string, number | null>;
   resumeChapterId: string;
 }
 

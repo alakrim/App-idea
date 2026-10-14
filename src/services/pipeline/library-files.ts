@@ -10,6 +10,8 @@ export interface LibraryFiles {
   readText(relativePath: string): Promise<string | null>;
   /** The bytes of a file as base64. The URI is one returned by `write` or `importFile`. */
   readBase64(uri: string): Promise<string>;
+  /** The size of a file in bytes, read from its metadata, or null when it is not known. */
+  sizeOf(uri: string): Promise<number | null>;
   /** Copies a file from outside the library (a picked document) into it. Returns the new URI. */
   importFile(sourceUri: string, relativePath: string): Promise<string>;
   /** The names of the entries in a directory. Empty when the directory does not exist. */

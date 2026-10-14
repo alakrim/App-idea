@@ -87,6 +87,7 @@ describe('runChapter: the happy path', () => {
         text: pages.join('\n'),
         pages,
         model: 'pdf/parser',
+        generationId: null,
         usage: { promptTokens: 1, completionTokens: 1, costUsd: 0.002 },
       },
     });
@@ -101,6 +102,7 @@ describe('runChapter: the happy path', () => {
     expect(fake.state.pdfCalls).toEqual([{ engine: 'cloudflare-ai' }]);
     expect(fake.state.ledger.find((e) => e.stage === 'extract')).toMatchObject({
       model: 'pdf/parser',
+      generationId: null,
       costUsd: 0.002,
     });
   });
@@ -172,6 +174,7 @@ describe('runChapter: extraction routes', () => {
           ? {
               text: '{"keep":[0,1,2]}',
               usage: { promptTokens: 50, completionTokens: 5, costUsd: 0.0001 },
+              generationId: null,
             }
           : undefined,
     });
@@ -197,7 +200,11 @@ describe('runChapter: extraction routes', () => {
       html: articleHtml(6),
       llm: (request) =>
         request.jsonSchema?.name === 'index_selection'
-          ? { text: 'not json at all', usage: { promptTokens: 1, completionTokens: 1, costUsd: 0 } }
+          ? {
+              text: 'not json at all',
+              usage: { promptTokens: 1, completionTokens: 1, costUsd: 0 },
+              generationId: null,
+            }
           : undefined,
     });
     const outcome = await runChapter(CHAPTER_ID, fake.ports);
@@ -210,12 +217,14 @@ describe('runChapter: extraction routes', () => {
       text: 'Scan 1',
       pages: ['Scan 1', '', ''],
       model: 'pdf/parser',
+      generationId: null,
       usage: { promptTokens: 1, completionTokens: 1, costUsd: 0 },
     };
     const ocr = {
       text: longText(6, 300),
       pages: [longText(6, 300)],
       model: 'pdf/ocr',
+      generationId: null,
       usage: { promptTokens: 1, completionTokens: 1, costUsd: 0.5 },
     };
     const fake = createFakePorts({
@@ -348,7 +357,7 @@ describe('runChapter: cancellation and resume', () => {
           abortOnce = false;
           controller.abort();
         }
-        return { bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null };
+        return { bytes: mp3Bytes(1), mime: 'audio/mpeg', costUsd: null, generationId: null };
       },
     });
 
@@ -403,7 +412,7 @@ describe('runChapter: usage and cost accounting', () => {
       expect(entry.costUsd).toBeGreaterThan(0);
     }
 
-    const ledgerTotal = fake.state.ledger.reduce((sum, e) => sum + e.costUsd, 0);
+    const ledgerTotal = fake.state.ledger.reduce((sum, e) => sum + (e.costUsd ?? 0), 0);
     const lastCost = events.filter((e) => e.type === 'cost').at(-1);
     expect(lastCost?.type === 'cost' ? lastCost.totalUsd : NaN).toBeCloseTo(ledgerTotal, 12);
     expect(fake.job('analyze')?.costUsd).toBeCloseTo(0.001, 12);

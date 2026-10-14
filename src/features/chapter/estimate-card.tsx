@@ -132,7 +132,7 @@ export function EstimateCard({ status, onRetry }: EstimateCardProps) {
                   {line.basis}
                 </Text>
               </View>
-              <Text variant="body">{formatUsd(line.usd)}</Text>
+              <Text variant="body">{line.usd === null ? 'Unknown' : formatUsd(line.usd)}</Text>
             </View>
           ))}
         </View>

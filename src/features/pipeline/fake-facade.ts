@@ -492,17 +492,17 @@ export function fakePreview(url: string): SourcePreview {
 export function fakeEstimate({ chars, sourceLang, targetLang }: EstimateArgs): CostEstimate {
   const translates = targetLang !== null && targetLang !== sourceLang;
   const total = chars * FAKE_USD_PER_CHAR * (translates ? 1.2 : 1);
+  const line = (stage: CostLine['stage'], usd: number, basis: string): CostLine => ({
+    stage,
+    usd,
+    basis,
+    unknownReason: null,
+  });
   const lines: CostLine[] = [
-    {
-      stage: 'clean',
-      usd: total * 0.14,
-      basis: `About ${Math.round(chars / 4000)}k tokens of cleanup`,
-    },
-    { stage: 'analyze', usd: total * 0.3, basis: 'Ambience and memory, one pass' },
-    ...(translates
-      ? [{ stage: 'translate' as const, usd: total * 0.26, basis: `Into ${targetLang}` }]
-      : []),
-    { stage: 'narrate', usd: total * 0.3, basis: 'Narration of the full text' },
+    line('clean', total * 0.14, `About ${Math.round(chars / 4000)}k tokens of cleanup`),
+    line('analyze', total * 0.3, 'Ambience and memory, one pass'),
+    ...(translates ? [line('translate', total * 0.26, `Into ${targetLang}`)] : []),
+    line('narrate', total * 0.3, 'Narration of the full text'),
   ];
   return { totalUsd: total, lowUsd: total * 0.75, highUsd: total * 1.5, lines };
 }

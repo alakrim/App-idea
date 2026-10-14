@@ -13,6 +13,8 @@ function estimateWith(lines: CostEstimate['lines']): CostEstimate {
   return { totalUsd: 0, lowUsd: 0, highUsd: 0, lines };
 }
 
+const priced = (usd: number) => ({ usd, basis: '4000 words', unknownReason: null });
+
 function wrapperWith(estimate: jest.Mock): ({ children }: { children: ReactNode }) => ReactNode {
   // Only `estimate` is used by the hook, so the rest of the facade is left out on purpose.
   const facade = { estimate } as unknown as PipelineFacade;
@@ -25,7 +27,7 @@ describe('useNarrationPrice', () => {
   it('prices the narration of the chapter from its word count', async () => {
     const estimate = jest
       .fn()
-      .mockResolvedValue(estimateWith([{ stage: 'narrate', usd: 0.27, basis: '4000 words' }]));
+      .mockResolvedValue(estimateWith([{ stage: 'narrate', ...priced(0.27) }]));
     const { result } = await renderHook(() => useNarrationPrice(TARGET), {
       wrapper: wrapperWith(estimate),
     });
@@ -41,7 +43,12 @@ describe('useNarrationPrice', () => {
       .fn()
       .mockResolvedValue(
         estimateWith([
-          { stage: 'narrate', usd: 0, basis: 'pricing unavailable for vendor/removed' },
+          {
+            stage: 'narrate',
+            usd: null,
+            basis: 'pricing unavailable for vendor/removed',
+            unknownReason: 'pricing unavailable for vendor/removed',
+          },
         ]),
       );
     const { result } = await renderHook(() => useNarrationPrice(TARGET), {
