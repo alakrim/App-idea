@@ -390,3 +390,14 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
   - An ADR-0005 amendment: 24 MB, 48 kbps, 45/60 s loops, screening thresholds, era rules.
   - `cave_drip` peak at exactly −3 dBTP.
 - **AI-generated beds** (castle hall, forge, battlefield…) would need ElevenLabs on a paid plan: the user's decision.
+
+## Paused (2026-10-14): the user is low on tokens
+- **Delivered:** APK `lectio-0.1.0-54b3d2e-arm64.apk` on `apk-builds`, built from the last fully verified commit `54b3d2e` (N2–N4, L1, F1, F2, F4). It is 51.3 MB, with SHA-256 `2a662f29…0a91` and the same debug key. The manifest has `FOREGROUND_SERVICE_DATA_SYNC` and `POST_NOTIFICATIONS`.
+- **Paused, unverified, in wip commits:**
+  - **F3** (data integrity): partial.
+  - **A4 phase 2** (clean ambience): partial. The limiter is done and the base pack is proven byte-identical; 45 s loops and the wider sourcing are not done.
+  - Resume either one by re-briefing a worker from its brief plus this note.
+- **Next when resuming:**
+  - Finish F3 and A4.
+  - Era persistence.
+  - Device checks: background service, resume, bookmarks.
