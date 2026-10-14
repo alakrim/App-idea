@@ -1,4 +1,4 @@
-import { count, gte, sql, sum } from 'drizzle-orm';
+import { count, eq, gte, sql, sum } from 'drizzle-orm';
 
 import { usageLedger } from '../schema';
 
@@ -27,6 +27,17 @@ const KEY_EXPRESSIONS = {
 export const usageRepo = {
   insert(db: Db, entry: UsageEntry): void {
     db.insert(usageLedger).values(entry).run();
+  },
+
+  /** A chapter's total spend. It reads only that chapter's rows, through the chapter index. */
+  totalCostForChapter(db: Db, chapterId: string): number {
+    return (
+      db
+        .select({ costUsd: sql<number>`coalesce(${sum(usageLedger.costUsd)}, 0)` })
+        .from(usageLedger)
+        .where(eq(usageLedger.chapterId, chapterId))
+        .get()?.costUsd ?? 0
+    );
   },
 
   /** Totals grouped by day, model, chapter or stage. `sinceMs` limits the window (inclusive). */

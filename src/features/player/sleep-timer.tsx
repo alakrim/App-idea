@@ -48,6 +48,7 @@ export function SleepChip({ onPress }: { onPress: () => void }) {
       accessibilityLabel={running ? `${label}. Change sleep timer` : 'Sleep timer, off'}
       icon={Moon}
       active={running}
+      value={running ? 'On' : 'Off'}
       onPress={onPress}
       testID="sleep-chip"
     />

@@ -189,7 +189,7 @@
   "screening": {
     "screenedOn": "2026-10-14",
     "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": null,
+    "reranker": "laion/clap-htsat-unfused",
     "thresholds": {
       "denyFrameProbability": 0.15,
       "alarmFrameProbability": 0.05,

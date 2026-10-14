@@ -34,9 +34,11 @@ function props(overrides: Partial<ChapterRowProps> = {}): ChapterRowProps {
     listening: { kind: 'unstarted' },
     current: false,
     divided: false,
+    availability: { canMoveUp: true, canMoveDown: true, canRegenerate: true, canStop: false },
     onOpen: jest.fn(),
     onPlay: jest.fn(),
     onMenu: jest.fn(),
+    onAction: jest.fn(),
     onRetry: jest.fn(),
     onOcr: jest.fn(),
     ...overrides,
@@ -91,5 +93,60 @@ describe('ChapterRow listening state', () => {
     fireEvent.press(screen.getByLabelText(/Chapter 3, The Bell Buoy/));
 
     expect(onOpen).toHaveBeenCalledWith(CHAPTER.id);
+  });
+});
+
+describe('ChapterRow actions', () => {
+  it('opens the chapter menu from a visible More actions button', async () => {
+    const onMenu = jest.fn();
+    await renderRow({ onMenu });
+
+    await fireEvent.press(screen.getByRole('button', { name: 'More actions for chapter 3' }));
+
+    expect(onMenu).toHaveBeenCalledWith(CHAPTER.id);
+  });
+
+  it('offers the same actions to screen readers and runs the one they pick', async () => {
+    const onAction = jest.fn();
+    await renderRow({ onAction });
+
+    fireEvent(
+      screen.getByRole('button', { name: /^Chapter 3, The Bell Buoy/ }),
+      'accessibilityAction',
+      {
+        nativeEvent: { actionName: 'move-up' },
+      },
+    );
+
+    expect(onAction).toHaveBeenCalledWith(CHAPTER.id, 'move-up');
+  });
+
+  it('ignores an accessibility action it does not know', async () => {
+    const onAction = jest.fn();
+    await renderRow({ onAction });
+
+    fireEvent(
+      screen.getByRole('button', { name: /^Chapter 3, The Bell Buoy/ }),
+      'accessibilityAction',
+      {
+        nativeEvent: { actionName: 'rename' },
+      },
+    );
+
+    expect(onAction).not.toHaveBeenCalled();
+  });
+
+  it('shows Try again on a failed chapter even when the pipeline marks the error not retryable', async () => {
+    const onRetry = jest.fn();
+    const failed: Chapter = { ...CHAPTER, status: 'failed' };
+    await renderRow({
+      chapter: failed,
+      failure: { code: 'UNKNOWN', message: 'Something went wrong. Try again.', retryable: false },
+      onRetry,
+    });
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Try again' }));
+
+    expect(onRetry).toHaveBeenCalledWith(CHAPTER.id);
   });
 });

@@ -72,7 +72,7 @@ export function SpeedSheet({ visible, onClose }: SpeedSheetProps) {
                 },
               ]}
             >
-              <Text variant="caption" tone={selected ? 'accent' : 'muted'}>
+              <Text variant="caption" tone={selected ? 'onAccentSoft' : 'muted'}>
                 {formatRate(preset)}
               </Text>
             </Pressable>

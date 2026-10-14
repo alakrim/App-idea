@@ -10,10 +10,6 @@ function rangeKey(cue: Pick<AmbienceCue, 'category' | 'startSentence' | 'endSent
 }
 
 export const cueRepo = {
-  insert(db: Db, cue: AmbienceCue): void {
-    db.insert(ambienceCues).values(cue).run();
-  },
-
   /** A chapter's ambience cues, in the order they start. */
   listForChapter(db: Db, chapterId: string): AmbienceCue[] {
     return db

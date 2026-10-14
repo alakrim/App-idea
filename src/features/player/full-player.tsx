@@ -10,6 +10,7 @@ import { findBookmark, findBookmarkById } from '@/features/bookmarks/bookmark-da
 import { BookmarkNoteSheet } from '@/features/bookmarks/bookmark-note-sheet';
 import { BookmarksSheet } from '@/features/bookmarks/bookmarks-sheet';
 import { ambienceIconOf } from '@/features/shared/ambience-display';
+import { goBackOrHome } from '@/features/shared/navigation';
 import { useVocabActions } from '@/features/vocab/vocab-actions';
 import { CoverImage } from '@/ui/cover-image';
 import { EmptyState } from '@/ui/empty-state';
@@ -29,7 +30,7 @@ import { Skeleton } from '@/ui/skeleton';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { useToast } from '@/ui/toast';
-import { gutter, space } from '@/ui/tokens';
+import { gutter, minTouchTarget, space } from '@/ui/tokens';
 
 import { activeAmbience } from './ambience-names';
 import { AmbienceSheet } from './ambience-sheet';
@@ -82,7 +83,7 @@ interface TopBarProps {
 function TopBar({ label = 'Now playing', trailing }: TopBarProps) {
   return (
     <View style={styles.topBar}>
-      <IconButton label="Close player" icon={ChevronDown} onPress={() => router.back()} />
+      <IconButton label="Close player" icon={ChevronDown} onPress={goBackOrHome} />
       <Text variant="micro" tone="muted">
         {label}
       </Text>
@@ -243,8 +244,9 @@ function ReadyPlayer() {
   );
   const copy = useCallback(
     (sentence: Sentence) => {
-      void setStringAsync(displayText(sentence));
-      toast.show({ message: 'Sentence copied', tone: 'success' });
+      setStringAsync(displayText(sentence))
+        .then(() => toast.show({ message: 'Sentence copied', tone: 'success' }))
+        .catch(() => toast.show({ message: 'Could not copy the sentence', tone: 'danger' }));
       setActionSentence(null);
     },
     [toast],
@@ -253,18 +255,23 @@ function ReadyPlayer() {
   const saveVocab = useCallback(
     (sentence: Sentence) => {
       if (seriesId === null) return;
+      const input = {
+        seriesId,
+        chapterId: sentence.chapterId,
+        sentenceIdx: sentence.idx,
+        text: displayText(sentence),
+      };
       try {
-        vocab.saveToVocab({
-          seriesId,
-          chapterId: sentence.chapterId,
-          sentenceIdx: sentence.idx,
-          text: displayText(sentence),
-        });
+        if (vocab.hasSaved(input)) {
+          toast.show({ message: 'Already in Vocab' });
+        } else {
+          vocab.saveToVocab(input);
+          toast.show({ message: 'Saved to Vocab' });
+        }
       } catch {
         toast.show({ message: 'Nothing to save in this sentence', tone: 'danger' });
         return;
       }
-      toast.show({ message: 'Saved to Vocab' });
       setActionSentence(null);
     },
     [seriesId, vocab, toast],
@@ -353,7 +360,7 @@ function ReadyPlayer() {
               accessibilityLabel={`Ambience, ${ambienceLabel}`}
               hint="Opens the ambience settings"
               icon={activeCues[0] ? ambienceIconOf(activeCues[0].id) : CloudRain}
-              active={ambience.enabled && activeNames.length > 0}
+              value={ambience.enabled && activeNames.length > 0 ? 'On' : 'Off'}
               onPress={() => setSheet('ambience')}
               testID="ambience-chip"
             />
@@ -386,6 +393,7 @@ function ReadyPlayer() {
               accessibilityLabel={`Speed ${formatRate(rate)}`}
               hint="Opens speed settings"
               icon={Gauge}
+              value={formatRate(rate)}
               onPress={() => setSheet('speed')}
               testID="speed-chip"
             />
@@ -475,8 +483,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: gutter,
   },
   topBarSpacer: {
-    width: 44,
-    height: 44,
+    width: minTouchTarget,
+    height: minTouchTarget,
   },
   center: {
     flex: 1,

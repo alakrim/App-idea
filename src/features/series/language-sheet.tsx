@@ -1,8 +1,8 @@
-import { FlatList, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import { LANGUAGES } from '@/features/shared/languages';
 import { Check } from '@/ui/icons';
-import { Sheet } from '@/ui/sheet';
+import { Sheet, SheetList } from '@/ui/sheet';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { iconSize, iconStrokeWidth, minTouchTarget, radius, space } from '@/ui/tokens';
@@ -24,7 +24,7 @@ export function LanguageSheet({ visible, title, value, onSelect, onClose }: Lang
 
   return (
     <Sheet visible={visible} onClose={onClose} title={title} snapPoints={['75%']}>
-      <FlatList
+      <SheetList
         data={choices}
         keyExtractor={(item) => item ?? 'not-set'}
         contentContainerStyle={styles.list}
@@ -83,7 +83,6 @@ function LanguageOption({ code, selected, onPress }: LanguageOptionProps) {
 const styles = StyleSheet.create({
   list: {
     gap: space.xs,
-    paddingBottom: space.xl,
   },
   row: {
     flexDirection: 'row',

@@ -1,4 +1,4 @@
-import { and, asc, eq, gte } from 'drizzle-orm';
+import { and, asc, count, eq, gte } from 'drizzle-orm';
 import { z } from 'zod';
 
 import { AudioSegmentSchema } from '../../core/domain';
@@ -44,6 +44,17 @@ export const audioSegmentRepo = {
       .orderBy(asc(audioSegments.idx))
       .all()
       .map(toAudioSegment);
+  },
+
+  /** How many segments a chapter has. A count, so no row is read or validated. */
+  countByChapter(db: Db, chapterId: string): number {
+    return (
+      db
+        .select({ total: count() })
+        .from(audioSegments)
+        .where(eq(audioSegments.chapterId, chapterId))
+        .get()?.total ?? 0
+    );
   },
 
   /** Removes segment `idx` and every later segment of the chapter, so narration can be redone from there. */

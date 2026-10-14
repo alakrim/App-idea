@@ -68,8 +68,8 @@ describe('LibraryView with data', () => {
     const view = props();
     await renderThemed(<LibraryView {...view} />);
 
-    await fireEvent.press(screen.getByRole('button', { name: /Amber Coast/ }));
-    await fireEvent(screen.getByRole('button', { name: /Amber Coast/ }), 'longPress');
+    await fireEvent.press(screen.getByRole('button', { name: /^Amber Coast,/ }));
+    await fireEvent(screen.getByRole('button', { name: /^Amber Coast,/ }), 'longPress');
 
     expect(view.onOpenSeries).toHaveBeenCalledWith(id(2));
     expect(view.onSeriesMenu).toHaveBeenCalledWith(id(2));

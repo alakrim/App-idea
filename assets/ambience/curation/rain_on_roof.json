@@ -191,5 +191,619 @@
         "+1 name matches roof, rain"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": "laion/clap-htsat-unfused",
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Rain on surface",
+          "Raindrop",
+          "Rain"
+        ]
+      ],
+      "clapPrompt": "rain drumming on a roof heard from inside a building, no thunder"
+    },
+    "verdict": "filled",
+    "unfilledReason": null,
+    "chosen": {
+      "freesoundId": 521773,
+      "windowStartSeconds": 27,
+      "windowSeconds": 64,
+      "steadinessDb": 1.26,
+      "clapScore": 0.567
+    },
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 573334,
+        "name": "Medium Rain Ambience Tin Roof Top edlarez vsnr.wav",
+        "url": "https://freesound.org/people/visionear/sounds/573334/",
+        "author": "visionear",
+        "durationSec": 91.7,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Vehicle reaches 0.38 (at 40 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 91,
+          "cleanSeconds": 82,
+          "topClasses": [
+            {
+              "label": "Rain",
+              "max": 0.8075
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.7781
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.7543
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.3796
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.3155
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.38,
+              "atSecond": 40
+            },
+            {
+              "label": "Train",
+              "max": 0.167,
+              "atSecond": 40
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain on surface",
+                "Raindrop",
+                "Rain"
+              ],
+              "fraction": 0.604
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 521772,
+        "name": "Indoors_Shed_RainOnTinRoof_02.wav",
+        "url": "https://freesound.org/people/MrFossy/sounds/521772/",
+        "author": "MrFossy",
+        "durationSec": 120,
+        "verdict": "reject",
+        "reason": "required sound absent: Rain on surface / Raindrop / Rain",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 120,
+          "cleanSeconds": 119,
+          "topClasses": [
+            {
+              "label": "Bird",
+              "max": 0.8012
+            },
+            {
+              "label": "Pigeon, dove",
+              "max": 0.781
+            },
+            {
+              "label": "Inside, small room",
+              "max": 0.4083
+            },
+            {
+              "label": "Coo",
+              "max": 0.3889
+            },
+            {
+              "label": "Animal",
+              "max": 0.3052
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Applause",
+              "max": 0.18,
+              "atSecond": 71
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain on surface",
+                "Raindrop",
+                "Rain"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 521773,
+        "name": "Indoors_Shed_RainOnTinRoof_01.wav",
+        "url": "https://freesound.org/people/MrFossy/sounds/521773/",
+        "author": "MrFossy",
+        "durationSec": 95,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 27,
+          "lengthSeconds": 64,
+          "steadinessDb": 1.26
+        },
+        "clapScore": 0.567,
+        "evidence": {
+          "frames": 95,
+          "cleanSeconds": 95,
+          "topClasses": [
+            {
+              "label": "Pigeon, dove",
+              "max": 0.769
+            },
+            {
+              "label": "Bird",
+              "max": 0.7628
+            },
+            {
+              "label": "Rain",
+              "max": 0.7574
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.7558
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.6304
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain on surface",
+                "Raindrop",
+                "Rain"
+              ],
+              "fraction": 0.568
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 431656,
+        "name": "Raindrops on open roof window, faint thunder in distance.wav",
+        "url": "https://freesound.org/people/scenes/sounds/431656/",
+        "author": "scenes",
+        "durationSec": 328.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Rain on surface / Raindrop / Rain",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 328,
+          "cleanSeconds": 130,
+          "topClasses": [
+            {
+              "label": "Rain",
+              "max": 0.7071
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.6309
+            },
+            {
+              "label": "Music",
+              "max": 0.5983
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.5972
+            },
+            {
+              "label": "Thunder",
+              "max": 0.5815
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.631,
+              "atSecond": 37
+            },
+            {
+              "label": "Music",
+              "max": 0.598,
+              "atSecond": 189
+            },
+            {
+              "label": "Thunder",
+              "max": 0.581,
+              "atSecond": 52
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.515,
+              "atSecond": 251
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.482,
+              "atSecond": 52
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.374,
+              "atSecond": 150
+            },
+            {
+              "label": "Car",
+              "max": 0.314,
+              "atSecond": 32
+            },
+            {
+              "label": "Engine",
+              "max": 0.281,
+              "atSecond": 223
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.21,
+              "atSecond": 251
+            },
+            {
+              "label": "Ship",
+              "max": 0.169,
+              "atSecond": 51
+            },
+            {
+              "label": "Engine knocking",
+              "max": 0.151,
+              "atSecond": 223
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain on surface",
+                "Raindrop",
+                "Rain"
+              ],
+              "fraction": 0.201
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 851476,
+        "name": "Rain falling on tin shed, rhythmic drips",
+        "url": "https://freesound.org/people/kkenny101/sounds/851476/",
+        "author": "kkenny101",
+        "durationSec": 100,
+        "verdict": "reject",
+        "reason": "required sound absent: Rain on surface / Raindrop / Rain",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 100,
+          "cleanSeconds": 12,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.6215
+            },
+            {
+              "label": "Machine gun",
+              "max": 0.5533
+            },
+            {
+              "label": "Gunshot, gunfire",
+              "max": 0.4825
+            },
+            {
+              "label": "Drum",
+              "max": 0.4818
+            },
+            {
+              "label": "Drum roll",
+              "max": 0.3876
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.622,
+              "atSecond": 95
+            },
+            {
+              "label": "Machine gun",
+              "max": 0.553,
+              "atSecond": 21
+            },
+            {
+              "label": "Drum",
+              "max": 0.482,
+              "atSecond": 38
+            },
+            {
+              "label": "Gunshot, gunfire",
+              "max": 0.482,
+              "atSecond": 84
+            },
+            {
+              "label": "Drum roll",
+              "max": 0.388,
+              "atSecond": 77
+            },
+            {
+              "label": "Snare drum",
+              "max": 0.358,
+              "atSecond": 77
+            },
+            {
+              "label": "Bass drum",
+              "max": 0.286,
+              "atSecond": 77
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.26,
+              "atSecond": 22
+            },
+            {
+              "label": "Drum kit",
+              "max": 0.229,
+              "atSecond": 77
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.178,
+              "atSecond": 87
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain on surface",
+                "Raindrop",
+                "Rain"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 398581,
+        "name": "Rain On Fiber Roof at Night",
+        "url": "https://freesound.org/people/Sagnik_Basu/sounds/398581/",
+        "author": "Sagnik_Basu",
+        "durationSec": 178,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 40,
+          "lengthSeconds": 64,
+          "steadinessDb": 0.749
+        },
+        "clapScore": 0.5608,
+        "evidence": {
+          "frames": 177,
+          "cleanSeconds": 175,
+          "topClasses": [
+            {
+              "label": "Rain on surface",
+              "max": 0.7898
+            },
+            {
+              "label": "Rain",
+              "max": 0.75
+            },
+            {
+              "label": "Bird",
+              "max": 0.5474
+            },
+            {
+              "label": "Pigeon, dove",
+              "max": 0.5348
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.5286
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Train",
+              "max": 0.248,
+              "atSecond": 153
+            },
+            {
+              "label": "Firecracker",
+              "max": 0.243,
+              "atSecond": 38
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.188,
+              "atSecond": 153
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.155,
+              "atSecond": 153
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain on surface",
+                "Raindrop",
+                "Rain"
+              ],
+              "fraction": 0.508
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 733844,
+        "name": "Rain On roof window",
+        "url": "https://freesound.org/people/Salom%C3%A9_Lubczanski/sounds/733844/",
+        "author": "Salomé_Lubczanski",
+        "durationSec": 83.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Rain on surface / Raindrop / Rain",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 83,
+          "cleanSeconds": 75,
+          "topClasses": [
+            {
+              "label": "Typing",
+              "max": 0.5152
+            },
+            {
+              "label": "Computer keyboard",
+              "max": 0.4451
+            },
+            {
+              "label": "Rain",
+              "max": 0.3309
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.2772
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.2748
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.275,
+              "atSecond": 7
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain on surface",
+                "Raindrop",
+                "Rain"
+              ],
+              "fraction": 0.012
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 669484,
+        "name": "Light rain on roof",
+        "url": "https://freesound.org/people/xkeril/sounds/669484/",
+        "author": "xkeril",
+        "durationSec": 61.2,
+        "verdict": "reject",
+        "reason": "clip has 61 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 61,
+          "cleanSeconds": 56,
+          "topClasses": [
+            {
+              "label": "Rain",
+              "max": 0.6938
+            },
+            {
+              "label": "Thunder",
+              "max": 0.6258
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.61
+            },
+            {
+              "label": "Bird",
+              "max": 0.5177
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.5139
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.626,
+              "atSecond": 37
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.514,
+              "atSecond": 37
+            },
+            {
+              "label": "Music",
+              "max": 0.201,
+              "atSecond": 34
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain on surface",
+                "Raindrop",
+                "Rain"
+              ],
+              "fraction": 0.738
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

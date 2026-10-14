@@ -32,7 +32,13 @@ export function SentenceSheet({
   onBookmark,
 }: SentenceSheetProps) {
   return (
-    <Sheet visible={sentence !== null} onClose={onClose} title="Sentence" snapPoints={['52%']}>
+    <Sheet
+      visible={sentence !== null}
+      onClose={onClose}
+      title="Sentence"
+      snapPoints={['52%']}
+      scrollable
+    >
       {sentence ? (
         <View style={styles.body}>
           <Text variant="reading" testID="sentence-sheet-text">

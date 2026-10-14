@@ -53,7 +53,11 @@ export function ListItem({
       </View>
       {trailing ??
         (onPress ? (
-          <ChevronRight size={iconSize.sm} strokeWidth={iconStrokeWidth} color={colors.textFaint} />
+          <ChevronRight
+            size={iconSize.sm}
+            strokeWidth={iconStrokeWidth}
+            color={colors.decorativeFaint}
+          />
         ) : null)}
     </>
   );

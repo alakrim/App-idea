@@ -164,7 +164,7 @@ export function Slider({
           <View
             style={[
               styles.track,
-              { backgroundColor: colors.surfaceRaised, borderColor: colors.border },
+              { backgroundColor: colors.surfaceRaised, borderColor: colors.boundary },
             ]}
           >
             <Animated.View style={[styles.fill, { backgroundColor: colors.accent }, fillStyle]} />

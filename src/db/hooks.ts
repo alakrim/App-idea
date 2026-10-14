@@ -72,10 +72,6 @@ export function useChapters(seriesId: string): Chapter[] {
   return useLiveRead(chapterRepo.listBySeries, CHAPTER_TABLES, seriesId);
 }
 
-export function useChapter(chapterId: string): Chapter | null {
-  return useLiveRead(chapterRepo.get, CHAPTER_TABLES, chapterId);
-}
-
 /** The pipeline jobs of one chapter, one per stage. */
 export function useJobs(chapterId: string): Job[] {
   return useLiveRead(jobRepo.listForChapter, JOB_TABLES, chapterId);

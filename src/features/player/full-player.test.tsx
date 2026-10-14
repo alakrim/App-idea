@@ -264,6 +264,7 @@ describe('FullPlayer learner actions', () => {
 function fakeVocabActions(overrides: Partial<VocabActions>): VocabActions {
   return {
     saveToVocab: jest.fn(() => 'vocab-1'),
+    hasSaved: () => false,
     retryExplanation: jest.fn(),
     isPending: () => false,
     failureOf: () => null,

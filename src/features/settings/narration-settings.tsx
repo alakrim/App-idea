@@ -210,7 +210,7 @@ export function NarrationPanel() {
                     },
                   ]}
                 >
-                  <Text variant="caption" tone={selected ? 'accent' : 'default'}>
+                  <Text variant="caption" tone={selected ? 'onAccentSoft' : 'default'}>
                     {voice.label}
                   </Text>
                 </Pressable>

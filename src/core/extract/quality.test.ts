@@ -1,10 +1,6 @@
-import {
-  ACCEPT,
-  WEBVIEW_BELOW,
-  decisionForScore,
-  mainLinkDensity,
-  scoreExtraction,
-} from './quality';
+import { parseDocument } from './dom';
+import { mainLinkDensity } from './link-density';
+import { ACCEPT, WEBVIEW_BELOW, decisionForScore, scoreExtraction } from './quality';
 
 import type { Block } from './types';
 
@@ -69,6 +65,7 @@ function narrativeBlocks(count: number): Block[] {
 
 const CLEAN_HTML =
   '<html><body><article><p>Clean article body with no links at all.</p></article></body></html>';
+const CLEAN_LINK_DENSITY = mainLinkDensity(parseDocument(CLEAN_HTML, 'https://example.com/'));
 
 describe('thresholds and routing', () => {
   it('exports the ADR-0004 thresholds', () => {
@@ -91,7 +88,11 @@ describe('thresholds and routing', () => {
 describe('scoreExtraction', () => {
   it('accepts long, clean, sentence-terminated narrative', () => {
     const blocks = narrativeBlocks(20);
-    const { score, signals } = scoreExtraction({ blocks, rawHtml: CLEAN_HTML, lang: 'en' });
+    const { score, signals } = scoreExtraction({
+      blocks,
+      linkDensity: CLEAN_LINK_DENSITY,
+      lang: 'en',
+    });
     expect(signals.units).toBeGreaterThanOrEqual(400);
     expect(signals.sentenceLikeness).toBe(1);
     expect(signals.hardFails).toEqual([]);
@@ -102,7 +103,7 @@ describe('scoreExtraction', () => {
   it('reports the length, sentence, repeat, lexicon and link components', () => {
     const { signals } = scoreExtraction({
       blocks: narrativeBlocks(20),
-      rawHtml: CLEAN_HTML,
+      linkDensity: CLEAN_LINK_DENSITY,
       lang: 'en',
     });
     expect(signals.components).toEqual({
@@ -119,14 +120,18 @@ describe('scoreExtraction', () => {
   it('scores a page whose five components are all 1 as exactly 1, so the weights sum to 1', () => {
     const { score } = scoreExtraction({
       blocks: narrativeBlocks(20),
-      rawHtml: CLEAN_HTML,
+      linkDensity: CLEAN_LINK_DENSITY,
       lang: 'en',
     });
     expect(score).toBe(1);
   });
 
   it('scores an empty extraction as 0 with the empty hard fail', () => {
-    const { score, signals } = scoreExtraction({ blocks: [], rawHtml: CLEAN_HTML, lang: null });
+    const { score, signals } = scoreExtraction({
+      blocks: [],
+      linkDensity: CLEAN_LINK_DENSITY,
+      lang: null,
+    });
     expect(score).toBe(0);
     expect(signals.hardFails).toEqual(['empty']);
     expect(decisionForScore(score)).toBe('webview');
@@ -134,7 +139,11 @@ describe('scoreExtraction', () => {
 
   it('flags a short extraction as a length failure and caps its score', () => {
     const blocks: Block[] = [{ tag: 'p', text: 'A short paragraph with only a few words in it.' }];
-    const { score, signals } = scoreExtraction({ blocks, rawHtml: CLEAN_HTML, lang: 'en' });
+    const { score, signals } = scoreExtraction({
+      blocks,
+      linkDensity: CLEAN_LINK_DENSITY,
+      lang: 'en',
+    });
     expect(signals.hardFails).toContain('length');
     expect(score).toBeLessThanOrEqual(0.5);
     expect(decisionForScore(score)).toBe('webview');
@@ -142,15 +151,20 @@ describe('scoreExtraction', () => {
 
   it('measures CJK text by character, so a 1275-character prologue passes the length check', () => {
     const blocks: Block[] = [{ tag: 'p', text: `${'夜'.repeat(1275)}。` }];
-    const { signals } = scoreExtraction({ blocks, rawHtml: CLEAN_HTML, lang: 'ja' });
+    const { signals } = scoreExtraction({ blocks, linkDensity: CLEAN_LINK_DENSITY, lang: 'ja' });
     expect(signals.units).toBe(637.5);
     expect(signals.hardFails).not.toContain('length');
   });
 
   it('applies the chapter length floor only when asked', () => {
     const blocks: Block[] = [{ tag: 'p', text: `${'雨'.repeat(400)}。` }];
-    const article = scoreExtraction({ blocks, rawHtml: CLEAN_HTML, lang: 'zh' });
-    const chapter = scoreExtraction({ blocks, rawHtml: CLEAN_HTML, lang: 'zh', expect: 'chapter' });
+    const article = scoreExtraction({ blocks, linkDensity: CLEAN_LINK_DENSITY, lang: 'zh' });
+    const chapter = scoreExtraction({
+      blocks,
+      linkDensity: CLEAN_LINK_DENSITY,
+      lang: 'zh',
+      expect: 'chapter',
+    });
     expect(article.signals.hardFails).not.toContain('length');
     expect(chapter.signals.hardFails).toContain('length');
   });
@@ -161,7 +175,7 @@ describe('scoreExtraction', () => {
       { tag: 'p', text: 'Advertisement' },
       { tag: 'p', text: 'Advertisement' },
     ];
-    const { signals } = scoreExtraction({ blocks, rawHtml: CLEAN_HTML, lang: 'en' });
+    const { signals } = scoreExtraction({ blocks, linkDensity: CLEAN_LINK_DENSITY, lang: 'en' });
     expect(signals.repeatedBlockRatio).toBe(0.333);
   });
 
@@ -172,7 +186,11 @@ describe('scoreExtraction', () => {
       { tag: 'li', text: 'Leave a reply' },
       { tag: 'li', text: 'Share this on Facebook' },
     ];
-    const { score, signals } = scoreExtraction({ blocks, rawHtml: CLEAN_HTML, lang: 'en' });
+    const { score, signals } = scoreExtraction({
+      blocks,
+      linkDensity: CLEAN_LINK_DENSITY,
+      lang: 'en',
+    });
     expect(signals.lexiconHits).toBe(3);
     expect(signals.hardFails).toEqual([]);
     expect(decisionForScore(score)).toBe('accept');
@@ -188,7 +206,7 @@ describe('scoreExtraction', () => {
     const { signals } = scoreExtraction({
       blocks: clean,
       preFilterBlocks: [...clean, ...boilerplate],
-      rawHtml: CLEAN_HTML,
+      linkDensity: CLEAN_LINK_DENSITY,
       lang: 'en',
     });
     expect(signals.lexiconHits).toBe(3);
@@ -203,7 +221,7 @@ describe('scoreExtraction', () => {
       scoreExtraction({
         blocks: narrative,
         preFilterBlocks: [...narrative, ...junk(boilerplate)],
-        rawHtml: CLEAN_HTML,
+        linkDensity: CLEAN_LINK_DENSITY,
         lang: 'en',
       }).signals.components.lexicon ?? 0;
     expect(score(2)).toBe(1); // 2 of 12 blocks: within the tolerated share
@@ -216,7 +234,7 @@ describe('scoreExtraction', () => {
       tag: 'p' as const,
       text: `${SUBJECTS[i]} ${OBJECTS[i]} ${TIMES[i]} and several more words that never reach a full stop`,
     }));
-    const { signals } = scoreExtraction({ blocks, rawHtml: CLEAN_HTML, lang: 'en' });
+    const { signals } = scoreExtraction({ blocks, linkDensity: CLEAN_LINK_DENSITY, lang: 'en' });
     expect(signals.sentenceLikeness).toBe(0);
     expect(signals.hardFails).toContain('sentence');
   });
@@ -231,33 +249,10 @@ describe('scoreExtraction', () => {
       tag: 'li' as const,
       text: `Story link ${String.fromCharCode(97 + (i % 26))}`,
     }));
-    const { score, signals } = scoreExtraction({ blocks, rawHtml, lang: 'en' });
+    const linkDensity = mainLinkDensity(parseDocument(rawHtml, 'https://example.com/'));
+    const { score, signals } = scoreExtraction({ blocks, linkDensity, lang: 'en' });
     expect(signals.linkDensity).toBe(1);
     expect(score).toBeLessThan(WEBVIEW_BELOW);
     expect(decisionForScore(score)).toBe('webview');
-  });
-});
-
-describe('mainLinkDensity', () => {
-  it('measures the article element when one exists', () => {
-    const html =
-      '<html><body><article><p>Plain prose here.</p></article><div><a href="/x">lots of link text</a></div></body></html>';
-    expect(mainLinkDensity(html)).toBe(0);
-  });
-
-  it('falls back to body when there is no article or main element', () => {
-    expect(
-      mainLinkDensity('<html><body><div><a href="/x">only links</a></div></body></html>'),
-    ).toBe(1);
-  });
-
-  it('ignores script and style text when measuring the candidate', () => {
-    const html =
-      '<html><body><article><a href="/x">aaaa</a><script>bbbbbbbbbbbbbbbbbbbbbb</script></article></body></html>';
-    expect(mainLinkDensity(html)).toBe(1);
-  });
-
-  it('returns null for a page with no text', () => {
-    expect(mainLinkDensity('<html><body></body></html>')).toBeNull();
   });
 });

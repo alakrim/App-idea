@@ -5,7 +5,7 @@
  */
 import type { Chapter, ChapterSource, Id, JobStatus, Stage, IdGenerator } from '@/core/domain';
 import { decode, detectCharset } from '@/core/extract/charset';
-import { extractArticle } from '@/core/extract/pipeline';
+import { loadPipeline } from '@/core/extract/load';
 import type { PipelineEvent } from '@/core/pipeline/context';
 import { estimateChapterCost } from '@/core/pipeline/estimate';
 import type { CostStage } from '@/core/pipeline/estimate';
@@ -126,7 +126,7 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
   }
 
   function ledgerTotalOf(chapterId: Id): number {
-    return usageRepo.totalsBy(db, 'chapter').find((row) => row.key === chapterId)?.costUsd ?? 0;
+    return usageRepo.totalCostForChapter(db, chapterId);
   }
 
   /** The state of a chapter that has no live run: what its row and its jobs say. */
@@ -148,7 +148,7 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
       (job) => job?.status === 'failed',
     );
     const ready = chapter.status === 'ready';
-    const segments = audioSegmentRepo.listByChapter(db, chapterId).length;
+    const segments = audioSegmentRepo.countByChapter(db, chapterId);
     return {
       state: ready ? 'ready' : chapter.status === 'failed' ? 'failed' : 'idle',
       stages,
@@ -254,6 +254,7 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
       const fetched = await fetcher.fetch(url, abort, FETCH_LIMITS);
       const charset = detectCharset(fetched.bytes, fetched.contentType ?? undefined);
       const html = decodeOrEmpty(fetched.bytes, charset);
+      const { extractArticle } = await loadPipeline();
       const result = await extractArticle({
         bytes: fetched.bytes,
         contentType: fetched.contentType ?? undefined,
@@ -267,7 +268,7 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
         wordCount: estimateWordCount(text),
         detectedLang: best?.lang ?? (text === '' ? null : guessLanguage(text)),
         quality: qualityOf(result.decision, text),
-        nextChapterUrl: html === null ? null : findNextChapterUrl(html, fetched.finalUrl),
+        nextChapterUrl: html === null ? null : await findNextChapterUrl(html, fetched.finalUrl),
       };
       return preview;
     },

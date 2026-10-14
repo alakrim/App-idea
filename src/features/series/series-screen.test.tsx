@@ -60,15 +60,16 @@ describe('Series screen: failed chapters', () => {
       WAIT,
     );
     await waitFor(
-      () => expect(screen.getByRole('button', { name: /Use OCR \(≈/ })).toBeOnTheScreen(),
+      () =>
+        expect(screen.getByRole('button', { name: /Read scanned pages \(≈/ })).toBeOnTheScreen(),
       WAIT,
     );
 
-    await fireEvent.press(screen.getByRole('button', { name: /Use OCR \(≈/ }));
-    expect(screen.getByText('Read this PDF with OCR?')).toBeOnTheScreen();
+    await fireEvent.press(screen.getByRole('button', { name: /Read scanned pages \(≈/ }));
+    expect(screen.getByText('Read the scanned pages?')).toBeOnTheScreen();
     expect(retryWithOcr).not.toHaveBeenCalled();
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Use OCR' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Read pages' }));
     expect(retryWithOcr).toHaveBeenCalledWith(id(900));
   });
 
@@ -84,13 +85,13 @@ describe('Series screen: failed chapters', () => {
     await renderWithApp(<SeriesScreen seriesId={id(1)} />, { db, pipeline });
 
     await waitFor(
-      () => expect(screen.getByRole('button', { name: 'Retry' })).toBeOnTheScreen(),
+      () => expect(screen.getByRole('button', { name: 'Try again' })).toBeOnTheScreen(),
       WAIT,
     );
-    await fireEvent.press(screen.getByRole('button', { name: 'Retry' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Try again' }));
 
     expect(retry).toHaveBeenCalledWith(id(900));
-    expect(screen.queryByText('Read this PDF with OCR?')).toBeNull();
+    expect(screen.queryByText('Read the scanned pages?')).toBeNull();
   });
 });
 

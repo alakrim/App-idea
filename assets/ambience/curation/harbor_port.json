@@ -190,5 +190,853 @@
         "+1 name matches harbour"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": "laion/clap-htsat-unfused",
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [
+        "Sailboat, sailing ship",
+        "Rowboat, canoe, kayak",
+        "Ship",
+        "Boat, Water vehicle"
+      ],
+      "required": [
+        [
+          "Fowl",
+          "Bird",
+          "Bird vocalization, bird call, bird song",
+          "Waves, surf",
+          "Water"
+        ]
+      ],
+      "clapPrompt": "an old harbour with gulls, ropes and water against wooden hulls, no engines"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Fowl / Bird / Bird vocalization, bird call, bird song / Waves, surf / Water; no 64 s window is free of denied sounds: Honk reaches 0.9 (at 108 s)",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 501340,
+        "name": "Harbor during the night (Valparaiso, Chile)",
+        "url": "https://freesound.org/people/felix.blume/sounds/501340/",
+        "author": "felix.blume",
+        "durationSec": 246.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Fowl / Bird / Bird vocalization, bird call, bird song / Waves, surf / Water",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 246,
+          "cleanSeconds": 14,
+          "topClasses": [
+            {
+              "label": "Cat",
+              "max": 0.869
+            },
+            {
+              "label": "Animal",
+              "max": 0.8042
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.7904
+            },
+            {
+              "label": "Toot",
+              "max": 0.7772
+            },
+            {
+              "label": "Helicopter",
+              "max": 0.7215
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.79,
+              "atSecond": 166
+            },
+            {
+              "label": "Helicopter",
+              "max": 0.721,
+              "atSecond": 176
+            },
+            {
+              "label": "Train",
+              "max": 0.678,
+              "atSecond": 190
+            },
+            {
+              "label": "Car alarm",
+              "max": 0.613,
+              "atSecond": 214
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.536,
+              "atSecond": 166
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.532,
+              "atSecond": 190
+            },
+            {
+              "label": "Train horn",
+              "max": 0.483,
+              "atSecond": 198
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.478,
+              "atSecond": 190
+            },
+            {
+              "label": "Siren",
+              "max": 0.47,
+              "atSecond": 10
+            },
+            {
+              "label": "Honk",
+              "max": 0.46,
+              "atSecond": 139
+            },
+            {
+              "label": "Vehicle horn, car horn, honking",
+              "max": 0.446,
+              "atSecond": 16
+            },
+            {
+              "label": "Music",
+              "max": 0.429,
+              "atSecond": 72
+            },
+            {
+              "label": "Car",
+              "max": 0.414,
+              "atSecond": 240
+            },
+            {
+              "label": "Reversing beeps",
+              "max": 0.412,
+              "atSecond": 151
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.411,
+              "atSecond": 10
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.367,
+              "atSecond": 242
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.367,
+              "atSecond": 36
+            },
+            {
+              "label": "Emergency vehicle",
+              "max": 0.335,
+              "atSecond": 242
+            },
+            {
+              "label": "Wind instrument, woodwind instrument",
+              "max": 0.313,
+              "atSecond": 72
+            },
+            {
+              "label": "Bus",
+              "max": 0.292,
+              "atSecond": 52
+            },
+            {
+              "label": "Thunder",
+              "max": 0.274,
+              "atSecond": 158
+            },
+            {
+              "label": "Traffic noise, roadway noise",
+              "max": 0.234,
+              "atSecond": 233
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.233,
+              "atSecond": 37
+            },
+            {
+              "label": "Ambulance (siren)",
+              "max": 0.219,
+              "atSecond": 242
+            },
+            {
+              "label": "Truck",
+              "max": 0.211,
+              "atSecond": 151
+            },
+            {
+              "label": "Propeller, airscrew",
+              "max": 0.209,
+              "atSecond": 175
+            },
+            {
+              "label": "Foghorn",
+              "max": 0.206,
+              "atSecond": 5
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.201,
+              "atSecond": 199
+            },
+            {
+              "label": "Brass instrument",
+              "max": 0.196,
+              "atSecond": 72
+            },
+            {
+              "label": "Train whistle",
+              "max": 0.165,
+              "atSecond": 191
+            },
+            {
+              "label": "Motor vehicle (road)",
+              "max": 0.164,
+              "atSecond": 240
+            },
+            {
+              "label": "Aircraft engine",
+              "max": 0.162,
+              "atSecond": 47
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.161,
+              "atSecond": 158
+            },
+            {
+              "label": "Explosion",
+              "max": 0.161,
+              "atSecond": 91
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.053,
+              "atSecond": 242
+            },
+            {
+              "label": "Steam whistle",
+              "max": 0.052,
+              "atSecond": 191
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fowl",
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Waves, surf",
+                "Water"
+              ],
+              "fraction": 0.008
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 450529,
+        "name": "Seagulls in a quiet street, 6AM, Harbour City",
+        "url": "https://freesound.org/people/etienne.leplumey/sounds/450529/",
+        "author": "etienne.leplumey",
+        "durationSec": 255.5,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Honk reaches 0.9 (at 108 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 255,
+          "cleanSeconds": 68,
+          "topClasses": [
+            {
+              "label": "Honk",
+              "max": 0.8998
+            },
+            {
+              "label": "Goose",
+              "max": 0.8928
+            },
+            {
+              "label": "Fowl",
+              "max": 0.8571
+            },
+            {
+              "label": "Turkey",
+              "max": 0.762
+            },
+            {
+              "label": "Gobble",
+              "max": 0.7524
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Honk",
+              "max": 0.9,
+              "atSecond": 108
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.681,
+              "atSecond": 160
+            },
+            {
+              "label": "Skidding",
+              "max": 0.611,
+              "atSecond": 160
+            },
+            {
+              "label": "Car",
+              "max": 0.58,
+              "atSecond": 160
+            },
+            {
+              "label": "Emergency vehicle",
+              "max": 0.503,
+              "atSecond": 19
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.46,
+              "atSecond": 214
+            },
+            {
+              "label": "Ambulance (siren)",
+              "max": 0.447,
+              "atSecond": 19
+            },
+            {
+              "label": "Train",
+              "max": 0.398,
+              "atSecond": 241
+            },
+            {
+              "label": "Siren",
+              "max": 0.371,
+              "atSecond": 17
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.266,
+              "atSecond": 241
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.254,
+              "atSecond": 241
+            },
+            {
+              "label": "Race car, auto racing",
+              "max": 0.206,
+              "atSecond": 160
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.094,
+              "atSecond": 246
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fowl",
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Waves, surf",
+                "Water"
+              ],
+              "fraction": 0.588
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 561815,
+        "name": "Genaral Habour Ambience",
+        "url": "https://freesound.org/people/Kinoton/sounds/561815/",
+        "author": "Kinoton",
+        "durationSec": 180,
+        "verdict": "reject",
+        "reason": "required sound absent: Fowl / Bird / Bird vocalization, bird call, bird song / Waves, surf / Water",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 180,
+          "cleanSeconds": 49,
+          "topClasses": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.7537
+            },
+            {
+              "label": "Bird",
+              "max": 0.6797
+            },
+            {
+              "label": "Fowl",
+              "max": 0.657
+            },
+            {
+              "label": "Pigeon, dove",
+              "max": 0.6474
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.6251
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.625,
+              "atSecond": 34
+            },
+            {
+              "label": "Honk",
+              "max": 0.482,
+              "atSecond": 75
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.375,
+              "atSecond": 152
+            },
+            {
+              "label": "Train",
+              "max": 0.324,
+              "atSecond": 44
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.226,
+              "atSecond": 44
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.203,
+              "atSecond": 44
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fowl",
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Waves, surf",
+                "Water"
+              ],
+              "fraction": 0.122
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 584217,
+        "name": "La Spezia - Mirabello - 09.08.21.WAV",
+        "url": "https://freesound.org/people/nicolo.ciuffi/sounds/584217/",
+        "author": "nicolo.ciuffi",
+        "durationSec": 315,
+        "verdict": "reject",
+        "reason": "required sound absent: Fowl / Bird / Bird vocalization, bird call, bird song / Waves, surf / Water",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 314,
+          "cleanSeconds": 253,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8005
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.7891
+            },
+            {
+              "label": "Animal",
+              "max": 0.6994
+            },
+            {
+              "label": "Horse",
+              "max": 0.6875
+            },
+            {
+              "label": "Music",
+              "max": 0.6177
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.618,
+              "atSecond": 206
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.378,
+              "atSecond": 312
+            },
+            {
+              "label": "Cowbell",
+              "max": 0.28,
+              "atSecond": 64
+            },
+            {
+              "label": "Wind chime",
+              "max": 0.182,
+              "atSecond": 132
+            },
+            {
+              "label": "Honk",
+              "max": 0.085,
+              "atSecond": 18
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fowl",
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Waves, surf",
+                "Water"
+              ],
+              "fraction": 0.019
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 809278,
+        "name": "AMBNaut Guest harbour on a windy day, eiders and traffic ambience, Karlskrona, Sweden",
+        "url": "https://freesound.org/people/vhio/sounds/809278/",
+        "author": "vhio",
+        "durationSec": 278.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Fowl / Bird / Bird vocalization, bird call, bird song / Waves, surf / Water",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 278,
+          "cleanSeconds": 87,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.5992
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.532
+            },
+            {
+              "label": "Animal",
+              "max": 0.4868
+            },
+            {
+              "label": "Horse",
+              "max": 0.4746
+            },
+            {
+              "label": "Honk",
+              "max": 0.4345
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.599,
+              "atSecond": 67
+            },
+            {
+              "label": "Honk",
+              "max": 0.435,
+              "atSecond": 96
+            },
+            {
+              "label": "Train",
+              "max": 0.179,
+              "atSecond": 262
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.16,
+              "atSecond": 67
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fowl",
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Waves, surf",
+                "Water"
+              ],
+              "fraction": 0.004
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 530210,
+        "name": "Pea Point, New Brunswick, Seaside ambience.",
+        "url": "https://freesound.org/people/AlexLane/sounds/530210/",
+        "author": "AlexLane",
+        "durationSec": 198.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Fowl / Bird / Bird vocalization, bird call, bird song / Waves, surf / Water",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 198,
+          "cleanSeconds": 16,
+          "topClasses": [
+            {
+              "label": "Cat",
+              "max": 0.8661
+            },
+            {
+              "label": "Crow",
+              "max": 0.8413
+            },
+            {
+              "label": "Animal",
+              "max": 0.8345
+            },
+            {
+              "label": "Goose",
+              "max": 0.7179
+            },
+            {
+              "label": "Domestic animals, pets",
+              "max": 0.7158
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Honk",
+              "max": 0.698,
+              "atSecond": 1
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.611,
+              "atSecond": 163
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.47,
+              "atSecond": 188
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.15,
+              "atSecond": 163
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fowl",
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Waves, surf",
+                "Water"
+              ],
+              "fraction": 0.212
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 457613,
+        "name": "Harbor City Center - Hamburg Jungfernstieg - People, Traffic, Seagulls",
+        "url": "https://freesound.org/people/Pfannkuchn/sounds/457613/",
+        "author": "Pfannkuchn",
+        "durationSec": 165.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Fowl / Bird / Bird vocalization, bird call, bird song / Waves, surf / Water",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 165,
+          "cleanSeconds": 98,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8717
+            },
+            {
+              "label": "Music",
+              "max": 0.7675
+            },
+            {
+              "label": "Neigh, whinny",
+              "max": 0.7449
+            },
+            {
+              "label": "Horse",
+              "max": 0.7317
+            },
+            {
+              "label": "Duck",
+              "max": 0.5896
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.767,
+              "atSecond": 41
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.438,
+              "atSecond": 82
+            },
+            {
+              "label": "Train",
+              "max": 0.41,
+              "atSecond": 8
+            },
+            {
+              "label": "Honk",
+              "max": 0.348,
+              "atSecond": 52
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.308,
+              "atSecond": 8
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.305,
+              "atSecond": 8
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.162,
+              "atSecond": 12
+            },
+            {
+              "label": "Train horn",
+              "max": 0.065,
+              "atSecond": 8
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fowl",
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Waves, surf",
+                "Water"
+              ],
+              "fraction": 0.012
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 823541,
+        "name": "AMBTraf Overgrown oil harbour with highway traffic and birds, Karlskrona, Sweden",
+        "url": "https://freesound.org/people/vhio/sounds/823541/",
+        "author": "vhio",
+        "durationSec": 319.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Fowl / Bird / Bird vocalization, bird call, bird song / Waves, surf / Water",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 319,
+          "cleanSeconds": 303,
+          "topClasses": [
+            {
+              "label": "Fowl",
+              "max": 0.6879
+            },
+            {
+              "label": "Honk",
+              "max": 0.6472
+            },
+            {
+              "label": "Goose",
+              "max": 0.6036
+            },
+            {
+              "label": "Owl",
+              "max": 0.5531
+            },
+            {
+              "label": "Clicking",
+              "max": 0.3108
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Honk",
+              "max": 0.647,
+              "atSecond": 127
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fowl",
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Waves, surf",
+                "Water"
+              ],
+              "fraction": 0.044
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

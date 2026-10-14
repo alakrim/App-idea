@@ -26,6 +26,7 @@ jest.mock('@/app-shell/openrouter-provider', () => ({ useOpenRouter: () => ({}) 
 
 const noVocabActions = {
   saveToVocab: () => 'unused',
+  hasSaved: () => false,
   retryExplanation: () => undefined,
   isPending: () => false,
   failureOf: () => null,

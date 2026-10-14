@@ -44,7 +44,7 @@ export function TextField({
   const [focused, setFocused] = useState(false);
   const [masked, setMasked] = useState(true);
 
-  const borderColor = error ? colors.danger : focused ? colors.accent : colors.border;
+  const borderColor = error ? colors.danger : focused ? colors.accent : colors.boundary;
   const message = error ?? helper;
 
   return (

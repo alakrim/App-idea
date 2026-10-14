@@ -189,5 +189,871 @@
         "-4 voice or speech (voices)"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": "laion/clap-htsat-unfused",
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Echo",
+          "Reverberation",
+          "Walk, footsteps"
+        ]
+      ],
+      "clapPrompt": "a large stone hall with a faint echo and distant footsteps"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Echo / Reverberation / Walk, footsteps",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 266961,
+        "name": "StructureLarge internal ambience - children in distance.flac",
+        "url": "https://freesound.org/people/muel2002/sounds/266961/",
+        "author": "muel2002",
+        "durationSec": 65.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Echo / Reverberation / Walk, footsteps",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 65,
+          "cleanSeconds": 2,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.7099
+            },
+            {
+              "label": "Train",
+              "max": 0.7061
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.5956
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.5675
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5674
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.71,
+              "atSecond": 8
+            },
+            {
+              "label": "Train",
+              "max": 0.706,
+              "atSecond": 40
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.596,
+              "atSecond": 40
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.567,
+              "atSecond": 12
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.567,
+              "atSecond": 40
+            },
+            {
+              "label": "Music",
+              "max": 0.412,
+              "atSecond": 48
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.3,
+              "atSecond": 12
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.256,
+              "atSecond": 44
+            },
+            {
+              "label": "Train horn",
+              "max": 0.056,
+              "atSecond": 61
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Echo",
+                "Reverberation",
+                "Walk, footsteps"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 648415,
+        "name": "sagrada_ambience.wav",
+        "url": "https://freesound.org/people/noisymichael/sounds/648415/",
+        "author": "noisymichael",
+        "durationSec": 122.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Echo / Reverberation / Walk, footsteps",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 122,
+          "cleanSeconds": 2,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8533
+            },
+            {
+              "label": "Music",
+              "max": 0.781
+            },
+            {
+              "label": "Train",
+              "max": 0.6972
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5843
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.5331
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.853,
+              "atSecond": 24
+            },
+            {
+              "label": "Music",
+              "max": 0.781,
+              "atSecond": 54
+            },
+            {
+              "label": "Train",
+              "max": 0.697,
+              "atSecond": 74
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.584,
+              "atSecond": 111
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.533,
+              "atSecond": 74
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.505,
+              "atSecond": 74
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.37,
+              "atSecond": 45
+            },
+            {
+              "label": "Train wheels squealing",
+              "max": 0.221,
+              "atSecond": 121
+            },
+            {
+              "label": "Bus",
+              "max": 0.195,
+              "atSecond": 111
+            },
+            {
+              "label": "Car",
+              "max": 0.155,
+              "atSecond": 40
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Echo",
+                "Reverberation",
+                "Walk, footsteps"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 841923,
+        "name": "AMBPubl_Lichfield Catherdral, Interior_Recording_02_JW Audio",
+        "url": "https://freesound.org/people/JW_Audio/sounds/841923/",
+        "author": "JW_Audio",
+        "durationSec": 246.3,
+        "verdict": "reject",
+        "reason": "required sound absent: Echo / Reverberation / Walk, footsteps",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 246,
+          "cleanSeconds": 45,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8402
+            },
+            {
+              "label": "Music",
+              "max": 0.8208
+            },
+            {
+              "label": "Cat",
+              "max": 0.7053
+            },
+            {
+              "label": "Train",
+              "max": 0.7039
+            },
+            {
+              "label": "Animal",
+              "max": 0.6325
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.84,
+              "atSecond": 11
+            },
+            {
+              "label": "Music",
+              "max": 0.821,
+              "atSecond": 15
+            },
+            {
+              "label": "Train",
+              "max": 0.704,
+              "atSecond": 162
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.612,
+              "atSecond": 162
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.59,
+              "atSecond": 162
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.486,
+              "atSecond": 191
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.22,
+              "atSecond": 92
+            },
+            {
+              "label": "Train wheels squealing",
+              "max": 0.193,
+              "atSecond": 162
+            },
+            {
+              "label": "Choir",
+              "max": 0.178,
+              "atSecond": 13
+            },
+            {
+              "label": "Narration, monologue",
+              "max": 0.163,
+              "atSecond": 96
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.156,
+              "atSecond": 162
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Echo",
+                "Reverberation",
+                "Walk, footsteps"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 841922,
+        "name": "AMBPubl_Lichfield Catherdral, Interior_Recording_01_JW Audio",
+        "url": "https://freesound.org/people/JW_Audio/sounds/841922/",
+        "author": "JW_Audio",
+        "durationSec": 293.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Echo / Reverberation / Walk, footsteps",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 293,
+          "cleanSeconds": 113,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.7962
+            },
+            {
+              "label": "Music",
+              "max": 0.714
+            },
+            {
+              "label": "Train",
+              "max": 0.5759
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.415
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.4118
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.796,
+              "atSecond": 278
+            },
+            {
+              "label": "Music",
+              "max": 0.714,
+              "atSecond": 60
+            },
+            {
+              "label": "Train",
+              "max": 0.576,
+              "atSecond": 265
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.415,
+              "atSecond": 227
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.412,
+              "atSecond": 227
+            },
+            {
+              "label": "Choir",
+              "max": 0.382,
+              "atSecond": 117
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.365,
+              "atSecond": 12
+            },
+            {
+              "label": "Emergency vehicle",
+              "max": 0.347,
+              "atSecond": 161
+            },
+            {
+              "label": "Train wheels squealing",
+              "max": 0.266,
+              "atSecond": 227
+            },
+            {
+              "label": "Siren",
+              "max": 0.265,
+              "atSecond": 161
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.242,
+              "atSecond": 161
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.204,
+              "atSecond": 161
+            },
+            {
+              "label": "Chant",
+              "max": 0.181,
+              "atSecond": 98
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.18,
+              "atSecond": 278
+            },
+            {
+              "label": "Narration, monologue",
+              "max": 0.175,
+              "atSecond": 67
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.17,
+              "atSecond": 265
+            },
+            {
+              "label": "Singing",
+              "max": 0.155,
+              "atSecond": 117
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.124,
+              "atSecond": 30
+            },
+            {
+              "label": "Ambulance (siren)",
+              "max": 0.083,
+              "atSecond": 161
+            },
+            {
+              "label": "Train horn",
+              "max": 0.057,
+              "atSecond": 265
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Echo",
+                "Reverberation",
+                "Walk, footsteps"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 393688,
+        "name": "walla nike headquarters large hall busy dutch english.wav",
+        "url": "https://freesound.org/people/hz37/sounds/393688/",
+        "author": "hz37",
+        "durationSec": 67.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Echo / Reverberation / Walk, footsteps",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 67,
+          "cleanSeconds": 1,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8627
+            },
+            {
+              "label": "Train",
+              "max": 0.8418
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.7682
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.739
+            },
+            {
+              "label": "Train wheels squealing",
+              "max": 0.4812
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.863,
+              "atSecond": 19
+            },
+            {
+              "label": "Train",
+              "max": 0.842,
+              "atSecond": 36
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.768,
+              "atSecond": 36
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.739,
+              "atSecond": 36
+            },
+            {
+              "label": "Train wheels squealing",
+              "max": 0.481,
+              "atSecond": 36
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.409,
+              "atSecond": 36
+            },
+            {
+              "label": "Music",
+              "max": 0.378,
+              "atSecond": 60
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.309,
+              "atSecond": 36
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.194,
+              "atSecond": 19
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Echo",
+                "Reverberation",
+                "Walk, footsteps"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 393689,
+        "name": "walla nike headquarters large hall dutch english.wav",
+        "url": "https://freesound.org/people/hz37/sounds/393689/",
+        "author": "hz37",
+        "durationSec": 70.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Echo / Reverberation / Walk, footsteps",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 70,
+          "cleanSeconds": 1,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8684
+            },
+            {
+              "label": "Music",
+              "max": 0.6074
+            },
+            {
+              "label": "Animal",
+              "max": 0.4823
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.4202
+            },
+            {
+              "label": "Horse",
+              "max": 0.3821
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.868,
+              "atSecond": 4
+            },
+            {
+              "label": "Music",
+              "max": 0.607,
+              "atSecond": 59
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.349,
+              "atSecond": 69
+            },
+            {
+              "label": "Train",
+              "max": 0.221,
+              "atSecond": 26
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.199,
+              "atSecond": 15
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.151,
+              "atSecond": 26
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Echo",
+                "Reverberation",
+                "Walk, footsteps"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 624859,
+        "name": "Brussels_PassageDuNord.wav",
+        "url": "https://freesound.org/people/uniuniversal/sounds/624859/",
+        "author": "uniuniversal",
+        "durationSec": 183.3,
+        "verdict": "reject",
+        "reason": "required sound absent: Echo / Reverberation / Walk, footsteps",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 183,
+          "cleanSeconds": 19,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8682
+            },
+            {
+              "label": "Basketball bounce",
+              "max": 0.657
+            },
+            {
+              "label": "Animal",
+              "max": 0.582
+            },
+            {
+              "label": "Bow-wow",
+              "max": 0.5331
+            },
+            {
+              "label": "Dog",
+              "max": 0.5257
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.868,
+              "atSecond": 172
+            },
+            {
+              "label": "Music",
+              "max": 0.456,
+              "atSecond": 41
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.376,
+              "atSecond": 113
+            },
+            {
+              "label": "Train",
+              "max": 0.273,
+              "atSecond": 113
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.178,
+              "atSecond": 7
+            },
+            {
+              "label": "Child speech, kid speaking",
+              "max": 0.177,
+              "atSecond": 77
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.168,
+              "atSecond": 113
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.167,
+              "atSecond": 113
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Echo",
+                "Reverberation",
+                "Walk, footsteps"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 846900,
+        "name": "Pantheon busy crowd interior 2026",
+        "url": "https://freesound.org/people/sambrewster/sounds/846900/",
+        "author": "sambrewster",
+        "durationSec": 133.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Echo / Reverberation / Walk, footsteps",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 133,
+          "cleanSeconds": 0,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8481
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.6474
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.406
+            },
+            {
+              "label": "Chatter",
+              "max": 0.3938
+            },
+            {
+              "label": "Neigh, whinny",
+              "max": 0.3346
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.848,
+              "atSecond": 67
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.647,
+              "atSecond": 104
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.406,
+              "atSecond": 15
+            },
+            {
+              "label": "Chatter",
+              "max": 0.394,
+              "atSecond": 29
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.325,
+              "atSecond": 15
+            },
+            {
+              "label": "Train",
+              "max": 0.294,
+              "atSecond": 110
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.224,
+              "atSecond": 91
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.198,
+              "atSecond": 15
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.185,
+              "atSecond": 104
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.177,
+              "atSecond": 110
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.17,
+              "atSecond": 110
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.165,
+              "atSecond": 37
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Echo",
+                "Reverberation",
+                "Walk, footsteps"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

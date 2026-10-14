@@ -310,3 +310,40 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
 - jest 229 suites, 2,163 tests green
 - boot:check OK
 - Only `sounds:verify` fails, in A4's in-progress work.
+
+## F2 accepted (2026-10-14)
+- **Tokens and contrast:**
+  - New text values: `textFaint` dark `#8E8980`, light `#6F695F`.
+  - New tokens `decorativeFaint`, `boundary`, `accentOnSoft`.
+  - Light success and warning darkened.
+  - Contrast tests: every text token ≥ 4.5 and the boundary ≥ 3.
+- **Sheets:** Android back closes them; modal semantics with focus on the title; `SheetList`; the sentence sheet scrolls.
+- **Chapters:**
+  - **Stop** a running chapter (with a confirm), from the processing card and the chapter menu.
+  - Re-generate audio is priced and confirmed.
+  - **Try again** on every failure, with a next step for non-retryable errors.
+  - "Prepare this chapter" for drafts.
+  - A visible reason when Play is blocked.
+- **Menus:** a visible ⋯ on chapter rows and series cards. One availability list drives both the menu and the accessibility actions.
+- **Copy:**
+  - The Vocab instructions.
+  - "Already in Vocab".
+  - "Chapter ready: «title»".
+  - No "OCR" or sentence numbers.
+  - The Create gate says why it's disabled.
+  - The unknown estimate shows "Create anyway".
+  - Action toasts stay 8 s.
+- **Sizes:** 48 dp touch targets.
+- **Onboarding:** value, notice, key, narrator; Back; Skip; reduce motion.
+- **Lists:** the series list is a FlatList, Vocab a SectionList.
+- **Settings:** async storage size; a Notifications row.
+- **The key screen** uses ConfirmSheet.
+- **Evidence:**
+  - Worker: 127 suites, 899 tests targeted; mutations caught.
+  - Architect: typecheck and lint green; 90 suites, 616 tests in scope. Mutation: the back handler returning false → 1 failure; restored 8/8.
+- **Open:**
+  - Estimate `.catch` and Retry: handed to F4.
+  - **Decision (architect):** the content notice must be accepted before the first import, even after Skip. Add Chapter gates on it (to be done in F3).
+  - Mini-player nested button (QA-C P1-6) still to verify.
+  - Device checks: TalkBack, FlatList look, 48 dp, light theme.
+  - A stray empty `/tok_edit.py` outside the repo (a safety check blocked its removal; harmless).

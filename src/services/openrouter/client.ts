@@ -32,6 +32,10 @@ export interface OpenRouterClientOptions {
   /** Longest passage accepted by synthesizeSpeech. */
   maxSpeechChars?: number;
   modelCacheTtlMs?: number;
+  /** Returns the saved model catalogue snapshot, or null. Read once, on the first model use. */
+  loadModelSnapshot?: () => string | null;
+  /** Receives the catalogue snapshot after each successful model fetch. Must not throw. */
+  onModelsFetched?: (snapshot: string) => void;
   fetchImpl?: typeof fetch;
   sleep?: (ms: number) => Promise<void>;
   random?: () => number;
@@ -78,6 +82,8 @@ export function createOpenRouterClient(options: OpenRouterClientOptions): OpenRo
     transport,
     ttlMs: options.modelCacheTtlMs ?? defaults.modelCacheTtlMs,
     now,
+    loadSnapshot: options.loadModelSnapshot,
+    onFetched: options.onModelsFetched,
   });
   const chatDeps = { transport, models };
 

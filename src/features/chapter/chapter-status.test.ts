@@ -5,6 +5,7 @@ import type { ChapterProgress } from '@/features/pipeline/facade';
 import {
   ELAPSED_SHOWN_AFTER_MS,
   isScannedPdfFailure,
+  playBlockedCopy,
   rowStateOf,
   statusLine,
 } from './chapter-status';
@@ -124,5 +125,17 @@ describe('isScannedPdfFailure', () => {
     expect(isScannedPdfFailure(pdf, empty)).toBe(true);
     expect(isScannedPdfFailure(chapterRow(1, 1, 1), empty)).toBe(false);
     expect(isScannedPdfFailure(pdf, null)).toBe(false);
+  });
+});
+
+describe('playBlockedCopy', () => {
+  it('says nothing when Play is on', () => {
+    expect(playBlockedCopy('ready')).toBeNull();
+  });
+
+  it('says what has to happen first for every other state', () => {
+    expect(playBlockedCopy('processing')).toBe('Play starts when preparing finishes.');
+    expect(playBlockedCopy('draft')).toBe('Prepare the chapter first, then play it.');
+    expect(playBlockedCopy('failed')).toBe('Try again to finish preparing it, then play it.');
   });
 });

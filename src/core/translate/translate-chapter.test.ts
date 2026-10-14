@@ -156,7 +156,7 @@ describe('translateChapter: alignment repair', () => {
   });
 
   it('falls back to the source text for what the repair still misses, and flags partial', async () => {
-    const { llm } = fakeLlm((user, call) => {
+    const { llm } = fakeLlm((_user, call) => {
       if (call === 1) return JSON.stringify({ items: [{ idx: 0, text: 'EN Uno.' }] });
       // The repair supplies idx 1 and leaves idx 2 blank, and idx 3 is absent.
       return JSON.stringify({
@@ -176,7 +176,7 @@ describe('translateChapter: alignment repair', () => {
   });
 
   it('falls back for the whole missing set when the repair reply is not valid JSON', async () => {
-    const { llm } = fakeLlm((user, call) => (call === 1 ? '{"items":[]}' : 'not json at all'));
+    const { llm } = fakeLlm((_user, call) => (call === 1 ? '{"items":[]}' : 'not json at all'));
     const result = await translateChapter(input({ llm }));
 
     expect([...result.translations.values()]).toEqual(['Uno.', 'Due.', 'Tre.', 'Quattro.']);

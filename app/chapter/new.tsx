@@ -1,6 +1,7 @@
-import { Stack, useLocalSearchParams, router } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
 
 import { AddChapterScreen } from '@/features/chapter/add-chapter-screen';
+import { goBackOrHome } from '@/features/shared/navigation';
 import { ErrorState } from '@/ui/error-state';
 import { Screen } from '@/ui/screen';
 
@@ -20,7 +21,7 @@ export default function NewChapterScreen() {
           <ErrorState
             title="No series selected"
             message="Open this from a series so the chapter has somewhere to go."
-            onRetry={() => router.back()}
+            onRetry={goBackOrHome}
             retryLabel="Go back"
           />
         )}

@@ -13,11 +13,7 @@ module.exports = {
       displayName: 'core',
       testEnvironment: 'node',
       testMatch: ['<rootDir>/src/core/**/*.test.ts'],
-      moduleNameMapper: {
-        ...moduleNameMapper,
-        // defuddle/node has only an `import` export condition. Jest needs its CJS build.
-        '^defuddle/node$': '<rootDir>/node_modules/defuddle/dist/node.js',
-      },
+      moduleNameMapper,
       transform: {
         ...tsTransform,
         // linkedom's dependency tree (css-select 7, boolbase 2, entities 8, ...) is ESM-only.
@@ -45,10 +41,7 @@ module.exports = {
         '<rootDir>/src/services/pipeline/**/*.test.ts',
         '<rootDir>/src/db/**/*.test.ts',
       ],
-      moduleNameMapper: {
-        ...moduleNameMapper,
-        '^defuddle/node$': '<rootDir>/node_modules/defuddle/dist/node.js',
-      },
+      moduleNameMapper,
       transform: {
         ...tsTransform,
         '^.+\\.js$': [
@@ -83,11 +76,7 @@ module.exports = {
         '<rootDir>/src/services/pipeline/',
         '<rootDir>/src/db/',
       ],
-      moduleNameMapper: {
-        ...moduleNameMapper,
-        // The app's extract stack (services/pipeline) imports defuddle's Node build.
-        '^defuddle/node$': '<rootDir>/node_modules/defuddle/dist/node.js',
-      },
+      moduleNameMapper,
     },
   ],
 };

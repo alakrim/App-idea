@@ -3,6 +3,7 @@ import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
 
 import { useDb } from '@/db/hooks';
+import { NotificationsRow } from '@/features/settings/notifications-row';
 import { SettingsSection } from '@/features/settings/settings-section';
 import { useSettings } from '@/features/settings/settings-store';
 import {
@@ -12,14 +13,13 @@ import {
   narrationSummary,
   playbackSummary,
   readingSummary,
-  storageSummary,
   themeLabel,
   translationSummary,
   usageSummary,
 } from '@/features/settings/summaries';
 import { loadUsageSummary } from '@/features/settings/usage-query';
 import { useSavedKey } from '@/features/settings/use-saved-key';
-import { bytesUsedByLibrary, freeSpaceBytes } from '@/services/storage';
+import { useStorageSummary } from '@/features/settings/use-storage-summary';
 import {
   BookOpen,
   CircleDollarSign,
@@ -35,6 +35,8 @@ import {
 } from '@/ui/icons';
 import { ListItem } from '@/ui/list-item';
 import { Screen } from '@/ui/screen';
+import { Skeleton } from '@/ui/skeleton';
+import { space } from '@/ui/tokens';
 
 /** The settings home. Each row shows its current value, so most answers are visible without opening it. */
 export default function SettingsScreen() {
@@ -43,10 +45,7 @@ export default function SettingsScreen() {
   const saved = useSavedKey();
   const [now] = useState(() => Date.now());
   const usage = useMemo(() => loadUsageSummary(db, now), [db, now]);
-  const [storage] = useState(() => ({
-    used: bytesUsedByLibrary().totalBytes,
-    free: freeSpaceBytes(),
-  }));
+  const storage = useStorageSummary();
   const version = Constants.expoConfig?.version ?? 'Unknown';
 
   const todayCost = usage.windows.find((window) => window.id === 'today')?.costUsd ?? 0;
@@ -119,9 +118,15 @@ export default function SettingsScreen() {
           leading={CircleDollarSign}
           onPress={() => router.push('/settings/usage')}
         />
+        <NotificationsRow />
         <ListItem
           title="Storage"
-          subtitle={storageSummary(storage.used, storage.free)}
+          subtitle={storage.status === 'ready' ? storage.text : undefined}
+          trailing={
+            storage.status === 'loading' ? (
+              <Skeleton width={space.xxxl * 2} height={space.md} label="Measuring storage" />
+            ) : undefined
+          }
           leading={HardDrive}
         />
         <ListItem

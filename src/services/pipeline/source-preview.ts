@@ -2,8 +2,6 @@
  * Local preview of a URL before a chapter is created: quality, excerpt and the next-chapter link.
  * Everything here runs on the device and makes no paid call.
  */
-import { parseHTML } from 'linkedom';
-
 import { LEXICON_RULES } from '@/core/extract/lexicon';
 import type { Decision } from '@/core/extract/types';
 import type { SourcePreview } from '@/features/pipeline/facade';
@@ -51,9 +49,11 @@ function isNextLabel(text: string): boolean {
 
 /**
  * The URL of the next chapter, from a `rel="next"` link first and then from a link whose text is a
- * "next chapter" label in one of the lexicon's languages. Null when the page has neither.
+ * "next chapter" label in one of the lexicon's languages. Null when the page has neither. linkedom
+ * loads on the first call, so the preview path does not pull it in at app start.
  */
-export function findNextChapterUrl(html: string, pageUrl: string): string | null {
+export async function findNextChapterUrl(html: string, pageUrl: string): Promise<string | null> {
+  const { parseHTML } = await import('linkedom');
   const { document } = parseHTML(html);
   for (const link of Array.from(document.querySelectorAll('link[rel], a[rel]'))) {
     const rel = (link.getAttribute('rel') ?? '').toLowerCase().split(/\s+/u);

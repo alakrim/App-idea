@@ -34,6 +34,7 @@ export { default as Church } from 'lucide-react-native/icons/church';
 export { default as CircleCheck } from 'lucide-react-native/icons/circle-check';
 export { default as CircleDollarSign } from 'lucide-react-native/icons/circle-dollar-sign';
 export { default as ClipboardPaste } from 'lucide-react-native/icons/clipboard-paste';
+export { default as CircleStop } from 'lucide-react-native/icons/circle-stop';
 export { default as Clock } from 'lucide-react-native/icons/clock';
 export { default as CloudDrizzle } from 'lucide-react-native/icons/cloud-drizzle';
 export { default as CloudLightning } from 'lucide-react-native/icons/cloud-lightning';

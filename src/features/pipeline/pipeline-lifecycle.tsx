@@ -147,7 +147,11 @@ export function PipelineLifecycle() {
     if (!runtime) return undefined;
     return runtime.subscribeEvents((event) => {
       if (event.type === 'done' && AppState.currentState === 'active') {
-        toast.show({ message: 'Chapter ready', tone: 'success' });
+        const title = chapterRepo.get(db, event.chapterId)?.title;
+        toast.show({
+          message: title ? `Chapter ready: «${title}»` : 'Chapter ready',
+          tone: 'success',
+        });
       }
       if (event.type === 'error' && event.error.code === 'AUTH') {
         toast.show({
@@ -160,7 +164,7 @@ export function PipelineLifecycle() {
         });
       }
     });
-  }, [runtime, toast, router]);
+  }, [runtime, db, toast, router]);
 
   useEffect(() => {
     if (runtime && keyStatus === 'present' && runtime.isPaused()) runtime.resume();

@@ -11,11 +11,26 @@ import { formatUsd } from '@/features/shared/format';
 import { useNow } from '@/features/shared/use-now';
 import { Button } from '@/ui/button';
 import { IconButton } from '@/ui/icon-button';
-import { Check, Play } from '@/ui/icons';
+import { Check, Ellipsis, Play } from '@/ui/icons';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
-import { hairline, iconSize, iconStrokeWidth, minTouchTarget, radius, space } from '@/ui/tokens';
+import {
+  hairline,
+  iconSize,
+  iconStrokeWidth,
+  minTouchTarget,
+  opacity,
+  radius,
+  space,
+} from '@/ui/tokens';
 
+import {
+  CHAPTER_ACTION_LABELS,
+  chapterActionFrom,
+  chapterActionsFor,
+  type ChapterAction,
+  type ChapterAvailability,
+} from './chapter-actions';
 import { ListeningBar } from './listening-bar';
 import { listeningShortLabel, listeningSpokenLabel } from './listening-copy';
 
@@ -37,9 +52,14 @@ export interface ChapterRowProps {
   current: boolean;
   /** Hairline above the row, for every row but the first. */
   divided: boolean;
+  /** Which actions the chapter offers now. The same list backs the menu and the accessibility actions. */
+  availability: ChapterAvailability;
   onOpen: (chapterId: string) => void;
   onPlay: (chapterId: string) => void;
+  /** Opens the chapter's action menu: the visible ⋯ button and a long press both use it. */
   onMenu: (chapterId: string) => void;
+  /** Runs one action directly, for screen-reader users who pick it from the row's actions. */
+  onAction: (chapterId: string, action: ChapterAction) => void;
   onRetry: (chapterId: string) => void;
   onOcr: (chapterId: string) => void;
 }
@@ -57,9 +77,11 @@ export const ChapterRow = memo(function ChapterRow({
   listening,
   current,
   divided,
+  availability,
   onOpen,
   onPlay,
   onMenu,
+  onAction,
   onRetry,
   onOcr,
 }: ChapterRowProps) {
@@ -74,6 +96,7 @@ export const ChapterRow = memo(function ChapterRow({
   const spoken = isReady ? listeningSpokenLabel(listening) : null;
   const showBar = isReady && listening.kind === 'in-progress';
   const showListening = isReady && (current || listening.kind !== 'unstarted');
+  const actions = chapterActionsFor(availability);
   const accessibilityLabel = [
     `Chapter ${number}, ${chapter.title}, ${line}`,
     spoken,
@@ -93,11 +116,19 @@ export const ChapterRow = memo(function ChapterRow({
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={accessibilityLabel}
-          accessibilityHint="Opens the chapter. Long press for more actions."
+          accessibilityHint="Opens the chapter. More actions are in the menu."
+          accessibilityActions={actions.map((action) => ({
+            name: action,
+            label: CHAPTER_ACTION_LABELS[action],
+          }))}
+          onAccessibilityAction={(event) => {
+            const action = chapterActionFrom(event.nativeEvent.actionName);
+            if (action !== null) onAction(chapter.id, action);
+          }}
           delayLongPress={350}
           onPress={() => onOpen(chapter.id)}
           onLongPress={() => onMenu(chapter.id)}
-          style={({ pressed }) => [styles.press, pressed ? { opacity: 0.85 } : null]}
+          style={({ pressed }) => [styles.press, pressed ? { opacity: opacity.pressed } : null]}
         >
           <Text variant="caption" tone="faint" style={styles.number} importantForAccessibility="no">
             {String(number).padStart(2, '0')}
@@ -151,6 +182,12 @@ export const ChapterRow = memo(function ChapterRow({
             onPress={() => onPlay(chapter.id)}
           />
         ) : null}
+        <IconButton
+          label={`More actions for chapter ${number}`}
+          icon={Ellipsis}
+          variant="surface"
+          onPress={() => onMenu(chapter.id)}
+        />
       </View>
 
       {showSteps ? (
@@ -163,14 +200,17 @@ export const ChapterRow = memo(function ChapterRow({
         <View style={styles.actions}>
           {scanned ? (
             <Button
-              label={ocrUsd === null ? 'Use OCR' : `Use OCR (≈ ${formatUsd(ocrUsd)})`}
+              label={
+                ocrUsd === null
+                  ? 'Read scanned pages'
+                  : `Read scanned pages (≈ ${formatUsd(ocrUsd)})`
+              }
               variant="secondary"
               onPress={() => onOcr(chapter.id)}
-              accessibilityHint="Reads the scanned pages with OCR. Asks for confirmation first."
+              accessibilityHint="Reads the text in the scanned pages. Asks for confirmation first."
             />
-          ) : failure?.retryable !== false ? (
-            <Button label="Retry" variant="secondary" onPress={() => onRetry(chapter.id)} />
           ) : null}
+          <Button label="Try again" variant="secondary" onPress={() => onRetry(chapter.id)} />
         </View>
       ) : null}
     </View>

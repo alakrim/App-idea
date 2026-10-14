@@ -35,7 +35,7 @@ export function AmbienceSheet({ visible, onClose, activeNames }: AmbienceSheetPr
           accessibilityLabel="Ambience on"
           value={ambience.enabled}
           onValueChange={(enabled) => controller.setAmbience({ enabled })}
-          trackColor={{ false: colors.border, true: colors.accent }}
+          trackColor={{ false: colors.boundary, true: colors.accent }}
           thumbColor={colors.text}
         />
       </View>

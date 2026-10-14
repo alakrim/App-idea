@@ -1,5 +1,13 @@
+import * as linkedom from 'linkedom';
+
 import * as extractors from './extractors';
 import { extractArticle, extractFromHtml } from './pipeline';
+
+// Wraps the real parser so a test can count how often each HTML string is parsed.
+jest.mock('linkedom', () => {
+  const actual = jest.requireActual('linkedom');
+  return { ...actual, parseHTML: jest.fn(actual.parseHTML) };
+});
 
 const URL = 'https://example.com/news/storm';
 
@@ -121,5 +129,33 @@ describe('extractFromHtml', () => {
       charset: null,
       warnings: ['readability_failed: a', 'defuddle_failed: b'],
     });
+  });
+});
+
+describe('one parse per page', () => {
+  it('parses the page HTML once, however many extractors and measures run', async () => {
+    const parse = jest.mocked(linkedom.parseHTML);
+    parse.mockClear();
+    const result = await extractFromHtml(ARTICLE_HTML, URL);
+    expect(result.best?.extractor).toBeDefined();
+    const pageParses = parse.mock.calls.filter(([html]) => html === ARTICLE_HTML);
+    expect(pageParses).toHaveLength(1);
+  });
+
+  it('gives Defuddle its own copy, so Readability cannot remove what Defuddle reads', async () => {
+    // Readability strips <script> from the page it parses. Defuddle must still see the source page.
+    const html = ARTICLE_HTML.replace(
+      '</body>',
+      '<script>var marker = "copy-check";</script></body>',
+    );
+    const seen: string[] = [];
+    const real = extractors.extractWithDefuddle;
+    jest.spyOn(extractors, 'extractWithDefuddle').mockImplementationOnce((document, url) => {
+      seen.push(document.body.innerHTML);
+      return real(document, url);
+    });
+    await extractFromHtml(html, URL);
+    expect(seen).toHaveLength(1);
+    expect(seen[0]).toContain('copy-check');
   });
 });

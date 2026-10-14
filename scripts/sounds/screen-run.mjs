@@ -90,6 +90,9 @@ function pythonEnv() {
     HF_HOME: SCREEN_HF_HOME,
     LANG: 'C.UTF-8',
     FFMPEG_PATH: process.env.FFMPEG_PATH ?? 'ffmpeg',
+    // The sandbox proxy re-signs HTTPS; the model download needs its CA bundle (never disable TLS).
+    ...(process.env.SSL_CERT_FILE ? { SSL_CERT_FILE: process.env.SSL_CERT_FILE } : {}),
+    ...(process.env.REQUESTS_CA_BUNDLE ? { REQUESTS_CA_BUNDLE: process.env.REQUESTS_CA_BUNDLE } : {}),
   };
 }
 

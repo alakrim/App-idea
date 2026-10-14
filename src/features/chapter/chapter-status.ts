@@ -2,6 +2,8 @@ import type { Chapter, PipelineError, Stage } from '@/core/domain';
 import type { ChapterProgress, StageProgress } from '@/features/pipeline/facade';
 import { formatDuration, formatElapsed } from '@/features/shared/format';
 
+import { failureCopy } from './failure-copy';
+
 export type ChapterRowState = 'draft' | 'processing' | 'ready' | 'failed';
 
 /** What the row shows: live progress wins over the stored status, which only changes at the ends. */
@@ -49,7 +51,7 @@ export function statusLine(
     case 'processing':
       return processingLine(progress, now);
     case 'failed':
-      return failure?.message ?? 'Processing stopped. Try again.';
+      return failureCopy(failure);
     case 'draft':
       return 'Not processed yet';
   }
@@ -75,4 +77,18 @@ function elapsedSuffix(stage: StageProgress, now: number): string {
   if (stage.since === null) return '';
   const elapsed = now - stage.since;
   return elapsed < ELAPSED_SHOWN_AFTER_MS ? '' : ` · ${formatElapsed(elapsed)}`;
+}
+
+/** Why Play is off, in plain words, so a disabled button never leaves the listener guessing. */
+export function playBlockedCopy(state: ChapterRowState): string | null {
+  switch (state) {
+    case 'ready':
+      return null;
+    case 'processing':
+      return 'Play starts when preparing finishes.';
+    case 'draft':
+      return 'Prepare the chapter first, then play it.';
+    case 'failed':
+      return 'Try again to finish preparing it, then play it.';
+  }
 }

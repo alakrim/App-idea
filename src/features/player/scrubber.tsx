@@ -129,7 +129,7 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
   const [previewMs, setPreviewMs] = useState<number | null>(null);
   const shownMs = previewMs ?? positionMs;
   const enabled = durationMs > 0;
-  const tickColor = colors.textFaint;
+  const tickColor = colors.decorativeFaint;
 
   const width = useSharedValue(0);
   const scrubbing = useSharedValue(false);

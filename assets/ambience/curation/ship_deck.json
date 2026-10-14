@@ -144,5 +144,745 @@
         "-4 synth (synth)"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": "laion/clap-htsat-unfused",
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [
+        "Sailboat, sailing ship",
+        "Rowboat, canoe, kayak",
+        "Ship",
+        "Boat, Water vehicle"
+      ],
+      "required": [
+        [
+          "Wind",
+          "Water",
+          "Ocean",
+          "Waves, surf",
+          "Creak"
+        ]
+      ],
+      "clapPrompt": "a wooden sailing ship at sea, creaking hull and flapping sails, no engine"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "clip has 62 s; a window needs 64 s; required sound absent: Wind / Water / Ocean / Waves, surf / Creak",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 648653,
+        "name": "PIRATE SHIP SAILING AMBIENCE",
+        "url": "https://freesound.org/people/Elenalostale/sounds/648653/",
+        "author": "Elenalostale",
+        "durationSec": 62.5,
+        "verdict": "reject",
+        "reason": "clip has 62 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 62,
+          "cleanSeconds": 11,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.87
+            },
+            {
+              "label": "Speech",
+              "max": 0.7142
+            },
+            {
+              "label": "Waves, surf",
+              "max": 0.7018
+            },
+            {
+              "label": "Ocean",
+              "max": 0.6512
+            },
+            {
+              "label": "Accordion",
+              "max": 0.618
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.87,
+              "atSecond": 24
+            },
+            {
+              "label": "Speech",
+              "max": 0.714,
+              "atSecond": 18
+            },
+            {
+              "label": "Accordion",
+              "max": 0.618,
+              "atSecond": 23
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.557,
+              "atSecond": 38
+            },
+            {
+              "label": "Fireworks",
+              "max": 0.535,
+              "atSecond": 19
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.481,
+              "atSecond": 13
+            },
+            {
+              "label": "Guitar",
+              "max": 0.418,
+              "atSecond": 13
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.38,
+              "atSecond": 2
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.349,
+              "atSecond": 13
+            },
+            {
+              "label": "Firecracker",
+              "max": 0.19,
+              "atSecond": 19
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Water",
+                "Ocean",
+                "Waves, surf",
+                "Creak"
+              ],
+              "fraction": 0.371
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 587353,
+        "name": "Foggy Morning in Southampton",
+        "url": "https://freesound.org/people/richwise/sounds/587353/",
+        "author": "richwise",
+        "durationSec": 556,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Water / Ocean / Waves, surf / Creak",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 556,
+          "cleanSeconds": 343,
+          "topClasses": [
+            {
+              "label": "Crow",
+              "max": 0.8605
+            },
+            {
+              "label": "Cricket",
+              "max": 0.7388
+            },
+            {
+              "label": "Foghorn",
+              "max": 0.7194
+            },
+            {
+              "label": "Caw",
+              "max": 0.6957
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.6374
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Foghorn",
+              "max": 0.719,
+              "atSecond": 52
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.637,
+              "atSecond": 72
+            },
+            {
+              "label": "Music",
+              "max": 0.609,
+              "atSecond": 549
+            },
+            {
+              "label": "Emergency vehicle",
+              "max": 0.53,
+              "atSecond": 514
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.449,
+              "atSecond": 458
+            },
+            {
+              "label": "Singing bowl",
+              "max": 0.434,
+              "atSecond": 494
+            },
+            {
+              "label": "Gong",
+              "max": 0.431,
+              "atSecond": 62
+            },
+            {
+              "label": "Siren",
+              "max": 0.397,
+              "atSecond": 13
+            },
+            {
+              "label": "Speech",
+              "max": 0.377,
+              "atSecond": 239
+            },
+            {
+              "label": "Brass instrument",
+              "max": 0.351,
+              "atSecond": 252
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.315,
+              "atSecond": 13
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.309,
+              "atSecond": 514
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.306,
+              "atSecond": 9
+            },
+            {
+              "label": "Synthesizer",
+              "max": 0.297,
+              "atSecond": 55
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.276,
+              "atSecond": 72
+            },
+            {
+              "label": "Train",
+              "max": 0.244,
+              "atSecond": 81
+            },
+            {
+              "label": "Car",
+              "max": 0.227,
+              "atSecond": 328
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.212,
+              "atSecond": 72
+            },
+            {
+              "label": "Truck",
+              "max": 0.189,
+              "atSecond": 514
+            },
+            {
+              "label": "Thunder",
+              "max": 0.166,
+              "atSecond": 237
+            },
+            {
+              "label": "Ambulance (siren)",
+              "max": 0.117,
+              "atSecond": 514
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Water",
+                "Ocean",
+                "Waves, surf",
+                "Creak"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 648593,
+        "name": "AMBIENCE PORT PIRATES.wav",
+        "url": "https://freesound.org/people/Elenalostale/sounds/648593/",
+        "author": "Elenalostale",
+        "durationSec": 109.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Water / Ocean / Waves, surf / Creak",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 109,
+          "cleanSeconds": 8,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8409
+            },
+            {
+              "label": "Fowl",
+              "max": 0.7882
+            },
+            {
+              "label": "Honk",
+              "max": 0.7618
+            },
+            {
+              "label": "Goose",
+              "max": 0.7531
+            },
+            {
+              "label": "Cat",
+              "max": 0.7433
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.841,
+              "atSecond": 24
+            },
+            {
+              "label": "Honk",
+              "max": 0.762,
+              "atSecond": 54
+            },
+            {
+              "label": "Music",
+              "max": 0.609,
+              "atSecond": 2
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.473,
+              "atSecond": 51
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.433,
+              "atSecond": 24
+            },
+            {
+              "label": "Machine gun",
+              "max": 0.264,
+              "atSecond": 59
+            },
+            {
+              "label": "Gunshot, gunfire",
+              "max": 0.192,
+              "atSecond": 96
+            },
+            {
+              "label": "Train",
+              "max": 0.176,
+              "atSecond": 104
+            },
+            {
+              "label": "Car alarm",
+              "max": 0.124,
+              "atSecond": 66
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.086,
+              "atSecond": 66
+            },
+            {
+              "label": "Siren",
+              "max": 0.065,
+              "atSecond": 66
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Water",
+                "Ocean",
+                "Waves, surf",
+                "Creak"
+              ],
+              "fraction": 0.046
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 234361,
+        "name": "080101-rowing boat various paddles creak6-M.wav",
+        "url": "https://freesound.org/people/martian/sounds/234361/",
+        "author": "martian",
+        "durationSec": 334,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Water / Ocean / Waves, surf / Creak",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 333,
+          "cleanSeconds": 114,
+          "topClasses": [
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.9664
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.9362
+            },
+            {
+              "label": "Speech",
+              "max": 0.8523
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.7993
+            },
+            {
+              "label": "Animal",
+              "max": 0.6604
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.852,
+              "atSecond": 20
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.799,
+              "atSecond": 60
+            },
+            {
+              "label": "Fireworks",
+              "max": 0.477,
+              "atSecond": 260
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.231,
+              "atSecond": 166
+            },
+            {
+              "label": "Honk",
+              "max": 0.214,
+              "atSecond": 228
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.186,
+              "atSecond": 33
+            },
+            {
+              "label": "Firecracker",
+              "max": 0.181,
+              "atSecond": 260
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.163,
+              "atSecond": 114
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Water",
+                "Ocean",
+                "Waves, surf",
+                "Creak"
+              ],
+              "fraction": 0.006
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 616774,
+        "name": "NOISY_ENGINE_INTERIOR.wav",
+        "url": "https://freesound.org/people/MattDale/sounds/616774/",
+        "author": "MattDale",
+        "durationSec": 30.9,
+        "verdict": "reject",
+        "reason": "clip has 30 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 30,
+          "cleanSeconds": 15,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.4937
+            },
+            {
+              "label": "Rumble",
+              "max": 0.3308
+            },
+            {
+              "label": "Gong",
+              "max": 0.2468
+            },
+            {
+              "label": "Car",
+              "max": 0.1924
+            },
+            {
+              "label": "Music",
+              "max": 0.13
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.494,
+              "atSecond": 0
+            },
+            {
+              "label": "Gong",
+              "max": 0.247,
+              "atSecond": 27
+            },
+            {
+              "label": "Car",
+              "max": 0.192,
+              "atSecond": 0
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Water",
+                "Ocean",
+                "Waves, surf",
+                "Creak"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 853452,
+        "name": "Dogwalk(in') the Afterwoods.wav",
+        "url": "https://freesound.org/people/ChristmasKrumble666/sounds/853452/",
+        "author": "ChristmasKrumble666",
+        "durationSec": 121.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Water / Ocean / Waves, surf / Creak",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 121,
+          "cleanSeconds": 14,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.8162
+            },
+            {
+              "label": "Gong",
+              "max": 0.8138
+            },
+            {
+              "label": "Music",
+              "max": 0.6952
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.5797
+            },
+            {
+              "label": "Train",
+              "max": 0.4408
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.816,
+              "atSecond": 41
+            },
+            {
+              "label": "Gong",
+              "max": 0.814,
+              "atSecond": 25
+            },
+            {
+              "label": "Music",
+              "max": 0.695,
+              "atSecond": 108
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.58,
+              "atSecond": 38
+            },
+            {
+              "label": "Train",
+              "max": 0.441,
+              "atSecond": 69
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.398,
+              "atSecond": 62
+            },
+            {
+              "label": "Car",
+              "max": 0.384,
+              "atSecond": 79
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.335,
+              "atSecond": 2
+            },
+            {
+              "label": "Skidding",
+              "max": 0.334,
+              "atSecond": 45
+            },
+            {
+              "label": "Singing bowl",
+              "max": 0.307,
+              "atSecond": 108
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.299,
+              "atSecond": 69
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.292,
+              "atSecond": 69
+            },
+            {
+              "label": "Ambient music",
+              "max": 0.269,
+              "atSecond": 108
+            },
+            {
+              "label": "Propeller, airscrew",
+              "max": 0.252,
+              "atSecond": 41
+            },
+            {
+              "label": "Race car, auto racing",
+              "max": 0.193,
+              "atSecond": 45
+            },
+            {
+              "label": "Aircraft engine",
+              "max": 0.19,
+              "atSecond": 62
+            },
+            {
+              "label": "Speech",
+              "max": 0.183,
+              "atSecond": 57
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.162,
+              "atSecond": 94
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.152,
+              "atSecond": 69
+            },
+            {
+              "label": "Microwave oven",
+              "max": 0.15,
+              "atSecond": 49
+            },
+            {
+              "label": "Siren",
+              "max": 0.125,
+              "atSecond": 94
+            },
+            {
+              "label": "Train whistle",
+              "max": 0.067,
+              "atSecond": 94
+            },
+            {
+              "label": "Train horn",
+              "max": 0.056,
+              "atSecond": 94
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Water",
+                "Ocean",
+                "Waves, surf",
+                "Creak"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

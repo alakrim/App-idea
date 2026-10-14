@@ -1,9 +1,10 @@
-import { router, Stack, useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
 
 import { useSeries } from '@/db/hooks';
 import { SeriesForm } from '@/features/series/series-form';
 import { updateSeries } from '@/features/series/series-service';
 import { useSeriesDeps } from '@/features/series/use-series-deps';
+import { goBackOrHome } from '@/features/shared/navigation';
 import { ErrorState } from '@/ui/error-state';
 import { Screen } from '@/ui/screen';
 
@@ -26,7 +27,7 @@ export default function EditSeriesScreen() {
             title="Series not found"
             message="It may have been deleted."
             retryLabel="Go back"
-            onRetry={() => router.back()}
+            onRetry={goBackOrHome}
           />
         </Screen>
       </>
@@ -49,7 +50,7 @@ export default function EditSeriesScreen() {
           submitLabel="Save changes"
           onSubmit={(values) => {
             updateSeries(deps, series.id, values);
-            router.back();
+            goBackOrHome();
           }}
         />
       </Screen>

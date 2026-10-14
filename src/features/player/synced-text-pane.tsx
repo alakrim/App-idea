@@ -247,7 +247,7 @@ export const SyncedTextPane = memo(function SyncedTextPane(props: SyncedTextPane
     >
       <GestureDetector gesture={gesture}>
         <View style={styles.header}>
-          <View style={[styles.grabber, { backgroundColor: colors.textFaint }]} />
+          <View style={[styles.grabber, { backgroundColor: colors.decorativeFaint }]} />
           <View style={styles.headerRow}>
             <Text variant="micro" tone="muted" style={styles.headerTitle}>
               Read along
@@ -272,7 +272,7 @@ export const SyncedTextPane = memo(function SyncedTextPane(props: SyncedTextPane
                   strokeWidth={iconStrokeWidth}
                   color={bilingual ? colors.accent : colors.textMuted}
                 />
-                <Text variant="caption" tone={bilingual ? 'accent' : 'muted'}>
+                <Text variant="caption" tone={bilingual ? 'onAccentSoft' : 'muted'}>
                   Bilingual
                 </Text>
               </Pressable>
@@ -294,7 +294,12 @@ export const SyncedTextPane = memo(function SyncedTextPane(props: SyncedTextPane
           {open ? null : (
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel="Open text"
+              accessibilityLabel={
+                current
+                  ? `Current sentence: ${displayText(current)}`
+                  : 'Start listening to read along'
+              }
+              accessibilityHint="Opens the text"
               onPress={() => snap(true)}
               style={styles.peek}
             >

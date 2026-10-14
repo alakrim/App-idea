@@ -118,7 +118,7 @@ function StepNode({ step, variant }: StepNodeProps) {
     case 'skipped':
       return (
         <View style={[...base, { borderWidth: hairline, borderColor: colors.border }]}>
-          <Minus size={icon} strokeWidth={iconStrokeWidth} color={colors.textFaint} />
+          <Minus size={icon} strokeWidth={iconStrokeWidth} color={colors.decorativeFaint} />
         </View>
       );
     case 'pending':

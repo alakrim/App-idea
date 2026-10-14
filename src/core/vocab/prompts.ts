@@ -1,7 +1,5 @@
 import { z } from 'zod';
 
-/** Bumped whenever the prompt or schema changes meaning. Explanations are stored with no version yet. */
-export const VOCAB_PROMPT_VERSION = 'vocab-v1';
 export const VOCAB_EXPLANATION_MAX_WORDS = 40;
 export const VOCAB_JSON_SCHEMA_NAME = 'vocab_explanation';
 
@@ -30,7 +28,6 @@ export const VocabExplanationSchema = z.object({
     }),
   example: z.string().nullable(),
 });
-export type VocabExplanationReply = z.infer<typeof VocabExplanationSchema>;
 
 export const VOCAB_SYSTEM_PROMPT = `You explain one word or phrase that a language learner saved while listening to a book.
 

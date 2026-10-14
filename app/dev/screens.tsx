@@ -117,6 +117,7 @@ function SeriesGallery() {
       onAddChapter={() => undefined}
       onOpenChapter={() => undefined}
       onChapterMenu={() => undefined}
+      onChapterAction={() => undefined}
       onRetry={() => undefined}
       onOcr={() => undefined}
     />
@@ -137,6 +138,8 @@ function ChapterGallery(): ReactNode {
       onBack={() => undefined}
       onPlay={() => undefined}
       onRetry={() => undefined}
+      onPrepare={() => undefined}
+      onStop={() => undefined}
       onToggleCue={() => undefined}
     />
   );

@@ -25,6 +25,30 @@ function entry(n: number, overrides: Partial<UsageEntry>): UsageEntry {
 }
 
 describe('usageRepo', () => {
+  it('totals one chapter from its own rows, matching the grouped total', () => {
+    const { db } = createTestDb();
+    seriesRepo.insert(db, seriesRow(1));
+    chapterRepo.insert(db, chapterRow(1, 1, 1));
+    chapterRepo.insert(db, chapterRow(2, 1, 2));
+    usageRepo.insert(db, entry(1, { chapterId: id(1), costUsd: 0.5 }));
+    usageRepo.insert(db, entry(2, { chapterId: id(1), costUsd: 0.125 }));
+    usageRepo.insert(db, entry(3, { chapterId: id(2), costUsd: 9 }));
+    usageRepo.insert(db, entry(4, { chapterId: null, costUsd: 7 }));
+
+    expect(usageRepo.totalCostForChapter(db, id(1))).toBe(0.625);
+    expect(usageRepo.totalCostForChapter(db, id(1))).toBe(
+      usageRepo.totalsBy(db, 'chapter').find((row) => row.key === id(1))?.costUsd,
+    );
+  });
+
+  it('reports zero for a chapter with no usage', () => {
+    const { db } = createTestDb();
+    seriesRepo.insert(db, seriesRow(1));
+    chapterRepo.insert(db, chapterRow(1, 1, 1));
+
+    expect(usageRepo.totalCostForChapter(db, id(1))).toBe(0);
+  });
+
   it('totals spend by UTC day, model and chapter', () => {
     const { db } = createTestDb();
     seriesRepo.insert(db, seriesRow(1));

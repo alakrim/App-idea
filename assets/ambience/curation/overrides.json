@@ -1,1 +1,6 @@
-{}
+{
+  "waterfall": {
+    "freesoundId": 853107,
+    "reason": "872740 (CLAP first) cannot reach -28 LUFS under the true-peak ceiling (measured -26.8). 853107 passed the same screen (CLAP second) and is built instead."
+  }
+}

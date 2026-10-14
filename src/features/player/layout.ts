@@ -1,3 +1,5 @@
+import { minTouchTarget } from '@/ui/tokens';
+
 /**
  * Geometry of the player surfaces. Colours, spacing and type come from src/ui/tokens; these are the
  * few sizes that only exist on the player.
@@ -11,7 +13,7 @@ export const PLAYER = {
   skipButtonSize: 56,
   skipIconSize: 26,
   playIconSize: 30,
-  scrubHitHeight: 44,
+  scrubHitHeight: minTouchTarget,
   scrubTrackHeight: 4,
   scrubThumbSize: 16,
   scrubTickHeight: 6,

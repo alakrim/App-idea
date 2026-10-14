@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import type { CostEstimate } from '@/features/pipeline/facade';
+import { isEstimateUnknown } from '@/features/shared/estimate-price';
 import { formatCostEstimate, formatUsd } from '@/features/shared/format';
+import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
 import { ChevronDown, ChevronUp } from '@/ui/icons';
 import { Skeleton } from '@/ui/skeleton';
@@ -18,14 +20,19 @@ const STAGE_LABELS: Readonly<Record<string, string>> = {
 };
 
 export type EstimateStatus =
-  { kind: 'idle' } | { kind: 'loading' } | { kind: 'ready'; estimate: CostEstimate };
+  | { kind: 'idle' }
+  | { kind: 'loading' }
+  | { kind: 'error' }
+  | { kind: 'ready'; estimate: CostEstimate };
 
 export interface EstimateCardProps {
   status: EstimateStatus;
+  /** Recomputes the estimate. The error state offers it as Retry. */
+  onRetry?: () => void;
 }
 
 /** The cost before anything is spent: a range, with the per-stage breakdown one tap away. */
-export function EstimateCard({ status }: EstimateCardProps) {
+export function EstimateCard({ status, onRetry }: EstimateCardProps) {
   const { colors } = useTheme();
   const [open, setOpen] = useState(false);
 
@@ -48,7 +55,36 @@ export function EstimateCard({ status }: EstimateCardProps) {
     );
   }
 
+  if (status.kind === 'error') {
+    return (
+      <Card>
+        <Text variant="micro" tone="muted">
+          Estimated cost
+        </Text>
+        <Text variant="title">{"Couldn't work out the cost"}</Text>
+        <Text variant="caption" tone="muted">
+          Check your connection, then try again. Nothing has been spent.
+        </Text>
+        {onRetry ? <Button label="Retry" variant="secondary" fullWidth onPress={onRetry} /> : null}
+      </Card>
+    );
+  }
+
   const { estimate } = status;
+  if (isEstimateUnknown(estimate)) {
+    return (
+      <Card>
+        <Text variant="micro" tone="muted">
+          Estimated cost
+        </Text>
+        <Text variant="title">{"Can't price this right now"}</Text>
+        <Text variant="caption" tone="muted">
+          The price list for this model is not available. You can still create the chapter, and the
+          cost stays unknown until it can be checked.
+        </Text>
+      </Card>
+    );
+  }
   return (
     <Card>
       <Text variant="micro" tone="muted">

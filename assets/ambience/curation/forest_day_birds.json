@@ -194,7 +194,7 @@
   "screening": {
     "screenedOn": "2026-10-14",
     "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": null,
+    "reranker": "laion/clap-htsat-unfused",
     "thresholds": {
       "denyFrameProbability": 0.15,
       "alarmFrameProbability": 0.05,
@@ -233,7 +233,7 @@
       "windowStartSeconds": 9,
       "windowSeconds": 64,
       "steadinessDb": 1.234,
-      "clapScore": null
+      "clapScore": 0.5286
     },
     "candidates": [
       {
@@ -310,7 +310,7 @@
           "lengthSeconds": 64,
           "steadinessDb": 1.234
         },
-        "clapScore": null,
+        "clapScore": 0.5286,
         "evidence": {
           "frames": 589,
           "cleanSeconds": 587,
@@ -369,7 +369,7 @@
           "lengthSeconds": 64,
           "steadinessDb": 2.844
         },
-        "clapScore": null,
+        "clapScore": 0.4815,
         "evidence": {
           "frames": 74,
           "cleanSeconds": 74,
@@ -422,7 +422,7 @@
           "lengthSeconds": 64,
           "steadinessDb": 5.592
         },
-        "clapScore": null,
+        "clapScore": 0.5232,
         "evidence": {
           "frames": 122,
           "cleanSeconds": 121,
