@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-import { getCategory } from '@/core/analysis/ambience-taxonomy';
+import { bedEraOf, getCategory } from '@/core/analysis/ambience-taxonomy';
 
 import { INSTALLED_BEDS, resolveInstalledBed } from './ambience-pack';
 
@@ -108,7 +108,7 @@ describe('resolveInstalledBed', () => {
     it('keeps a storm in a medieval chapter timeless: thunderstorm is unfilled, so the chain gives timeless rain', () => {
       const bed = resolveInstalledBed('thunderstorm', 'historic');
       expect(bed).not.toBeNull();
-      expect(getCategory(bed?.id ?? '')?.era ?? 'timeless').toBe('timeless');
+      expect(bedEraOf(bed?.id ?? '')).toBe('timeless');
     });
 
     it('plays a modern bed in a modern chapter', () => {
