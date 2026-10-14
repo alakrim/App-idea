@@ -4,20 +4,31 @@ import type { AudioEngine, ChapterLoad, LoadedSegment, PlaybackState } from '@/a
 import type {
   AmbienceCue,
   AudioSegment,
+  Bookmark,
   ChapterStatus,
   Paragraph,
-  PlaybackPoint,
   Sentence,
 } from '@/core/domain';
 import { DEFAULT_BED_LEVEL_DB } from '@/core/playback/ambience-scheduler';
 import { DUCKING_DEFAULTS } from '@/core/playback/ducking';
-import { BED_LEVEL_RANGE_DB, DUCKING_RANGE_DB, clampToRange } from '@/core/playback/ranges';
+import {
+  BED_LEVEL_RANGE_DB,
+  DUCKING_RANGE_DB,
+  PLAYBACK_RATE_RANGE,
+  clampToRange,
+} from '@/core/playback/ranges';
 import { buildTimeline, type ChapterTimeline } from '@/core/playback/timeline';
 import { systemTimers } from '@/core/playback/timers';
 import type { ChapterForPlayback } from '@/db/repos/playback-repo';
+import { findBookmark, type BookmarkGroup } from '@/features/bookmarks/bookmark-data';
 import type { ChapterProgress, PipelineFacade } from '@/features/pipeline/facade';
 
-import { createPlayerStore, type PlayerStore, type PlayerTimers } from './player-store';
+import {
+  createPlayerStore,
+  type PlayerStore,
+  type PlayerTimers,
+  type SavedPosition,
+} from './player-store';
 import { containsMs, sentenceRange } from './sentence-range';
 
 import type { PlaybackData } from './playback-data';
@@ -62,7 +73,12 @@ export interface PlaybackContent {
   /** The sentence on repeat (A-B loop on one sentence), or null. */
   loopSentenceIdx: number | null;
   ambience: AmbienceSettings;
+  /** The series' bookmarks, by chapter in reading order. Empty when no series is loaded. */
+  bookmarks: readonly BookmarkGroup[];
 }
+
+/** The result of bookmarking the current sentence: a new bookmark, or one removed again. */
+export type BookmarkToggle = { kind: 'added'; bookmark: Bookmark } | { kind: 'removed' };
 
 /** The saved ambience settings, read and written by the controller. Production wires it to settings. */
 export interface AmbiencePort {
@@ -96,6 +112,7 @@ const INITIAL_CONTENT: PlaybackContent = {
   timeline: null,
   loopSentenceIdx: null,
   ambience: INITIAL_AMBIENCE,
+  bookmarks: [],
 };
 
 export interface PlayChapterOptions {
@@ -111,6 +128,8 @@ export interface PlaybackControllerDeps {
   pipeline: Pick<PipelineFacade, 'subscribe'>;
   ambience: AmbiencePort;
   samples: SampleOutput;
+  /** The speed for a series that has none saved yet. Read when a chapter loads. */
+  defaultRate: () => number;
   timers?: PlayerTimers;
   now?: () => number;
 }
@@ -122,8 +141,13 @@ export interface PlaybackController {
   readonly content: UseBoundStore<StoreApi<PlaybackContent>>;
   /** Whether a sample is playing, read through its hook. */
   readonly sample: UseBoundStore<StoreApi<PlaybackSampleState>>;
-  /** Loads a chapter, resuming the saved position when it is the one last played. Never throws. */
+  /**
+   * Loads a chapter at its own saved place, or from the start when it was finished. Never throws.
+   * The series' saved speed applies once it is ready.
+   */
   playChapter(chapterId: string, options?: PlayChapterOptions): Promise<void>;
+  /** Plays a bookmark or any other sentence: seeks in the chapter in view, or loads it first. */
+  jumpToSentence(chapterId: string, sentenceIdx: number): void;
   /** A user seek to a sentence. Ends a repeat unless the sentence is the one repeating. */
   seekToSentence(idx: number): void;
   /** A user seek in media ms. Ends a repeat when the target leaves the repeated sentence. */
@@ -133,6 +157,13 @@ export interface PlaybackController {
   stepSentence(direction: 'next' | 'previous'): void;
   /** Repeats one sentence until it is set to null or the listener seeks out of it. */
   setLoopSentence(idx: number | null): void;
+  /** Remembers the current speed for this series, so its chapters load at it from now on. */
+  saveRateForSeries(): void;
+  /** Bookmarks a sentence of the chapter in view, or removes its bookmark. Null when neither can happen. */
+  toggleBookmark(sentenceIdx: number): BookmarkToggle | null;
+  /** Saves the note of a bookmark, then refreshes the list. */
+  saveBookmarkNote(bookmarkId: string, note: string): void;
+  deleteBookmark(bookmarkId: string): void;
   setAmbience(patch: Partial<AmbienceSettings>): void;
   /** Plays one ambience bed for a few seconds at `levelDb`, for the settings sample. */
   previewBed(category: string, levelDb: number): void;
@@ -218,10 +249,13 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
     now: deps.now,
   });
 
-  function savePositionSafely(point: PlaybackPoint): void {
+  function savePositionSafely(point: SavedPosition): void {
     if (seriesId === null) return;
     try {
-      data.savePosition(seriesId, point.chapterId, point.sentenceIdx);
+      data.savePosition(seriesId, point.chapterId, {
+        sentenceIdx: point.sentenceIdx,
+        positionMs: point.positionMs,
+      });
     } catch (error) {
       // Position saves are best effort. The next tick saves again, so a failure is not fatal.
       console.warn('Could not save the listening position.', error);
@@ -287,8 +321,22 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       engine.seekTo(range.startMs);
       return;
     }
+    markChapterFinished(readContent().chapterId, timeline);
     if (stopAtChapterEnd) return;
     advanceToNext();
+  }
+
+  /** Records that the chapter was heard to its end, so it reads as finished and restarts from the top. */
+  function markChapterFinished(chapterId: string | null, timeline: ChapterTimeline | null): void {
+    if (chapterId === null || timeline === null || timeline.sentenceCount === 0) return;
+    try {
+      data.markFinished(chapterId, {
+        sentenceIdx: timeline.sentenceCount - 1,
+        positionMs: timeline.totalDurationMs,
+      });
+    } catch (error) {
+      console.warn('Could not mark the chapter as finished.', error);
+    }
   }
 
   function advanceToNext(): void {
@@ -349,10 +397,16 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
     writeContent({ timeline: buildTimeline(segments), final });
   }
 
+  /** A chapter resumes at its own saved sentence. A finished one starts from the top. */
   function resumeSentence(chapterId: string): number {
-    if (seriesId === null) return 0;
-    const saved = data.currentPoint(seriesId);
-    return saved?.chapterId === chapterId ? saved.sentenceIdx : 0;
+    const saved = data.chapterPosition(chapterId);
+    return saved !== null && !saved.completed ? saved.sentenceIdx : 0;
+  }
+
+  /** The series' saved speed, or the default for a series that has none, kept inside the range. */
+  function rateFor(chapterSeriesId: string): number {
+    const saved = data.seriesPlaybackRate(chapterSeriesId) ?? deps.defaultRate();
+    return clampToRange(saved, PLAYBACK_RATE_RANGE);
   }
 
   /** Ends the sample. Resumes the narration only when it was held for the sample and asked to resume. */
@@ -425,6 +479,7 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       await player.load(load, startMs);
       if (token !== loadToken) return;
 
+      player.setRate(rateFor(chapter.chapter.seriesId));
       writeContent({ ...shared, status: 'ready', timeline, final });
       if (options.autoplay) player.play();
       if (!final) watchProgress(chapterId);
@@ -445,7 +500,13 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       sentences: chapter.sentences,
       cues: chapter.cues,
       loopSentenceIdx: null,
+      bookmarks: data.bookmarksOf(chapter.chapter.seriesId),
     };
+  }
+
+  function refreshBookmarks(): void {
+    const { seriesId: current } = readContent();
+    writeContent({ bookmarks: current === null ? [] : data.bookmarksOf(current) });
   }
 
   function seekToSentence(idx: number): void {
@@ -498,6 +559,21 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       }
     },
 
+    jumpToSentence(chapterId, sentenceIdx) {
+      const { chapterId: inView, status } = readContent();
+      if (chapterId === inView && status === 'ready') {
+        seekToSentence(sentenceIdx);
+        player.play();
+        return;
+      }
+      void playChapter(chapterId, { fromSentence: sentenceIdx, autoplay: true });
+    },
+
+    saveRateForSeries() {
+      if (seriesId === null) return;
+      data.saveSeriesPlaybackRate(seriesId, player.getState().rate);
+    },
+
     setLoopSentence(idx) {
       const { timeline } = readContent();
       if (idx === null || !timeline) {
@@ -509,6 +585,36 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       if (!range) return;
       writeContent({ loopSentenceIdx: idx });
       if (!containsMs(range, player.getState().positionMs)) player.seekTo(range.startMs);
+    },
+
+    toggleBookmark(sentenceIdx) {
+      const { chapterId, seriesId: series, timeline, bookmarks } = readContent();
+      if (chapterId === null || series === null || !timeline) return null;
+      if (!timeline.isSentenceAvailable(sentenceIdx)) return null;
+      const existing = findBookmark(bookmarks, chapterId, sentenceIdx);
+      if (existing !== null) {
+        data.removeBookmark(existing.id);
+        refreshBookmarks();
+        return { kind: 'removed' };
+      }
+      const bookmark = data.addBookmark({
+        seriesId: series,
+        chapterId,
+        sentenceIdx,
+        positionMs: timeline.sentenceToPosition(sentenceIdx),
+      });
+      refreshBookmarks();
+      return { kind: 'added', bookmark };
+    },
+
+    saveBookmarkNote(bookmarkId, note) {
+      data.setBookmarkNote(bookmarkId, note);
+      refreshBookmarks();
+    },
+
+    deleteBookmark(bookmarkId) {
+      data.removeBookmark(bookmarkId);
+      refreshBookmarks();
     },
 
     setAmbience(patch) {

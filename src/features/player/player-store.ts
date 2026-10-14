@@ -27,6 +27,11 @@ export interface NowPlaying {
   coverUri: string | null;
 }
 
+/** A chapter's place as the position saver stores it: where it is, and the media time for progress. */
+export interface SavedPosition extends PlaybackPoint {
+  positionMs: number;
+}
+
 export interface PlayerState {
   nowPlaying: NowPlaying | null;
   state: PlaybackState;
@@ -56,8 +61,8 @@ export interface PlayerActions {
 
 export interface PlayerStoreDeps {
   engine: AudioEngine;
-  /** Persists one position. F0 wires this to the position repo. The store never imports the DB. */
-  savePosition: (point: PlaybackPoint) => void;
+  /** Persists one position. The controller wires this to the data port. The store never imports the DB. */
+  savePosition: (point: SavedPosition) => void;
   timers?: PlayerTimers;
   now?: () => number;
   saveWindowMs?: number;
@@ -85,7 +90,7 @@ export function createPlayerStore(deps: PlayerStoreDeps): PlayerStore {
     sleepTimer: SLEEP_TIMER_OFF,
   }));
   const { engine } = deps;
-  const saver = createPositionSaver<PlaybackPoint>({
+  const saver = createPositionSaver<SavedPosition>({
     save: deps.savePosition,
     windowMs: deps.saveWindowMs ?? POSITION_SAVE_WINDOW_MS,
     timers,
@@ -146,6 +151,7 @@ export function createPlayerStore(deps: PlayerStoreDeps): PlayerStore {
           chapterId: chapter.chapterId,
           chapterOrder: chapter.chapterOrder,
           sentenceIdx,
+          positionMs,
         });
       }
     }),

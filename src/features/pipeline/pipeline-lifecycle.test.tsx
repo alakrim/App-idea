@@ -10,6 +10,7 @@ import { createTestDb } from '@/db/__fixtures__/test-db';
 import { DbContext } from '@/db/hooks';
 import { settingsStore } from '@/features/settings/settings-store';
 import type { PipelineRuntime } from '@/services/pipeline';
+import { createForegroundStatus } from '@/services/pipeline/foreground-status';
 import { ThemeProvider } from '@/ui/theme';
 import { ToastProvider } from '@/ui/toast';
 
@@ -44,6 +45,34 @@ const apiKey: { status: 'unknown' | 'missing' | 'present' } = { status: 'present
 jest.mock('@/services/secrets', () => ({
   useApiKeyStatus: () => apiKey.status,
 }));
+jest.mock('@gorhom/bottom-sheet', () =>
+  require('../../__tests__/helpers/feature-mocks').bottomSheetStub(),
+);
+
+// The native adapters are stand-ins: the foreground service and the permission are set per test.
+const mockForegroundService = {
+  supported: false,
+  start: jest.fn((_task: () => Promise<void>, _notification: unknown) => Promise.resolve()),
+  update: jest.fn((_notification: unknown) => Promise.resolve()),
+  stop: jest.fn(() => Promise.resolve()),
+};
+jest.mock('@/services/background/foreground-service', () => ({
+  createForegroundService: () => mockForegroundService,
+}));
+const mockPermission = {
+  isGranted: jest.fn((): Promise<boolean> => Promise.resolve(true)),
+  request: jest.fn((): Promise<boolean> => Promise.resolve(true)),
+};
+jest.mock('@/services/background/notification-permission', () => ({
+  createNotificationPermission: () => mockPermission,
+}));
+const mockAppForeground = {
+  isActive: () => true,
+  subscribe: () => () => undefined,
+};
+jest.mock('@/services/background/app-foreground', () => ({
+  createAppForeground: () => mockAppForeground,
+}));
 
 const CHAPTER = '01J00000000000000000000CHP';
 const IDLE: QueueSnapshot = { running: null, pending: [] };
@@ -55,7 +84,8 @@ function fakeRuntime() {
   let eventListener: ((event: PipelineEvent) => void) | null = null;
   let paused = false;
   const runtime = {
-    facade: {},
+    facade: { subscribe: () => () => undefined },
+    foreground: createForegroundStatus(false),
     restore: jest.fn(() => Promise.resolve()),
     resume: jest.fn(() => {
       paused = false;
@@ -79,6 +109,10 @@ function fakeRuntime() {
     runtime: runtime as unknown as PipelineRuntime,
     pause: () => {
       paused = true;
+    },
+    /** Delivers a queue snapshot without an act scope, for tests that wrap the work in their own. */
+    dispatch: (snapshot: QueueSnapshot) => {
+      for (const listener of snapshotListeners) listener(snapshot);
     },
     queue: async (snapshot: QueueSnapshot) => {
       await act(async () => {
@@ -117,6 +151,8 @@ describe('PipelineLifecycle', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     apiKey.status = 'present';
+    mockForegroundService.supported = false;
+    mockPermission.isGranted.mockImplementation(() => Promise.resolve(true));
     Object.defineProperty(AppState, 'currentState', { value: 'active', configurable: true });
   });
 
@@ -133,6 +169,22 @@ describe('PipelineLifecycle', () => {
     expect(activateKeepAwakeAsync).toHaveBeenCalledWith('lectio-pipeline');
     await fake.queue(IDLE);
     expect(deactivateKeepAwake).toHaveBeenCalledWith('lectio-pipeline');
+  });
+
+  it('does not keep the screen awake while the foreground service keeps chapters preparing', async () => {
+    const fake = fakeRuntime();
+    await mount(fake.runtime);
+    fake.runtime.foreground.set({ state: 'running', lastStartedAt: 1, failure: null });
+    await fake.queue(RUNNING);
+    expect(activateKeepAwakeAsync).not.toHaveBeenCalled();
+  });
+
+  it('starts the foreground service when a chapter is queued in the foreground', async () => {
+    mockForegroundService.supported = true;
+    const fake = fakeRuntime();
+    await mount(fake.runtime);
+    await fake.queue(RUNNING);
+    expect(mockForegroundService.start).toHaveBeenCalledTimes(1);
   });
 
   it('does not keep the screen awake for a queue that is paused on a missing key', async () => {
@@ -224,6 +276,19 @@ describe('PipelineLifecycle: the background notice', () => {
     expect(settingsStore.getSettings().backgroundNoticeShown).toBe(true);
   });
 
+  it('stays quiet while the foreground service keeps the work going', async () => {
+    const fake = fakeRuntime();
+    await mountWithSettings(fake);
+    fake.runtime.foreground.set({ state: 'running', lastStartedAt: 1, failure: null });
+    await fake.queue(RUNNING);
+
+    await changeAppState('background');
+    await changeAppState('active');
+
+    expect(screen.queryByText(BACKGROUND_NOTICE)).toBeNull();
+    expect(settingsStore.getSettings().backgroundNoticeShown).toBe(false);
+  });
+
   it('shows it once: a later return with work in flight stays quiet', async () => {
     const fake = fakeRuntime();
     await mountWithSettings(fake);
@@ -259,5 +324,62 @@ describe('PipelineLifecycle: the background notice', () => {
     await changeAppState('active');
 
     expect(screen.getByText(BACKGROUND_NOTICE)).toBeTruthy();
+  });
+});
+
+describe('PipelineLifecycle: the notification permission sheet', () => {
+  const PRIMER = 'Show progress in notifications';
+
+  async function mountHydrated(fake: ReturnType<typeof fakeRuntime>) {
+    const { db } = await mount(fake.runtime);
+    settingsStore.hydrate(db);
+  }
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockPermission.isGranted.mockImplementation(() => Promise.resolve(true));
+    Object.defineProperty(AppState, 'currentState', { value: 'active', configurable: true });
+  });
+
+  it('opens once, when the first chapter is queued and notifications are off', async () => {
+    mockPermission.isGranted.mockImplementation(() => Promise.resolve(false));
+    const fake = fakeRuntime();
+    await mountHydrated(fake);
+    expect(screen.queryByText(PRIMER)).toBeNull();
+
+    // One act covers the queue update and the permission check it starts, so the sheet's state
+    // lands inside it.
+    await act(async () => {
+      fake.dispatch(RUNNING);
+      await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    });
+
+    expect(screen.getByText(PRIMER)).toBeTruthy();
+    expect(settingsStore.getSettings().notificationPromptShown).toBe(true);
+  });
+
+  it('asks the system when the user allows notifications from the sheet', async () => {
+    mockPermission.isGranted.mockImplementation(() => Promise.resolve(false));
+    const fake = fakeRuntime();
+    await mountHydrated(fake);
+    await act(async () => {
+      fake.dispatch(RUNNING);
+      await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    });
+
+    fireEvent.press(screen.getByRole('button', { name: 'Allow notifications' }));
+
+    expect(mockPermission.request).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not open when notifications are already granted', async () => {
+    const fake = fakeRuntime();
+    await mountHydrated(fake);
+
+    await fake.queue(RUNNING);
+
+    expect(mockPermission.isGranted).toHaveBeenCalledTimes(1);
+    expect(screen.queryByText(PRIMER)).toBeNull();
+    expect(settingsStore.getSettings().notificationPromptShown).toBe(false);
   });
 });

@@ -1,10 +1,193 @@
 {
   "category": "castle_hall",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "castle hall ambience",
-    "stone hall echo room"
+    "stone hall echo room",
+    "stone room echo ambience",
+    "large hall reverb ambience",
+    "church interior ambience"
   ],
-  "poolSize": 0,
-  "candidates": []
+  "poolSize": 13,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 266961,
+      "name": "StructureLarge internal ambience - children in distance.flac",
+      "url": "https://freesound.org/people/muel2002/sounds/266961/",
+      "author": "muel2002",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.87,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 6,
+      "numDownloads": 289,
+      "previewUrl": "https://cdn.freesound.org/previews/266/266961_1657381-hq.mp3",
+      "score": 6.15,
+      "reasons": [
+        "+2.42 rating 4.83 from 6 ratings",
+        "+1.23 289 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags hall"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 648415,
+      "name": "sagrada_ambience.wav",
+      "url": "https://freesound.org/people/noisymichael/sounds/648415/",
+      "author": "noisymichael",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 122.4,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 2,
+      "numDownloads": 57,
+      "previewUrl": "https://cdn.freesound.org/previews/648/648415_13563349-hq.mp3",
+      "score": 4.97,
+      "reasons": [
+        "+2.09 rating 4.5 from 2 ratings",
+        "+0.88 57 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 841923,
+      "name": "AMBPubl_Lichfield Catherdral, Interior_Recording_02_JW Audio",
+      "url": "https://freesound.org/people/JW_Audio/sounds/841923/",
+      "author": "JW_Audio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 246.28,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 34,
+      "previewUrl": "https://cdn.freesound.org/previews/841/841923_13183432-hq.mp3",
+      "score": 4.83,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.77 34 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 841922,
+      "name": "AMBPubl_Lichfield Catherdral, Interior_Recording_01_JW Audio",
+      "url": "https://freesound.org/people/JW_Audio/sounds/841922/",
+      "author": "JW_Audio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 293.85,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 2,
+      "numRatings": 1,
+      "numDownloads": 21,
+      "previewUrl": "https://cdn.freesound.org/previews/841/841922_13183432-hq.mp3",
+      "score": 4.36,
+      "reasons": [
+        "+1.69 rating 2 from 1 ratings",
+        "+0.67 21 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 393688,
+      "name": "walla nike headquarters large hall busy dutch english.wav",
+      "url": "https://freesound.org/people/hz37/sounds/393688/",
+      "author": "hz37",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 67.5,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 230,
+      "previewUrl": "https://cdn.freesound.org/previews/393/393688_123355-hq.mp3",
+      "score": 2.88,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+1.18 230 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags hall",
+        "+1 name matches hall",
+        "-4 voice or speech (voices, speaking, talking, talk)"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 393689,
+      "name": "walla nike headquarters large hall dutch english.wav",
+      "url": "https://freesound.org/people/hz37/sounds/393689/",
+      "author": "hz37",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 70.39,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 225,
+      "previewUrl": "https://cdn.freesound.org/previews/393/393689_123355-hq.mp3",
+      "score": 2.88,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+1.18 225 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags hall",
+        "+1 name matches hall",
+        "-4 voice or speech (voices, speaking, talking, talk)"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 624859,
+      "name": "Brussels_PassageDuNord.wav",
+      "url": "https://freesound.org/people/uniuniversal/sounds/624859/",
+      "author": "uniuniversal",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 183.33,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 80,
+      "previewUrl": "https://cdn.freesound.org/previews/624/624859_13601611-hq.mp3",
+      "score": 2.83,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.95 80 downloads",
+        "+2 at least 90 s",
+        "+2 tags hall, echo",
+        "-4 voice or speech (voices, talking)"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 846900,
+      "name": "Pantheon busy crowd interior 2026",
+      "url": "https://freesound.org/people/sambrewster/sounds/846900/",
+      "author": "sambrewster",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 133.72,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4,
+      "numRatings": 4,
+      "numDownloads": 92,
+      "previewUrl": "https://cdn.freesound.org/previews/846/846900_1763922-hq.mp3",
+      "score": 2.03,
+      "reasons": [
+        "+2.04 rating 4 from 4 ratings",
+        "+0.98 92 downloads",
+        "+2 at least 90 s",
+        "+1 tags hall",
+        "-4 voice or speech (voices)"
+      ]
+    }
+  ]
 }

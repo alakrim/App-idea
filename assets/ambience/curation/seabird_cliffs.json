@@ -1,11 +1,13 @@
 {
   "category": "seabird_cliffs",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "seabirds cliffs ambience",
-    "seagulls sea cliff"
+    "seagulls sea cliff",
+    "seagull ambience",
+    "sea birds ambience"
   ],
-  "poolSize": 3,
+  "poolSize": 59,
   "candidates": [
     {
       "rank": 1,
@@ -54,22 +56,135 @@
     },
     {
       "rank": 3,
-      "freesoundId": 570906,
-      "name": "foghorn.wav",
-      "url": "https://freesound.org/people/bruno.auzet/sounds/570906/",
-      "author": "bruno.auzet",
+      "freesoundId": 155747,
+      "name": "Seagulls screeching on the beach, on the peruvian shore.",
+      "url": "https://freesound.org/people/felix.blume/sounds/155747/",
+      "author": "felix.blume",
       "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 46.48,
+      "durationSec": 120.96,
       "samplerate": 48000,
       "channels": 2,
-      "avgRating": 4.93,
-      "numRatings": 27,
-      "numDownloads": 928,
-      "previewUrl": "https://cdn.freesound.org/previews/570/570906_11519060-hq.mp3",
-      "score": 4.26,
+      "avgRating": 4.63,
+      "numRatings": 38,
+      "numDownloads": 1749,
+      "previewUrl": "https://cdn.freesound.org/previews/155/155747_1661766-hq.mp3",
+      "score": 7.25,
       "reasons": [
-        "+2.78 rating 4.93 from 27 ratings",
-        "+1.48 928 downloads"
+        "+2.63 rating 4.63 from 38 ratings",
+        "+1.62 1749 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 634434,
+      "name": "quiet morning 01",
+      "url": "https://freesound.org/people/rucisko/sounds/634434/",
+      "author": "rucisko",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 399.47,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.84,
+      "numRatings": 25,
+      "numDownloads": 1138,
+      "previewUrl": "https://cdn.freesound.org/previews/634/634434_2978883-hq.mp3",
+      "score": 7.24,
+      "reasons": [
+        "+2.71 rating 4.84 from 25 ratings",
+        "+1.53 1138 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 517678,
+      "name": "Seagulls by the sea",
+      "url": "https://freesound.org/people/TeTeNoise/sounds/517678/",
+      "author": "TeTeNoise",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 194.52,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 34,
+      "numDownloads": 2511,
+      "previewUrl": "https://cdn.freesound.org/previews/517/517678_8140496-hq.mp3",
+      "score": 7.23,
+      "reasons": [
+        "+2.53 rating 4.5 from 34 ratings",
+        "+1.7 2511 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 853455,
+      "name": "Seagull Beach Ambience Loop",
+      "url": "https://freesound.org/people/kkenny101/sounds/853455/",
+      "author": "kkenny101",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 268.8,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 97,
+      "previewUrl": "https://cdn.freesound.org/previews/853/853455_17997500-hq.mp3",
+      "score": 7.19,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1 97 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull",
+        "+1 name matches seagull"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 323001,
+      "name": "Alcatraz Soundscape.wav",
+      "url": "https://freesound.org/people/Kevzog/sounds/323001/",
+      "author": "Kevzog",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 157.58,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.87,
+      "numRatings": 15,
+      "numDownloads": 740,
+      "previewUrl": "https://cdn.freesound.org/previews/323/323001_4505856-hq.mp3",
+      "score": 7.08,
+      "reasons": [
+        "+2.64 rating 4.87 from 15 ratings",
+        "+1.43 740 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 243664,
+      "name": "Seaside Thunder",
+      "url": "https://freesound.org/people/HarryPeeks/sounds/243664/",
+      "author": "HarryPeeks",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 140.28,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.73,
+      "numRatings": 11,
+      "numDownloads": 363,
+      "previewUrl": "https://cdn.freesound.org/previews/243/243664_2979316-hq.mp3",
+      "score": 6.79,
+      "reasons": [
+        "+2.51 rating 4.73 from 11 ratings",
+        "+1.28 363 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull"
       ]
     }
   ]

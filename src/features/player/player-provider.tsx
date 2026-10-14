@@ -53,6 +53,7 @@ export function PlayerEngineProvider({ children, engine, samples }: PlayerEngine
         pipeline,
         ambience: settingsAmbience,
         samples: samples ?? createDefaultSamples(),
+        defaultRate: () => settingsStore.getSettings().playback.defaultRate,
       }),
     [db, engine, pipeline, samples],
   );

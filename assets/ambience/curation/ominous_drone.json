@@ -190,5 +190,800 @@
         "+3 tags drone, dark, horror"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Hum",
+          "Humming",
+          "Mains hum",
+          "Sine wave"
+        ]
+      ],
+      "clapPrompt": "a low dark drone in a still, cold room"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 421826,
+        "name": "Dark Cave Drone",
+        "url": "https://freesound.org/people/Kinoton/sounds/421826/",
+        "author": "Kinoton",
+        "durationSec": 256.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 256,
+          "cleanSeconds": 195,
+          "topClasses": [
+            {
+              "label": "Rumble",
+              "max": 0.6596
+            },
+            {
+              "label": "Gong",
+              "max": 0.5621
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.3564
+            },
+            {
+              "label": "Music",
+              "max": 0.2358
+            },
+            {
+              "label": "Car",
+              "max": 0.1595
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Gong",
+              "max": 0.562,
+              "atSecond": 21
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.356,
+              "atSecond": 236
+            },
+            {
+              "label": "Music",
+              "max": 0.236,
+              "atSecond": 0
+            },
+            {
+              "label": "Car",
+              "max": 0.16,
+              "atSecond": 55
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum",
+                "Sine wave"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 266412,
+        "name": "Drone_OminousDistortion.wav",
+        "url": "https://freesound.org/people/ceich93/sounds/266412/",
+        "author": "ceich93",
+        "durationSec": 103.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 103,
+          "cleanSeconds": 0,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.8471
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.7226
+            },
+            {
+              "label": "Gong",
+              "max": 0.6131
+            },
+            {
+              "label": "Car",
+              "max": 0.4396
+            },
+            {
+              "label": "Rumble",
+              "max": 0.3837
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.847,
+              "atSecond": 76
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.723,
+              "atSecond": 72
+            },
+            {
+              "label": "Gong",
+              "max": 0.613,
+              "atSecond": 91
+            },
+            {
+              "label": "Car",
+              "max": 0.44,
+              "atSecond": 72
+            },
+            {
+              "label": "Ambient music",
+              "max": 0.245,
+              "atSecond": 88
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.227,
+              "atSecond": 76
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.222,
+              "atSecond": 56
+            },
+            {
+              "label": "Electronic music",
+              "max": 0.194,
+              "atSecond": 33
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.184,
+              "atSecond": 56
+            },
+            {
+              "label": "Foghorn",
+              "max": 0.07,
+              "atSecond": 86
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum",
+                "Sine wave"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 534018,
+        "name": "Sci-fi Ambient Drone.wav",
+        "url": "https://freesound.org/people/LookIMadeAThing/sounds/534018/",
+        "author": "LookIMadeAThing",
+        "durationSec": 165,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 165,
+          "cleanSeconds": 17,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.9165
+            },
+            {
+              "label": "Didgeridoo",
+              "max": 0.8209
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.7404
+            },
+            {
+              "label": "Guitar",
+              "max": 0.612
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.5101
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.916,
+              "atSecond": 69
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.74,
+              "atSecond": 94
+            },
+            {
+              "label": "Guitar",
+              "max": 0.612,
+              "atSecond": 106
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.51,
+              "atSecond": 106
+            },
+            {
+              "label": "Synthesizer",
+              "max": 0.447,
+              "atSecond": 63
+            },
+            {
+              "label": "Ambient music",
+              "max": 0.282,
+              "atSecond": 108
+            },
+            {
+              "label": "Electronic music",
+              "max": 0.26,
+              "atSecond": 122
+            },
+            {
+              "label": "Electric guitar",
+              "max": 0.207,
+              "atSecond": 106
+            },
+            {
+              "label": "Bass guitar",
+              "max": 0.196,
+              "atSecond": 33
+            },
+            {
+              "label": "Fire alarm",
+              "max": 0.091,
+              "atSecond": 44
+            },
+            {
+              "label": "Siren",
+              "max": 0.064,
+              "atSecond": 122
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum",
+                "Sine wave"
+              ],
+              "fraction": 0.006
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 266413,
+        "name": "Drone_DarkEmptiness.wav",
+        "url": "https://freesound.org/people/ceich93/sounds/266413/",
+        "author": "ceich93",
+        "durationSec": 87.2,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 87,
+          "cleanSeconds": 10,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.6126
+            },
+            {
+              "label": "Rumble",
+              "max": 0.3463
+            },
+            {
+              "label": "Music",
+              "max": 0.2458
+            },
+            {
+              "label": "Car",
+              "max": 0.2378
+            },
+            {
+              "label": "Field recording",
+              "max": 0.2154
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.613,
+              "atSecond": 51
+            },
+            {
+              "label": "Music",
+              "max": 0.246,
+              "atSecond": 60
+            },
+            {
+              "label": "Car",
+              "max": 0.238,
+              "atSecond": 45
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.154,
+              "atSecond": 53
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum",
+                "Sine wave"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 612645,
+        "name": "Slow Time Winter Temple Atmo Asia Ambience Fantasy Dark Drone Cinematic Surround.wav",
+        "url": "https://freesound.org/people/szegvari/sounds/612645/",
+        "author": "szegvari",
+        "durationSec": 103.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 103,
+          "cleanSeconds": 0,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.8665
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.7027
+            },
+            {
+              "label": "Train",
+              "max": 0.6762
+            },
+            {
+              "label": "Scary music",
+              "max": 0.6445
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.5616
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.867,
+              "atSecond": 72
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.703,
+              "atSecond": 67
+            },
+            {
+              "label": "Train",
+              "max": 0.676,
+              "atSecond": 28
+            },
+            {
+              "label": "Scary music",
+              "max": 0.645,
+              "atSecond": 75
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.562,
+              "atSecond": 28
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.537,
+              "atSecond": 28
+            },
+            {
+              "label": "Car",
+              "max": 0.479,
+              "atSecond": 25
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.403,
+              "atSecond": 67
+            },
+            {
+              "label": "Gong",
+              "max": 0.359,
+              "atSecond": 78
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.265,
+              "atSecond": 67
+            },
+            {
+              "label": "Propeller, airscrew",
+              "max": 0.256,
+              "atSecond": 67
+            },
+            {
+              "label": "Ambient music",
+              "max": 0.237,
+              "atSecond": 71
+            },
+            {
+              "label": "Race car, auto racing",
+              "max": 0.202,
+              "atSecond": 25
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.186,
+              "atSecond": 30
+            },
+            {
+              "label": "Singing bowl",
+              "max": 0.183,
+              "atSecond": 13
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.173,
+              "atSecond": 100
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.157,
+              "atSecond": 84
+            },
+            {
+              "label": "Train horn",
+              "max": 0.097,
+              "atSecond": 28
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum",
+                "Sine wave"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 860781,
+        "name": "Low Frequency Vibrating Drone with Heart Pressure Rumbles and Booms",
+        "url": "https://freesound.org/people/bassimat/sounds/860781/",
+        "author": "bassimat",
+        "durationSec": 423.2,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 423,
+          "cleanSeconds": 8,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.7767
+            },
+            {
+              "label": "Gong",
+              "max": 0.5612
+            },
+            {
+              "label": "Singing bowl",
+              "max": 0.4942
+            },
+            {
+              "label": "Chirp tone",
+              "max": 0.478
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.3133
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.777,
+              "atSecond": 0
+            },
+            {
+              "label": "Gong",
+              "max": 0.561,
+              "atSecond": 237
+            },
+            {
+              "label": "Singing bowl",
+              "max": 0.494,
+              "atSecond": 202
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.313,
+              "atSecond": 0
+            },
+            {
+              "label": "Ambient music",
+              "max": 0.265,
+              "atSecond": 373
+            },
+            {
+              "label": "Guitar",
+              "max": 0.212,
+              "atSecond": 0
+            },
+            {
+              "label": "Synthesizer",
+              "max": 0.187,
+              "atSecond": 45
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum",
+                "Sine wave"
+              ],
+              "fraction": 0.007
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 466567,
+        "name": "Electronic Minute No 262 - cinematic doomsday drone.wav",
+        "url": "https://freesound.org/people/gis_sweden/sounds/466567/",
+        "author": "gis_sweden",
+        "durationSec": 107.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 107,
+          "cleanSeconds": 30,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.7491
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.6321
+            },
+            {
+              "label": "Rumble",
+              "max": 0.5989
+            },
+            {
+              "label": "Gong",
+              "max": 0.5447
+            },
+            {
+              "label": "Synthesizer",
+              "max": 0.5159
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.749,
+              "atSecond": 101
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.632,
+              "atSecond": 67
+            },
+            {
+              "label": "Gong",
+              "max": 0.545,
+              "atSecond": 58
+            },
+            {
+              "label": "Synthesizer",
+              "max": 0.516,
+              "atSecond": 100
+            },
+            {
+              "label": "Ambient music",
+              "max": 0.385,
+              "atSecond": 101
+            },
+            {
+              "label": "Car",
+              "max": 0.295,
+              "atSecond": 67
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.288,
+              "atSecond": 100
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.219,
+              "atSecond": 83
+            },
+            {
+              "label": "Engine",
+              "max": 0.207,
+              "atSecond": 13
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.173,
+              "atSecond": 83
+            },
+            {
+              "label": "Keyboard (musical)",
+              "max": 0.158,
+              "atSecond": 100
+            },
+            {
+              "label": "Singing bowl",
+              "max": 0.152,
+              "atSecond": 99
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum",
+                "Sine wave"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 516566,
+        "name": "Dark Dungeon Ambience",
+        "url": "https://freesound.org/people/Kinoton/sounds/516566/",
+        "author": "Kinoton",
+        "durationSec": 180,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 180,
+          "cleanSeconds": 23,
+          "topClasses": [
+            {
+              "label": "Rumble",
+              "max": 0.7651
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.7436
+            },
+            {
+              "label": "Music",
+              "max": 0.5546
+            },
+            {
+              "label": "Car",
+              "max": 0.4458
+            },
+            {
+              "label": "Field recording",
+              "max": 0.3276
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.744,
+              "atSecond": 134
+            },
+            {
+              "label": "Music",
+              "max": 0.555,
+              "atSecond": 20
+            },
+            {
+              "label": "Car",
+              "max": 0.446,
+              "atSecond": 44
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum",
+                "Sine wave"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

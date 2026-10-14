@@ -65,6 +65,13 @@ module.exports = {
       ],
     },
     {
+      // Config plugins are CommonJS, run by Node at prebuild, and need no transform.
+      displayName: 'plugins',
+      testEnvironment: 'node',
+      testMatch: ['<rootDir>/plugins/**/*.test.js'],
+      transform: {},
+    },
+    {
       displayName: 'app',
       preset: 'jest-expo',
       testMatch: ['<rootDir>/src/**/*.test.[jt]s?(x)'],

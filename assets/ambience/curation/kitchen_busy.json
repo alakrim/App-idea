@@ -189,5 +189,658 @@
         "+1 name matches kitchen"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Frying (food)",
+          "Sizzle",
+          "Chopping (food)",
+          "Cutlery, silverware",
+          "Pour"
+        ]
+      ],
+      "clapPrompt": "a kitchen at work with pots, chopping and sizzling, no appliances"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "clip has 62 s; a window needs 64 s; required sound absent: Frying (food) / Sizzle / Chopping (food) / Cutlery, silverware / Pour",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 512511,
+        "name": "Kitchen Ambience",
+        "url": "https://freesound.org/people/brunoboselli/sounds/512511/",
+        "author": "brunoboselli",
+        "durationSec": 63,
+        "verdict": "reject",
+        "reason": "clip has 62 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 62,
+          "cleanSeconds": 59,
+          "topClasses": [
+            {
+              "label": "Water tap, faucet",
+              "max": 0.6256
+            },
+            {
+              "label": "Bathtub (filling or washing)",
+              "max": 0.6004
+            },
+            {
+              "label": "Dishes, pots, and pans",
+              "max": 0.5453
+            },
+            {
+              "label": "Water",
+              "max": 0.5203
+            },
+            {
+              "label": "Sink (filling or washing)",
+              "max": 0.4792
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Beep, bleep",
+              "max": 0.361,
+              "atSecond": 25
+            },
+            {
+              "label": "Music",
+              "max": 0.341,
+              "atSecond": 26
+            },
+            {
+              "label": "Smoke detector, smoke alarm",
+              "max": 0.053,
+              "atSecond": 25
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Frying (food)",
+                "Sizzle",
+                "Chopping (food)",
+                "Cutlery, silverware",
+                "Pour"
+              ],
+              "fraction": 0.129
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 271443,
+        "name": "Fast Food Restaurant",
+        "url": "https://freesound.org/people/lauramellis/sounds/271443/",
+        "author": "lauramellis",
+        "durationSec": 352,
+        "verdict": "reject",
+        "reason": "required sound absent: Frying (food) / Sizzle / Chopping (food) / Cutlery, silverware / Pour",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 351,
+          "cleanSeconds": 220,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8897
+            },
+            {
+              "label": "Music",
+              "max": 0.6634
+            },
+            {
+              "label": "Pigeon, dove",
+              "max": 0.532
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5163
+            },
+            {
+              "label": "Bird",
+              "max": 0.511
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.663,
+              "atSecond": 208
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.516,
+              "atSecond": 345
+            },
+            {
+              "label": "Train",
+              "max": 0.376,
+              "atSecond": 30
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.266,
+              "atSecond": 30
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.245,
+              "atSecond": 30
+            },
+            {
+              "label": "Alarm clock",
+              "max": 0.067,
+              "atSecond": 207
+            },
+            {
+              "label": "Vehicle horn, car horn, honking",
+              "max": 0.06,
+              "atSecond": 31
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Frying (food)",
+                "Sizzle",
+                "Chopping (food)",
+                "Cutlery, silverware",
+                "Pour"
+              ],
+              "fraction": 0.003
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 514176,
+        "name": "Bowl knife cooking dishes mixing-bowl.wav",
+        "url": "https://freesound.org/people/shachory/sounds/514176/",
+        "author": "shachory",
+        "durationSec": 116,
+        "verdict": "reject",
+        "reason": "required sound absent: Frying (food) / Sizzle / Chopping (food) / Cutlery, silverware / Pour",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 115,
+          "cleanSeconds": 73,
+          "topClasses": [
+            {
+              "label": "Knock",
+              "max": 0.9083
+            },
+            {
+              "label": "Music",
+              "max": 0.8942
+            },
+            {
+              "label": "Computer keyboard",
+              "max": 0.6618
+            },
+            {
+              "label": "Synthesizer",
+              "max": 0.631
+            },
+            {
+              "label": "Typing",
+              "max": 0.624
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.894,
+              "atSecond": 31
+            },
+            {
+              "label": "Synthesizer",
+              "max": 0.631,
+              "atSecond": 31
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.494,
+              "atSecond": 68
+            },
+            {
+              "label": "Piano",
+              "max": 0.415,
+              "atSecond": 68
+            },
+            {
+              "label": "Keyboard (musical)",
+              "max": 0.382,
+              "atSecond": 68
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.253,
+              "atSecond": 67
+            },
+            {
+              "label": "Electric piano",
+              "max": 0.236,
+              "atSecond": 68
+            },
+            {
+              "label": "Guitar",
+              "max": 0.221,
+              "atSecond": 67
+            },
+            {
+              "label": "Drum machine",
+              "max": 0.206,
+              "atSecond": 31
+            },
+            {
+              "label": "Electronic music",
+              "max": 0.172,
+              "atSecond": 31
+            },
+            {
+              "label": "Telephone dialing, DTMF",
+              "max": 0.171,
+              "atSecond": 32
+            },
+            {
+              "label": "Alarm clock",
+              "max": 0.068,
+              "atSecond": 32
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Frying (food)",
+                "Sizzle",
+                "Chopping (food)",
+                "Cutlery, silverware",
+                "Pour"
+              ],
+              "fraction": 0.052
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 138048,
+        "name": "cooking_onions_in_oil_ambience.wav",
+        "url": "https://freesound.org/people/daboy291/sounds/138048/",
+        "author": "daboy291",
+        "durationSec": 64,
+        "verdict": "reject",
+        "reason": "clip has 63 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 63,
+          "cleanSeconds": 62,
+          "topClasses": [
+            {
+              "label": "Frying (food)",
+              "max": 0.8692
+            },
+            {
+              "label": "Stir",
+              "max": 0.7067
+            },
+            {
+              "label": "Sizzle",
+              "max": 0.5564
+            },
+            {
+              "label": "Water",
+              "max": 0.4517
+            },
+            {
+              "label": "Water tap, faucet",
+              "max": 0.3829
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.164,
+              "atSecond": 50
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Frying (food)",
+                "Sizzle",
+                "Chopping (food)",
+                "Cutlery, silverware",
+                "Pour"
+              ],
+              "fraction": 0.889
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 176033,
+        "name": "ambience_rural_kitchen_silence.aiff",
+        "url": "https://freesound.org/people/patobottos/sounds/176033/",
+        "author": "patobottos",
+        "durationSec": 310.3,
+        "verdict": "reject",
+        "reason": "required sound absent: Frying (food) / Sizzle / Chopping (food) / Cutlery, silverware / Pour",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 310,
+          "cleanSeconds": 261,
+          "topClasses": [
+            {
+              "label": "Animal",
+              "max": 0.7632
+            },
+            {
+              "label": "Music",
+              "max": 0.7201
+            },
+            {
+              "label": "Speech",
+              "max": 0.7094
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.4919
+            },
+            {
+              "label": "Horse",
+              "max": 0.4687
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.72,
+              "atSecond": 304
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.437,
+              "atSecond": 117
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.219,
+              "atSecond": 239
+            },
+            {
+              "label": "Car",
+              "max": 0.211,
+              "atSecond": 117
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.176,
+              "atSecond": 18
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Frying (food)",
+                "Sizzle",
+                "Chopping (food)",
+                "Cutlery, silverware",
+                "Pour"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 178506,
+        "name": "woman_cooking_rural_kitchen.aiff",
+        "url": "https://freesound.org/people/patobottos/sounds/178506/",
+        "author": "patobottos",
+        "durationSec": 182.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Frying (food) / Sizzle / Chopping (food) / Cutlery, silverware / Pour",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 182,
+          "cleanSeconds": 148,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.9275
+            },
+            {
+              "label": "Insect",
+              "max": 0.8913
+            },
+            {
+              "label": "Bathtub (filling or washing)",
+              "max": 0.8887
+            },
+            {
+              "label": "Chicken, rooster",
+              "max": 0.875
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.8225
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.674,
+              "atSecond": 152
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.159,
+              "atSecond": 121
+            },
+            {
+              "label": "Honk",
+              "max": 0.146,
+              "atSecond": 2
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Frying (food)",
+                "Sizzle",
+                "Chopping (food)",
+                "Cutlery, silverware",
+                "Pour"
+              ],
+              "fraction": 0.011
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 554583,
+        "name": "Apartman ambience - Making tea",
+        "url": "https://freesound.org/people/Frigus_XIII/sounds/554583/",
+        "author": "Frigus_XIII",
+        "durationSec": 146.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Frying (food) / Sizzle / Chopping (food) / Cutlery, silverware / Pour",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 146,
+          "cleanSeconds": 77,
+          "topClasses": [
+            {
+              "label": "Finger snapping",
+              "max": 0.8842
+            },
+            {
+              "label": "Music",
+              "max": 0.7989
+            },
+            {
+              "label": "Camera",
+              "max": 0.775
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.5306
+            },
+            {
+              "label": "Tick-tock",
+              "max": 0.5018
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.799,
+              "atSecond": 77
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.531,
+              "atSecond": 77
+            },
+            {
+              "label": "Guitar",
+              "max": 0.319,
+              "atSecond": 77
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.315,
+              "atSecond": 77
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.288,
+              "atSecond": 106
+            },
+            {
+              "label": "Train",
+              "max": 0.164,
+              "atSecond": 70
+            },
+            {
+              "label": "Sewing machine",
+              "max": 0.162,
+              "atSecond": 142
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Frying (food)",
+                "Sizzle",
+                "Chopping (food)",
+                "Cutlery, silverware",
+                "Pour"
+              ],
+              "fraction": 0.027
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 862622,
+        "name": "Sausages Sizzling in a Pan with Boiling Eggs Kitchen Ambience",
+        "url": "https://freesound.org/people/bassimat/sounds/862622/",
+        "author": "bassimat",
+        "durationSec": 61.1,
+        "verdict": "reject",
+        "reason": "clip has 61 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 61,
+          "cleanSeconds": 59,
+          "topClasses": [
+            {
+              "label": "Bird",
+              "max": 0.5686
+            },
+            {
+              "label": "Pigeon, dove",
+              "max": 0.4855
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.467
+            },
+            {
+              "label": "Frying (food)",
+              "max": 0.4321
+            },
+            {
+              "label": "Sizzle",
+              "max": 0.422
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.467,
+              "atSecond": 59
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Frying (food)",
+                "Sizzle",
+                "Chopping (food)",
+                "Cutlery, silverware",
+                "Pour"
+              ],
+              "fraction": 0.131
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -191,5 +191,628 @@
         "+1 name matches street, traffic"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [
+        "vehicles",
+        "engines"
+      ],
+      "required": [
+        [
+          "Traffic noise, roadway noise",
+          "Vehicle",
+          "Car",
+          "Motor vehicle (road)"
+        ]
+      ],
+      "clapPrompt": "a busy city street by day with traffic and footsteps, no sirens"
+    },
+    "verdict": "filled",
+    "unfilledReason": null,
+    "chosen": {
+      "freesoundId": 645851,
+      "windowStartSeconds": 43,
+      "windowSeconds": 64,
+      "steadinessDb": 0.647,
+      "clapScore": null
+    },
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 645851,
+        "name": "City streets from far away.wav",
+        "url": "https://freesound.org/people/BonnyOrbit/sounds/645851/",
+        "author": "BonnyOrbit",
+        "durationSec": 156,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 43,
+          "lengthSeconds": 64,
+          "steadinessDb": 0.647
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 156,
+          "cleanSeconds": 156,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.5305
+            },
+            {
+              "label": "Field recording",
+              "max": 0.2848
+            },
+            {
+              "label": "Bee, wasp, etc.",
+              "max": 0.1901
+            },
+            {
+              "label": "Insect",
+              "max": 0.1884
+            },
+            {
+              "label": "Car",
+              "max": 0.1664
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.981
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 417388,
+        "name": "Amazing street ambience sounds.wav",
+        "url": "https://freesound.org/people/dersinnsspace/sounds/417388/",
+        "author": "dersinnsspace",
+        "durationSec": 153.6,
+        "verdict": "reject",
+        "reason": "required sound absent: Traffic noise, roadway noise / Vehicle / Car / Motor vehicle (road)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 153,
+          "cleanSeconds": 150,
+          "topClasses": [
+            {
+              "label": "Train",
+              "max": 0.8452
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.7392
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.7027
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.6897
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.397
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.259,
+              "atSecond": 140
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.444
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 608158,
+        "name": "Street People Cars City Fantasy Traffic Noise Ambience Atmosphere - Mastered ST.wav",
+        "url": "https://freesound.org/people/szegvari/sounds/608158/",
+        "author": "szegvari",
+        "durationSec": 123.9,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Thunder reaches 0.445 (at 7 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 123,
+          "cleanSeconds": 112,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.8037
+            },
+            {
+              "label": "Train",
+              "max": 0.7323
+            },
+            {
+              "label": "Speech",
+              "max": 0.6606
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.6435
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.6426
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.445,
+              "atSecond": 7
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.38,
+              "atSecond": 1
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.284,
+              "atSecond": 7
+            },
+            {
+              "label": "Lawn mower",
+              "max": 0.157,
+              "atSecond": 64
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.935
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 384475,
+        "name": "Cologne City, Tarffic on a street with barking dog (Surround)",
+        "url": "https://freesound.org/people/Pfannkuchn/sounds/384475/",
+        "author": "Pfannkuchn",
+        "durationSec": 200.5,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 15,
+          "lengthSeconds": 64,
+          "steadinessDb": 4.587
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 200,
+          "cleanSeconds": 198,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.8093
+            },
+            {
+              "label": "Speech",
+              "max": 0.7961
+            },
+            {
+              "label": "Animal",
+              "max": 0.6849
+            },
+            {
+              "label": "Bow-wow",
+              "max": 0.6771
+            },
+            {
+              "label": "Dog",
+              "max": 0.6053
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.251,
+              "atSecond": 145
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.515
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 561463,
+        "name": "Ambience from 5th floor balcony in Sao Paulo Brazil traffic construction machine pile driver foundation walla",
+        "url": "https://freesound.org/people/anapb/sounds/561463/",
+        "author": "anapb",
+        "durationSec": 162.1,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Music reaches 0.747 (at 17 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 162,
+          "cleanSeconds": 148,
+          "topClasses": [
+            {
+              "label": "Train",
+              "max": 0.8263
+            },
+            {
+              "label": "Music",
+              "max": 0.7471
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.7394
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.7276
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.7016
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.747,
+              "atSecond": 17
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.532,
+              "atSecond": 17
+            },
+            {
+              "label": "Siren",
+              "max": 0.449,
+              "atSecond": 131
+            },
+            {
+              "label": "Ambulance (siren)",
+              "max": 0.4,
+              "atSecond": 131
+            },
+            {
+              "label": "Vehicle horn, car horn, honking",
+              "max": 0.312,
+              "atSecond": 86
+            },
+            {
+              "label": "Drum",
+              "max": 0.213,
+              "atSecond": 17
+            },
+            {
+              "label": "Guitar",
+              "max": 0.182,
+              "atSecond": 17
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.156,
+              "atSecond": 131
+            },
+            {
+              "label": "Air horn, truck horn",
+              "max": 0.061,
+              "atSecond": 132
+            },
+            {
+              "label": "Train horn",
+              "max": 0.058,
+              "atSecond": 25
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.87
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 727873,
+        "name": "ambience, city, preobrazhenskaya street, traffic, winter, moscow",
+        "url": "https://freesound.org/people/AlexanderChe/sounds/727873/",
+        "author": "AlexanderChe",
+        "durationSec": 118.1,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Vehicle horn, car horn, honking reaches 0.388 (at 86 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 118,
+          "cleanSeconds": 115,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.6252
+            },
+            {
+              "label": "Waves, surf",
+              "max": 0.5856
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5745
+            },
+            {
+              "label": "Car",
+              "max": 0.5356
+            },
+            {
+              "label": "Ocean",
+              "max": 0.5033
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle horn, car horn, honking",
+              "max": 0.388,
+              "atSecond": 86
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.264,
+              "atSecond": 46
+            },
+            {
+              "label": "Music",
+              "max": 0.193,
+              "atSecond": 83
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.695
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 608157,
+        "name": "Street People Cars City Fantasy Traffic Noise Ambience Atmosphere - Mastered Surround.wav",
+        "url": "https://freesound.org/people/szegvari/sounds/608157/",
+        "author": "szegvari",
+        "durationSec": 123.9,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Thunder reaches 0.473 (at 7 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 123,
+          "cleanSeconds": 112,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.8013
+            },
+            {
+              "label": "Train",
+              "max": 0.7294
+            },
+            {
+              "label": "Speech",
+              "max": 0.6635
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.6387
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.6377
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.473,
+              "atSecond": 7
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.368,
+              "atSecond": 1
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.307,
+              "atSecond": 7
+            },
+            {
+              "label": "Lawn mower",
+              "max": 0.159,
+              "atSecond": 64
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.935
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 406871,
+        "name": "traffic medium Middle East busy street echo throaty cars motorcycles horn honks2 Gaza 2016.wav",
+        "url": "https://freesound.org/people/kyles/sounds/406871/",
+        "author": "kyles",
+        "durationSec": 166,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Reversing beeps reaches 0.507 (at 8 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 166,
+          "cleanSeconds": 126,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.7895
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.7271
+            },
+            {
+              "label": "Toot",
+              "max": 0.6983
+            },
+            {
+              "label": "Car",
+              "max": 0.6521
+            },
+            {
+              "label": "Reversing beeps",
+              "max": 0.5069
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Reversing beeps",
+              "max": 0.507,
+              "atSecond": 8
+            },
+            {
+              "label": "Music",
+              "max": 0.483,
+              "atSecond": 105
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.352,
+              "atSecond": 142
+            },
+            {
+              "label": "Vehicle horn, car horn, honking",
+              "max": 0.337,
+              "atSecond": 100
+            },
+            {
+              "label": "Car alarm",
+              "max": 0.144,
+              "atSecond": 94
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.124,
+              "atSecond": 133
+            },
+            {
+              "label": "Siren",
+              "max": 0.105,
+              "atSecond": 113
+            },
+            {
+              "label": "Ambulance (siren)",
+              "max": 0.089,
+              "atSecond": 113
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.058,
+              "atSecond": 133
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.91
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

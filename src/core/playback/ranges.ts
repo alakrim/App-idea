@@ -16,6 +16,9 @@ export const DUCKING_RANGE_DB: ValueRange = { min: 0, max: 24 };
 /** Playback speed. Pitch is preserved by the voice player. */
 export const PLAYBACK_RATE_RANGE: ValueRange = { min: 0.5, max: 2 };
 
+/** Speed sliders move in these steps. */
+export const PLAYBACK_RATE_STEP = 0.05;
+
 export function clampToRange(value: number, range: ValueRange): number {
   return Math.min(range.max, Math.max(range.min, value));
 }

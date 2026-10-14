@@ -1,11 +1,13 @@
 {
   "category": "campfire_night",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "campfire night ambience",
-    "campfire crackling outdoors"
+    "campfire crackling outdoors",
+    "campfire ambience",
+    "fire crackle outdoors night"
   ],
-  "poolSize": 6,
+  "poolSize": 14,
   "candidates": [
     {
       "rank": 1,
@@ -19,12 +21,12 @@
       "channels": 2,
       "avgRating": 4.74,
       "numRatings": 47,
-      "numDownloads": 1031,
+      "numDownloads": 1032,
       "previewUrl": "https://cdn.freesound.org/previews/681/681366_5752443-hq.mp3",
       "score": 9.73,
       "reasons": [
         "+2.72 rating 4.74 from 47 ratings",
-        "+1.51 1031 downloads",
+        "+1.51 1032 downloads",
         "+1.5 at least 63 s",
         "+3 tags campfire, fire, crackling",
         "+1 name matches campfire"
@@ -77,6 +79,72 @@
     },
     {
       "rank": 4,
+      "freesoundId": 186316,
+      "name": "Nighttime Bonfire 1",
+      "url": "https://freesound.org/people/samararaine/sounds/186316/",
+      "author": "samararaine",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 101.37,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.82,
+      "numRatings": 103,
+      "numDownloads": 6760,
+      "previewUrl": "https://cdn.freesound.org/previews/186/186316_2421128-hq.mp3",
+      "score": 7.73,
+      "reasons": [
+        "+2.82 rating 4.82 from 103 ratings",
+        "+1.92 6760 downloads",
+        "+2 at least 90 s",
+        "+1 tags fire"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 187079,
+      "name": "Nighttime Bonfire 2",
+      "url": "https://freesound.org/people/samararaine/sounds/187079/",
+      "author": "samararaine",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 101.37,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.73,
+      "numRatings": 90,
+      "numDownloads": 5847,
+      "previewUrl": "https://cdn.freesound.org/previews/187/187079_2421128-hq.mp3",
+      "score": 7.63,
+      "reasons": [
+        "+2.75 rating 4.73 from 90 ratings",
+        "+1.88 5847 downloads",
+        "+2 at least 90 s",
+        "+1 tags fire"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 836535,
+      "name": "Hearthfire (Louder)",
+      "url": "https://freesound.org/people/SilverIllusionist/sounds/836535/",
+      "author": "SilverIllusionist",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 80,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.85,
+      "numRatings": 20,
+      "numDownloads": 528,
+      "previewUrl": "https://cdn.freesound.org/previews/836/836535_7395592-hq.mp3",
+      "score": 7.55,
+      "reasons": [
+        "+2.69 rating 4.85 from 20 ratings",
+        "+1.36 528 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags campfire, fire"
+      ]
+    },
+    {
+      "rank": 7,
       "freesoundId": 766127,
       "name": "Ambience_Campsite_Night",
       "url": "https://freesound.org/people/LizzBitzz/sounds/766127/",
@@ -98,48 +166,25 @@
       ]
     },
     {
-      "rank": 5,
-      "freesoundId": 342369,
-      "name": "Sounds of the forest night.mp3",
-      "url": "https://freesound.org/people/Kingcornz/sounds/342369/",
-      "author": "Kingcornz",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 60.57,
-      "samplerate": 48000,
-      "channels": 2,
-      "avgRating": 4.74,
-      "numRatings": 27,
-      "numDownloads": 1630,
-      "previewUrl": "https://cdn.freesound.org/previews/342/342369_4804147-hq.mp3",
-      "score": 6.27,
-      "reasons": [
-        "+2.66 rating 4.74 from 27 ratings",
-        "+1.61 1630 downloads",
-        "+1 at least 60 s",
-        "+1 tags fire"
-      ]
-    },
-    {
-      "rank": 6,
-      "freesoundId": 410734,
-      "name": "brushwood in the fire 2",
-      "url": "https://freesound.org/people/Selector/sounds/410734/",
+      "rank": 8,
+      "freesoundId": 410736,
+      "name": "campfire in the open field 3",
+      "url": "https://freesound.org/people/Selector/sounds/410736/",
       "author": "Selector",
       "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 34.48,
+      "durationSec": 45.79,
       "samplerate": 48000,
       "channels": 2,
-      "avgRating": 4.83,
-      "numRatings": 12,
-      "numDownloads": 636,
-      "previewUrl": "https://cdn.freesound.org/previews/410/410734_270868-hq.mp3",
-      "score": 4.98,
+      "avgRating": 5,
+      "numRatings": 40,
+      "numDownloads": 1325,
+      "previewUrl": "https://cdn.freesound.org/previews/410/410736_270868-hq.mp3",
+      "score": 6.44,
       "reasons": [
-        "+2.58 rating 4.83 from 12 ratings",
-        "+1.4 636 downloads",
-        "-3 only 34.48 s",
-        "+3 tags campfire, fire, crackling",
-        "+1 name matches fire"
+        "+2.88 rating 5 from 40 ratings",
+        "+1.56 1325 downloads",
+        "+1 tags fire",
+        "+1 name matches campfire"
       ]
     }
   ]

@@ -180,5 +180,890 @@
         "+2 at least 90 s"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Air conditioning",
+          "Mechanical fan",
+          "Typing",
+          "Computer keyboard"
+        ]
+      ],
+      "clapPrompt": "a modern office with HVAC hum and keyboards, no speech"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 725718,
+        "name": "Typing Office chatter in background",
+        "url": "https://freesound.org/people/SduggySounds/sounds/725718/",
+        "author": "SduggySounds",
+        "durationSec": 101.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 101,
+          "cleanSeconds": 83,
+          "topClasses": [
+            {
+              "label": "Typing",
+              "max": 0.8264
+            },
+            {
+              "label": "Speech",
+              "max": 0.8178
+            },
+            {
+              "label": "Computer keyboard",
+              "max": 0.7936
+            },
+            {
+              "label": "Writing",
+              "max": 0.5489
+            },
+            {
+              "label": "Tick",
+              "max": 0.3959
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.818,
+              "atSecond": 17
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.331,
+              "atSecond": 22
+            },
+            {
+              "label": "Car",
+              "max": 0.194,
+              "atSecond": 85
+            },
+            {
+              "label": "Whispering",
+              "max": 0.177,
+              "atSecond": 44
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Air conditioning",
+                "Mechanical fan",
+                "Typing",
+                "Computer keyboard"
+              ],
+              "fraction": 0.406
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 862604,
+        "name": "Office Ambience",
+        "url": "https://freesound.org/people/BeaconStudio/sounds/862604/",
+        "author": "BeaconStudio",
+        "durationSec": 65.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 65,
+          "cleanSeconds": 63,
+          "topClasses": [
+            {
+              "label": "Typing",
+              "max": 0.8096
+            },
+            {
+              "label": "Computer keyboard",
+              "max": 0.758
+            },
+            {
+              "label": "Finger snapping",
+              "max": 0.7063
+            },
+            {
+              "label": "Tick-tock",
+              "max": 0.3809
+            },
+            {
+              "label": "Tick",
+              "max": 0.3187
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.186,
+              "atSecond": 39
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Air conditioning",
+                "Mechanical fan",
+                "Typing",
+                "Computer keyboard"
+              ],
+              "fraction": 0.169
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 708021,
+        "name": "Empty Office Space Room Tone with Aircon SFX",
+        "url": "https://freesound.org/people/Soup_UnderScore/sounds/708021/",
+        "author": "Soup_UnderScore",
+        "durationSec": 128,
+        "verdict": "reject",
+        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 128,
+          "cleanSeconds": 101,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.4044
+            },
+            {
+              "label": "Car",
+              "max": 0.1622
+            },
+            {
+              "label": "White noise",
+              "max": 0.1566
+            },
+            {
+              "label": "Music",
+              "max": 0.1118
+            },
+            {
+              "label": "Microwave oven",
+              "max": 0.0909
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.404,
+              "atSecond": 101
+            },
+            {
+              "label": "Car",
+              "max": 0.162,
+              "atSecond": 101
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Air conditioning",
+                "Mechanical fan",
+                "Typing",
+                "Computer keyboard"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 609250,
+        "name": "Journey To The Interweb",
+        "url": "https://freesound.org/people/Aemyn/sounds/609250/",
+        "author": "Aemyn",
+        "durationSec": 508,
+        "verdict": "reject",
+        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 508,
+          "cleanSeconds": 128,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.9644
+            },
+            {
+              "label": "Speech",
+              "max": 0.8717
+            },
+            {
+              "label": "Printer",
+              "max": 0.835
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.8219
+            },
+            {
+              "label": "Animal",
+              "max": 0.8179
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.964,
+              "atSecond": 475
+            },
+            {
+              "label": "Speech",
+              "max": 0.872,
+              "atSecond": 349
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.747,
+              "atSecond": 62
+            },
+            {
+              "label": "Ice cream truck, ice cream van",
+              "max": 0.698,
+              "atSecond": 193
+            },
+            {
+              "label": "Telephone bell ringing",
+              "max": 0.62,
+              "atSecond": 451
+            },
+            {
+              "label": "Wind chime",
+              "max": 0.607,
+              "atSecond": 410
+            },
+            {
+              "label": "Telephone",
+              "max": 0.547,
+              "atSecond": 450
+            },
+            {
+              "label": "Chime",
+              "max": 0.525,
+              "atSecond": 410
+            },
+            {
+              "label": "Jackhammer",
+              "max": 0.473,
+              "atSecond": 10
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.382,
+              "atSecond": 62
+            },
+            {
+              "label": "Car",
+              "max": 0.364,
+              "atSecond": 343
+            },
+            {
+              "label": "Honk",
+              "max": 0.331,
+              "atSecond": 365
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.323,
+              "atSecond": 291
+            },
+            {
+              "label": "Train",
+              "max": 0.313,
+              "atSecond": 304
+            },
+            {
+              "label": "Engine",
+              "max": 0.31,
+              "atSecond": 43
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.305,
+              "atSecond": 106
+            },
+            {
+              "label": "Ringtone",
+              "max": 0.278,
+              "atSecond": 153
+            },
+            {
+              "label": "Bell",
+              "max": 0.248,
+              "atSecond": 93
+            },
+            {
+              "label": "Bicycle bell",
+              "max": 0.247,
+              "atSecond": 360
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.245,
+              "atSecond": 62
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.216,
+              "atSecond": 388
+            },
+            {
+              "label": "Guitar",
+              "max": 0.215,
+              "atSecond": 31
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.202,
+              "atSecond": 304
+            },
+            {
+              "label": "Sewing machine",
+              "max": 0.2,
+              "atSecond": 24
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.194,
+              "atSecond": 31
+            },
+            {
+              "label": "Bus",
+              "max": 0.193,
+              "atSecond": 330
+            },
+            {
+              "label": "Engine knocking",
+              "max": 0.181,
+              "atSecond": 359
+            },
+            {
+              "label": "Radio",
+              "max": 0.166,
+              "atSecond": 4
+            },
+            {
+              "label": "Electronic music",
+              "max": 0.156,
+              "atSecond": 433
+            },
+            {
+              "label": "Video game music",
+              "max": 0.156,
+              "atSecond": 106
+            },
+            {
+              "label": "Motorboat, speedboat",
+              "max": 0.156,
+              "atSecond": 317
+            },
+            {
+              "label": "Siren",
+              "max": 0.149,
+              "atSecond": 145
+            },
+            {
+              "label": "Fire alarm",
+              "max": 0.109,
+              "atSecond": 16
+            },
+            {
+              "label": "Alarm",
+              "max": 0.095,
+              "atSecond": 16
+            },
+            {
+              "label": "Vehicle horn, car horn, honking",
+              "max": 0.093,
+              "atSecond": 337
+            },
+            {
+              "label": "Alarm clock",
+              "max": 0.074,
+              "atSecond": 16
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.065,
+              "atSecond": 333
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Air conditioning",
+                "Mechanical fan",
+                "Typing",
+                "Computer keyboard"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 474832,
+        "name": "RoomTone07",
+        "url": "https://freesound.org/people/richwise/sounds/474832/",
+        "author": "richwise",
+        "durationSec": 599.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 599,
+          "cleanSeconds": 516,
+          "topClasses": [
+            {
+              "label": "White noise",
+              "max": 0.279
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.2502
+            },
+            {
+              "label": "Microwave oven",
+              "max": 0.1425
+            },
+            {
+              "label": "Inside, small room",
+              "max": 0.0629
+            },
+            {
+              "label": "Mechanical fan",
+              "max": 0.0586
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.25,
+              "atSecond": 217
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Air conditioning",
+                "Mechanical fan",
+                "Typing",
+                "Computer keyboard"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 564166,
+        "name": "Crashing Starship",
+        "url": "https://freesound.org/people/Aemyn/sounds/564166/",
+        "author": "Aemyn",
+        "durationSec": 308,
+        "verdict": "reject",
+        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 307,
+          "cleanSeconds": 26,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8549
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.7907
+            },
+            {
+              "label": "Music",
+              "max": 0.7847
+            },
+            {
+              "label": "Reversing beeps",
+              "max": 0.7815
+            },
+            {
+              "label": "Train",
+              "max": 0.6161
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.855,
+              "atSecond": 4
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.791,
+              "atSecond": 289
+            },
+            {
+              "label": "Music",
+              "max": 0.785,
+              "atSecond": 23
+            },
+            {
+              "label": "Reversing beeps",
+              "max": 0.781,
+              "atSecond": 289
+            },
+            {
+              "label": "Train",
+              "max": 0.616,
+              "atSecond": 105
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.532,
+              "atSecond": 105
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.498,
+              "atSecond": 105
+            },
+            {
+              "label": "Ice cream truck, ice cream van",
+              "max": 0.469,
+              "atSecond": 286
+            },
+            {
+              "label": "Truck",
+              "max": 0.463,
+              "atSecond": 285
+            },
+            {
+              "label": "Emergency vehicle",
+              "max": 0.328,
+              "atSecond": 115
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.316,
+              "atSecond": 131
+            },
+            {
+              "label": "Jet engine",
+              "max": 0.256,
+              "atSecond": 135
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.25,
+              "atSecond": 303
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.232,
+              "atSecond": 131
+            },
+            {
+              "label": "Bagpipes",
+              "max": 0.215,
+              "atSecond": 9
+            },
+            {
+              "label": "Siren",
+              "max": 0.203,
+              "atSecond": 115
+            },
+            {
+              "label": "Bus",
+              "max": 0.194,
+              "atSecond": 217
+            },
+            {
+              "label": "Car",
+              "max": 0.191,
+              "atSecond": 104
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.162,
+              "atSecond": 115
+            },
+            {
+              "label": "Traffic noise, roadway noise",
+              "max": 0.16,
+              "atSecond": 104
+            },
+            {
+              "label": "Ambulance (siren)",
+              "max": 0.156,
+              "atSecond": 115
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.132,
+              "atSecond": 115
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Air conditioning",
+                "Mechanical fan",
+                "Typing",
+                "Computer keyboard"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 661435,
+        "name": "Defensible Twister",
+        "url": "https://freesound.org/people/Brazilio123/sounds/661435/",
+        "author": "Brazilio123",
+        "durationSec": 433,
+        "verdict": "reject",
+        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 433,
+          "cleanSeconds": 18,
+          "topClasses": [
+            {
+              "label": "Train",
+              "max": 0.7963
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.7242
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.6985
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.6553
+            },
+            {
+              "label": "Speech",
+              "max": 0.4846
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Train",
+              "max": 0.796,
+              "atSecond": 30
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.724,
+              "atSecond": 71
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.698,
+              "atSecond": 71
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.655,
+              "atSecond": 51
+            },
+            {
+              "label": "Speech",
+              "max": 0.485,
+              "atSecond": 170
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.431,
+              "atSecond": 51
+            },
+            {
+              "label": "Music",
+              "max": 0.375,
+              "atSecond": 223
+            },
+            {
+              "label": "Jet engine",
+              "max": 0.368,
+              "atSecond": 412
+            },
+            {
+              "label": "Train wheels squealing",
+              "max": 0.344,
+              "atSecond": 71
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.292,
+              "atSecond": 51
+            },
+            {
+              "label": "Hair dryer",
+              "max": 0.267,
+              "atSecond": 42
+            },
+            {
+              "label": "Vacuum cleaner",
+              "max": 0.246,
+              "atSecond": 42
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.243,
+              "atSecond": 30
+            },
+            {
+              "label": "Aircraft engine",
+              "max": 0.215,
+              "atSecond": 51
+            },
+            {
+              "label": "Engine",
+              "max": 0.157,
+              "atSecond": 351
+            },
+            {
+              "label": "Train horn",
+              "max": 0.081,
+              "atSecond": 46
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Air conditioning",
+                "Mechanical fan",
+                "Typing",
+                "Computer keyboard"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 556390,
+        "name": "Quiet City Atmos.mp3",
+        "url": "https://freesound.org/people/Anya_Media/sounds/556390/",
+        "author": "Anya_Media",
+        "durationSec": 409.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 409,
+          "cleanSeconds": 404,
+          "topClasses": [
+            {
+              "label": "Train",
+              "max": 0.2883
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.2857
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.2107
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.1976
+            },
+            {
+              "label": "Music",
+              "max": 0.1292
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Train",
+              "max": 0.288,
+              "atSecond": 146
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.286,
+              "atSecond": 150
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.211,
+              "atSecond": 146
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.198,
+              "atSecond": 146
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Air conditioning",
+                "Mechanical fan",
+                "Typing",
+                "Computer keyboard"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

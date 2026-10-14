@@ -1,14 +1,81 @@
 {
   "category": "ritual_chant",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "chanting ritual ambience",
-    "monks chant reverb"
+    "monks chant reverb",
+    "gregorian chant",
+    "monks singing ambience"
   ],
-  "poolSize": 1,
+  "poolSize": 6,
   "candidates": [
     {
       "rank": 1,
+      "freesoundId": 780488,
+      "name": "Gregorian choir & organ in Rome",
+      "url": "https://freesound.org/people/tullio/sounds/780488/",
+      "author": "tullio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.27,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.87,
+      "numRatings": 23,
+      "numDownloads": 596,
+      "previewUrl": "https://cdn.freesound.org/previews/780/780488_264532-hq.mp3",
+      "score": 6.61,
+      "reasons": [
+        "+2.72 rating 4.87 from 23 ratings",
+        "+1.39 596 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags chant"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 628648,
+      "name": "Reggaemonks.wav",
+      "url": "https://freesound.org/people/Marcker/sounds/628648/",
+      "author": "Marcker",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.97,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.56,
+      "numRatings": 9,
+      "numDownloads": 129,
+      "previewUrl": "https://cdn.freesound.org/previews/628/628648_9288205-hq.mp3",
+      "score": 4.94,
+      "reasons": [
+        "+2.38 rating 4.56 from 9 ratings",
+        "+1.06 129 downloads",
+        "+1.5 at least 63 s"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 437475,
+      "name": "Short eerie chorus",
+      "url": "https://freesound.org/people/ThomEvans/sounds/437475/",
+      "author": "ThomEvans",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 40.44,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.78,
+      "numRatings": 94,
+      "numDownloads": 3931,
+      "previewUrl": "https://cdn.freesound.org/previews/437/437475_8092625-hq.mp3",
+      "score": 2.58,
+      "reasons": [
+        "+2.78 rating 4.78 from 94 ratings",
+        "+1.8 3931 downloads",
+        "-3 only 40.44 s",
+        "+1 tags chant"
+      ]
+    },
+    {
+      "rank": 4,
       "freesoundId": 262876,
       "name": "Musical - Native American Day of the Dead Celebtration with Pipes, Whip Cracks, Drums.wav",
       "url": "https://freesound.org/people/jaegrover/sounds/262876/",
@@ -28,6 +95,51 @@
         "+2 at least 90 s",
         "+2 tags chant, ritual",
         "-6 music (musical)"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 333930,
+      "name": "Echoes from a Distant Past.wav",
+      "url": "https://freesound.org/people/BuytheField/sounds/333930/",
+      "author": "BuytheField",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 72.18,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.39,
+      "numRatings": 31,
+      "numDownloads": 1083,
+      "previewUrl": "https://cdn.freesound.org/previews/333/333930_4438873-hq.mp3",
+      "score": 1.47,
+      "reasons": [
+        "+2.45 rating 4.39 from 31 ratings",
+        "+1.52 1083 downloads",
+        "+1.5 at least 63 s",
+        "-4 synth (synth)"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 462735,
+      "name": "monk music 01",
+      "url": "https://freesound.org/people/rucisko/sounds/462735/",
+      "author": "rucisko",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 245.18,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.42,
+      "numRatings": 12,
+      "numDownloads": 771,
+      "previewUrl": "https://cdn.freesound.org/previews/462/462735_2978883-hq.mp3",
+      "score": 0.8,
+      "reasons": [
+        "+2.36 rating 4.42 from 12 ratings",
+        "+1.44 771 downloads",
+        "+2 at least 90 s",
+        "+1 tags monks",
+        "-6 music (music, beat)"
       ]
     }
   ]

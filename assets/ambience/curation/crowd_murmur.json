@@ -188,5 +188,564 @@
         "+1 name matches crowd, murmur"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Crowd",
+          "Hubbub, speech noise, speech babble",
+          "Chatter",
+          "Conversation"
+        ]
+      ],
+      "clapPrompt": "a large crowd murmuring with no distinct words"
+    },
+    "verdict": "filled",
+    "unfilledReason": null,
+    "chosen": {
+      "freesoundId": 445228,
+      "windowStartSeconds": 5,
+      "windowSeconds": 64,
+      "steadinessDb": 2.104,
+      "clapScore": null
+    },
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 138118,
+        "name": "Small Crowd Chatter",
+        "url": "https://freesound.org/people/snakebarney/sounds/138118/",
+        "author": "snakebarney",
+        "durationSec": 92.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 92,
+          "cleanSeconds": 91,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8869
+            },
+            {
+              "label": "Chatter",
+              "max": 0.7061
+            },
+            {
+              "label": "Finger snapping",
+              "max": 0.4698
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.4384
+            },
+            {
+              "label": "Chuckle, chortle",
+              "max": 0.326
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.161,
+              "atSecond": 65
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.12
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 640254,
+        "name": "geroezemoes.wav",
+        "url": "https://freesound.org/people/gecop/sounds/640254/",
+        "author": "gecop",
+        "durationSec": 120.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 120,
+          "cleanSeconds": 119,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8772
+            },
+            {
+              "label": "Chatter",
+              "max": 0.3796
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.1834
+            },
+            {
+              "label": "Animal",
+              "max": 0.1834
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.1631
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.183,
+              "atSecond": 34
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.05
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 608996,
+        "name": "5 min of crowd chatter.  40 people.wav",
+        "url": "https://freesound.org/people/Psykophobia/sounds/608996/",
+        "author": "Psykophobia",
+        "durationSec": 311.9,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Music reaches 0.801 (at 105 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 311,
+          "cleanSeconds": 227,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9202
+            },
+            {
+              "label": "Music",
+              "max": 0.8013
+            },
+            {
+              "label": "Chatter",
+              "max": 0.7835
+            },
+            {
+              "label": "Rub",
+              "max": 0.7144
+            },
+            {
+              "label": "Sanding",
+              "max": 0.6763
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.801,
+              "atSecond": 105
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.508
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 204911,
+        "name": "Voices",
+        "url": "https://freesound.org/people/unfa/sounds/204911/",
+        "author": "unfa",
+        "durationSec": 300.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 300,
+          "cleanSeconds": 116,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8971
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5683
+            },
+            {
+              "label": "Music",
+              "max": 0.4834
+            },
+            {
+              "label": "Chatter",
+              "max": 0.3407
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.3223
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.568,
+              "atSecond": 169
+            },
+            {
+              "label": "Music",
+              "max": 0.483,
+              "atSecond": 165
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.298,
+              "atSecond": 169
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.167,
+              "atSecond": 169
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.013
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 69308,
+        "name": "crowd  sm conf rm  jumbled conversations.wav",
+        "url": "https://freesound.org/people/cognito%20perceptu/sounds/69308/",
+        "author": "cognito perceptu",
+        "durationSec": 76.3,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 76,
+          "cleanSeconds": 75,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.905
+            },
+            {
+              "label": "Chatter",
+              "max": 0.6538
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.3846
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.2977
+            },
+            {
+              "label": "Narration, monologue",
+              "max": 0.2867
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.217,
+              "atSecond": 11
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.263
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 848088,
+        "name": "London tube train at rush hour",
+        "url": "https://freesound.org/people/andrewfordham/sounds/848088/",
+        "author": "andrewfordham",
+        "durationSec": 177.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 177,
+          "cleanSeconds": 116,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9336
+            },
+            {
+              "label": "Music",
+              "max": 0.7373
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5923
+            },
+            {
+              "label": "Train",
+              "max": 0.3903
+            },
+            {
+              "label": "Chatter",
+              "max": 0.388
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.737,
+              "atSecond": 16
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.592,
+              "atSecond": 80
+            },
+            {
+              "label": "Train",
+              "max": 0.39,
+              "atSecond": 153
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.273,
+              "atSecond": 153
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.209,
+              "atSecond": 153
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.207,
+              "atSecond": 153
+            },
+            {
+              "label": "Car",
+              "max": 0.178,
+              "atSecond": 107
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.051
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 445228,
+        "name": "Crowd Noise.m4a",
+        "url": "https://freesound.org/people/keus92/sounds/445228/",
+        "author": "keus92",
+        "durationSec": 100.5,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 5,
+          "lengthSeconds": 64,
+          "steadinessDb": 2.104
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 100,
+          "cleanSeconds": 99,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9029
+            },
+            {
+              "label": "Chatter",
+              "max": 0.8183
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.1932
+            },
+            {
+              "label": "Outside, urban or manmade",
+              "max": 0.1864
+            },
+            {
+              "label": "Inside, large room or hall",
+              "max": 0.1758
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.153,
+              "atSecond": 4
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.65
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 546676,
+        "name": "Crowd talking / murmur",
+        "url": "https://freesound.org/people/trezz77/sounds/546676/",
+        "author": "trezz77",
+        "durationSec": 62.9,
+        "verdict": "reject",
+        "reason": "clip has 62 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 62,
+          "cleanSeconds": 48,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8895
+            },
+            {
+              "label": "Chatter",
+              "max": 0.3524
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.3144
+            },
+            {
+              "label": "Music",
+              "max": 0.2461
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.2387
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.314,
+              "atSecond": 33
+            },
+            {
+              "label": "Music",
+              "max": 0.246,
+              "atSecond": 55
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.204,
+              "atSecond": 56
+            },
+            {
+              "label": "Train",
+              "max": 0.158,
+              "atSecond": 28
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.097
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

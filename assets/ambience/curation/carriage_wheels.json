@@ -121,5 +121,431 @@
         "+1 name matches carriage"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Creak",
+          "Clip-clop",
+          "Horse"
+        ]
+      ],
+      "clapPrompt": "a wooden carriage on a road, wheels creaking and harness jingle"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Creak / Clip-clop / Horse; clip has 49 s; a window needs 64 s",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 137843,
+        "name": "Horse and Carriage.aif",
+        "url": "https://freesound.org/people/thefilmbakery/sounds/137843/",
+        "author": "thefilmbakery",
+        "durationSec": 89.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Creak / Clip-clop / Horse",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 89,
+          "cleanSeconds": 78,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8539
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.8408
+            },
+            {
+              "label": "Sewing machine",
+              "max": 0.7722
+            },
+            {
+              "label": "Animal",
+              "max": 0.7232
+            },
+            {
+              "label": "Horse",
+              "max": 0.7061
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.854,
+              "atSecond": 5
+            },
+            {
+              "label": "Sewing machine",
+              "max": 0.772,
+              "atSecond": 14
+            },
+            {
+              "label": "Engine",
+              "max": 0.178,
+              "atSecond": 20
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Creak",
+                "Clip-clop",
+                "Horse"
+              ],
+              "fraction": 0.292
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 437077,
+        "name": "G52-06-Buckboard Wagon.wav",
+        "url": "https://freesound.org/people/craigsmith/sounds/437077/",
+        "author": "craigsmith",
+        "durationSec": 49.7,
+        "verdict": "reject",
+        "reason": "clip has 49 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 49,
+          "cleanSeconds": 6,
+          "topClasses": [
+            {
+              "label": "Sewing machine",
+              "max": 0.8811
+            },
+            {
+              "label": "Speech",
+              "max": 0.7855
+            },
+            {
+              "label": "Ratchet, pawl",
+              "max": 0.7445
+            },
+            {
+              "label": "Gears",
+              "max": 0.5435
+            },
+            {
+              "label": "Mechanisms",
+              "max": 0.5307
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Sewing machine",
+              "max": 0.881,
+              "atSecond": 7
+            },
+            {
+              "label": "Speech",
+              "max": 0.785,
+              "atSecond": 1
+            },
+            {
+              "label": "Engine",
+              "max": 0.488,
+              "atSecond": 48
+            },
+            {
+              "label": "Machine gun",
+              "max": 0.471,
+              "atSecond": 3
+            },
+            {
+              "label": "Gunshot, gunfire",
+              "max": 0.318,
+              "atSecond": 3
+            },
+            {
+              "label": "Engine knocking",
+              "max": 0.249,
+              "atSecond": 48
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.242,
+              "atSecond": 0
+            },
+            {
+              "label": "Medium engine (mid frequency)",
+              "max": 0.152,
+              "atSecond": 48
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Creak",
+                "Clip-clop",
+                "Horse"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 538438,
+        "name": "horse with old cart.wav",
+        "url": "https://freesound.org/people/bruno.auzet/sounds/538438/",
+        "author": "bruno.auzet",
+        "durationSec": 33.4,
+        "verdict": "reject",
+        "reason": "clip has 33 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 33,
+          "cleanSeconds": 26,
+          "topClasses": [
+            {
+              "label": "Neigh, whinny",
+              "max": 0.7897
+            },
+            {
+              "label": "Horse",
+              "max": 0.6068
+            },
+            {
+              "label": "Typing",
+              "max": 0.5775
+            },
+            {
+              "label": "Mechanisms",
+              "max": 0.5533
+            },
+            {
+              "label": "Animal",
+              "max": 0.5311
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.439,
+              "atSecond": 16
+            },
+            {
+              "label": "Engine",
+              "max": 0.242,
+              "atSecond": 7
+            },
+            {
+              "label": "Sewing machine",
+              "max": 0.21,
+              "atSecond": 10
+            },
+            {
+              "label": "Music",
+              "max": 0.173,
+              "atSecond": 4
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Creak",
+                "Clip-clop",
+                "Horse"
+              ],
+              "fraction": 0.152
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 841364,
+        "name": "🐎 Horse Carriage Sounds in Zakopane - Kuźnice | ASMR Ambience, Field Recording",
+        "url": "https://freesound.org/people/GirlWithSoundRecorder/sounds/841364/",
+        "author": "GirlWithSoundRecorder",
+        "durationSec": 39.9,
+        "verdict": "reject",
+        "reason": "clip has 39 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 39,
+          "cleanSeconds": 19,
+          "topClasses": [
+            {
+              "label": "Clip-clop",
+              "max": 0.8872
+            },
+            {
+              "label": "Speech",
+              "max": 0.8272
+            },
+            {
+              "label": "Horse",
+              "max": 0.8058
+            },
+            {
+              "label": "Animal",
+              "max": 0.7963
+            },
+            {
+              "label": "Music",
+              "max": 0.7304
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.827,
+              "atSecond": 5
+            },
+            {
+              "label": "Music",
+              "max": 0.73,
+              "atSecond": 10
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.621,
+              "atSecond": 3
+            },
+            {
+              "label": "Jingle bell",
+              "max": 0.431,
+              "atSecond": 12
+            },
+            {
+              "label": "Bell",
+              "max": 0.274,
+              "atSecond": 14
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.231,
+              "atSecond": 3
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.212,
+              "atSecond": 3
+            },
+            {
+              "label": "Car",
+              "max": 0.196,
+              "atSecond": 10
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Creak",
+                "Clip-clop",
+                "Horse"
+              ],
+              "fraction": 0.769
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 437076,
+        "name": "G52-07-Horse Drawn Carriage.wav",
+        "url": "https://freesound.org/people/craigsmith/sounds/437076/",
+        "author": "craigsmith",
+        "durationSec": 41.7,
+        "verdict": "reject",
+        "reason": "clip has 41 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 41,
+          "cleanSeconds": 33,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.85
+            },
+            {
+              "label": "Heart murmur",
+              "max": 0.5086
+            },
+            {
+              "label": "Heart sounds, heartbeat",
+              "max": 0.3421
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.221
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.1801
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.85,
+              "atSecond": 2
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.221,
+              "atSecond": 19
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.18,
+              "atSecond": 19
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.158,
+              "atSecond": 19
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Creak",
+                "Clip-clop",
+                "Horse"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -17,6 +17,7 @@ export { default as Bell } from 'lucide-react-native/icons/bell';
 export { default as Bird } from 'lucide-react-native/icons/bird';
 export { default as Bomb } from 'lucide-react-native/icons/bomb';
 export { default as BookA } from 'lucide-react-native/icons/book-a';
+export { default as Bookmark } from 'lucide-react-native/icons/bookmark';
 export { default as BookmarkPlus } from 'lucide-react-native/icons/bookmark-plus';
 export { default as BookOpen } from 'lucide-react-native/icons/book-open';
 export { default as Briefcase } from 'lucide-react-native/icons/briefcase';

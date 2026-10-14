@@ -10,6 +10,9 @@ import Animated, {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import type { PipelineError, Series } from '@/core/domain';
+import { listeningProgress } from '@/core/playback/listening-progress';
+import { countBookmarks, type BookmarkGroup } from '@/features/bookmarks/bookmark-data';
+import { bookmarkCountLabel } from '@/features/bookmarks/bookmark-format';
 import type { ChapterProgress } from '@/features/pipeline/facade';
 import { withAlpha } from '@/features/shared/color';
 import { NEUTRAL_TINT } from '@/features/shared/cover-tint';
@@ -21,7 +24,8 @@ import { Card } from '@/ui/card';
 import { CoverImage } from '@/ui/cover-image';
 import { EmptyState } from '@/ui/empty-state';
 import { IconButton } from '@/ui/icon-button';
-import { BookOpen, ChevronLeft, Ellipsis, Play, Plus } from '@/ui/icons';
+import { Bookmark, BookOpen, ChevronLeft, Ellipsis, Play, Plus } from '@/ui/icons';
+import { ListItem } from '@/ui/list-item';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { gutter, hairline, radius, space } from '@/ui/tokens';
@@ -48,6 +52,9 @@ export interface SeriesViewProps {
   /** Estimated OCR cost per scanned chapter, keyed by chapter id. */
   ocrPrices: Readonly<Record<string, number>>;
   playTarget: PlayTarget | null;
+  /** The chapter the listener is on, which gets the "Now" marker. */
+  currentChapterId: string | null;
+  bookmarks: readonly BookmarkGroup[];
   onBack: () => void;
   onMenu: () => void;
   onPlay: (chapterId: string) => void;
@@ -56,6 +63,7 @@ export interface SeriesViewProps {
   onChapterMenu: (chapterId: string) => void;
   onRetry: (chapterId: string) => void;
   onOcr: (chapterId: string) => void;
+  onBookmarks: () => void;
 }
 
 /**
@@ -197,6 +205,11 @@ export function SeriesView(props: SeriesViewProps) {
                   progress={item.progress}
                   failure={item.failure}
                   ocrUsd={props.ocrPrices[item.record.chapter.id] ?? null}
+                  listening={listeningProgress(
+                    item.record.chapter.durationMs,
+                    item.record.listening,
+                  )}
+                  current={item.record.chapter.id === props.currentChapterId}
                   divided={index > 0}
                   onOpen={props.onOpenChapter}
                   onPlay={onPlay}
@@ -205,6 +218,15 @@ export function SeriesView(props: SeriesViewProps) {
                   onOcr={props.onOcr}
                 />
               ))}
+            </Card>
+            <Card style={styles.flush}>
+              <ListItem
+                title="Bookmarks"
+                subtitle={bookmarkCountLabel(countBookmarks(props.bookmarks))}
+                leading={Bookmark}
+                onPress={props.onBookmarks}
+                accessibilityHint="Opens your bookmarks in this series"
+              />
             </Card>
           </View>
         )}

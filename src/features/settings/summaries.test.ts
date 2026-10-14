@@ -4,6 +4,7 @@ import {
   formatDb,
   MINUS_SIGN,
   narrationSummary,
+  playbackSummary,
   readingSummary,
   storageSummary,
   translationSummary,
@@ -64,5 +65,12 @@ describe('settings home summaries', () => {
     expect(storageSummary(12.4 * 1024 * 1024, 3 * 1024 * 1024 * 1024)).toBe(
       '12 MB used · 3.0 GB free',
     );
+  });
+});
+
+describe('playbackSummary', () => {
+  it('names the default speed a new series starts at', () => {
+    expect(playbackSummary({ defaultRate: 1.25 })).toBe('Default speed 1.25×');
+    expect(playbackSummary({ defaultRate: 1 })).toBe('Default speed 1.0×');
   });
 });

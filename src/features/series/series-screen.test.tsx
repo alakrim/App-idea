@@ -12,6 +12,9 @@ import { createFakePipeline } from '@/features/pipeline/fake-facade';
 
 import { SeriesScreen } from './series-screen';
 
+jest.mock('react-native-gesture-handler/ReanimatedSwipeable', () =>
+  require('../../__tests__/helpers/swipeable-stub'),
+);
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
 jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 jest.mock('expo-image', () => require('../../__tests__/helpers/feature-mocks').expoImageStub());

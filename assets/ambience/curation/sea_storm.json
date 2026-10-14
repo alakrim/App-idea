@@ -1,10 +1,196 @@
 {
   "category": "sea_storm",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "storm at sea waves wind",
-    "rough sea storm ambience"
+    "rough sea storm ambience",
+    "storm waves ocean wind",
+    "stormy sea ambience loop"
   ],
-  "poolSize": 0,
-  "candidates": []
+  "poolSize": 21,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 544119,
+      "name": "atlantic storm.wav",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/544119/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 128,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 54,
+      "numDownloads": 2064,
+      "previewUrl": "https://cdn.freesound.org/previews/544/544119_11519060-hq.mp3",
+      "score": 10.42,
+      "reasons": [
+        "+2.76 rating 4.8 from 54 ratings",
+        "+1.66 2064 downloads",
+        "+2 at least 90 s",
+        "+3 tags sea, storm, waves, wind",
+        "+1 name matches storm"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 426075,
+      "name": "Big waves breaking and splashing against groyne",
+      "url": "https://freesound.org/people/chris_dagorne/sounds/426075/",
+      "author": "chris_dagorne",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 233.09,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.68,
+      "numRatings": 34,
+      "numDownloads": 2829,
+      "previewUrl": "https://cdn.freesound.org/previews/426/426075_3380363-hq.mp3",
+      "score": 10.37,
+      "reasons": [
+        "+2.64 rating 4.68 from 34 ratings",
+        "+1.73 2829 downloads",
+        "+2 at least 90 s",
+        "+3 tags sea, storm, waves",
+        "+1 name matches waves"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 441108,
+      "name": "Amb_Storm_Pier.wav",
+      "url": "https://freesound.org/people/cribbler/sounds/441108/",
+      "author": "cribbler",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 91.65,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 17,
+      "numDownloads": 1198,
+      "previewUrl": "https://cdn.freesound.org/previews/441/441108_3728489-hq.mp3",
+      "score": 10.11,
+      "reasons": [
+        "+2.57 rating 4.71 from 17 ratings",
+        "+1.54 1198 downloads",
+        "+2 at least 90 s",
+        "+3 tags storm, waves, wind",
+        "+1 name matches storm"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 575787,
+      "name": "Sea travel",
+      "url": "https://freesound.org/people/szegvari/sounds/575787/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 98,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.6,
+      "numRatings": 15,
+      "numDownloads": 478,
+      "previewUrl": "https://cdn.freesound.org/previews/575/575787_2282212-hq.mp3",
+      "score": 9.83,
+      "reasons": [
+        "+2.49 rating 4.6 from 15 ratings",
+        "+1.34 478 downloads",
+        "+2 at least 90 s",
+        "+3 tags sea, waves, wind",
+        "+1 name matches sea"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 616222,
+      "name": "storm_sea_close.WAV",
+      "url": "https://freesound.org/people/frodeims/sounds/616222/",
+      "author": "frodeims",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 148.36,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.8,
+      "numRatings": 10,
+      "numDownloads": 397,
+      "previewUrl": "https://cdn.freesound.org/previews/616/616222_3755886-hq.mp3",
+      "score": 9.82,
+      "reasons": [
+        "+2.52 rating 4.8 from 10 ratings",
+        "+1.3 397 downloads",
+        "+2 at least 90 s",
+        "+3 tags sea, storm, waves, wind",
+        "+1 name matches sea, storm"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 706465,
+      "name": "strong wind and sea.wav",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/706465/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 196.01,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.89,
+      "numRatings": 9,
+      "numDownloads": 330,
+      "previewUrl": "https://cdn.freesound.org/previews/706/706465_11519060-hq.mp3",
+      "score": 9.8,
+      "reasons": [
+        "+2.54 rating 4.89 from 9 ratings",
+        "+1.26 330 downloads",
+        "+2 at least 90 s",
+        "+3 tags sea, storm, waves, wind",
+        "+1 name matches sea"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 426076,
+      "name": "Storm waves breaking on sandy beach in Bournemouth - clean recording",
+      "url": "https://freesound.org/people/chris_dagorne/sounds/426076/",
+      "author": "chris_dagorne",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 84.43,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.7,
+      "numRatings": 30,
+      "numDownloads": 1655,
+      "previewUrl": "https://cdn.freesound.org/previews/426/426076_3380363-hq.mp3",
+      "score": 9.76,
+      "reasons": [
+        "+2.65 rating 4.7 from 30 ratings",
+        "+1.61 1655 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags sea, storm, waves",
+        "+1 name matches storm, waves"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 469009,
+      "name": "Relaxing, Mountains, Rivers, Streams, Running Water",
+      "url": "https://freesound.org/people/INNORECORDS/sounds/469009/",
+      "author": "INNORECORDS",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 299.89,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.61,
+      "numRatings": 356,
+      "numDownloads": 16694,
+      "previewUrl": "https://cdn.freesound.org/previews/469/469009_9518146-hq.mp3",
+      "score": 9.7,
+      "reasons": [
+        "+2.7 rating 4.61 from 356 ratings",
+        "+2 16694 downloads",
+        "+2 at least 90 s",
+        "+3 tags storm, waves, wind"
+      ]
+    }
+  ]
 }

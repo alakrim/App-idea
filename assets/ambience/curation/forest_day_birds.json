@@ -190,5 +190,546 @@
         "+1 name matches birds, forest"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Bird",
+          "Bird vocalization, bird call, bird song",
+          "Chirp, tweet"
+        ]
+      ],
+      "clapPrompt": "daytime forest with birdsong and light leaf rustle, no people, no machines"
+    },
+    "verdict": "filled",
+    "unfilledReason": null,
+    "chosen": {
+      "freesoundId": 745273,
+      "windowStartSeconds": 9,
+      "windowSeconds": 64,
+      "steadinessDb": 1.234,
+      "clapScore": null
+    },
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 856018,
+        "name": "AMBForst_Late Spring.A Quiet Forest Edge.Hot.Sunny.Birds.Mosquitoes 2_EM",
+        "url": "https://freesound.org/people/newlocknew/sounds/856018/",
+        "author": "newlocknew",
+        "durationSec": 366.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Bird / Bird vocalization, bird call, bird song / Chirp, tweet",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 366,
+          "cleanSeconds": 351,
+          "topClasses": [
+            {
+              "label": "Bee, wasp, etc.",
+              "max": 0.8926
+            },
+            {
+              "label": "Insect",
+              "max": 0.7884
+            },
+            {
+              "label": "Fly, housefly",
+              "max": 0.7321
+            },
+            {
+              "label": "Environmental noise",
+              "max": 0.6346
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.3818
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.382,
+              "atSecond": 299
+            },
+            {
+              "label": "Thunder",
+              "max": 0.184,
+              "atSecond": 298
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Chirp, tweet"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 745273,
+        "name": "Bird ambience. Coniferous forest dawn chorus.",
+        "url": "https://freesound.org/people/SamsterBirdies/sounds/745273/",
+        "author": "SamsterBirdies",
+        "durationSec": 589.1,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 9,
+          "lengthSeconds": 64,
+          "steadinessDb": 1.234
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 589,
+          "cleanSeconds": 587,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.7581
+            },
+            {
+              "label": "Insect",
+              "max": 0.6959
+            },
+            {
+              "label": "Environmental noise",
+              "max": 0.6545
+            },
+            {
+              "label": "Chirp, tweet",
+              "max": 0.6279
+            },
+            {
+              "label": "Bird vocalization, bird call, bird song",
+              "max": 0.5772
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.296,
+              "atSecond": 75
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Chirp, tweet"
+              ],
+              "fraction": 0.679
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 456123,
+        "name": "Birds In The Forest",
+        "url": "https://freesound.org/people/BurghRecords/sounds/456123/",
+        "author": "BurghRecords",
+        "durationSec": 74.4,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 9,
+          "lengthSeconds": 64,
+          "steadinessDb": 2.844
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 74,
+          "cleanSeconds": 74,
+          "topClasses": [
+            {
+              "label": "Squawk",
+              "max": 0.8893
+            },
+            {
+              "label": "Crow",
+              "max": 0.7939
+            },
+            {
+              "label": "Caw",
+              "max": 0.6153
+            },
+            {
+              "label": "Bird",
+              "max": 0.572
+            },
+            {
+              "label": "Environmental noise",
+              "max": 0.4936
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Chirp, tweet"
+              ],
+              "fraction": 0.797
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 546521,
+        "name": "birds on morning",
+        "url": "https://freesound.org/people/trezz77/sounds/546521/",
+        "author": "trezz77",
+        "durationSec": 122.6,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 33,
+          "lengthSeconds": 64,
+          "steadinessDb": 5.592
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 122,
+          "cleanSeconds": 121,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.7568
+            },
+            {
+              "label": "Insect",
+              "max": 0.6905
+            },
+            {
+              "label": "Chirp, tweet",
+              "max": 0.6804
+            },
+            {
+              "label": "Bird",
+              "max": 0.6581
+            },
+            {
+              "label": "Environmental noise",
+              "max": 0.5651
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.151,
+              "atSecond": 20
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Chirp, tweet"
+              ],
+              "fraction": 0.566
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 855650,
+        "name": "AMBForst_Late spring.A Quiet Forest Edge.Hot.Sunny.Birds.Raven.Wood Pigeon.Mosquitoes 1_EM",
+        "url": "https://freesound.org/people/newlocknew/sounds/855650/",
+        "author": "newlocknew",
+        "durationSec": 213.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Bird / Bird vocalization, bird call, bird song / Chirp, tweet",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 213,
+          "cleanSeconds": 213,
+          "topClasses": [
+            {
+              "label": "Bee, wasp, etc.",
+              "max": 0.9232
+            },
+            {
+              "label": "Insect",
+              "max": 0.8662
+            },
+            {
+              "label": "Fly, housefly",
+              "max": 0.7347
+            },
+            {
+              "label": "Environmental noise",
+              "max": 0.5097
+            },
+            {
+              "label": "Animal",
+              "max": 0.3217
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Chirp, tweet"
+              ],
+              "fraction": 0.009
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 490846,
+        "name": "Birds In Forest (Scotland)",
+        "url": "https://freesound.org/people/BurghRecords/sounds/490846/",
+        "author": "BurghRecords",
+        "durationSec": 113,
+        "verdict": "reject",
+        "reason": "required sound absent: Bird / Bird vocalization, bird call, bird song / Chirp, tweet",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 113,
+          "cleanSeconds": 113,
+          "topClasses": [
+            {
+              "label": "Environmental noise",
+              "max": 0.6246
+            },
+            {
+              "label": "Bird vocalization, bird call, bird song",
+              "max": 0.3639
+            },
+            {
+              "label": "Chirp, tweet",
+              "max": 0.3604
+            },
+            {
+              "label": "Bird",
+              "max": 0.3575
+            },
+            {
+              "label": "Animal",
+              "max": 0.1497
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Chirp, tweet"
+              ],
+              "fraction": 0.15
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 434712,
+        "name": "Woodland Ambience Sound Effect - Duddingston Village.wav",
+        "url": "https://freesound.org/people/BurghRecords/sounds/434712/",
+        "author": "BurghRecords",
+        "durationSec": 376.2,
+        "verdict": "reject",
+        "reason": "required sound absent: Bird / Bird vocalization, bird call, bird song / Chirp, tweet",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 376,
+          "cleanSeconds": 352,
+          "topClasses": [
+            {
+              "label": "Environmental noise",
+              "max": 0.6453
+            },
+            {
+              "label": "Bee, wasp, etc.",
+              "max": 0.5383
+            },
+            {
+              "label": "Insect",
+              "max": 0.523
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.488
+            },
+            {
+              "label": "Music",
+              "max": 0.3275
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.488,
+              "atSecond": 94
+            },
+            {
+              "label": "Music",
+              "max": 0.327,
+              "atSecond": 84
+            },
+            {
+              "label": "Singing bowl",
+              "max": 0.311,
+              "atSecond": 85
+            },
+            {
+              "label": "Speech",
+              "max": 0.285,
+              "atSecond": 63
+            },
+            {
+              "label": "Car",
+              "max": 0.273,
+              "atSecond": 94
+            },
+            {
+              "label": "Foghorn",
+              "max": 0.186,
+              "atSecond": 93
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Chirp, tweet"
+              ],
+              "fraction": 0.024
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 629003,
+        "name": "birds chirping forest light rain ambience",
+        "url": "https://freesound.org/people/larspriebe/sounds/629003/",
+        "author": "larspriebe",
+        "durationSec": 209.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Bird / Bird vocalization, bird call, bird song / Chirp, tweet",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 209,
+          "cleanSeconds": 188,
+          "topClasses": [
+            {
+              "label": "Environmental noise",
+              "max": 0.6509
+            },
+            {
+              "label": "Turkey",
+              "max": 0.5848
+            },
+            {
+              "label": "Bird",
+              "max": 0.5792
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5588
+            },
+            {
+              "label": "Wind chime",
+              "max": 0.5538
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.559,
+              "atSecond": 80
+            },
+            {
+              "label": "Wind chime",
+              "max": 0.554,
+              "atSecond": 91
+            },
+            {
+              "label": "Chime",
+              "max": 0.512,
+              "atSecond": 91
+            },
+            {
+              "label": "Train",
+              "max": 0.289,
+              "atSecond": 80
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.27,
+              "atSecond": 78
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.242,
+              "atSecond": 80
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.227,
+              "atSecond": 80
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Bird",
+                "Bird vocalization, bird call, bird song",
+                "Chirp, tweet"
+              ],
+              "fraction": 0.096
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

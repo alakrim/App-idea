@@ -1,4 +1,8 @@
-import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetScrollView,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
 import { StyleSheet } from 'react-native';
 
 import { Text } from './text';
@@ -14,14 +18,31 @@ export interface SheetProps {
   title: string;
   children: ReactNode;
   snapPoints?: readonly (string | number)[];
+  /** For long content, such as a list: the body scrolls inside the sheet. */
+  scrollable?: boolean;
 }
 
 /**
  * Bottom sheet on @gorhom/bottom-sheet (Reanimated 4 compatible). Must sit under a
  * GestureHandlerRootView, which the root layout provides.
  */
-export function Sheet({ visible, onClose, title, children, snapPoints = ['60%'] }: SheetProps) {
+export function Sheet({
+  visible,
+  onClose,
+  title,
+  children,
+  snapPoints = ['60%'],
+  scrollable = false,
+}: SheetProps) {
   const { colors } = useTheme();
+  const body = (
+    <>
+      <Text variant="heading" accessibilityRole="header">
+        {title}
+      </Text>
+      {children}
+    </>
+  );
 
   return (
     <BottomSheet
@@ -41,12 +62,11 @@ export function Sheet({ visible, onClose, title, children, snapPoints = ['60%'] 
       backgroundStyle={[styles.background, { backgroundColor: colors.surfaceRaised }]}
       handleIndicatorStyle={{ backgroundColor: colors.textFaint }}
     >
-      <BottomSheetView style={styles.content}>
-        <Text variant="heading" accessibilityRole="header">
-          {title}
-        </Text>
-        {children}
-      </BottomSheetView>
+      {scrollable ? (
+        <BottomSheetScrollView contentContainerStyle={styles.content}>{body}</BottomSheetScrollView>
+      ) : (
+        <BottomSheetView style={styles.content}>{body}</BottomSheetView>
+      )}
     </BottomSheet>
   );
 }

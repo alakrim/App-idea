@@ -191,5 +191,683 @@
         "+1 name matches rain"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Rain",
+          "Raindrop",
+          "Rain on surface"
+        ]
+      ],
+      "clapPrompt": "gentle steady rain on leaves, no thunder, no people"
+    },
+    "verdict": "filled",
+    "unfilledReason": null,
+    "chosen": {
+      "freesoundId": 171980,
+      "windowStartSeconds": 56,
+      "windowSeconds": 64,
+      "steadinessDb": 1.018,
+      "clapScore": null
+    },
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 171980,
+        "name": "AMB_M_City_Rain_Light.wav",
+        "url": "https://freesound.org/people/conleec/sounds/171980/",
+        "author": "conleec",
+        "durationSec": 206.2,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 56,
+          "lengthSeconds": 64,
+          "steadinessDb": 1.018
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 206,
+          "cleanSeconds": 204,
+          "topClasses": [
+            {
+              "label": "Rain on surface",
+              "max": 0.8202
+            },
+            {
+              "label": "Rain",
+              "max": 0.8066
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.6943
+            },
+            {
+              "label": "Animal",
+              "max": 0.5104
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.3529
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Train",
+              "max": 0.312,
+              "atSecond": 183
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.265,
+              "atSecond": 183
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.224,
+              "atSecond": 183
+            },
+            {
+              "label": "Applause",
+              "max": 0.161,
+              "atSecond": 20
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.641
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 270349,
+        "name": "light rain ambience",
+        "url": "https://freesound.org/people/seth-m/sounds/270349/",
+        "author": "seth-m",
+        "durationSec": 210.6,
+        "verdict": "reject",
+        "reason": "required sound absent: Rain / Raindrop / Rain on surface",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 210,
+          "cleanSeconds": 152,
+          "topClasses": [
+            {
+              "label": "Animal",
+              "max": 0.7094
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.659
+            },
+            {
+              "label": "Rain",
+              "max": 0.6455
+            },
+            {
+              "label": "Cat",
+              "max": 0.5748
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.5437
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.434,
+              "atSecond": 159
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.404,
+              "atSecond": 49
+            },
+            {
+              "label": "Music",
+              "max": 0.247,
+              "atSecond": 46
+            },
+            {
+              "label": "Car alarm",
+              "max": 0.169,
+              "atSecond": 81
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.143
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 380651,
+        "name": "Light rain on street.wav",
+        "url": "https://freesound.org/people/BonnyOrbit/sounds/380651/",
+        "author": "BonnyOrbit",
+        "durationSec": 105,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 10,
+          "lengthSeconds": 64,
+          "steadinessDb": 1.899
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 105,
+          "cleanSeconds": 103,
+          "topClasses": [
+            {
+              "label": "Rain",
+              "max": 0.6856
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.6666
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.5514
+            },
+            {
+              "label": "Stream",
+              "max": 0.2097
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.166
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.166,
+              "atSecond": 9
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.155,
+              "atSecond": 6
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.733
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 759562,
+        "name": "Light Forest Rain Ambience with Village Sounds in the Background",
+        "url": "https://freesound.org/people/Garuda1982/sounds/759562/",
+        "author": "Garuda1982",
+        "durationSec": 477.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Rain / Raindrop / Rain on surface",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 477,
+          "cleanSeconds": 477,
+          "topClasses": [
+            {
+              "label": "Rain on surface",
+              "max": 0.7293
+            },
+            {
+              "label": "Rain",
+              "max": 0.7246
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.7184
+            },
+            {
+              "label": "Chop",
+              "max": 0.4588
+            },
+            {
+              "label": "Animal",
+              "max": 0.2925
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.342
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 392304,
+        "name": "Rain recorded inside with open window.WAV",
+        "url": "https://freesound.org/people/BonnyOrbit/sounds/392304/",
+        "author": "BonnyOrbit",
+        "durationSec": 277.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Rain / Raindrop / Rain on surface",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 277,
+          "cleanSeconds": 158,
+          "topClasses": [
+            {
+              "label": "Rain",
+              "max": 0.7808
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.7557
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.7204
+            },
+            {
+              "label": "Thunder",
+              "max": 0.6577
+            },
+            {
+              "label": "Tick-tock",
+              "max": 0.4981
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.658,
+              "atSecond": 180
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.491,
+              "atSecond": 180
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.463,
+              "atSecond": 13
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.441,
+              "atSecond": 179
+            },
+            {
+              "label": "Train",
+              "max": 0.338,
+              "atSecond": 210
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.268,
+              "atSecond": 13
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.214,
+              "atSecond": 210
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.214,
+              "atSecond": 210
+            },
+            {
+              "label": "Ship",
+              "max": 0.203,
+              "atSecond": 13
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.181,
+              "atSecond": 13
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.072
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 592482,
+        "name": "Medium Light Rain",
+        "url": "https://freesound.org/people/Baconation/sounds/592482/",
+        "author": "Baconation",
+        "durationSec": 319.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Rain / Raindrop / Rain on surface",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 319,
+          "cleanSeconds": 319,
+          "topClasses": [
+            {
+              "label": "Rain on surface",
+              "max": 0.5929
+            },
+            {
+              "label": "Rain",
+              "max": 0.5795
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.512
+            },
+            {
+              "label": "Frying (food)",
+              "max": 0.5041
+            },
+            {
+              "label": "Drip",
+              "max": 0.4293
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.122
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 557376,
+        "name": "Rain sounds from a first floor window in city building at night",
+        "url": "https://freesound.org/people/khenshom/sounds/557376/",
+        "author": "khenshom",
+        "durationSec": 106.5,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Thunder reaches 0.772 (at 51 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 106,
+          "cleanSeconds": 88,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.7722
+            },
+            {
+              "label": "Rain",
+              "max": 0.7526
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.6689
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.667
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.6612
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.772,
+              "atSecond": 51
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.667,
+              "atSecond": 51
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.505,
+              "atSecond": 46
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.312,
+              "atSecond": 46
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.29,
+              "atSecond": 46
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.238,
+              "atSecond": 46
+            },
+            {
+              "label": "Ship",
+              "max": 0.186,
+              "atSecond": 46
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.745
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 575378,
+        "name": "Light rain in the garden",
+        "url": "https://freesound.org/people/Cinetony/sounds/575378/",
+        "author": "Cinetony",
+        "durationSec": 545.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Rain / Raindrop / Rain on surface",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 545,
+          "cleanSeconds": 498,
+          "topClasses": [
+            {
+              "label": "Rain on surface",
+              "max": 0.7853
+            },
+            {
+              "label": "Rain",
+              "max": 0.7835
+            },
+            {
+              "label": "Thunder",
+              "max": 0.7627
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.6819
+            },
+            {
+              "label": "Bird",
+              "max": 0.6601
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.763,
+              "atSecond": 368
+            },
+            {
+              "label": "Music",
+              "max": 0.657,
+              "atSecond": 327
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.631,
+              "atSecond": 368
+            },
+            {
+              "label": "Train",
+              "max": 0.496,
+              "atSecond": 213
+            },
+            {
+              "label": "Siren",
+              "max": 0.414,
+              "atSecond": 281
+            },
+            {
+              "label": "Speech",
+              "max": 0.402,
+              "atSecond": 408
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.396,
+              "atSecond": 33
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.379,
+              "atSecond": 213
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.315,
+              "atSecond": 213
+            },
+            {
+              "label": "Train horn",
+              "max": 0.274,
+              "atSecond": 213
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.262,
+              "atSecond": 281
+            },
+            {
+              "label": "Emergency vehicle",
+              "max": 0.223,
+              "atSecond": 351
+            },
+            {
+              "label": "Whistle",
+              "max": 0.19,
+              "atSecond": 352
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.108,
+              "atSecond": 351
+            },
+            {
+              "label": "Train whistle",
+              "max": 0.091,
+              "atSecond": 213
+            },
+            {
+              "label": "Ambulance (siren)",
+              "max": 0.077,
+              "atSecond": 351
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.073,
+              "atSecond": 351
+            },
+            {
+              "label": "Vehicle horn, car horn, honking",
+              "max": 0.067,
+              "atSecond": 213
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.4
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

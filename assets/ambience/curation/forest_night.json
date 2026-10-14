@@ -193,11 +193,12 @@
     }
   ],
   "screening": {
-    "screenedOn": "2026-10-13",
+    "screenedOn": "2026-10-14",
     "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
     "reranker": null,
     "thresholds": {
       "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
       "requiredFrameProbability": 0.2,
       "requiredFraction": 0.5,
       "windowSeconds": 64
@@ -310,7 +311,7 @@
         "clapScore": null,
         "evidence": {
           "frames": 300,
-          "cleanSeconds": 299,
+          "cleanSeconds": 298,
           "topClasses": [
             {
               "label": "Cricket",
@@ -343,6 +344,11 @@
               "label": "Wind chime",
               "max": 0.167,
               "atSecond": 268
+            },
+            {
+              "label": "Fire alarm",
+              "max": 0.058,
+              "atSecond": 215
             }
           ],
           "requiredFraction": [
@@ -485,7 +491,7 @@
         "clapScore": null,
         "evidence": {
           "frames": 179,
-          "cleanSeconds": 152,
+          "cleanSeconds": 147,
           "topClasses": [
             {
               "label": "Cricket",
@@ -518,6 +524,16 @@
               "label": "Speech",
               "max": 0.24,
               "atSecond": 12
+            },
+            {
+              "label": "Smoke detector, smoke alarm",
+              "max": 0.124,
+              "atSecond": 24
+            },
+            {
+              "label": "Fire alarm",
+              "max": 0.068,
+              "atSecond": 24
             }
           ],
           "requiredFraction": [
@@ -612,7 +628,7 @@
         "clapScore": null,
         "evidence": {
           "frames": 175,
-          "cleanSeconds": 28,
+          "cleanSeconds": 22,
           "topClasses": [
             {
               "label": "Cricket",
@@ -655,6 +671,11 @@
               "label": "Fixed-wing aircraft, airplane",
               "max": 0.233,
               "atSecond": 88
+            },
+            {
+              "label": "Fire alarm",
+              "max": 0.135,
+              "atSecond": 13
             }
           ],
           "requiredFraction": [

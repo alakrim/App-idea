@@ -164,5 +164,506 @@
         "+1 name matches horse"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Clip-clop",
+          "Horse",
+          "Neigh, whinny"
+        ]
+      ],
+      "clapPrompt": "a horse trotting on a dirt road, hooves and a light tack creak"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Clip-clop / Horse / Neigh, whinny; clip has 50 s; a window needs 64 s",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 481917,
+        "name": "R26-18-Foley Horse Hooves Walking.wav",
+        "url": "https://freesound.org/people/craigsmith/sounds/481917/",
+        "author": "craigsmith",
+        "durationSec": 177.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Clip-clop / Horse / Neigh, whinny",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 177,
+          "cleanSeconds": 157,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9383
+            },
+            {
+              "label": "Thunk",
+              "max": 0.9175
+            },
+            {
+              "label": "Typing",
+              "max": 0.6656
+            },
+            {
+              "label": "Typewriter",
+              "max": 0.6409
+            },
+            {
+              "label": "Bird",
+              "max": 0.5945
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.938,
+              "atSecond": 169
+            },
+            {
+              "label": "Music",
+              "max": 0.419,
+              "atSecond": 22
+            },
+            {
+              "label": "Narration, monologue",
+              "max": 0.183,
+              "atSecond": 136
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Clip-clop",
+                "Horse",
+                "Neigh, whinny"
+              ],
+              "fraction": 0.028
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 870717,
+        "name": "Riding Horse Thru Mud, Rider's Perspective",
+        "url": "https://freesound.org/people/CHallSmith/sounds/870717/",
+        "author": "CHallSmith",
+        "durationSec": 50.3,
+        "verdict": "reject",
+        "reason": "clip has 50 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 50,
+          "cleanSeconds": 49,
+          "topClasses": [
+            {
+              "label": "Animal",
+              "max": 0.7289
+            },
+            {
+              "label": "Wood",
+              "max": 0.5416
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.477
+            },
+            {
+              "label": "Walk, footsteps",
+              "max": 0.4701
+            },
+            {
+              "label": "Horse",
+              "max": 0.4573
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.173,
+              "atSecond": 16
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Clip-clop",
+                "Horse",
+                "Neigh, whinny"
+              ],
+              "fraction": 0.06
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 640199,
+        "name": "horse weeding plowing",
+        "url": "https://freesound.org/people/bruno.auzet/sounds/640199/",
+        "author": "bruno.auzet",
+        "durationSec": 44,
+        "verdict": "reject",
+        "reason": "clip has 43 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 43,
+          "cleanSeconds": 36,
+          "topClasses": [
+            {
+              "label": "Clip-clop",
+              "max": 0.9646
+            },
+            {
+              "label": "Keys jangling",
+              "max": 0.8089
+            },
+            {
+              "label": "Horse",
+              "max": 0.7927
+            },
+            {
+              "label": "Animal",
+              "max": 0.7574
+            },
+            {
+              "label": "Rodents, rats, mice",
+              "max": 0.7161
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.655,
+              "atSecond": 0
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.238,
+              "atSecond": 32
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Clip-clop",
+                "Horse",
+                "Neigh, whinny"
+              ],
+              "fraction": 0.674
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 843303,
+        "name": "Coconut Horse Walking Sound Effects (Slow Gallop, Faster Gallop)",
+        "url": "https://freesound.org/people/BorzSounds/sounds/843303/",
+        "author": "BorzSounds",
+        "durationSec": 44.8,
+        "verdict": "reject",
+        "reason": "clip has 44 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 44,
+          "cleanSeconds": 14,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.9008
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.7963
+            },
+            {
+              "label": "Wood block",
+              "max": 0.7838
+            },
+            {
+              "label": "Plop",
+              "max": 0.6671
+            },
+            {
+              "label": "Percussion",
+              "max": 0.4855
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.901,
+              "atSecond": 33
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.796,
+              "atSecond": 26
+            },
+            {
+              "label": "Drum",
+              "max": 0.433,
+              "atSecond": 26
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Clip-clop",
+                "Horse",
+                "Neigh, whinny"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 233345,
+        "name": "Horses.WAV",
+        "url": "https://freesound.org/people/Ornery/sounds/233345/",
+        "author": "Ornery",
+        "durationSec": 36.9,
+        "verdict": "reject",
+        "reason": "clip has 36 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 36,
+          "cleanSeconds": 35,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.7926
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.6396
+            },
+            {
+              "label": "Walk, footsteps",
+              "max": 0.636
+            },
+            {
+              "label": "Animal",
+              "max": 0.5881
+            },
+            {
+              "label": "Horse",
+              "max": 0.5545
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.793,
+              "atSecond": 6
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Clip-clop",
+                "Horse",
+                "Neigh, whinny"
+              ],
+              "fraction": 0.167
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 841364,
+        "name": "🐎 Horse Carriage Sounds in Zakopane - Kuźnice | ASMR Ambience, Field Recording",
+        "url": "https://freesound.org/people/GirlWithSoundRecorder/sounds/841364/",
+        "author": "GirlWithSoundRecorder",
+        "durationSec": 39.9,
+        "verdict": "reject",
+        "reason": "clip has 39 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 39,
+          "cleanSeconds": 19,
+          "topClasses": [
+            {
+              "label": "Clip-clop",
+              "max": 0.8872
+            },
+            {
+              "label": "Speech",
+              "max": 0.8272
+            },
+            {
+              "label": "Horse",
+              "max": 0.8058
+            },
+            {
+              "label": "Animal",
+              "max": 0.7963
+            },
+            {
+              "label": "Music",
+              "max": 0.7304
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.827,
+              "atSecond": 5
+            },
+            {
+              "label": "Music",
+              "max": 0.73,
+              "atSecond": 10
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.621,
+              "atSecond": 3
+            },
+            {
+              "label": "Jingle bell",
+              "max": 0.431,
+              "atSecond": 12
+            },
+            {
+              "label": "Bell",
+              "max": 0.274,
+              "atSecond": 14
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.231,
+              "atSecond": 3
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.212,
+              "atSecond": 3
+            },
+            {
+              "label": "Car",
+              "max": 0.196,
+              "atSecond": 10
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Clip-clop",
+                "Horse",
+                "Neigh, whinny"
+              ],
+              "fraction": 0.769
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 479679,
+        "name": "R13-07-Horse on Wood.wav",
+        "url": "https://freesound.org/people/craigsmith/sounds/479679/",
+        "author": "craigsmith",
+        "durationSec": 41.8,
+        "verdict": "reject",
+        "reason": "clip has 41 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 41,
+          "cleanSeconds": 30,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.7778
+            },
+            {
+              "label": "Drawer open or close",
+              "max": 0.43
+            },
+            {
+              "label": "Animal",
+              "max": 0.3602
+            },
+            {
+              "label": "Domestic animals, pets",
+              "max": 0.2654
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.2594
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.778,
+              "atSecond": 12
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.259,
+              "atSecond": 18
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.183,
+              "atSecond": 18
+            },
+            {
+              "label": "Smoke detector, smoke alarm",
+              "max": 0.071,
+              "atSecond": 0
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Clip-clop",
+                "Horse",
+                "Neigh, whinny"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -1,9 +1,13 @@
 import { type LoadedSegment } from '@/audio/engine';
 import { createFakeEngine, type FakeAudioEngine } from '@/audio/fake-engine';
-import type { PlaybackPoint } from '@/core/domain/library';
 import { SLEEP_FADE_MS } from '@/core/playback/sleep-timer';
 
-import { createPlayerStore, type PlayerStore, type PlayerTimers } from './player-store';
+import {
+  createPlayerStore,
+  type PlayerStore,
+  type PlayerTimers,
+  type SavedPosition,
+} from './player-store';
 
 const CHAPTER_ID = '01HZX00000000000000000000C';
 const SEGMENTS: LoadedSegment[] = [
@@ -88,7 +92,7 @@ function createClock() {
 
 function setup(options: { saveWindowMs?: number } = {}) {
   const engine: FakeAudioEngine = createFakeEngine();
-  const saved: PlaybackPoint[] = [];
+  const saved: SavedPosition[] = [];
   const clock = createClock();
   const store: PlayerStore = createPlayerStore({
     engine,
@@ -171,7 +175,11 @@ describe('player store: position persistence', () => {
     run(4000);
     expect(saved).toEqual([]);
     run(1000);
-    expect(saved).toEqual([{ chapterId: CHAPTER_ID, chapterOrder: 3, sentenceIdx: 2 }]);
+    expect(saved).toHaveLength(1);
+    expect(saved[0]).toMatchObject({ chapterId: CHAPTER_ID, chapterOrder: 3, sentenceIdx: 2 });
+    // Sentence 2 starts at 4 s, and the window closes at 5 s.
+    expect(saved[0]?.positionMs).toBeGreaterThanOrEqual(4000);
+    expect(saved[0]?.positionMs).toBeLessThanOrEqual(5000);
     store.dispose();
   });
 
@@ -181,7 +189,12 @@ describe('player store: position persistence', () => {
     store.play();
     run(2600);
     store.pause();
-    expect(saved.at(-1)).toEqual({ chapterId: CHAPTER_ID, chapterOrder: 3, sentenceIdx: 1 });
+    expect(saved.at(-1)).toEqual({
+      chapterId: CHAPTER_ID,
+      chapterOrder: 3,
+      sentenceIdx: 1,
+      positionMs: 2600,
+    });
     store.dispose();
   });
 
@@ -191,7 +204,9 @@ describe('player store: position persistence', () => {
     store.play();
     run(1000);
     await store.load({ ...CHAPTER, id: '01HZX00000000000000000000D', order: 4 }, 0);
-    expect(saved).toEqual([{ chapterId: CHAPTER_ID, chapterOrder: 3, sentenceIdx: 0 }]);
+    expect(saved).toEqual([
+      { chapterId: CHAPTER_ID, chapterOrder: 3, sentenceIdx: 0, positionMs: 1000 },
+    ]);
     store.dispose();
   });
 

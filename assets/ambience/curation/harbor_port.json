@@ -1,14 +1,62 @@
 {
   "category": "harbor_port",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "harbour ambience seagulls boats",
-    "old port harbor water boats"
+    "old port harbor water boats",
+    "harbour ambience",
+    "seagulls harbor ambience"
   ],
-  "poolSize": 2,
+  "poolSize": 32,
   "candidates": [
     {
       "rank": 1,
+      "freesoundId": 501340,
+      "name": "Harbor during the night (Valparaiso, Chile)",
+      "url": "https://freesound.org/people/felix.blume/sounds/501340/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 246.51,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.82,
+      "numRatings": 11,
+      "numDownloads": 608,
+      "previewUrl": "https://cdn.freesound.org/previews/501/501340_1661766-hq.mp3",
+      "score": 9.95,
+      "reasons": [
+        "+2.55 rating 4.82 from 11 ratings",
+        "+1.39 608 downloads",
+        "+2 at least 90 s",
+        "+3 tags harbor, port, seagulls",
+        "+1 name matches harbor"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 450529,
+      "name": "Seagulls in a quiet street, 6AM, Harbour City",
+      "url": "https://freesound.org/people/etienne.leplumey/sounds/450529/",
+      "author": "etienne.leplumey",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 255.47,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.72,
+      "numRatings": 40,
+      "numDownloads": 1704,
+      "previewUrl": "https://cdn.freesound.org/previews/450/450529_997174-hq.mp3",
+      "score": 9.31,
+      "reasons": [
+        "+2.69 rating 4.72 from 40 ratings",
+        "+1.62 1704 downloads",
+        "+2 at least 90 s",
+        "+2 tags harbour, seagulls",
+        "+1 name matches harbour"
+      ]
+    },
+    {
+      "rank": 3,
       "freesoundId": 561815,
       "name": "Genaral Habour Ambience",
       "url": "https://freesound.org/people/Kinoton/sounds/561815/",
@@ -19,36 +67,127 @@
       "channels": 2,
       "avgRating": 4.79,
       "numRatings": 24,
-      "numDownloads": 904,
+      "numDownloads": 906,
       "previewUrl": "https://cdn.freesound.org/previews/561/561815_2247456-hq.mp3",
       "score": 9.16,
       "reasons": [
         "+2.68 rating 4.79 from 24 ratings",
-        "+1.48 904 downloads",
+        "+1.48 906 downloads",
         "+2 at least 90 s",
         "+3 tags harbour, port, boats, seagulls"
       ]
     },
     {
-      "rank": 2,
-      "freesoundId": 837974,
-      "name": "Saint Nazaire rooftop ambiance",
-      "url": "https://freesound.org/people/bruno.auzet/sounds/837974/",
-      "author": "bruno.auzet",
+      "rank": 4,
+      "freesoundId": 584217,
+      "name": "La Spezia - Mirabello - 09.08.21.WAV",
+      "url": "https://freesound.org/people/nicolo.ciuffi/sounds/584217/",
+      "author": "nicolo.ciuffi",
       "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 205.71,
-      "samplerate": 48000,
+      "durationSec": 314.99,
+      "samplerate": 96000,
       "channels": 2,
       "avgRating": 5,
-      "numRatings": 5,
-      "numDownloads": 30,
-      "previewUrl": "https://cdn.freesound.org/previews/837/837974_11519060-hq.mp3",
-      "score": 6.18,
+      "numRatings": 3,
+      "numDownloads": 148,
+      "previewUrl": "https://cdn.freesound.org/previews/584/584217_12075612-hq.mp3",
+      "score": 8.38,
       "reasons": [
-        "+2.44 rating 5 from 5 ratings",
+        "+2.3 rating 5 from 3 ratings",
+        "+1.09 148 downloads",
+        "+2 at least 90 s",
+        "+3 tags harbour, port, boats"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 809278,
+      "name": "AMBNaut Guest harbour on a windy day, eiders and traffic ambience, Karlskrona, Sweden",
+      "url": "https://freesound.org/people/vhio/sounds/809278/",
+      "author": "vhio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 278.8,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 51,
+      "previewUrl": "https://cdn.freesound.org/previews/809/809278_15774433-hq.mp3",
+      "score": 8.15,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+0.86 51 downloads",
+        "+2 at least 90 s",
+        "+2 tags harbour, boats",
+        "+1 name matches harbour"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 530210,
+      "name": "Pea Point, New Brunswick, Seaside ambience.",
+      "url": "https://freesound.org/people/AlexLane/sounds/530210/",
+      "author": "AlexLane",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 198.48,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.92,
+      "numRatings": 12,
+      "numDownloads": 474,
+      "previewUrl": "https://cdn.freesound.org/previews/530/530210_2617886-hq.mp3",
+      "score": 7.96,
+      "reasons": [
+        "+2.63 rating 4.92 from 12 ratings",
+        "+1.34 474 downloads",
+        "+2 at least 90 s",
+        "+2 tags harbour, seagulls"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 457613,
+      "name": "Harbor City Center - Hamburg Jungfernstieg - People, Traffic, Seagulls",
+      "url": "https://freesound.org/people/Pfannkuchn/sounds/457613/",
+      "author": "Pfannkuchn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 165.08,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.73,
+      "numRatings": 11,
+      "numDownloads": 477,
+      "previewUrl": "https://cdn.freesound.org/previews/457/457613_627541-hq.mp3",
+      "score": 7.85,
+      "reasons": [
+        "+2.51 rating 4.73 from 11 ratings",
+        "+1.34 477 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagulls",
+        "+1 name matches harbor"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 823541,
+      "name": "AMBTraf Overgrown oil harbour with highway traffic and birds, Karlskrona, Sweden",
+      "url": "https://freesound.org/people/vhio/sounds/823541/",
+      "author": "vhio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 319.8,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 30,
+      "previewUrl": "https://cdn.freesound.org/previews/823/823541_15774433-hq.mp3",
+      "score": 7.62,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
         "+0.75 30 downloads",
         "+2 at least 90 s",
-        "+1 tags harbour"
+        "+2 tags harbour, seagulls",
+        "+1 name matches harbour"
       ]
     }
   ]

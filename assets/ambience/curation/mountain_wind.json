@@ -191,5 +191,570 @@
         "+1 name matches mountain"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Wind",
+          "Wind noise (microphone)"
+        ]
+      ],
+      "clapPrompt": "high mountain wind with cold gusts and a sparse echo"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Wind / Wind noise (microphone)",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 577263,
+        "name": "Mountain Soundscape.wav",
+        "url": "https://freesound.org/people/BotanicalVan/sounds/577263/",
+        "author": "BotanicalVan",
+        "durationSec": 179.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 179,
+          "cleanSeconds": 175,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.7112
+            },
+            {
+              "label": "Insect",
+              "max": 0.5502
+            },
+            {
+              "label": "Environmental noise",
+              "max": 0.5139
+            },
+            {
+              "label": "Bird",
+              "max": 0.2174
+            },
+            {
+              "label": "Animal",
+              "max": 0.2082
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.189,
+              "atSecond": 175
+            },
+            {
+              "label": "Music",
+              "max": 0.168,
+              "atSecond": 111
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 288899,
+        "name": "Rocky Mountain Outdoors:  wind and birds",
+        "url": "https://freesound.org/people/petebuchwald/sounds/288899/",
+        "author": "petebuchwald",
+        "durationSec": 89.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 89,
+          "cleanSeconds": 87,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.8108
+            },
+            {
+              "label": "Insect",
+              "max": 0.7355
+            },
+            {
+              "label": "Writing",
+              "max": 0.6475
+            },
+            {
+              "label": "Rattle",
+              "max": 0.5806
+            },
+            {
+              "label": "Rattle (instrument)",
+              "max": 0.4295
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Rattle (instrument)",
+              "max": 0.43,
+              "atSecond": 49
+            },
+            {
+              "label": "Speech",
+              "max": 0.33,
+              "atSecond": 79
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 647658,
+        "name": "Ambience - night atmosphere - mountains - provence - south France - insects - crickets - light wind.wav",
+        "url": "https://freesound.org/people/ValentinPetiteau/sounds/647658/",
+        "author": "ValentinPetiteau",
+        "durationSec": 355,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 355,
+          "cleanSeconds": 355,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.8883
+            },
+            {
+              "label": "Insect",
+              "max": 0.8504
+            },
+            {
+              "label": "Environmental noise",
+              "max": 0.1289
+            },
+            {
+              "label": "Owl",
+              "max": 0.1019
+            },
+            {
+              "label": "Animal",
+              "max": 0.0987
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 486891,
+        "name": "Ambience Mountain Outdoor Mirador Horta",
+        "url": "https://freesound.org/people/bitlab_coop/sounds/486891/",
+        "author": "bitlab_coop",
+        "durationSec": 277.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 277,
+          "cleanSeconds": 3,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.6756
+            },
+            {
+              "label": "Field recording",
+              "max": 0.4988
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.4526
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.447
+            },
+            {
+              "label": "Train",
+              "max": 0.3552
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.676,
+              "atSecond": 210
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.453,
+              "atSecond": 210
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.447,
+              "atSecond": 210
+            },
+            {
+              "label": "Train",
+              "max": 0.355,
+              "atSecond": 74
+            },
+            {
+              "label": "Aircraft engine",
+              "max": 0.254,
+              "atSecond": 210
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.241,
+              "atSecond": 74
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.238,
+              "atSecond": 74
+            },
+            {
+              "label": "Car",
+              "max": 0.157,
+              "atSecond": 267
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 757868,
+        "name": "Morning in swiss mountain",
+        "url": "https://freesound.org/people/xkeril/sounds/757868/",
+        "author": "xkeril",
+        "durationSec": 117.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 117,
+          "cleanSeconds": 117,
+          "topClasses": [
+            {
+              "label": "Animal",
+              "max": 0.2946
+            },
+            {
+              "label": "Clicking",
+              "max": 0.2584
+            },
+            {
+              "label": "Mouse",
+              "max": 0.2299
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.2121
+            },
+            {
+              "label": "Rustle",
+              "max": 0.1763
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 647660,
+        "name": "Ambience - dawn atmosphere -  air - light wind - south France - provence - far village - no insects.wav",
+        "url": "https://freesound.org/people/ValentinPetiteau/sounds/647660/",
+        "author": "ValentinPetiteau",
+        "durationSec": 590.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 590,
+          "cleanSeconds": 579,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.5754
+            },
+            {
+              "label": "Music",
+              "max": 0.5166
+            },
+            {
+              "label": "Whispering",
+              "max": 0.386
+            },
+            {
+              "label": "Heart sounds, heartbeat",
+              "max": 0.3167
+            },
+            {
+              "label": "White noise",
+              "max": 0.2223
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.575,
+              "atSecond": 176
+            },
+            {
+              "label": "Music",
+              "max": 0.517,
+              "atSecond": 215
+            },
+            {
+              "label": "Whispering",
+              "max": 0.386,
+              "atSecond": 537
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.178,
+              "atSecond": 93
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 486895,
+        "name": "Ambience Mountain Outdoor Muntanya Forat del Vent Torrebaro",
+        "url": "https://freesound.org/people/bitlab_coop/sounds/486895/",
+        "author": "bitlab_coop",
+        "durationSec": 164,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 164,
+          "cleanSeconds": 159,
+          "topClasses": [
+            {
+              "label": "Insect",
+              "max": 0.8016
+            },
+            {
+              "label": "Bee, wasp, etc.",
+              "max": 0.7643
+            },
+            {
+              "label": "Fly, housefly",
+              "max": 0.6057
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.21
+            },
+            {
+              "label": "Writing",
+              "max": 0.2095
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.21,
+              "atSecond": 42
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.146,
+              "atSecond": 66
+            },
+            {
+              "label": "Siren",
+              "max": 0.093,
+              "atSecond": 66
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 486894,
+        "name": "Ambience Mountain Outdoor Mirador Torrebaro",
+        "url": "https://freesound.org/people/bitlab_coop/sounds/486894/",
+        "author": "bitlab_coop",
+        "durationSec": 171.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 171,
+          "cleanSeconds": 61,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.8686
+            },
+            {
+              "label": "Animal",
+              "max": 0.7548
+            },
+            {
+              "label": "Speech",
+              "max": 0.6944
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.6413
+            },
+            {
+              "label": "Dog",
+              "max": 0.6365
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.869,
+              "atSecond": 40
+            },
+            {
+              "label": "Speech",
+              "max": 0.694,
+              "atSecond": 98
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.641,
+              "atSecond": 40
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.591,
+              "atSecond": 40
+            },
+            {
+              "label": "Aircraft engine",
+              "max": 0.483,
+              "atSecond": 40
+            },
+            {
+              "label": "Music",
+              "max": 0.309,
+              "atSecond": 125
+            },
+            {
+              "label": "Car",
+              "max": 0.284,
+              "atSecond": 2
+            },
+            {
+              "label": "Honk",
+              "max": 0.259,
+              "atSecond": 157
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

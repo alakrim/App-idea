@@ -191,5 +191,545 @@
         "+1 name matches night"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [
+        "vehicles",
+        "engines"
+      ],
+      "required": [
+        [
+          "Traffic noise, roadway noise",
+          "Vehicle",
+          "Car",
+          "Motor vehicle (road)"
+        ]
+      ],
+      "clapPrompt": "a city at night with light traffic and a humming sign, no sirens"
+    },
+    "verdict": "filled",
+    "unfilledReason": null,
+    "chosen": {
+      "freesoundId": 427841,
+      "windowStartSeconds": 33,
+      "windowSeconds": 64,
+      "steadinessDb": 0.496,
+      "clapScore": null
+    },
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 384476,
+        "name": "Cologne at night, Quiet street with cars passing by in the distance (Surround)",
+        "url": "https://freesound.org/people/Pfannkuchn/sounds/384476/",
+        "author": "Pfannkuchn",
+        "durationSec": 204.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Traffic noise, roadway noise / Vehicle / Car / Motor vehicle (road)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 204,
+          "cleanSeconds": 199,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.6919
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.659
+            },
+            {
+              "label": "Car",
+              "max": 0.4376
+            },
+            {
+              "label": "Bird",
+              "max": 0.2396
+            },
+            {
+              "label": "Owl",
+              "max": 0.201
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.692,
+              "atSecond": 119
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.471
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 427841,
+        "name": "Ambience City Quiet Night Air Tone",
+        "url": "https://freesound.org/people/leonelmail/sounds/427841/",
+        "author": "leonelmail",
+        "durationSec": 139.5,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 33,
+          "lengthSeconds": 64,
+          "steadinessDb": 0.496
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 139,
+          "cleanSeconds": 139,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.5583
+            },
+            {
+              "label": "Car",
+              "max": 0.264
+            },
+            {
+              "label": "Field recording",
+              "max": 0.2512
+            },
+            {
+              "label": "White noise",
+              "max": 0.1304
+            },
+            {
+              "label": "Thunder",
+              "max": 0.1293
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.928
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 752436,
+        "name": "Walking through the bustling night market in the downtown area",
+        "url": "https://freesound.org/people/lastraindrop/sounds/752436/",
+        "author": "lastraindrop",
+        "durationSec": 485.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Traffic noise, roadway noise / Vehicle / Car / Motor vehicle (road)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 485,
+          "cleanSeconds": 9,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.9327
+            },
+            {
+              "label": "Speech",
+              "max": 0.913
+            },
+            {
+              "label": "Run",
+              "max": 0.8093
+            },
+            {
+              "label": "Insect",
+              "max": 0.7399
+            },
+            {
+              "label": "Bee, wasp, etc.",
+              "max": 0.5718
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.933,
+              "atSecond": 474
+            },
+            {
+              "label": "Speech",
+              "max": 0.913,
+              "atSecond": 313
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.547,
+              "atSecond": 311
+            },
+            {
+              "label": "Chatter",
+              "max": 0.517,
+              "atSecond": 315
+            },
+            {
+              "label": "Guitar",
+              "max": 0.443,
+              "atSecond": 311
+            },
+            {
+              "label": "Honk",
+              "max": 0.441,
+              "atSecond": 35
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.44,
+              "atSecond": 311
+            },
+            {
+              "label": "Child speech, kid speaking",
+              "max": 0.262,
+              "atSecond": 407
+            },
+            {
+              "label": "Hubbub, speech noise, speech babble",
+              "max": 0.225,
+              "atSecond": 415
+            },
+            {
+              "label": "Crowd",
+              "max": 0.216,
+              "atSecond": 129
+            },
+            {
+              "label": "Electronic music",
+              "max": 0.214,
+              "atSecond": 303
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.089
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 332783,
+        "name": "city ambience, pedestrian subway, outside, night, distant traffic, trains and railway station announcements - Stereo preview.wav",
+        "url": "https://freesound.org/people/be_a_hero_not_a_patriot/sounds/332783/",
+        "author": "be_a_hero_not_a_patriot",
+        "durationSec": 270.9,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 156,
+          "lengthSeconds": 64,
+          "steadinessDb": 0.677
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 270,
+          "cleanSeconds": 270,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.563
+            },
+            {
+              "label": "Field recording",
+              "max": 0.3836
+            },
+            {
+              "label": "Train",
+              "max": 0.3154
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.2131
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.2067
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.819
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 237329,
+        "name": "Night city atmosphere",
+        "url": "https://freesound.org/people/Soundkrampf/sounds/237329/",
+        "author": "Soundkrampf",
+        "durationSec": 67.7,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Speech reaches 0.746 (at 7 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 67,
+          "cleanSeconds": 62,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.7455
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.6259
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.2724
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.2644
+            },
+            {
+              "label": "Field recording",
+              "max": 0.262
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.746,
+              "atSecond": 7
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.94
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 556228,
+        "name": "Silent City Evening Atmosphere",
+        "url": "https://freesound.org/people/Basbazooka/sounds/556228/",
+        "author": "Basbazooka",
+        "durationSec": 148.2,
+        "verdict": "reject",
+        "reason": "required sound absent: Traffic noise, roadway noise / Vehicle / Car / Motor vehicle (road)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 148,
+          "cleanSeconds": 145,
+          "topClasses": [
+            {
+              "label": "Cat",
+              "max": 0.699
+            },
+            {
+              "label": "Animal",
+              "max": 0.5663
+            },
+            {
+              "label": "Domestic animals, pets",
+              "max": 0.5609
+            },
+            {
+              "label": "Meow",
+              "max": 0.5545
+            },
+            {
+              "label": "Goose",
+              "max": 0.5506
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Honk",
+              "max": 0.543,
+              "atSecond": 134
+            },
+            {
+              "label": "Speech",
+              "max": 0.288,
+              "atSecond": 118
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.074
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 332785,
+        "name": "city ambience, pedestrian subway, at entrance, night, distant traffic, trains and railway station announcements - Stereo preview.wav",
+        "url": "https://freesound.org/people/be_a_hero_not_a_patriot/sounds/332785/",
+        "author": "be_a_hero_not_a_patriot",
+        "durationSec": 208.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Traffic noise, roadway noise / Vehicle / Car / Motor vehicle (road)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 208,
+          "cleanSeconds": 208,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.3944
+            },
+            {
+              "label": "Car",
+              "max": 0.2057
+            },
+            {
+              "label": "Accelerating, revving, vroom",
+              "max": 0.1327
+            },
+            {
+              "label": "Field recording",
+              "max": 0.1083
+            },
+            {
+              "label": "White noise",
+              "max": 0.1007
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.298
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 380781,
+        "name": "Backyard with wind at night.wav",
+        "url": "https://freesound.org/people/BonnyOrbit/sounds/380781/",
+        "author": "BonnyOrbit",
+        "durationSec": 302.8,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 12,
+          "lengthSeconds": 64,
+          "steadinessDb": 0.688
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 302,
+          "cleanSeconds": 302,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.6259
+            },
+            {
+              "label": "Train",
+              "max": 0.5738
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.3956
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.3845
+            },
+            {
+              "label": "Field recording",
+              "max": 0.365
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Traffic noise, roadway noise",
+                "Vehicle",
+                "Car",
+                "Motor vehicle (road)"
+              ],
+              "fraction": 0.957
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

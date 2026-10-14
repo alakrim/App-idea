@@ -189,5 +189,503 @@
         "+1 name matches crickets"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Insect",
+          "Cricket"
+        ]
+      ],
+      "clapPrompt": "a summer meadow at dusk with crickets and grasshoppers, no people"
+    },
+    "verdict": "filled",
+    "unfilledReason": null,
+    "chosen": {
+      "freesoundId": 692842,
+      "windowStartSeconds": 55,
+      "windowSeconds": 64,
+      "steadinessDb": 0.576,
+      "clapScore": null
+    },
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 639459,
+        "name": "summer meadow with wind",
+        "url": "https://freesound.org/people/Garuda1982/sounds/639459/",
+        "author": "Garuda1982",
+        "durationSec": 133.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Insect / Cricket",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 133,
+          "cleanSeconds": 129,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.5866
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.5623
+            },
+            {
+              "label": "Environmental noise",
+              "max": 0.5487
+            },
+            {
+              "label": "Waves, surf",
+              "max": 0.3623
+            },
+            {
+              "label": "Insect",
+              "max": 0.3452
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.587,
+              "atSecond": 68
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.199,
+              "atSecond": 68
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket"
+              ],
+              "fraction": 0.083
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 414907,
+        "name": "Summer afternoon Meadow ATM birds and crickets.wav",
+        "url": "https://freesound.org/people/DanGasior/sounds/414907/",
+        "author": "DanGasior",
+        "durationSec": 121.3,
+        "verdict": "reject",
+        "reason": "required sound absent: Insect / Cricket",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 121,
+          "cleanSeconds": 116,
+          "topClasses": [
+            {
+              "label": "Bird",
+              "max": 0.6004
+            },
+            {
+              "label": "Insect",
+              "max": 0.577
+            },
+            {
+              "label": "Chirp, tweet",
+              "max": 0.5519
+            },
+            {
+              "label": "Cricket",
+              "max": 0.4833
+            },
+            {
+              "label": "Bird vocalization, bird call, bird song",
+              "max": 0.4704
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.261,
+              "atSecond": 108
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket"
+              ],
+              "fraction": 0.091
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 692842,
+        "name": "insects pasture.wav",
+        "url": "https://freesound.org/people/bruno.auzet/sounds/692842/",
+        "author": "bruno.auzet",
+        "durationSec": 512.3,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 55,
+          "lengthSeconds": 64,
+          "steadinessDb": 0.576
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 512,
+          "cleanSeconds": 478,
+          "topClasses": [
+            {
+              "label": "Insect",
+              "max": 0.9032
+            },
+            {
+              "label": "Cricket",
+              "max": 0.8943
+            },
+            {
+              "label": "Bee, wasp, etc.",
+              "max": 0.8661
+            },
+            {
+              "label": "Fly, housefly",
+              "max": 0.7596
+            },
+            {
+              "label": "Speech",
+              "max": 0.6684
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.668,
+              "atSecond": 322
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.327,
+              "atSecond": 495
+            },
+            {
+              "label": "Music",
+              "max": 0.326,
+              "atSecond": 491
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket"
+              ],
+              "fraction": 0.594
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 576367,
+        "name": "Field, meadow, insects, crickets, summer day, NOTL, 10.mp3",
+        "url": "https://freesound.org/people/TRP/sounds/576367/",
+        "author": "TRP",
+        "durationSec": 111.8,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 20,
+          "lengthSeconds": 64,
+          "steadinessDb": 0.182
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 111,
+          "cleanSeconds": 111,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.9075
+            },
+            {
+              "label": "Insect",
+              "max": 0.8478
+            },
+            {
+              "label": "Bee, wasp, etc.",
+              "max": 0.3335
+            },
+            {
+              "label": "Hiss",
+              "max": 0.2465
+            },
+            {
+              "label": "Environmental noise",
+              "max": 0.2269
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket"
+              ],
+              "fraction": 0.964
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 585318,
+        "name": "Indian summer evening Norway Crickets and Birds.wav",
+        "url": "https://freesound.org/people/LarsErikErtzgaardRingen/sounds/585318/",
+        "author": "LarsErikErtzgaardRingen",
+        "durationSec": 107.2,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Vehicle reaches 0.31 (at 103 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 107,
+          "cleanSeconds": 101,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.8567
+            },
+            {
+              "label": "Insect",
+              "max": 0.7671
+            },
+            {
+              "label": "Chicken, rooster",
+              "max": 0.5816
+            },
+            {
+              "label": "Cluck",
+              "max": 0.344
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.3095
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.31,
+              "atSecond": 103
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket"
+              ],
+              "fraction": 0.822
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 717573,
+        "name": "220611 Field meadow summer, busy birds insects distant traffic, EM272st, NOTL 9pm",
+        "url": "https://freesound.org/people/TRP/sounds/717573/",
+        "author": "TRP",
+        "durationSec": 133.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Insect / Cricket",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 133,
+          "cleanSeconds": 132,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.8755
+            },
+            {
+              "label": "Insect",
+              "max": 0.8166
+            },
+            {
+              "label": "Owl",
+              "max": 0.5078
+            },
+            {
+              "label": "Environmental noise",
+              "max": 0.4135
+            },
+            {
+              "label": "Bird",
+              "max": 0.3364
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Honk",
+              "max": 0.057,
+              "atSecond": 36
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket"
+              ],
+              "fraction": 0.444
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 203598,
+        "name": "CricketsandTawnyOwl.wav",
+        "url": "https://freesound.org/people/raoul_slayer/sounds/203598/",
+        "author": "raoul_slayer",
+        "durationSec": 140.4,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 64,
+          "lengthSeconds": 64,
+          "steadinessDb": 0.498
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 140,
+          "cleanSeconds": 140,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.8955
+            },
+            {
+              "label": "Owl",
+              "max": 0.8183
+            },
+            {
+              "label": "Insect",
+              "max": 0.807
+            },
+            {
+              "label": "Hoot",
+              "max": 0.7424
+            },
+            {
+              "label": "Frog",
+              "max": 0.5531
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket"
+              ],
+              "fraction": 0.779
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 59103,
+        "name": "emmentaler farm ambience-crickets at dusk.wav",
+        "url": "https://freesound.org/people/Zozzy/sounds/59103/",
+        "author": "Zozzy",
+        "durationSec": 90.8,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Music reaches 0.234 (at 63 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 90,
+          "cleanSeconds": 85,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.9342
+            },
+            {
+              "label": "Insect",
+              "max": 0.8945
+            },
+            {
+              "label": "Music",
+              "max": 0.2343
+            },
+            {
+              "label": "Hoot",
+              "max": 0.1784
+            },
+            {
+              "label": "Speech",
+              "max": 0.1525
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.234,
+              "atSecond": 63
+            },
+            {
+              "label": "Speech",
+              "max": 0.153,
+              "atSecond": 19
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket"
+              ],
+              "fraction": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

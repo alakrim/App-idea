@@ -1,14 +1,175 @@
 {
   "category": "monastery_chant",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "monastery chant ambience",
-    "gregorian chant church"
+    "gregorian chant church",
+    "choir monastery ambience",
+    "monks chanting"
   ],
-  "poolSize": 2,
+  "poolSize": 28,
   "candidates": [
     {
       "rank": 1,
+      "freesoundId": 383167,
+      "name": "Buddhist Monk Chant / prayer, China",
+      "url": "https://freesound.org/people/mycompasstv/sounds/383167/",
+      "author": "mycompasstv",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 173.68,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.72,
+      "numRatings": 25,
+      "numDownloads": 1261,
+      "previewUrl": "https://cdn.freesound.org/previews/383/383167_3902754-hq.mp3",
+      "score": 9.19,
+      "reasons": [
+        "+2.64 rating 4.72 from 25 ratings",
+        "+1.55 1261 downloads",
+        "+2 at least 90 s",
+        "+2 tags monastery, chant",
+        "+1 name matches chant"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 545056,
+      "name": "Monk Chant Temple Fantasy",
+      "url": "https://freesound.org/people/szegvari/sounds/545056/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 94,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.82,
+      "numRatings": 17,
+      "numDownloads": 554,
+      "previewUrl": "https://cdn.freesound.org/previews/545/545056_2282212-hq.mp3",
+      "score": 9.01,
+      "reasons": [
+        "+2.64 rating 4.82 from 17 ratings",
+        "+1.37 554 downloads",
+        "+2 at least 90 s",
+        "+2 tags chant, church",
+        "+1 name matches chant"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 545057,
+      "name": "Monk Chant Fantasy",
+      "url": "https://freesound.org/people/szegvari/sounds/545057/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 94,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.92,
+      "numRatings": 13,
+      "numDownloads": 494,
+      "previewUrl": "https://cdn.freesound.org/previews/545/545057_2282212-hq.mp3",
+      "score": 8.99,
+      "reasons": [
+        "+2.65 rating 4.92 from 13 ratings",
+        "+1.35 494 downloads",
+        "+2 at least 90 s",
+        "+2 tags chant, church",
+        "+1 name matches chant"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 545055,
+      "name": "Monk Chant Temple",
+      "url": "https://freesound.org/people/szegvari/sounds/545055/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 94,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.42,
+      "numRatings": 12,
+      "numDownloads": 458,
+      "previewUrl": "https://cdn.freesound.org/previews/545/545055_2282212-hq.mp3",
+      "score": 8.69,
+      "reasons": [
+        "+2.36 rating 4.42 from 12 ratings",
+        "+1.33 458 downloads",
+        "+2 at least 90 s",
+        "+2 tags chant, church",
+        "+1 name matches chant"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 177597,
+      "name": "Thailand Chiang Mai Buddhist temple Burmese monks enter, walla, chant pray.flac",
+      "url": "https://freesound.org/people/kyles/sounds/177597/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 369.02,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 355,
+      "previewUrl": "https://cdn.freesound.org/previews/177/177597_612689-hq.mp3",
+      "score": 7.71,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.28 355 downloads",
+        "+2 at least 90 s",
+        "+1 tags chant",
+        "+1 name matches chant"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 677547,
+      "name": "Chanting Drone Bells1.wav",
+      "url": "https://freesound.org/people/Jim-Bretherick/sounds/677547/",
+      "author": "Jim-Bretherick",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 149,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 7,
+      "numDownloads": 220,
+      "previewUrl": "https://cdn.freesound.org/previews/677/677547_10983022-hq.mp3",
+      "score": 7.58,
+      "reasons": [
+        "+2.41 rating 4.71 from 7 ratings",
+        "+1.17 220 downloads",
+        "+2 at least 90 s",
+        "+2 tags monastery, chant"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 345028,
+      "name": "Temple chanting interior",
+      "url": "https://freesound.org/people/3bagbrew/sounds/345028/",
+      "author": "3bagbrew",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 402,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.9,
+      "numRatings": 48,
+      "numDownloads": 2519,
+      "previewUrl": "https://cdn.freesound.org/previews/345/345028_571436-hq.mp3",
+      "score": 7.52,
+      "reasons": [
+        "+2.82 rating 4.9 from 48 ratings",
+        "+1.7 2519 downloads",
+        "+2 at least 90 s",
+        "+1 tags chant"
+      ]
+    },
+    {
+      "rank": 8,
       "freesoundId": 468041,
       "name": "Buddhist temple hum 02",
       "url": "https://freesound.org/people/rucisko/sounds/468041/",
@@ -25,28 +186,6 @@
       "reasons": [
         "+2.3 rating 5 from 3 ratings",
         "+1.21 263 downloads",
-        "+2 at least 90 s",
-        "+2 tags monastery, chant"
-      ]
-    },
-    {
-      "rank": 2,
-      "freesoundId": 390290,
-      "name": "052016 maruyama shrine.mp3",
-      "url": "https://freesound.org/people/pflanigan/sounds/390290/",
-      "author": "pflanigan",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 200.14,
-      "samplerate": 44100,
-      "channels": 1,
-      "avgRating": 5,
-      "numRatings": 1,
-      "numDownloads": 84,
-      "previewUrl": "https://cdn.freesound.org/previews/390/390290_6132202-hq.mp3",
-      "score": 7.03,
-      "reasons": [
-        "+2.06 rating 5 from 1 ratings",
-        "+0.96 84 downloads",
         "+2 at least 90 s",
         "+2 tags monastery, chant"
       ]

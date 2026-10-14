@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { PLAYBACK_RATE_RANGE, PLAYBACK_RATE_STEP } from '@/core/playback/ranges';
 import { Sheet } from '@/ui/sheet';
 import { Slider } from '@/ui/slider';
 import { Text } from '@/ui/text';
@@ -9,9 +10,9 @@ import { minTouchTarget, radius, space } from '@/ui/tokens';
 import { formatRate } from './format';
 import { usePlayback, usePlayerState } from './player-provider';
 
-export const RATE_MIN = 0.5;
-export const RATE_MAX = 2;
-export const RATE_STEP = 0.05;
+const RATE_MIN = PLAYBACK_RATE_RANGE.min;
+const RATE_MAX = PLAYBACK_RATE_RANGE.max;
+const RATE_STEP = PLAYBACK_RATE_STEP;
 /** Presets for the common listening speeds. */
 export const RATE_PRESETS = [0.75, 1, 1.25, 1.5, 1.75, 2] as const;
 
@@ -20,15 +21,23 @@ export interface SpeedSheetProps {
   onClose: () => void;
 }
 
+/**
+ * The speed of the narration. Moving the slider changes it at once, and the value is saved for the
+ * series when the finger lifts, so each series keeps its own speed.
+ */
 export function SpeedSheet({ visible, onClose }: SpeedSheetProps) {
   const { colors } = useTheme();
-  const { player } = usePlayback();
+  const playback = usePlayback();
+  const { player } = playback;
   const rate = usePlayerState((state) => state.rate);
 
   return (
     <Sheet visible={visible} onClose={onClose} title="Speed" snapPoints={['56%']}>
       <Text variant="display" align="center" style={styles.readout}>
         {formatRate(rate)}
+      </Text>
+      <Text variant="caption" tone="muted" align="center" accessibilityLiveRegion="polite">
+        Saved for this series
       </Text>
       <Slider
         label="Playback speed"
@@ -40,6 +49,7 @@ export function SpeedSheet({ visible, onClose }: SpeedSheetProps) {
         minimumLabel={formatRate(RATE_MIN)}
         maximumLabel={formatRate(RATE_MAX)}
         onValueChange={(next) => player.setRate(next)}
+        onValueCommit={() => playback.saveRateForSeries()}
       />
       <View style={styles.presets}>
         {RATE_PRESETS.map((preset) => {
@@ -50,7 +60,10 @@ export function SpeedSheet({ visible, onClose }: SpeedSheetProps) {
               accessibilityRole="radio"
               accessibilityLabel={`Speed ${formatRate(preset)}`}
               accessibilityState={{ checked: selected }}
-              onPress={() => player.setRate(preset)}
+              onPress={() => {
+                player.setRate(preset);
+                playback.saveRateForSeries();
+              }}
               style={[
                 styles.preset,
                 {

@@ -191,5 +191,781 @@
         "+1 name matches thunder"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "gunfire"
+      ],
+      "exempt": [
+        "thunder"
+      ],
+      "required": [
+        [
+          "Thunder",
+          "Thunderstorm"
+        ],
+        [
+          "Rain",
+          "Raindrop",
+          "Rain on surface"
+        ]
+      ],
+      "clapPrompt": "rain with distant rolling thunder, nothing else"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "no 64 s window is free of denied sounds: Music reaches 0.582 (at 90 s); required sound absent: Rain / Raindrop / Rain on surface",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 319568,
+        "name": "distant storm 1.WAV",
+        "url": "https://freesound.org/people/Soojay/sounds/319568/",
+        "author": "Soojay",
+        "durationSec": 178.4,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Music reaches 0.582 (at 90 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 178,
+          "cleanSeconds": 119,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.8331
+            },
+            {
+              "label": "Rain",
+              "max": 0.7072
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.6925
+            },
+            {
+              "label": "Music",
+              "max": 0.5819
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.5473
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.582,
+              "atSecond": 90
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.507,
+              "atSecond": 123
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.486,
+              "atSecond": 152
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.209,
+              "atSecond": 152
+            },
+            {
+              "label": "Car",
+              "max": 0.163,
+              "atSecond": 84
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.158,
+              "atSecond": 152
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Thunder",
+                "Thunderstorm"
+              ],
+              "fraction": 0.669
+            },
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.59
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 319566,
+        "name": "distant storm 3.WAV",
+        "url": "https://freesound.org/people/Soojay/sounds/319566/",
+        "author": "Soojay",
+        "durationSec": 179.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Rain / Raindrop / Rain on surface",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 179,
+          "cleanSeconds": 146,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.8571
+            },
+            {
+              "label": "Speech",
+              "max": 0.8294
+            },
+            {
+              "label": "Rain",
+              "max": 0.7169
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.7167
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.3512
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.829,
+              "atSecond": 177
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.346,
+              "atSecond": 100
+            },
+            {
+              "label": "Music",
+              "max": 0.28,
+              "atSecond": 35
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.194,
+              "atSecond": 113
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Thunder",
+                "Thunderstorm"
+              ],
+              "fraction": 0.804
+            },
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.436
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 158691,
+        "name": "Distant Thunder and Rain from Half Open Window 2.aif",
+        "url": "https://freesound.org/people/RutgerMuller/sounds/158691/",
+        "author": "RutgerMuller",
+        "durationSec": 104,
+        "verdict": "reject",
+        "reason": "required sound absent: Thunder / Thunderstorm",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 104,
+          "cleanSeconds": 94,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.7568
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.6606
+            },
+            {
+              "label": "Rain",
+              "max": 0.6579
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.6569
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.5334
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.4,
+              "atSecond": 47
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.301,
+              "atSecond": 48
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.26,
+              "atSecond": 47
+            },
+            {
+              "label": "Ship",
+              "max": 0.155,
+              "atSecond": 47
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Thunder",
+                "Thunderstorm"
+              ],
+              "fraction": 0.077
+            },
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.423
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 241335,
+        "name": "Thunderstorm",
+        "url": "https://freesound.org/people/konkreteruser/sounds/241335/",
+        "author": "konkreteruser",
+        "durationSec": 112,
+        "verdict": "reject",
+        "reason": "required sound absent: Thunder / Thunderstorm",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 112,
+          "cleanSeconds": 112,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.8325
+            },
+            {
+              "label": "Rain",
+              "max": 0.734
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.7099
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.5834
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.5395
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Thunder",
+                "Thunderstorm"
+              ],
+              "fraction": 0.205
+            },
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.545
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 157002,
+        "name": "Thunderstorm Ambience 2.wav",
+        "url": "https://freesound.org/people/chrscrwfrd18/sounds/157002/",
+        "author": "chrscrwfrd18",
+        "durationSec": 600,
+        "verdict": "reject",
+        "reason": "required sound absent: Thunder / Thunderstorm",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 600,
+          "cleanSeconds": 519,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.8695
+            },
+            {
+              "label": "Rain",
+              "max": 0.8468
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.8093
+            },
+            {
+              "label": "Cricket",
+              "max": 0.8054
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.78
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.683,
+              "atSecond": 552
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.476,
+              "atSecond": 10
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.399,
+              "atSecond": 3
+            },
+            {
+              "label": "Train",
+              "max": 0.317,
+              "atSecond": 281
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.27,
+              "atSecond": 10
+            },
+            {
+              "label": "Music",
+              "max": 0.258,
+              "atSecond": 5
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.23,
+              "atSecond": 281
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.226,
+              "atSecond": 281
+            },
+            {
+              "label": "Car",
+              "max": 0.22,
+              "atSecond": 552
+            },
+            {
+              "label": "Ship",
+              "max": 0.196,
+              "atSecond": 10
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.173,
+              "atSecond": 6
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Thunder",
+                "Thunderstorm"
+              ],
+              "fraction": 0.38
+            },
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.833
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 157001,
+        "name": "Thunderstorm Ambience.wav",
+        "url": "https://freesound.org/people/chrscrwfrd18/sounds/157001/",
+        "author": "chrscrwfrd18",
+        "durationSec": 600,
+        "verdict": "reject",
+        "reason": "required sound absent: Thunder / Thunderstorm",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 600,
+          "cleanSeconds": 419,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.9039
+            },
+            {
+              "label": "Rain",
+              "max": 0.8807
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.8765
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.84
+            },
+            {
+              "label": "Cricket",
+              "max": 0.8179
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.793,
+              "atSecond": 366
+            },
+            {
+              "label": "Train",
+              "max": 0.678,
+              "atSecond": 564
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.659,
+              "atSecond": 450
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.622,
+              "atSecond": 564
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.55,
+              "atSecond": 564
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.424,
+              "atSecond": 3
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.397,
+              "atSecond": 3
+            },
+            {
+              "label": "Explosion",
+              "max": 0.289,
+              "atSecond": 7
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.285,
+              "atSecond": 6
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.231,
+              "atSecond": 3
+            },
+            {
+              "label": "Siren",
+              "max": 0.225,
+              "atSecond": 263
+            },
+            {
+              "label": "Engine",
+              "max": 0.219,
+              "atSecond": 297
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.214,
+              "atSecond": 385
+            },
+            {
+              "label": "Truck",
+              "max": 0.197,
+              "atSecond": 450
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.19,
+              "atSecond": 385
+            },
+            {
+              "label": "Bus",
+              "max": 0.186,
+              "atSecond": 450
+            },
+            {
+              "label": "Ship",
+              "max": 0.183,
+              "atSecond": 3
+            },
+            {
+              "label": "Car",
+              "max": 0.178,
+              "atSecond": 371
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.139,
+              "atSecond": 263
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Thunder",
+                "Thunderstorm"
+              ],
+              "fraction": 0.363
+            },
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.868
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 700358,
+        "name": "Rain and Thunder Ambience",
+        "url": "https://freesound.org/people/sagamusix/sounds/700358/",
+        "author": "sagamusix",
+        "durationSec": 190.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Thunder / Thunderstorm",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 190,
+          "cleanSeconds": 152,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.8467
+            },
+            {
+              "label": "Rain",
+              "max": 0.8006
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.7682
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.7461
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.6571
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.449,
+              "atSecond": 156
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.34,
+              "atSecond": 45
+            },
+            {
+              "label": "Speech",
+              "max": 0.257,
+              "atSecond": 171
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.175,
+              "atSecond": 45
+            },
+            {
+              "label": "Ship",
+              "max": 0.161,
+              "atSecond": 45
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.152,
+              "atSecond": 45
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Thunder",
+                "Thunderstorm"
+              ],
+              "fraction": 0.379
+            },
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.937
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 581232,
+        "name": "Distant Thunder at dawn",
+        "url": "https://freesound.org/people/richwise/sounds/581232/",
+        "author": "richwise",
+        "durationSec": 229.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Thunder / Thunderstorm",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 229,
+          "cleanSeconds": 203,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.4165
+            },
+            {
+              "label": "Thunder",
+              "max": 0.3739
+            },
+            {
+              "label": "Speech",
+              "max": 0.3587
+            },
+            {
+              "label": "Heart sounds, heartbeat",
+              "max": 0.3177
+            },
+            {
+              "label": "Animal",
+              "max": 0.2194
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.417,
+              "atSecond": 35
+            },
+            {
+              "label": "Speech",
+              "max": 0.359,
+              "atSecond": 44
+            },
+            {
+              "label": "Music",
+              "max": 0.197,
+              "atSecond": 111
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.113,
+              "atSecond": 47
+            },
+            {
+              "label": "Siren",
+              "max": 0.067,
+              "atSecond": 47
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Thunder",
+                "Thunderstorm"
+              ],
+              "fraction": 0.004
+            },
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

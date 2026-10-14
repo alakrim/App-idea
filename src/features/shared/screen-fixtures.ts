@@ -141,12 +141,17 @@ export interface SeriesScreenFixture {
 export function seriesScreenFixture(): SeriesScreenFixture {
   const rows: SeriesChapterItem[] = [
     {
-      record: { chapter: chapter(1, 1, 1, 'The Lamp at Tessport'), failure: null },
+      record: {
+        chapter: chapter(1, 1, 1, 'The Lamp at Tessport'),
+        failure: null,
+        listening: null,
+      },
       progress: null,
       failure: null,
     },
     {
       record: {
+        listening: null,
         chapter: chapter(2, 1, 2, 'The Bell Buoy', { durationMs: 27 * 60_000 }),
         failure: null,
       },
@@ -155,6 +160,7 @@ export function seriesScreenFixture(): SeriesScreenFixture {
     },
     {
       record: {
+        listening: null,
         chapter: chapter(3, 1, 3, 'Fog and Oil', { status: 'processing', durationMs: null }),
         failure: null,
       },
@@ -163,6 +169,7 @@ export function seriesScreenFixture(): SeriesScreenFixture {
     },
     {
       record: {
+        listening: null,
         chapter: chapter(4, 1, 4, 'The Salt Ledger', {
           status: 'failed',
           durationMs: null,
@@ -183,6 +190,7 @@ export function seriesScreenFixture(): SeriesScreenFixture {
     },
     {
       record: {
+        listening: null,
         chapter: chapter(5, 1, 5, 'Ledger of the Dead', {
           status: 'failed',
           durationMs: null,

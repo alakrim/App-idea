@@ -18,6 +18,9 @@ import { PlaybackProvider } from './player-provider';
 import PlayerScreen from '../../../app/player';
 
 // The vocab provider reads the database and OpenRouter before it uses the injected actions.
+jest.mock('react-native-gesture-handler/ReanimatedSwipeable', () =>
+  require('../../__tests__/helpers/swipeable-stub'),
+);
 jest.mock('@/db/hooks', () => ({ useDb: () => ({}) }));
 jest.mock('@/app-shell/openrouter-provider', () => ({ useOpenRouter: () => ({}) }));
 

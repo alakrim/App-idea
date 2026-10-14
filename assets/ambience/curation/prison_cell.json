@@ -1,14 +1,39 @@
 {
   "category": "prison_cell",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "prison cell ambience",
-    "dungeon dripping water ambience"
+    "dungeon dripping water ambience",
+    "dungeon ambience",
+    "cell ambience water drip"
   ],
-  "poolSize": 1,
+  "poolSize": 8,
   "candidates": [
     {
       "rank": 1,
+      "freesoundId": 530161,
+      "name": "Dungeon Air",
+      "url": "https://freesound.org/people/Flamiffer/sounds/530161/",
+      "author": "Flamiffer",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 151.58,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.84,
+      "numRatings": 57,
+      "numDownloads": 2432,
+      "previewUrl": "https://cdn.freesound.org/previews/530/530161_2683450-hq.mp3",
+      "score": 8.49,
+      "reasons": [
+        "+2.8 rating 4.84 from 57 ratings",
+        "+1.69 2432 downloads",
+        "+2 at least 90 s",
+        "+1 tags dungeon",
+        "+1 name matches dungeon"
+      ]
+    },
+    {
+      "rank": 2,
       "freesoundId": 516566,
       "name": "Dark Dungeon Ambience",
       "url": "https://freesound.org/people/Kinoton/sounds/516566/",
@@ -19,14 +44,148 @@
       "channels": 2,
       "avgRating": 4.84,
       "numRatings": 64,
-      "numDownloads": 2066,
+      "numDownloads": 2068,
       "previewUrl": "https://cdn.freesound.org/previews/516/516566_2247456-hq.mp3",
       "score": 7.47,
       "reasons": [
         "+2.81 rating 4.84 from 64 ratings",
-        "+1.66 2066 downloads",
+        "+1.66 2068 downloads",
         "+2 at least 90 s",
         "+1 name matches dungeon"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 816416,
+      "name": "Dark ambience/atmosphere - cave, dungeon echo",
+      "url": "https://freesound.org/people/Darklitstudio/sounds/816416/",
+      "author": "Darklitstudio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 66.76,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.44,
+      "numRatings": 18,
+      "numDownloads": 249,
+      "previewUrl": "https://cdn.freesound.org/previews/816/816416_12786774-hq.mp3",
+      "score": 7.13,
+      "reasons": [
+        "+2.43 rating 4.44 from 18 ratings",
+        "+1.2 249 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags dungeon",
+        "+1 name matches dungeon"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 825855,
+      "name": "Magic - Unpleasant Tonal Ambience",
+      "url": "https://freesound.org/people/Vrymaa/sounds/825855/",
+      "author": "Vrymaa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 121.66,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.69,
+      "numRatings": 16,
+      "numDownloads": 288,
+      "previewUrl": "https://cdn.freesound.org/previews/825/825855_13973196-hq.mp3",
+      "score": 6.78,
+      "reasons": [
+        "+2.55 rating 4.69 from 16 ratings",
+        "+1.23 288 downloads",
+        "+2 at least 90 s",
+        "+1 tags dungeon"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 690129,
+      "name": "Village_Fandalin.mp3",
+      "url": "https://freesound.org/people/mitaywalle/sounds/690129/",
+      "author": "mitaywalle",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 265.89,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 143,
+      "previewUrl": "https://cdn.freesound.org/previews/690/690129_4587036-hq.mp3",
+      "score": 5.14,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1.08 143 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 512513,
+      "name": "HorrorCaveAmbience.mp3",
+      "url": "https://freesound.org/people/shelbyshark/sounds/512513/",
+      "author": "shelbyshark",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 38.06,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.7,
+      "numRatings": 53,
+      "numDownloads": 2790,
+      "previewUrl": "https://cdn.freesound.org/previews/512/512513_8644110-hq.mp3",
+      "score": 1.42,
+      "reasons": [
+        "+2.7 rating 4.7 from 53 ratings",
+        "+1.72 2790 downloads",
+        "-3 only 38.06 s"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 606970,
+      "name": "Creepy Dungeon Ambience (Elementary Memories version).mp3",
+      "url": "https://freesound.org/people/AmaezingNooby/sounds/606970/",
+      "author": "AmaezingNooby",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 34.21,
+      "samplerate": 8000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 8,
+      "numDownloads": 475,
+      "previewUrl": "https://cdn.freesound.org/previews/606/606970_13418598-hq.mp3",
+      "score": 0.79,
+      "reasons": [
+        "+2.45 rating 4.75 from 8 ratings",
+        "+1.34 475 downloads",
+        "-3 only 34.21 s",
+        "-1 sample rate 8000 Hz",
+        "+1 name matches dungeon"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 578733,
+      "name": "Dungeon Music",
+      "url": "https://freesound.org/people/Samuelbcf7/sounds/578733/",
+      "author": "Samuelbcf7",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 41.14,
+      "samplerate": 88200,
+      "channels": 2,
+      "avgRating": 4.64,
+      "numRatings": 11,
+      "numDownloads": 267,
+      "previewUrl": "https://cdn.freesound.org/previews/578/578733_11497502-hq.mp3",
+      "score": -3.32,
+      "reasons": [
+        "+2.46 rating 4.64 from 11 ratings",
+        "+1.21 267 downloads",
+        "-3 only 41.14 s",
+        "+1 tags dungeon",
+        "+1 name matches dungeon",
+        "-6 music (music)"
       ]
     }
   ]

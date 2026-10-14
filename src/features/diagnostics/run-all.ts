@@ -3,6 +3,7 @@ import type { InstalledBed } from '@/audio/ambience-pack';
 import type { Db } from '@/db/types';
 
 import { checkBedDecode, checkDuckingRamps, checkLockScreenSession } from './checks-audio';
+import { checkBackgroundService, type BackgroundDiagnostics } from './checks-background';
 import {
   checkRegexFeatures,
   checkLegacyDecoders,
@@ -41,6 +42,7 @@ export interface DiagnosticsDeps {
     hasLockScreenSession(): boolean | null;
   };
   storage: () => StorageSizes;
+  background: BackgroundDiagnostics;
 }
 
 interface ProbeDef {
@@ -141,6 +143,19 @@ export const PROBES: readonly ProbeDef[] = [
       timeoutMs: SHORT,
     },
     run: (deps) => checkPipelineQueue(deps.db),
+  },
+  {
+    spec: {
+      id: 'background-service',
+      group: 'pipeline',
+      label: 'Background service and notifications',
+      timeoutMs: SHORT,
+    },
+    run: async (deps) =>
+      checkBackgroundService(
+        deps.background.status(),
+        await deps.background.notificationsGranted().catch(() => null),
+      ),
   },
   {
     spec: {

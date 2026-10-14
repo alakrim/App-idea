@@ -190,5 +190,649 @@
         "+1 name matches cafe"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Chatter",
+          "Conversation",
+          "Crowd",
+          "Hubbub, speech noise, speech babble"
+        ]
+      ],
+      "clapPrompt": "a quiet cafe with soft chatter and cups clinking, no music"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 370973,
+        "name": "coffee shop ambience",
+        "url": "https://freesound.org/people/waweee/sounds/370973/",
+        "author": "waweee",
+        "durationSec": 296,
+        "verdict": "reject",
+        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 296,
+          "cleanSeconds": 283,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8656
+            },
+            {
+              "label": "Music",
+              "max": 0.5182
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.4767
+            },
+            {
+              "label": "Chatter",
+              "max": 0.4566
+            },
+            {
+              "label": "Cough",
+              "max": 0.3117
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.518,
+              "atSecond": 255
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Chatter",
+                "Conversation",
+                "Crowd",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0.034
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 260062,
+        "name": "Busy Coffee Shop Counter Field Recording",
+        "url": "https://freesound.org/people/mhtaylor67/sounds/260062/",
+        "author": "mhtaylor67",
+        "durationSec": 236,
+        "verdict": "reject",
+        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 236,
+          "cleanSeconds": 183,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9033
+            },
+            {
+              "label": "Music",
+              "max": 0.8393
+            },
+            {
+              "label": "Chatter",
+              "max": 0.66
+            },
+            {
+              "label": "Dishes, pots, and pans",
+              "max": 0.6489
+            },
+            {
+              "label": "Train",
+              "max": 0.5051
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.839,
+              "atSecond": 106
+            },
+            {
+              "label": "Train",
+              "max": 0.505,
+              "atSecond": 214
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.425,
+              "atSecond": 111
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.404,
+              "atSecond": 214
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.35,
+              "atSecond": 214
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.18,
+              "atSecond": 170
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.175,
+              "atSecond": 44
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Chatter",
+                "Conversation",
+                "Crowd",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0.225
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 453074,
+        "name": "370973__waweee__coffee-shop-ambience_remastered.mp3",
+        "url": "https://freesound.org/people/C_Rogers/sounds/453074/",
+        "author": "C_Rogers",
+        "durationSec": 296,
+        "verdict": "reject",
+        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 296,
+          "cleanSeconds": 268,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8921
+            },
+            {
+              "label": "Music",
+              "max": 0.8117
+            },
+            {
+              "label": "Chopping (food)",
+              "max": 0.7289
+            },
+            {
+              "label": "Chatter",
+              "max": 0.5955
+            },
+            {
+              "label": "Cough",
+              "max": 0.5954
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.812,
+              "atSecond": 255
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.255,
+              "atSecond": 253
+            },
+            {
+              "label": "Train",
+              "max": 0.201,
+              "atSecond": 253
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Chatter",
+                "Conversation",
+                "Crowd",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0.057
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 437461,
+        "name": "QUIET CAFE, CHATTER, MILK FROTHING MACHINE, atmos atmosphere wildtrack ambience.mp3",
+        "url": "https://freesound.org/people/Anya_Media/sounds/437461/",
+        "author": "Anya_Media",
+        "durationSec": 120.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 120,
+          "cleanSeconds": 97,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.872
+            },
+            {
+              "label": "Music",
+              "max": 0.7252
+            },
+            {
+              "label": "Hair dryer",
+              "max": 0.6561
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.3254
+            },
+            {
+              "label": "Snake",
+              "max": 0.2694
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.725,
+              "atSecond": 116
+            },
+            {
+              "label": "Hair dryer",
+              "max": 0.656,
+              "atSecond": 47
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.325,
+              "atSecond": 10
+            },
+            {
+              "label": "Train",
+              "max": 0.259,
+              "atSecond": 10
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.244,
+              "atSecond": 116
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.193,
+              "atSecond": 10
+            },
+            {
+              "label": "Tambourine",
+              "max": 0.162,
+              "atSecond": 93
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.152,
+              "atSecond": 10
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Chatter",
+                "Conversation",
+                "Crowd",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 746428,
+        "name": "Miss Michelle's cafe in Discovery Mountain -- small cafe ambience - room tone - small crowd",
+        "url": "https://freesound.org/people/douglasbruce@look.ca/sounds/746428/",
+        "author": "douglasbruce@look.ca",
+        "durationSec": 151.2,
+        "verdict": "reject",
+        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 151,
+          "cleanSeconds": 125,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8293
+            },
+            {
+              "label": "Music",
+              "max": 0.5784
+            },
+            {
+              "label": "Tick-tock",
+              "max": 0.4382
+            },
+            {
+              "label": "Tick",
+              "max": 0.3721
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.3652
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.578,
+              "atSecond": 136
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Chatter",
+                "Conversation",
+                "Crowd",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 540299,
+        "name": "Cofee shop Ambience .wav",
+        "url": "https://freesound.org/people/aidansamuel/sounds/540299/",
+        "author": "aidansamuel",
+        "durationSec": 136.6,
+        "verdict": "reject",
+        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 136,
+          "cleanSeconds": 124,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8571
+            },
+            {
+              "label": "Music",
+              "max": 0.8127
+            },
+            {
+              "label": "Hammer",
+              "max": 0.4616
+            },
+            {
+              "label": "Animal",
+              "max": 0.4253
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.3207
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.813,
+              "atSecond": 15
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.188,
+              "atSecond": 71
+            },
+            {
+              "label": "Train",
+              "max": 0.159,
+              "atSecond": 71
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.158,
+              "atSecond": 62
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Chatter",
+                "Conversation",
+                "Crowd",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 813868,
+        "name": "Coffee Shop Ambience , Northtown Coffee, Arcata, CA",
+        "url": "https://freesound.org/people/CVLTIV8R/sounds/813868/",
+        "author": "CVLTIV8R",
+        "durationSec": 144.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 144,
+          "cleanSeconds": 54,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8595
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.673
+            },
+            {
+              "label": "Horse",
+              "max": 0.5684
+            },
+            {
+              "label": "Animal",
+              "max": 0.562
+            },
+            {
+              "label": "Train",
+              "max": 0.5483
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Train",
+              "max": 0.548,
+              "atSecond": 69
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.54,
+              "atSecond": 15
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.437,
+              "atSecond": 69
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.392,
+              "atSecond": 69
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.354,
+              "atSecond": 33
+            },
+            {
+              "label": "Music",
+              "max": 0.342,
+              "atSecond": 116
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.279,
+              "atSecond": 15
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.2,
+              "atSecond": 15
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Chatter",
+                "Conversation",
+                "Crowd",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 214993,
+        "name": "Ambient sound inside cafe dining.aif",
+        "url": "https://freesound.org/people/4team/sounds/214993/",
+        "author": "4team",
+        "durationSec": 301.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 301,
+          "cleanSeconds": 257,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8936
+            },
+            {
+              "label": "Music",
+              "max": 0.8193
+            },
+            {
+              "label": "Dishes, pots, and pans",
+              "max": 0.7984
+            },
+            {
+              "label": "Cutlery, silverware",
+              "max": 0.7423
+            },
+            {
+              "label": "Train",
+              "max": 0.6814
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.819,
+              "atSecond": 145
+            },
+            {
+              "label": "Train",
+              "max": 0.681,
+              "atSecond": 187
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.575,
+              "atSecond": 187
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.561,
+              "atSecond": 187
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.272,
+              "atSecond": 39
+            },
+            {
+              "label": "Train wheels squealing",
+              "max": 0.26,
+              "atSecond": 187
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.193,
+              "atSecond": 145
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Chatter",
+                "Conversation",
+                "Crowd",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0.023
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

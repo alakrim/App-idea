@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { LangSchema, NarrationProfileSchema } from './domain';
-import { BED_LEVEL_RANGE_DB, DUCKING_RANGE_DB } from './playback/ranges';
+import { BED_LEVEL_RANGE_DB, DUCKING_RANGE_DB, PLAYBACK_RATE_RANGE } from './playback/ranges';
 
 /** OpenRouter model ids look like `vendor/model`, optionally with a `:variant` suffix. */
 export const ModelIdSchema = z
@@ -26,6 +26,12 @@ export const AmbienceSettingsSchema = z.object({
   duckingDb: z.number().min(DUCKING_RANGE_DB.min).max(DUCKING_RANGE_DB.max),
 });
 
+export const PlaybackSettingsSchema = z.object({
+  /** Speed for a series that has not been given one yet. */
+  defaultRate: z.number().min(PLAYBACK_RATE_RANGE.min).max(PLAYBACK_RATE_RANGE.max),
+});
+export type PlaybackSettings = z.infer<typeof PlaybackSettingsSchema>;
+
 export const ReadingSettingsSchema = z.object({
   fontScale: z.number().min(0.8).max(1.6),
   showOriginal: z.boolean(),
@@ -41,11 +47,17 @@ export const SettingsSchema = z.object({
   cleanupModel: ModelIdSchema,
   narration: NarrationSettingsSchema,
   ambience: AmbienceSettingsSchema,
+  playback: PlaybackSettingsSchema,
   reading: ReadingSettingsSchema,
   onboardingDone: z.boolean(),
   contentNoticeAccepted: z.boolean(),
   /** Set once the app has told the user that chapter preparation pauses in the background. */
   backgroundNoticeShown: z.boolean(),
+  /**
+   * Set once the notification sheet has been shown. It is never shown again, so a refusal is not
+   * asked for twice. The settings screen is where the user can turn notifications on later.
+   */
+  notificationPromptShown: z.boolean(),
 });
 export type Settings = z.infer<typeof SettingsSchema>;
 

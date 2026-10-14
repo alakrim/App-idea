@@ -188,5 +188,737 @@
         "+1 name matches snow"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [],
+      "clapPrompt": "the muffled quiet of falling snow"
+    },
+    "verdict": "filled",
+    "unfilledReason": null,
+    "chosen": {
+      "freesoundId": 719961,
+      "windowStartSeconds": 29,
+      "windowSeconds": 64,
+      "steadinessDb": 0.674,
+      "clapScore": null
+    },
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 719961,
+        "name": "Snowfall Ambience, City",
+        "url": "https://freesound.org/people/Kinoton/sounds/719961/",
+        "author": "Kinoton",
+        "durationSec": 180,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 29,
+          "lengthSeconds": 64,
+          "steadinessDb": 0.674
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 180,
+          "cleanSeconds": 175,
+          "topClasses": [
+            {
+              "label": "Rain",
+              "max": 0.6169
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.5636
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.4143
+            },
+            {
+              "label": "Thunder",
+              "max": 0.3638
+            },
+            {
+              "label": "White noise",
+              "max": 0.2997
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.364,
+              "atSecond": 130
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.265,
+              "atSecond": 130
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.211,
+              "atSecond": 150
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.163,
+              "atSecond": 150
+            }
+          ],
+          "requiredFraction": []
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 551118,
+        "name": "Snow Falling In Scotland.wav",
+        "url": "https://freesound.org/people/BurghRecords/sounds/551118/",
+        "author": "BurghRecords",
+        "durationSec": 122.5,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Vehicle reaches 0.255 (at 67 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 122,
+          "cleanSeconds": 118,
+          "topClasses": [
+            {
+              "label": "Crumpling, crinkling",
+              "max": 0.397
+            },
+            {
+              "label": "Pour",
+              "max": 0.3718
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.3525
+            },
+            {
+              "label": "Rain",
+              "max": 0.3193
+            },
+            {
+              "label": "Crushing",
+              "max": 0.3154
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.255,
+              "atSecond": 67
+            }
+          ],
+          "requiredFraction": []
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 845502,
+        "name": "Quiet Winter Night with Light Snow & Wind – Altenthann Ambience - 260215_001",
+        "url": "https://freesound.org/people/TSP-Talk/sounds/845502/",
+        "author": "TSP-Talk",
+        "durationSec": 466.6,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Thunder reaches 0.756 (at 367 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 466,
+          "cleanSeconds": 237,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.7556
+            },
+            {
+              "label": "Rain",
+              "max": 0.6907
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.6608
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.6158
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.5462
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.756,
+              "atSecond": 367
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.661,
+              "atSecond": 410
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.616,
+              "atSecond": 285
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.546,
+              "atSecond": 410
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.474,
+              "atSecond": 410
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.345,
+              "atSecond": 385
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.314,
+              "atSecond": 372
+            },
+            {
+              "label": "Aircraft engine",
+              "max": 0.3,
+              "atSecond": 410
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.292,
+              "atSecond": 453
+            },
+            {
+              "label": "Car",
+              "max": 0.287,
+              "atSecond": 293
+            },
+            {
+              "label": "Train",
+              "max": 0.24,
+              "atSecond": 458
+            },
+            {
+              "label": "Ship",
+              "max": 0.18,
+              "atSecond": 453
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.157,
+              "atSecond": 458
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.156,
+              "atSecond": 458
+            }
+          ],
+          "requiredFraction": []
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 610317,
+        "name": "Snow falling in the city",
+        "url": "https://freesound.org/people/xkeril/sounds/610317/",
+        "author": "xkeril",
+        "durationSec": 93.7,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Thunder reaches 0.475 (at 69 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 93,
+          "cleanSeconds": 88,
+          "topClasses": [
+            {
+              "label": "Pink noise",
+              "max": 0.6593
+            },
+            {
+              "label": "Rain",
+              "max": 0.6364
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.5585
+            },
+            {
+              "label": "Thunder",
+              "max": 0.4754
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.4511
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.475,
+              "atSecond": 69
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.37,
+              "atSecond": 69
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.316,
+              "atSecond": 80
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.198,
+              "atSecond": 80
+            }
+          ],
+          "requiredFraction": []
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 450237,
+        "name": "village winter ambience light quiet Quaqtaq, Nunavik +nearby construction and SNOW falling on recorder and jacket.flac",
+        "url": "https://freesound.org/people/kyles/sounds/450237/",
+        "author": "kyles",
+        "durationSec": 143.2,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Boat, Water vehicle reaches 0.63 (at 75 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 143,
+          "cleanSeconds": 87,
+          "topClasses": [
+            {
+              "label": "Animal",
+              "max": 0.6836
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.6299
+            },
+            {
+              "label": "Horse",
+              "max": 0.6294
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.6277
+            },
+            {
+              "label": "Rain",
+              "max": 0.6007
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.63,
+              "atSecond": 75
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.557,
+              "atSecond": 46
+            },
+            {
+              "label": "Thunder",
+              "max": 0.551,
+              "atSecond": 134
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.427,
+              "atSecond": 134
+            },
+            {
+              "label": "Speech",
+              "max": 0.396,
+              "atSecond": 51
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.316,
+              "atSecond": 75
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.249,
+              "atSecond": 136
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.15,
+              "atSecond": 75
+            },
+            {
+              "label": "Honk",
+              "max": 0.063,
+              "atSecond": 31
+            }
+          ],
+          "requiredFraction": []
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 609250,
+        "name": "Journey To The Interweb",
+        "url": "https://freesound.org/people/Aemyn/sounds/609250/",
+        "author": "Aemyn",
+        "durationSec": 508,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Music reaches 0.964 (at 475 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 508,
+          "cleanSeconds": 128,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.9644
+            },
+            {
+              "label": "Speech",
+              "max": 0.8717
+            },
+            {
+              "label": "Printer",
+              "max": 0.835
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.8219
+            },
+            {
+              "label": "Animal",
+              "max": 0.8179
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.964,
+              "atSecond": 475
+            },
+            {
+              "label": "Speech",
+              "max": 0.872,
+              "atSecond": 349
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.747,
+              "atSecond": 62
+            },
+            {
+              "label": "Ice cream truck, ice cream van",
+              "max": 0.698,
+              "atSecond": 193
+            },
+            {
+              "label": "Telephone bell ringing",
+              "max": 0.62,
+              "atSecond": 451
+            },
+            {
+              "label": "Wind chime",
+              "max": 0.607,
+              "atSecond": 410
+            },
+            {
+              "label": "Telephone",
+              "max": 0.547,
+              "atSecond": 450
+            },
+            {
+              "label": "Chime",
+              "max": 0.525,
+              "atSecond": 410
+            },
+            {
+              "label": "Jackhammer",
+              "max": 0.473,
+              "atSecond": 10
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.382,
+              "atSecond": 62
+            },
+            {
+              "label": "Car",
+              "max": 0.364,
+              "atSecond": 343
+            },
+            {
+              "label": "Honk",
+              "max": 0.331,
+              "atSecond": 365
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.323,
+              "atSecond": 291
+            },
+            {
+              "label": "Train",
+              "max": 0.313,
+              "atSecond": 304
+            },
+            {
+              "label": "Engine",
+              "max": 0.31,
+              "atSecond": 43
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.305,
+              "atSecond": 106
+            },
+            {
+              "label": "Ringtone",
+              "max": 0.278,
+              "atSecond": 153
+            },
+            {
+              "label": "Bell",
+              "max": 0.248,
+              "atSecond": 93
+            },
+            {
+              "label": "Bicycle bell",
+              "max": 0.247,
+              "atSecond": 360
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.245,
+              "atSecond": 62
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.216,
+              "atSecond": 388
+            },
+            {
+              "label": "Guitar",
+              "max": 0.215,
+              "atSecond": 31
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.202,
+              "atSecond": 304
+            },
+            {
+              "label": "Sewing machine",
+              "max": 0.2,
+              "atSecond": 24
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.194,
+              "atSecond": 31
+            },
+            {
+              "label": "Bus",
+              "max": 0.193,
+              "atSecond": 330
+            },
+            {
+              "label": "Engine knocking",
+              "max": 0.181,
+              "atSecond": 359
+            },
+            {
+              "label": "Radio",
+              "max": 0.166,
+              "atSecond": 4
+            },
+            {
+              "label": "Electronic music",
+              "max": 0.156,
+              "atSecond": 433
+            },
+            {
+              "label": "Video game music",
+              "max": 0.156,
+              "atSecond": 106
+            },
+            {
+              "label": "Motorboat, speedboat",
+              "max": 0.156,
+              "atSecond": 317
+            },
+            {
+              "label": "Siren",
+              "max": 0.149,
+              "atSecond": 145
+            },
+            {
+              "label": "Fire alarm",
+              "max": 0.109,
+              "atSecond": 16
+            },
+            {
+              "label": "Alarm",
+              "max": 0.095,
+              "atSecond": 16
+            },
+            {
+              "label": "Vehicle horn, car horn, honking",
+              "max": 0.093,
+              "atSecond": 337
+            },
+            {
+              "label": "Alarm clock",
+              "max": 0.074,
+              "atSecond": 16
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.065,
+              "atSecond": 333
+            }
+          ],
+          "requiredFraction": []
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 669484,
+        "name": "Light rain on roof",
+        "url": "https://freesound.org/people/xkeril/sounds/669484/",
+        "author": "xkeril",
+        "durationSec": 61.2,
+        "verdict": "reject",
+        "reason": "clip has 61 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 61,
+          "cleanSeconds": 56,
+          "topClasses": [
+            {
+              "label": "Rain",
+              "max": 0.6938
+            },
+            {
+              "label": "Thunder",
+              "max": 0.6258
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.61
+            },
+            {
+              "label": "Bird",
+              "max": 0.5177
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.5139
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.626,
+              "atSecond": 37
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.514,
+              "atSecond": 37
+            },
+            {
+              "label": "Music",
+              "max": 0.201,
+              "atSecond": 34
+            }
+          ],
+          "requiredFraction": []
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 666748,
+        "name": "fine_snow_falling_at_minus_7c_02.wav",
+        "url": "https://freesound.org/people/cyclic/sounds/666748/",
+        "author": "cyclic",
+        "durationSec": 42.7,
+        "verdict": "reject",
+        "reason": "clip has 42 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 42,
+          "cleanSeconds": 42,
+          "topClasses": [
+            {
+              "label": "Sizzle",
+              "max": 0.4087
+            },
+            {
+              "label": "Frying (food)",
+              "max": 0.3426
+            },
+            {
+              "label": "Patter",
+              "max": 0.1622
+            },
+            {
+              "label": "Tick-tock",
+              "max": 0.1482
+            },
+            {
+              "label": "Tick",
+              "max": 0.1384
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": []
+        }
+      }
+    ]
+  }
 }

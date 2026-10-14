@@ -185,5 +185,538 @@
         "+1 tags party"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Crowd",
+          "Hubbub, speech noise, speech babble",
+          "Chatter",
+          "Conversation",
+          "Glass"
+        ]
+      ],
+      "clapPrompt": "a ballroom murmur with glasses and distant chatter, no music"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 102157,
+        "name": "Party Crowd Walla_Fiona Thraille(2).mp3",
+        "url": "https://freesound.org/people/UltraRob/sounds/102157/",
+        "author": "UltraRob",
+        "durationSec": 170.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 170,
+          "cleanSeconds": 166,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8951
+            },
+            {
+              "label": "Clicking",
+              "max": 0.5119
+            },
+            {
+              "label": "Narration, monologue",
+              "max": 0.3799
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.327
+            },
+            {
+              "label": "Whispering",
+              "max": 0.2733
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech synthesizer",
+              "max": 0.201,
+              "atSecond": 21
+            },
+            {
+              "label": "Music",
+              "max": 0.15,
+              "atSecond": 142
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation",
+                "Glass"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 102163,
+        "name": "russ party walla.mp3",
+        "url": "https://freesound.org/people/UltraRob/sounds/102163/",
+        "author": "UltraRob",
+        "durationSec": 91.2,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 91,
+          "cleanSeconds": 86,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8927
+            },
+            {
+              "label": "Speech synthesizer",
+              "max": 0.3801
+            },
+            {
+              "label": "Narration, monologue",
+              "max": 0.3367
+            },
+            {
+              "label": "Animal",
+              "max": 0.2564
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.2542
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech synthesizer",
+              "max": 0.38,
+              "atSecond": 51
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation",
+                "Glass"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 102155,
+        "name": "Danar walla.mp3",
+        "url": "https://freesound.org/people/UltraRob/sounds/102155/",
+        "author": "UltraRob",
+        "durationSec": 301.6,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 301,
+          "cleanSeconds": 252,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8983
+            },
+            {
+              "label": "Whispering",
+              "max": 0.5973
+            },
+            {
+              "label": "Speech synthesizer",
+              "max": 0.5259
+            },
+            {
+              "label": "Throat clearing",
+              "max": 0.5143
+            },
+            {
+              "label": "Sigh",
+              "max": 0.4722
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech synthesizer",
+              "max": 0.526,
+              "atSecond": 175
+            },
+            {
+              "label": "Music",
+              "max": 0.164,
+              "atSecond": 105
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation",
+                "Glass"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 180938,
+        "name": "Wedding Cutting the Cake Utensils on Glasses",
+        "url": "https://freesound.org/people/toonothing/sounds/180938/",
+        "author": "toonothing",
+        "durationSec": 90.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 90,
+          "cleanSeconds": 76,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8903
+            },
+            {
+              "label": "Children playing",
+              "max": 0.8679
+            },
+            {
+              "label": "Chatter",
+              "max": 0.639
+            },
+            {
+              "label": "Applause",
+              "max": 0.6358
+            },
+            {
+              "label": "Music",
+              "max": 0.5872
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.587,
+              "atSecond": 28
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.358,
+              "atSecond": 35
+            },
+            {
+              "label": "Wind chime",
+              "max": 0.164,
+              "atSecond": 74
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation",
+                "Glass"
+              ],
+              "fraction": 0.122
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 102161,
+        "name": "kim_walla.mp3",
+        "url": "https://freesound.org/people/UltraRob/sounds/102161/",
+        "author": "UltraRob",
+        "durationSec": 155.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 155,
+          "cleanSeconds": 144,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8742
+            },
+            {
+              "label": "Gasp",
+              "max": 0.5221
+            },
+            {
+              "label": "Clicking",
+              "max": 0.3284
+            },
+            {
+              "label": "Sine wave",
+              "max": 0.3237
+            },
+            {
+              "label": "Speech synthesizer",
+              "max": 0.3169
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech synthesizer",
+              "max": 0.317,
+              "atSecond": 93
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation",
+                "Glass"
+              ],
+              "fraction": 0.006
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 102160,
+        "name": "gene T_walla.mp3",
+        "url": "https://freesound.org/people/UltraRob/sounds/102160/",
+        "author": "UltraRob",
+        "durationSec": 268.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 268,
+          "cleanSeconds": 204,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9262
+            },
+            {
+              "label": "Whispering",
+              "max": 0.8558
+            },
+            {
+              "label": "Sigh",
+              "max": 0.7463
+            },
+            {
+              "label": "Cough",
+              "max": 0.6962
+            },
+            {
+              "label": "Honk",
+              "max": 0.6166
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Honk",
+              "max": 0.617,
+              "atSecond": 170
+            },
+            {
+              "label": "Music",
+              "max": 0.523,
+              "atSecond": 7
+            },
+            {
+              "label": "Speech synthesizer",
+              "max": 0.487,
+              "atSecond": 21
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.166,
+              "atSecond": 7
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation",
+                "Glass"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 102158,
+        "name": "Walla_JZ.mp3",
+        "url": "https://freesound.org/people/UltraRob/sounds/102158/",
+        "author": "UltraRob",
+        "durationSec": 120.2,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 120,
+          "cleanSeconds": 95,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8621
+            },
+            {
+              "label": "Rub",
+              "max": 0.5774
+            },
+            {
+              "label": "Sanding",
+              "max": 0.4831
+            },
+            {
+              "label": "Throat clearing",
+              "max": 0.4041
+            },
+            {
+              "label": "Speech synthesizer",
+              "max": 0.3564
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech synthesizer",
+              "max": 0.356,
+              "atSecond": 11
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation",
+                "Glass"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 102162,
+        "name": "reynaud walla.mp3",
+        "url": "https://freesound.org/people/UltraRob/sounds/102162/",
+        "author": "UltraRob",
+        "durationSec": 176.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 176,
+          "cleanSeconds": 159,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9045
+            },
+            {
+              "label": "Clicking",
+              "max": 0.7106
+            },
+            {
+              "label": "Whispering",
+              "max": 0.6448
+            },
+            {
+              "label": "Cattle, bovinae",
+              "max": 0.559
+            },
+            {
+              "label": "Livestock, farm animals, working animals",
+              "max": 0.5382
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech synthesizer",
+              "max": 0.496,
+              "atSecond": 19
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation",
+                "Glass"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -109,6 +109,8 @@ export const topHighlight = 'rgba(255,255,255,0.04)';
 
 /** WCAG floor for touch targets on iOS and Android. */
 export const minTouchTarget = 44;
+/** Height of a thin progress track, such as a chapter's listening bar. */
+export const thinTrackHeight = 3;
 export const tabBarHeight = 56;
 
 export const fontFamily = {

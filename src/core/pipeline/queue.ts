@@ -29,6 +29,11 @@ export interface PipelineQueueOptions {
   readonly onEvent?: (event: PipelineEvent) => void;
   /** The clock the stall watchdog reads. Defaults to the ports' clock. */
   readonly clock?: Clock;
+  /**
+   * True while a platform foreground service keeps the JS runtime alive in the background. The
+   * watchdog then keeps counting when the app leaves the foreground, because nothing is frozen.
+   */
+  readonly keepsAliveInBackground?: () => boolean;
 }
 
 interface Item {
@@ -262,7 +267,7 @@ export class PipelineQueue {
         }
         return;
       case 'backgrounded':
-        run?.watchdog.suspend();
+        if (!this.options.keepsAliveInBackground?.()) run?.watchdog.suspend();
         return;
       case 'resumed':
         if (run) {

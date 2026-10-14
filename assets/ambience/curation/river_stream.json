@@ -191,5 +191,544 @@
         "+1 name matches river, stream"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Stream",
+          "Water",
+          "Babbling"
+        ]
+      ],
+      "clapPrompt": "a stream flowing over stones, no people"
+    },
+    "verdict": "filled",
+    "unfilledReason": null,
+    "chosen": {
+      "freesoundId": 275627,
+      "windowStartSeconds": 47,
+      "windowSeconds": 64,
+      "steadinessDb": 0.732,
+      "clapScore": null
+    },
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 433589,
+        "name": "Stream River Water Up Close",
+        "url": "https://freesound.org/people/jackthemurray/sounds/433589/",
+        "author": "jackthemurray",
+        "durationSec": 68.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Stream / Water / Babbling",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 68,
+          "cleanSeconds": 68,
+          "topClasses": [
+            {
+              "label": "Stream",
+              "max": 0.2954
+            },
+            {
+              "label": "Pour",
+              "max": 0.2617
+            },
+            {
+              "label": "Trickle, dribble",
+              "max": 0.1673
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.1183
+            },
+            {
+              "label": "Water",
+              "max": 0.1148
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Stream",
+                "Water",
+                "Babbling"
+              ],
+              "fraction": 0.206
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 446019,
+        "name": "Gentle Stream Natural Stream Sound",
+        "url": "https://freesound.org/people/BurghRecords/sounds/446019/",
+        "author": "BurghRecords",
+        "durationSec": 63.7,
+        "verdict": "reject",
+        "reason": "clip has 63 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 63,
+          "cleanSeconds": 59,
+          "topClasses": [
+            {
+              "label": "Stream",
+              "max": 0.4335
+            },
+            {
+              "label": "Trickle, dribble",
+              "max": 0.4265
+            },
+            {
+              "label": "Water",
+              "max": 0.2534
+            },
+            {
+              "label": "Pour",
+              "max": 0.1706
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.1698
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.17,
+              "atSecond": 13
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Stream",
+                "Water",
+                "Babbling"
+              ],
+              "fraction": 0.508
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 275627,
+        "name": "water stream river sma",
+        "url": "https://freesound.org/people/hanneswannerberger/sounds/275627/",
+        "author": "hanneswannerberger",
+        "durationSec": 111,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 47,
+          "lengthSeconds": 64,
+          "steadinessDb": 0.732
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 111,
+          "cleanSeconds": 110,
+          "topClasses": [
+            {
+              "label": "Trickle, dribble",
+              "max": 0.5413
+            },
+            {
+              "label": "Water",
+              "max": 0.5151
+            },
+            {
+              "label": "Speech",
+              "max": 0.4592
+            },
+            {
+              "label": "Stream",
+              "max": 0.3699
+            },
+            {
+              "label": "Pour",
+              "max": 0.3289
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.459,
+              "atSecond": 46
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Stream",
+                "Water",
+                "Babbling"
+              ],
+              "fraction": 0.874
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 557170,
+        "name": "River water stream with high flow",
+        "url": "https://freesound.org/people/klau78/sounds/557170/",
+        "author": "klau78",
+        "durationSec": 417.2,
+        "verdict": "reject",
+        "reason": "required sound absent: Stream / Water / Babbling",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 417,
+          "cleanSeconds": 257,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.5926
+            },
+            {
+              "label": "Ocean",
+              "max": 0.5589
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.5505
+            },
+            {
+              "label": "Stream",
+              "max": 0.4702
+            },
+            {
+              "label": "Wind",
+              "max": 0.4151
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.55,
+              "atSecond": 142
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.385,
+              "atSecond": 142
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.321,
+              "atSecond": 142
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.293,
+              "atSecond": 142
+            },
+            {
+              "label": "Ship",
+              "max": 0.162,
+              "atSecond": 142
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Stream",
+                "Water",
+                "Babbling"
+              ],
+              "fraction": 0.436
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 869104,
+        "name": "Mountain Stream Flowing Past from the Riverbank, Boscoverde, Dolomites - Torrente Pettorina",
+        "url": "https://freesound.org/people/bassimat/sounds/869104/",
+        "author": "bassimat",
+        "durationSec": 418.7,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Vehicle reaches 0.262 (at 315 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 418,
+          "cleanSeconds": 387,
+          "topClasses": [
+            {
+              "label": "Stream",
+              "max": 0.6917
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.2622
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.2584
+            },
+            {
+              "label": "Applause",
+              "max": 0.2444
+            },
+            {
+              "label": "Waterfall",
+              "max": 0.2438
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.262,
+              "atSecond": 315
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.258,
+              "atSecond": 223
+            },
+            {
+              "label": "Applause",
+              "max": 0.244,
+              "atSecond": 254
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Stream",
+                "Water",
+                "Babbling"
+              ],
+              "fraction": 0.902
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 857693,
+        "name": "Forest Mountain Stream - Intense Flow in the Far East Taiga",
+        "url": "https://freesound.org/people/laymiko/sounds/857693/",
+        "author": "laymiko",
+        "durationSec": 295.8,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Boat, Water vehicle reaches 0.352 (at 197 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 295,
+          "cleanSeconds": 268,
+          "topClasses": [
+            {
+              "label": "Stream",
+              "max": 0.51
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.352
+            },
+            {
+              "label": "Rain",
+              "max": 0.3403
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.2994
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.2745
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.352,
+              "atSecond": 197
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.299,
+              "atSecond": 33
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Stream",
+                "Water",
+                "Babbling"
+              ],
+              "fraction": 0.915
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 674078,
+        "name": "River small water stream, with lapping, insect, bird, flies, cicada, traffic hum recorded in Amazon rainforest",
+        "url": "https://freesound.org/people/felix.blume/sounds/674078/",
+        "author": "felix.blume",
+        "durationSec": 177.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Stream / Water / Babbling",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 177,
+          "cleanSeconds": 122,
+          "topClasses": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.4893
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.4643
+            },
+            {
+              "label": "Pour",
+              "max": 0.4475
+            },
+            {
+              "label": "Insect",
+              "max": 0.4471
+            },
+            {
+              "label": "Cricket",
+              "max": 0.425
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.489,
+              "atSecond": 107
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.464,
+              "atSecond": 107
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.355,
+              "atSecond": 107
+            },
+            {
+              "label": "Speech",
+              "max": 0.183,
+              "atSecond": 31
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Stream",
+                "Water",
+                "Babbling"
+              ],
+              "fraction": 0.469
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 454283,
+        "name": "water river large stream small over rocks wide.flac",
+        "url": "https://freesound.org/people/kyles/sounds/454283/",
+        "author": "kyles",
+        "durationSec": 92.2,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 9,
+          "lengthSeconds": 64,
+          "steadinessDb": 0.34
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 92,
+          "cleanSeconds": 91,
+          "topClasses": [
+            {
+              "label": "Waterfall",
+              "max": 0.485
+            },
+            {
+              "label": "Stream",
+              "max": 0.4199
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.3377
+            },
+            {
+              "label": "Rain",
+              "max": 0.3257
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.2602
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.168,
+              "atSecond": 75
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Stream",
+                "Water",
+                "Babbling"
+              ],
+              "fraction": 0.5
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

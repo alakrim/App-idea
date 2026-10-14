@@ -120,5 +120,520 @@
         "+1 name matches classroom"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Air conditioning",
+          "Mechanical fan"
+        ]
+      ],
+      "clapPrompt": "a lecture hall with a quiet audience rustle and distant ventilation, no speech"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Air conditioning / Mechanical fan; clip has 60 s; a window needs 64 s",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 238710,
+        "name": "Classroom.mp3",
+        "url": "https://freesound.org/people/musicace17/sounds/238710/",
+        "author": "musicace17",
+        "durationSec": 66.2,
+        "verdict": "reject",
+        "reason": "required sound absent: Air conditioning / Mechanical fan",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 66,
+          "cleanSeconds": 0,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8968
+            },
+            {
+              "label": "Music",
+              "max": 0.6733
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.5336
+            },
+            {
+              "label": "A capella",
+              "max": 0.4458
+            },
+            {
+              "label": "Chuckle, chortle",
+              "max": 0.4355
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.897,
+              "atSecond": 53
+            },
+            {
+              "label": "Music",
+              "max": 0.673,
+              "atSecond": 9
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.534,
+              "atSecond": 39
+            },
+            {
+              "label": "Chatter",
+              "max": 0.4,
+              "atSecond": 2
+            },
+            {
+              "label": "Singing",
+              "max": 0.282,
+              "atSecond": 47
+            },
+            {
+              "label": "Narration, monologue",
+              "max": 0.26,
+              "atSecond": 43
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.212,
+              "atSecond": 45
+            },
+            {
+              "label": "Laughter",
+              "max": 0.172,
+              "atSecond": 26
+            },
+            {
+              "label": "Conversation",
+              "max": 0.171,
+              "atSecond": 28
+            },
+            {
+              "label": "Vocal music",
+              "max": 0.157,
+              "atSecond": 47
+            },
+            {
+              "label": "Male singing",
+              "max": 0.154,
+              "atSecond": 47
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Air conditioning",
+                "Mechanical fan"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 850559,
+        "name": "Clase de universidad",
+        "url": "https://freesound.org/people/Mariayolanda511/sounds/850559/",
+        "author": "Mariayolanda511",
+        "durationSec": 60.6,
+        "verdict": "reject",
+        "reason": "clip has 60 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 60,
+          "cleanSeconds": 7,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8557
+            },
+            {
+              "label": "Music",
+              "max": 0.8009
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.6568
+            },
+            {
+              "label": "Narration, monologue",
+              "max": 0.4882
+            },
+            {
+              "label": "Animal",
+              "max": 0.367
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.856,
+              "atSecond": 49
+            },
+            {
+              "label": "Music",
+              "max": 0.801,
+              "atSecond": 55
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.657,
+              "atSecond": 39
+            },
+            {
+              "label": "Narration, monologue",
+              "max": 0.488,
+              "atSecond": 39
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.197,
+              "atSecond": 24
+            },
+            {
+              "label": "Child speech, kid speaking",
+              "max": 0.181,
+              "atSecond": 6
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Air conditioning",
+                "Mechanical fan"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 478346,
+        "name": "Museum Corridor 1, Children's Classroom Access",
+        "url": "https://freesound.org/people/ecfike/sounds/478346/",
+        "author": "ecfike",
+        "durationSec": 391.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Air conditioning / Mechanical fan",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 391,
+          "cleanSeconds": 159,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8216
+            },
+            {
+              "label": "Music",
+              "max": 0.7475
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.7276
+            },
+            {
+              "label": "Train",
+              "max": 0.6438
+            },
+            {
+              "label": "Dog",
+              "max": 0.5726
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.822,
+              "atSecond": 331
+            },
+            {
+              "label": "Music",
+              "max": 0.748,
+              "atSecond": 127
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.728,
+              "atSecond": 225
+            },
+            {
+              "label": "Train",
+              "max": 0.644,
+              "atSecond": 19
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.478,
+              "atSecond": 19
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.477,
+              "atSecond": 19
+            },
+            {
+              "label": "Emergency vehicle",
+              "max": 0.376,
+              "atSecond": 294
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.376,
+              "atSecond": 225
+            },
+            {
+              "label": "Child singing",
+              "max": 0.346,
+              "atSecond": 120
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.317,
+              "atSecond": 225
+            },
+            {
+              "label": "Siren",
+              "max": 0.303,
+              "atSecond": 294
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.288,
+              "atSecond": 118
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.276,
+              "atSecond": 20
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.252,
+              "atSecond": 294
+            },
+            {
+              "label": "Narration, monologue",
+              "max": 0.208,
+              "atSecond": 192
+            },
+            {
+              "label": "Car",
+              "max": 0.188,
+              "atSecond": 138
+            },
+            {
+              "label": "Aircraft engine",
+              "max": 0.158,
+              "atSecond": 225
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.14,
+              "atSecond": 294
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.104,
+              "atSecond": 301
+            },
+            {
+              "label": "Whistle",
+              "max": 0.101,
+              "atSecond": 264
+            },
+            {
+              "label": "Ambulance (siren)",
+              "max": 0.08,
+              "atSecond": 294
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Air conditioning",
+                "Mechanical fan"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 417041,
+        "name": "Classroom Ambience - High School Class.wav",
+        "url": "https://freesound.org/people/okieactor/sounds/417041/",
+        "author": "okieactor",
+        "durationSec": 37.4,
+        "verdict": "reject",
+        "reason": "clip has 37 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 37,
+          "cleanSeconds": 0,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9235
+            },
+            {
+              "label": "Music",
+              "max": 0.6634
+            },
+            {
+              "label": "Chuckle, chortle",
+              "max": 0.3328
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.2654
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.2577
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.924,
+              "atSecond": 1
+            },
+            {
+              "label": "Music",
+              "max": 0.663,
+              "atSecond": 9
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.265,
+              "atSecond": 12
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.258,
+              "atSecond": 21
+            },
+            {
+              "label": "Conversation",
+              "max": 0.255,
+              "atSecond": 24
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.169,
+              "atSecond": 9
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Air conditioning",
+                "Mechanical fan"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 205184,
+        "name": "ROOM_TONE_QUIET_CLASSROOM_01.wav",
+        "url": "https://freesound.org/people/justingregoire/sounds/205184/",
+        "author": "justingregoire",
+        "durationSec": 40,
+        "verdict": "reject",
+        "reason": "clip has 40 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 40,
+          "cleanSeconds": 2,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.4943
+            },
+            {
+              "label": "Car",
+              "max": 0.1649
+            },
+            {
+              "label": "White noise",
+              "max": 0.1342
+            },
+            {
+              "label": "Ship",
+              "max": 0.1087
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.1033
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.494,
+              "atSecond": 16
+            },
+            {
+              "label": "Car",
+              "max": 0.165,
+              "atSecond": 16
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Air conditioning",
+                "Mechanical fan"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

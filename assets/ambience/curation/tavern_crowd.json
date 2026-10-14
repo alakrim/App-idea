@@ -190,5 +190,494 @@
         "+3 tags pub, bar, crowd"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Crowd",
+          "Hubbub, speech noise, speech babble",
+          "Chatter",
+          "Conversation"
+        ]
+      ],
+      "clapPrompt": "a busy tavern with conversations and clinking mugs, no music"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation; no 64 s window is free of denied sounds: Music reaches 0.875 (at 272 s)",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 376456,
+        "name": "Pub in Cambridge",
+        "url": "https://freesound.org/people/domasmo/sounds/376456/",
+        "author": "domasmo",
+        "durationSec": 121.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 121,
+          "cleanSeconds": 108,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9064
+            },
+            {
+              "label": "Chatter",
+              "max": 0.678
+            },
+            {
+              "label": "Music",
+              "max": 0.519
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.2984
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.2399
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.519,
+              "atSecond": 27
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.405
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 212094,
+        "name": "Small_Town_Bar_007.wav",
+        "url": "https://freesound.org/people/conleec/sounds/212094/",
+        "author": "conleec",
+        "durationSec": 371.4,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Music reaches 0.875 (at 272 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 371,
+          "cleanSeconds": 361,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8948
+            },
+            {
+              "label": "Music",
+              "max": 0.8754
+            },
+            {
+              "label": "Chatter",
+              "max": 0.8362
+            },
+            {
+              "label": "Dog",
+              "max": 0.5666
+            },
+            {
+              "label": "Domestic animals, pets",
+              "max": 0.5429
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.875,
+              "atSecond": 272
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.701
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 237398,
+        "name": "General Chatter In Bar",
+        "url": "https://freesound.org/people/squareal/sounds/237398/",
+        "author": "squareal",
+        "durationSec": 233.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 233,
+          "cleanSeconds": 226,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9147
+            },
+            {
+              "label": "Chatter",
+              "max": 0.7015
+            },
+            {
+              "label": "Chink, clink",
+              "max": 0.574
+            },
+            {
+              "label": "Music",
+              "max": 0.309
+            },
+            {
+              "label": "Crowd",
+              "max": 0.2345
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.309,
+              "atSecond": 146
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.223
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 212096,
+        "name": "Small_Town_Bar_004.wav",
+        "url": "https://freesound.org/people/conleec/sounds/212096/",
+        "author": "conleec",
+        "durationSec": 166,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 166,
+          "cleanSeconds": 158,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9005
+            },
+            {
+              "label": "Chatter",
+              "max": 0.8075
+            },
+            {
+              "label": "Music",
+              "max": 0.4074
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.3024
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.2089
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.407,
+              "atSecond": 1
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.446
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 695295,
+        "name": "Pirate Tavern",
+        "url": "https://freesound.org/people/brunoboselli/sounds/695295/",
+        "author": "brunoboselli",
+        "durationSec": 61,
+        "verdict": "reject",
+        "reason": "clip has 61 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 61,
+          "cleanSeconds": 48,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8916
+            },
+            {
+              "label": "Music",
+              "max": 0.7223
+            },
+            {
+              "label": "Animal",
+              "max": 0.6231
+            },
+            {
+              "label": "Dog",
+              "max": 0.497
+            },
+            {
+              "label": "Chatter",
+              "max": 0.4606
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.722,
+              "atSecond": 28
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.148
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 829383,
+        "name": "Family Restaurant/Bar/Grill - Chatter/Ambience",
+        "url": "https://freesound.org/people/ChristopherJngs/sounds/829383/",
+        "author": "ChristopherJngs",
+        "durationSec": 111.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 111,
+          "cleanSeconds": 99,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8831
+            },
+            {
+              "label": "Chatter",
+              "max": 0.676
+            },
+            {
+              "label": "Chink, clink",
+              "max": 0.3994
+            },
+            {
+              "label": "Music",
+              "max": 0.2852
+            },
+            {
+              "label": "Inside, public space",
+              "max": 0.2465
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.285,
+              "atSecond": 14
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.36
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 651364,
+        "name": "background_chatter_tavern.wav",
+        "url": "https://freesound.org/people/dazzamoo/sounds/651364/",
+        "author": "dazzamoo",
+        "durationSec": 65.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 65,
+          "cleanSeconds": 63,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9139
+            },
+            {
+              "label": "Animal",
+              "max": 0.5865
+            },
+            {
+              "label": "Dog",
+              "max": 0.5395
+            },
+            {
+              "label": "Chatter",
+              "max": 0.4979
+            },
+            {
+              "label": "Domestic animals, pets",
+              "max": 0.4765
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.433,
+              "atSecond": 48
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.015
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 232175,
+        "name": "talking people 2.MP3",
+        "url": "https://freesound.org/people/szalonegacie/sounds/232175/",
+        "author": "szalonegacie",
+        "durationSec": 81.2,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 81,
+          "cleanSeconds": 73,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9199
+            },
+            {
+              "label": "Chatter",
+              "max": 0.4655
+            },
+            {
+              "label": "Music",
+              "max": 0.3761
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.3611
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.2292
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.376,
+              "atSecond": 77
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.037
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -189,5 +189,697 @@
         "+1 name matches wind"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Wind",
+          "Wind noise (microphone)"
+        ]
+      ],
+      "clapPrompt": "howling blizzard wind, harsh and cold"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Wind / Wind noise (microphone); clip has 59 s; a window needs 64 s",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 719561,
+        "name": "Wind whooshing through vent",
+        "url": "https://freesound.org/people/giddster/sounds/719561/",
+        "author": "giddster",
+        "durationSec": 99.2,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 99,
+          "cleanSeconds": 58,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.63
+            },
+            {
+              "label": "Bird",
+              "max": 0.5681
+            },
+            {
+              "label": "Owl",
+              "max": 0.5432
+            },
+            {
+              "label": "Animal",
+              "max": 0.5315
+            },
+            {
+              "label": "Cat",
+              "max": 0.5312
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.63,
+              "atSecond": 31
+            },
+            {
+              "label": "Car",
+              "max": 0.476,
+              "atSecond": 82
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.359,
+              "atSecond": 13
+            },
+            {
+              "label": "Music",
+              "max": 0.308,
+              "atSecond": 42
+            },
+            {
+              "label": "Speech",
+              "max": 0.221,
+              "atSecond": 15
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.203,
+              "atSecond": 26
+            },
+            {
+              "label": "Motorcycle",
+              "max": 0.154,
+              "atSecond": 31
+            },
+            {
+              "label": "Siren",
+              "max": 0.095,
+              "atSecond": 12
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.053,
+              "atSecond": 12
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0.01
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 505999,
+        "name": "Howling winter storm ambient sounds",
+        "url": "https://freesound.org/people/DBlover/sounds/505999/",
+        "author": "DBlover",
+        "durationSec": 336.6,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 336,
+          "cleanSeconds": 10,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.8179
+            },
+            {
+              "label": "Rain",
+              "max": 0.7077
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.6904
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.5531
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.5048
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.818,
+              "atSecond": 77
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.69,
+              "atSecond": 77
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.505,
+              "atSecond": 62
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.383,
+              "atSecond": 62
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.361,
+              "atSecond": 9
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.261,
+              "atSecond": 62
+            },
+            {
+              "label": "Music",
+              "max": 0.207,
+              "atSecond": 319
+            },
+            {
+              "label": "Ship",
+              "max": 0.184,
+              "atSecond": 62
+            },
+            {
+              "label": "Explosion",
+              "max": 0.183,
+              "atSecond": 5
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.16,
+              "atSecond": 92
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0.015
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 473815,
+        "name": "Wind during snow storm #1.m4a",
+        "url": "https://freesound.org/people/guyburns/sounds/473815/",
+        "author": "guyburns",
+        "durationSec": 208.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 208,
+          "cleanSeconds": 43,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.7072
+            },
+            {
+              "label": "Ocean",
+              "max": 0.6546
+            },
+            {
+              "label": "Wind",
+              "max": 0.4815
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.4701
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.3833
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.47,
+              "atSecond": 64
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.383,
+              "atSecond": 181
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.294,
+              "atSecond": 85
+            },
+            {
+              "label": "Ship",
+              "max": 0.271,
+              "atSecond": 85
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.181,
+              "atSecond": 64
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0.077
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 35480,
+        "name": "DMP013016 HEAVY SNOW STORM MS.wav",
+        "url": "https://freesound.org/people/martypinso/sounds/35480/",
+        "author": "martypinso",
+        "durationSec": 213.3,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 213,
+          "cleanSeconds": 182,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.5476
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.5143
+            },
+            {
+              "label": "Ocean",
+              "max": 0.4908
+            },
+            {
+              "label": "Waterfall",
+              "max": 0.3245
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.2734
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.273,
+              "atSecond": 90
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.203,
+              "atSecond": 45
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0.009
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 473816,
+        "name": "Wind during snow storm #2.m4a",
+        "url": "https://freesound.org/people/guyburns/sounds/473816/",
+        "author": "guyburns",
+        "durationSec": 104.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 104,
+          "cleanSeconds": 14,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.5243
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.4813
+            },
+            {
+              "label": "Waves, surf",
+              "max": 0.4431
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.4081
+            },
+            {
+              "label": "Ocean",
+              "max": 0.389
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.524,
+              "atSecond": 97
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.481,
+              "atSecond": 96
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.408,
+              "atSecond": 99
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.278,
+              "atSecond": 99
+            },
+            {
+              "label": "Ship",
+              "max": 0.249,
+              "atSecond": 96
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0.067
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 574552,
+        "name": "WInter storm wind lashing snow DISTILERY 190212.flac",
+        "url": "https://freesound.org/people/TRP/sounds/574552/",
+        "author": "TRP",
+        "durationSec": 126.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 126,
+          "cleanSeconds": 7,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.6615
+            },
+            {
+              "label": "Waves, surf",
+              "max": 0.5967
+            },
+            {
+              "label": "Ocean",
+              "max": 0.5627
+            },
+            {
+              "label": "Thunder",
+              "max": 0.5044
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.4575
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.661,
+              "atSecond": 90
+            },
+            {
+              "label": "Thunder",
+              "max": 0.504,
+              "atSecond": 61
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.458,
+              "atSecond": 20
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.446,
+              "atSecond": 20
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.363,
+              "atSecond": 61
+            },
+            {
+              "label": "Train",
+              "max": 0.342,
+              "atSecond": 124
+            },
+            {
+              "label": "Ship",
+              "max": 0.262,
+              "atSecond": 20
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.256,
+              "atSecond": 124
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.252,
+              "atSecond": 124
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.251,
+              "atSecond": 20
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0.159
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 678893,
+        "name": "16th. fl. At the Top of the Stairs, the entrance to the Roof... during a Blizzard B.aif",
+        "url": "https://freesound.org/people/JohnLaVine333/sounds/678893/",
+        "author": "JohnLaVine333",
+        "durationSec": 438.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 438,
+          "cleanSeconds": 16,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.6746
+            },
+            {
+              "label": "Train",
+              "max": 0.5676
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.4185
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.3995
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.2957
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.675,
+              "atSecond": 334
+            },
+            {
+              "label": "Train",
+              "max": 0.568,
+              "atSecond": 394
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.419,
+              "atSecond": 394
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.4,
+              "atSecond": 394
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.296,
+              "atSecond": 334
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.24,
+              "atSecond": 349
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.182,
+              "atSecond": 338
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.164,
+              "atSecond": 420
+            },
+            {
+              "label": "Ship",
+              "max": 0.151,
+              "atSecond": 420
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 117136,
+        "name": "Wind__Artic__Cold.wav",
+        "url": "https://freesound.org/people/cobratronik/sounds/117136/",
+        "author": "cobratronik",
+        "durationSec": 59,
+        "verdict": "reject",
+        "reason": "clip has 59 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 59,
+          "cleanSeconds": 5,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.5493
+            },
+            {
+              "label": "Field recording",
+              "max": 0.2331
+            },
+            {
+              "label": "Car",
+              "max": 0.1529
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.141
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.1178
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.549,
+              "atSecond": 47
+            },
+            {
+              "label": "Car",
+              "max": 0.153,
+              "atSecond": 42
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

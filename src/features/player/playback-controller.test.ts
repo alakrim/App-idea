@@ -4,6 +4,7 @@ import {
   DEFAULT_AMBIENCE,
   SEGMENT_ONE,
   SEGMENT_TWO,
+  SERIES_ID,
   fixtureChapter,
   flush,
   id,
@@ -31,12 +32,11 @@ describe('playChapter', () => {
     expect(engine.soundingBedIds()).toEqual([id(900)]);
   });
 
-  it('resumes the saved sentence when it belongs to the chapter', async () => {
-    const { controller } = setupController([fixtureChapter(1, 1, 'ready')], {
-      chapterId: id(1),
-      chapterOrder: 1,
-      sentenceIdx: 2,
-    });
+  it('resumes the saved sentence of the chapter', async () => {
+    const { controller } = setupController(
+      [fixtureChapter(1, 1, 'ready')],
+      [{ chapterId: id(1), sentenceIdx: 2, positionMs: 4000 }],
+    );
 
     await controller.playChapter(id(1));
 
@@ -44,12 +44,11 @@ describe('playChapter', () => {
     expect(controller.player.getState().sentenceIdx).toBe(2);
   });
 
-  it('starts from the beginning when the saved position is in another chapter', async () => {
-    const { controller } = setupController([fixtureChapter(1, 1, 'ready')], {
-      chapterId: id(7),
-      chapterOrder: 2,
-      sentenceIdx: 3,
-    });
+  it('starts from the beginning when the chapter has no saved place', async () => {
+    const { controller } = setupController(
+      [fixtureChapter(1, 1, 'ready')],
+      [{ chapterId: id(7), sentenceIdx: 3 }],
+    );
 
     await controller.playChapter(id(1));
 
@@ -57,15 +56,104 @@ describe('playChapter', () => {
   });
 
   it('starts at an explicit sentence over the saved position', async () => {
-    const { controller } = setupController([fixtureChapter(1, 1, 'ready')], {
-      chapterId: id(1),
-      chapterOrder: 1,
-      sentenceIdx: 3,
-    });
+    const { controller } = setupController(
+      [fixtureChapter(1, 1, 'ready')],
+      [{ chapterId: id(1), sentenceIdx: 3 }],
+    );
 
     await controller.playChapter(id(1), { fromSentence: 1 });
 
     expect(controller.player.getState().positionMs).toBe(2000);
+  });
+
+  it('resumes chapter 3 at its own place after the listener visited chapter 2 (resume scenario)', async () => {
+    const { controller, fixture } = setupController(
+      [fixtureChapter(1, 1, 'ready'), fixtureChapter(2, 2, 'ready'), fixtureChapter(3, 3, 'ready')],
+      [{ chapterId: id(3), sentenceIdx: 2, positionMs: 4000 }],
+    );
+    await controller.playChapter(id(3));
+    controller.player.pause();
+    await controller.playChapter(id(2));
+    controller.player.pause();
+
+    await controller.playChapter(id(3));
+
+    expect(controller.player.getState()).toMatchObject({ sentenceIdx: 2, positionMs: 4000 });
+    expect(
+      fixture.saved.some((write) => write.chapterId === id(3) && write.sentenceIdx === 2),
+    ).toBe(true);
+  });
+
+  it('starts a finished chapter from the beginning, even with a saved place', async () => {
+    const { controller } = setupController(
+      [fixtureChapter(1, 1, 'ready')],
+      [{ chapterId: id(1), sentenceIdx: 3, positionMs: 9000, completed: true }],
+    );
+
+    await controller.playChapter(id(1));
+
+    expect(controller.player.getState()).toMatchObject({ sentenceIdx: 0, positionMs: 0 });
+  });
+
+  it('marks a chapter finished when it plays to its end, and saves the place at the end', async () => {
+    const { controller, engine, fixture } = setupController([fixtureChapter(1, 1, 'ready')]);
+    await controller.playChapter(id(1));
+    controller.player.play();
+
+    engine.advance(10_000);
+    await flush();
+
+    expect(fixture.finished).toEqual([id(1)]);
+  });
+
+  it('does not mark a chapter finished while a sentence repeats past its end', async () => {
+    const { controller, engine, fixture } = setupController([fixtureChapter(1, 1, 'ready')]);
+    await controller.playChapter(id(1));
+    controller.setLoopSentence(0);
+    controller.player.play();
+
+    engine.advance(10_000);
+    await flush();
+
+    expect(fixture.finished).toEqual([]);
+  });
+
+  it('applies the series saved speed when the chapter loads, and the default for a new series', async () => {
+    const saved = setupController([fixtureChapter(1, 1, 'ready')]);
+    saved.fixture.rates.set(SERIES_ID, 1.5);
+    await saved.controller.playChapter(id(1));
+    expect(saved.controller.player.getState().rate).toBe(1.5);
+
+    const fresh = setupController([fixtureChapter(1, 1, 'ready')]);
+    await fresh.controller.playChapter(id(1));
+    expect(fresh.controller.player.getState().rate).toBe(1);
+  });
+
+  it('saves the speed for the series only when asked, and then the series loads at it', async () => {
+    const { controller, fixture } = setupController([fixtureChapter(1, 1, 'ready')]);
+    await controller.playChapter(id(1));
+
+    controller.player.setRate(1.75);
+    expect(fixture.rateWrites).toEqual([]);
+    controller.saveRateForSeries();
+
+    expect(fixture.rateWrites).toEqual([{ seriesId: SERIES_ID, rate: 1.75 }]);
+  });
+
+  it('jumps to a sentence of the chapter in view, and to one of another chapter', async () => {
+    const { controller } = setupController([
+      fixtureChapter(1, 1, 'ready'),
+      fixtureChapter(2, 2, 'ready'),
+    ]);
+    await controller.playChapter(id(1));
+
+    controller.jumpToSentence(id(1), 2);
+    expect(controller.player.getState()).toMatchObject({ sentenceIdx: 2, state: 'playing' });
+
+    controller.jumpToSentence(id(2), 1);
+    await flush();
+    expect(controller.content.getState().chapterId).toBe(id(2));
+    expect(controller.player.getState().sentenceIdx).toBe(1);
   });
 
   it('reports unavailable for a chapter with no narration yet, and never loads the engine', async () => {
@@ -499,7 +587,7 @@ describe('sample playback (P1-6)', () => {
 describe('repeat jump timing (P2-14)', () => {
   it('schedules the jump back from the predicted end of the sentence, not at the next position tick', async () => {
     const timers = createVirtualTimers();
-    const { controller, engine } = setupController([fixtureChapter(1, 1, 'ready')], null, {
+    const { controller, engine } = setupController([fixtureChapter(1, 1, 'ready')], [], {
       timers,
     });
     await controller.playChapter(id(1));
@@ -514,5 +602,74 @@ describe('repeat jump timing (P2-14)', () => {
     timers.advance(1);
     expect(seek).toHaveBeenCalledWith(0);
     expect(seek).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('bookmarks', () => {
+  it('bookmarks the sentence at its media time, then removes it when toggled again', async () => {
+    const { controller, fixture } = setupController([fixtureChapter(1, 1, 'ready')]);
+    await controller.playChapter(id(1));
+
+    const added = controller.toggleBookmark(2);
+
+    expect(added).toMatchObject({ kind: 'added', bookmark: { sentenceIdx: 2, positionMs: 4000 } });
+    expect(fixture.bookmarks).toHaveLength(1);
+    expect(controller.content.getState().bookmarks).toEqual([
+      expect.objectContaining({
+        chapterId: id(1),
+        chapterNumber: 1,
+        bookmarks: [expect.objectContaining({ sentenceIdx: 2, positionMs: 4000 })],
+      }),
+    ]);
+
+    expect(controller.toggleBookmark(2)).toEqual({ kind: 'removed' });
+    expect(fixture.bookmarks).toEqual([]);
+    expect(controller.content.getState().bookmarks).toEqual([]);
+  });
+
+  it('does not bookmark a sentence that is not narrated yet, or before a chapter is ready', async () => {
+    const { controller, fixture } = setupController([fixtureChapter(1, 1, 'ready')]);
+    expect(controller.toggleBookmark(0)).toBeNull();
+
+    await controller.playChapter(id(1));
+    expect(controller.toggleBookmark(99)).toBeNull();
+    expect(fixture.bookmarks).toEqual([]);
+  });
+
+  it('saves a note on a bookmark and shows it in the list', async () => {
+    const { controller } = setupController([fixtureChapter(1, 1, 'ready')]);
+    await controller.playChapter(id(1));
+    const added = controller.toggleBookmark(1);
+    if (added?.kind !== 'added') throw new Error('expected a bookmark');
+
+    controller.saveBookmarkNote(added.bookmark.id, 'The harbour master');
+
+    expect(controller.content.getState().bookmarks[0]?.bookmarks[0]?.note).toBe(
+      'The harbour master',
+    );
+  });
+
+  it('deletes a bookmark from the list', async () => {
+    const { controller } = setupController([fixtureChapter(1, 1, 'ready')]);
+    await controller.playChapter(id(1));
+    const added = controller.toggleBookmark(1);
+    if (added?.kind !== 'added') throw new Error('expected a bookmark');
+
+    controller.deleteBookmark(added.bookmark.id);
+
+    expect(controller.content.getState().bookmarks).toEqual([]);
+  });
+
+  it('lists the series bookmarks once a chapter of the series opens, across chapters', async () => {
+    const { controller, fixture } = setupController([
+      fixtureChapter(1, 1, 'ready'),
+      fixtureChapter(2, 2, 'ready'),
+    ]);
+    await controller.playChapter(id(2));
+    controller.toggleBookmark(3);
+    await controller.playChapter(id(1));
+
+    expect(controller.content.getState().bookmarks.map((g) => g.chapterNumber)).toEqual([2]);
+    expect(fixture.bookmarks.map((b) => b.chapterId)).toEqual([id(2)]);
   });
 });

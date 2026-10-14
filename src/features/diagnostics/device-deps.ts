@@ -3,6 +3,8 @@ import { Platform } from 'react-native';
 
 import type { MixerContext } from '@/audio/ambience-mixer';
 import { INSTALLED_BEDS, type InstalledBed } from '@/audio/ambience-pack';
+import { appForegroundStatus } from '@/services/background/foreground-state';
+import { createNotificationPermission } from '@/services/background/notification-permission';
 import { webViewRenderQueue } from '@/services/pipeline/webview-bridge';
 
 import { globalLanguageEnv } from './checks-language';
@@ -61,5 +63,9 @@ export function deviceDiagnosticsDeps(
       hasLockScreenSession: () => null,
     },
     storage: readStorageSizes,
+    background: {
+      status: () => appForegroundStatus.get(),
+      notificationsGranted: () => createNotificationPermission().isGranted(),
+    },
   };
 }

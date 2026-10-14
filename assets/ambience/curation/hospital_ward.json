@@ -1,10 +1,197 @@
 {
   "category": "hospital_ward",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "hospital ward ambience",
-    "hospital background monitors"
+    "hospital background monitors",
+    "hospital ambience",
+    "hospital corridor ambience"
   ],
-  "poolSize": 0,
-  "candidates": []
+  "poolSize": 30,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 733585,
+      "name": "Hospital reception, seating area ambience",
+      "url": "https://freesound.org/people/misperpodcast/sounds/733585/",
+      "author": "misperpodcast",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 210.35,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 18,
+      "numDownloads": 700,
+      "previewUrl": "https://cdn.freesound.org/previews/733/733585_15877364-hq.mp3",
+      "score": 8.08,
+      "reasons": [
+        "+2.66 rating 4.83 from 18 ratings",
+        "+1.42 700 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 679048,
+      "name": "HOSPITAL ICU HALLWAY - ATMO AMBIENT (02/02)",
+      "url": "https://freesound.org/people/tferrino/sounds/679048/",
+      "author": "tferrino",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 172.37,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.87,
+      "numRatings": 15,
+      "numDownloads": 709,
+      "previewUrl": "https://cdn.freesound.org/previews/679/679048_7891112-hq.mp3",
+      "score": 8.07,
+      "reasons": [
+        "+2.64 rating 4.87 from 15 ratings",
+        "+1.43 709 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 618353,
+      "name": "HOSPITAL - LONG CORRIDOR - ATMO / AMB (02)",
+      "url": "https://freesound.org/people/tferrino/sounds/618353/",
+      "author": "tferrino",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 106.82,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.92,
+      "numRatings": 13,
+      "numDownloads": 558,
+      "previewUrl": "https://cdn.freesound.org/previews/618/618353_7891112-hq.mp3",
+      "score": 8.02,
+      "reasons": [
+        "+2.65 rating 4.92 from 13 ratings",
+        "+1.37 558 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 618354,
+      "name": "HOSPITAL - LONG CORRIDOR - ATMO / AMB (01)",
+      "url": "https://freesound.org/people/tferrino/sounds/618354/",
+      "author": "tferrino",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 101.88,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.77,
+      "numRatings": 13,
+      "numDownloads": 677,
+      "previewUrl": "https://cdn.freesound.org/previews/618/618354_7891112-hq.mp3",
+      "score": 7.98,
+      "reasons": [
+        "+2.56 rating 4.77 from 13 ratings",
+        "+1.42 677 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 640627,
+      "name": "Pediatric Hospital - Reception / Corridor (Coimbra, Portugal)",
+      "url": "https://freesound.org/people/tferrino/sounds/640627/",
+      "author": "tferrino",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 153,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 7,
+      "numDownloads": 532,
+      "previewUrl": "https://cdn.freesound.org/previews/640/640627_7891112-hq.mp3",
+      "score": 7.89,
+      "reasons": [
+        "+2.53 rating 5 from 7 ratings",
+        "+1.36 532 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 679047,
+      "name": "HOSPITAL ICU HALLWAY - ATMO AMBIENT (01/02)",
+      "url": "https://freesound.org/people/tferrino/sounds/679047/",
+      "author": "tferrino",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 152.06,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.36,
+      "numRatings": 28,
+      "numDownloads": 771,
+      "previewUrl": "https://cdn.freesound.org/previews/679/679047_7891112-hq.mp3",
+      "score": 7.86,
+      "reasons": [
+        "+2.42 rating 4.36 from 28 ratings",
+        "+1.44 771 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 640628,
+      "name": "Pediatric Hospital - Entrance Hall (Coimbra, Portugal)",
+      "url": "https://freesound.org/people/tferrino/sounds/640628/",
+      "author": "tferrino",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 194.22,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.88,
+      "numRatings": 8,
+      "numDownloads": 466,
+      "previewUrl": "https://cdn.freesound.org/previews/640/640628_7891112-hq.mp3",
+      "score": 7.84,
+      "reasons": [
+        "+2.51 rating 4.88 from 8 ratings",
+        "+1.33 466 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 640626,
+      "name": "Pediatric Hospital - Waiting Room - Speaker Announcement (Coimbra, Portugal)",
+      "url": "https://freesound.org/people/tferrino/sounds/640626/",
+      "author": "tferrino",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 138.16,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.56,
+      "numRatings": 9,
+      "numDownloads": 595,
+      "previewUrl": "https://cdn.freesound.org/previews/640/640626_7891112-hq.mp3",
+      "score": 7.77,
+      "reasons": [
+        "+2.38 rating 4.56 from 9 ratings",
+        "+1.39 595 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    }
+  ]
 }

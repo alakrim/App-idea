@@ -188,5 +188,646 @@
         "+3 tags jungle, insects, tropical, rainforest"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Insect",
+          "Cricket",
+          "Bird vocalization, bird call, bird song"
+        ]
+      ],
+      "clapPrompt": "tropical jungle with insects and dripping foliage, no people"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Insect / Cricket / Bird vocalization, bird call, bird song; no 64 s window is free of denied sounds: Train reaches 0.406 (at 337 s)",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 805467,
+        "name": "Crickets - Jungle & Summer day",
+        "url": "https://freesound.org/people/Vrymaa/sounds/805467/",
+        "author": "Vrymaa",
+        "durationSec": 85.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Insect / Cricket / Bird vocalization, bird call, bird song",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 85,
+          "cleanSeconds": 73,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.4699
+            },
+            {
+              "label": "Insect",
+              "max": 0.2891
+            },
+            {
+              "label": "Whistle",
+              "max": 0.1677
+            },
+            {
+              "label": "Music",
+              "max": 0.1555
+            },
+            {
+              "label": "Train",
+              "max": 0.1419
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Whistle",
+              "max": 0.168,
+              "atSecond": 2
+            },
+            {
+              "label": "Music",
+              "max": 0.155,
+              "atSecond": 83
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket",
+                "Bird vocalization, bird call, bird song"
+              ],
+              "fraction": 0.153
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 469276,
+        "name": "jungle forest 01",
+        "url": "https://freesound.org/people/rucisko/sounds/469276/",
+        "author": "rucisko",
+        "durationSec": 300.6,
+        "verdict": "reject",
+        "reason": "required sound absent: Insect / Cricket / Bird vocalization, bird call, bird song",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 300,
+          "cleanSeconds": 294,
+          "topClasses": [
+            {
+              "label": "Fowl",
+              "max": 0.7382
+            },
+            {
+              "label": "Turkey",
+              "max": 0.7358
+            },
+            {
+              "label": "Gobble",
+              "max": 0.7103
+            },
+            {
+              "label": "Cricket",
+              "max": 0.6796
+            },
+            {
+              "label": "Insect",
+              "max": 0.5192
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.379,
+              "atSecond": 223
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.055,
+              "atSecond": 227
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket",
+                "Bird vocalization, bird call, bird song"
+              ],
+              "fraction": 0.403
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 804838,
+        "name": "Forest Ambience, Monk’s Trail, Chiang Mai, Thailand (March 7, 2019)",
+        "url": "https://freesound.org/people/marc.om/sounds/804838/",
+        "author": "marc.om",
+        "durationSec": 96,
+        "verdict": "reject",
+        "reason": "required sound absent: Insect / Cricket / Bird vocalization, bird call, bird song",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 95,
+          "cleanSeconds": 93,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.7036
+            },
+            {
+              "label": "Insect",
+              "max": 0.5687
+            },
+            {
+              "label": "Environmental noise",
+              "max": 0.5309
+            },
+            {
+              "label": "Speech",
+              "max": 0.3254
+            },
+            {
+              "label": "Animal",
+              "max": 0.3173
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.325,
+              "atSecond": 73
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket",
+                "Bird vocalization, bird call, bird song"
+              ],
+              "fraction": 0.242
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 868965,
+        "name": "Distant River, Frogs and Insects in the forest - Rorota Trail, French Guiana",
+        "url": "https://freesound.org/people/felix.blume/sounds/868965/",
+        "author": "felix.blume",
+        "durationSec": 360.7,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Train reaches 0.406 (at 337 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 360,
+          "cleanSeconds": 337,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.9122
+            },
+            {
+              "label": "Insect",
+              "max": 0.873
+            },
+            {
+              "label": "Train",
+              "max": 0.4064
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.3544
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.3472
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Train",
+              "max": 0.406,
+              "atSecond": 337
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.354,
+              "atSecond": 337
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.347,
+              "atSecond": 337
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.299,
+              "atSecond": 320
+            },
+            {
+              "label": "Train wheels squealing",
+              "max": 0.281,
+              "atSecond": 337
+            },
+            {
+              "label": "Speech",
+              "max": 0.261,
+              "atSecond": 286
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket",
+                "Bird vocalization, bird call, bird song"
+              ],
+              "fraction": 0.947
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 333222,
+        "name": "Bako National Park, Borneo Island, Rain Forest Ambience near a water stream daytime 01.10.2013 Roland R-26 XY Mics",
+        "url": "https://freesound.org/people/gladkiy/sounds/333222/",
+        "author": "gladkiy",
+        "durationSec": 208,
+        "verdict": "reject",
+        "reason": "required sound absent: Insect / Cricket / Bird vocalization, bird call, bird song",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 208,
+          "cleanSeconds": 173,
+          "topClasses": [
+            {
+              "label": "Water",
+              "max": 0.6554
+            },
+            {
+              "label": "Sewing machine",
+              "max": 0.6518
+            },
+            {
+              "label": "Water tap, faucet",
+              "max": 0.6025
+            },
+            {
+              "label": "Pour",
+              "max": 0.4352
+            },
+            {
+              "label": "Bird",
+              "max": 0.4284
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Sewing machine",
+              "max": 0.652,
+              "atSecond": 135
+            },
+            {
+              "label": "Alarm clock",
+              "max": 0.416,
+              "atSecond": 173
+            },
+            {
+              "label": "Engine",
+              "max": 0.163,
+              "atSecond": 172
+            },
+            {
+              "label": "Telephone bell ringing",
+              "max": 0.152,
+              "atSecond": 180
+            },
+            {
+              "label": "Alarm",
+              "max": 0.082,
+              "atSecond": 173
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket",
+                "Bird vocalization, bird call, bird song"
+              ],
+              "fraction": 0.005
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 868968,
+        "name": "Waterfall, Frogs and Insects - Rorota Trail, French Guiana",
+        "url": "https://freesound.org/people/felix.blume/sounds/868968/",
+        "author": "felix.blume",
+        "durationSec": 300.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Insect / Cricket / Bird vocalization, bird call, bird song",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 300,
+          "cleanSeconds": 280,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.5856
+            },
+            {
+              "label": "Waterfall",
+              "max": 0.572
+            },
+            {
+              "label": "Stream",
+              "max": 0.5548
+            },
+            {
+              "label": "Insect",
+              "max": 0.5063
+            },
+            {
+              "label": "Environmental noise",
+              "max": 0.3263
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Train",
+              "max": 0.313,
+              "atSecond": 140
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.261,
+              "atSecond": 140
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.243,
+              "atSecond": 206
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.209,
+              "atSecond": 195
+            },
+            {
+              "label": "Speech",
+              "max": 0.159,
+              "atSecond": 86
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket",
+                "Bird vocalization, bird call, bird song"
+              ],
+              "fraction": 0.037
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 479573,
+        "name": "R25-01-Big Jungle Ambience.wav",
+        "url": "https://freesound.org/people/craigsmith/sounds/479573/",
+        "author": "craigsmith",
+        "durationSec": 115.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Insect / Cricket / Bird vocalization, bird call, bird song",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 115,
+          "cleanSeconds": 61,
+          "topClasses": [
+            {
+              "label": "Wild animals",
+              "max": 0.8572
+            },
+            {
+              "label": "Roaring cats (lions, tigers)",
+              "max": 0.8529
+            },
+            {
+              "label": "Animal",
+              "max": 0.8473
+            },
+            {
+              "label": "Speech",
+              "max": 0.7818
+            },
+            {
+              "label": "Frog",
+              "max": 0.7603
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.782,
+              "atSecond": 88
+            },
+            {
+              "label": "Honk",
+              "max": 0.68,
+              "atSecond": 4
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.579,
+              "atSecond": 27
+            },
+            {
+              "label": "Music",
+              "max": 0.452,
+              "atSecond": 99
+            },
+            {
+              "label": "Skidding",
+              "max": 0.426,
+              "atSecond": 27
+            },
+            {
+              "label": "Car",
+              "max": 0.341,
+              "atSecond": 27
+            },
+            {
+              "label": "Guitar",
+              "max": 0.285,
+              "atSecond": 99
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.252,
+              "atSecond": 99
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.178,
+              "atSecond": 99
+            },
+            {
+              "label": "Race car, auto racing",
+              "max": 0.154,
+              "atSecond": 27
+            },
+            {
+              "label": "Whistle",
+              "max": 0.108,
+              "atSecond": 49
+            },
+            {
+              "label": "Alarm clock",
+              "max": 0.086,
+              "atSecond": 77
+            },
+            {
+              "label": "Alarm",
+              "max": 0.05,
+              "atSecond": 77
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket",
+                "Bird vocalization, bird call, bird song"
+              ],
+              "fraction": 0.009
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 333223,
+        "name": "Bako National Park, Borneo Island, Rain Forest Ambience near a water stream daytime 01.10.2013 Roland R-26 OMNI Mics.wav",
+        "url": "https://freesound.org/people/gladkiy/sounds/333223/",
+        "author": "gladkiy",
+        "durationSec": 208,
+        "verdict": "reject",
+        "reason": "required sound absent: Insect / Cricket / Bird vocalization, bird call, bird song",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 208,
+          "cleanSeconds": 177,
+          "topClasses": [
+            {
+              "label": "Water",
+              "max": 0.6257
+            },
+            {
+              "label": "Water tap, faucet",
+              "max": 0.5385
+            },
+            {
+              "label": "Ratchet, pawl",
+              "max": 0.419
+            },
+            {
+              "label": "Pour",
+              "max": 0.4169
+            },
+            {
+              "label": "Sink (filling or washing)",
+              "max": 0.3555
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.347,
+              "atSecond": 165
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.292,
+              "atSecond": 0
+            },
+            {
+              "label": "Sewing machine",
+              "max": 0.277,
+              "atSecond": 152
+            },
+            {
+              "label": "Engine",
+              "max": 0.188,
+              "atSecond": 174
+            },
+            {
+              "label": "Alarm clock",
+              "max": 0.188,
+              "atSecond": 160
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.154,
+              "atSecond": 0
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Insect",
+                "Cricket",
+                "Bird vocalization, bird call, bird song"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

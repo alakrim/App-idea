@@ -186,5 +186,981 @@
         "+2 at least 90 s"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Hum",
+          "Humming",
+          "Mains hum"
+        ]
+      ],
+      "clapPrompt": "a low resonant hum with soft wind and a faint shimmer"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Hum / Humming / Mains hum",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 512174,
+        "name": "Resonating Analog Drone",
+        "url": "https://freesound.org/people/Nielsvdb/sounds/512174/",
+        "author": "Nielsvdb",
+        "durationSec": 322.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 322,
+          "cleanSeconds": 24,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.9096
+            },
+            {
+              "label": "Synthesizer",
+              "max": 0.8068
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.7167
+            },
+            {
+              "label": "Keyboard (musical)",
+              "max": 0.6861
+            },
+            {
+              "label": "Guitar",
+              "max": 0.6645
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.91,
+              "atSecond": 107
+            },
+            {
+              "label": "Synthesizer",
+              "max": 0.807,
+              "atSecond": 121
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.717,
+              "atSecond": 118
+            },
+            {
+              "label": "Keyboard (musical)",
+              "max": 0.686,
+              "atSecond": 272
+            },
+            {
+              "label": "Guitar",
+              "max": 0.664,
+              "atSecond": 107
+            },
+            {
+              "label": "Organ",
+              "max": 0.575,
+              "atSecond": 273
+            },
+            {
+              "label": "Piano",
+              "max": 0.543,
+              "atSecond": 276
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.512,
+              "atSecond": 107
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.506,
+              "atSecond": 227
+            },
+            {
+              "label": "Electric piano",
+              "max": 0.48,
+              "atSecond": 276
+            },
+            {
+              "label": "Singing bowl",
+              "max": 0.378,
+              "atSecond": 5
+            },
+            {
+              "label": "Electronic organ",
+              "max": 0.35,
+              "atSecond": 273
+            },
+            {
+              "label": "Bass guitar",
+              "max": 0.345,
+              "atSecond": 102
+            },
+            {
+              "label": "Siren",
+              "max": 0.289,
+              "atSecond": 306
+            },
+            {
+              "label": "Engine",
+              "max": 0.282,
+              "atSecond": 221
+            },
+            {
+              "label": "Dial tone",
+              "max": 0.28,
+              "atSecond": 25
+            },
+            {
+              "label": "Hammond organ",
+              "max": 0.278,
+              "atSecond": 142
+            },
+            {
+              "label": "Electronic music",
+              "max": 0.249,
+              "atSecond": 235
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.237,
+              "atSecond": 200
+            },
+            {
+              "label": "Motorcycle",
+              "max": 0.22,
+              "atSecond": 224
+            },
+            {
+              "label": "Gong",
+              "max": 0.216,
+              "atSecond": 7
+            },
+            {
+              "label": "Medium engine (mid frequency)",
+              "max": 0.184,
+              "atSecond": 227
+            },
+            {
+              "label": "Car",
+              "max": 0.178,
+              "atSecond": 227
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 870670,
+        "name": "Drone, Low Frequency, Very Distorted",
+        "url": "https://freesound.org/people/CHallSmith/sounds/870670/",
+        "author": "CHallSmith",
+        "durationSec": 491.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 491,
+          "cleanSeconds": 173,
+          "topClasses": [
+            {
+              "label": "Gong",
+              "max": 0.8797
+            },
+            {
+              "label": "Music",
+              "max": 0.145
+            },
+            {
+              "label": "Silence",
+              "max": 0.1385
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.1151
+            },
+            {
+              "label": "Rumble",
+              "max": 0.0607
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Gong",
+              "max": 0.88,
+              "atSecond": 429
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 870671,
+        "name": "SciFi Low Drone, Slowed Computer Noise",
+        "url": "https://freesound.org/people/CHallSmith/sounds/870671/",
+        "author": "CHallSmith",
+        "durationSec": 64.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 64,
+          "cleanSeconds": 3,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.7535
+            },
+            {
+              "label": "Gong",
+              "max": 0.7269
+            },
+            {
+              "label": "Rumble",
+              "max": 0.5329
+            },
+            {
+              "label": "Car",
+              "max": 0.5007
+            },
+            {
+              "label": "Music",
+              "max": 0.2614
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.753,
+              "atSecond": 8
+            },
+            {
+              "label": "Gong",
+              "max": 0.727,
+              "atSecond": 29
+            },
+            {
+              "label": "Car",
+              "max": 0.501,
+              "atSecond": 12
+            },
+            {
+              "label": "Music",
+              "max": 0.261,
+              "atSecond": 63
+            },
+            {
+              "label": "Motorcycle",
+              "max": 0.204,
+              "atSecond": 9
+            },
+            {
+              "label": "Siren",
+              "max": 0.19,
+              "atSecond": 1
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.176,
+              "atSecond": 1
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 869334,
+        "name": "Deep Electromagnetic Low-Frequency Drone with Electrical Resonances",
+        "url": "https://freesound.org/people/bassimat/sounds/869334/",
+        "author": "bassimat",
+        "durationSec": 123.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 123,
+          "cleanSeconds": 2,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.753
+            },
+            {
+              "label": "Synthesizer",
+              "max": 0.4838
+            },
+            {
+              "label": "Sine wave",
+              "max": 0.3017
+            },
+            {
+              "label": "Electronic music",
+              "max": 0.2282
+            },
+            {
+              "label": "Noise",
+              "max": 0.2202
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.753,
+              "atSecond": 118
+            },
+            {
+              "label": "Synthesizer",
+              "max": 0.484,
+              "atSecond": 111
+            },
+            {
+              "label": "Electronic music",
+              "max": 0.228,
+              "atSecond": 7
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.199,
+              "atSecond": 71
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 843484,
+        "name": "Large Floor Fan - Steady Deep Hum - 2 Minutes",
+        "url": "https://freesound.org/people/FansAreCoolAndRelaxing16/sounds/843484/",
+        "author": "FansAreCoolAndRelaxing16",
+        "durationSec": 121.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 121,
+          "cleanSeconds": 1,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.4676
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.3925
+            },
+            {
+              "label": "Air conditioning",
+              "max": 0.2325
+            },
+            {
+              "label": "Music",
+              "max": 0.1919
+            },
+            {
+              "label": "Car",
+              "max": 0.1525
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.468,
+              "atSecond": 85
+            },
+            {
+              "label": "Music",
+              "max": 0.192,
+              "atSecond": 31
+            },
+            {
+              "label": "Car",
+              "max": 0.153,
+              "atSecond": 85
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 870675,
+        "name": "Scraping Glass Disk, Half Speed, Contact",
+        "url": "https://freesound.org/people/CHallSmith/sounds/870675/",
+        "author": "CHallSmith",
+        "durationSec": 113.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 113,
+          "cleanSeconds": 0,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.8555
+            },
+            {
+              "label": "Singing bowl",
+              "max": 0.5568
+            },
+            {
+              "label": "Ambient music",
+              "max": 0.535
+            },
+            {
+              "label": "Gong",
+              "max": 0.5072
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.3505
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.855,
+              "atSecond": 1
+            },
+            {
+              "label": "Singing bowl",
+              "max": 0.557,
+              "atSecond": 22
+            },
+            {
+              "label": "Ambient music",
+              "max": 0.535,
+              "atSecond": 81
+            },
+            {
+              "label": "Gong",
+              "max": 0.507,
+              "atSecond": 108
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.35,
+              "atSecond": 1
+            },
+            {
+              "label": "Guitar",
+              "max": 0.221,
+              "atSecond": 1
+            },
+            {
+              "label": "New-age music",
+              "max": 0.205,
+              "atSecond": 81
+            },
+            {
+              "label": "French horn",
+              "max": 0.203,
+              "atSecond": 57
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.164,
+              "atSecond": 1
+            },
+            {
+              "label": "Brass instrument",
+              "max": 0.152,
+              "atSecond": 57
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 609250,
+        "name": "Journey To The Interweb",
+        "url": "https://freesound.org/people/Aemyn/sounds/609250/",
+        "author": "Aemyn",
+        "durationSec": 508,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 508,
+          "cleanSeconds": 128,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.9644
+            },
+            {
+              "label": "Speech",
+              "max": 0.8717
+            },
+            {
+              "label": "Printer",
+              "max": 0.835
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.8219
+            },
+            {
+              "label": "Animal",
+              "max": 0.8179
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.964,
+              "atSecond": 475
+            },
+            {
+              "label": "Speech",
+              "max": 0.872,
+              "atSecond": 349
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.747,
+              "atSecond": 62
+            },
+            {
+              "label": "Ice cream truck, ice cream van",
+              "max": 0.698,
+              "atSecond": 193
+            },
+            {
+              "label": "Telephone bell ringing",
+              "max": 0.62,
+              "atSecond": 451
+            },
+            {
+              "label": "Wind chime",
+              "max": 0.607,
+              "atSecond": 410
+            },
+            {
+              "label": "Telephone",
+              "max": 0.547,
+              "atSecond": 450
+            },
+            {
+              "label": "Chime",
+              "max": 0.525,
+              "atSecond": 410
+            },
+            {
+              "label": "Jackhammer",
+              "max": 0.473,
+              "atSecond": 10
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.382,
+              "atSecond": 62
+            },
+            {
+              "label": "Car",
+              "max": 0.364,
+              "atSecond": 343
+            },
+            {
+              "label": "Honk",
+              "max": 0.331,
+              "atSecond": 365
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.323,
+              "atSecond": 291
+            },
+            {
+              "label": "Train",
+              "max": 0.313,
+              "atSecond": 304
+            },
+            {
+              "label": "Engine",
+              "max": 0.31,
+              "atSecond": 43
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.305,
+              "atSecond": 106
+            },
+            {
+              "label": "Ringtone",
+              "max": 0.278,
+              "atSecond": 153
+            },
+            {
+              "label": "Bell",
+              "max": 0.248,
+              "atSecond": 93
+            },
+            {
+              "label": "Bicycle bell",
+              "max": 0.247,
+              "atSecond": 360
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.245,
+              "atSecond": 62
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.216,
+              "atSecond": 388
+            },
+            {
+              "label": "Guitar",
+              "max": 0.215,
+              "atSecond": 31
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.202,
+              "atSecond": 304
+            },
+            {
+              "label": "Sewing machine",
+              "max": 0.2,
+              "atSecond": 24
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.194,
+              "atSecond": 31
+            },
+            {
+              "label": "Bus",
+              "max": 0.193,
+              "atSecond": 330
+            },
+            {
+              "label": "Engine knocking",
+              "max": 0.181,
+              "atSecond": 359
+            },
+            {
+              "label": "Radio",
+              "max": 0.166,
+              "atSecond": 4
+            },
+            {
+              "label": "Electronic music",
+              "max": 0.156,
+              "atSecond": 433
+            },
+            {
+              "label": "Video game music",
+              "max": 0.156,
+              "atSecond": 106
+            },
+            {
+              "label": "Motorboat, speedboat",
+              "max": 0.156,
+              "atSecond": 317
+            },
+            {
+              "label": "Siren",
+              "max": 0.149,
+              "atSecond": 145
+            },
+            {
+              "label": "Fire alarm",
+              "max": 0.109,
+              "atSecond": 16
+            },
+            {
+              "label": "Alarm",
+              "max": 0.095,
+              "atSecond": 16
+            },
+            {
+              "label": "Vehicle horn, car horn, honking",
+              "max": 0.093,
+              "atSecond": 337
+            },
+            {
+              "label": "Alarm clock",
+              "max": 0.074,
+              "atSecond": 16
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.065,
+              "atSecond": 333
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum"
+              ],
+              "fraction": 0.006
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 564166,
+        "name": "Crashing Starship",
+        "url": "https://freesound.org/people/Aemyn/sounds/564166/",
+        "author": "Aemyn",
+        "durationSec": 308,
+        "verdict": "reject",
+        "reason": "required sound absent: Hum / Humming / Mains hum",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 307,
+          "cleanSeconds": 26,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8549
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.7907
+            },
+            {
+              "label": "Music",
+              "max": 0.7847
+            },
+            {
+              "label": "Reversing beeps",
+              "max": 0.7815
+            },
+            {
+              "label": "Train",
+              "max": 0.6161
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.855,
+              "atSecond": 4
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.791,
+              "atSecond": 289
+            },
+            {
+              "label": "Music",
+              "max": 0.785,
+              "atSecond": 23
+            },
+            {
+              "label": "Reversing beeps",
+              "max": 0.781,
+              "atSecond": 289
+            },
+            {
+              "label": "Train",
+              "max": 0.616,
+              "atSecond": 105
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.532,
+              "atSecond": 105
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.498,
+              "atSecond": 105
+            },
+            {
+              "label": "Ice cream truck, ice cream van",
+              "max": 0.469,
+              "atSecond": 286
+            },
+            {
+              "label": "Truck",
+              "max": 0.463,
+              "atSecond": 285
+            },
+            {
+              "label": "Emergency vehicle",
+              "max": 0.328,
+              "atSecond": 115
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.316,
+              "atSecond": 131
+            },
+            {
+              "label": "Jet engine",
+              "max": 0.256,
+              "atSecond": 135
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.25,
+              "atSecond": 303
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.232,
+              "atSecond": 131
+            },
+            {
+              "label": "Bagpipes",
+              "max": 0.215,
+              "atSecond": 9
+            },
+            {
+              "label": "Siren",
+              "max": 0.203,
+              "atSecond": 115
+            },
+            {
+              "label": "Bus",
+              "max": 0.194,
+              "atSecond": 217
+            },
+            {
+              "label": "Car",
+              "max": 0.191,
+              "atSecond": 104
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.162,
+              "atSecond": 115
+            },
+            {
+              "label": "Traffic noise, roadway noise",
+              "max": 0.16,
+              "atSecond": 104
+            },
+            {
+              "label": "Ambulance (siren)",
+              "max": 0.156,
+              "atSecond": 115
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.132,
+              "atSecond": 115
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Hum",
+                "Humming",
+                "Mains hum"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

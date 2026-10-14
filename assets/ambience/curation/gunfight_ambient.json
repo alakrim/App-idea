@@ -1,11 +1,13 @@
 {
   "category": "gunfight_ambient",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "distant gunfire ambience",
-    "gunfire echo battle"
+    "gunfire echo battle",
+    "gunfire ambience",
+    "distant gunfire loop"
   ],
-  "poolSize": 1,
+  "poolSize": 3,
   "candidates": [
     {
       "rank": 1,
@@ -19,14 +21,56 @@
       "channels": 2,
       "avgRating": 4.64,
       "numRatings": 39,
-      "numDownloads": 4000,
+      "numDownloads": 4001,
       "previewUrl": "https://cdn.freesound.org/previews/125/125932_296888-hq.mp3",
       "score": 7.43,
       "reasons": [
         "+2.63 rating 4.64 from 39 ratings",
-        "+1.8 4000 downloads",
+        "+1.8 4001 downloads",
         "+2 at least 90 s",
         "+1 tags gunfire"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 653902,
+      "name": "Howland Island Wildlife Management Area 101522.aiff",
+      "url": "https://freesound.org/people/JohnLaVine333/sounds/653902/",
+      "author": "JohnLaVine333",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120.29,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 2,
+      "numDownloads": 158,
+      "previewUrl": "https://cdn.freesound.org/previews/653/653902_450294-hq.mp3",
+      "score": 6.19,
+      "reasons": [
+        "+2.09 rating 4.5 from 2 ratings",
+        "+1.1 158 downloads",
+        "+2 at least 90 s",
+        "+1 tags gunfire"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 533033,
+      "name": "Gulls and Bullets",
+      "url": "https://freesound.org/people/Johnsy/sounds/533033/",
+      "author": "Johnsy",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 52,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.6,
+      "numRatings": 5,
+      "numDownloads": 79,
+      "previewUrl": "https://cdn.freesound.org/previews/533/533033_235050-hq.mp3",
+      "score": 3.24,
+      "reasons": [
+        "+2.29 rating 4.6 from 5 ratings",
+        "+0.95 79 downloads"
       ]
     }
   ]

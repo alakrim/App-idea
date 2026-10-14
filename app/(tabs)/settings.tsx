@@ -10,6 +10,7 @@ import {
   analysisSummary,
   apiKeySummary,
   narrationSummary,
+  playbackSummary,
   readingSummary,
   storageSummary,
   themeLabel,
@@ -22,6 +23,7 @@ import { bytesUsedByLibrary, freeSpaceBytes } from '@/services/storage';
 import {
   BookOpen,
   CircleDollarSign,
+  Gauge,
   HardDrive,
   Info,
   KeyRound,
@@ -89,6 +91,12 @@ export default function SettingsScreen() {
           subtitle={ambienceSummary(settings.ambience)}
           leading={Wind}
           onPress={() => router.push('/settings/ambience')}
+        />
+        <ListItem
+          title="Playback"
+          subtitle={playbackSummary(settings.playback)}
+          leading={Gauge}
+          onPress={() => router.push('/settings/playback')}
         />
         <ListItem
           title="Reading"

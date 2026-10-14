@@ -191,5 +191,573 @@
         "+1 name matches clock"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Clock",
+          "Tick",
+          "Tick-tock"
+        ]
+      ],
+      "clapPrompt": "a slow pendulum clock ticking in a quiet room"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Clock / Tick / Tick-tock; clip has 60 s; a window needs 64 s",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 726603,
+        "name": "Ticking clock rhythm percussion 1",
+        "url": "https://freesound.org/people/Jim-Bretherick/sounds/726603/",
+        "author": "Jim-Bretherick",
+        "durationSec": 144,
+        "verdict": "reject",
+        "reason": "required sound absent: Clock / Tick / Tick-tock",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 144,
+          "cleanSeconds": 50,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.8693
+            },
+            {
+              "label": "Wood block",
+              "max": 0.4472
+            },
+            {
+              "label": "Percussion",
+              "max": 0.3879
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.3281
+            },
+            {
+              "label": "Fireworks",
+              "max": 0.3057
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.869,
+              "atSecond": 102
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.328,
+              "atSecond": 13
+            },
+            {
+              "label": "Fireworks",
+              "max": 0.306,
+              "atSecond": 99
+            },
+            {
+              "label": "Drum",
+              "max": 0.282,
+              "atSecond": 77
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.263,
+              "atSecond": 77
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.203,
+              "atSecond": 100
+            },
+            {
+              "label": "Electronic music",
+              "max": 0.189,
+              "atSecond": 102
+            },
+            {
+              "label": "Gunshot, gunfire",
+              "max": 0.176,
+              "atSecond": 100
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Clock",
+                "Tick",
+                "Tick-tock"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 380300,
+        "name": "Clock Ticking",
+        "url": "https://freesound.org/people/shazzakip/sounds/380300/",
+        "author": "shazzakip",
+        "durationSec": 91.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Clock / Tick / Tick-tock",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 91,
+          "cleanSeconds": 88,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.6362
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.5369
+            },
+            {
+              "label": "Rain",
+              "max": 0.5192
+            },
+            {
+              "label": "Tick-tock",
+              "max": 0.4934
+            },
+            {
+              "label": "Tick",
+              "max": 0.493
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.636,
+              "atSecond": 89
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.537,
+              "atSecond": 89
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.281,
+              "atSecond": 8
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Clock",
+                "Tick",
+                "Tick-tock"
+              ],
+              "fraction": 0.363
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 211192,
+        "name": "small clock in room",
+        "url": "https://freesound.org/people/Yuval/sounds/211192/",
+        "author": "Yuval",
+        "durationSec": 60,
+        "verdict": "reject",
+        "reason": "clip has 60 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 60,
+          "cleanSeconds": 60,
+          "topClasses": [
+            {
+              "label": "Tick-tock",
+              "max": 0.5694
+            },
+            {
+              "label": "Tick",
+              "max": 0.537
+            },
+            {
+              "label": "Clock",
+              "max": 0.3382
+            },
+            {
+              "label": "Scissors",
+              "max": 0.289
+            },
+            {
+              "label": "Writing",
+              "max": 0.1292
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Clock",
+                "Tick",
+                "Tick-tock"
+              ],
+              "fraction": 0.683
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 517682,
+        "name": "Clock ticking, natural room verb",
+        "url": "https://freesound.org/people/janbezouska/sounds/517682/",
+        "author": "janbezouska",
+        "durationSec": 199.6,
+        "verdict": "reject",
+        "reason": "required sound absent: Clock / Tick / Tick-tock",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 199,
+          "cleanSeconds": 199,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.1321
+            },
+            {
+              "label": "Speech",
+              "max": 0.0431
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.0229
+            },
+            {
+              "label": "Inside, small room",
+              "max": 0.0191
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.0144
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Clock",
+                "Tick",
+                "Tick-tock"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 659391,
+        "name": "Digital Clock World1.wav",
+        "url": "https://freesound.org/people/Jim-Bretherick/sounds/659391/",
+        "author": "Jim-Bretherick",
+        "durationSec": 140.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Clock / Tick / Tick-tock",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 140,
+          "cleanSeconds": 1,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.9182
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.5693
+            },
+            {
+              "label": "Guitar",
+              "max": 0.5054
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.4523
+            },
+            {
+              "label": "Speech",
+              "max": 0.2608
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.918,
+              "atSecond": 123
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.569,
+              "atSecond": 89
+            },
+            {
+              "label": "Guitar",
+              "max": 0.505,
+              "atSecond": 89
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.452,
+              "atSecond": 89
+            },
+            {
+              "label": "Speech",
+              "max": 0.261,
+              "atSecond": 99
+            },
+            {
+              "label": "Electronic music",
+              "max": 0.25,
+              "atSecond": 95
+            },
+            {
+              "label": "Bell",
+              "max": 0.249,
+              "atSecond": 115
+            },
+            {
+              "label": "Electric guitar",
+              "max": 0.229,
+              "atSecond": 89
+            },
+            {
+              "label": "Church bell",
+              "max": 0.179,
+              "atSecond": 112
+            },
+            {
+              "label": "Drum",
+              "max": 0.173,
+              "atSecond": 53
+            },
+            {
+              "label": "Fire alarm",
+              "max": 0.072,
+              "atSecond": 10
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Clock",
+                "Tick",
+                "Tick-tock"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 676288,
+        "name": "Ticking wall clock in kitchen",
+        "url": "https://freesound.org/people/Fauxtogramme/sounds/676288/",
+        "author": "Fauxtogramme",
+        "durationSec": 140,
+        "verdict": "reject",
+        "reason": "required sound absent: Clock / Tick / Tick-tock",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 140,
+          "cleanSeconds": 139,
+          "topClasses": [
+            {
+              "label": "Tick-tock",
+              "max": 0.5961
+            },
+            {
+              "label": "Tick",
+              "max": 0.4118
+            },
+            {
+              "label": "Music",
+              "max": 0.3
+            },
+            {
+              "label": "Arrow",
+              "max": 0.222
+            },
+            {
+              "label": "Inside, small room",
+              "max": 0.1957
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.3,
+              "atSecond": 5
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Clock",
+                "Tick",
+                "Tick-tock"
+              ],
+              "fraction": 0.329
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 520467,
+        "name": "BGSaSc Room Tone Workshop Birds Hum Clock Ticking",
+        "url": "https://freesound.org/people/Profispiesser/sounds/520467/",
+        "author": "Profispiesser",
+        "durationSec": 146,
+        "verdict": "reject",
+        "reason": "required sound absent: Clock / Tick / Tick-tock",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 146,
+          "cleanSeconds": 146,
+          "topClasses": [
+            {
+              "label": "Tick-tock",
+              "max": 0.7477
+            },
+            {
+              "label": "Tick",
+              "max": 0.6089
+            },
+            {
+              "label": "Clock",
+              "max": 0.318
+            },
+            {
+              "label": "Music",
+              "max": 0.1006
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.0945
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Clock",
+                "Tick",
+                "Tick-tock"
+              ],
+              "fraction": 0.466
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 341375,
+        "name": "muted clock[Foolishfool].MP3",
+        "url": "https://freesound.org/people/foolishfool/sounds/341375/",
+        "author": "foolishfool",
+        "durationSec": 92.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Clock / Tick / Tick-tock",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 92,
+          "cleanSeconds": 76,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8906
+            },
+            {
+              "label": "Creak",
+              "max": 0.7133
+            },
+            {
+              "label": "Tick-tock",
+              "max": 0.5549
+            },
+            {
+              "label": "Printer",
+              "max": 0.4546
+            },
+            {
+              "label": "Rub",
+              "max": 0.4512
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.891,
+              "atSecond": 58
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.397,
+              "atSecond": 20
+            },
+            {
+              "label": "Car",
+              "max": 0.157,
+              "atSecond": 20
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Clock",
+                "Tick",
+                "Tick-tock"
+              ],
+              "fraction": 0.207
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

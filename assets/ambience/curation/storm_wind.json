@@ -192,11 +192,12 @@
     }
   ],
   "screening": {
-    "screenedOn": "2026-10-13",
+    "screenedOn": "2026-10-14",
     "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
     "reranker": null,
     "thresholds": {
       "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
       "requiredFrameProbability": 0.2,
       "requiredFraction": 0.5,
       "windowSeconds": 64
@@ -218,13 +219,14 @@
       "exempt": [],
       "required": [
         [
-          "Wind"
+          "Wind",
+          "Wind noise (microphone)"
         ]
       ],
       "clapPrompt": "gusting storm wind through trees, no thunder, no sirens, no people"
     },
     "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Wind; no 64 s window is free of denied sounds: Vehicle reaches 0.603 (at 296 s)",
+    "unfilledReason": "required sound absent: Wind / Wind noise (microphone); no 64 s window is free of denied sounds: Vehicle reaches 0.603 (at 296 s)",
     "chosen": null,
     "candidates": [
       {
@@ -235,7 +237,7 @@
         "author": "DBlover",
         "durationSec": 85.4,
         "verdict": "reject",
-        "reason": "required sound absent: Wind",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
         "window": null,
         "clapScore": null,
         "evidence": {
@@ -308,9 +310,10 @@
           "requiredFraction": [
             {
               "group": [
-                "Wind"
+                "Wind",
+                "Wind noise (microphone)"
               ],
-              "fraction": 0
+              "fraction": 0.012
             }
           ]
         }
@@ -323,7 +326,7 @@
         "author": "Kinoton",
         "durationSec": 200,
         "verdict": "reject",
-        "reason": "required sound absent: Wind",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
         "window": null,
         "clapScore": null,
         "evidence": {
@@ -396,7 +399,8 @@
           "requiredFraction": [
             {
               "group": [
-                "Wind"
+                "Wind",
+                "Wind noise (microphone)"
               ],
               "fraction": 0.155
             }
@@ -411,7 +415,7 @@
         "author": "Vrymaa",
         "durationSec": 80.7,
         "verdict": "reject",
-        "reason": "required sound absent: Wind",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
         "window": null,
         "clapScore": null,
         "evidence": {
@@ -464,7 +468,8 @@
           "requiredFraction": [
             {
               "group": [
-                "Wind"
+                "Wind",
+                "Wind noise (microphone)"
               ],
               "fraction": 0.013
             }
@@ -562,9 +567,10 @@
           "requiredFraction": [
             {
               "group": [
-                "Wind"
+                "Wind",
+                "Wind noise (microphone)"
               ],
-              "fraction": 0.5
+              "fraction": 0.51
             }
           ]
         }
@@ -577,7 +583,7 @@
         "author": "Garuda1982",
         "durationSec": 198.9,
         "verdict": "reject",
-        "reason": "required sound absent: Wind",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
         "window": null,
         "clapScore": null,
         "evidence": {
@@ -640,7 +646,8 @@
           "requiredFraction": [
             {
               "group": [
-                "Wind"
+                "Wind",
+                "Wind noise (microphone)"
               ],
               "fraction": 0.051
             }
@@ -655,12 +662,12 @@
         "author": "Vrymaa",
         "durationSec": 72,
         "verdict": "reject",
-        "reason": "required sound absent: Wind",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
         "window": null,
         "clapScore": null,
         "evidence": {
           "frames": 72,
-          "cleanSeconds": 40,
+          "cleanSeconds": 27,
           "topClasses": [
             {
               "label": "Music",
@@ -713,12 +720,28 @@
               "label": "Vehicle",
               "max": 0.156,
               "atSecond": 56
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.121,
+              "atSecond": 50
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.084,
+              "atSecond": 51
+            },
+            {
+              "label": "Car alarm",
+              "max": 0.08,
+              "atSecond": 50
             }
           ],
           "requiredFraction": [
             {
               "group": [
-                "Wind"
+                "Wind",
+                "Wind noise (microphone)"
               ],
               "fraction": 0
             }
@@ -733,7 +756,7 @@
         "author": "Vrymaa",
         "durationSec": 77.6,
         "verdict": "reject",
-        "reason": "required sound absent: Wind",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
         "window": null,
         "clapScore": null,
         "evidence": {
@@ -786,9 +809,10 @@
           "requiredFraction": [
             {
               "group": [
-                "Wind"
+                "Wind",
+                "Wind noise (microphone)"
               ],
-              "fraction": 0.039
+              "fraction": 0.091
             }
           ]
         }
@@ -801,7 +825,7 @@
         "author": "HECKFRICKER",
         "durationSec": 183.7,
         "verdict": "reject",
-        "reason": "required sound absent: Wind",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
         "window": null,
         "clapScore": null,
         "evidence": {
@@ -864,9 +888,10 @@
           "requiredFraction": [
             {
               "group": [
-                "Wind"
+                "Wind",
+                "Wind noise (microphone)"
               ],
-              "fraction": 0.005
+              "fraction": 0.011
             }
           ]
         }

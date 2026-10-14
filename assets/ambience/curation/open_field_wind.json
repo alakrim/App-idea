@@ -191,5 +191,701 @@
         "+1 name matches wind, field, grass"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Wind",
+          "Wind noise (microphone)"
+        ]
+      ],
+      "clapPrompt": "steady wind through open grassland, no birds, no people"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Wind / Wind noise (microphone)",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 167684,
+        "name": "Strong wind blowing in the plain in Anatolia (Turkey)",
+        "url": "https://freesound.org/people/felix.blume/sounds/167684/",
+        "author": "felix.blume",
+        "durationSec": 181,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 181,
+          "cleanSeconds": 4,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.7685
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.6768
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.6495
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.6234
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.6077
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.768,
+              "atSecond": 28
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.677,
+              "atSecond": 166
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.65,
+              "atSecond": 28
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.623,
+              "atSecond": 103
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.608,
+              "atSecond": 41
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.467,
+              "atSecond": 166
+            },
+            {
+              "label": "Ship",
+              "max": 0.271,
+              "atSecond": 166
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.266,
+              "atSecond": 103
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.236,
+              "atSecond": 103
+            },
+            {
+              "label": "Speech",
+              "max": 0.201,
+              "atSecond": 52
+            },
+            {
+              "label": "Honk",
+              "max": 0.062,
+              "atSecond": 52
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0.398
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 139337,
+        "name": "Wind is blowing in the grass of a patagonian plain. Wind is blowing in the trees in background. (Tierra del fuego, Argentina). ",
+        "url": "https://freesound.org/people/felix.blume/sounds/139337/",
+        "author": "felix.blume",
+        "durationSec": 181,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 181,
+          "cleanSeconds": 31,
+          "topClasses": [
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.5976
+            },
+            {
+              "label": "Waves, surf",
+              "max": 0.5962
+            },
+            {
+              "label": "Wind",
+              "max": 0.5832
+            },
+            {
+              "label": "Ocean",
+              "max": 0.5753
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.5424
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.598,
+              "atSecond": 143
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.542,
+              "atSecond": 35
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.472,
+              "atSecond": 48
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.428,
+              "atSecond": 143
+            },
+            {
+              "label": "Ship",
+              "max": 0.309,
+              "atSecond": 163
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0.122
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 620099,
+        "name": "Field ambience 01.wav",
+        "url": "https://freesound.org/people/szelestamas/sounds/620099/",
+        "author": "szelestamas",
+        "durationSec": 114.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 114,
+          "cleanSeconds": 114,
+          "topClasses": [
+            {
+              "label": "White noise",
+              "max": 0.1901
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.1376
+            },
+            {
+              "label": "Rustle",
+              "max": 0.1121
+            },
+            {
+              "label": "Silence",
+              "max": 0.1024
+            },
+            {
+              "label": "Thunder",
+              "max": 0.0893
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 176252,
+        "name": "wind in the grass small town",
+        "url": "https://freesound.org/people/strangy/sounds/176252/",
+        "author": "strangy",
+        "durationSec": 90,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 90,
+          "cleanSeconds": 86,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.821
+            },
+            {
+              "label": "Thunder",
+              "max": 0.6103
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.4205
+            },
+            {
+              "label": "Rain",
+              "max": 0.3791
+            },
+            {
+              "label": "Tick-tock",
+              "max": 0.2345
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.821,
+              "atSecond": 1
+            },
+            {
+              "label": "Thunder",
+              "max": 0.61,
+              "atSecond": 27
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.421,
+              "atSecond": 27
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 164656,
+        "name": "meadow_insects_sunny_afternoon.wav",
+        "url": "https://freesound.org/people/DanGasior/sounds/164656/",
+        "author": "DanGasior",
+        "durationSec": 207.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 207,
+          "cleanSeconds": 176,
+          "topClasses": [
+            {
+              "label": "Insect",
+              "max": 0.9037
+            },
+            {
+              "label": "Bee, wasp, etc.",
+              "max": 0.8652
+            },
+            {
+              "label": "Cricket",
+              "max": 0.8259
+            },
+            {
+              "label": "Fly, housefly",
+              "max": 0.7592
+            },
+            {
+              "label": "Music",
+              "max": 0.6676
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.668,
+              "atSecond": 3
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.452,
+              "atSecond": 125
+            },
+            {
+              "label": "Speech",
+              "max": 0.401,
+              "atSecond": 75
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 197232,
+        "name": "Wind is blowing in the grass of a patagonian plain. Wind is blowing in the trees in background. (Tierra del fuego, Argentina)",
+        "url": "https://freesound.org/people/felix.blume/sounds/197232/",
+        "author": "felix.blume",
+        "durationSec": 179.3,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 179,
+          "cleanSeconds": 1,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.7205
+            },
+            {
+              "label": "Thunder",
+              "max": 0.7129
+            },
+            {
+              "label": "Ocean",
+              "max": 0.6732
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.656
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.6067
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.713,
+              "atSecond": 11
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.656,
+              "atSecond": 13
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.607,
+              "atSecond": 125
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.575,
+              "atSecond": 35
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.564,
+              "atSecond": 11
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.458,
+              "atSecond": 35
+            },
+            {
+              "label": "Ship",
+              "max": 0.272,
+              "atSecond": 124
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.203,
+              "atSecond": 13
+            },
+            {
+              "label": "Car",
+              "max": 0.153,
+              "atSecond": 152
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0.369
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 215414,
+        "name": "Wind blowing in the countryside during spring, Tall Grass Prairie, Oklahoma, USA",
+        "url": "https://freesound.org/people/felix.blume/sounds/215414/",
+        "author": "felix.blume",
+        "durationSec": 275.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 275,
+          "cleanSeconds": 7,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.7521
+            },
+            {
+              "label": "Rain",
+              "max": 0.7039
+            },
+            {
+              "label": "Waves, surf",
+              "max": 0.663
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.6536
+            },
+            {
+              "label": "Ocean",
+              "max": 0.6359
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.752,
+              "atSecond": 140
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.654,
+              "atSecond": 140
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.592,
+              "atSecond": 205
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.573,
+              "atSecond": 221
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.559,
+              "atSecond": 70
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.373,
+              "atSecond": 273
+            },
+            {
+              "label": "Ship",
+              "max": 0.305,
+              "atSecond": 221
+            },
+            {
+              "label": "Explosion",
+              "max": 0.26,
+              "atSecond": 249
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.199,
+              "atSecond": 205
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.174,
+              "atSecond": 205
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0.367
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 215853,
+        "name": "Wind blowing in dry grass, in a field in Texas, USA.",
+        "url": "https://freesound.org/people/felix.blume/sounds/215853/",
+        "author": "felix.blume",
+        "durationSec": 361,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 361,
+          "cleanSeconds": 34,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.7771
+            },
+            {
+              "label": "Ocean",
+              "max": 0.7667
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.637
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.6178
+            },
+            {
+              "label": "Wind",
+              "max": 0.6123
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.637,
+              "atSecond": 162
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.618,
+              "atSecond": 15
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.59,
+              "atSecond": 107
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.479,
+              "atSecond": 162
+            },
+            {
+              "label": "Thunder",
+              "max": 0.389,
+              "atSecond": 310
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.331,
+              "atSecond": 199
+            },
+            {
+              "label": "Ship",
+              "max": 0.32,
+              "atSecond": 263
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.284,
+              "atSecond": 310
+            },
+            {
+              "label": "Explosion",
+              "max": 0.258,
+              "atSecond": 276
+            },
+            {
+              "label": "Car",
+              "max": 0.221,
+              "atSecond": 176
+            },
+            {
+              "label": "Motorboat, speedboat",
+              "max": 0.21,
+              "atSecond": 26
+            },
+            {
+              "label": "Music",
+              "max": 0.193,
+              "atSecond": 28
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0.355
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

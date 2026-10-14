@@ -22,3 +22,18 @@ describe('ambience settings schema (P1-3)', () => {
     expect(SettingsSchema.safeParse(DEFAULT_SETTINGS).success).toBe(true);
   });
 });
+
+describe('playback settings', () => {
+  const playback = SettingsSchema.shape.playback;
+
+  it('accepts a default speed from 0.5 to 2.0 and nothing outside it', () => {
+    expect(playback.safeParse({ defaultRate: 0.5 }).success).toBe(true);
+    expect(playback.safeParse({ defaultRate: 2 }).success).toBe(true);
+    expect(playback.safeParse({ defaultRate: 0.4 }).success).toBe(false);
+    expect(playback.safeParse({ defaultRate: 2.1 }).success).toBe(false);
+  });
+
+  it('defaults to normal speed', () => {
+    expect(DEFAULT_SETTINGS.playback).toEqual({ defaultRate: 1 });
+  });
+});

@@ -58,3 +58,18 @@ describe('seriesRepo', () => {
     ).toEqual([]);
   });
 });
+
+describe('seriesRepo playback rate', () => {
+  it('is empty until a speed is saved, then keeps the last one, without changing the series shape', () => {
+    const { db } = createTestDb();
+    seriesRepo.insert(db, seriesRow(1));
+
+    expect(seriesRepo.getPlaybackRate(db, id(1))).toBeNull();
+    seriesRepo.setPlaybackRate(db, id(1), 1.25);
+    seriesRepo.setPlaybackRate(db, id(1), 1.5);
+
+    expect(seriesRepo.getPlaybackRate(db, id(1))).toBe(1.5);
+    expect(seriesRepo.get(db, id(1))).toEqual(seriesRow(1));
+    expect(seriesRepo.list(db)[0]).not.toHaveProperty('playbackRate');
+  });
+});

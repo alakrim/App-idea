@@ -185,5 +185,581 @@
         "+2 at least 90 s"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Fire",
+          "Crackle"
+        ]
+      ],
+      "clapPrompt": "a crackling fire in a room, soft pops, no people"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Fire / Crackle",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 447818,
+        "name": "Crackeling Fireplace.mp3",
+        "url": "https://freesound.org/people/courter/sounds/447818/",
+        "author": "courter",
+        "durationSec": 403.2,
+        "verdict": "reject",
+        "reason": "required sound absent: Fire / Crackle",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 403,
+          "cleanSeconds": 400,
+          "topClasses": [
+            {
+              "label": "Typing",
+              "max": 0.7398
+            },
+            {
+              "label": "Finger snapping",
+              "max": 0.7308
+            },
+            {
+              "label": "Computer keyboard",
+              "max": 0.6841
+            },
+            {
+              "label": "Crumpling, crinkling",
+              "max": 0.6288
+            },
+            {
+              "label": "Chop",
+              "max": 0.628
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Gunshot, gunfire",
+              "max": 0.276,
+              "atSecond": 228
+            },
+            {
+              "label": "Firecracker",
+              "max": 0.215,
+              "atSecond": 48
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fire",
+                "Crackle"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 414482,
+        "name": "Fireplace burning",
+        "url": "https://freesound.org/people/giddster/sounds/414482/",
+        "author": "giddster",
+        "durationSec": 72.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Fire / Crackle",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 72,
+          "cleanSeconds": 18,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.5934
+            },
+            {
+              "label": "Animal",
+              "max": 0.4056
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.3095
+            },
+            {
+              "label": "Car",
+              "max": 0.2928
+            },
+            {
+              "label": "Rain",
+              "max": 0.283
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.593,
+              "atSecond": 6
+            },
+            {
+              "label": "Car",
+              "max": 0.293,
+              "atSecond": 6
+            },
+            {
+              "label": "Thunder",
+              "max": 0.203,
+              "atSecond": 39
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.2,
+              "atSecond": 40
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.194,
+              "atSecond": 5
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.162,
+              "atSecond": 39
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fire",
+                "Crackle"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 729396,
+        "name": "Campfire 02",
+        "url": "https://freesound.org/people/HECKFRICKER/sounds/729396/",
+        "author": "HECKFRICKER",
+        "durationSec": 267.6,
+        "verdict": "reject",
+        "reason": "required sound absent: Fire / Crackle",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 267,
+          "cleanSeconds": 266,
+          "topClasses": [
+            {
+              "label": "Chop",
+              "max": 0.8802
+            },
+            {
+              "label": "Finger snapping",
+              "max": 0.7723
+            },
+            {
+              "label": "Squish",
+              "max": 0.3386
+            },
+            {
+              "label": "Typing",
+              "max": 0.3281
+            },
+            {
+              "label": "Computer keyboard",
+              "max": 0.3082
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.179,
+              "atSecond": 154
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fire",
+                "Crackle"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 729395,
+        "name": "Campfire 01",
+        "url": "https://freesound.org/people/HECKFRICKER/sounds/729395/",
+        "author": "HECKFRICKER",
+        "durationSec": 109,
+        "verdict": "reject",
+        "reason": "required sound absent: Fire / Crackle",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 108,
+          "cleanSeconds": 108,
+          "topClasses": [
+            {
+              "label": "Tearing",
+              "max": 0.3231
+            },
+            {
+              "label": "Chop",
+              "max": 0.2993
+            },
+            {
+              "label": "Finger snapping",
+              "max": 0.2925
+            },
+            {
+              "label": "Fire",
+              "max": 0.2859
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.2591
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fire",
+                "Crackle"
+              ],
+              "fraction": 0.046
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 797669,
+        "name": "Sauna fireplace loop",
+        "url": "https://freesound.org/people/HenKonen/sounds/797669/",
+        "author": "HenKonen",
+        "durationSec": 122.3,
+        "verdict": "reject",
+        "reason": "required sound absent: Fire / Crackle",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 122,
+          "cleanSeconds": 21,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.7141
+            },
+            {
+              "label": "Car",
+              "max": 0.4676
+            },
+            {
+              "label": "Keys jangling",
+              "max": 0.4434
+            },
+            {
+              "label": "Music",
+              "max": 0.4264
+            },
+            {
+              "label": "Rain",
+              "max": 0.2771
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.714,
+              "atSecond": 14
+            },
+            {
+              "label": "Car",
+              "max": 0.468,
+              "atSecond": 73
+            },
+            {
+              "label": "Music",
+              "max": 0.426,
+              "atSecond": 70
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.206,
+              "atSecond": 18
+            },
+            {
+              "label": "Thunder",
+              "max": 0.189,
+              "atSecond": 107
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.178,
+              "atSecond": 21
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fire",
+                "Crackle"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 836535,
+        "name": "Hearthfire (Louder)",
+        "url": "https://freesound.org/people/SilverIllusionist/sounds/836535/",
+        "author": "SilverIllusionist",
+        "durationSec": 80,
+        "verdict": "reject",
+        "reason": "required sound absent: Fire / Crackle",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 80,
+          "cleanSeconds": 47,
+          "topClasses": [
+            {
+              "label": "Finger snapping",
+              "max": 0.4828
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.3702
+            },
+            {
+              "label": "Animal",
+              "max": 0.313
+            },
+            {
+              "label": "Fire",
+              "max": 0.289
+            },
+            {
+              "label": "Arrow",
+              "max": 0.2788
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.37,
+              "atSecond": 57
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.262,
+              "atSecond": 71
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.153,
+              "atSecond": 71
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fire",
+                "Crackle"
+              ],
+              "fraction": 0.013
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 52762,
+        "name": "cauldron.mp3",
+        "url": "https://freesound.org/people/billyzenn/sounds/52762/",
+        "author": "billyzenn",
+        "durationSec": 257.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Fire / Crackle",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 257,
+          "cleanSeconds": 185,
+          "topClasses": [
+            {
+              "label": "Whip",
+              "max": 0.7531
+            },
+            {
+              "label": "Boiling",
+              "max": 0.546
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.3753
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.3278
+            },
+            {
+              "label": "Liquid",
+              "max": 0.3188
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.375,
+              "atSecond": 67
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.328,
+              "atSecond": 67
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.256,
+              "atSecond": 168
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.252,
+              "atSecond": 67
+            },
+            {
+              "label": "Gunshot, gunfire",
+              "max": 0.245,
+              "atSecond": 15
+            },
+            {
+              "label": "Firecracker",
+              "max": 0.232,
+              "atSecond": 85
+            },
+            {
+              "label": "Fireworks",
+              "max": 0.189,
+              "atSecond": 85
+            },
+            {
+              "label": "Music",
+              "max": 0.17,
+              "atSecond": 142
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fire",
+                "Crackle"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 465064,
+        "name": "Water in pan.wav",
+        "url": "https://freesound.org/people/Kiarand/sounds/465064/",
+        "author": "Kiarand",
+        "durationSec": 134.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Fire / Crackle",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 134,
+          "cleanSeconds": 126,
+          "topClasses": [
+            {
+              "label": "Ratchet, pawl",
+              "max": 0.6014
+            },
+            {
+              "label": "Water tap, faucet",
+              "max": 0.5519
+            },
+            {
+              "label": "Frying (food)",
+              "max": 0.5291
+            },
+            {
+              "label": "Mechanisms",
+              "max": 0.4885
+            },
+            {
+              "label": "Sink (filling or washing)",
+              "max": 0.4779
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Hair dryer",
+              "max": 0.457,
+              "atSecond": 48
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.198,
+              "atSecond": 9
+            },
+            {
+              "label": "Engine",
+              "max": 0.173,
+              "atSecond": 9
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Fire",
+                "Crackle"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

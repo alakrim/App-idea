@@ -185,5 +185,729 @@
         "+1 name matches arena"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Crowd",
+          "Cheering",
+          "Applause",
+          "Hubbub, speech noise, speech babble"
+        ]
+      ],
+      "clapPrompt": "a stadium crowd cheering and jeering far off, no music"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Crowd / Cheering / Applause / Hubbub, speech noise, speech babble; no 64 s window is free of denied sounds: Music reaches 0.876 (at 45 s)",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 645337,
+        "name": "concert crowd cheering",
+        "url": "https://freesound.org/people/fxcv/sounds/645337/",
+        "author": "fxcv",
+        "durationSec": 67.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Cheering / Applause / Hubbub, speech noise, speech babble",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 67,
+          "cleanSeconds": 50,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.7436
+            },
+            {
+              "label": "Music",
+              "max": 0.7412
+            },
+            {
+              "label": "Applause",
+              "max": 0.7386
+            },
+            {
+              "label": "Crowd",
+              "max": 0.3003
+            },
+            {
+              "label": "Run",
+              "max": 0.235
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.741,
+              "atSecond": 66
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.162,
+              "atSecond": 10
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Cheering",
+                "Applause",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0.403
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 424297,
+        "name": "Boston Garden Celtics Ambience 2.m4a",
+        "url": "https://freesound.org/people/Douglas711/sounds/424297/",
+        "author": "Douglas711",
+        "durationSec": 165.4,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Music reaches 0.876 (at 45 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 165,
+          "cleanSeconds": 66,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.8755
+            },
+            {
+              "label": "Speech",
+              "max": 0.8504
+            },
+            {
+              "label": "Applause",
+              "max": 0.7384
+            },
+            {
+              "label": "Crowd",
+              "max": 0.7273
+            },
+            {
+              "label": "Battle cry",
+              "max": 0.5379
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.876,
+              "atSecond": 45
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.25,
+              "atSecond": 43
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.211,
+              "atSecond": 104
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Cheering",
+                "Applause",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0.636
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 829454,
+        "name": "CRWDReac-SOCCER_Millerntor Stadium Crowd Reaction General Ambience 01_PHILIPP FEIT_FCSP 29.546_Sound Of Sankt Pauli",
+        "url": "https://freesound.org/people/itmightgetloud/sounds/829454/",
+        "author": "itmightgetloud",
+        "durationSec": 372.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Cheering / Applause / Hubbub, speech noise, speech babble",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 372,
+          "cleanSeconds": 259,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.734
+            },
+            {
+              "label": "Train",
+              "max": 0.6857
+            },
+            {
+              "label": "Applause",
+              "max": 0.6807
+            },
+            {
+              "label": "Music",
+              "max": 0.659
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.6538
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Train",
+              "max": 0.686,
+              "atSecond": 230
+            },
+            {
+              "label": "Music",
+              "max": 0.659,
+              "atSecond": 155
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.654,
+              "atSecond": 322
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.561,
+              "atSecond": 230
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.517,
+              "atSecond": 230
+            },
+            {
+              "label": "Aircraft engine",
+              "max": 0.421,
+              "atSecond": 159
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.406,
+              "atSecond": 230
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.4,
+              "atSecond": 159
+            },
+            {
+              "label": "Truck",
+              "max": 0.391,
+              "atSecond": 322
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.377,
+              "atSecond": 159
+            },
+            {
+              "label": "Jet engine",
+              "max": 0.336,
+              "atSecond": 318
+            },
+            {
+              "label": "Car",
+              "max": 0.241,
+              "atSecond": 150
+            },
+            {
+              "label": "Hair dryer",
+              "max": 0.226,
+              "atSecond": 320
+            },
+            {
+              "label": "Train wheels squealing",
+              "max": 0.166,
+              "atSecond": 230
+            },
+            {
+              "label": "Siren",
+              "max": 0.053,
+              "atSecond": 223
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Cheering",
+                "Applause",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0.196
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 424292,
+        "name": "Fenway Ambience 4.m4a",
+        "url": "https://freesound.org/people/Douglas711/sounds/424292/",
+        "author": "Douglas711",
+        "durationSec": 128.9,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Music reaches 0.714 (at 127 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 128,
+          "cleanSeconds": 122,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8371
+            },
+            {
+              "label": "Applause",
+              "max": 0.8145
+            },
+            {
+              "label": "Music",
+              "max": 0.7143
+            },
+            {
+              "label": "Crowd",
+              "max": 0.4965
+            },
+            {
+              "label": "Battle cry",
+              "max": 0.4481
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.714,
+              "atSecond": 127
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.286,
+              "atSecond": 88
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Cheering",
+                "Applause",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0.727
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 39733,
+        "name": "noise#01.aif",
+        "url": "https://freesound.org/people/huubjeroen/sounds/39733/",
+        "author": "huubjeroen",
+        "durationSec": 324.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Cheering / Applause / Hubbub, speech noise, speech babble",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 324,
+          "cleanSeconds": 146,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8468
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5761
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.5754
+            },
+            {
+              "label": "Run",
+              "max": 0.5536
+            },
+            {
+              "label": "Applause",
+              "max": 0.5307
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.576,
+              "atSecond": 186
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.575,
+              "atSecond": 87
+            },
+            {
+              "label": "Music",
+              "max": 0.386,
+              "atSecond": 140
+            },
+            {
+              "label": "Skidding",
+              "max": 0.364,
+              "atSecond": 61
+            },
+            {
+              "label": "Train",
+              "max": 0.317,
+              "atSecond": 133
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.283,
+              "atSecond": 87
+            },
+            {
+              "label": "Motorboat, speedboat",
+              "max": 0.239,
+              "atSecond": 109
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.236,
+              "atSecond": 87
+            },
+            {
+              "label": "Car",
+              "max": 0.228,
+              "atSecond": 61
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.214,
+              "atSecond": 87
+            },
+            {
+              "label": "Ship",
+              "max": 0.202,
+              "atSecond": 90
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.193,
+              "atSecond": 42
+            },
+            {
+              "label": "Emergency vehicle",
+              "max": 0.191,
+              "atSecond": 152
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.191,
+              "atSecond": 133
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.189,
+              "atSecond": 133
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.181,
+              "atSecond": 152
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.167,
+              "atSecond": 42
+            },
+            {
+              "label": "Siren",
+              "max": 0.163,
+              "atSecond": 134
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.074,
+              "atSecond": 61
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.064,
+              "atSecond": 134
+            },
+            {
+              "label": "Ambulance (siren)",
+              "max": 0.063,
+              "atSecond": 61
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Cheering",
+                "Applause",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0.049
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 424296,
+        "name": "Boston Garden Celtics Ambience.m4a",
+        "url": "https://freesound.org/people/Douglas711/sounds/424296/",
+        "author": "Douglas711",
+        "durationSec": 217,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Cheering / Applause / Hubbub, speech noise, speech babble",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 217,
+          "cleanSeconds": 132,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.8702
+            },
+            {
+              "label": "Speech",
+              "max": 0.8621
+            },
+            {
+              "label": "Crowd",
+              "max": 0.632
+            },
+            {
+              "label": "Run",
+              "max": 0.6079
+            },
+            {
+              "label": "Children shouting",
+              "max": 0.5731
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.87,
+              "atSecond": 191
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.403,
+              "atSecond": 42
+            },
+            {
+              "label": "Siren",
+              "max": 0.082,
+              "atSecond": 32
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Cheering",
+                "Applause",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0.369
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 424293,
+        "name": "Fenway Ambience 3.m4a",
+        "url": "https://freesound.org/people/Douglas711/sounds/424293/",
+        "author": "Douglas711",
+        "durationSec": 131.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Cheering / Applause / Hubbub, speech noise, speech babble",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 131,
+          "cleanSeconds": 104,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.836
+            },
+            {
+              "label": "Music",
+              "max": 0.7826
+            },
+            {
+              "label": "Applause",
+              "max": 0.6917
+            },
+            {
+              "label": "Run",
+              "max": 0.6349
+            },
+            {
+              "label": "Train",
+              "max": 0.5371
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.783,
+              "atSecond": 129
+            },
+            {
+              "label": "Train",
+              "max": 0.537,
+              "atSecond": 73
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.379,
+              "atSecond": 73
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.378,
+              "atSecond": 73
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.288,
+              "atSecond": 73
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.258,
+              "atSecond": 86
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.221,
+              "atSecond": 73
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Cheering",
+                "Applause",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0.137
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 706732,
+        "name": "Hockey arena pregame applause.wav",
+        "url": "https://freesound.org/people/SEF7/sounds/706732/",
+        "author": "SEF7",
+        "durationSec": 47.9,
+        "verdict": "reject",
+        "reason": "clip has 47 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 47,
+          "cleanSeconds": 28,
+          "topClasses": [
+            {
+              "label": "Applause",
+              "max": 0.7481
+            },
+            {
+              "label": "Music",
+              "max": 0.687
+            },
+            {
+              "label": "Speech",
+              "max": 0.6314
+            },
+            {
+              "label": "Crowd",
+              "max": 0.3662
+            },
+            {
+              "label": "Cheering",
+              "max": 0.2385
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.687,
+              "atSecond": 46
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.233,
+              "atSecond": 8
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Cheering",
+                "Applause",
+                "Hubbub, speech noise, speech babble"
+              ],
+              "fraction": 0.936
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

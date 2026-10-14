@@ -191,5 +191,671 @@
         "+1 name matches village"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Speech",
+          "Crowd",
+          "Hubbub, speech noise, speech babble",
+          "Dog",
+          "Bark",
+          "Chatter",
+          "Conversation"
+        ]
+      ],
+      "clapPrompt": "a small village square with a few voices and a dog barking, no engines"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "no 64 s window is free of denied sounds: Music reaches 0.816 (at 219 s); required sound absent: Speech / Crowd / Hubbub, speech noise, speech babble / Dog / Bark / Chatter / Conversation",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 648483,
+        "name": "CROWD village square.wav",
+        "url": "https://freesound.org/people/nicoproson/sounds/648483/",
+        "author": "nicoproson",
+        "durationSec": 248,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Music reaches 0.816 (at 219 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 248,
+          "cleanSeconds": 175,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9107
+            },
+            {
+              "label": "Children playing",
+              "max": 0.9044
+            },
+            {
+              "label": "Music",
+              "max": 0.8157
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5444
+            },
+            {
+              "label": "Child speech, kid speaking",
+              "max": 0.5346
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.816,
+              "atSecond": 219
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.544,
+              "atSecond": 119
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.335,
+              "atSecond": 13
+            },
+            {
+              "label": "Train",
+              "max": 0.172,
+              "atSecond": 55
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Speech",
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Dog",
+                "Bark",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.988
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 482932,
+        "name": "Small Town Ambience",
+        "url": "https://freesound.org/people/zakrzu/sounds/482932/",
+        "author": "zakrzu",
+        "durationSec": 340.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Speech / Crowd / Hubbub, speech noise, speech babble / Dog / Bark / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 340,
+          "cleanSeconds": 273,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.9361
+            },
+            {
+              "label": "Insect",
+              "max": 0.9072
+            },
+            {
+              "label": "Speech",
+              "max": 0.8493
+            },
+            {
+              "label": "Car",
+              "max": 0.8488
+            },
+            {
+              "label": "Fly, housefly",
+              "max": 0.7775
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.936,
+              "atSecond": 208
+            },
+            {
+              "label": "Car",
+              "max": 0.849,
+              "atSecond": 208
+            },
+            {
+              "label": "Engine starting",
+              "max": 0.664,
+              "atSecond": 208
+            },
+            {
+              "label": "Engine",
+              "max": 0.471,
+              "atSecond": 208
+            },
+            {
+              "label": "Medium engine (mid frequency)",
+              "max": 0.299,
+              "atSecond": 208
+            },
+            {
+              "label": "Music",
+              "max": 0.279,
+              "atSecond": 116
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Speech",
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Dog",
+                "Bark",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.365
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 690572,
+        "name": "Calm square ambience with pigeons and birds at St Saturnin Les Apt, France",
+        "url": "https://freesound.org/people/Raphael.Malfliet/sounds/690572/",
+        "author": "Raphael.Malfliet",
+        "durationSec": 177.3,
+        "verdict": "reject",
+        "reason": "required sound absent: Speech / Crowd / Hubbub, speech noise, speech babble / Dog / Bark / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 177,
+          "cleanSeconds": 176,
+          "topClasses": [
+            {
+              "label": "Bird",
+              "max": 0.7923
+            },
+            {
+              "label": "Pigeon, dove",
+              "max": 0.6983
+            },
+            {
+              "label": "Bee, wasp, etc.",
+              "max": 0.589
+            },
+            {
+              "label": "Cricket",
+              "max": 0.5707
+            },
+            {
+              "label": "Insect",
+              "max": 0.5454
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.179,
+              "atSecond": 122
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Speech",
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Dog",
+                "Bark",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.056
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 422585,
+        "name": "Village square voices birds",
+        "url": "https://freesound.org/people/Martin.Sadoux/sounds/422585/",
+        "author": "Martin.Sadoux",
+        "durationSec": 388.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Speech / Crowd / Hubbub, speech noise, speech babble / Dog / Bark / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 388,
+          "cleanSeconds": 385,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.7138
+            },
+            {
+              "label": "Cricket",
+              "max": 0.6869
+            },
+            {
+              "label": "Insect",
+              "max": 0.6171
+            },
+            {
+              "label": "Tick-tock",
+              "max": 0.5046
+            },
+            {
+              "label": "Owl",
+              "max": 0.4739
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.189,
+              "atSecond": 151
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Speech",
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Dog",
+                "Bark",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.098
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 612602,
+        "name": "Outpatient clinic interior, calm environment, few people talking in spanish, village atmosphere outside, cicadas in Ikabaru",
+        "url": "https://freesound.org/people/felix.blume/sounds/612602/",
+        "author": "felix.blume",
+        "durationSec": 288.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Speech / Crowd / Hubbub, speech noise, speech babble / Dog / Bark / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 288,
+          "cleanSeconds": 117,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.7638
+            },
+            {
+              "label": "Train",
+              "max": 0.6441
+            },
+            {
+              "label": "Speech",
+              "max": 0.5947
+            },
+            {
+              "label": "Rub",
+              "max": 0.5614
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.5373
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.764,
+              "atSecond": 79
+            },
+            {
+              "label": "Train",
+              "max": 0.644,
+              "atSecond": 102
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.537,
+              "atSecond": 82
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.53,
+              "atSecond": 82
+            },
+            {
+              "label": "Train wheels squealing",
+              "max": 0.452,
+              "atSecond": 82
+            },
+            {
+              "label": "Music",
+              "max": 0.436,
+              "atSecond": 120
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.345,
+              "atSecond": 75
+            },
+            {
+              "label": "Truck",
+              "max": 0.341,
+              "atSecond": 79
+            },
+            {
+              "label": "Traffic noise, roadway noise",
+              "max": 0.309,
+              "atSecond": 115
+            },
+            {
+              "label": "Car",
+              "max": 0.253,
+              "atSecond": 115
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.205,
+              "atSecond": 283
+            },
+            {
+              "label": "Bus",
+              "max": 0.194,
+              "atSecond": 115
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.18,
+              "atSecond": 85
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.175,
+              "atSecond": 283
+            },
+            {
+              "label": "Motor vehicle (road)",
+              "max": 0.166,
+              "atSecond": 115
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Speech",
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Dog",
+                "Bark",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.042
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 731234,
+        "name": "AMB-Village,Rooster,DistantPeople,Insects,Birds,Wind-Kaski,Nepal-19Jul2023,18.56.09",
+        "url": "https://freesound.org/people/soundandmelodies/sounds/731234/",
+        "author": "soundandmelodies",
+        "durationSec": 161.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Speech / Crowd / Hubbub, speech noise, speech babble / Dog / Bark / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 161,
+          "cleanSeconds": 149,
+          "topClasses": [
+            {
+              "label": "Animal",
+              "max": 0.7566
+            },
+            {
+              "label": "Chicken, rooster",
+              "max": 0.728
+            },
+            {
+              "label": "Crowing, cock-a-doodle-doo",
+              "max": 0.7036
+            },
+            {
+              "label": "Domestic animals, pets",
+              "max": 0.6747
+            },
+            {
+              "label": "Fowl",
+              "max": 0.6137
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Honk",
+              "max": 0.228,
+              "atSecond": 93
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Speech",
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Dog",
+                "Bark",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.019
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 653236,
+        "name": "walk thru east village 2.wav",
+        "url": "https://freesound.org/people/overmedium/sounds/653236/",
+        "author": "overmedium",
+        "durationSec": 113.2,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Music reaches 0.743 (at 24 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 113,
+          "cleanSeconds": 71,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8681
+            },
+            {
+              "label": "Music",
+              "max": 0.7426
+            },
+            {
+              "label": "Train",
+              "max": 0.6745
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.619
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.5532
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.743,
+              "atSecond": 24
+            },
+            {
+              "label": "Train",
+              "max": 0.674,
+              "atSecond": 65
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.619,
+              "atSecond": 47
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.553,
+              "atSecond": 65
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.513,
+              "atSecond": 65
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.336,
+              "atSecond": 56
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.187,
+              "atSecond": 32
+            },
+            {
+              "label": "Motorboat, speedboat",
+              "max": 0.152,
+              "atSecond": 56
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Speech",
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Dog",
+                "Bark",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.938
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 570631,
+        "name": "Village Ambient - Birds, Dogs, Cars Passing, etc.",
+        "url": "https://freesound.org/people/l34ndr0pt/sounds/570631/",
+        "author": "l34ndr0pt",
+        "durationSec": 358,
+        "verdict": "reject",
+        "reason": "required sound absent: Speech / Crowd / Hubbub, speech noise, speech babble / Dog / Bark / Chatter / Conversation",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 358,
+          "cleanSeconds": 355,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.6077
+            },
+            {
+              "label": "Environmental noise",
+              "max": 0.5844
+            },
+            {
+              "label": "Animal",
+              "max": 0.551
+            },
+            {
+              "label": "Insect",
+              "max": 0.4754
+            },
+            {
+              "label": "Crow",
+              "max": 0.4504
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.209,
+              "atSecond": 251
+            },
+            {
+              "label": "Music",
+              "max": 0.2,
+              "atSecond": 95
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Speech",
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Dog",
+                "Bark",
+                "Chatter",
+                "Conversation"
+              ],
+              "fraction": 0.006
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

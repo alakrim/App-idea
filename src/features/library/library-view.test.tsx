@@ -22,7 +22,7 @@ function entries() {
   chapterRepo.insert(db, chapterRow(11, 1, 1, { title: 'Harbour I', durationMs: 3_600_000 }));
   chapterRepo.insert(db, chapterRow(12, 1, 2, { title: 'Harbour II', durationMs: 1_200_000 }));
   chapterRepo.insert(db, chapterRow(21, 2, 1, { title: 'Coast I', durationMs: 600_000 }));
-  positionRepo.record(db, id(1), { chapterId: id(12), sentenceIdx: 2 }, T0 + 100);
+  positionRepo.record(db, id(1), { chapterId: id(12), sentenceIdx: 2, positionMs: 0 }, T0 + 100);
   return readLibrary(db);
 }
 

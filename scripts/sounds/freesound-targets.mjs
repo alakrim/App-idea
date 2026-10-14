@@ -169,7 +169,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'seabird_cliffs',
-    queries: ['seabirds cliffs ambience', 'seagulls sea cliff'],
+    queries: ['seabirds cliffs ambience', 'seagulls sea cliff', 'seagull ambience', 'sea birds ambience'],
     tags: ['seagull', 'seabird', 'gulls', 'cliff', 'cliffs'],
     names: ['seagull', 'gulls', 'cliff', 'cliffs', 'seabird'],
     allowsVoices: false,
@@ -181,7 +181,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'sea_storm',
-    queries: ['storm at sea waves wind', 'rough sea storm ambience'],
+    queries: ['storm at sea waves wind', 'rough sea storm ambience', 'storm waves ocean wind', 'stormy sea ambience loop'],
     tags: ['sea', 'storm', 'waves', 'wind'],
     names: ['sea', 'storm', 'waves'],
     allowsVoices: false,
@@ -193,7 +193,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'campfire_night',
-    queries: ['campfire night ambience', 'campfire crackling outdoors'],
+    queries: ['campfire night ambience', 'campfire crackling outdoors', 'campfire ambience', 'fire crackle outdoors night'],
     tags: ['campfire', 'fire', 'crackling'],
     names: ['campfire', 'fire'],
     allowsVoices: false,
@@ -230,7 +230,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'rain_on_roof',
-    queries: ['rain on roof ambience', 'rain on tin roof'],
+    queries: ['rain on roof ambience', 'rain on tin roof', 'rain roof ambience', 'rain on metal roof loop'],
     tags: ['roof', 'rain', 'tin'],
     names: ['roof', 'rain'],
     allowsVoices: false,
@@ -424,7 +424,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'castle_hall',
-    queries: ['castle hall ambience', 'stone hall echo room'],
+    queries: ['castle hall ambience', 'stone hall echo room', 'stone room echo ambience', 'large hall reverb ambience', 'church interior ambience'],
     tags: ['castle', 'hall', 'stone', 'echo'],
     names: ['castle', 'hall', 'stone'],
     allowsVoices: false,
@@ -484,7 +484,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'ship_deck',
-    queries: ['sailing ship deck ambience', 'wooden ship creaking sails'],
+    queries: ['sailing ship deck ambience', 'wooden ship creaking sails', 'wooden boat creaking ambience', 'sailing ship ambience'],
     tags: ['ship', 'sailing', 'boat', 'deck', 'rigging'],
     names: ['ship', 'sailing', 'deck', 'boat'],
     allowsVoices: false,
@@ -496,7 +496,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'harbor_port',
-    queries: ['harbour ambience seagulls boats', 'old port harbor water boats'],
+    queries: ['harbour ambience seagulls boats', 'old port harbor water boats', 'harbour ambience', 'seagulls harbor ambience'],
     tags: ['harbor', 'harbour', 'port', 'boats', 'seagulls'],
     names: ['harbor', 'harbour', 'port', 'boats'],
     allowsVoices: true,
@@ -532,7 +532,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'ritual_chant',
-    queries: ['chanting ritual ambience', 'monks chant reverb'],
+    queries: ['chanting ritual ambience', 'monks chant reverb', 'gregorian chant', 'monks singing ambience'],
     tags: ['chant', 'chanting', 'ritual', 'monks'],
     names: ['chant', 'ritual'],
     allowsVoices: true,
@@ -556,7 +556,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'monastery_chant',
-    queries: ['monastery chant ambience', 'gregorian chant church'],
+    queries: ['monastery chant ambience', 'gregorian chant church', 'choir monastery ambience', 'monks chanting'],
     tags: ['monastery', 'chant', 'church', 'gregorian'],
     names: ['monastery', 'chant', 'church'],
     allowsVoices: true,
@@ -580,7 +580,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'prison_cell',
-    queries: ['prison cell ambience', 'dungeon dripping water ambience'],
+    queries: ['prison cell ambience', 'dungeon dripping water ambience', 'dungeon ambience', 'cell ambience water drip'],
     tags: ['prison', 'dungeon', 'cell', 'drip'],
     names: ['prison', 'dungeon', 'cell'],
     allowsVoices: false,
@@ -604,7 +604,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'forge_anvil',
-    queries: ['blacksmith forge ambience', 'anvil hammer forge'],
+    queries: ['blacksmith forge ambience', 'anvil hammer forge', 'blacksmith hammer anvil', 'hammering metal workshop'],
     tags: ['blacksmith', 'forge', 'anvil', 'hammer'],
     names: ['blacksmith', 'forge', 'anvil', 'hammer'],
     allowsVoices: false,
@@ -653,7 +653,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'hospital_ward',
-    queries: ['hospital ward ambience', 'hospital background monitors'],
+    queries: ['hospital ward ambience', 'hospital background monitors', 'hospital ambience', 'hospital corridor ambience'],
     tags: ['hospital', 'ward', 'monitor'],
     names: ['hospital', 'ward'],
     allowsVoices: false,
@@ -725,7 +725,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'gunfight_ambient',
-    queries: ['distant gunfire ambience', 'gunfire echo battle'],
+    queries: ['distant gunfire ambience', 'gunfire echo battle', 'gunfire ambience', 'distant gunfire loop'],
     tags: ['gunfire', 'gun', 'shooting'],
     names: ['gunfire', 'shots'],
     allowsVoices: true,

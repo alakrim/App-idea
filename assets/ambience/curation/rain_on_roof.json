@@ -1,10 +1,195 @@
 {
   "category": "rain_on_roof",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "rain on roof ambience",
-    "rain on tin roof"
+    "rain on tin roof",
+    "rain roof ambience",
+    "rain on metal roof loop"
   ],
-  "poolSize": 0,
-  "candidates": []
+  "poolSize": 30,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 573334,
+      "name": "Medium Rain Ambience Tin Roof Top edlarez vsnr.wav",
+      "url": "https://freesound.org/people/visionear/sounds/573334/",
+      "author": "visionear",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 91.68,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 111,
+      "previewUrl": "https://cdn.freesound.org/previews/573/573334_10869493-hq.mp3",
+      "score": 9.23,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+1.02 111 downloads",
+        "+2 at least 90 s",
+        "+3 tags roof, rain, tin",
+        "+1 name matches roof, rain"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 521772,
+      "name": "Indoors_Shed_RainOnTinRoof_02.wav",
+      "url": "https://freesound.org/people/MrFossy/sounds/521772/",
+      "author": "MrFossy",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 11,
+      "numDownloads": 247,
+      "previewUrl": "https://cdn.freesound.org/previews/521/521772_129727-hq.mp3",
+      "score": 8.85,
+      "reasons": [
+        "+2.65 rating 5 from 11 ratings",
+        "+1.2 247 downloads",
+        "+2 at least 90 s",
+        "+3 tags roof, rain, tin"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 521773,
+      "name": "Indoors_Shed_RainOnTinRoof_01.wav",
+      "url": "https://freesound.org/people/MrFossy/sounds/521773/",
+      "author": "MrFossy",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 95,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.7,
+      "numRatings": 10,
+      "numDownloads": 336,
+      "previewUrl": "https://cdn.freesound.org/previews/521/521773_129727-hq.mp3",
+      "score": 8.74,
+      "reasons": [
+        "+2.47 rating 4.7 from 10 ratings",
+        "+1.26 336 downloads",
+        "+2 at least 90 s",
+        "+3 tags roof, rain, tin"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 431656,
+      "name": "Raindrops on open roof window, faint thunder in distance.wav",
+      "url": "https://freesound.org/people/scenes/sounds/431656/",
+      "author": "scenes",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 328.7,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 344,
+      "previewUrl": "https://cdn.freesound.org/previews/431/431656_4136026-hq.mp3",
+      "score": 8.71,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.27 344 downloads",
+        "+2 at least 90 s",
+        "+2 tags roof, rain",
+        "+1 name matches roof"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 851476,
+      "name": "Rain falling on tin shed, rhythmic drips",
+      "url": "https://freesound.org/people/kkenny101/sounds/851476/",
+      "author": "kkenny101",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 100.03,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 32,
+      "previewUrl": "https://cdn.freesound.org/previews/851/851476_17997500-hq.mp3",
+      "score": 8.63,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.76 32 downloads",
+        "+2 at least 90 s",
+        "+3 tags roof, rain, tin",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 398581,
+      "name": "Rain On Fiber Roof at Night",
+      "url": "https://freesound.org/people/Sagnik_Basu/sounds/398581/",
+      "author": "Sagnik_Basu",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 177.96,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 163,
+      "previewUrl": "https://cdn.freesound.org/previews/398/398581_7631926-hq.mp3",
+      "score": 8.31,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+1.11 163 downloads",
+        "+2 at least 90 s",
+        "+2 tags roof, rain",
+        "+1 name matches roof, rain"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 733844,
+      "name": "Rain On roof window",
+      "url": "https://freesound.org/people/Salom%C3%A9_Lubczanski/sounds/733844/",
+      "author": "Salomé_Lubczanski",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 83.37,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 6,
+      "numDownloads": 167,
+      "previewUrl": "https://cdn.freesound.org/previews/733/733844_7796757-hq.mp3",
+      "score": 8.1,
+      "reasons": [
+        "+2.49 rating 5 from 6 ratings",
+        "+1.11 167 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags roof, rain",
+        "+1 name matches roof, rain"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 669484,
+      "name": "Light rain on roof",
+      "url": "https://freesound.org/people/xkeril/sounds/669484/",
+      "author": "xkeril",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 61.23,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.88,
+      "numRatings": 17,
+      "numDownloads": 517,
+      "previewUrl": "https://cdn.freesound.org/previews/669/669484_13504080-hq.mp3",
+      "score": 8.03,
+      "reasons": [
+        "+2.68 rating 4.88 from 17 ratings",
+        "+1.36 517 downloads",
+        "+1 at least 60 s",
+        "+2 tags roof, rain",
+        "+1 name matches roof, rain"
+      ]
+    }
+  ]
 }

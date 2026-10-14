@@ -6,13 +6,24 @@ import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanima
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type { Sentence } from '@/core/domain';
+import { findBookmark, findBookmarkById } from '@/features/bookmarks/bookmark-data';
+import { BookmarkNoteSheet } from '@/features/bookmarks/bookmark-note-sheet';
+import { BookmarksSheet } from '@/features/bookmarks/bookmarks-sheet';
 import { ambienceIconOf } from '@/features/shared/ambience-display';
 import { useVocabActions } from '@/features/vocab/vocab-actions';
 import { CoverImage } from '@/ui/cover-image';
 import { EmptyState } from '@/ui/empty-state';
 import { ErrorState } from '@/ui/error-state';
 import { IconButton } from '@/ui/icon-button';
-import { AudioLines, ChevronDown, CloudRain, Gauge, Headphones, Repeat1 } from '@/ui/icons';
+import {
+  AudioLines,
+  Bookmark,
+  ChevronDown,
+  CloudRain,
+  Gauge,
+  Headphones,
+  Repeat1,
+} from '@/ui/icons';
 import { useMotion } from '@/ui/motion';
 import { Skeleton } from '@/ui/skeleton';
 import { Text } from '@/ui/text';
@@ -34,7 +45,7 @@ import { SpeedSheet } from './speed-sheet';
 import { SyncedTextPane, displayText, type SentenceAction } from './synced-text-pane';
 import { Transport } from './transport';
 
-type OpenSheet = 'speed' | 'sleep' | 'ambience' | null;
+type OpenSheet = 'speed' | 'sleep' | 'ambience' | 'bookmarks' | null;
 
 const COVER_MIN_HEIGHT = 120;
 const COVER_MAX_HEIGHT = PLAYER.coverMaxHeight;
@@ -61,15 +72,21 @@ export function FullPlayer() {
   return <ReadyPlayer />;
 }
 
+interface TopBarProps {
+  label?: string;
+  /** An action at the right end, such as Bookmarks. Empty states leave it out. */
+  trailing?: ReactNode;
+}
+
 /** Close button, with an optional label. The label is left out where it would contradict the state. */
-function TopBar({ label = 'Now playing' }: { label?: string }) {
+function TopBar({ label = 'Now playing', trailing }: TopBarProps) {
   return (
     <View style={styles.topBar}>
       <IconButton label="Close player" icon={ChevronDown} onPress={() => router.back()} />
       <Text variant="micro" tone="muted">
         {label}
       </Text>
-      <View style={styles.topBarSpacer} />
+      {trailing ?? <View style={styles.topBarSpacer} />}
     </View>
   );
 }
@@ -164,6 +181,7 @@ function ReadyPlayer() {
   const toast = useToast();
   const [sheet, setSheet] = useState<OpenSheet>(null);
   const [actionSentence, setActionSentence] = useState<Sentence | null>(null);
+  const [noteFor, setNoteFor] = useState<string | null>(null);
   const [centerHeight, setCenterHeight] = useState(0);
 
   // The full player does not subscribe to the position: the scrubber and the text pane that need
@@ -183,6 +201,8 @@ function ReadyPlayer() {
   const loopIdx = usePlaybackContent((content) => content.loopSentenceIdx);
   const ambience = usePlaybackContent((content) => content.ambience);
   const narrationPaused = usePlaybackContent((content) => content.narrationPaused);
+  const chapterId = usePlaybackContent((content) => content.chapterId);
+  const bookmarks = usePlaybackContent((content) => content.bookmarks);
 
   const availableCount = timeline?.sentenceCount ?? 0;
   const busy = playState === 'loading' || playState === 'buffering';
@@ -250,6 +270,32 @@ function ReadyPlayer() {
     [seriesId, vocab, toast],
   );
 
+  const bookmarked = findBookmark(bookmarks, chapterId, sentenceIdx) !== null;
+  const actionBookmarked =
+    actionSentence !== null && findBookmark(bookmarks, chapterId, actionSentence.idx) !== null;
+
+  /**
+   * Bookmarks or un-bookmarks a sentence. A new bookmark says so and offers a note, which is the
+   * moment a listener usually wants one; removing it just confirms.
+   */
+  const toggleBookmark = useCallback(
+    (idx: number) => {
+      const result = controller.toggleBookmark(idx);
+      if (result === null) return;
+      if (result.kind === 'removed') {
+        toast.show({ message: 'Bookmark removed' });
+        return;
+      }
+      const bookmarkId = result.bookmark.id;
+      toast.show({
+        message: 'Bookmarked',
+        tone: 'success',
+        action: { label: 'Add note', onPress: () => setNoteFor(bookmarkId) },
+      });
+    },
+    [controller, toast],
+  );
+
   const seekSentence = useCallback((idx: number) => controller.seekToSentence(idx), [controller]);
   const openSentenceActions = useCallback(
     (idx: number) => {
@@ -277,7 +323,11 @@ function ReadyPlayer() {
     <View style={[styles.root, { backgroundColor: colors.bg }]}>
       <PlayerBackdrop uri={coverUri} title={title} tint={coverTint} />
       <View style={[styles.column, { paddingTop: insets.top, paddingBottom: peekHeight }]}>
-        <TopBar />
+        <TopBar
+          trailing={
+            <IconButton label="Bookmarks" icon={Bookmark} onPress={() => setSheet('bookmarks')} />
+          }
+        />
 
         <View
           style={styles.center}
@@ -317,9 +367,11 @@ function ReadyPlayer() {
           <Transport
             playing={playing}
             busy={busy}
+            bookmarked={bookmarked}
             onTogglePlay={() => controller.player.togglePlay()}
             onSkip={(deltaMs) => controller.seekBy(deltaMs)}
             onSentence={(direction) => controller.stepSentence(direction)}
+            onBookmark={() => toggleBookmark(sentenceIdx)}
           />
           {showPaused ? (
             <View style={styles.inset}>
@@ -371,12 +423,39 @@ function ReadyPlayer() {
         onClose={closeSheet}
         activeNames={activeNames}
       />
+      <BookmarksSheet
+        visible={sheet === 'bookmarks'}
+        groups={bookmarks}
+        onClose={closeSheet}
+        onOpen={(openChapterId, idx) => {
+          closeSheet();
+          controller.jumpToSentence(openChapterId, idx);
+        }}
+        onEditNote={(bookmark) => {
+          closeSheet();
+          setNoteFor(bookmark.id);
+        }}
+        onDelete={(bookmarkId) => controller.deleteBookmark(bookmarkId)}
+      />
+      <BookmarkNoteSheet
+        bookmark={noteFor === null ? null : findBookmarkById(bookmarks, noteFor)}
+        onClose={() => setNoteFor(null)}
+        onSave={(bookmarkId, note) => {
+          controller.saveBookmarkNote(bookmarkId, note);
+          setNoteFor(null);
+        }}
+      />
       <SentenceSheet
         sentence={actionSentence}
         onClose={() => setActionSentence(null)}
         onRepeat={repeat}
         onCopy={copy}
         onSaveVocab={saveVocab}
+        bookmarked={actionBookmarked}
+        onBookmark={(sentence) => {
+          toggleBookmark(sentence.idx);
+          setActionSentence(null);
+        }}
       />
     </View>
   );

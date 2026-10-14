@@ -191,5 +191,737 @@
         "+1 name matches waves"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Ocean",
+          "Waves, surf"
+        ]
+      ],
+      "clapPrompt": "waves breaking on a beach with a slow swell, no people"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Ocean / Waves, surf; no 64 s window is free of denied sounds: Thunder reaches 0.71 (at 120 s)",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 550915,
+        "name": "BGSaSc Water Beach Ocean Waves Constant Splashing Rocks Many Small Waves Greece 16",
+        "url": "https://freesound.org/people/Profispiesser/sounds/550915/",
+        "author": "Profispiesser",
+        "durationSec": 102.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Ocean / Waves, surf",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 102,
+          "cleanSeconds": 47,
+          "topClasses": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.3798
+            },
+            {
+              "label": "Stream",
+              "max": 0.2857
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.2286
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.2233
+            },
+            {
+              "label": "Waves, surf",
+              "max": 0.1546
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.38,
+              "atSecond": 44
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.229,
+              "atSecond": 52
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.223,
+              "atSecond": 55
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Ocean",
+                "Waves, surf"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 518637,
+        "name": "Gentle ocean waves birdsong and gull.WAV",
+        "url": "https://freesound.org/people/jackmichaelking/sounds/518637/",
+        "author": "jackmichaelking",
+        "durationSec": 115.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Ocean / Waves, surf",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 115,
+          "cleanSeconds": 100,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.717
+            },
+            {
+              "label": "Ocean",
+              "max": 0.6778
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.6108
+            },
+            {
+              "label": "Wind",
+              "max": 0.381
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.3402
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.34,
+              "atSecond": 44
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.333,
+              "atSecond": 44
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.21,
+              "atSecond": 44
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.207,
+              "atSecond": 44
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Ocean",
+                "Waves, surf"
+              ],
+              "fraction": 0.426
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 155641,
+        "name": "Ocean waves crushing on the chilean shore. ",
+        "url": "https://freesound.org/people/felix.blume/sounds/155641/",
+        "author": "felix.blume",
+        "durationSec": 180.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Ocean / Waves, surf",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 180,
+          "cleanSeconds": 75,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.7359
+            },
+            {
+              "label": "Ocean",
+              "max": 0.7014
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.492
+            },
+            {
+              "label": "Wind",
+              "max": 0.4677
+            },
+            {
+              "label": "Stream",
+              "max": 0.4484
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.492,
+              "atSecond": 30
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.427,
+              "atSecond": 14
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.318,
+              "atSecond": 16
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.235,
+              "atSecond": 7
+            },
+            {
+              "label": "Ship",
+              "max": 0.211,
+              "atSecond": 171
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.192,
+              "atSecond": 138
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Ocean",
+                "Waves, surf"
+              ],
+              "fraction": 0.333
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 425632,
+        "name": "Sea waves",
+        "url": "https://freesound.org/people/molkko/sounds/425632/",
+        "author": "molkko",
+        "durationSec": 122.9,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Thunder reaches 0.71 (at 120 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 122,
+          "cleanSeconds": 14,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.8527
+            },
+            {
+              "label": "Ocean",
+              "max": 0.8194
+            },
+            {
+              "label": "Thunder",
+              "max": 0.7096
+            },
+            {
+              "label": "Wind",
+              "max": 0.6095
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.5952
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.71,
+              "atSecond": 120
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.595,
+              "atSecond": 120
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.593,
+              "atSecond": 100
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.573,
+              "atSecond": 28
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.403,
+              "atSecond": 28
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.382,
+              "atSecond": 50
+            },
+            {
+              "label": "Ship",
+              "max": 0.172,
+              "atSecond": 104
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Ocean",
+                "Waves, surf"
+              ],
+              "fraction": 0.934
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 827530,
+        "name": "Ocean_coast_04_092025_0659AM",
+        "url": "https://freesound.org/people/YevgVerh/sounds/827530/",
+        "author": "YevgVerh",
+        "durationSec": 181.2,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Boat, Water vehicle reaches 0.62 (at 173 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 181,
+          "cleanSeconds": 7,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.8564
+            },
+            {
+              "label": "Ocean",
+              "max": 0.8069
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.6204
+            },
+            {
+              "label": "Wind",
+              "max": 0.608
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.5926
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.62,
+              "atSecond": 173
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.593,
+              "atSecond": 31
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.589,
+              "atSecond": 42
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.381,
+              "atSecond": 177
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.325,
+              "atSecond": 169
+            },
+            {
+              "label": "Train",
+              "max": 0.278,
+              "atSecond": 60
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.245,
+              "atSecond": 42
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.224,
+              "atSecond": 60
+            },
+            {
+              "label": "Ship",
+              "max": 0.217,
+              "atSecond": 177
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.207,
+              "atSecond": 60
+            },
+            {
+              "label": "Speech",
+              "max": 0.198,
+              "atSecond": 7
+            },
+            {
+              "label": "Aircraft engine",
+              "max": 0.165,
+              "atSecond": 42
+            },
+            {
+              "label": "Thunder",
+              "max": 0.154,
+              "atSecond": 73
+            },
+            {
+              "label": "Propeller, airscrew",
+              "max": 0.153,
+              "atSecond": 169
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Ocean",
+                "Waves, surf"
+              ],
+              "fraction": 0.718
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 450755,
+        "name": "Waves of Hawaii",
+        "url": "https://freesound.org/people/florianreichelt/sounds/450755/",
+        "author": "florianreichelt",
+        "durationSec": 92.8,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Wind noise (microphone) reaches 0.558 (at 17 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 92,
+          "cleanSeconds": 39,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.8903
+            },
+            {
+              "label": "Ocean",
+              "max": 0.8567
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.5962
+            },
+            {
+              "label": "Wind",
+              "max": 0.594
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.5575
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.558,
+              "atSecond": 17
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.394,
+              "atSecond": 18
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.283,
+              "atSecond": 29
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.277,
+              "atSecond": 18
+            },
+            {
+              "label": "Ship",
+              "max": 0.216,
+              "atSecond": 18
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Ocean",
+                "Waves, surf"
+              ],
+              "fraction": 0.902
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 659001,
+        "name": "Waves Crashing on shore.",
+        "url": "https://freesound.org/people/Tom_Kaszuba/sounds/659001/",
+        "author": "Tom_Kaszuba",
+        "durationSec": 110,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Vehicle reaches 0.725 (at 10 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 109,
+          "cleanSeconds": 6,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.7749
+            },
+            {
+              "label": "Ocean",
+              "max": 0.7485
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.7245
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.7046
+            },
+            {
+              "label": "Wind",
+              "max": 0.5335
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.725,
+              "atSecond": 10
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.705,
+              "atSecond": 104
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.477,
+              "atSecond": 61
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.44,
+              "atSecond": 25
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.31,
+              "atSecond": 10
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.27,
+              "atSecond": 30
+            },
+            {
+              "label": "Ship",
+              "max": 0.219,
+              "atSecond": 5
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.209,
+              "atSecond": 10
+            },
+            {
+              "label": "Music",
+              "max": 0.177,
+              "atSecond": 9
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Ocean",
+                "Waves, surf"
+              ],
+              "fraction": 0.716
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 254857,
+        "name": "Waves Against Shore ",
+        "url": "https://freesound.org/people/Afeeto/sounds/254857/",
+        "author": "Afeeto",
+        "durationSec": 208.6,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Boat, Water vehicle reaches 0.637 (at 206 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 208,
+          "cleanSeconds": 60,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.783
+            },
+            {
+              "label": "Ocean",
+              "max": 0.7515
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.6375
+            },
+            {
+              "label": "Wind",
+              "max": 0.5716
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.5486
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.637,
+              "atSecond": 206
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.549,
+              "atSecond": 160
+            },
+            {
+              "label": "Speech",
+              "max": 0.473,
+              "atSecond": 15
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.436,
+              "atSecond": 47
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.424,
+              "atSecond": 60
+            },
+            {
+              "label": "Thunder",
+              "max": 0.338,
+              "atSecond": 157
+            },
+            {
+              "label": "Motorboat, speedboat",
+              "max": 0.286,
+              "atSecond": 60
+            },
+            {
+              "label": "Ship",
+              "max": 0.264,
+              "atSecond": 140
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.234,
+              "atSecond": 157
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.176,
+              "atSecond": 177
+            },
+            {
+              "label": "Explosion",
+              "max": 0.153,
+              "atSecond": 68
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.153,
+              "atSecond": 64
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Ocean",
+                "Waves, surf"
+              ],
+              "fraction": 0.611
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

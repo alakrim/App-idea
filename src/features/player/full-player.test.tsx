@@ -16,6 +16,9 @@ import type { ReactElement } from 'react';
 
 // Jest cannot load Reanimated's worklet runtime or gesture-handler's native detectors, and the
 // bottom sheet needs both. The stand-ins keep the behaviour the tests check.
+jest.mock('react-native-gesture-handler/ReanimatedSwipeable', () =>
+  require('../../__tests__/helpers/swipeable-stub'),
+);
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
 jest.mock('react-native-gesture-handler', () => require('./__fixtures__/gesture-stub'));
 jest.mock('@gorhom/bottom-sheet', () => require('./__fixtures__/bottom-sheet-stub'));
@@ -338,5 +341,51 @@ describe('FullPlayer screen-reader actions (P2-18)', () => {
     });
 
     expect(controller.content.getState().loopSentenceIdx).toBe(1);
+  });
+});
+
+describe('bookmarks in the player', () => {
+  it('bookmarks the sentence in view, and the toast offers a note that is then saved', async () => {
+    const { controller, fixture } = await renderPlayer();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Bookmark this sentence' }));
+    await flush();
+
+    expect(fixture.bookmarks).toHaveLength(1);
+    expect(screen.getByRole('button', { name: 'Remove bookmark' })).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Add note' }));
+    await flush();
+    await fireEvent.changeText(screen.getByLabelText('Note'), 'The harbour master');
+    await fireEvent.press(screen.getByRole('button', { name: 'Save note' }));
+    await flush();
+
+    expect(controller.content.getState().bookmarks[0]?.bookmarks[0]?.note).toBe(
+      'The harbour master',
+    );
+  });
+
+  it('removes the bookmark when the button is pressed on a bookmarked sentence', async () => {
+    const { fixture } = await renderPlayer();
+    await fireEvent.press(screen.getByRole('button', { name: 'Bookmark this sentence' }));
+    await flush();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Remove bookmark' }));
+    await flush();
+
+    expect(fixture.bookmarks).toEqual([]);
+    expect(screen.getByRole('button', { name: 'Bookmark this sentence' })).toBeOnTheScreen();
+  });
+
+  it('says so when the series has no bookmarks yet', async () => {
+    await renderPlayer();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Bookmarks' }));
+    await flush();
+
+    expect(screen.getByText('No bookmarks yet')).toBeOnTheScreen();
+    expect(
+      screen.getByText('Bookmark a moment while you listen to come back to it here.'),
+    ).toBeOnTheScreen();
   });
 });

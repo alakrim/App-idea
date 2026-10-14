@@ -189,5 +189,641 @@
         "-4 voice or speech (voices)"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Water",
+          "Waves, surf",
+          "Stream"
+        ]
+      ],
+      "clapPrompt": "a calm lake shore with gentle lapping water and reeds, no people"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "no 64 s window is free of denied sounds: Boat, Water vehicle reaches 0.476 (at 18 s); clip has 60 s; a window needs 64 s",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 523392,
+        "name": "Lake waves.wav",
+        "url": "https://freesound.org/people/Anya_Media/sounds/523392/",
+        "author": "Anya_Media",
+        "durationSec": 126.1,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Boat, Water vehicle reaches 0.476 (at 18 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 126,
+          "cleanSeconds": 31,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.7007
+            },
+            {
+              "label": "Ocean",
+              "max": 0.6385
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.4756
+            },
+            {
+              "label": "Wind",
+              "max": 0.4751
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.3927
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.476,
+              "atSecond": 18
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.393,
+              "atSecond": 53
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.257,
+              "atSecond": 18
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.253,
+              "atSecond": 18
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Water",
+                "Waves, surf",
+                "Stream"
+              ],
+              "fraction": 0.857
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 529663,
+        "name": "By the lake",
+        "url": "https://freesound.org/people/tender_sounds/sounds/529663/",
+        "author": "tender_sounds",
+        "durationSec": 60.7,
+        "verdict": "reject",
+        "reason": "clip has 60 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 60,
+          "cleanSeconds": 28,
+          "topClasses": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.7193
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.5264
+            },
+            {
+              "label": "Speech",
+              "max": 0.4417
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.4246
+            },
+            {
+              "label": "Pour",
+              "max": 0.2302
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.719,
+              "atSecond": 51
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.526,
+              "atSecond": 51
+            },
+            {
+              "label": "Speech",
+              "max": 0.442,
+              "atSecond": 12
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.425,
+              "atSecond": 51
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Water",
+                "Waves, surf",
+                "Stream"
+              ],
+              "fraction": 0.033
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 324547,
+        "name": "Maziarnia Lake - waves and wind - Zoom H2n.flac",
+        "url": "https://freesound.org/people/jacekksiazek/sounds/324547/",
+        "author": "jacekksiazek",
+        "durationSec": 172.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Water / Waves, surf / Stream",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 172,
+          "cleanSeconds": 9,
+          "topClasses": [
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.7165
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.6971
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.478
+            },
+            {
+              "label": "Stream",
+              "max": 0.1505
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.145
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.716,
+              "atSecond": 141
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.697,
+              "atSecond": 141
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.478,
+              "atSecond": 141
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Water",
+                "Waves, surf",
+                "Stream"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 724599,
+        "name": "Waves of a lake and reed bed",
+        "url": "https://freesound.org/people/Sacha.Julien/sounds/724599/",
+        "author": "Sacha.Julien",
+        "durationSec": 424.3,
+        "verdict": "reject",
+        "reason": "required sound absent: Water / Waves, surf / Stream",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 424,
+          "cleanSeconds": 177,
+          "topClasses": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.8286
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.685
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5748
+            },
+            {
+              "label": "Walk, footsteps",
+              "max": 0.5581
+            },
+            {
+              "label": "Biting",
+              "max": 0.4782
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.829,
+              "atSecond": 210
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.685,
+              "atSecond": 210
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.575,
+              "atSecond": 210
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.37,
+              "atSecond": 174
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.265,
+              "atSecond": 174
+            },
+            {
+              "label": "Speech",
+              "max": 0.184,
+              "atSecond": 220
+            },
+            {
+              "label": "Ship",
+              "max": 0.175,
+              "atSecond": 326
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Water",
+                "Waves, surf",
+                "Stream"
+              ],
+              "fraction": 0.064
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 757115,
+        "name": "Ocean Waves Ambience",
+        "url": "https://freesound.org/people/jcdeegs123/sounds/757115/",
+        "author": "jcdeegs123",
+        "durationSec": 88.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Water / Waves, surf / Stream",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 88,
+          "cleanSeconds": 11,
+          "topClasses": [
+            {
+              "label": "Whip",
+              "max": 0.9373
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.6758
+            },
+            {
+              "label": "Waves, surf",
+              "max": 0.6219
+            },
+            {
+              "label": "Ocean",
+              "max": 0.5803
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.5452
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.676,
+              "atSecond": 38
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.545,
+              "atSecond": 2
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.525,
+              "atSecond": 32
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.325,
+              "atSecond": 38
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.299,
+              "atSecond": 59
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.263,
+              "atSecond": 18
+            },
+            {
+              "label": "Ship",
+              "max": 0.202,
+              "atSecond": 32
+            },
+            {
+              "label": "Gunshot, gunfire",
+              "max": 0.163,
+              "atSecond": 59
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Water",
+                "Waves, surf",
+                "Stream"
+              ],
+              "fraction": 0.477
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 521817,
+        "name": "Lake Starnberg, windy day on the lake shore, 2020-05-31",
+        "url": "https://freesound.org/people/krakenkraft/sounds/521817/",
+        "author": "krakenkraft",
+        "durationSec": 64,
+        "verdict": "reject",
+        "reason": "required sound absent: Water / Waves, surf / Stream",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 64,
+          "cleanSeconds": 62,
+          "topClasses": [
+            {
+              "label": "Waves, surf",
+              "max": 0.6408
+            },
+            {
+              "label": "Ocean",
+              "max": 0.6205
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.4342
+            },
+            {
+              "label": "Waterfall",
+              "max": 0.3964
+            },
+            {
+              "label": "Rain",
+              "max": 0.3569
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.263,
+              "atSecond": 23
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.16,
+              "atSecond": 23
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Water",
+                "Waves, surf",
+                "Stream"
+              ],
+              "fraction": 0.078
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 500169,
+        "name": "Lakeside ambience",
+        "url": "https://freesound.org/people/sad3d/sounds/500169/",
+        "author": "sad3d",
+        "durationSec": 78,
+        "verdict": "reject",
+        "reason": "required sound absent: Water / Waves, surf / Stream",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 78,
+          "cleanSeconds": 5,
+          "topClasses": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.7434
+            },
+            {
+              "label": "Duck",
+              "max": 0.6703
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.6381
+            },
+            {
+              "label": "Quack",
+              "max": 0.5851
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.4351
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.743,
+              "atSecond": 64
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.638,
+              "atSecond": 19
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.435,
+              "atSecond": 64
+            },
+            {
+              "label": "Speech",
+              "max": 0.397,
+              "atSecond": 75
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.205,
+              "atSecond": 77
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.184,
+              "atSecond": 68
+            },
+            {
+              "label": "Honk",
+              "max": 0.18,
+              "atSecond": 1
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Water",
+                "Waves, surf",
+                "Stream"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 567909,
+        "name": "200530 Late spring, lapping water, evening urban birdsong, sparrows, geese, trumpeter swans fly over honks, voices, city rumble noise TTP 9pm.flac",
+        "url": "https://freesound.org/people/TRP/sounds/567909/",
+        "author": "TRP",
+        "durationSec": 96.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Water / Waves, surf / Stream",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 96,
+          "cleanSeconds": 69,
+          "topClasses": [
+            {
+              "label": "Pour",
+              "max": 0.6248
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.5675
+            },
+            {
+              "label": "Bird",
+              "max": 0.534
+            },
+            {
+              "label": "Chirp, tweet",
+              "max": 0.5063
+            },
+            {
+              "label": "Bird vocalization, bird call, bird song",
+              "max": 0.4822
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.567,
+              "atSecond": 85
+            },
+            {
+              "label": "Speech",
+              "max": 0.422,
+              "atSecond": 87
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.416,
+              "atSecond": 57
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.399,
+              "atSecond": 85
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Water",
+                "Waves, surf",
+                "Stream"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -1,11 +1,13 @@
 {
   "category": "ship_deck",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "sailing ship deck ambience",
-    "wooden ship creaking sails"
+    "wooden ship creaking sails",
+    "wooden boat creaking ambience",
+    "sailing ship ambience"
   ],
-  "poolSize": 2,
+  "poolSize": 6,
   "candidates": [
     {
       "rank": 1,
@@ -19,12 +21,12 @@
       "channels": 2,
       "avgRating": 4.46,
       "numRatings": 26,
-      "numDownloads": 1111,
+      "numDownloads": 1112,
       "previewUrl": "https://cdn.freesound.org/previews/648/648653_10933546-hq.mp3",
       "score": 9,
       "reasons": [
         "+2.48 rating 4.46 from 26 ratings",
-        "+1.52 1111 downloads",
+        "+1.52 1112 downloads",
         "+1 at least 60 s",
         "+3 tags ship, sailing, boat",
         "+1 name matches ship, sailing"
@@ -32,6 +34,73 @@
     },
     {
       "rank": 2,
+      "freesoundId": 587353,
+      "name": "Foggy Morning in Southampton",
+      "url": "https://freesound.org/people/richwise/sounds/587353/",
+      "author": "richwise",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 556.04,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 10,
+      "numDownloads": 454,
+      "previewUrl": "https://cdn.freesound.org/previews/587/587353_1481531-hq.mp3",
+      "score": 8.95,
+      "reasons": [
+        "+2.63 rating 5 from 10 ratings",
+        "+1.33 454 downloads",
+        "+2 at least 90 s",
+        "+3 tags ship, sailing, boat"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 648593,
+      "name": "AMBIENCE PORT PIRATES.wav",
+      "url": "https://freesound.org/people/Elenalostale/sounds/648593/",
+      "author": "Elenalostale",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 109.88,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.88,
+      "numRatings": 51,
+      "numDownloads": 1876,
+      "previewUrl": "https://cdn.freesound.org/previews/648/648593_10933546-hq.mp3",
+      "score": 7.46,
+      "reasons": [
+        "+2.82 rating 4.88 from 51 ratings",
+        "+1.64 1876 downloads",
+        "+2 at least 90 s",
+        "+1 tags ship"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 234361,
+      "name": "080101-rowing boat various paddles creak6-M.wav",
+      "url": "https://freesound.org/people/martian/sounds/234361/",
+      "author": "martian",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 333.98,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 2.25,
+      "numRatings": 4,
+      "numDownloads": 510,
+      "previewUrl": "https://cdn.freesound.org/previews/234/234361_84709-hq.mp3",
+      "score": 6.81,
+      "reasons": [
+        "+1.46 rating 2.25 from 4 ratings",
+        "+1.35 510 downloads",
+        "+2 at least 90 s",
+        "+1 tags boat",
+        "+1 name matches boat"
+      ]
+    },
+    {
+      "rank": 5,
       "freesoundId": 616774,
       "name": "NOISY_ENGINE_INTERIOR.wav",
       "url": "https://freesound.org/people/MattDale/sounds/616774/",
@@ -50,6 +119,29 @@
         "+1.25 318 downloads",
         "-3 only 30.91 s",
         "+2 tags ship, boat"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 853452,
+      "name": "Dogwalk(in') the Afterwoods.wav",
+      "url": "https://freesound.org/people/ChristmasKrumble666/sounds/853452/",
+      "author": "ChristmasKrumble666",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 121.67,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 141,
+      "previewUrl": "https://cdn.freesound.org/previews/853/853452_5820974-hq.mp3",
+      "score": -4.56,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+1.08 141 downloads",
+        "+2 at least 90 s",
+        "-6 music (guitar)",
+        "-4 synth (synth)"
       ]
     }
   ]

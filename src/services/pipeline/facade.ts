@@ -46,6 +46,8 @@ export interface PipelineServiceDeps {
   readonly files: LibraryFiles;
   readonly clock: Clock;
   readonly ids: IdGenerator;
+  /** True while a foreground service keeps the runtime alive in the background. See the queue. */
+  readonly keepsAliveInBackground?: () => boolean;
 }
 
 export interface PipelineService {
@@ -108,7 +110,7 @@ function sourceOf(input: ChapterInput, libraryPdfUri: string | undefined): Chapt
 }
 
 export function createPipelineService(deps: PipelineServiceDeps): PipelineService {
-  const { db, ports, fetcher, files, clock, ids } = deps;
+  const { db, ports, fetcher, files, clock, ids, keepsAliveInBackground } = deps;
   const tracked = new Map<string, TrackedChapter>();
   const progressListeners = new Map<string, Set<(progress: ChapterProgress) => void>>();
   const eventListeners = new Set<(event: PipelineEvent) => void>();
@@ -116,6 +118,7 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
 
   const queue = createPipelineQueue(ports, {
     onEvent: (event) => handleEvent(event),
+    keepsAliveInBackground,
   });
 
   function jobStatusOf(chapterId: Id, stage: Stage): JobStatus | null {

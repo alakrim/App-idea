@@ -108,6 +108,9 @@ function SeriesGallery() {
       chapters={fixture.chapters}
       ocrPrices={fixture.ocrPrices}
       playTarget={{ chapterId: fixture.resumeChapterId, resume: true }}
+      currentChapterId={fixture.resumeChapterId}
+      bookmarks={[]}
+      onBookmarks={() => undefined}
       onBack={() => undefined}
       onMenu={() => undefined}
       onPlay={() => undefined}

@@ -191,5 +191,844 @@
         "+1 name matches metro"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [
+        "vehicles",
+        "engines",
+        "Train whistle",
+        "Train horn"
+      ],
+      "required": [
+        [
+          "Train",
+          "Railroad car, train wagon",
+          "Rail transport"
+        ]
+      ],
+      "clapPrompt": "an underground subway platform with a train far off and an echoing hall"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Train / Railroad car, train wagon / Rail transport; no 64 s window is free of denied sounds: Speech reaches 0.748 (at 12 s)",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 516481,
+        "name": "Paris Covid19 METRO SUBWAY Station empty",
+        "url": "https://freesound.org/people/davidmenke/sounds/516481/",
+        "author": "davidmenke",
+        "durationSec": 370.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Train / Railroad car, train wagon / Rail transport",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 370,
+          "cleanSeconds": 298,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.9153
+            },
+            {
+              "label": "Speech",
+              "max": 0.8472
+            },
+            {
+              "label": "Train",
+              "max": 0.7027
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.6096
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.5698
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.915,
+              "atSecond": 65
+            },
+            {
+              "label": "Speech",
+              "max": 0.847,
+              "atSecond": 291
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.451,
+              "atSecond": 65
+            },
+            {
+              "label": "Guitar",
+              "max": 0.294,
+              "atSecond": 65
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.282,
+              "atSecond": 25
+            },
+            {
+              "label": "Reversing beeps",
+              "max": 0.279,
+              "atSecond": 325
+            },
+            {
+              "label": "Narration, monologue",
+              "max": 0.266,
+              "atSecond": 68
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.263,
+              "atSecond": 87
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.233,
+              "atSecond": 65
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Train",
+                "Railroad car, train wagon",
+                "Rail transport"
+              ],
+              "fraction": 0.159
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 361913,
+        "name": "Japan_Train_Station_Kashiwa_Platform_Annoucements_24Bit_96Khz_MS-Stereo.wav",
+        "url": "https://freesound.org/people/RutgerMuller/sounds/361913/",
+        "author": "RutgerMuller",
+        "durationSec": 309.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Train / Railroad car, train wagon / Rail transport",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 309,
+          "cleanSeconds": 125,
+          "topClasses": [
+            {
+              "label": "Train wheels squealing",
+              "max": 0.9182
+            },
+            {
+              "label": "Speech",
+              "max": 0.8959
+            },
+            {
+              "label": "Train",
+              "max": 0.8861
+            },
+            {
+              "label": "Music",
+              "max": 0.8709
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.8384
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.896,
+              "atSecond": 131
+            },
+            {
+              "label": "Music",
+              "max": 0.871,
+              "atSecond": 179
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.547,
+              "atSecond": 125
+            },
+            {
+              "label": "Narration, monologue",
+              "max": 0.419,
+              "atSecond": 118
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.294,
+              "atSecond": 165
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.24,
+              "atSecond": 178
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.217,
+              "atSecond": 279
+            },
+            {
+              "label": "Bell",
+              "max": 0.152,
+              "atSecond": 42
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.12,
+              "atSecond": 86
+            },
+            {
+              "label": "Siren",
+              "max": 0.092,
+              "atSecond": 86
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Train",
+                "Railroad car, train wagon",
+                "Rail transport"
+              ],
+              "fraction": 0.337
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 835507,
+        "name": "Vienna U6 Metro – Onboard & Platform Ambience (Michelbeuern → Währingerstraße)",
+        "url": "https://freesound.org/people/Marschal/sounds/835507/",
+        "author": "Marschal",
+        "durationSec": 197.2,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Speech reaches 0.748 (at 12 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 197,
+          "cleanSeconds": 156,
+          "topClasses": [
+            {
+              "label": "Train",
+              "max": 0.8148
+            },
+            {
+              "label": "Speech",
+              "max": 0.748
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.6967
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.6647
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.6576
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.748,
+              "atSecond": 12
+            },
+            {
+              "label": "Music",
+              "max": 0.592,
+              "atSecond": 48
+            },
+            {
+              "label": "Microwave oven",
+              "max": 0.348,
+              "atSecond": 53
+            },
+            {
+              "label": "Beep, bleep",
+              "max": 0.222,
+              "atSecond": 142
+            },
+            {
+              "label": "Reversing beeps",
+              "max": 0.191,
+              "atSecond": 55
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.184,
+              "atSecond": 187
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.169,
+              "atSecond": 36
+            },
+            {
+              "label": "Thunder",
+              "max": 0.162,
+              "atSecond": 106
+            },
+            {
+              "label": "Smoke detector, smoke alarm",
+              "max": 0.145,
+              "atSecond": 142
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.051,
+              "atSecond": 182
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Train",
+                "Railroad car, train wagon",
+                "Rail transport"
+              ],
+              "fraction": 0.528
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 857105,
+        "name": "Moscow Metro's 1st (Sokolnicheskaya) line inside a train car, both ways",
+        "url": "https://freesound.org/people/Trautwein/sounds/857105/",
+        "author": "Trautwein",
+        "durationSec": 153.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Train / Railroad car, train wagon / Rail transport",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 153,
+          "cleanSeconds": 93,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8975
+            },
+            {
+              "label": "Train",
+              "max": 0.816
+            },
+            {
+              "label": "Music",
+              "max": 0.6894
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.6777
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.6232
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.897,
+              "atSecond": 125
+            },
+            {
+              "label": "Music",
+              "max": 0.689,
+              "atSecond": 51
+            },
+            {
+              "label": "Siren",
+              "max": 0.425,
+              "atSecond": 113
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.38,
+              "atSecond": 51
+            },
+            {
+              "label": "Brass instrument",
+              "max": 0.319,
+              "atSecond": 51
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.304,
+              "atSecond": 113
+            },
+            {
+              "label": "Church bell",
+              "max": 0.299,
+              "atSecond": 53
+            },
+            {
+              "label": "Bell",
+              "max": 0.235,
+              "atSecond": 53
+            },
+            {
+              "label": "Trumpet",
+              "max": 0.215,
+              "atSecond": 51
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.203,
+              "atSecond": 1
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.19,
+              "atSecond": 77
+            },
+            {
+              "label": "Television",
+              "max": 0.184,
+              "atSecond": 12
+            },
+            {
+              "label": "Narration, monologue",
+              "max": 0.18,
+              "atSecond": 124
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Train",
+                "Railroad car, train wagon",
+                "Rail transport"
+              ],
+              "fraction": 0.333
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 518735,
+        "name": "Metro Underground",
+        "url": "https://freesound.org/people/TeTeNoise/sounds/518735/",
+        "author": "TeTeNoise",
+        "durationSec": 416,
+        "verdict": "reject",
+        "reason": "required sound absent: Train / Railroad car, train wagon / Rail transport",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 416,
+          "cleanSeconds": 306,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8822
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.848
+            },
+            {
+              "label": "Train",
+              "max": 0.8017
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.714
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.6895
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.882,
+              "atSecond": 336
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.577,
+              "atSecond": 243
+            },
+            {
+              "label": "Siren",
+              "max": 0.529,
+              "atSecond": 243
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.404,
+              "atSecond": 82
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.31,
+              "atSecond": 399
+            },
+            {
+              "label": "Thunder",
+              "max": 0.263,
+              "atSecond": 69
+            },
+            {
+              "label": "Gunshot, gunfire",
+              "max": 0.23,
+              "atSecond": 82
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.2,
+              "atSecond": 80
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.197,
+              "atSecond": 399
+            },
+            {
+              "label": "Bell",
+              "max": 0.187,
+              "atSecond": 259
+            },
+            {
+              "label": "Music",
+              "max": 0.167,
+              "atSecond": 339
+            },
+            {
+              "label": "Church bell",
+              "max": 0.156,
+              "atSecond": 259
+            },
+            {
+              "label": "Vehicle horn, car horn, honking",
+              "max": 0.094,
+              "atSecond": 244
+            },
+            {
+              "label": "Ambulance (siren)",
+              "max": 0.087,
+              "atSecond": 399
+            },
+            {
+              "label": "Steam whistle",
+              "max": 0.065,
+              "atSecond": 216
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Train",
+                "Railroad car, train wagon",
+                "Rail transport"
+              ],
+              "fraction": 0.332
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 727841,
+        "name": "ambience, city, metro, Komsomolskaya, subway, Moscow",
+        "url": "https://freesound.org/people/AlexanderChe/sounds/727841/",
+        "author": "AlexanderChe",
+        "durationSec": 130,
+        "verdict": "reject",
+        "reason": "required sound absent: Train / Railroad car, train wagon / Rail transport",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 130,
+          "cleanSeconds": 98,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8785
+            },
+            {
+              "label": "Train",
+              "max": 0.7364
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5978
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.5881
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.5516
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.878,
+              "atSecond": 121
+            },
+            {
+              "label": "Music",
+              "max": 0.306,
+              "atSecond": 41
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.229,
+              "atSecond": 76
+            },
+            {
+              "label": "Thunder",
+              "max": 0.183,
+              "atSecond": 97
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Train",
+                "Railroad car, train wagon",
+                "Rail transport"
+              ],
+              "fraction": 0.323
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 663788,
+        "name": "[ MPooman ] Subway Sounds (SE468) (High Quality)",
+        "url": "https://freesound.org/people/MPooman/sounds/663788/",
+        "author": "MPooman",
+        "durationSec": 287.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Train / Railroad car, train wagon / Rail transport",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 287,
+          "cleanSeconds": 238,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.8311
+            },
+            {
+              "label": "Speech",
+              "max": 0.8009
+            },
+            {
+              "label": "Train",
+              "max": 0.7953
+            },
+            {
+              "label": "Bow-wow",
+              "max": 0.744
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.7158
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.831,
+              "atSecond": 248
+            },
+            {
+              "label": "Speech",
+              "max": 0.801,
+              "atSecond": 266
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.431,
+              "atSecond": 33
+            },
+            {
+              "label": "Siren",
+              "max": 0.333,
+              "atSecond": 32
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.242,
+              "atSecond": 249
+            },
+            {
+              "label": "Microwave oven",
+              "max": 0.202,
+              "atSecond": 67
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.199,
+              "atSecond": 31
+            },
+            {
+              "label": "Violin, fiddle",
+              "max": 0.196,
+              "atSecond": 249
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.164,
+              "atSecond": 218
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.115,
+              "atSecond": 29
+            },
+            {
+              "label": "Ambulance (siren)",
+              "max": 0.083,
+              "atSecond": 31
+            },
+            {
+              "label": "Foghorn",
+              "max": 0.057,
+              "atSecond": 244
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Train",
+                "Railroad car, train wagon",
+                "Rail transport"
+              ],
+              "fraction": 0.094
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 547672,
+        "name": "Vishali Metro Station",
+        "url": "https://freesound.org/people/kalhan/sounds/547672/",
+        "author": "kalhan",
+        "durationSec": 63.1,
+        "verdict": "reject",
+        "reason": "clip has 63 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 63,
+          "cleanSeconds": 46,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8151
+            },
+            {
+              "label": "Train",
+              "max": 0.5608
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5279
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.4914
+            },
+            {
+              "label": "Music",
+              "max": 0.4734
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.815,
+              "atSecond": 62
+            },
+            {
+              "label": "Music",
+              "max": 0.473,
+              "atSecond": 7
+            },
+            {
+              "label": "Siren",
+              "max": 0.4,
+              "atSecond": 6
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.36,
+              "atSecond": 6
+            },
+            {
+              "label": "Air horn, truck horn",
+              "max": 0.172,
+              "atSecond": 19
+            },
+            {
+              "label": "Vehicle horn, car horn, honking",
+              "max": 0.171,
+              "atSecond": 19
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Train",
+                "Railroad car, train wagon",
+                "Rail transport"
+              ],
+              "fraction": 0.143
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

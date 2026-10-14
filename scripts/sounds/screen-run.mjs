@@ -164,17 +164,24 @@ async function tagClips(clips, labels) {
     await writeFile(requestsPath, JSON.stringify(requests));
     try {
       await runPython([SCREEN_TAG_SCRIPT, labelsPath, requestsPath]);
-      for (const clip of batch) {
-        const tmp = `${clip.cachePath}.tmp`;
-        tagsSchema.parse(await readJson(tmp));
-        await rename(tmp, clip.cachePath);
-      }
     } finally {
-      for (const request of requests) {
-        await rm(request.input, { force: true });
-        await rm(request.output, { force: true });
-      }
+      // Keep every clip the tagger finished, even when the batch fails part way: a rerun then
+      // resumes at the first clip without a cached result. Only audio and torn files are removed.
+      for (const clip of batch) await keepFinishedTags(clip);
+      for (const request of requests) await rm(request.input, { force: true });
     }
+  }
+}
+
+/** Moves a finished tag file into the cache. A torn file (the process died mid-write) is deleted. */
+async function keepFinishedTags(clip) {
+  const tmp = `${clip.cachePath}.tmp`;
+  if (!(await fileExists(tmp))) return;
+  try {
+    tagsSchema.parse(await readJson(tmp));
+    await rename(tmp, clip.cachePath);
+  } catch {
+    await rm(tmp, { force: true });
   }
 }
 

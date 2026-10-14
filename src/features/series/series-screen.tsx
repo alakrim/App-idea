@@ -1,7 +1,11 @@
 import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
 
-import { useLiveRead } from '@/db/hooks';
+import { useDb, useLiveRead } from '@/db/hooks';
+import type { BookmarkItem } from '@/features/bookmarks/bookmark-data';
+import { BookmarkNoteSheet } from '@/features/bookmarks/bookmark-note-sheet';
+import { removeBookmark, setBookmarkNote } from '@/features/bookmarks/bookmark-service';
+import { BookmarksSheet } from '@/features/bookmarks/bookmarks-sheet';
 import { isScannedPdfFailure } from '@/features/chapter/chapter-status';
 import { usePipeline } from '@/features/pipeline/facade';
 import { useChapterProgressMap } from '@/features/pipeline/use-chapter-progress';
@@ -26,6 +30,7 @@ export interface SeriesScreenProps {
 export function SeriesScreen({ seriesId }: SeriesScreenProps) {
   const data = useLiveRead(readSeriesScreen, SERIES_SCREEN_TABLES, seriesId);
   const deps = useSeriesDeps();
+  const db = useDb();
   const pipeline = usePipeline();
   const chapterIds = useMemo(
     () => data.chapters.map((record) => record.chapter.id),
@@ -38,6 +43,8 @@ export function SeriesScreen({ seriesId }: SeriesScreenProps) {
   const [chapterMenuFor, setChapterMenuFor] = useState<string | null>(null);
   const [deletingChapter, setDeletingChapter] = useState<string | null>(null);
   const [ocrFor, setOcrFor] = useState<string | null>(null);
+  const [bookmarksOpen, setBookmarksOpen] = useState(false);
+  const [noteFor, setNoteFor] = useState<BookmarkItem | null>(null);
 
   // Live progress is newer than the stored job, so its error wins.
   const chapters: SeriesChapterItem[] = data.chapters.map((record) => {
@@ -73,6 +80,9 @@ export function SeriesScreen({ seriesId }: SeriesScreenProps) {
         chapters={chapters}
         ocrPrices={ocrPrices}
         playTarget={playTarget(data.chapters, data.resumeChapterId)}
+        currentChapterId={data.resumeChapterId}
+        bookmarks={data.bookmarks}
+        onBookmarks={() => setBookmarksOpen(true)}
         onBack={goBack}
         onMenu={() => setMenuOpen(true)}
         onPlay={(chapterId) => router.push({ pathname: '/player', params: { chapterId } })}
@@ -110,6 +120,33 @@ export function SeriesScreen({ seriesId }: SeriesScreenProps) {
           setDeletingSeries(false);
           deleteSeries(deps, seriesId);
           goBack();
+        }}
+      />
+
+      <BookmarksSheet
+        visible={bookmarksOpen}
+        groups={data.bookmarks}
+        onClose={() => setBookmarksOpen(false)}
+        onOpen={(chapterId, sentenceIdx) => {
+          setBookmarksOpen(false);
+          router.push({
+            pathname: '/player',
+            params: { chapterId, sentence: String(sentenceIdx) },
+          });
+        }}
+        onEditNote={(bookmark) => {
+          setBookmarksOpen(false);
+          setNoteFor(bookmark);
+        }}
+        onDelete={(bookmarkId) => removeBookmark(db, bookmarkId)}
+      />
+
+      <BookmarkNoteSheet
+        bookmark={noteFor}
+        onClose={() => setNoteFor(null)}
+        onSave={(bookmarkId, note) => {
+          setBookmarkNote(db, bookmarkId, note);
+          setNoteFor(null);
         }}
       />
 

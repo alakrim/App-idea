@@ -435,6 +435,35 @@ describe('PipelineQueue: stalls and the network', () => {
     expect(doneOrder(events)).toEqual([A]);
   });
 
+  it('keeps watching in the background while a foreground service keeps JS alive', async () => {
+    let release: () => void = () => undefined;
+    const gate = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const events: PipelineEvent[] = [];
+    const fake = createFakePorts({
+      sourceText: LONG_TEXT,
+      tts: async () => {
+        await gate;
+        return { bytes: mp3Bytes(4), mime: 'audio/mpeg', costUsd: null };
+      },
+    });
+    const queue = createPipelineQueue(fake.ports, {
+      onEvent: (e) => events.push(e),
+      clock: WALL_CLOCK,
+      keepsAliveInBackground: () => true,
+    });
+
+    await queue.enqueue(A);
+    await jest.advanceTimersByTimeAsync(1_000);
+    fake.network.emit({ type: 'backgrounded' });
+    await jest.advanceTimersByTimeAsync(STALL_AFTER_MS);
+    expect(events.filter((e) => e.type === 'stall')).toHaveLength(1);
+    release();
+    await queue.idle();
+    expect(doneOrder(events)).toEqual([A]);
+  });
+
   it('lets a request that reports its timeout keep the chapter quiet for that long too', async () => {
     const gate = new Promise<void>(() => undefined);
     const events: PipelineEvent[] = [];

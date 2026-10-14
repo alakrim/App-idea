@@ -73,5 +73,386 @@
         "-6 music (soundtrack, instrumental)"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Wind",
+          "Hum",
+          "Humming"
+        ]
+      ],
+      "clapPrompt": "faint eerie air with unplaceable low tones"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "clip has 60 s; a window needs 64 s; required sound absent: Wind / Hum / Humming",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 837985,
+        "name": "Textural SFX – Bubbling  & Fire",
+        "url": "https://freesound.org/people/Artem_Zaitsev/sounds/837985/",
+        "author": "Artem_Zaitsev",
+        "durationSec": 60.1,
+        "verdict": "reject",
+        "reason": "clip has 60 s; a window needs 64 s",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 60,
+          "cleanSeconds": 54,
+          "topClasses": [
+            {
+              "label": "Scratch",
+              "max": 0.3147
+            },
+            {
+              "label": "Firecracker",
+              "max": 0.1966
+            },
+            {
+              "label": "Fireworks",
+              "max": 0.1833
+            },
+            {
+              "label": "Shuffling cards",
+              "max": 0.13
+            },
+            {
+              "label": "Scratching (performance technique)",
+              "max": 0.1193
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Firecracker",
+              "max": 0.197,
+              "atSecond": 24
+            },
+            {
+              "label": "Fireworks",
+              "max": 0.183,
+              "atSecond": 24
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Hum",
+                "Humming"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 530683,
+        "name": "ambient ghost",
+        "url": "https://freesound.org/people/s-light/sounds/530683/",
+        "author": "s-light",
+        "durationSec": 300,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Hum / Humming",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 300,
+          "cleanSeconds": 39,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.7199
+            },
+            {
+              "label": "Music",
+              "max": 0.718
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.6963
+            },
+            {
+              "label": "Timpani",
+              "max": 0.546
+            },
+            {
+              "label": "Field recording",
+              "max": 0.5116
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.72,
+              "atSecond": 164
+            },
+            {
+              "label": "Music",
+              "max": 0.718,
+              "atSecond": 21
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.696,
+              "atSecond": 145
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.503,
+              "atSecond": 164
+            },
+            {
+              "label": "Train",
+              "max": 0.497,
+              "atSecond": 15
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.426,
+              "atSecond": 63
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.408,
+              "atSecond": 63
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.392,
+              "atSecond": 181
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.382,
+              "atSecond": 181
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.292,
+              "atSecond": 74
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.264,
+              "atSecond": 21
+            },
+            {
+              "label": "Car",
+              "max": 0.264,
+              "atSecond": 71
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.26,
+              "atSecond": 174
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.203,
+              "atSecond": 15
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.198,
+              "atSecond": 206
+            },
+            {
+              "label": "Aircraft engine",
+              "max": 0.185,
+              "atSecond": 141
+            },
+            {
+              "label": "Drum",
+              "max": 0.18,
+              "atSecond": 21
+            },
+            {
+              "label": "Bus",
+              "max": 0.168,
+              "atSecond": 22
+            },
+            {
+              "label": "Ship",
+              "max": 0.164,
+              "atSecond": 81
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.161,
+              "atSecond": 174
+            },
+            {
+              "label": "Truck",
+              "max": 0.156,
+              "atSecond": 22
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Hum",
+                "Humming"
+              ],
+              "fraction": 0.01
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 725604,
+        "name": "Winter Winds Leaving The Front Yard",
+        "url": "https://freesound.org/people/WhiteNoiseSleeper/sounds/725604/",
+        "author": "WhiteNoiseSleeper",
+        "durationSec": 477,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Hum / Humming",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 476,
+          "cleanSeconds": 176,
+          "topClasses": [
+            {
+              "label": "Rain",
+              "max": 0.7298
+            },
+            {
+              "label": "Thunder",
+              "max": 0.7213
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.6296
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.6109
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.579
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.721,
+              "atSecond": 79
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.611,
+              "atSecond": 79
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.579,
+              "atSecond": 97
+            },
+            {
+              "label": "Speech",
+              "max": 0.429,
+              "atSecond": 341
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.311,
+              "atSecond": 308
+            },
+            {
+              "label": "Train",
+              "max": 0.281,
+              "atSecond": 172
+            },
+            {
+              "label": "Music",
+              "max": 0.278,
+              "atSecond": 365
+            },
+            {
+              "label": "Reversing beeps",
+              "max": 0.257,
+              "atSecond": 442
+            },
+            {
+              "label": "Car",
+              "max": 0.218,
+              "atSecond": 148
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.204,
+              "atSecond": 172
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.203,
+              "atSecond": 375
+            },
+            {
+              "label": "Wind chime",
+              "max": 0.202,
+              "atSecond": 399
+            },
+            {
+              "label": "Chime",
+              "max": 0.161,
+              "atSecond": 399
+            },
+            {
+              "label": "Truck",
+              "max": 0.16,
+              "atSecond": 442
+            },
+            {
+              "label": "Traffic noise, roadway noise",
+              "max": 0.155,
+              "atSecond": 34
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Hum",
+                "Humming"
+              ],
+              "fraction": 0.002
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

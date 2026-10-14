@@ -191,5 +191,601 @@
         "+1 name matches library"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [],
+      "clapPrompt": "a quiet library, near silence, soft room tone"
+    },
+    "verdict": "filled",
+    "unfilledReason": null,
+    "chosen": {
+      "freesoundId": 400849,
+      "windowStartSeconds": 174,
+      "windowSeconds": 64,
+      "steadinessDb": 2.515,
+      "clapScore": null
+    },
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 635727,
+        "name": "room tone medium quiet library carpeted empty with heavy building ambience +distant sounds.flac",
+        "url": "https://freesound.org/people/kyles/sounds/635727/",
+        "author": "kyles",
+        "durationSec": 121.4,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Vehicle reaches 0.388 (at 5 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 121,
+          "cleanSeconds": 21,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.3879
+            },
+            {
+              "label": "White noise",
+              "max": 0.1475
+            },
+            {
+              "label": "Ship",
+              "max": 0.1096
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.0869
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.0858
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.388,
+              "atSecond": 5
+            }
+          ],
+          "requiredFraction": []
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 620683,
+        "name": "Quiet library ambience",
+        "url": "https://freesound.org/people/xkeril/sounds/620683/",
+        "author": "xkeril",
+        "durationSec": 580.6,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Speech reaches 0.593 (at 348 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 580,
+          "cleanSeconds": 529,
+          "topClasses": [
+            {
+              "label": "Typing",
+              "max": 0.7726
+            },
+            {
+              "label": "Computer keyboard",
+              "max": 0.7505
+            },
+            {
+              "label": "Speech",
+              "max": 0.5928
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.4981
+            },
+            {
+              "label": "Animal",
+              "max": 0.456
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.593,
+              "atSecond": 348
+            },
+            {
+              "label": "Music",
+              "max": 0.238,
+              "atSecond": 375
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.177,
+              "atSecond": 32
+            }
+          ],
+          "requiredFraction": []
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 406497,
+        "name": "public library ground floor quiet distant voices1 echo woman heel steps around room waiting for rain to go away Gaza 2016.wav",
+        "url": "https://freesound.org/people/kyles/sounds/406497/",
+        "author": "kyles",
+        "durationSec": 193.6,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Speech reaches 0.823 (at 187 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 193,
+          "cleanSeconds": 76,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8234
+            },
+            {
+              "label": "Whip",
+              "max": 0.6833
+            },
+            {
+              "label": "Music",
+              "max": 0.5691
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.3824
+            },
+            {
+              "label": "Rub",
+              "max": 0.353
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.823,
+              "atSecond": 187
+            },
+            {
+              "label": "Music",
+              "max": 0.569,
+              "atSecond": 41
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.191,
+              "atSecond": 73
+            },
+            {
+              "label": "Tambourine",
+              "max": 0.19,
+              "atSecond": 74
+            },
+            {
+              "label": "Male speech, man speaking",
+              "max": 0.177,
+              "atSecond": 187
+            },
+            {
+              "label": "Female speech, woman speaking",
+              "max": 0.155,
+              "atSecond": 48
+            }
+          ],
+          "requiredFraction": []
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 742477,
+        "name": "Students at the Library, Whispering at Bibliothèque Nationale de France - Richelieu (Oval Room)",
+        "url": "https://freesound.org/people/alberto_cendra_woodman/sounds/742477/",
+        "author": "alberto_cendra_woodman",
+        "durationSec": 424.5,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Speech reaches 0.645 (at 89 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 424,
+          "cleanSeconds": 378,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.6449
+            },
+            {
+              "label": "Music",
+              "max": 0.6386
+            },
+            {
+              "label": "Clip-clop",
+              "max": 0.5995
+            },
+            {
+              "label": "Horse",
+              "max": 0.5615
+            },
+            {
+              "label": "Writing",
+              "max": 0.5138
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.645,
+              "atSecond": 89
+            },
+            {
+              "label": "Music",
+              "max": 0.639,
+              "atSecond": 309
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.319,
+              "atSecond": 320
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.295,
+              "atSecond": 280
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.26,
+              "atSecond": 309
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.25,
+              "atSecond": 81
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.193,
+              "atSecond": 144
+            },
+            {
+              "label": "Thunder",
+              "max": 0.172,
+              "atSecond": 125
+            }
+          ],
+          "requiredFraction": []
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 400849,
+        "name": "A small library in Korea",
+        "url": "https://freesound.org/people/mindhealer/sounds/400849/",
+        "author": "mindhealer",
+        "durationSec": 242.9,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 174,
+          "lengthSeconds": 64,
+          "steadinessDb": 2.515
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 242,
+          "cleanSeconds": 223,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.7098
+            },
+            {
+              "label": "Tick-tock",
+              "max": 0.6676
+            },
+            {
+              "label": "Bird",
+              "max": 0.6613
+            },
+            {
+              "label": "Pigeon, dove",
+              "max": 0.6533
+            },
+            {
+              "label": "Train",
+              "max": 0.5314
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.71,
+              "atSecond": 140
+            },
+            {
+              "label": "Train",
+              "max": 0.531,
+              "atSecond": 88
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.416,
+              "atSecond": 88
+            },
+            {
+              "label": "Speech",
+              "max": 0.412,
+              "atSecond": 59
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.403,
+              "atSecond": 88
+            },
+            {
+              "label": "Music",
+              "max": 0.237,
+              "atSecond": 116
+            },
+            {
+              "label": "Bus",
+              "max": 0.2,
+              "atSecond": 140
+            },
+            {
+              "label": "Car",
+              "max": 0.192,
+              "atSecond": 238
+            },
+            {
+              "label": "Truck",
+              "max": 0.172,
+              "atSecond": 140
+            },
+            {
+              "label": "Train wheels squealing",
+              "max": 0.165,
+              "atSecond": 88
+            }
+          ],
+          "requiredFraction": []
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 154640,
+        "name": "Roomtone_Garage.aif",
+        "url": "https://freesound.org/people/crcavol/sounds/154640/",
+        "author": "crcavol",
+        "durationSec": 198.3,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 25,
+          "lengthSeconds": 64,
+          "steadinessDb": 0
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 198,
+          "cleanSeconds": 183,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.2904
+            },
+            {
+              "label": "White noise",
+              "max": 0.2436
+            },
+            {
+              "label": "Microwave oven",
+              "max": 0.1487
+            },
+            {
+              "label": "Music",
+              "max": 0.1419
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.0612
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.29,
+              "atSecond": 19
+            }
+          ],
+          "requiredFraction": []
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 427851,
+        "name": "Empty Room Tone 4 - Large room background traffic",
+        "url": "https://freesound.org/people/leonelmail/sounds/427851/",
+        "author": "leonelmail",
+        "durationSec": 266,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Vehicle reaches 0.659 (at 228 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 266,
+          "cleanSeconds": 15,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.6586
+            },
+            {
+              "label": "Jet engine",
+              "max": 0.505
+            },
+            {
+              "label": "Smoke detector, smoke alarm",
+              "max": 0.4404
+            },
+            {
+              "label": "Squeal",
+              "max": 0.327
+            },
+            {
+              "label": "Buzzer",
+              "max": 0.2779
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.659,
+              "atSecond": 228
+            },
+            {
+              "label": "Jet engine",
+              "max": 0.505,
+              "atSecond": 192
+            },
+            {
+              "label": "Smoke detector, smoke alarm",
+              "max": 0.44,
+              "atSecond": 6
+            },
+            {
+              "label": "Fire alarm",
+              "max": 0.274,
+              "atSecond": 8
+            },
+            {
+              "label": "Car",
+              "max": 0.271,
+              "atSecond": 254
+            },
+            {
+              "label": "Engine",
+              "max": 0.247,
+              "atSecond": 21
+            },
+            {
+              "label": "Alarm",
+              "max": 0.056,
+              "atSecond": 11
+            }
+          ],
+          "requiredFraction": []
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 708234,
+        "name": "quiet library",
+        "url": "https://freesound.org/people/Bathulile231236/sounds/708234/",
+        "author": "Bathulile231236",
+        "durationSec": 227.5,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 86,
+          "lengthSeconds": 64,
+          "steadinessDb": 1.672
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 227,
+          "cleanSeconds": 224,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.3575
+            },
+            {
+              "label": "Siren",
+              "max": 0.3432
+            },
+            {
+              "label": "Speech",
+              "max": 0.2576
+            },
+            {
+              "label": "Environmental noise",
+              "max": 0.1987
+            },
+            {
+              "label": "Animal",
+              "max": 0.1761
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.357,
+              "atSecond": 205
+            },
+            {
+              "label": "Siren",
+              "max": 0.343,
+              "atSecond": 205
+            },
+            {
+              "label": "Speech",
+              "max": 0.258,
+              "atSecond": 225
+            },
+            {
+              "label": "Emergency vehicle",
+              "max": 0.158,
+              "atSecond": 205
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.139,
+              "atSecond": 205
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.104,
+              "atSecond": 205
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.066,
+              "atSecond": 205
+            }
+          ],
+          "requiredFraction": []
+        }
+      }
+    ]
+  }
 }

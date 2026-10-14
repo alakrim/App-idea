@@ -191,5 +191,593 @@
         "+1 name matches rain"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Rain",
+          "Raindrop",
+          "Rain on surface"
+        ]
+      ],
+      "clapPrompt": "heavy rain pouring down, dense and steady, no thunder, no people"
+    },
+    "verdict": "filled",
+    "unfilledReason": null,
+    "chosen": {
+      "freesoundId": 826025,
+      "windowStartSeconds": 30,
+      "windowSeconds": 64,
+      "steadinessDb": 0.569,
+      "clapScore": null
+    },
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 826025,
+        "name": "RAIN_Summer Rain.City Yard.Entrance Canopy.Eaves Leaking.Drops On Plants And Asphalt 3_EM",
+        "url": "https://freesound.org/people/newlocknew/sounds/826025/",
+        "author": "newlocknew",
+        "durationSec": 205.2,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 30,
+          "lengthSeconds": 64,
+          "steadinessDb": 0.569
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 205,
+          "cleanSeconds": 205,
+          "topClasses": [
+            {
+              "label": "Rain on surface",
+              "max": 0.8707
+            },
+            {
+              "label": "Rain",
+              "max": 0.854
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.7179
+            },
+            {
+              "label": "Train",
+              "max": 0.1445
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.1335
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 1
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 435222,
+        "name": "Heavy rain with thuder",
+        "url": "https://freesound.org/people/dersinnsspace/sounds/435222/",
+        "author": "dersinnsspace",
+        "durationSec": 100,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Thunder reaches 0.488 (at 83 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 100,
+          "cleanSeconds": 83,
+          "topClasses": [
+            {
+              "label": "Rain on surface",
+              "max": 0.7294
+            },
+            {
+              "label": "Rain",
+              "max": 0.7257
+            },
+            {
+              "label": "Thunder",
+              "max": 0.488
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.4438
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.4239
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.488,
+              "atSecond": 83
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.424,
+              "atSecond": 83
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.371,
+              "atSecond": 0
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.59
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 717843,
+        "name": "230405 Rain heavy, concrete, trees, M10 ParaEM272s, Toronto 7am",
+        "url": "https://freesound.org/people/TRP/sounds/717843/",
+        "author": "TRP",
+        "durationSec": 117,
+        "verdict": "reject",
+        "reason": "required sound absent: Rain / Raindrop / Rain on surface",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 116,
+          "cleanSeconds": 114,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.8251
+            },
+            {
+              "label": "Rain",
+              "max": 0.7639
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.7528
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.7369
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.6789
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.825,
+              "atSecond": 96
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.737,
+              "atSecond": 96
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.328
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 616446,
+        "name": "Heavy rain pouring with water stream on concrete",
+        "url": "https://freesound.org/people/AdrianoAnjos/sounds/616446/",
+        "author": "AdrianoAnjos",
+        "durationSec": 110.3,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 41,
+          "lengthSeconds": 64,
+          "steadinessDb": 0.698
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 110,
+          "cleanSeconds": 110,
+          "topClasses": [
+            {
+              "label": "Rain on surface",
+              "max": 0.7977
+            },
+            {
+              "label": "Rain",
+              "max": 0.7845
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.6662
+            },
+            {
+              "label": "Water",
+              "max": 0.2069
+            },
+            {
+              "label": "Gush",
+              "max": 0.164
+            }
+          ],
+          "deniedMax": [],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.964
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 512965,
+        "name": "Heavy rain Larnaca",
+        "url": "https://freesound.org/people/ratdh9/sounds/512965/",
+        "author": "ratdh9",
+        "durationSec": 108.8,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Vehicle reaches 0.387 (at 69 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 108,
+          "cleanSeconds": 95,
+          "topClasses": [
+            {
+              "label": "Rain",
+              "max": 0.6738
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.6488
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.5487
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.4167
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.3874
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.387,
+              "atSecond": 69
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.32,
+              "atSecond": 98
+            },
+            {
+              "label": "Thunder",
+              "max": 0.319,
+              "atSecond": 97
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.28,
+              "atSecond": 97
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.227,
+              "atSecond": 69
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.546
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 592996,
+        "name": "heavy rain on a small tent hq",
+        "url": "https://freesound.org/people/Petrosilia/sounds/592996/",
+        "author": "Petrosilia",
+        "durationSec": 67,
+        "verdict": "reject",
+        "reason": "no 64 s window is free of denied sounds: Firecracker reaches 0.294 (at 6 s)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 67,
+          "cleanSeconds": 56,
+          "topClasses": [
+            {
+              "label": "Rain on surface",
+              "max": 0.6532
+            },
+            {
+              "label": "Rain",
+              "max": 0.5685
+            },
+            {
+              "label": "Raindrop",
+              "max": 0.4106
+            },
+            {
+              "label": "Firecracker",
+              "max": 0.2939
+            },
+            {
+              "label": "Fireworks",
+              "max": 0.2154
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Firecracker",
+              "max": 0.294,
+              "atSecond": 6
+            },
+            {
+              "label": "Fireworks",
+              "max": 0.215,
+              "atSecond": 56
+            },
+            {
+              "label": "Applause",
+              "max": 0.159,
+              "atSecond": 27
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.716
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 581639,
+        "name": "rain and thunder.m4a",
+        "url": "https://freesound.org/people/KayGood/sounds/581639/",
+        "author": "KayGood",
+        "durationSec": 263.4,
+        "verdict": "reject",
+        "reason": "required sound absent: Rain / Raindrop / Rain on surface",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 263,
+          "cleanSeconds": 200,
+          "topClasses": [
+            {
+              "label": "Rain",
+              "max": 0.7696
+            },
+            {
+              "label": "Thunder",
+              "max": 0.7613
+            },
+            {
+              "label": "Rain on surface",
+              "max": 0.7492
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.6665
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.6183
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.761,
+              "atSecond": 83
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.666,
+              "atSecond": 83
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.562,
+              "atSecond": 3
+            },
+            {
+              "label": "Train",
+              "max": 0.346,
+              "atSecond": 193
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.275,
+              "atSecond": 193
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.261,
+              "atSecond": 193
+            },
+            {
+              "label": "Car",
+              "max": 0.203,
+              "atSecond": 3
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.17,
+              "atSecond": 137
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0.308
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 501007,
+        "name": "Ambience - Living Room with Exterior Rain Falling",
+        "url": "https://freesound.org/people/RavenWolfProds/sounds/501007/",
+        "author": "RavenWolfProds",
+        "durationSec": 268.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Rain / Raindrop / Rain on surface",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 268,
+          "cleanSeconds": 250,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.6401
+            },
+            {
+              "label": "Tick-tock",
+              "max": 0.5765
+            },
+            {
+              "label": "Tick",
+              "max": 0.4162
+            },
+            {
+              "label": "Chime",
+              "max": 0.3364
+            },
+            {
+              "label": "Marimba, xylophone",
+              "max": 0.3341
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.64,
+              "atSecond": 157
+            },
+            {
+              "label": "Chime",
+              "max": 0.336,
+              "atSecond": 118
+            },
+            {
+              "label": "Marimba, xylophone",
+              "max": 0.334,
+              "atSecond": 156
+            },
+            {
+              "label": "Wind chime",
+              "max": 0.314,
+              "atSecond": 118
+            },
+            {
+              "label": "Singing bowl",
+              "max": 0.263,
+              "atSecond": 158
+            },
+            {
+              "label": "Train",
+              "max": 0.15,
+              "atSecond": 151
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Rain",
+                "Raindrop",
+                "Rain on surface"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

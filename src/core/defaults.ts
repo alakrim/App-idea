@@ -38,8 +38,10 @@ export const DEFAULT_SETTINGS: Settings = {
     levelDb: DEFAULT_BED_LEVEL_DB,
     duckingDb: DUCKING_DEFAULTS.duckingDb,
   },
+  playback: { defaultRate: 1 },
   reading: { fontScale: 1, showOriginal: false },
   onboardingDone: false,
   contentNoticeAccepted: false,
   backgroundNoticeShown: false,
+  notificationPromptShown: false,
 };

@@ -187,5 +187,611 @@
         "+1 name matches cave"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Drip",
+          "Water"
+        ]
+      ],
+      "clapPrompt": "inside a cave, slow water drips and a faint echo, still air"
+    },
+    "verdict": "filled",
+    "unfilledReason": null,
+    "chosen": {
+      "freesoundId": 843938,
+      "windowStartSeconds": 84,
+      "windowSeconds": 64,
+      "steadinessDb": 2.807,
+      "clapScore": null
+    },
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 177958,
+        "name": "Water Dripping in Cave.wav",
+        "url": "https://freesound.org/people/Sclolex/sounds/177958/",
+        "author": "Sclolex",
+        "durationSec": 89.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Drip / Water",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 89,
+          "cleanSeconds": 87,
+          "topClasses": [
+            {
+              "label": "Sonar",
+              "max": 0.4765
+            },
+            {
+              "label": "Tick",
+              "max": 0.4504
+            },
+            {
+              "label": "Busy signal",
+              "max": 0.3758
+            },
+            {
+              "label": "Silence",
+              "max": 0.2791
+            },
+            {
+              "label": "Tick-tock",
+              "max": 0.2356
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Busy signal",
+              "max": 0.376,
+              "atSecond": 25
+            },
+            {
+              "label": "Music",
+              "max": 0.18,
+              "atSecond": 68
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Drip",
+                "Water"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 516566,
+        "name": "Dark Dungeon Ambience",
+        "url": "https://freesound.org/people/Kinoton/sounds/516566/",
+        "author": "Kinoton",
+        "durationSec": 180,
+        "verdict": "reject",
+        "reason": "required sound absent: Drip / Water",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 180,
+          "cleanSeconds": 23,
+          "topClasses": [
+            {
+              "label": "Rumble",
+              "max": 0.7651
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.7436
+            },
+            {
+              "label": "Music",
+              "max": 0.5546
+            },
+            {
+              "label": "Car",
+              "max": 0.4458
+            },
+            {
+              "label": "Field recording",
+              "max": 0.3276
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.744,
+              "atSecond": 134
+            },
+            {
+              "label": "Music",
+              "max": 0.555,
+              "atSecond": 20
+            },
+            {
+              "label": "Car",
+              "max": 0.446,
+              "atSecond": 44
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Drip",
+                "Water"
+              ],
+              "fraction": 0.006
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 381418,
+        "name": "Water Through Drain (With Reverb).wav",
+        "url": "https://freesound.org/people/clif_creates/sounds/381418/",
+        "author": "clif_creates",
+        "durationSec": 65.6,
+        "verdict": "reject",
+        "reason": "required sound absent: Drip / Water",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 65,
+          "cleanSeconds": 53,
+          "topClasses": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.4843
+            },
+            {
+              "label": "Pour",
+              "max": 0.4793
+            },
+            {
+              "label": "Water",
+              "max": 0.4347
+            },
+            {
+              "label": "Speech",
+              "max": 0.3415
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.3362
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.484,
+              "atSecond": 53
+            },
+            {
+              "label": "Speech",
+              "max": 0.342,
+              "atSecond": 55
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.336,
+              "atSecond": 53
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.299,
+              "atSecond": 53
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Drip",
+                "Water"
+              ],
+              "fraction": 0.431
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 162116,
+        "name": "Water Dripping (Large Echo)",
+        "url": "https://freesound.org/people/editor_adp/sounds/162116/",
+        "author": "editor_adp",
+        "durationSec": 64.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Drip / Water",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 64,
+          "cleanSeconds": 22,
+          "topClasses": [
+            {
+              "label": "Jingle bell",
+              "max": 0.7
+            },
+            {
+              "label": "Music",
+              "max": 0.6528
+            },
+            {
+              "label": "Cymbal",
+              "max": 0.4058
+            },
+            {
+              "label": "Hi-hat",
+              "max": 0.3818
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.2897
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Jingle bell",
+              "max": 0.7,
+              "atSecond": 58
+            },
+            {
+              "label": "Music",
+              "max": 0.653,
+              "atSecond": 34
+            },
+            {
+              "label": "Cymbal",
+              "max": 0.406,
+              "atSecond": 13
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.29,
+              "atSecond": 36
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Drip",
+                "Water"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 535048,
+        "name": "ambient noise.wav",
+        "url": "https://freesound.org/people/patchytherat/sounds/535048/",
+        "author": "patchytherat",
+        "durationSec": 362.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Drip / Water",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 362,
+          "cleanSeconds": 182,
+          "topClasses": [
+            {
+              "label": "Gong",
+              "max": 0.8973
+            },
+            {
+              "label": "Rumble",
+              "max": 0.4691
+            },
+            {
+              "label": "Music",
+              "max": 0.4518
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.3601
+            },
+            {
+              "label": "Timpani",
+              "max": 0.221
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Gong",
+              "max": 0.897,
+              "atSecond": 163
+            },
+            {
+              "label": "Music",
+              "max": 0.452,
+              "atSecond": 75
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.36,
+              "atSecond": 274
+            },
+            {
+              "label": "Car",
+              "max": 0.187,
+              "atSecond": 171
+            },
+            {
+              "label": "Singing bowl",
+              "max": 0.162,
+              "atSecond": 358
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Drip",
+                "Water"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 843938,
+        "name": "Teufelsfelsen Forest Ambience – Distant Cave Drips with Aircraft & Dog (Pirmasens Field Recording) - 20250814_007",
+        "url": "https://freesound.org/people/TSP-Talk/sounds/843938/",
+        "author": "TSP-Talk",
+        "durationSec": 520,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 84,
+          "lengthSeconds": 64,
+          "steadinessDb": 2.807
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 520,
+          "cleanSeconds": 500,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.5759
+            },
+            {
+              "label": "Water tap, faucet",
+              "max": 0.5132
+            },
+            {
+              "label": "Dog",
+              "max": 0.5084
+            },
+            {
+              "label": "Animal",
+              "max": 0.5048
+            },
+            {
+              "label": "Bow-wow",
+              "max": 0.4985
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.576,
+              "atSecond": 292
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.304,
+              "atSecond": 444
+            },
+            {
+              "label": "Thunder",
+              "max": 0.299,
+              "atSecond": 460
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.207,
+              "atSecond": 460
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Drip",
+                "Water"
+              ],
+              "fraction": 0.594
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 740041,
+        "name": "Cave Ambience",
+        "url": "https://freesound.org/people/pointlessperson1/sounds/740041/",
+        "author": "pointlessperson1",
+        "durationSec": 480,
+        "verdict": "reject",
+        "reason": "required sound absent: Drip / Water",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 479,
+          "cleanSeconds": 404,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.5524
+            },
+            {
+              "label": "Whistling",
+              "max": 0.5348
+            },
+            {
+              "label": "Theremin",
+              "max": 0.5213
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.4718
+            },
+            {
+              "label": "Sigh",
+              "max": 0.4401
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.552,
+              "atSecond": 419
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.472,
+              "atSecond": 136
+            },
+            {
+              "label": "Emergency vehicle",
+              "max": 0.399,
+              "atSecond": 228
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.355,
+              "atSecond": 228
+            },
+            {
+              "label": "Siren",
+              "max": 0.314,
+              "atSecond": 374
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.23,
+              "atSecond": 228
+            },
+            {
+              "label": "Whistle",
+              "max": 0.178,
+              "atSecond": 342
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.123,
+              "atSecond": 374
+            },
+            {
+              "label": "Ambulance (siren)",
+              "max": 0.063,
+              "atSecond": 228
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Drip",
+                "Water"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 843936,
+        "name": "Teufelsfelsen Cave Dripping Water – Distant Aircraft Overflight (Pirmasens Field Recording) - 20250814_006",
+        "url": "https://freesound.org/people/TSP-Talk/sounds/843936/",
+        "author": "TSP-Talk",
+        "durationSec": 496.6,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 421,
+          "lengthSeconds": 64,
+          "steadinessDb": 4.59
+        },
+        "clapScore": null,
+        "evidence": {
+          "frames": 496,
+          "cleanSeconds": 494,
+          "topClasses": [
+            {
+              "label": "Drip",
+              "max": 0.6648
+            },
+            {
+              "label": "Water tap, faucet",
+              "max": 0.6415
+            },
+            {
+              "label": "Bathtub (filling or washing)",
+              "max": 0.5987
+            },
+            {
+              "label": "Water",
+              "max": 0.5905
+            },
+            {
+              "label": "Sink (filling or washing)",
+              "max": 0.517
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Gong",
+              "max": 0.216,
+              "atSecond": 131
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Drip",
+                "Water"
+              ],
+              "fraction": 0.962
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

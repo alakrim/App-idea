@@ -2,6 +2,7 @@ import { memo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import type { Chapter, PipelineError } from '@/core/domain';
+import type { ListeningProgress } from '@/core/playback/listening-progress';
 import { isScannedPdfFailure, rowStateOf, statusLine } from '@/features/chapter/chapter-status';
 import { StageStepper } from '@/features/chapter/stage-stepper';
 import { stepStates } from '@/features/chapter/stage-steps';
@@ -10,10 +11,13 @@ import { formatUsd } from '@/features/shared/format';
 import { useNow } from '@/features/shared/use-now';
 import { Button } from '@/ui/button';
 import { IconButton } from '@/ui/icon-button';
-import { Play } from '@/ui/icons';
+import { Check, Play } from '@/ui/icons';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
-import { hairline, minTouchTarget, space } from '@/ui/tokens';
+import { hairline, iconSize, iconStrokeWidth, minTouchTarget, radius, space } from '@/ui/tokens';
+
+import { ListeningBar } from './listening-bar';
+import { listeningShortLabel, listeningSpokenLabel } from './listening-copy';
 
 const NUMBER_WIDTH = space.xl;
 /** How often a processing row refreshes its elapsed time. */
@@ -27,6 +31,10 @@ export interface ChapterRowProps {
   failure: PipelineError | null;
   /** Estimated cost of the OCR retry, for a scanned PDF. Null while it is being worked out. */
   ocrUsd: number | null;
+  /** How much of this chapter the listener has heard. */
+  listening: ListeningProgress;
+  /** True for the chapter the listener is on, which gets a "Now" marker. */
+  current: boolean;
   /** Hairline above the row, for every row but the first. */
   divided: boolean;
   onOpen: (chapterId: string) => void;
@@ -46,6 +54,8 @@ export const ChapterRow = memo(function ChapterRow({
   progress,
   failure,
   ocrUsd,
+  listening,
+  current,
   divided,
   onOpen,
   onPlay,
@@ -59,6 +69,18 @@ export const ChapterRow = memo(function ChapterRow({
   const line = statusLine(state, chapter, progress, failure, now);
   const scanned = isScannedPdfFailure(chapter, failure);
   const showSteps = state === 'processing' || state === 'failed';
+  const isReady = state === 'ready';
+  const short = isReady ? listeningShortLabel(listening) : null;
+  const spoken = isReady ? listeningSpokenLabel(listening) : null;
+  const showBar = isReady && listening.kind === 'in-progress';
+  const showListening = isReady && (current || listening.kind !== 'unstarted');
+  const accessibilityLabel = [
+    `Chapter ${number}, ${chapter.title}, ${line}`,
+    spoken,
+    current ? 'now playing' : null,
+  ]
+    .filter((part): part is string => part !== null)
+    .join(', ');
 
   return (
     <View
@@ -70,7 +92,7 @@ export const ChapterRow = memo(function ChapterRow({
       <View style={styles.head}>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={`Chapter ${number}, ${chapter.title}, ${line}`}
+          accessibilityLabel={accessibilityLabel}
           accessibilityHint="Opens the chapter. Long press for more actions."
           delayLongPress={350}
           onPress={() => onOpen(chapter.id)}
@@ -91,6 +113,34 @@ export const ChapterRow = memo(function ChapterRow({
             >
               {line}
             </Text>
+            {showBar && listening.kind === 'in-progress' ? (
+              <ListeningBar fraction={listening.fraction} />
+            ) : null}
+            {showListening ? (
+              <View style={styles.listeningLine}>
+                {current ? (
+                  <View style={[styles.nowPill, { backgroundColor: colors.accentSoft }]}>
+                    <Text variant="micro">Now</Text>
+                  </View>
+                ) : null}
+                {listening.kind === 'finished' ? (
+                  <View style={styles.finished}>
+                    <Check
+                      size={iconSize.sm}
+                      strokeWidth={iconStrokeWidth}
+                      color={colors.success}
+                    />
+                    <Text variant="caption" tone="success">
+                      Finished
+                    </Text>
+                  </View>
+                ) : short !== null ? (
+                  <Text variant="caption" tone="muted">
+                    {short}
+                  </Text>
+                ) : null}
+              </View>
+            ) : null}
           </View>
         </Pressable>
         {state === 'ready' ? (
@@ -152,6 +202,22 @@ const styles = StyleSheet.create({
   },
   copy: {
     flex: 1,
+    gap: space.xxs,
+  },
+  listeningLine: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: space.sm,
+  },
+  nowPill: {
+    paddingHorizontal: space.sm,
+    paddingVertical: space.xxs,
+    borderRadius: radius.pill,
+  },
+  finished: {
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: space.xxs,
   },
   steps: {

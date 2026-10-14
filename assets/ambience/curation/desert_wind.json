@@ -190,5 +190,717 @@
         "+1 name matches desert, sand"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "voices",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Wind",
+          "Wind noise (microphone)"
+        ]
+      ],
+      "clapPrompt": "wind hissing over an empty desert of sand, no people"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Wind / Wind noise (microphone)",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 825860,
+        "name": "Desert sand - Dune atmosphere",
+        "url": "https://freesound.org/people/Vrymaa/sounds/825860/",
+        "author": "Vrymaa",
+        "durationSec": 128.2,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 128,
+          "cleanSeconds": 97,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.6367
+            },
+            {
+              "label": "Pink noise",
+              "max": 0.5612
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.5362
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.4851
+            },
+            {
+              "label": "Aircraft engine",
+              "max": 0.3959
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.637,
+              "atSecond": 121
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.536,
+              "atSecond": 121
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.485,
+              "atSecond": 121
+            },
+            {
+              "label": "Aircraft engine",
+              "max": 0.396,
+              "atSecond": 121
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 574397,
+        "name": "Semi desert insects ravens birds quiet with bad mic noise BADLANDS AB 190818.flac",
+        "url": "https://freesound.org/people/TRP/sounds/574397/",
+        "author": "TRP",
+        "durationSec": 125.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 125,
+          "cleanSeconds": 118,
+          "topClasses": [
+            {
+              "label": "Cricket",
+              "max": 0.7161
+            },
+            {
+              "label": "Insect",
+              "max": 0.6162
+            },
+            {
+              "label": "Purr",
+              "max": 0.5919
+            },
+            {
+              "label": "Crow",
+              "max": 0.5243
+            },
+            {
+              "label": "Animal",
+              "max": 0.4658
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Speech",
+              "max": 0.215,
+              "atSecond": 2
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.182,
+              "atSecond": 14
+            },
+            {
+              "label": "Honk",
+              "max": 0.123,
+              "atSecond": 106
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 796194,
+        "name": "Wind in the desert countryside 2",
+        "url": "https://freesound.org/people/fran_marenco/sounds/796194/",
+        "author": "fran_marenco",
+        "durationSec": 165.3,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 165,
+          "cleanSeconds": 114,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.6824
+            },
+            {
+              "label": "Insect",
+              "max": 0.599
+            },
+            {
+              "label": "Fly, housefly",
+              "max": 0.5049
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.4691
+            },
+            {
+              "label": "Rain",
+              "max": 0.4581
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.682,
+              "atSecond": 128
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.469,
+              "atSecond": 128
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.295,
+              "atSecond": 148
+            },
+            {
+              "label": "Music",
+              "max": 0.283,
+              "atSecond": 3
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 796193,
+        "name": "Wind in the desert countryside 1",
+        "url": "https://freesound.org/people/fran_marenco/sounds/796193/",
+        "author": "fran_marenco",
+        "durationSec": 446,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 446,
+          "cleanSeconds": 212,
+          "topClasses": [
+            {
+              "label": "Bee, wasp, etc.",
+              "max": 0.9396
+            },
+            {
+              "label": "Insect",
+              "max": 0.9159
+            },
+            {
+              "label": "Fly, housefly",
+              "max": 0.76
+            },
+            {
+              "label": "Waves, surf",
+              "max": 0.6338
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5806
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.581,
+              "atSecond": 51
+            },
+            {
+              "label": "Speech",
+              "max": 0.453,
+              "atSecond": 97
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.304,
+              "atSecond": 435
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.253,
+              "atSecond": 240
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.213,
+              "atSecond": 51
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.197,
+              "atSecond": 51
+            },
+            {
+              "label": "Ship",
+              "max": 0.193,
+              "atSecond": 47
+            },
+            {
+              "label": "Music",
+              "max": 0.159,
+              "atSecond": 317
+            },
+            {
+              "label": "Honk",
+              "max": 0.115,
+              "atSecond": 72
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0.063
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 557552,
+        "name": "Dark Sahara Egypt",
+        "url": "https://freesound.org/people/szegvari/sounds/557552/",
+        "author": "szegvari",
+        "durationSec": 78.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 78,
+          "cleanSeconds": 15,
+          "topClasses": [
+            {
+              "label": "Vehicle",
+              "max": 0.7511
+            },
+            {
+              "label": "Gong",
+              "max": 0.5319
+            },
+            {
+              "label": "Music",
+              "max": 0.475
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.4163
+            },
+            {
+              "label": "Train",
+              "max": 0.315
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.751,
+              "atSecond": 58
+            },
+            {
+              "label": "Gong",
+              "max": 0.532,
+              "atSecond": 22
+            },
+            {
+              "label": "Music",
+              "max": 0.475,
+              "atSecond": 33
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.416,
+              "atSecond": 49
+            },
+            {
+              "label": "Train",
+              "max": 0.315,
+              "atSecond": 11
+            },
+            {
+              "label": "Siren",
+              "max": 0.292,
+              "atSecond": 49
+            },
+            {
+              "label": "Car",
+              "max": 0.278,
+              "atSecond": 58
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.233,
+              "atSecond": 32
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.199,
+              "atSecond": 32
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.179,
+              "atSecond": 58
+            },
+            {
+              "label": "Microwave oven",
+              "max": 0.178,
+              "atSecond": 54
+            },
+            {
+              "label": "Train whistle",
+              "max": 0.155,
+              "atSecond": 11
+            },
+            {
+              "label": "Train horn",
+              "max": 0.144,
+              "atSecond": 32
+            },
+            {
+              "label": "Steam whistle",
+              "max": 0.101,
+              "atSecond": 11
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 701185,
+        "name": "Slight wind whistle, city hum and plane passing near the desert in 29Palms outskirts",
+        "url": "https://freesound.org/people/felix.blume/sounds/701185/",
+        "author": "felix.blume",
+        "durationSec": 298.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 298,
+          "cleanSeconds": 63,
+          "topClasses": [
+            {
+              "label": "Thunder",
+              "max": 0.7029
+            },
+            {
+              "label": "Train",
+              "max": 0.6905
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5329
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.5227
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.484
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Thunder",
+              "max": 0.703,
+              "atSecond": 103
+            },
+            {
+              "label": "Train",
+              "max": 0.691,
+              "atSecond": 139
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.533,
+              "atSecond": 249
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.523,
+              "atSecond": 139
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.484,
+              "atSecond": 139
+            },
+            {
+              "label": "Thunderstorm",
+              "max": 0.479,
+              "atSecond": 103
+            },
+            {
+              "label": "Emergency vehicle",
+              "max": 0.348,
+              "atSecond": 231
+            },
+            {
+              "label": "Siren",
+              "max": 0.335,
+              "atSecond": 140
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.222,
+              "atSecond": 231
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.206,
+              "atSecond": 89
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.192,
+              "atSecond": 235
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.166,
+              "atSecond": 89
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.164,
+              "atSecond": 231
+            },
+            {
+              "label": "Civil defense siren",
+              "max": 0.151,
+              "atSecond": 140
+            },
+            {
+              "label": "Ambulance (siren)",
+              "max": 0.106,
+              "atSecond": 120
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 705515,
+        "name": "Footsteps on dirt, gravel and sand, with slight wind and city hum",
+        "url": "https://freesound.org/people/felix.blume/sounds/705515/",
+        "author": "felix.blume",
+        "durationSec": 179.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 179,
+          "cleanSeconds": 171,
+          "topClasses": [
+            {
+              "label": "Walk, footsteps",
+              "max": 0.8115
+            },
+            {
+              "label": "Whip",
+              "max": 0.7614
+            },
+            {
+              "label": "Eruption",
+              "max": 0.2726
+            },
+            {
+              "label": "Run",
+              "max": 0.24
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.2333
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Artillery fire",
+              "max": 0.233,
+              "atSecond": 105
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.161,
+              "atSecond": 119
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.159,
+              "atSecond": 43
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 705747,
+        "name": "Footsteps wearing sneakers walking on sand gravel in the desert with road hum",
+        "url": "https://freesound.org/people/felix.blume/sounds/705747/",
+        "author": "felix.blume",
+        "durationSec": 90.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Wind / Wind noise (microphone)",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 90,
+          "cleanSeconds": 86,
+          "topClasses": [
+            {
+              "label": "Walk, footsteps",
+              "max": 0.8113
+            },
+            {
+              "label": "Fireworks",
+              "max": 0.5094
+            },
+            {
+              "label": "Firecracker",
+              "max": 0.4949
+            },
+            {
+              "label": "Whip",
+              "max": 0.4551
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.2107
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Fireworks",
+              "max": 0.509,
+              "atSecond": 82
+            },
+            {
+              "label": "Firecracker",
+              "max": 0.495,
+              "atSecond": 82
+            },
+            {
+              "label": "Artillery fire",
+              "max": 0.211,
+              "atSecond": 56
+            },
+            {
+              "label": "Gunshot, gunfire",
+              "max": 0.198,
+              "atSecond": 56
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Wind",
+                "Wind noise (microphone)"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

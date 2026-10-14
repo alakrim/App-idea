@@ -191,5 +191,800 @@
         "+1 name matches market"
       ]
     }
-  ]
+  ],
+  "screening": {
+    "screenedOn": "2026-10-14",
+    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
+    "reranker": null,
+    "thresholds": {
+      "denyFrameProbability": 0.15,
+      "alarmFrameProbability": 0.05,
+      "requiredFrameProbability": 0.2,
+      "requiredFraction": 0.5,
+      "windowSeconds": 64
+    },
+    "policy": {
+      "families": [
+        "alarms",
+        "percussion",
+        "brass",
+        "music",
+        "vehicles",
+        "engines",
+        "tools",
+        "phones_media",
+        "thunder",
+        "gunfire"
+      ],
+      "exempt": [],
+      "required": [
+        [
+          "Crowd",
+          "Hubbub, speech noise, speech babble",
+          "Chatter"
+        ]
+      ],
+      "clapPrompt": "an open-air market with vendors calling and many voices, no engines"
+    },
+    "verdict": "unfilled",
+    "unfilledReason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
+    "chosen": null,
+    "candidates": [
+      {
+        "rank": 1,
+        "freesoundId": 412824,
+        "name": "market bazaar.wav",
+        "url": "https://freesound.org/people/blukotek/sounds/412824/",
+        "author": "blukotek",
+        "durationSec": 80.1,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 80,
+          "cleanSeconds": 61,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9105
+            },
+            {
+              "label": "Music",
+              "max": 0.891
+            },
+            {
+              "label": "Animal",
+              "max": 0.4246
+            },
+            {
+              "label": "Bow-wow",
+              "max": 0.2764
+            },
+            {
+              "label": "Domestic animals, pets",
+              "max": 0.2761
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.891,
+              "atSecond": 9
+            },
+            {
+              "label": "Train",
+              "max": 0.201,
+              "atSecond": 10
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 2,
+        "freesoundId": 755969,
+        "name": "Evening food market atmosphere at street side",
+        "url": "https://freesound.org/people/lastraindrop/sounds/755969/",
+        "author": "lastraindrop",
+        "durationSec": 340.3,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 340,
+          "cleanSeconds": 95,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9424
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.9021
+            },
+            {
+              "label": "Car",
+              "max": 0.7366
+            },
+            {
+              "label": "Truck",
+              "max": 0.6003
+            },
+            {
+              "label": "Train",
+              "max": 0.5808
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.902,
+              "atSecond": 213
+            },
+            {
+              "label": "Car",
+              "max": 0.737,
+              "atSecond": 305
+            },
+            {
+              "label": "Truck",
+              "max": 0.6,
+              "atSecond": 213
+            },
+            {
+              "label": "Train",
+              "max": 0.581,
+              "atSecond": 123
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.48,
+              "atSecond": 123
+            },
+            {
+              "label": "Train wheels squealing",
+              "max": 0.435,
+              "atSecond": 123
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.43,
+              "atSecond": 123
+            },
+            {
+              "label": "Bus",
+              "max": 0.38,
+              "atSecond": 339
+            },
+            {
+              "label": "Music",
+              "max": 0.366,
+              "atSecond": 256
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.355,
+              "atSecond": 45
+            },
+            {
+              "label": "Engine",
+              "max": 0.34,
+              "atSecond": 212
+            },
+            {
+              "label": "Vehicle horn, car horn, honking",
+              "max": 0.313,
+              "atSecond": 102
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.279,
+              "atSecond": 136
+            },
+            {
+              "label": "Traffic noise, roadway noise",
+              "max": 0.261,
+              "atSecond": 249
+            },
+            {
+              "label": "Air horn, truck horn",
+              "max": 0.243,
+              "atSecond": 102
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.209,
+              "atSecond": 127
+            },
+            {
+              "label": "Fixed-wing aircraft, airplane",
+              "max": 0.205,
+              "atSecond": 136
+            },
+            {
+              "label": "Sewing machine",
+              "max": 0.2,
+              "atSecond": 212
+            },
+            {
+              "label": "Motor vehicle (road)",
+              "max": 0.169,
+              "atSecond": 305
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.154,
+              "atSecond": 137
+            },
+            {
+              "label": "Subway, metro, underground",
+              "max": 0.151,
+              "atSecond": 123
+            },
+            {
+              "label": "Car alarm",
+              "max": 0.059,
+              "atSecond": 95
+            },
+            {
+              "label": "Fire engine, fire truck (siren)",
+              "max": 0.055,
+              "atSecond": 339
+            },
+            {
+              "label": "Fire alarm",
+              "max": 0.055,
+              "atSecond": 122
+            },
+            {
+              "label": "Alarm",
+              "max": 0.053,
+              "atSecond": 239
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter"
+              ],
+              "fraction": 0.012
+            }
+          ]
+        }
+      },
+      {
+        "rank": 3,
+        "freesoundId": 700436,
+        "name": "Le Cheylard outside summer market.wav",
+        "url": "https://freesound.org/people/bruno.auzet/sounds/700436/",
+        "author": "bruno.auzet",
+        "durationSec": 132.5,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 132,
+          "cleanSeconds": 100,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.9009
+            },
+            {
+              "label": "Speech",
+              "max": 0.8879
+            },
+            {
+              "label": "Cat",
+              "max": 0.6565
+            },
+            {
+              "label": "Animal",
+              "max": 0.6068
+            },
+            {
+              "label": "Domestic animals, pets",
+              "max": 0.5923
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.901,
+              "atSecond": 48
+            },
+            {
+              "label": "Flute",
+              "max": 0.319,
+              "atSecond": 53
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.27,
+              "atSecond": 66
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.266,
+              "atSecond": 50
+            },
+            {
+              "label": "Whistle",
+              "max": 0.182,
+              "atSecond": 53
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter"
+              ],
+              "fraction": 0.129
+            }
+          ]
+        }
+      },
+      {
+        "rank": 4,
+        "freesoundId": 545756,
+        "name": "CROWD",
+        "url": "https://freesound.org/people/SamuelGremaud/sounds/545756/",
+        "author": "SamuelGremaud",
+        "durationSec": 167.3,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 167,
+          "cleanSeconds": 116,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9163
+            },
+            {
+              "label": "Bird",
+              "max": 0.8523
+            },
+            {
+              "label": "Pigeon, dove",
+              "max": 0.7781
+            },
+            {
+              "label": "Animal",
+              "max": 0.6805
+            },
+            {
+              "label": "Cat",
+              "max": 0.676
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.56,
+              "atSecond": 88
+            },
+            {
+              "label": "Music",
+              "max": 0.513,
+              "atSecond": 107
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.468,
+              "atSecond": 140
+            },
+            {
+              "label": "Rowboat, canoe, kayak",
+              "max": 0.243,
+              "atSecond": 84
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.212,
+              "atSecond": 88
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.201,
+              "atSecond": 88
+            },
+            {
+              "label": "Car",
+              "max": 0.186,
+              "atSecond": 54
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 5,
+        "freesoundId": 782314,
+        "name": "sophia open air vegetable market",
+        "url": "https://freesound.org/people/bruno.auzet/sounds/782314/",
+        "author": "bruno.auzet",
+        "durationSec": 144.7,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 144,
+          "cleanSeconds": 136,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.9118
+            },
+            {
+              "label": "Chatter",
+              "max": 0.6397
+            },
+            {
+              "label": "Music",
+              "max": 0.5405
+            },
+            {
+              "label": "Stir",
+              "max": 0.4748
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.401
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.54,
+              "atSecond": 42
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.401,
+              "atSecond": 63
+            },
+            {
+              "label": "Train",
+              "max": 0.218,
+              "atSecond": 52
+            },
+            {
+              "label": "Vehicle horn, car horn, honking",
+              "max": 0.181,
+              "atSecond": 63
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter"
+              ],
+              "fraction": 0.201
+            }
+          ]
+        }
+      },
+      {
+        "rank": 6,
+        "freesoundId": 752436,
+        "name": "Walking through the bustling night market in the downtown area",
+        "url": "https://freesound.org/people/lastraindrop/sounds/752436/",
+        "author": "lastraindrop",
+        "durationSec": 485.8,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 485,
+          "cleanSeconds": 270,
+          "topClasses": [
+            {
+              "label": "Music",
+              "max": 0.9327
+            },
+            {
+              "label": "Speech",
+              "max": 0.913
+            },
+            {
+              "label": "Run",
+              "max": 0.8093
+            },
+            {
+              "label": "Insect",
+              "max": 0.7399
+            },
+            {
+              "label": "Bee, wasp, etc.",
+              "max": 0.5718
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.933,
+              "atSecond": 474
+            },
+            {
+              "label": "Musical instrument",
+              "max": 0.547,
+              "atSecond": 311
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.512,
+              "atSecond": 141
+            },
+            {
+              "label": "Train",
+              "max": 0.474,
+              "atSecond": 15
+            },
+            {
+              "label": "Guitar",
+              "max": 0.443,
+              "atSecond": 311
+            },
+            {
+              "label": "Honk",
+              "max": 0.441,
+              "atSecond": 35
+            },
+            {
+              "label": "Plucked string instrument",
+              "max": 0.44,
+              "atSecond": 311
+            },
+            {
+              "label": "Rail transport",
+              "max": 0.362,
+              "atSecond": 15
+            },
+            {
+              "label": "Car",
+              "max": 0.347,
+              "atSecond": 141
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.302,
+              "atSecond": 319
+            },
+            {
+              "label": "Railroad car, train wagon",
+              "max": 0.296,
+              "atSecond": 15
+            },
+            {
+              "label": "Electronic music",
+              "max": 0.214,
+              "atSecond": 303
+            },
+            {
+              "label": "Race car, auto racing",
+              "max": 0.188,
+              "atSecond": 141
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter"
+              ],
+              "fraction": 0.058
+            }
+          ]
+        }
+      },
+      {
+        "rank": 7,
+        "freesoundId": 705302,
+        "name": "Market fair ambience with crowd hubbub far and cars passing",
+        "url": "https://freesound.org/people/felix.blume/sounds/705302/",
+        "author": "felix.blume",
+        "durationSec": 99.9,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 99,
+          "cleanSeconds": 18,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8456
+            },
+            {
+              "label": "Music",
+              "max": 0.821
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.697
+            },
+            {
+              "label": "Run",
+              "max": 0.6705
+            },
+            {
+              "label": "Honk",
+              "max": 0.6211
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Music",
+              "max": 0.821,
+              "atSecond": 15
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.697,
+              "atSecond": 88
+            },
+            {
+              "label": "Honk",
+              "max": 0.621,
+              "atSecond": 25
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.447,
+              "atSecond": 62
+            },
+            {
+              "label": "Car",
+              "max": 0.228,
+              "atSecond": 72
+            },
+            {
+              "label": "Wind noise (microphone)",
+              "max": 0.205,
+              "atSecond": 62
+            },
+            {
+              "label": "Sailboat, sailing ship",
+              "max": 0.2,
+              "atSecond": 62
+            },
+            {
+              "label": "Traffic noise, roadway noise",
+              "max": 0.192,
+              "atSecond": 88
+            },
+            {
+              "label": "Motorboat, speedboat",
+              "max": 0.176,
+              "atSecond": 62
+            },
+            {
+              "label": "Aircraft",
+              "max": 0.171,
+              "atSecond": 78
+            },
+            {
+              "label": "Police car (siren)",
+              "max": 0.069,
+              "atSecond": 73
+            },
+            {
+              "label": "Car alarm",
+              "max": 0.056,
+              "atSecond": 73
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter"
+              ],
+              "fraction": 0
+            }
+          ]
+        }
+      },
+      {
+        "rank": 8,
+        "freesoundId": 659634,
+        "name": "2022-11-12-binaural-london-market-ambience.wav",
+        "url": "https://freesound.org/people/ilmari_freesound/sounds/659634/",
+        "author": "ilmari_freesound",
+        "durationSec": 144.6,
+        "verdict": "reject",
+        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
+        "window": null,
+        "clapScore": null,
+        "evidence": {
+          "frames": 144,
+          "cleanSeconds": 80,
+          "topClasses": [
+            {
+              "label": "Speech",
+              "max": 0.8941
+            },
+            {
+              "label": "Vehicle",
+              "max": 0.5299
+            },
+            {
+              "label": "Animal",
+              "max": 0.4893
+            },
+            {
+              "label": "Dog",
+              "max": 0.3858
+            },
+            {
+              "label": "Domestic animals, pets",
+              "max": 0.3326
+            }
+          ],
+          "deniedMax": [
+            {
+              "label": "Vehicle",
+              "max": 0.53,
+              "atSecond": 88
+            },
+            {
+              "label": "Music",
+              "max": 0.284,
+              "atSecond": 121
+            },
+            {
+              "label": "Boat, Water vehicle",
+              "max": 0.156,
+              "atSecond": 88
+            }
+          ],
+          "requiredFraction": [
+            {
+              "group": [
+                "Crowd",
+                "Hubbub, speech noise, speech babble",
+                "Chatter"
+              ],
+              "fraction": 0.028
+            }
+          ]
+        }
+      }
+    ]
+  }
 }
