@@ -97,6 +97,7 @@ function buildWorld(webview: WebViewExtractor = noWebView): World {
     openrouter,
     files,
     webview,
+    storage: { freeBytes: async () => 10 * 1024 * 1024 * 1024 },
     fetchImpl: network.fetchImpl,
     clock,
     ids: createIdGenerator({ now: clock.now }),

@@ -1,6 +1,8 @@
 import { newId } from '@/core/domain';
 import type { ChapterMemory, Entity, EntityFact, EntityKind, IdGenerator } from '@/core/domain';
 
+import { aliasesThrough } from './aliases';
+
 /** A combining mark is only stripped when it follows a Latin letter, so CJK kana are untouched. */
 const COMBINING_MARK_AFTER_LATIN = /(?<=\p{Script=Latin})\p{M}+/gu;
 
@@ -77,8 +79,10 @@ function factKey(entityId: string, fact: string): string {
 
 /**
  * Matches the memory's characters, places and items against the existing entities of the same
- * kind, by normalized name or alias. Matches gain the new spellings as aliases. Unmatched mentions
- * create entities. Facts are attached with the chapter that revealed them, and duplicates are dropped.
+ * kind, by normalized name or alias. Only the aliases revealed through this chapter take part in
+ * matching, so a later spelling never links an earlier chapter's mention. Matches gain the new
+ * spellings as aliases, stamped with this chapter. Unmatched mentions create entities. Facts are
+ * attached with the chapter that revealed them, and duplicates are dropped.
  */
 export function resolveEntities(
   existing: readonly Entity[],
@@ -103,7 +107,7 @@ export function resolveEntities(
     let entity = [...byId.values()].find(
       (e) =>
         e.kind === mention.kind &&
-        nameKeys(e.canonicalName, e.aliases).some((k) => keys.includes(k)),
+        nameKeys(e.canonicalName, aliasesThrough(e, chapterOrder)).some((k) => keys.includes(k)),
     );
     if (!entity) {
       entity = {
@@ -117,11 +121,13 @@ export function resolveEntities(
       byId.set(entity.id, entity);
     }
 
-    const known = new Set(nameKeys(entity.canonicalName, entity.aliases));
+    // Every stored spelling counts as known, so a spelling is stamped once, with the chapter that
+    // first revealed it.
+    const known = new Set(nameKeys(entity.canonicalName, entity.aliases.map((a) => a.alias)));
     for (const spelling of [mention.name, ...mention.aliases]) {
       const key = normalizeName(spelling);
       if (key && !known.has(key)) {
-        entity.aliases.push(spelling.trim());
+        entity.aliases.push({ alias: spelling.trim(), firstChapterOrder: chapterOrder });
         known.add(key);
       }
     }

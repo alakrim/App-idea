@@ -195,7 +195,7 @@
   "screening": {
     "screenedOn": "2026-10-14",
     "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
+    "reranker": null,
     "thresholds": {
       "denyFrameProbability": 0.15,
       "alarmFrameProbability": 0.05,
@@ -227,9 +227,15 @@
       ],
       "clapPrompt": "heavy rain pouring down, dense and steady, no thunder, no people"
     },
-    "verdict": "unfilled",
-    "unfilledReason": "build checks: no screened candidate passed the build checks (826025: heavy_rain: integrated loudness -26.9 LUFS is outside the target; 616446: heavy_rain: integrated loudness -26.8 LUFS is outside the target)",
-    "chosen": null,
+    "verdict": "filled",
+    "unfilledReason": null,
+    "chosen": {
+      "freesoundId": 826025,
+      "windowStartSeconds": 30,
+      "windowSeconds": 64,
+      "steadinessDb": 0.569,
+      "clapScore": null
+    },
     "candidates": [
       {
         "rank": 1,
@@ -243,9 +249,10 @@
         "window": {
           "startSeconds": 30,
           "lengthSeconds": 64,
+          "loopSeconds": 60,
           "steadinessDb": 0.569
         },
-        "clapScore": 0.6121,
+        "clapScore": null,
         "evidence": {
           "frames": 205,
           "cleanSeconds": 205,
@@ -421,9 +428,10 @@
         "window": {
           "startSeconds": 41,
           "lengthSeconds": 64,
+          "loopSeconds": 60,
           "steadinessDb": 0.698
         },
-        "clapScore": 0.598,
+        "clapScore": null,
         "evidence": {
           "frames": 110,
           "cleanSeconds": 110,
@@ -469,9 +477,14 @@
         "url": "https://freesound.org/people/ratdh9/sounds/512965/",
         "author": "ratdh9",
         "durationSec": 108.8,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Vehicle reaches 0.387 (at 69 s)",
-        "window": null,
+        "verdict": "pass",
+        "reason": null,
+        "window": {
+          "startSeconds": 14,
+          "lengthSeconds": 46,
+          "loopSeconds": 45,
+          "steadinessDb": 1.925
+        },
         "clapScore": null,
         "evidence": {
           "frames": 108,

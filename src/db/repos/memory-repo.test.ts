@@ -50,7 +50,7 @@ const LIN_MO: Entity = {
   seriesId: id(1),
   kind: 'character',
   canonicalName: 'Lin Mo',
-  aliases: ['Mo'],
+  aliases: [{ alias: 'Mo', firstChapterOrder: 1 }],
   firstChapterOrder: 1,
 };
 

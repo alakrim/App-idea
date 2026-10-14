@@ -195,7 +195,7 @@
   "screening": {
     "screenedOn": "2026-10-14",
     "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
+    "reranker": null,
     "thresholds": {
       "denyFrameProbability": 0.15,
       "alarmFrameProbability": 0.05,
@@ -227,9 +227,15 @@
       ],
       "clapPrompt": "gentle steady rain on leaves, no thunder, no people"
     },
-    "verdict": "unfilled",
-    "unfilledReason": "build checks: no screened candidate passed the build checks (380651: light_rain: integrated loudness -26.9 LUFS is outside the target; 171980: light_rain: integrated loudness -26.9 LUFS is outside the target)",
-    "chosen": null,
+    "verdict": "filled",
+    "unfilledReason": null,
+    "chosen": {
+      "freesoundId": 171980,
+      "windowStartSeconds": 56,
+      "windowSeconds": 64,
+      "steadinessDb": 1.018,
+      "clapScore": null
+    },
     "candidates": [
       {
         "rank": 1,
@@ -243,9 +249,10 @@
         "window": {
           "startSeconds": 56,
           "lengthSeconds": 64,
+          "loopSeconds": 60,
           "steadinessDb": 1.018
         },
-        "clapScore": 0.4737,
+        "clapScore": null,
         "evidence": {
           "frames": 206,
           "cleanSeconds": 204,
@@ -387,9 +394,10 @@
         "window": {
           "startSeconds": 10,
           "lengthSeconds": 64,
+          "loopSeconds": 60,
           "steadinessDb": 1.899
         },
-        "clapScore": 0.5,
+        "clapScore": null,
         "evidence": {
           "frames": 105,
           "cleanSeconds": 103,

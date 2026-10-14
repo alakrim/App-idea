@@ -7,6 +7,7 @@ import type {
   QaMessage,
   SentenceRef,
 } from '@/core/domain';
+import { aliasesBefore } from '@/core/memory/aliases';
 import { buildPriorContext } from '@/core/memory/codex';
 import { paidCallEntry } from '@/core/llm/usage-entry';
 import { buildQaPrompt } from '@/core/memory/qa';
@@ -87,7 +88,10 @@ function gatherContext(
     QA_CODEX_BUDGET_TOKENS,
   );
 
-  const names = entities.flatMap((entity) => [entity.canonicalName, ...entity.aliases]);
+  const names = entities.flatMap((entity) => [
+    entity.canonicalName,
+    ...aliasesBefore(entity, cutoff.chapterOrder),
+  ]);
   const keywords = extractKeywords(question, names);
   const hits = searchPassages(db, seriesId, cutoff, keywords, numberByOrder);
 

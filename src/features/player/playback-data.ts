@@ -1,4 +1,5 @@
 import type { AudioSegment, Bookmark, ChapterPosition } from '@/core/domain';
+import { playableRun } from '@/core/playback/playability';
 import { audioSegmentRepo } from '@/db/repos/audio-segment-repo';
 import { chapterPositionRepo, type ChapterPointInput } from '@/db/repos/chapter-position-repo';
 import { chapterRepo } from '@/db/repos/chapter-repo';
@@ -19,10 +20,11 @@ import {
  * database; tests pass an in-memory version, so the controller never imports the database.
  */
 export interface PlaybackData {
+  /** The chapter, with only the passages that can be heard (see core/playback/playability). */
   loadChapter(chapterId: string): ChapterForPlayback | null;
   /** Where the listener stopped in one chapter, or null when it was never played. */
   chapterPosition(chapterId: string): ChapterPosition | null;
-  /** The next chapter in reading order that is ready to play, or null at the end of the series. */
+  /** The next chapter in reading order that can play, or null at the end of the series. */
   nextReadyChapterId(seriesId: string, afterOrder: number): string | null;
   /** Saves where the listener is. The series' current place and furthest place move with it. */
   savePosition(seriesId: string, chapterId: string, point: ChapterPointInput): void;
@@ -42,12 +44,17 @@ export interface PlaybackData {
 
 export function createPlaybackData(db: Db): PlaybackData {
   return {
-    loadChapter: (chapterId) => playbackRepo.getChapterForPlayback(db, chapterId),
+    loadChapter(chapterId) {
+      const chapter = playbackRepo.getChapterForPlayback(db, chapterId);
+      if (chapter === null) return null;
+      return { ...chapter, segments: playableRun(chapter.segments) };
+    },
     chapterPosition: (chapterId) => chapterPositionRepo.get(db, chapterId),
     nextReadyChapterId(seriesId, afterOrder) {
+      const playable = audioSegmentRepo.playableChapterIds(db, seriesId);
       const next = chapterRepo
         .listBySeries(db, seriesId)
-        .find((chapter) => chapter.order > afterOrder && chapter.status === 'ready');
+        .find((chapter) => chapter.order > afterOrder && playable.has(chapter.id));
       return next?.id ?? null;
     },
     savePosition(seriesId, chapterId, point) {
@@ -57,7 +64,8 @@ export function createPlaybackData(db: Db): PlaybackData {
       chapterPositionRepo.markFinished(db, chapterId, point, Date.now()),
     seriesPlaybackRate: (seriesId) => seriesRepo.getPlaybackRate(db, seriesId),
     saveSeriesPlaybackRate: (seriesId, rate) => seriesRepo.setPlaybackRate(db, seriesId, rate),
-    segmentsFrom: (chapterId, fromIdx) => audioSegmentRepo.listByChapter(db, chapterId, fromIdx),
+    segmentsFrom: (chapterId, fromIdx) =>
+      playableRun(audioSegmentRepo.listByChapter(db, chapterId)).slice(fromIdx),
     bookmarksOf: (seriesId) => readSeriesBookmarks(db, seriesId),
     addBookmark: (place) => addBookmark({ db, now: Date.now }, place),
     setBookmarkNote: (bookmarkId, note) => setBookmarkNote(db, bookmarkId, note),

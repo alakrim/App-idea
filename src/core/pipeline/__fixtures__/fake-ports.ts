@@ -116,6 +116,8 @@ export interface FakeOptions {
     signal: AbortSignal,
   ) => TtsResult | Promise<TtsResult>;
   readonly catalog?: Record<string, CatalogModel>;
+  /** The free space the device reports, in bytes. Plenty by default. */
+  readonly freeBytes?: number;
   /** Overrides fields of the chapter's narration profile. */
   readonly narration?: Partial<NarrationProfile>;
   /** Runs each time the pipeline retires in-flight requests. */
@@ -176,6 +178,7 @@ function storedFrom(text: ChapterText): StoredSentence[] {
     kind: s.kind,
     text: s.text,
     translated: null,
+    translatedLang: null,
     charCount: s.charCount,
   }));
 }
@@ -337,14 +340,14 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     async getSentences(chapterId) {
       return state.sentences.get(chapterId) ?? [];
     },
-    async setTranslations(chapterId, translations, partialIdx) {
+    async setTranslations(chapterId, translations, partialIdx, lang) {
       const partial = new Set(partialIdx);
       state.sentences.set(
         chapterId,
-        (state.sentences.get(chapterId) ?? []).map((s) => ({
-          ...s,
-          translated: partial.has(s.idx) ? null : (translations.get(s.idx) ?? null),
-        })),
+        (state.sentences.get(chapterId) ?? []).map((s) => {
+          const translated = partial.has(s.idx) ? null : (translations.get(s.idx) ?? null);
+          return { ...s, translated, translatedLang: translated === null ? null : lang };
+        }),
       );
     },
     async saveCues(chapterId, cues) {
@@ -493,6 +496,11 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     catalog: {
       async find(modelId) {
         return catalog[modelId] ?? null;
+      },
+    },
+    storage: {
+      async freeBytes() {
+        return options.freeBytes ?? 10 * 1024 * 1024 * 1024;
       },
     },
     clock: {

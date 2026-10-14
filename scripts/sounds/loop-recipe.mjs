@@ -1,6 +1,11 @@
 // The seamless-loop recipe shared by the procedural base pack and the Freesound beds (ADR-0005, R4 5.3).
 // Every step is an ffmpeg argument array. The functions only build graphs or run ffmpeg; they do not
 // decide what to keep. Callers own the file names and the checks.
+//
+// A loop is `loopSamples` long. Its source window is `windowSamples`, and the crossfade is the rest:
+// window - loop. The base pack uses the 60 s loop with a 3 s crossfade (the defaults below). The A4
+// Freesound beds may use a 45 s loop from a 46 s window (crossfade under 1 s) when no clean 64 s window
+// exists. Every graph is built from the two lengths, so the base pack's graphs do not change.
 
 import { runFfmpeg, runFfmpegCapture } from './ffmpeg-tools.mjs';
 import {
@@ -15,6 +20,28 @@ export const CROSSFADE_SECONDS = 3;
 export const CROSSFADE_SAMPLES = CROSSFADE_SECONDS * SAMPLE_RATE;
 /** The loop source window: LOOP + CROSSFADE. The R4 recipe returns window - crossfade = LOOP. */
 export const WINDOW_SAMPLES = LOOP_SAMPLES + CROSSFADE_SAMPLES;
+
+/** The A4 short loop: 45 s of audio (whole AAC frames) from a 46 s window. */
+export const SHORT_LOOP_SECONDS = 45;
+export const SHORT_WINDOW_SECONDS = 46;
+const SHORT_LOOP_SAMPLES =
+  Math.round((SHORT_LOOP_SECONDS * SAMPLE_RATE) / 1024) * 1024;
+export const SHORT_RECIPE = {
+  loopSamples: SHORT_LOOP_SAMPLES,
+  windowSamples: SHORT_WINDOW_SECONDS * SAMPLE_RATE,
+};
+export const LONG_RECIPE = { loopSamples: LOOP_SAMPLES, windowSamples: WINDOW_SAMPLES };
+
+/**
+ * A true-peak safety stage for the A4 beds only. It caps the sample peak at `ceilingDbtp` before the
+ * loudness passes, so the linear second pass can reach the target instead of being held back by the
+ * true-peak ceiling. Fast attack, 50 ms release: a gentle limit, not a compressor.
+ */
+export const LIMITER_CEILING_DBTP = -4;
+export function limiterFilter(ceilingDbtp = LIMITER_CEILING_DBTP) {
+  return `alimiter=limit=${10 ** (ceilingDbtp / 20)}:attack=5:release=50:level=disabled`;
+}
+
 /**
  * A loose LRA target keeps loudnorm in linear (constant-gain) mode. With a tight target (11 LU) the
  * ocean swell measured 11.1 LU, loudnorm switched to dynamic mode, and it reshaped the envelopes.
@@ -24,25 +51,32 @@ const LRA_TARGET = 20;
 /**
  * Equal-power loop over the window that starts at `startSample` of the input: the tail fades out
  * while the head fades in, then the head is replaced by the crossfade. `prefix` is an optional
- * filter chain run on the input before the window is cut (for example a high-pass).
+ * filter chain run on the input before the window is cut (for example a high-pass). The recipe
+ * lengths default to the base pack's 60 s loop.
  */
-export function loopGraph({ startSample, prefix = '' }) {
-  const x = CROSSFADE_SECONDS;
+export function loopGraph({
+  startSample,
+  prefix = '',
+  loopSamples = LOOP_SAMPLES,
+  windowSamples = WINDOW_SAMPLES,
+}) {
+  const crossfadeSamples = windowSamples - loopSamples;
+  const x = crossfadeSamples / SAMPLE_RATE;
   return [
-    `[0:a]${prefix}atrim=start_sample=${startSample}:end_sample=${startSample + WINDOW_SAMPLES},asetpts=PTS-STARTPTS,asplit=3[w1][w2][w3]`,
-    `[w1]atrim=start_sample=${LOOP_SAMPLES},asetpts=PTS-STARTPTS,afade=t=out:st=0:d=${x}:curve=qsin[tail]`,
-    `[w2]atrim=end_sample=${CROSSFADE_SAMPLES},asetpts=PTS-STARTPTS,afade=t=in:st=0:d=${x}:curve=qsin[head]`,
+    `[0:a]${prefix}atrim=start_sample=${startSample}:end_sample=${startSample + windowSamples},asetpts=PTS-STARTPTS,asplit=3[w1][w2][w3]`,
+    `[w1]atrim=start_sample=${loopSamples},asetpts=PTS-STARTPTS,afade=t=out:st=0:d=${x}:curve=qsin[tail]`,
+    `[w2]atrim=end_sample=${crossfadeSamples},asetpts=PTS-STARTPTS,afade=t=in:st=0:d=${x}:curve=qsin[head]`,
     '[tail][head]amix=inputs=2:duration=first:weights=1 1:normalize=0[xf]',
-    `[w3]atrim=start_sample=${CROSSFADE_SAMPLES}:end_sample=${LOOP_SAMPLES},asetpts=PTS-STARTPTS[rest]`,
+    `[w3]atrim=start_sample=${crossfadeSamples}:end_sample=${loopSamples},asetpts=PTS-STARTPTS[rest]`,
     '[xf][rest]concat=n=2:v=0:a=1[out]',
   ].join(';');
 }
 
 /** Adds ROLL_SAMPLES of loop audio before and after the loop, so the encoder sees no onset at its edges. */
-export function rollGraph() {
+export function rollGraph(loopSamples = LOOP_SAMPLES) {
   return [
     '[0:a]asplit=3[s1][s2][s3]',
-    `[s1]atrim=start_sample=${LOOP_SAMPLES - ROLL_SAMPLES},asetpts=PTS-STARTPTS[pre]`,
+    `[s1]atrim=start_sample=${loopSamples - ROLL_SAMPLES},asetpts=PTS-STARTPTS[pre]`,
     '[s2]asetpts=PTS-STARTPTS[body]',
     `[s3]atrim=end_sample=${ROLL_SAMPLES},asetpts=PTS-STARTPTS[post]`,
     '[pre][body][post]concat=n=3:v=0:a=1[out]',
@@ -85,18 +119,32 @@ export function loudnormPass2(m, truePeakDbtp = TRUE_PEAK_MAX_DBTP) {
 }
 
 /** Applies the rolls to a loop WAV, writing a float WAV. */
-export async function rollLoop(loopWav, rolledWav) {
+export async function rollLoop(loopWav, rolledWav, loopSamples = LOOP_SAMPLES) {
   await runFfmpeg([
     '-y',
     '-i',
     loopWav,
     '-filter_complex',
-    rollGraph(),
+    rollGraph(loopSamples),
     '-map',
     '[out]',
     '-c:a',
     'pcm_f32le',
     rolledWav,
+  ]);
+}
+
+/** Runs the limiter over a loop WAV, writing a float WAV of the same length. */
+export async function limitLoop(loopWav, limitedWav, ceilingDbtp = LIMITER_CEILING_DBTP) {
+  await runFfmpeg([
+    '-y',
+    '-i',
+    loopWav,
+    '-af',
+    limiterFilter(ceilingDbtp),
+    '-c:a',
+    'pcm_f32le',
+    limitedWav,
   ]);
 }
 

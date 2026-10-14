@@ -1,5 +1,5 @@
 import { buildPriorContext, estimateTokens } from './codex';
-import { emptyMemory, entity, fact, fakeId } from '../analysis/__fixtures__/builders';
+import { alias, emptyMemory, entity, fact, fakeId } from '../analysis/__fixtures__/builders';
 
 import type { ChapterMemoryRecord, Entity, EntityFact } from '../analysis/types';
 
@@ -50,6 +50,43 @@ describe('estimateTokens', () => {
 });
 
 describe('buildPriorContext', () => {
+  // The QA repro: Jon is introduced in chapter 1, and chapter 9 reveals that he is "The Prince".
+  it('never names an alias revealed after the cutoff (QA-A P1-1)', () => {
+    const jon = entity({
+      id: fakeId(201),
+      canonicalName: 'Jon',
+      aliases: [alias('Jon Snow', 1), alias('The Prince', 9)],
+      firstChapterOrder: 1,
+    });
+    const jonFacts = [
+      fact({ id: fakeId(301), entityId: fakeId(201), fact: 'Lives in the north', chapterOrder: 1 }),
+      fact({
+        id: fakeId(302),
+        entityId: fakeId(201),
+        fact: 'Is secretly the Prince',
+        chapterOrder: 9,
+      }),
+    ];
+
+    const codex = buildPriorContext([jon], jonFacts, [], 3, 2000);
+
+    expect(codex).toContain('- Jon (also: Jon Snow): Lives in the north');
+    expect(codex).not.toContain('The Prince');
+    expect(codex).not.toContain('secretly the Prince');
+  });
+
+  it('names the alias once its reveal chapter is before the cutoff', () => {
+    const jon = entity({
+      id: fakeId(201),
+      canonicalName: 'Jon',
+      aliases: [alias('The Prince', 9)],
+      firstChapterOrder: 1,
+    });
+
+    expect(buildPriorContext([jon], [], [], 10, 2000)).toContain('(also: The Prince)');
+    expect(buildPriorContext([jon], [], [], 9, 2000)).not.toContain('The Prince');
+  });
+
   it('includes only what is strictly before the cutoff', () => {
     const text = buildPriorContext(ents, facts, memories, 3, 10_000);
     expect(text).toContain('Ana arrives in port.');

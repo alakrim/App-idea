@@ -49,7 +49,7 @@ function setup(): Db {
   seriesRepo.insert(db, seriesRow(1, { title: 'The Harbour', coverTint: '#2B3A55' }));
   chapterRepo.insert(db, chapterRow(1, 1, 1, { title: 'Arrival' }));
   textRepo.replaceChapterText(db, id(1), chapterText(1, ['Rain fell.', 'The door opened.']));
-  textRepo.setTranslations(db, id(1), [{ idx: 0, translated: 'Il pleuvait.' }]);
+  textRepo.setTranslations(db, id(1), [{ idx: 0, translated: 'Il pleuvait.' }], 'it');
   db.insert(narrationProfiles)
     .values({
       id: PROFILE_ID,

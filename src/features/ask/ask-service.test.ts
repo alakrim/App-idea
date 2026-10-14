@@ -98,7 +98,7 @@ function seedBook(db: Db): void {
     seriesId: SERIES,
     kind: 'character',
     canonicalName: 'Master Wen',
-    aliases: ['Wen'],
+    aliases: [{ alias: 'Wen', firstChapterOrder: 1 }],
     firstChapterOrder: 1,
   };
   const fact = (n: number, chapterN: number, order: number, text: string): EntityFact => ({

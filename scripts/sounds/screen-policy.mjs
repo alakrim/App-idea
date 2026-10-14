@@ -8,7 +8,7 @@
 //      class is at or above REQUIRED_FRAME_PROBABILITY.
 // Among passing windows the steadiest wins (the A3 rule): the lowest standard deviation of the level in dB.
 
-import { WINDOW_SAMPLES } from './loop-recipe.mjs';
+import { LONG_RECIPE, SHORT_LOOP_SECONDS, SHORT_RECIPE } from './loop-recipe.mjs';
 import { SAMPLE_RATE } from './pack-spec.mjs';
 
 /**
@@ -21,8 +21,14 @@ export const DENY_FRAME_PROBABILITY = 0.15;
 export const ALARM_FRAME_PROBABILITY = 0.05;
 export const REQUIRED_FRAME_PROBABILITY = 0.2;
 export const REQUIRED_FRACTION = 0.5;
-/** The 63 s window of the loop recipe, rounded up to whole one-second frames. */
-export const WINDOW_FRAMES = Math.ceil(WINDOW_SAMPLES / SAMPLE_RATE);
+/**
+ * The long window: the 60 s loop with its 3 s crossfade (63.0004 s), rounded up to whole seconds. A
+ * short window (A4) is 46 s, for a 45 s loop with a 1 s crossfade. A clip takes the long window when it
+ * has a clean one, and the short window otherwise.
+ */
+export const WINDOW_FRAMES = Math.ceil(LONG_RECIPE.windowSamples / SAMPLE_RATE);
+export const SHORT_WINDOW_FRAMES = Math.ceil(SHORT_RECIPE.windowSamples / SAMPLE_RATE);
+export const LONG_LOOP_SECONDS = 60;
 
 /**
  * AudioSet families, matched on the display names. A family covers its parent class and every child
@@ -162,33 +168,44 @@ export function screenCandidate({ tags, levelsDb, policy }) {
   };
   const reject = (reason) => ({ verdict: 'reject', reason, window: null, evidence });
 
-  if (frames < WINDOW_FRAMES) return reject(`clip has ${frames} s; a window needs ${WINDOW_FRAMES} s`);
+  if (frames < SHORT_WINDOW_FRAMES) {
+    return reject(`clip has ${frames} s; a window needs ${SHORT_WINDOW_FRAMES} s`);
+  }
   const absent = clipRequired.find((r) => r.fraction < REQUIRED_FRACTION);
   if (absent) return reject(`required sound absent: ${absent.group.join(' / ')}`);
 
-  let best = null;
-  for (let start = 0; start + WINDOW_FRAMES <= frames; start += 1) {
-    const to = start + WINDOW_FRAMES;
-    if (denied.slice(start, to).some((d) => d.length > 0)) continue;
-    if (clipRequired.some((r) => requiredFraction(clip, r.group, start, to) < REQUIRED_FRACTION)) {
-      continue;
+  const windowOf = (windowFrames) => {
+    let best = null;
+    for (let start = 0; start + windowFrames <= frames; start += 1) {
+      const to = start + windowFrames;
+      if (denied.slice(start, to).some((d) => d.length > 0)) continue;
+      if (clipRequired.some((r) => requiredFraction(clip, r.group, start, to) < REQUIRED_FRACTION)) {
+        continue;
+      }
+      const steadiness = stdDb(levelsDb, start, to);
+      if (best === null || steadiness < best.steadiness) best = { startSeconds: start, steadiness };
     }
-    const steadiness = stdDb(levelsDb, start, to);
-    if (best === null || steadiness < best.steadiness) best = { startSeconds: start, steadiness };
-  }
+    return best;
+  };
+  const long = frames >= WINDOW_FRAMES ? windowOf(WINDOW_FRAMES) : null;
+  const short = long === null ? windowOf(SHORT_WINDOW_FRAMES) : null;
+  const best = long ?? short;
   if (best === null) {
     const worst = evidence.deniedMax[0];
     const why = worst
       ? `${worst.label} reaches ${worst.max} (at ${worst.atSecond} s)`
       : 'the required sounds are missing from every window';
-    return reject(`no ${WINDOW_FRAMES} s window is free of denied sounds: ${why}`);
+    const length = frames >= WINDOW_FRAMES ? WINDOW_FRAMES : SHORT_WINDOW_FRAMES;
+    return reject(`no ${length} s window is free of denied sounds: ${why}`);
   }
+  const lengthSeconds = long !== null ? WINDOW_FRAMES : SHORT_WINDOW_FRAMES;
   return {
     verdict: 'pass',
     reason: null,
     window: {
       startSeconds: best.startSeconds,
-      lengthSeconds: WINDOW_FRAMES,
+      lengthSeconds,
+      loopSeconds: long !== null ? LONG_LOOP_SECONDS : SHORT_LOOP_SECONDS,
       steadinessDb: round(best.steadiness),
     },
     evidence,

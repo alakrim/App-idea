@@ -10,6 +10,8 @@ import type { Db } from '@/db/types';
 import { appForegroundStatus } from '@/services/background/foreground-state';
 import { getAppConnection } from '@/services/network/app-connection';
 
+import { freeSpaceBytes } from '@/services/storage';
+
 import { createExpoLibraryFiles } from './expo-library-files';
 import { createPipelineRuntime } from './runtime';
 import { webViewRenderQueue } from './webview-bridge';
@@ -23,6 +25,7 @@ export function createLectioPipelineRuntime(db: Db = getDatabase()): PipelineRun
     db,
     openrouter: getOpenRouter(),
     files: createExpoLibraryFiles(),
+    storage: { freeBytes: async () => freeSpaceBytes() },
     webview: { render: (url, signal) => webViewRenderQueue.render(url, signal) },
     connection: getAppConnection(),
     // expo/fetch streams the body on device, so a page over the size limit is refused while it is read.

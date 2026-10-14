@@ -1,9 +1,8 @@
 import { and, asc, desc, eq, inArray, lt } from 'drizzle-orm';
-import { z } from 'zod';
 
 import { ChapterMemorySchema, EntityFactSchema, EntitySchema } from '../../core/domain';
 import { parseJsonColumn } from '../json-column';
-import { chapterMemory, chapters, entities, entityFacts, series } from '../schema';
+import { chapterMemory, chapters, entities, entityAliases, entityFacts, series } from '../schema';
 
 import type { ChapterMemoryRecord, MemoryFields } from '../../core/analysis/types';
 import type { ChapterMemory, Entity, EntityFact, Series } from '../../core/domain';
@@ -124,24 +123,33 @@ export const memoryRepo = {
     return records;
   },
 
-  /** Every entity of the series, with its aliases. */
+  /** Every entity of the series, with its stamped aliases. Callers apply the cutoff to the aliases. */
   listEntities(db: Db, seriesId: string): Entity[] {
-    return db
+    const rows = db
       .select()
       .from(entities)
       .where(eq(entities.seriesId, seriesId))
       .orderBy(asc(entities.firstChapterOrder), asc(entities.canonicalName))
-      .all()
-      .map((row) =>
-        EntitySchema.parse({
-          ...row,
-          aliases: parseJsonColumn(z.array(z.string()), row.aliases, {
-            table: 'entities',
-            column: 'aliases',
-            id: row.id,
-          }),
-        }),
-      );
+      .all();
+    if (rows.length === 0) return [];
+    const aliasRows = db
+      .select({
+        entityId: entityAliases.entityId,
+        alias: entityAliases.alias,
+        firstChapterOrder: entityAliases.firstChapterOrder,
+      })
+      .from(entityAliases)
+      .innerJoin(entities, eq(entities.id, entityAliases.entityId))
+      .where(eq(entities.seriesId, seriesId))
+      .orderBy(asc(entityAliases.firstChapterOrder), asc(entityAliases.alias))
+      .all();
+    const byEntity = new Map<string, { alias: string; firstChapterOrder: number }[]>();
+    for (const row of aliasRows) {
+      const list = byEntity.get(row.entityId) ?? [];
+      list.push({ alias: row.alias, firstChapterOrder: row.firstChapterOrder });
+      byEntity.set(row.entityId, list);
+    }
+    return rows.map((row) => EntitySchema.parse({ ...row, aliases: byEntity.get(row.id) ?? [] }));
   },
 
   /** Entity facts of the series revealed strictly before `cutoffOrder`. */
@@ -177,8 +185,10 @@ export const memoryRepo = {
   },
 
   /**
-   * Applies one chapter's entity resolution in a single transaction: entities are upserted, and
-   * new facts are inserted. A repeated fact id is left as it is, so a retried chapter is idempotent.
+   * Applies one chapter's entity resolution in a single transaction: entities are upserted, their
+   * new aliases are inserted with the chapter that revealed them, and new facts are inserted. A
+   * repeated alias or fact is left as it is, so a retried chapter is idempotent and the first
+   * reveal of a spelling is the one kept.
    */
   saveEntityResolution(db: Db, seriesId: string, resolution: EntityResolution): void {
     db.transaction((tx) => {
@@ -186,8 +196,14 @@ export const memoryRepo = {
         if (entity.seriesId !== seriesId) {
           throw new Error(`Entity ${entity.id} belongs to series ${entity.seriesId}`);
         }
-        const row = { ...entity, aliases: JSON.stringify(entity.aliases) };
+        const { aliases, ...row } = entity;
         tx.insert(entities).values(row).onConflictDoUpdate({ target: entities.id, set: row }).run();
+        for (const alias of aliases) {
+          tx.insert(entityAliases)
+            .values({ entityId: entity.id, ...alias })
+            .onConflictDoNothing({ target: [entityAliases.entityId, entityAliases.alias] })
+            .run();
+        }
       }
       for (const fact of resolution.newFacts) {
         tx.insert(entityFacts).values(fact).onConflictDoNothing({ target: entityFacts.id }).run();

@@ -6,7 +6,7 @@
 import { createIdGenerator } from '@/core/domain';
 import type { IdGenerator } from '@/core/domain';
 import type { PipelineEvent } from '@/core/pipeline/context';
-import type { Clock, PipelinePorts, WebViewExtractor } from '@/core/pipeline/ports';
+import type { Clock, DeviceStorage, PipelinePorts, WebViewExtractor } from '@/core/pipeline/ports';
 import type { QueueSnapshot } from '@/core/pipeline/queue';
 import { settingsRepo } from '@/db/repos/settings-repo';
 import type { Db } from '@/db/types';
@@ -35,6 +35,8 @@ export interface PipelineRuntimeOptions {
   readonly openrouter: OpenRouterClient;
   readonly files: LibraryFiles;
   readonly webview: WebViewExtractor;
+  /** The device's free space, read before narration spends money. */
+  readonly storage: DeviceStorage;
   /** The page fetcher's transport. Defaults to the global fetch. */
   readonly fetchImpl?: typeof fetch;
   /** The app's connection, shared with the OpenRouter client. Defaults to a private one. */
@@ -82,6 +84,7 @@ export function createPipelinePorts(options: PipelineRuntimeOptions): PipelinePo
     llm: createLlmPort({ openrouter }),
     network: connection,
     catalog: createCatalog({ openrouter }),
+    storage: options.storage,
     clock,
     ids,
   };

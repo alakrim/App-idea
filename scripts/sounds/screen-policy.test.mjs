@@ -12,6 +12,7 @@ import {
   policyFor,
   REQUIRED_FRACTION,
   screenCandidate,
+  SHORT_WINDOW_FRAMES,
   WINDOW_FRAMES,
 } from './screen-policy.mjs';
 
@@ -96,12 +97,33 @@ describe('screenCandidate', () => {
     assert.equal(typeof result.window.startSeconds, 'number');
   });
 
-  it('rejects a clip whose only window contains a siren frame, and names the denied class', () => {
-    const tags = tagsWith(WINDOW_FRAMES, { [`10:${SIREN}`]: 0.6 });
+  it('rejects a clip where every window contains a siren second, and names the denied class', () => {
+    // 64 s clip: every 46 s window starts at 0..18 and so contains second 40, and the long window is out.
+    const tags = tagsWith(WINDOW_FRAMES, { [`10:${SIREN}`]: 0.6, [`40:${SIREN}`]: 0.6 });
     const result = screenCandidate({ tags, levelsDb: LEVELS(WINDOW_FRAMES), policy: RAIN_POLICY });
     assert.equal(result.verdict, 'reject');
     assert.match(result.reason, /Siren reaches 0.6 \(at 10 s\)/);
     assert.equal(result.window, null);
+  });
+
+  it('takes the 60 s loop when a clean 64 s window exists, and the 45 s loop otherwise', () => {
+    const long = screenCandidate({ tags: tagsWith(WINDOW_FRAMES), levelsDb: LEVELS(WINDOW_FRAMES), policy: RAIN_POLICY });
+    assert.equal(long.window.lengthSeconds, WINDOW_FRAMES);
+    assert.equal(long.window.loopSeconds, 60);
+    const shortClip = screenCandidate({
+      tags: tagsWith(SHORT_WINDOW_FRAMES),
+      levelsDb: LEVELS(SHORT_WINDOW_FRAMES),
+      policy: RAIN_POLICY,
+    });
+    assert.equal(shortClip.verdict, 'pass');
+    assert.equal(shortClip.window.lengthSeconds, SHORT_WINDOW_FRAMES);
+    assert.equal(shortClip.window.loopSeconds, 45);
+  });
+
+  it('uses the short window for a 60 s clip, because no 64 s window fits in it', () => {
+    const result = screenCandidate({ tags: tagsWith(60), levelsDb: LEVELS(60), policy: RAIN_POLICY });
+    assert.equal(result.verdict, 'pass');
+    assert.equal(result.window.loopSeconds, 45);
   });
 
   it('skips a contaminated stretch and keeps a clean window elsewhere', () => {
@@ -113,12 +135,13 @@ describe('screenCandidate', () => {
   });
 
   it('rejects a general deny class at exactly the frame threshold, and passes just under it', () => {
+    // A clip of exactly one short window: its only window holds every second, so the denial decides.
     const SPEECH = 3;
     const policy = { deny: ['Speech'], required: [['Rain']], clap: 'rain' };
-    const at = tagsWith(WINDOW_FRAMES, { [`3:${SPEECH}`]: DENY_FRAME_PROBABILITY });
-    assert.equal(screenCandidate({ tags: at, levelsDb: LEVELS(WINDOW_FRAMES), policy }).verdict, 'reject');
-    const under = tagsWith(WINDOW_FRAMES, { [`3:${SPEECH}`]: 0.149 });
-    assert.equal(screenCandidate({ tags: under, levelsDb: LEVELS(WINDOW_FRAMES), policy }).verdict, 'pass');
+    const at = tagsWith(SHORT_WINDOW_FRAMES, { [`3:${SPEECH}`]: DENY_FRAME_PROBABILITY });
+    assert.equal(screenCandidate({ tags: at, levelsDb: LEVELS(SHORT_WINDOW_FRAMES), policy }).verdict, 'reject');
+    const under = tagsWith(SHORT_WINDOW_FRAMES, { [`3:${SPEECH}`]: 0.149 });
+    assert.equal(screenCandidate({ tags: under, levelsDb: LEVELS(SHORT_WINDOW_FRAMES), policy }).verdict, 'pass');
   });
 
   it('rejects when a required sound is absent from most of the clip', () => {
@@ -132,14 +155,14 @@ describe('screenCandidate', () => {
     assert.match(result.reason, /required sound absent: Rain/);
   });
 
-  it('rejects a clip shorter than one window', () => {
+  it('rejects a clip shorter than the shortest window', () => {
     const result = screenCandidate({
-      tags: tagsWith(WINDOW_FRAMES - 1),
-      levelsDb: LEVELS(WINDOW_FRAMES - 1),
+      tags: tagsWith(SHORT_WINDOW_FRAMES - 1),
+      levelsDb: LEVELS(SHORT_WINDOW_FRAMES - 1),
       policy: RAIN_POLICY,
     });
     assert.equal(result.verdict, 'reject');
-    assert.match(result.reason, /a window needs/);
+    assert.match(result.reason, /a window needs 46 s/);
   });
 });
 

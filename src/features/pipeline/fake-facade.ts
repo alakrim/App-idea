@@ -322,6 +322,7 @@ export function createFakePipeline(options: FakePipelineOptions): PipelineFacade
       db,
       run.chapterId,
       text.sentences.map((s) => ({ idx: s.idx, translated: fakeTranslation(s.text, target) })),
+      target,
     );
   }
 

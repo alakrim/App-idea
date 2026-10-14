@@ -1,4 +1,4 @@
-import type { ChapterMemory, Entity, EntityFact } from '@/core/domain';
+import type { ChapterMemory, Entity, EntityAlias, EntityFact } from '@/core/domain';
 
 import type { SentenceInput } from '../types';
 
@@ -34,6 +34,11 @@ export function emptyMemory(overrides: Partial<ChapterMemory> = {}): ChapterMemo
     glossary: [],
     ...overrides,
   };
+}
+
+/** A stamped alias. The chapter order is when the spelling was first revealed. */
+export function alias(text: string, firstChapterOrder = 1): EntityAlias {
+  return { alias: text, firstChapterOrder };
 }
 
 export function entity(overrides: Partial<Entity> & Pick<Entity, 'id' | 'canonicalName'>): Entity {

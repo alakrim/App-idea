@@ -13,6 +13,7 @@ import { z } from 'zod';
 
 import { decodeMono, measureLoudness, sha256File } from './ffmpeg-tools.mjs';
 import { FREESOUND_TARGETS } from './freesound-targets.mjs';
+import { SHORT_RECIPE } from './loop-recipe.mjs';
 import { checkSeam } from './seam.mjs';
 import {
   BASE_BED_IDS,
@@ -55,6 +56,8 @@ const baseManifestSchema = z.array(z.object({ ...commonFields, source: z.literal
 const realManifestSchema = z.array(
   z.object({
     ...commonFields,
+    /** A4: 60 s, or 45 s for a bed cut from a 46 s window. Base-pack rows have no field and are 60 s. */
+    loopSeconds: z.union([z.literal(60), z.literal(45)]),
     source: z.literal('freesound'),
     freesoundId: z.number().int().positive(),
     author: z.string().min(1),
@@ -95,8 +98,9 @@ async function verifyBed(entry, dir, ledgerIds) {
   // Loop region: the file carries roll audio outside [loopStartMs, loopEndMs); seams are checked inside it.
   const regionStart = Math.round((entry.loopStartMs / 1000) * SAMPLE_RATE);
   const regionEnd = Math.round((entry.loopEndMs / 1000) * SAMPLE_RATE);
-  if (regionEnd - regionStart !== LOOP_SAMPLES) {
-    failures.push(`loop region is ${regionEnd - regionStart} samples, expected ${LOOP_SAMPLES}`);
+  const expectedLoop = entry.loopSeconds === 45 ? SHORT_RECIPE.loopSamples : LOOP_SAMPLES;
+  if (Math.abs(regionEnd - regionStart - expectedLoop) > 2) {
+    failures.push(`loop region is ${regionEnd - regionStart} samples, expected ${expectedLoop}`);
   }
   if (regionEnd > samples.length) failures.push('loop region extends past the file');
   const loop = samples.subarray(regionStart, regionEnd);

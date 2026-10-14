@@ -61,7 +61,7 @@ describe('textRepo.setTranslations in chunks', () => {
       translated: `T${idx}`,
     }));
 
-    textRepo.setTranslations(db, id(1), translations);
+    textRepo.setTranslations(db, id(1), translations, 'it');
 
     expect(translatedAt(db, 450)).toEqual(translations.map((t) => t.translated));
   });
@@ -74,7 +74,7 @@ describe('textRepo.setTranslations in chunks', () => {
       { idx: 200, translated: 'start of second chunk' },
       { idx: 399, translated: 'end of second chunk' },
       { idx: 400, translated: 'start of third chunk' },
-    ]);
+    ], 'it');
 
     const written = translatedAt(db, 450);
     expect(written.filter((value) => value !== null)).toHaveLength(4);
@@ -91,7 +91,7 @@ describe('textRepo.setTranslations in chunks', () => {
     textRepo.setTranslations(db, id(1), [
       { idx: 1, translated: 'first' },
       { idx: 1, translated: 'second' },
-    ]);
+    ], 'it');
 
     expect(translatedAt(db, 3)).toEqual([null, 'second', null]);
   });
@@ -99,8 +99,8 @@ describe('textRepo.setTranslations in chunks', () => {
   it('ignores an idx the chapter does not have, and accepts an empty list', () => {
     const { db } = longChapter(2);
 
-    textRepo.setTranslations(db, id(1), [{ idx: 99, translated: 'nowhere' }]);
-    textRepo.setTranslations(db, id(1), []);
+    textRepo.setTranslations(db, id(1), [{ idx: 99, translated: 'nowhere' }], 'it');
+    textRepo.setTranslations(db, id(1), [], 'it');
 
     expect(translatedAt(db, 2)).toEqual([null, null]);
   });
@@ -142,7 +142,7 @@ describe('textRepo bulk writes', () => {
   it('writes translations in bulk and indexes them for search', () => {
     const { db } = seedBook();
 
-    textRepo.setTranslations(db, id(1), [{ idx: 1, translated: 'Un chevalier part.' }]);
+    textRepo.setTranslations(db, id(1), [{ idx: 1, translated: 'Un chevalier part.' }], 'it');
 
     expect(textRepo.getRange(db, id(1), 1, 1)[0]?.translated).toBe('Un chevalier part.');
     expect(
@@ -160,7 +160,7 @@ describe('textRepo bulk writes', () => {
     textRepo.setTranslations(db, id(1), [
       { idx: 1, translated: 'Un chevalier part.' },
       { idx: 2, translated: null },
-    ]);
+    ], 'it');
 
     expect(textRepo.getRange(db, id(1), 1, 2).map((s) => s.translated)).toEqual([
       'Un chevalier part.',
@@ -204,7 +204,7 @@ describe('textRepo.search spoiler cutoff', () => {
 
   it('keeps later chapters hidden even when their translation matches', () => {
     const { db } = seedBook();
-    textRepo.setTranslations(db, id(3), [{ idx: 0, translated: 'Le dragon meurt.' }]);
+    textRepo.setTranslations(db, id(3), [{ idx: 0, translated: 'Le dragon meurt.' }], 'it');
 
     expect(hits(db, 2, 0, 'dragon')).not.toContain('3:0');
     expect(hits(db, 2, 0, 'meurt')).toEqual([]);

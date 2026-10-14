@@ -105,6 +105,8 @@ export const sentences = sqliteTable(
     paragraphIdx: integer('paragraph_idx').notNull(),
     text: text('text').notNull(),
     translated: text('translated'),
+    /** The language `translated` is written in. Null with no translation. Narration reads it per sentence. */
+    translatedLang: text('translated_lang'),
     charCount: integer('char_count').notNull(),
   },
   (t) => [uniqueIndex('sentences_chapter_idx_uq').on(t.chapterId, t.idx)],
@@ -150,11 +152,25 @@ export const entities = sqliteTable(
       .references(() => series.id, { onDelete: 'cascade' }),
     kind: text('kind').$type<EntityKind>().notNull(),
     canonicalName: text('canonical_name').notNull(),
-    /** JSON: string[]. */
-    aliases: text('aliases').notNull(),
     firstChapterOrder: real('first_chapter_order').notNull(),
   },
   (t) => [index('entities_series_name_idx').on(t.seriesId, t.canonicalName)],
+);
+
+/**
+ * Every spelling of an entity, with the chapter order that revealed it. The spoiler cutoff reads
+ * this table, so an alias first revealed later is never shown to an earlier chapter's context.
+ */
+export const entityAliases = sqliteTable(
+  'entity_aliases',
+  {
+    entityId: text('entity_id')
+      .notNull()
+      .references(() => entities.id, { onDelete: 'cascade' }),
+    alias: text('alias').notNull(),
+    firstChapterOrder: real('first_chapter_order').notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.entityId, t.alias] })],
 );
 
 export const entityFacts = sqliteTable(
@@ -355,6 +371,28 @@ export const vocab = sqliteTable(
 );
 
 /**
+ * A paid chunk's validated result, kept as soon as it completes. A retry of the same chunk (same
+ * input, model and prompt version) is served from here instead of being paid for again. `kind` is
+ * 'translation' or 'analysis'.
+ */
+export const chunkCache = sqliteTable(
+  'chunk_cache',
+  {
+    chapterId: text('chapter_id')
+      .notNull()
+      .references(() => chapters.id, { onDelete: 'cascade' }),
+    kind: text('kind').notNull(),
+    inputHash: text('input_hash').notNull(),
+    model: text('model').notNull(),
+    promptVersion: text('prompt_version').notNull(),
+    /** JSON: the chunk's validated result. */
+    result: text('result').notNull(),
+    createdAt: integer('created_at').notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.chapterId, t.kind, t.inputHash, t.model, t.promptVersion] })],
+);
+
+/**
  * Live activity of a chapter's stage, for Diagnostics: when it last moved, and how often it stalled
  * or had a request retired as stale. A stage's counts start again when the stage starts running.
  */
@@ -388,10 +426,12 @@ export const schema = {
   ambienceCues,
   chapterMemory,
   entities,
+  entityAliases,
   entityFacts,
   audioSegments,
   jobs,
   stageActivity,
+  chunkCache,
   usageLedger,
   listeningPositions,
   chapterPositions,

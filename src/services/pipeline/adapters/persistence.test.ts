@@ -148,7 +148,7 @@ describe('createChapterStore', () => {
         { idx: 1, paragraphIdx: 0, kind: 'text', text: 'B.', charCount: 2 },
       ],
     });
-    await store.setTranslations(id(1), new Map([[0, 'Uno.']]), [1]);
+    await store.setTranslations(id(1), new Map([[0, 'Uno.']]), [1], 'it');
     const stored = await store.getSentences(id(1));
     expect(stored.map((s) => s.translated)).toEqual(['Uno.', null]);
   });

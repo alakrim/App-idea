@@ -36,6 +36,13 @@
       "when": 1791969210202,
       "tag": "0004_uneven_zuras",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1791979624653,
+      "tag": "0005_integrity_fixes",
+      "breakpoints": true
     }
   ]
 }

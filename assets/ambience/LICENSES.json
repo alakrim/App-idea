@@ -1,53 +1,5 @@
 [
   {
-    "id": "base_rain",
-    "file": "base_rain.m4a",
-    "license": "Proprietary (generated in-house)",
-    "source": "scripts/sounds/build-base-pack.mjs",
-    "author": "Lectio",
-    "date": "2026-10-11"
-  },
-  {
-    "id": "base_wind",
-    "file": "base_wind.m4a",
-    "license": "Proprietary (generated in-house)",
-    "source": "scripts/sounds/build-base-pack.mjs",
-    "author": "Lectio",
-    "date": "2026-10-11"
-  },
-  {
-    "id": "base_ocean",
-    "file": "base_ocean.m4a",
-    "license": "Proprietary (generated in-house)",
-    "source": "scripts/sounds/build-base-pack.mjs",
-    "author": "Lectio",
-    "date": "2026-10-11"
-  },
-  {
-    "id": "base_crowd",
-    "file": "base_crowd.m4a",
-    "license": "Proprietary (generated in-house)",
-    "source": "scripts/sounds/build-base-pack.mjs",
-    "author": "Lectio",
-    "date": "2026-10-11"
-  },
-  {
-    "id": "base_space_hum",
-    "file": "base_space_hum.m4a",
-    "license": "Proprietary (generated in-house)",
-    "source": "scripts/sounds/build-base-pack.mjs",
-    "author": "Lectio",
-    "date": "2026-10-11"
-  },
-  {
-    "id": "base_fire",
-    "file": "base_fire.m4a",
-    "license": "Proprietary (generated in-house)",
-    "source": "scripts/sounds/build-base-pack.mjs",
-    "author": "Lectio",
-    "date": "2026-10-11"
-  },
-  {
     "id": "forest_day_birds",
     "file": "forest_day_birds.m4a",
     "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
@@ -93,6 +45,30 @@
     "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
     "source": "https://freesound.org/people/TRP/sounds/576367/",
     "author": "TRP",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "light_rain",
+    "file": "light_rain.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/conleec/sounds/171980/",
+    "author": "conleec",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "heavy_rain",
+    "file": "heavy_rain.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/newlocknew/sounds/826025/",
+    "author": "newlocknew",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "rain_on_roof",
+    "file": "rain_on_roof.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/MrFossy/sounds/521773/",
+    "author": "MrFossy",
     "date": "2026-10-14"
   },
   {
@@ -142,5 +118,53 @@
     "source": "https://freesound.org/people/gladkiy/sounds/333944/",
     "author": "gladkiy",
     "date": "2026-10-14"
+  },
+  {
+    "id": "base_rain",
+    "file": "base_rain.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-11"
+  },
+  {
+    "id": "base_wind",
+    "file": "base_wind.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-11"
+  },
+  {
+    "id": "base_ocean",
+    "file": "base_ocean.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-11"
+  },
+  {
+    "id": "base_crowd",
+    "file": "base_crowd.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-11"
+  },
+  {
+    "id": "base_space_hum",
+    "file": "base_space_hum.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-11"
+  },
+  {
+    "id": "base_fire",
+    "file": "base_fire.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-11"
   }
 ]

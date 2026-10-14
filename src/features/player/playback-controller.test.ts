@@ -469,36 +469,54 @@ describe('engine errors during playback (P1-4)', () => {
 });
 
 describe('narration that is not final (P1-5)', () => {
-  it('keeps a chapter open while processing is idle or cancelled, and shows that narration is paused', async () => {
+  it('ends at the audio it has when processing is cancelled, and shows that narration is paused', async () => {
+    const { controller, pipe } = setupController([
+      fixtureChapter(4, 4, 'processing', [SEGMENT_ONE]),
+    ]);
+    await controller.playChapter(id(4));
+
+    pipe.emit(id(4), 'cancelled', 1);
+
+    expect(controller.content.getState().final).toBe(true);
+    expect(controller.content.getState().narrationPaused).toBe(true);
+    expect(pipe.listenerCount(id(4))).toBe(0);
+  });
+
+  it('ends at the audio it has when processing is idle, with narration paused', async () => {
     const { controller, pipe } = setupController([
       fixtureChapter(4, 4, 'processing', [SEGMENT_ONE]),
     ]);
     await controller.playChapter(id(4));
 
     pipe.emit(id(4), 'idle', 1);
-    expect(controller.content.getState().final).toBe(false);
-    expect(controller.content.getState().narrationPaused).toBe(true);
 
-    pipe.emit(id(4), 'cancelled', 1);
-    expect(controller.content.getState().final).toBe(false);
+    expect(controller.content.getState().final).toBe(true);
     expect(controller.content.getState().narrationPaused).toBe(true);
-    expect(pipe.listenerCount(id(4))).toBe(1);
   });
 
-  it('treats a stall or reconnect as narrating, and resumes appending when it recovers', async () => {
+  it('keeps narrating through a queued or running state, and appends when new audio arrives', async () => {
     const processing = fixtureChapter(1, 1, 'processing', [SEGMENT_ONE]);
     const { controller, pipe, fixture } = setupController([processing]);
     await controller.playChapter(id(1));
 
-    pipe.emit(id(1), 'running', 1);
-    pipe.emit(id(1), 'idle', 1);
-    expect(controller.content.getState().narrationPaused).toBe(true);
+    pipe.emit(id(1), 'queued', 1);
+    expect(controller.content.getState().narrationPaused).toBe(false);
+    expect(controller.content.getState().final).toBe(false);
 
     fixture.chapters.set(id(1), { ...processing, segments: [SEGMENT_ONE, SEGMENT_TWO] });
     pipe.emit(id(1), 'running', 2);
     expect(controller.content.getState().narrationPaused).toBe(false);
     expect(controller.content.getState().timeline?.sentenceCount).toBe(4);
     expect(controller.content.getState().final).toBe(false);
+  });
+
+  it('plays a chapter that was cancelled after its first passages, as playable audio', async () => {
+    const { controller } = setupController([fixtureChapter(1, 1, 'draft', [SEGMENT_ONE])]);
+
+    await controller.playChapter(id(1));
+
+    expect(controller.content.getState().status).toBe('ready');
+    expect(controller.content.getState().timeline?.sentenceCount).toBe(2);
   });
 
   it('becomes final only when narration fails for good', async () => {

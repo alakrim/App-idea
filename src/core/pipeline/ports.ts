@@ -52,6 +52,8 @@ export interface StoredSentence {
   readonly kind: ParagraphKind;
   readonly text: string;
   readonly translated: string | null;
+  /** The language `translated` is written in. Null when there is no translation. */
+  readonly translatedLang: Lang | null;
   readonly charCount: number;
 }
 
@@ -72,13 +74,15 @@ export interface ChapterStore {
   replaceText(chapterId: Id, text: ChapterText): Promise<void>;
   getSentences(chapterId: Id): Promise<StoredSentence[]>;
   /**
-   * Stores the translations of every sentence. `partialIdx` lists the sentences that fell back to
-   * the source text. Those are stored with `translated: null`, so the UI can show them.
+   * Stores the translations of every sentence, each stamped with `lang`. `partialIdx` lists the
+   * sentences that fell back to the source text. Those are stored with `translated: null`, so the UI
+   * can show them.
    */
   setTranslations(
     chapterId: Id,
     translations: ReadonlyMap<number, string>,
     partialIdx: readonly number[],
+    lang: Lang,
   ): Promise<void>;
   /** Replaces the chapter's ambience cues. The store assigns ids and `enabled: true`. */
   saveCues(chapterId: Id, cues: readonly ValidatedCue[]): Promise<void>;
@@ -231,6 +235,12 @@ export interface NetworkPort {
   retireInFlight(): number;
 }
 
+/** The device's storage, read before the stages spend money that would have nowhere to go. */
+export interface DeviceStorage {
+  /** The free space on the device, in bytes. */
+  freeBytes(): Promise<number>;
+}
+
 /** Every port the pipeline uses, in one object so that the runner and stages take a single argument. */
 export interface PipelinePorts {
   readonly chapters: ChapterStore;
@@ -244,6 +254,7 @@ export interface PipelinePorts {
   readonly llm: LlmPort;
   readonly network: NetworkPort;
   readonly catalog: Catalog;
+  readonly storage: DeviceStorage;
   readonly clock: Clock;
   readonly ids: IdGenerator;
 }

@@ -3,7 +3,8 @@
  * hands each result to `onResult` in item order, as soon as every earlier item is done. So a slow
  * item holds back only the results after it, never the calls that can run. Cancellation stops new
  * calls. A failure stops new calls too, aborts the calls in flight and rethrows the first failure
- * once they have settled. Pure, so it runs in Node tests and on the device.
+ * once they have settled. Results that finished before the stop are still delivered, in item order,
+ * gaps included: paid work is never thrown away. Pure, so it runs in Node tests and on the device.
  */
 import { throwIfCancelled } from '../llm/transport';
 
@@ -84,5 +85,14 @@ export async function runOrdered<T, R>(
   } finally {
     outer?.removeEventListener('abort', forwardAbort);
   }
-  if (state.failure !== null) throw state.failure.error;
+  if (state.failure !== null) {
+    // Every result still held is delivered in item order, even past a gap left by the failure.
+    await delivery;
+    for (const index of [...finished.keys()].sort((a, b) => a - b)) {
+      const entry = finished.get(index);
+      finished.delete(index);
+      if (entry !== undefined) await onResult?.(entry.value, index);
+    }
+    throw state.failure.error;
+  }
 }

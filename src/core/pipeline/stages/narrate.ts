@@ -20,7 +20,7 @@ import { detectScript } from '@/core/text/normalize';
 import { estimateSpeechSeconds } from '@/core/text/speech-rate';
 import { estimateSentenceOffsets } from '@/core/text/timing';
 
-import { StageFailure, toPipelineError } from '../errors';
+import { StageFailure, storageFullFailure, toPipelineError } from '../errors';
 import { stableHash } from '../hash';
 import { mp3DurationMs } from '../mp3-duration';
 import { audioContainer, synthesizeWithFallback } from './narrate-fallback';
@@ -42,8 +42,10 @@ interface PlannedSegment {
 interface Plan {
   readonly profile: NarrationProfile;
   readonly segments: readonly PlannedSegment[];
-  /** The language being read aloud: the translation's when there is one, else the source's. */
+  /** The language being read aloud: the target's when the chapter is translated, else the source's. */
   readonly spokenLang: string | null;
+  /** The source language. Checked in place of `spokenLang` when the spoken language is unknown. */
+  readonly sourceLang: string | null;
   /** Speech requests in flight at once, for this narrator. */
   readonly concurrency: number;
 }
@@ -114,14 +116,13 @@ async function buildPlan(ctx: StageContext): Promise<Plan> {
     ? ctx.record.narration
     : { ...ctx.record.narration, style: null };
 
-  const translated = sentences.some((s) => s.translated !== null);
   const { chapter, series } = ctx.record;
-  const spokenLang = translated
-    ? series.targetLang
-    : (chapter.sourceLang ?? series.sourceLang ?? null);
+  const sourceLang = chapter.sourceLang ?? series.sourceLang ?? null;
+  const translates = isTranslated(sourceLang, series.targetLang);
+  const spokenLang = translates ? series.targetLang : sourceLang;
 
   const limits = segmentLimitsFor(profile.model);
-  const spoken = sentences.map((s) => spokenSentence(s, spokenLang));
+  const spoken = sentences.map((s) => spokenSentence(s, spokenLang, translates));
   const groups = planTtsSegments(spoken, {
     maxChars: limits.maxChars,
     maxSeconds: limits.maxSeconds,
@@ -154,13 +155,49 @@ async function buildPlan(ctx: StageContext): Promise<Plan> {
     profile,
     segments,
     spokenLang,
+    sourceLang,
     concurrency: narrateConcurrencyFor(profile.model),
   };
 }
 
+/** Translation runs when the source and target languages differ, the same rule the translate stage uses. */
+function isTranslated(sourceLang: string | null, targetLang: string | null): boolean {
+  return (
+    sourceLang !== null &&
+    targetLang !== null &&
+    targetLang.toLowerCase() !== sourceLang.toLowerCase()
+  );
+}
+
+/**
+ * The text to read aloud for one sentence. In a translated chapter every sentence must have a
+ * translation in the target language: a sentence in another language, or with none, is never
+ * read. The stage stops with a clear message instead, because the narrator would say the wrong words.
+ */
+function spokenTextOf(sentence: StoredSentence, targetLang: string | null, translates: boolean) {
+  if (!translates) return sentence.text;
+  if (sentence.translated === null || sentence.translatedLang !== targetLang) {
+    throw new StageFailure(
+      'UNKNOWN',
+      `Part of this chapter has no ${languageName(targetLang)} translation yet, so it can't be read aloud. Translate the chapter again, then narrate.`,
+      {
+        retryable: false,
+        detail: `sentence ${sentence.idx} translated=${sentence.translatedLang ?? 'none'} target=${targetLang ?? 'none'}`,
+      },
+    );
+  }
+  return sentence.translated;
+}
+
+function languageName(lang: string | null): string {
+  if (lang === null) return 'target';
+  const family = lang.split('-')[0]?.toLowerCase() ?? lang;
+  return LANGUAGE_NAMES[family] ?? lang;
+}
+
 /** A sentence as the planner sees it, with its estimated speech time in the spoken language. */
-function spokenSentence(sentence: StoredSentence, spokenLang: string | null) {
-  const text = (sentence.translated ?? sentence.text).trim();
+function spokenSentence(sentence: StoredSentence, spokenLang: string | null, translates: boolean) {
+  const text = spokenTextOf(sentence, spokenLang, translates).trim();
   return {
     idx: sentence.idx,
     paragraphIdx: sentence.paragraphIdx,
@@ -183,28 +220,29 @@ function joinSpoken(parts: readonly string[]): string {
 async function execute(ctx: StageContext, plan: Plan): Promise<void> {
   const { chapters } = ctx.ports;
   const { profile, segments } = plan;
-  assertNarratorSpeaks(profile, plan.spokenLang);
-  const existing = await chapters.listAudioSegments(ctx.chapterId);
-
-  let firstStale = 0;
-  while (firstStale < segments.length && matches(existing[firstStale], segments[firstStale])) {
-    firstStale += 1;
-  }
-  if (existing.length > firstStale) {
-    await chapters.deleteAudioFrom(ctx.chapterId, firstStale);
-  }
-
+  assertNarratorSpeaks(profile, plan.spokenLang ?? plan.sourceLang);
   const total = segments.length;
+  // Passages past the end of the text are stale, so they go first and are never played.
+  await chapters.deleteAudioFrom(ctx.chapterId, total);
+
+  // Passages are reused by input hash wherever they sit, not by position. A failure can leave a gap
+  // that a later passage fills, so a retry synthesizes only the passages that are missing or stale.
+  const stored = new Map(
+    (await chapters.listAudioSegments(ctx.chapterId)).map((s) => [s.idx, s] as const),
+  );
+  const missing = segments.filter((segment) => !matches(stored.get(segment.idx), segment));
+  await assertRoomForAudio(ctx, plan, missing);
+  const done = total - missing.length;
   // Announce the passages already saved, so a resumed run starts at the right count.
   ctx.emit({
     type: 'progress',
     chapterId: ctx.chapterId,
     stage: 'narrate',
-    progress: firstStale / total,
-    passages: { done: firstStale, total },
+    progress: done / total,
+    passages: { done, total },
   });
   await runOrdered(
-    segments.slice(firstStale),
+    missing,
     (segment, _index, signal) => narrateSegment(ctx, plan, segment, total, signal),
     {
       concurrency: plan.concurrency,
@@ -218,10 +256,33 @@ async function execute(ctx: StageContext, plan: Plan): Promise<void> {
   await chapters.setMeta(ctx.chapterId, { durationMs });
 }
 
+/** The most audio a second can take: 16-bit mono PCM at 24 kHz, the largest format a passage is saved in. */
+export const AUDIO_BYTES_PER_SECOND = 48_000;
+/** Room that must stay free on the device once the audio is saved. */
+export const STORAGE_RESERVE_BYTES = 200 * 1024 * 1024;
+
+/**
+ * Stops before any paid call when the device cannot hold the audio still to be made, plus the
+ * reserve. Spending on audio that cannot be saved would only waste the money.
+ */
+async function assertRoomForAudio(
+  ctx: StageContext,
+  plan: Plan,
+  missing: readonly PlannedSegment[],
+): Promise<void> {
+  if (missing.length === 0) return;
+  const seconds = missing.reduce(
+    (sum, segment) => sum + estimateSpeechSeconds(segment.text, plan.spokenLang),
+    0,
+  );
+  const neededBytes = seconds * AUDIO_BYTES_PER_SECOND + STORAGE_RESERVE_BYTES;
+  if ((await ctx.ports.storage.freeBytes()) < neededBytes) throw storageFullFailure('preflight');
+}
+
 /**
  * Synthesizes one segment and writes its audio file. A retryable failure that survives the
- * split-and-join fallback is reported with the passage number. The passages saved before it stay
- * saved, so a retry resumes at this one.
+ * split-and-join fallback is reported with the passage number. Every passage finished before it is
+ * still saved, so a retry synthesizes only the passages that are missing.
  */
 async function narrateSegment(
   ctx: StageContext,

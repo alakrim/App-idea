@@ -18,8 +18,6 @@ export function changeHint(failure: PipelineError): string | null {
       return 'Add credit to your OpenRouter account, then try again.';
     case 'INPUT_TOO_LONG':
       return 'Use a shorter source, then try again.';
-    case 'STORAGE_FULL':
-      return 'Free up space on this phone, then try again.';
     case 'CONTENT_EMPTY':
     case 'CONTENT_BLOCKED':
     case 'PARSE_FAILED':

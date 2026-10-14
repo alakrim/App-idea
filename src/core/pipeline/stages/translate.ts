@@ -85,7 +85,12 @@ export const translateStage: StageDefinition = {
               progress: total === 0 ? 1 : translated / total,
             }),
         });
-        await chapters.setTranslations(ctx.chapterId, result.translations, result.partialIdx);
+        await chapters.setTranslations(
+          ctx.chapterId,
+          result.translations,
+          result.partialIdx,
+          targetLang,
+        );
       },
     };
   },

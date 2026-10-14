@@ -29,7 +29,6 @@ import {
   FREESOUND_BUILD_SCRIPT,
   FREESOUND_RECIPE_VERSION,
   LEDGER_PATH,
-  LOOP_SAMPLES,
   LUFS_TOLERANCE,
   OVERRIDES_PATH,
   PREVIEW_CACHE_DIR,
@@ -42,10 +41,13 @@ import {
 } from './pack-spec.mjs';
 import {
   encodeLoopAac,
+  LONG_RECIPE,
+  limitLoop,
   loopGraph,
   measureLoudnorm,
   rollLoop,
-  WINDOW_SAMPLES,
+  SHORT_LOOP_SECONDS,
+  SHORT_RECIPE,
 } from './loop-recipe.mjs';
 
 const HIGH_PASS_HZ = 25;
@@ -129,7 +131,11 @@ function attemptsFor(target, curation, overrides) {
   if (!screening) throw new Error(`${target.id}: not screened; run npm run sounds:screen first`);
   const passers = screening.candidates.filter((c) => c.verdict === 'pass' && c.window !== null);
   const override = overrides[target.id];
-  const toAttempt = (c) => ({ freesoundId: c.freesoundId, windowStartSeconds: c.window.startSeconds });
+  const toAttempt = (c) => ({
+    freesoundId: c.freesoundId,
+    windowStartSeconds: c.window.startSeconds,
+    loopSeconds: c.window.loopSeconds ?? 60,
+  });
   if (override) {
     const candidate = passers.find((c) => c.freesoundId === override.freesoundId);
     if (!candidate) throw new Error(`${target.id}: override ${override.freesoundId} did not pass the screen`);
@@ -161,26 +167,53 @@ async function fetchPreview(client, sound) {
   return cached;
 }
 
-/** Cuts the loop-length window the screen chose out of the decoded clip. */
-function cutWindow(id, samples, windowStartSeconds) {
+/**
+ * AAC drops energy from noisy, high-frequency audio, so an encode can land above or below the target
+ * even when the linear pass hit it (rain lost 1.1 dB at 48 kbps). The encode is measured and, when it
+ * misses, the linear gain is corrected once by the difference and the file is encoded again. The
+ * limit itself is not changed, and the verify checks run on the final file.
+ */
+async function encodeAtTarget(rolled, measured, encoded, bitrate) {
+  await encodeLoopAac(rolled, measured, encoded, ENCODE_TRUE_PEAK_DBTP, bitrate);
+  const first = (await measureLoudness(encoded)).integratedLufs;
+  const correction = TARGET_LUFS - first;
+  if (Math.abs(correction) < 0.05) return;
+  await encodeLoopAac(
+    rolled,
+    { ...measured, offset: measured.offset + correction },
+    encoded,
+    ENCODE_TRUE_PEAK_DBTP,
+    bitrate,
+  );
+}
+
+/** The recipe for a screened loop length: the 60 s loop, or the 45 s loop of a 46 s window (A4). */
+function recipeFor(loopSeconds) {
+  return loopSeconds === SHORT_LOOP_SECONDS ? SHORT_RECIPE : LONG_RECIPE;
+}
+
+/** Cuts the window the screen chose out of the decoded clip. */
+function cutWindow(id, samples, windowStartSeconds, windowSamples) {
   const startSample = Math.round(windowStartSeconds * SAMPLE_RATE);
-  if (startSample + WINDOW_SAMPLES > samples.length) {
+  if (startSample + windowSamples > samples.length) {
     throw new Error(`${id}: the screened window at ${windowStartSeconds} s runs past the clip`);
   }
   return {
-    samples: samples.subarray(startSample, startSample + WINDOW_SAMPLES),
+    samples: samples.subarray(startSample, startSample + windowSamples),
     startSeconds: startSample / SAMPLE_RATE,
   };
 }
 
-async function buildBed({ client, target, sound, windowStartSeconds, how, workDir }) {
+async function buildBed({ client, target, sound, windowStartSeconds, loopSeconds, how, workDir }) {
   const id = target.id;
+  const { loopSamples, windowSamples } = recipeFor(loopSeconds);
   const preview = await fetchPreview(client, sound);
   const decoded = await decodeMono(preview);
-  const cut = cutWindow(id, decoded, windowStartSeconds);
+  const cut = cutWindow(id, decoded, windowStartSeconds, windowSamples);
 
   const raw = join(workDir, `${id}.window.f32`);
   const loop = join(workDir, `${id}.loop.wav`);
+  const limited = join(workDir, `${id}.limited.wav`);
   const rolled = join(workDir, `${id}.rolled.wav`);
   const encoded = join(workDir, `${id}.m4a`);
   await writeFile(
@@ -199,21 +232,28 @@ async function buildBed({ client, target, sound, windowStartSeconds, how, workDi
     '-i',
     raw,
     '-filter_complex',
-    loopGraph({ startSample: 0, prefix: `highpass=f=${HIGH_PASS_HZ},` }),
+    loopGraph({
+      startSample: 0,
+      prefix: `highpass=f=${HIGH_PASS_HZ},`,
+      loopSamples,
+      windowSamples,
+    }),
     '-map',
     '[out]',
     '-c:a',
     'pcm_f32le',
     loop,
   ]);
-  await rollLoop(loop, rolled);
-  const measured = await measureLoudnorm(loop);
-  await encodeLoopAac(rolled, measured, encoded, ENCODE_TRUE_PEAK_DBTP, REAL_BITRATE);
+  // A4: the limiter sits before the loudness passes, so the linear second pass can reach -28 LUFS.
+  await limitLoop(loop, limited);
+  await rollLoop(limited, rolled, loopSamples);
+  const measured = await measureLoudnorm(limited);
+  await encodeAtTarget(rolled, measured, encoded, REAL_BITRATE);
 
   const samples = await decodeMono(encoded);
-  if (samples.length !== 2 * ROLL_SAMPLES + LOOP_SAMPLES) {
+  if (samples.length !== 2 * ROLL_SAMPLES + loopSamples) {
     throw new Error(
-      `${id}: decoded ${samples.length} samples, expected ${2 * ROLL_SAMPLES + LOOP_SAMPLES}`,
+      `${id}: decoded ${samples.length} samples, expected ${2 * ROLL_SAMPLES + loopSamples}`,
     );
   }
   const { integratedLufs, truePeakDbtp } = await measureLoudness(encoded);
@@ -223,7 +263,7 @@ async function buildBed({ client, target, sound, windowStartSeconds, how, workDi
   if (truePeakDbtp > TRUE_PEAK_MAX_DBTP) {
     throw new Error(`${id}: true peak ${truePeakDbtp} dBTP exceeds ${TRUE_PEAK_MAX_DBTP}`);
   }
-  const seam = checkSeam(samples.subarray(ROLL_SAMPLES, ROLL_SAMPLES + LOOP_SAMPLES));
+  const seam = checkSeam(samples.subarray(ROLL_SAMPLES, ROLL_SAMPLES + loopSamples));
   if (!seamPasses(seam)) {
     throw new Error(
       `${id}: seam fails (dRMS ${seam.rmsDiffDb.toFixed(2)} dB, jump ${seam.jumpRatio.toFixed(2)}x); ` +
@@ -239,7 +279,8 @@ async function buildBed({ client, target, sound, windowStartSeconds, how, workDi
     file,
     durationMs: Math.round((samples.length / SAMPLE_RATE) * 1000),
     loopStartMs: Math.round((ROLL_SAMPLES / SAMPLE_RATE) * 1e6) / 1000,
-    loopEndMs: Math.round(((ROLL_SAMPLES + LOOP_SAMPLES) / SAMPLE_RATE) * 1e6) / 1000,
+    loopEndMs: Math.round(((ROLL_SAMPLES + loopSamples) / SAMPLE_RATE) * 1e6) / 1000,
+    loopSeconds: loopSeconds,
     lufs: round(integratedLufs, 1),
     bytes: size,
     sha256: await sha256File(join(REAL_DIR, file)),
@@ -301,6 +342,7 @@ async function buildFirstPassing({ client, choice, workDir }) {
         target: choice.target,
         sound,
         windowStartSeconds: attempt.windowStartSeconds,
+        loopSeconds: attempt.loopSeconds,
         how: choice.how,
         workDir,
       });

@@ -195,7 +195,7 @@
   "screening": {
     "screenedOn": "2026-10-14",
     "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
+    "reranker": null,
     "thresholds": {
       "denyFrameProbability": 0.15,
       "alarmFrameProbability": 0.05,
@@ -227,9 +227,15 @@
       ],
       "clapPrompt": "rain drumming on a roof heard from inside a building, no thunder"
     },
-    "verdict": "unfilled",
-    "unfilledReason": "build checks: no screened candidate passed the build checks (521773: rain_on_roof: integrated loudness -26.9 LUFS is outside the target; 398581: rain_on_roof: integrated loudness -26.8 LUFS is outside the target)",
-    "chosen": null,
+    "verdict": "filled",
+    "unfilledReason": null,
+    "chosen": {
+      "freesoundId": 521773,
+      "windowStartSeconds": 27,
+      "windowSeconds": 64,
+      "steadinessDb": 1.26,
+      "clapScore": null
+    },
     "candidates": [
       {
         "rank": 1,
@@ -358,9 +364,10 @@
         "window": {
           "startSeconds": 27,
           "lengthSeconds": 64,
+          "loopSeconds": 60,
           "steadinessDb": 1.26
         },
-        "clapScore": 0.567,
+        "clapScore": null,
         "evidence": {
           "frames": 95,
           "cleanSeconds": 95,
@@ -616,9 +623,10 @@
         "window": {
           "startSeconds": 40,
           "lengthSeconds": 64,
+          "loopSeconds": 60,
           "steadinessDb": 0.749
         },
-        "clapScore": 0.5608,
+        "clapScore": null,
         "evidence": {
           "frames": 177,
           "cleanSeconds": 175,
@@ -741,7 +749,7 @@
         "author": "xkeril",
         "durationSec": 61.2,
         "verdict": "reject",
-        "reason": "clip has 61 s; a window needs 64 s",
+        "reason": "no 46 s window is free of denied sounds: Thunder reaches 0.626 (at 37 s)",
         "window": null,
         "clapScore": null,
         "evidence": {

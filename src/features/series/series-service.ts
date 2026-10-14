@@ -1,6 +1,8 @@
 import type { IdGenerator } from '@/core/domain';
 import { chapterRepo } from '@/db/repos/chapter-repo';
+import { jobRepo } from '@/db/repos/job-repo';
 import { seriesRepo } from '@/db/repos/series-repo';
+import { textRepo } from '@/db/repos/text-repo';
 import type { Db } from '@/db/types';
 
 export const SERIES_NAME_MAX = 80;
@@ -67,13 +69,22 @@ export function updateSeries(
   assertValid(values);
   const existing = seriesRepo.get(deps.db, seriesId);
   if (!existing) throw new Error(`Series ${seriesId} does not exist`);
-  seriesRepo.update(deps.db, seriesId, {
-    title: values.title.trim(),
-    coverUri: values.coverUri,
-    coverTint: values.coverTint,
-    sourceLang: values.sourceLang,
-    targetLang: values.targetLang,
-    updatedAt: deps.now(),
+  const languageChanged = existing.targetLang !== values.targetLang;
+  deps.db.transaction((tx) => {
+    seriesRepo.update(tx, seriesId, {
+      title: values.title.trim(),
+      coverUri: values.coverUri,
+      coverTint: values.coverTint,
+      sourceLang: values.sourceLang,
+      targetLang: values.targetLang,
+      updatedAt: deps.now(),
+    });
+    // Translations in the old target language would be read aloud in the new voice, so they go with
+    // the change, together with the translate jobs that say they are done.
+    if (languageChanged) {
+      textRepo.clearTranslationsOfSeries(tx, seriesId);
+      jobRepo.deleteStageForSeries(tx, seriesId, 'translate');
+    }
   });
   // A replaced cover is no longer referenced, so its file goes too.
   if (existing.coverUri !== null && existing.coverUri !== values.coverUri) {

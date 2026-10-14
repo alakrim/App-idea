@@ -5,7 +5,6 @@ import type {
   AmbienceCue,
   AudioSegment,
   Bookmark,
-  ChapterStatus,
   Paragraph,
   Sentence,
 } from '@/core/domain';
@@ -17,6 +16,7 @@ import {
   PLAYBACK_RATE_RANGE,
   clampToRange,
 } from '@/core/playback/ranges';
+import { isComplete } from '@/core/playback/playability';
 import { buildTimeline, type ChapterTimeline } from '@/core/playback/timeline';
 import { systemTimers } from '@/core/playback/timers';
 import type { ChapterForPlayback } from '@/db/repos/playback-repo';
@@ -177,14 +177,12 @@ export interface PlaybackController {
   dispose(): void;
 }
 
-/** A chapter whose narration has finished for good: its last segment exists and nothing more is coming. */
-function isNarrationComplete(state: ChapterStatus | ChapterProgress['state']): boolean {
-  return state === 'ready' || state === 'failed';
-}
-
-/** Processing that has stopped on its own, and that the listener may want to restart. */
-function isProcessingStopped(state: ChapterProgress['state']): boolean {
-  return state === 'idle' || state === 'cancelled';
+/**
+ * Narration can still produce audio while a run is queued or running. In any other state it has
+ * stopped: it finished, failed or was cancelled. The player then ends at the audio it has.
+ */
+function isNarrationStopped(state: ChapterProgress['state']): boolean {
+  return state !== 'queued' && state !== 'running';
 }
 
 function toLoadedSegment(segment: AudioSegment): LoadedSegment {
@@ -368,7 +366,7 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
 
     unsubscribe = pipeline.subscribe(chapterId, (progress) => {
       if (!active) return;
-      const complete = isNarrationComplete(progress.state);
+      const complete = isNarrationStopped(progress.state);
       if (readContent().status === 'unavailable') {
         // Nothing was playable when the chapter opened: start it once narration produces audio.
         if (data.segmentsFrom(chapterId, 0).length > 0) {
@@ -382,7 +380,8 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       if (progress.readySegments > segments.length || complete) {
         appendFromData(chapterId, complete);
       }
-      writeContent({ narrationPaused: !complete && isProcessingStopped(progress.state) });
+      // Stopped short of the whole chapter: the player says narration is paused, and it waits for more.
+      writeContent({ narrationPaused: complete && progress.state !== 'ready' });
       if (complete) stop();
     });
     // The subscribe call emits the current snapshot at once, which may have stopped the watch already.
@@ -449,7 +448,12 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       seriesId = chapter.chapter.seriesId;
       const loaded = chapter.segments.map(toLoadedSegment);
       const timeline = buildTimeline(loaded);
-      const final = isNarrationComplete(chapter.chapter.status);
+      // Final when narration is done and the audio covers the text. Otherwise the watch below decides.
+      const final = isComplete({
+        narrateDone: chapter.chapter.status === 'ready',
+        passages: chapter.segments,
+        sentenceCount: chapter.sentences.length,
+      });
       const shared = sharedContent(chapter, chapterId);
 
       segments = loaded;

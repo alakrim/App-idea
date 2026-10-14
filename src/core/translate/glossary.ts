@@ -1,3 +1,4 @@
+import { aliasesThrough } from '../memory/aliases';
 import { normalizeName } from '../memory/entities';
 import { estimateTokens } from '../text/chunk';
 import { normalizeWhitespace } from '../text/normalize';
@@ -72,7 +73,7 @@ export function buildGlossary(
     );
   for (const entity of visibleEntities) {
     const term = normalizeWhitespace(entity.canonicalName);
-    const names = [term, ...entity.aliases.map(normalizeWhitespace)]
+    const names = [term, ...aliasesThrough(entity, current).map(normalizeWhitespace)]
       .map((name) => normalizeName(name))
       .filter((key) => key !== '');
     if (names.length === 0 || names.some((key) => byKey.has(key))) continue;
