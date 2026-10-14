@@ -30,7 +30,8 @@ function entity(canonicalName: string, firstChapterOrder: number, aliases: strin
     seriesId: 's',
     kind: 'character',
     canonicalName,
-    aliases,
+    // Each spelling is stamped with the chapter that first revealed it: here, the entity's own chapter.
+    aliases: aliases.map((alias) => ({ alias, firstChapterOrder })),
     firstChapterOrder,
   };
 }

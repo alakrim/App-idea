@@ -7,7 +7,15 @@ import { Trash } from '@/ui/icons';
 import { Skeleton } from '@/ui/skeleton';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
-import { fontFamily, iconSize, iconStrokeWidth, minTouchTarget, radius, space } from '@/ui/tokens';
+import {
+  fontFamily,
+  iconSize,
+  iconStrokeWidth,
+  minTouchTarget,
+  radius,
+  space,
+  typography,
+} from '@/ui/tokens';
 
 import type { VocabCard as VocabCardData } from './vocab-data';
 
@@ -101,7 +109,7 @@ export function VocabCard({ card, status, onDelete, onOpenSource, onRetry }: Voc
               accessibilityLabel="Open the sentence in its chapter"
               style={({ pressed }) => [
                 styles.source,
-                { borderLeftColor: colors.textFaint },
+                { borderLeftColor: colors.decorativeFaint },
                 pressed && styles.pressed,
               ]}
             >
@@ -133,7 +141,7 @@ const styles = StyleSheet.create({
     minHeight: minTouchTarget,
     justifyContent: 'center',
   },
-  sourceText: { fontSize: 15, lineHeight: 22 },
+  sourceText: { fontSize: typography.quote.size, lineHeight: typography.quote.lineHeight },
   pressed: { opacity: 0.85 },
   deletePanel: {
     width: DELETE_PANEL_WIDTH,

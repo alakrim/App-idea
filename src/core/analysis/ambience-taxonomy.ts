@@ -1,15 +1,42 @@
 /**
- * The ambience taxonomy (R4 section 2, ADR-0005). Ids are stable snake_case and are never renamed
- * once shipped: they are stored in cues and resolved against sound packs at playback time.
+ * The ambience taxonomy (R4 section 2, ADR-0005, A4 v2). Ids are stable snake_case and are never
+ * renamed once shipped: they are stored in cues and resolved against sound packs at playback time.
  *
  * Fallbacks: a bed names the next id to try when no sound is installed for it. The chain always
  * ends in a procedural base-pack id, or in `null` to skip the cue. Oneshots have no fallback in v1.
+ *
+ * Eras (A4): every category is single-purpose and has an era. A chapter has the same era (or none),
+ * and a bed is only played in a chapter whose era accepts it (see `bedFitsEra`).
  */
 
 export type AmbienceKind = 'bed' | 'oneshot';
 
 /** Kinds the analysis may emit in v1. One-shots are reserved for v1.1 (ADR-0005). */
 export const ENABLED_KINDS = ['bed'] as const satisfies readonly AmbienceKind[];
+
+/**
+ * When a sound belongs to. `timeless`: nature, weather, fire, water, wind, caves and quiet interiors
+ * with no technology. `historic`: pre-industrial human scenes. `modern`: the post-industrial world
+ * (traffic, trains, offices, hospitals, aircraft). `futuristic`: science fiction.
+ */
+export const AMBIENCE_ERAS = ['timeless', 'historic', 'modern', 'futuristic'] as const;
+export type AmbienceEra = (typeof AMBIENCE_ERAS)[number];
+
+/**
+ * The beds a chapter of each era accepts. A timeless chapter takes only timeless beds. A historic
+ * chapter takes no modern or futuristic bed, and a modern chapter takes no futuristic one.
+ */
+const ERA_ACCEPTS: Readonly<Record<AmbienceEra, readonly AmbienceEra[]>> = {
+  timeless: ['timeless'],
+  historic: ['timeless', 'historic'],
+  modern: ['timeless', 'historic', 'modern'],
+  futuristic: ['timeless', 'modern', 'futuristic'],
+};
+
+/** True when a bed of `bedEra` may play in a chapter of `chapterEra`. An unknown chapter era (null) accepts any bed. */
+export function bedFitsEra(bedEra: AmbienceEra, chapterEra: AmbienceEra | null): boolean {
+  return chapterEra === null || ERA_ACCEPTS[chapterEra].includes(bedEra);
+}
 
 /**
  * Procedural base-pack ids, synthesized at build time and always installed. They are named with a
@@ -26,9 +53,23 @@ export const BASE_PACK_IDS = [
 
 export type BasePackId = (typeof BASE_PACK_IDS)[number];
 
+/**
+ * The era of each base-pack bed. The hum is a synthesized drone with no identifiable source, so it
+ * is timeless. The procedural crowd is a historic human murmur.
+ */
+export const BASE_PACK_ERA: Readonly<Record<BasePackId, AmbienceEra>> = {
+  base_rain: 'timeless',
+  base_wind: 'timeless',
+  base_ocean: 'timeless',
+  base_crowd: 'historic',
+  base_space_hum: 'timeless',
+  base_fire: 'timeless',
+};
+
 /** Lucide icon names the taxonomy uses. The player maps each one to its component. */
 export const AMBIENCE_ICON_NAMES = [
   'Anchor',
+  'Anvil',
   'Atom',
   'Bell',
   'Bird',
@@ -98,20 +139,26 @@ export interface AmbienceCategoryDef {
   readonly icon: AmbienceIconName;
   readonly family: string;
   readonly kind: AmbienceKind;
-  readonly description: string;
+  readonly era: AmbienceEra;
+  /** One line: the only sounds the bed should hold. Written for the analysis prompt. */
+  readonly contains: string;
+  /** Sounds the bed must never hold. Written for the analysis prompt and the screening policy. */
+  readonly mustNotContain: readonly string[];
   /** Next id to try when this category has no installed sound. `null` skips the cue. */
   readonly fallback: string | null;
 }
 
 export const AMBIENCE_CATEGORIES = [
-  // nature
+  // nature (timeless)
   {
     id: 'forest_day_birds',
     label: 'Forest by Day',
     icon: 'Bird',
     family: 'nature',
     kind: 'bed',
-    description: 'Daytime forest with birdsong, light leaf rustle, distant woodpecker.',
+    era: 'timeless',
+    contains: 'Daytime forest: birdsong, light leaf rustle, a distant woodpecker.',
+    mustNotContain: ['people', 'engines', 'thunder', 'sirens'],
     fallback: 'open_field_wind',
   },
   {
@@ -120,7 +167,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Moon',
     family: 'nature',
     kind: 'bed',
-    description: 'Night forest: crickets, an occasional owl, soft wind in trees.',
+    era: 'timeless',
+    contains: 'Night forest: crickets, an occasional owl, soft wind in the trees.',
+    mustNotContain: ['people', 'engines', 'thunder', 'sirens'],
     fallback: 'open_field_wind',
   },
   {
@@ -129,7 +178,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Wind',
     family: 'nature',
     kind: 'bed',
-    description: 'Open grassland or moor, steady wind through grass, no birds.',
+    era: 'timeless',
+    contains: 'Open grassland or moor: steady wind through grass.',
+    mustNotContain: ['birds', 'people', 'engines', 'thunder'],
     fallback: 'base_wind',
   },
   {
@@ -138,7 +189,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Mountain',
     family: 'nature',
     kind: 'bed',
-    description: 'High exposed mountain wind with cold gusts and sparse echo.',
+    era: 'timeless',
+    contains: 'High exposed mountain wind: cold gusts and a sparse echo.',
+    mustNotContain: ['people', 'engines', 'thunder', 'birds'],
     fallback: 'open_field_wind',
   },
   {
@@ -147,7 +200,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Waves',
     family: 'nature',
     kind: 'bed',
-    description: 'Surf on a beach, rhythmic waves with a slow swell.',
+    era: 'timeless',
+    contains: 'Surf on a beach: rhythmic waves and a slow swell.',
+    mustNotContain: ['people', 'engines', 'sirens', 'thunder'],
     fallback: 'base_ocean',
   },
   {
@@ -156,7 +211,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Droplets',
     family: 'nature',
     kind: 'bed',
-    description: 'Flowing stream or river over stones.',
+    era: 'timeless',
+    contains: 'A stream or river running over stones.',
+    mustNotContain: ['people', 'engines', 'thunder'],
     fallback: 'base_rain',
   },
   {
@@ -165,17 +222,120 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Bug',
     family: 'nature',
     kind: 'bed',
-    description: 'Tropical jungle: insects, distant monkeys, dripping foliage.',
+    era: 'timeless',
+    contains: 'Tropical jungle: insects, distant monkeys, dripping foliage.',
+    mustNotContain: ['people', 'engines', 'thunder'],
     fallback: 'forest_day_birds',
   },
-  // weather
+  {
+    id: 'waterfall',
+    label: 'Waterfall',
+    icon: 'Droplets',
+    family: 'nature',
+    kind: 'bed',
+    era: 'timeless',
+    contains: 'A waterfall roaring into a pool.',
+    mustNotContain: ['people', 'engines', 'thunder'],
+    fallback: 'river_stream',
+  },
+  {
+    id: 'lake_shore',
+    label: 'Lake Shore',
+    icon: 'Waves',
+    family: 'nature',
+    kind: 'bed',
+    era: 'timeless',
+    contains: 'A calm lake shore: gentle lapping water and reeds.',
+    mustNotContain: ['people', 'engines', 'sirens', 'thunder'],
+    fallback: 'river_stream',
+  },
+  {
+    id: 'desert_wind',
+    label: 'Desert',
+    icon: 'Wind',
+    family: 'nature',
+    kind: 'bed',
+    era: 'timeless',
+    contains: 'An empty desert: wind hissing over sand.',
+    mustNotContain: ['birds', 'people', 'engines', 'thunder'],
+    fallback: 'open_field_wind',
+  },
+  {
+    id: 'wind_in_trees',
+    label: 'Forest Wind',
+    icon: 'Wind',
+    family: 'nature',
+    kind: 'bed',
+    era: 'timeless',
+    contains: 'Wind moving through a tall forest canopy, branches creaking.',
+    mustNotContain: ['birds', 'people', 'engines', 'thunder'],
+    fallback: 'open_field_wind',
+  },
+  {
+    id: 'cave_drip',
+    label: 'Cave',
+    icon: 'Droplet',
+    family: 'nature',
+    kind: 'bed',
+    era: 'timeless',
+    contains: 'Inside a cave: slow water drips, a faint echo, still air.',
+    mustNotContain: ['wind gusts', 'people', 'engines', 'thunder', 'music'],
+    fallback: 'base_rain',
+  },
+  {
+    id: 'meadow_insects',
+    label: 'Summer Meadow',
+    icon: 'Bug',
+    family: 'nature',
+    kind: 'bed',
+    era: 'timeless',
+    contains: 'A summer meadow at dusk: crickets and grasshoppers, a light breeze.',
+    mustNotContain: ['birds', 'people', 'engines', 'thunder'],
+    fallback: 'open_field_wind',
+  },
+  {
+    id: 'seabird_cliffs',
+    label: 'Sea Cliffs',
+    icon: 'Bird',
+    family: 'nature',
+    kind: 'bed',
+    era: 'timeless',
+    contains: 'Sea cliffs: seabirds calling over the surf.',
+    mustNotContain: ['people', 'engines', 'sirens', 'speech'],
+    fallback: 'ocean_waves',
+  },
+  {
+    id: 'sea_storm',
+    label: 'Sea Storm',
+    icon: 'Anchor',
+    family: 'nature',
+    kind: 'bed',
+    era: 'timeless',
+    contains: 'A rough sea in strong wind: heavy waves breaking, spray, no thunder.',
+    mustNotContain: ['thunder', 'people', 'engines', 'sirens'],
+    fallback: 'ocean_waves',
+  },
+  {
+    id: 'campfire_night',
+    label: 'Campfire',
+    icon: 'Flame',
+    family: 'nature',
+    kind: 'bed',
+    era: 'timeless',
+    contains: 'A campfire at night: crackling wood, soft wind, a far-off owl.',
+    mustNotContain: ['people', 'engines', 'thunder', 'sirens'],
+    fallback: 'fireplace_crackle',
+  },
+  // weather (timeless)
   {
     id: 'light_rain',
     label: 'Light Rain',
     icon: 'CloudDrizzle',
     family: 'weather',
     kind: 'bed',
-    description: 'Gentle steady rain on leaves or ground.',
+    era: 'timeless',
+    contains: 'Gentle steady rain on leaves or ground.',
+    mustNotContain: ['thunder', 'wind gusts', 'people', 'engines'],
     fallback: 'base_rain',
   },
   {
@@ -184,16 +344,42 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'CloudRain',
     family: 'weather',
     kind: 'bed',
-    description: 'Downpour, dense steady rain.',
+    era: 'timeless',
+    contains: 'A downpour: dense, steady rain.',
+    mustNotContain: ['thunder', 'people', 'engines', 'sirens'],
     fallback: 'light_rain',
   },
   {
+    id: 'rain_on_roof',
+    label: 'Rain on Roof',
+    icon: 'CloudRain',
+    family: 'weather',
+    kind: 'bed',
+    era: 'timeless',
+    contains: 'Rain drumming on a roof, heard from inside a building.',
+    mustNotContain: ['thunder', 'people', 'traffic', 'engines'],
+    fallback: 'light_rain',
+  },
+  {
+    id: 'thunderstorm',
+    label: 'Thunderstorm',
+    icon: 'Zap',
+    family: 'weather',
+    kind: 'bed',
+    era: 'timeless',
+    contains: 'Rain with distant rolling thunder, and nothing else.',
+    mustNotContain: ['people', 'engines', 'sirens', 'music'],
+    fallback: 'heavy_rain',
+  },
+  {
     id: 'storm_wind',
-    label: 'Storm',
+    label: 'Storm Wind',
     icon: 'CloudLightning',
     family: 'weather',
     kind: 'bed',
-    description: 'Storm: strong gusts, rain, distant rolling thunder.',
+    era: 'timeless',
+    contains: 'Gusting storm wind through trees or open land.',
+    mustNotContain: ['thunder', 'sirens', 'people', 'engines', 'music'],
     fallback: 'heavy_rain',
   },
   {
@@ -202,7 +388,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'CloudSnow',
     family: 'weather',
     kind: 'bed',
-    description: 'Muffled quiet of falling snow.',
+    era: 'timeless',
+    contains: 'The muffled quiet of falling snow.',
+    mustNotContain: ['wind gusts', 'people', 'engines', 'thunder'],
     fallback: 'open_field_wind',
   },
   {
@@ -211,7 +399,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Snowflake',
     family: 'weather',
     kind: 'bed',
-    description: 'Howling snow wind, harsh and cold.',
+    era: 'timeless',
+    contains: 'Howling snow wind: harsh and cold.',
+    mustNotContain: ['people', 'engines', 'thunder', 'sirens'],
     fallback: 'mountain_wind',
   },
   {
@@ -220,17 +410,21 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Zap',
     family: 'weather',
     kind: 'oneshot',
-    description: 'Single close thunder crack.',
+    era: 'timeless',
+    contains: 'A single close thunder crack.',
+    mustNotContain: ['people', 'engines'],
     fallback: null,
   },
-  // urban
+  // urban (modern unless noted)
   {
     id: 'city_street_day',
     label: 'City Street',
     icon: 'Building2',
     family: 'urban',
     kind: 'bed',
-    description: 'Busy city street by day: traffic, footsteps, distant voices.',
+    era: 'modern',
+    contains: 'A busy city street by day: traffic, footsteps, distant voices.',
+    mustNotContain: ['sirens', 'alarms', 'music'],
     fallback: 'crowd_murmur',
   },
   {
@@ -239,7 +433,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Building',
     family: 'urban',
     kind: 'bed',
-    description: 'Night city: light traffic, distant sirens, humming signs.',
+    era: 'modern',
+    contains: 'A city at night: light traffic and a humming sign.',
+    mustNotContain: ['sirens', 'alarms', 'music', 'speech'],
     fallback: 'city_street_day',
   },
   {
@@ -248,7 +444,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Store',
     family: 'urban',
     kind: 'bed',
-    description: 'Open market or bazaar: vendors calling, many voices.',
+    era: 'historic',
+    contains: 'An open-air market without engines: vendors calling, many voices.',
+    mustNotContain: ['engines', 'traffic', 'sirens', 'music', 'radio'],
     fallback: 'crowd_murmur',
   },
   {
@@ -257,7 +455,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Landmark',
     family: 'urban',
     kind: 'bed',
-    description: 'Small village square, few voices, a cart, a dog barking.',
+    era: 'historic',
+    contains: 'A small village square: a few voices, a cart, a dog barking.',
+    mustNotContain: ['engines', 'traffic', 'sirens', 'music', 'radio'],
     fallback: 'crowd_murmur',
   },
   {
@@ -266,7 +466,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Anchor',
     family: 'urban',
     kind: 'bed',
-    description: 'Port: gulls, ropes, distant cranes, water against hulls.',
+    era: 'historic',
+    contains: 'An old harbour: gulls, ropes, water against wooden hulls.',
+    mustNotContain: ['engines', 'cranes', 'sirens', 'music', 'traffic'],
     fallback: 'ocean_waves',
   },
   {
@@ -275,7 +477,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Users',
     family: 'urban',
     kind: 'bed',
-    description: 'Large crowd murmuring; no distinct words.',
+    era: 'historic',
+    contains: 'A large crowd murmuring, with no distinct words.',
+    mustNotContain: ['traffic', 'engines', 'sirens', 'music', 'phones'],
     fallback: 'base_crowd',
   },
   // interiors
@@ -285,7 +489,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Wine',
     family: 'interiors',
     kind: 'bed',
-    description: 'Busy tavern: many conversations, clinking mugs, distant laughter.',
+    era: 'historic',
+    contains: 'A busy tavern: many conversations, clinking mugs, a distant laugh.',
+    mustNotContain: ['music', 'instruments', 'traffic', 'engines', 'sirens'],
     fallback: 'crowd_murmur',
   },
   {
@@ -294,7 +500,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Castle',
     family: 'interiors',
     kind: 'bed',
-    description: 'Large stone hall with faint echo and distant footsteps.',
+    era: 'historic',
+    contains: 'A large stone hall: a faint echo and distant footsteps.',
+    mustNotContain: ['music', 'engines', 'sirens', 'crowd', 'speech'],
     fallback: 'library_quiet',
   },
   {
@@ -303,7 +511,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Flame',
     family: 'interiors',
     kind: 'bed',
-    description: 'Crackling fire in a room, soft pops.',
+    era: 'timeless',
+    contains: 'A crackling fire in a room, soft pops.',
+    mustNotContain: ['people', 'engines', 'thunder'],
     fallback: 'base_fire',
   },
   {
@@ -312,7 +522,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Utensils',
     family: 'interiors',
     kind: 'bed',
-    description: 'Kitchen at work: pots, chopping, sizzling, voices.',
+    era: 'historic',
+    contains: 'A kitchen at work: pots, chopping, sizzling.',
+    mustNotContain: ['music', 'engines', 'sirens', 'radio'],
     fallback: 'tavern_crowd',
   },
   {
@@ -321,7 +533,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Briefcase',
     family: 'interiors',
     kind: 'bed',
-    description: 'Modern office: HVAC hum, keyboards, faint phones.',
+    era: 'modern',
+    contains: 'A modern office: HVAC hum, keyboards, a faint phone.',
+    mustNotContain: ['sirens', 'music', 'speech', 'traffic'],
     fallback: 'base_space_hum',
   },
   {
@@ -330,7 +544,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Library',
     family: 'interiors',
     kind: 'bed',
-    description: 'Library: near silence, page turns, soft room tone.',
+    era: 'timeless',
+    contains: 'A library: near silence, a page turned now and then, soft room tone.',
+    mustNotContain: ['music', 'engines', 'sirens', 'crowd', 'speech'],
     fallback: 'base_space_hum',
   },
   {
@@ -339,7 +555,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Hospital',
     family: 'interiors',
     kind: 'bed',
-    description: 'Hospital ward: distant monitors, carts, low voices.',
+    era: 'modern',
+    contains: 'A hospital ward: distant monitors, carts, a low voice.',
+    mustNotContain: ['sirens', 'music', 'shouting'],
     fallback: 'office_hum',
   },
   {
@@ -348,7 +566,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Lock',
     family: 'interiors',
     kind: 'bed',
-    description: 'Stone cell with dripping water and distant metal echoes.',
+    era: 'historic',
+    contains: 'A stone cell with dripping water and distant echoes of metal.',
+    mustNotContain: ['engines', 'sirens', 'radio', 'music', 'speech'],
     fallback: 'base_rain',
   },
   {
@@ -357,7 +577,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Coffee',
     family: 'interiors',
     kind: 'bed',
-    description: 'Quiet cafe, soft chatter, cups clinking.',
+    era: 'modern',
+    contains: 'A quiet cafe: soft chatter and cups clinking.',
+    mustNotContain: ['music', 'sirens', 'traffic'],
     fallback: 'tavern_crowd',
   },
   {
@@ -366,7 +588,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'School',
     family: 'interiors',
     kind: 'bed',
-    description: 'Lecture hall: quiet audience rustle, distant HVAC.',
+    era: 'modern',
+    contains: 'A lecture hall: a quiet audience rustle and distant ventilation.',
+    mustNotContain: ['music', 'sirens', 'shouting', 'speech'],
     fallback: 'library_quiet',
   },
   {
@@ -375,8 +599,21 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'DoorClosed',
     family: 'interiors',
     kind: 'oneshot',
-    description: 'Single heavy door slam.',
+    era: 'timeless',
+    contains: 'A single heavy door slam.',
+    mustNotContain: ['music', 'speech'],
     fallback: null,
+  },
+  {
+    id: 'forge_anvil',
+    label: 'Forge',
+    icon: 'Anvil',
+    family: 'interiors',
+    kind: 'bed',
+    era: 'historic',
+    contains: "A blacksmith's forge: hammer on anvil, bellows, a crackling fire.",
+    mustNotContain: ['engines', 'power tools', 'sirens', 'music', 'radio'],
+    fallback: 'fireplace_crackle',
   },
   // transport
   {
@@ -385,7 +622,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Footprints',
     family: 'transport',
     kind: 'bed',
-    description: 'Horse walking or trotting on a dirt road, hooves, light tack creak.',
+    era: 'historic',
+    contains: 'A horse trotting on a dirt road: hooves, a light tack creak.',
+    mustNotContain: ['cars', 'engines', 'traffic', 'sirens', 'speech'],
     fallback: 'open_field_wind',
   },
   {
@@ -394,7 +633,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Route',
     family: 'transport',
     kind: 'bed',
-    description: 'Fast gallop, pounding hooves, breath and leather.',
+    era: 'historic',
+    contains: 'A horse galloping: pounding hooves, breath and leather.',
+    mustNotContain: ['cars', 'engines', 'traffic', 'sirens', 'speech'],
     fallback: 'horse_trot',
   },
   {
@@ -403,7 +644,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Waypoints',
     family: 'transport',
     kind: 'bed',
-    description: 'Wooden carriage on road, wheels creaking, harness jingle.',
+    era: 'historic',
+    contains: 'A wooden carriage on a road: wheels creaking, harness jingle.',
+    mustNotContain: ['cars', 'engines', 'traffic', 'sirens', 'music'],
     fallback: 'horse_trot',
   },
   {
@@ -412,7 +655,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Ship',
     family: 'transport',
     kind: 'bed',
-    description: 'Wooden sailing ship at sea: ropes, creaking hull, sails.',
+    era: 'historic',
+    contains: 'A wooden sailing ship at sea: ropes, a creaking hull, flapping sails.',
+    mustNotContain: ['engines', 'sirens', 'music', 'speech'],
     fallback: 'ocean_waves',
   },
   {
@@ -421,7 +666,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'TrainFront',
     family: 'transport',
     kind: 'bed',
-    description: 'Train carriage: rhythmic wheels on rail, muffled cabin.',
+    era: 'modern',
+    contains: 'A train carriage: rhythmic wheels on rail, a muffled cabin.',
+    mustNotContain: ['sirens', 'music', 'announcements', 'shouting'],
     fallback: 'airplane_cabin',
   },
   {
@@ -430,8 +677,21 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Plane',
     family: 'transport',
     kind: 'bed',
-    description: 'Airplane cabin: steady engine drone, muffled air.',
+    era: 'modern',
+    contains: 'An airplane cabin: a steady engine drone and muffled air.',
+    mustNotContain: ['sirens', 'music', 'announcements', 'shouting'],
     fallback: 'base_space_hum',
+  },
+  {
+    id: 'subway_platform',
+    label: 'Subway',
+    icon: 'TrainFront',
+    family: 'transport',
+    kind: 'bed',
+    era: 'modern',
+    contains: 'An underground platform: a train far off and an echoing hall.',
+    mustNotContain: ['music', 'sirens', 'announcements'],
+    fallback: 'train_interior',
   },
   // combat
   {
@@ -440,7 +700,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Swords',
     family: 'combat',
     kind: 'bed',
-    description: 'Distant battlefield: shouts, clashing metal, horns.',
+    era: 'historic',
+    contains: 'A distant battle: shouts, clashing metal, horns.',
+    mustNotContain: ['gunfire', 'engines', 'sirens', 'music'],
     fallback: 'crowd_murmur',
   },
   {
@@ -449,7 +711,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Drum',
     family: 'combat',
     kind: 'bed',
-    description: 'Drums and horns of an approaching army, tense.',
+    era: 'historic',
+    contains: 'Drums and horns of an approaching army, tense.',
+    mustNotContain: ['melody', 'songs', 'engines', 'sirens', 'speech'],
     fallback: 'battle_field',
   },
   {
@@ -458,7 +722,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Crosshair',
     family: 'combat',
     kind: 'bed',
-    description: 'Distant gunfire with echoes and shouting.',
+    era: 'modern',
+    contains: 'Distant gunfire with echoes and shouting.',
+    mustNotContain: ['sirens', 'engines', 'music'],
     fallback: 'battle_field',
   },
   {
@@ -467,7 +733,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Trophy',
     family: 'combat',
     kind: 'bed',
-    description: 'Stadium or arena crowd cheering or jeering.',
+    era: 'modern',
+    contains: 'A stadium crowd cheering and jeering, far off.',
+    mustNotContain: ['music', 'sirens', 'horns', 'whistles'],
     fallback: 'crowd_murmur',
   },
   {
@@ -476,7 +744,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Sword',
     family: 'combat',
     kind: 'oneshot',
-    description: 'Single steel-on-steel clash.',
+    era: 'historic',
+    contains: 'A single steel-on-steel clash.',
+    mustNotContain: ['music', 'speech'],
     fallback: null,
   },
   {
@@ -485,7 +755,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Target',
     family: 'combat',
     kind: 'oneshot',
-    description: 'Single gunshot.',
+    era: 'modern',
+    contains: 'A single gunshot.',
+    mustNotContain: ['music', 'speech'],
     fallback: null,
   },
   {
@@ -494,7 +766,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Bomb',
     family: 'combat',
     kind: 'oneshot',
-    description: 'Distant boom with rumble.',
+    era: 'modern',
+    contains: 'A distant boom with rumble.',
+    mustNotContain: ['music', 'speech'],
     fallback: null,
   },
   // mystical
@@ -504,7 +778,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Sparkles',
     family: 'mystical',
     kind: 'bed',
-    description: 'Low chanted voices in a ritual, reverberant.',
+    era: 'historic',
+    contains: 'Low chanted voices in a ritual, reverberant.',
+    mustNotContain: ['instruments', 'engines', 'sirens', 'radio'],
     fallback: 'crowd_murmur',
   },
   {
@@ -513,7 +789,20 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Church',
     family: 'mystical',
     kind: 'bed',
-    description: 'Temple interior: soft bells, hushed chanting.',
+    era: 'historic',
+    contains: 'A temple interior: soft bells and hushed chanting.',
+    mustNotContain: ['instruments', 'engines', 'sirens', 'radio'],
+    fallback: 'ritual_chant',
+  },
+  {
+    id: 'monastery_chant',
+    label: 'Monastery',
+    icon: 'Bell',
+    family: 'mystical',
+    kind: 'bed',
+    era: 'historic',
+    contains: 'Monks chanting in a stone hall, long reverberant tones.',
+    mustNotContain: ['instruments', 'engines', 'sirens', 'radio'],
     fallback: 'ritual_chant',
   },
   {
@@ -522,7 +811,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Atom',
     family: 'mystical',
     kind: 'bed',
-    description: 'Cultivation aura: low resonant hum, soft wind, faint shimmer.',
+    era: 'timeless',
+    contains: 'A cultivation aura: a low resonant hum, soft wind, a faint shimmer.',
+    mustNotContain: ['music', 'speech', 'engines', 'sirens'],
     fallback: 'base_space_hum',
   },
   {
@@ -531,7 +822,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Ghost',
     family: 'mystical',
     kind: 'bed',
-    description: 'Faint ghostly whispers, eerie air.',
+    era: 'timeless',
+    contains: 'Faint, eerie air with unplaceable low tones.',
+    mustNotContain: ['speech', 'music', 'engines', 'sirens'],
     fallback: null,
   },
   {
@@ -540,7 +833,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'WandSparkles',
     family: 'mystical',
     kind: 'oneshot',
-    description: 'Spell cast with a rising shimmer.',
+    era: 'timeless',
+    contains: 'A spell cast with a rising shimmer.',
+    mustNotContain: ['music', 'speech'],
     fallback: null,
   },
   {
@@ -549,17 +844,21 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Bell',
     family: 'mystical',
     kind: 'oneshot',
-    description: 'Single temple or church bell toll.',
+    era: 'historic',
+    contains: 'A single temple or church bell toll.',
+    mustNotContain: ['music', 'speech'],
     fallback: null,
   },
-  // sci-fi
+  // sci-fi (futuristic)
   {
     id: 'starship_bridge',
     label: 'Starship Bridge',
     icon: 'Rocket',
     family: 'sci-fi',
     kind: 'bed',
-    description: 'Spaceship bridge: low electronic hum, faint console tones.',
+    era: 'futuristic',
+    contains: 'A spaceship bridge: a low electronic hum and faint console tones.',
+    mustNotContain: ['music', 'speech', 'sirens'],
     fallback: 'base_space_hum',
   },
   {
@@ -568,7 +867,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Cog',
     family: 'sci-fi',
     kind: 'bed',
-    description: 'Deep engine rumble in a spaceship corridor.',
+    era: 'futuristic',
+    contains: 'A deep engine rumble in a spaceship corridor.',
+    mustNotContain: ['music', 'speech', 'sirens'],
     fallback: 'starship_bridge',
   },
   {
@@ -577,7 +878,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Telescope',
     family: 'sci-fi',
     kind: 'bed',
-    description: 'Alien planet: strange wind, unfamiliar chirps, low drone.',
+    era: 'futuristic',
+    contains: 'An alien planet: strange wind, unfamiliar chirps, a low drone.',
+    mustNotContain: ['music', 'speech', 'sirens', 'human voices'],
     fallback: 'open_field_wind',
   },
   {
@@ -586,7 +889,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Satellite',
     family: 'sci-fi',
     kind: 'bed',
-    description: 'Space station: steady air handling, distant clanks.',
+    era: 'futuristic',
+    contains: 'A space station: steady air handling and distant clanks.',
+    mustNotContain: ['music', 'speech', 'sirens'],
     fallback: 'starship_bridge',
   },
   {
@@ -595,7 +900,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Sparkle',
     family: 'sci-fi',
     kind: 'oneshot',
-    description: 'Single laser zap.',
+    era: 'futuristic',
+    contains: 'A single laser zap.',
+    mustNotContain: ['music', 'speech'],
     fallback: null,
   },
   // mood
@@ -605,8 +912,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'HeartPulse',
     family: 'mood',
     kind: 'bed',
-    description:
-      'Muffled heartbeat under silence, for suspense. Requires explicit tension in text.',
+    era: 'timeless',
+    contains: 'A muffled heartbeat under near silence, for explicit suspense only.',
+    mustNotContain: ['music', 'engines', 'sirens', 'speech'],
     fallback: null,
   },
   {
@@ -615,8 +923,10 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Clock',
     family: 'mood',
     kind: 'bed',
-    description: 'Slow ticking clock, tension.',
-    fallback: null,
+    era: 'historic',
+    contains: 'A slow pendulum clock ticking in a quiet room.',
+    mustNotContain: ['music', 'engines', 'sirens', 'speech'],
+    fallback: 'library_quiet',
   },
   {
     id: 'ominous_drone',
@@ -624,7 +934,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Skull',
     family: 'mood',
     kind: 'bed',
-    description: 'Low dark drone, horror atmosphere.',
+    era: 'timeless',
+    contains: 'A low, dark drone in a still, cold room, for a horror tone.',
+    mustNotContain: ['music', 'speech', 'engines', 'sirens'],
     fallback: 'base_space_hum',
   },
   {
@@ -633,7 +945,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Music',
     family: 'mood',
     kind: 'bed',
-    description: 'Ballroom or party murmur: glasses, distant chatter. No music.',
+    era: 'historic',
+    contains: 'A ballroom or party murmur: glasses and distant chatter, no music.',
+    mustNotContain: ['music', 'engines', 'sirens', 'radio'],
     fallback: 'crowd_murmur',
   },
   {
@@ -642,7 +956,9 @@ export const AMBIENCE_CATEGORIES = [
     icon: 'Droplet',
     family: 'mood',
     kind: 'bed',
-    description: 'Rain against window glass heard from a warm room; intimate scenes.',
+    era: 'timeless',
+    contains: 'Rain against window glass, heard from a warm room.',
+    mustNotContain: ['thunder', 'people', 'traffic', 'engines'],
     fallback: 'light_rain',
   },
 ] as const satisfies readonly AmbienceCategoryDef[];
@@ -666,6 +982,12 @@ export function getCategory(id: string): AmbienceCategory | undefined {
 
 export function isBasePackId(value: string): value is BasePackId {
   return (BASE_PACK_IDS as readonly string[]).includes(value);
+}
+
+/** The era of a playable bed id (a category or a base-pack id), or undefined for an unknown id. */
+export function bedEraOf(id: string): AmbienceEra | undefined {
+  if (isBasePackId(id)) return BASE_PACK_ERA[id];
+  return CATEGORY_BY_ID.get(id)?.era;
 }
 
 export function isEnabledKind(kind: AmbienceKind): boolean {

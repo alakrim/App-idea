@@ -1,3 +1,4 @@
+import { parseDocument } from './dom';
 import { extractWithDefuddle, extractWithReadability } from './extractors';
 
 const URL = 'https://news.example.com/world/storm-harbour';
@@ -22,7 +23,7 @@ const ARTICLE = `<!doctype html><html lang="en"><head>
 
 describe('extractWithReadability', () => {
   it('returns the title, byline, site name, language and main-content blocks', () => {
-    const article = extractWithReadability(ARTICLE, URL);
+    const article = extractWithReadability(parseDocument(ARTICLE, URL));
     expect(article.title).toContain('Storm hits harbour');
     expect(article.byline).toBe('Jane Roe');
     expect(article.lang).toBe('en');
@@ -36,18 +37,18 @@ describe('extractWithReadability', () => {
   });
 
   it('drops navigation, footer and script text', () => {
-    const { text } = extractWithReadability(ARTICLE, URL);
+    const { text } = extractWithReadability(parseDocument(ARTICLE, URL));
     expect(text).not.toContain('should never appear');
     expect(text).not.toContain('Copyright 2026');
   });
 
   it('resolves relative image URLs against the page URL', () => {
-    const { contentHtml } = extractWithReadability(ARTICLE, URL);
+    const { contentHtml } = extractWithReadability(parseDocument(ARTICLE, URL));
     expect(contentHtml).toContain('https://news.example.com/world/harbour.jpg');
   });
 
   it('returns an empty article for a page with no readable content', () => {
-    const article = extractWithReadability('<html><body></body></html>', URL);
+    const article = extractWithReadability(parseDocument('<html><body></body></html>', URL));
     expect(article.blocks).toEqual([]);
     expect(article.text).toBe('');
   });
@@ -55,7 +56,7 @@ describe('extractWithReadability', () => {
 
 describe('extractWithDefuddle', () => {
   it('returns the title and the main-content blocks', async () => {
-    const article = await extractWithDefuddle(ARTICLE, URL);
+    const article = await extractWithDefuddle(parseDocument(ARTICLE, URL), URL);
     expect(article.title).toContain('Storm hits harbour');
     expect(article.blocks.map((block) => block.text).join(' ')).toContain(
       'Crews worked through the night',
@@ -63,14 +64,17 @@ describe('extractWithDefuddle', () => {
   });
 
   it('reads byline, site name and publication date from page metadata', async () => {
-    const article = await extractWithDefuddle(ARTICLE, URL);
+    const article = await extractWithDefuddle(parseDocument(ARTICLE, URL), URL);
     expect(article.byline).toBe('Jane Roe');
     expect(article.siteName).toBe('Example News');
     expect(article.publishedAt).toContain('2026-10-11');
   });
 
   it('returns no blocks for an empty document', async () => {
-    const article = await extractWithDefuddle('<html><body></body></html>', URL);
+    const article = await extractWithDefuddle(
+      parseDocument('<html><body></body></html>', URL),
+      URL,
+    );
     expect(article.blocks).toEqual([]);
   });
 });

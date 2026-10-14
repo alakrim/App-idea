@@ -97,6 +97,28 @@ describe('createLectioOpenRouter', () => {
     expect(written).not.toContain('sk-or-');
   });
 
+  it('does not rewrite the cache on a cache hit', async () => {
+    const fake = createFakeFetch(() => jsonResponse({ data: [apiModel] }));
+    const client = createLectioOpenRouter({ fetchImpl: fake.fetchImpl });
+
+    await client.models.list();
+    await client.models.list();
+    await client.models.list();
+
+    expect(fake.calls).toHaveLength(1);
+    expect(writeMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('reads the saved catalogue on first model use, not while the client is built', async () => {
+    const fake = createFakeFetch(() => jsonResponse({ data: [apiModel] }));
+    const client = createLectioOpenRouter({ fetchImpl: fake.fetchImpl });
+    expect(readMock).not.toHaveBeenCalled();
+
+    await client.models.list();
+
+    expect(readMock).toHaveBeenCalledTimes(1);
+  });
+
   it('does not write the cache when the fetch fails', async () => {
     const fake = createFakeFetch(() =>
       jsonResponse({ error: { message: 'down' } }, { status: 500 }),

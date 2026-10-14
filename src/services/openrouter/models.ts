@@ -1,7 +1,9 @@
 import { z } from 'zod';
 
+import { pipelineFailure } from './errors';
 import { jsonBody } from './transport';
 
+import type { PipelineFailure } from './errors';
 import type { Transport } from './transport';
 
 export type OutputModality = 'text' | 'speech' | 'embeddings';
@@ -30,16 +32,31 @@ export interface OpenRouterModel {
 
 export interface ModelCatalog {
   list(options?: ListModelsOptions): Promise<OpenRouterModel[]>;
-  /** Snapshot of the cache as a JSON string, for the app to persist. */
-  serialize(): string;
-  /** Restores a snapshot. Returns false (and changes nothing) when the payload is invalid. */
-  hydrate(payload: string): boolean;
 }
 
 interface ModelCatalogDeps {
   transport: Transport;
   ttlMs: number;
   now: () => number;
+  /**
+   * Returns the last saved snapshot, or null. Called once, on the first `list` call, so a client
+   * that is built but never asked for models does no I/O. Never overrides a fetched entry.
+   */
+  loadSnapshot?: () => string | null;
+  /**
+   * Receives the snapshot after each successful network fetch, never after a cache hit. It must not
+   * throw: a failed save costs one fetch on the next launch.
+   */
+  onFetched?: (snapshot: string) => void;
+}
+
+/** One network fetch per modality, shared by every caller that asks while it is in flight. */
+interface Flight {
+  readonly promise: Promise<OpenRouterModel[]>;
+  readonly controller: AbortController;
+  /** Callers still waiting. The request is aborted when the last one leaves. */
+  waiters: number;
+  settled: boolean;
 }
 
 const priceSchema = z
@@ -104,55 +121,121 @@ interface CacheEntry {
 
 export function createModelCatalog(deps: ModelCatalogDeps): ModelCatalog {
   const entries = new Map<OutputModality, CacheEntry>();
+  const flights = new Map<OutputModality, Flight>();
+  let restored = false;
+
+  function restoreOnce(): void {
+    if (restored) return;
+    restored = true;
+    const payload = deps.loadSnapshot?.() ?? null;
+    if (payload === null) return;
+    let json: unknown;
+    try {
+      json = JSON.parse(payload);
+    } catch {
+      return;
+    }
+    const parsed = snapshotSchema.safeParse(json);
+    if (!parsed.success) return;
+    for (const entry of parsed.data.entries) {
+      entries.set(entry.outputModality, { fetchedAt: entry.fetchedAt, models: entry.models });
+    }
+  }
+
+  function serialize(): string {
+    const snapshot = {
+      version: 1,
+      entries: Array.from(entries, ([outputModality, entry]) => ({
+        outputModality,
+        fetchedAt: entry.fetchedAt,
+        models: entry.models,
+      })),
+    };
+    return JSON.stringify(snapshot);
+  }
+
+  function startFlight(modality: OutputModality): Flight {
+    const controller = new AbortController();
+    const flight: Flight = {
+      promise: fetchModels(modality, controller.signal),
+      controller,
+      waiters: 0,
+      settled: false,
+    };
+    flights.set(modality, flight);
+    const settle = (): void => {
+      flight.settled = true;
+      if (flights.get(modality) === flight) flights.delete(modality);
+    };
+    flight.promise.then(settle, settle);
+    return flight;
+  }
+
+  async function fetchModels(
+    modality: OutputModality,
+    signal: AbortSignal,
+  ): Promise<OpenRouterModel[]> {
+    const response = await deps.transport.request(
+      {
+        method: 'GET',
+        path: '/models',
+        query: { output_modalities: modality },
+        accept: 'application/json',
+        signal,
+      },
+      jsonBody(listResponseSchema),
+    );
+    const models = parseModelItems(response.data);
+    entries.set(modality, { fetchedAt: deps.now(), models });
+    deps.onFetched?.(serialize());
+    return models;
+  }
+
+  /**
+   * Joins the modality's request in flight, or starts one. A caller that aborts stops waiting at
+   * once. The request itself is aborted only when its last waiter has left.
+   */
+  function join(
+    modality: OutputModality,
+    signal: AbortSignal | undefined,
+  ): Promise<OpenRouterModel[]> {
+    if (signal?.aborted) return Promise.reject(cancelledFailure());
+    const flight = flights.get(modality) ?? startFlight(modality);
+    flight.waiters += 1;
+    const leave = (): void => {
+      flight.waiters -= 1;
+      if (flight.waiters > 0 || flight.settled) return;
+      if (flights.get(modality) === flight) flights.delete(modality);
+      flight.controller.abort();
+    };
+    return waitFor(flight.promise, signal).finally(leave);
+  }
 
   return {
     async list(options = {}) {
       const modality = options.outputModality ?? 'text';
+      restoreOnce();
       const cached = entries.get(modality);
       if (cached && deps.now() - cached.fetchedAt < deps.ttlMs) return cached.models;
-
-      const response = await deps.transport.request(
-        {
-          method: 'GET',
-          path: '/models',
-          query: { output_modalities: modality },
-          accept: 'application/json',
-          signal: options.signal,
-        },
-        jsonBody(listResponseSchema),
-      );
-      const models = parseModelItems(response.data);
-      entries.set(modality, { fetchedAt: deps.now(), models });
-      return models;
-    },
-
-    serialize() {
-      const snapshot = {
-        version: 1,
-        entries: Array.from(entries, ([outputModality, entry]) => ({
-          outputModality,
-          fetchedAt: entry.fetchedAt,
-          models: entry.models,
-        })),
-      };
-      return JSON.stringify(snapshot);
-    },
-
-    hydrate(payload) {
-      let json: unknown;
-      try {
-        json = JSON.parse(payload);
-      } catch {
-        return false;
-      }
-      const parsed = snapshotSchema.safeParse(json);
-      if (!parsed.success) return false;
-      for (const entry of parsed.data.entries) {
-        entries.set(entry.outputModality, { fetchedAt: entry.fetchedAt, models: entry.models });
-      }
-      return true;
+      return join(modality, options.signal);
     },
   };
+}
+
+function cancelledFailure(): PipelineFailure {
+  return pipelineFailure('CANCELLED', 'Cancelled.', { retryable: false });
+}
+
+/** Settles with `work`, or rejects as a cancelled request as soon as `signal` aborts. */
+function waitFor<T>(work: Promise<T>, signal: AbortSignal | undefined): Promise<T> {
+  if (!signal) return work;
+  return new Promise<T>((resolve, reject) => {
+    const onAbort = (): void => reject(cancelledFailure());
+    signal.addEventListener('abort', onAbort, { once: true });
+    work.then(resolve, reject).finally(() => {
+      signal.removeEventListener('abort', onAbort);
+    });
+  });
 }
 
 /** Keeps the models that pass validation. One malformed entry must not hide the rest. */
@@ -169,8 +252,4 @@ export function supportsStructuredOutput(
   model: Pick<OpenRouterModel, 'supportedParameters'>,
 ): boolean {
   return model.supportedParameters.includes('structured_outputs');
-}
-
-export function voicesFor(model: Pick<OpenRouterModel, 'supportedVoices'>): string[] {
-  return model.supportedVoices;
 }

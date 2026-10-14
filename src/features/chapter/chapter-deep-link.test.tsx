@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- jest.mock factories load the stub with require() */
 import { act, screen } from '@testing-library/react-native';
 import { StyleSheet } from 'react-native';
 
@@ -9,7 +10,10 @@ import { HIGHLIGHT_MS } from './sentence-focus';
 
 import type { ReadingParagraph } from './chapter-data';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+// The stub renders a sheet's contents only while it is open, the way the real sheet does.
+jest.mock('@gorhom/bottom-sheet', () =>
+  require('@/__tests__/helpers/feature-mocks').bottomSheetStub(),
+);
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
 jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 
@@ -41,6 +45,8 @@ function props(overrides: Partial<ChapterViewProps> = {}): ChapterViewProps {
     onBack: jest.fn(),
     onPlay: jest.fn(),
     onRetry: jest.fn(),
+    onPrepare: jest.fn(),
+    onStop: jest.fn(),
     onToggleCue: jest.fn(),
     ...overrides,
   };

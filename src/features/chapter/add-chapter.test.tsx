@@ -157,6 +157,33 @@ describe('Add chapter: PDF selection', () => {
     );
   });
 
+  it('refuses a PDF over 25 MB at pick time and keeps Create off', async () => {
+    const { db, pipeline } = setup();
+    const createSpy = jest.spyOn(pipeline, 'createChapter');
+    pickerMock.mockResolvedValue({
+      canceled: false,
+      assets: [
+        {
+          uri: 'file:///cache/Atlas.pdf',
+          name: 'Atlas.pdf',
+          size: 38 * 1024 * 1024,
+          mimeType: 'application/pdf',
+        },
+      ],
+    } as unknown as Awaited<ReturnType<typeof DocumentPicker.getDocumentAsync>>);
+    await renderWithApp(<AddChapterScreen seriesId={id(1)} />, { db, pipeline });
+
+    await fireEvent.press(screen.getByLabelText('PDF'));
+    await fireEvent.press(screen.getByRole('button', { name: 'Choose a PDF' }));
+
+    expect(
+      await screen.findByText('This PDF is 38 MB. Lectio can read PDFs up to 25 MB.', {}, WAIT),
+    ).toBeOnTheScreen();
+    expect(screen.queryByText('Atlas.pdf')).toBeNull();
+    expect(screen.getByRole('button', { name: 'Create & process' })).toBeDisabled();
+    expect(createSpy).not.toHaveBeenCalled();
+  });
+
   it('does nothing when the picker is cancelled', async () => {
     const { db, pipeline } = setup();
     pickerMock.mockResolvedValue({ canceled: true, assets: null } as unknown as Awaited<

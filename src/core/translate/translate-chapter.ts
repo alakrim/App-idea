@@ -17,6 +17,8 @@ import type { LlmChunk } from '../text/chunk';
 
 /** Source tokens per request, as estimated by `estimateTokens`. */
 export const TRANSLATE_CHUNK_TOKENS = 1500;
+/** Output tokens a translation reply may use: twice a chunk, which is more than any language pair expands to. */
+export const TRANSLATE_MAX_OUTPUT_TOKENS = 2 * TRANSLATE_CHUNK_TOKENS;
 /** Sentences of translated context sent ahead of each chunk. */
 export const TRANSLATE_CONTEXT_SENTENCES = 5;
 
@@ -245,6 +247,7 @@ class ChapterRun {
       jsonSchema: TRANSLATE_JSON_SCHEMA,
       signal: this.input.signal,
       cacheSystem: true,
+      maxOutputTokens: TRANSLATE_MAX_OUTPUT_TOKENS,
     });
     this.counts.requests += 1;
     if (isRepair) this.counts.repairRequests += 1;

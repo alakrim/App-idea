@@ -5,8 +5,8 @@ exports[`analysis prompts matches the snapshot of the static system prompt 1`] =
 
 OUTPUT
 Return only a JSON object. No prose, no code fence. Use this shape:
-{"memory": {"summary": string, "keyEvents": string[], "characters": [{"name": string, "aliases": string[], "role": string | null, "facts": string[]}], "places": [{"name": string, "facts": string[]}], "items": [{"name": string, "facts": string[]}], "relationships": [{"a": string, "b": string, "nature": string}], "openThreads": string[], "glossary": [{"term": string, "translation": string | null, "note": string | null}]}, "cues": [{"category": string, "startSentence": integer, "endSentence": integer, "intensity": "low" | "medium" | "high" | null, "confidence": number, "reason": string | null}]}
-Every key is always present. Use null for "role", "translation", "note", "intensity" and "reason" when you have nothing to say.
+{"memory": {"summary": string, "keyEvents": string[], "characters": [{"name": string, "aliases": string[], "role": string | null, "facts": string[]}], "places": [{"name": string, "facts": string[]}], "items": [{"name": string, "facts": string[]}], "relationships": [{"a": string, "b": string, "nature": string}], "openThreads": string[], "glossary": [{"term": string, "translation": string | null, "note": string | null}]}, "cues": [{"category": string, "startSentence": integer, "endSentence": integer, "intensity": "low" | "medium" | "high" | null, "confidence": number, "reason": string | null}], "setting": {"era": "timeless" | "historic" | "modern" | "futuristic" | null}}
+Every key is always present. Use null for "role", "translation", "note", "intensity", "reason" and "era" when you have nothing to say.
 
 MEMORY RULES
 - Facts come only from the passage you are given. No speculation and no inference beyond the text.
@@ -25,6 +25,9 @@ MEMORY RULES
 CUE RULES
 - category must be one of the ids listed under CATEGORIES, exactly as written. Never invent an id.
 - Choose a category only when the setting or sound is explicit or strongly implied by the text. Never cue a sound the text does not mention.
+- A category's sound must not be something its "Must not contain" list names. Pick a different category, or none, when the passage would bring one of those sounds in.
+- setting.era is the era of the place where the passage happens, not the era of the narration. "timeless": nature, weather, fire, water, wind, caves and quiet interiors with no technology. "historic": pre-industrial human life, such as castles, villages, taverns, markets without engines, sailing ships, horses and carts. "modern": the present-day technological world, such as cars, trains, offices, hospitals, aircraft and phones. "futuristic": science fiction, such as starships and alien worlds. Use null when the text does not place the scene.
+- Match every cue to the era of the setting. A timeless category fits any setting. A historic category fits a historic or modern setting. A modern category fits a modern or futuristic setting. A futuristic category fits only a futuristic setting. Never choose a modern category in a historic setting.
 - Never cue music.
 - A scene the text describes as silent gets no cue.
 - Prefer one bed per scene. Use two at most, and only when the scene really has two sources.
@@ -39,55 +42,69 @@ CUE RULES
 - If nothing fits, return "cues": [].
 
 CATEGORIES (id: description)
-forest_day_birds: Daytime forest with birdsong, light leaf rustle, distant woodpecker.
-forest_night: Night forest: crickets, an occasional owl, soft wind in trees.
-open_field_wind: Open grassland or moor, steady wind through grass, no birds.
-mountain_wind: High exposed mountain wind with cold gusts and sparse echo.
-ocean_waves: Surf on a beach, rhythmic waves with a slow swell.
-river_stream: Flowing stream or river over stones.
-jungle_insects: Tropical jungle: insects, distant monkeys, dripping foliage.
-light_rain: Gentle steady rain on leaves or ground.
-heavy_rain: Downpour, dense steady rain.
-storm_wind: Storm: strong gusts, rain, distant rolling thunder.
-snowfall_quiet: Muffled quiet of falling snow.
-blizzard_wind: Howling snow wind, harsh and cold.
-city_street_day: Busy city street by day: traffic, footsteps, distant voices.
-city_night: Night city: light traffic, distant sirens, humming signs.
-market_crowd: Open market or bazaar: vendors calling, many voices.
-village_square: Small village square, few voices, a cart, a dog barking.
-harbor_port: Port: gulls, ropes, distant cranes, water against hulls.
-crowd_murmur: Large crowd murmuring; no distinct words.
-tavern_crowd: Busy tavern: many conversations, clinking mugs, distant laughter.
-castle_hall: Large stone hall with faint echo and distant footsteps.
-fireplace_crackle: Crackling fire in a room, soft pops.
-kitchen_busy: Kitchen at work: pots, chopping, sizzling, voices.
-office_hum: Modern office: HVAC hum, keyboards, faint phones.
-library_quiet: Library: near silence, page turns, soft room tone.
-hospital_ward: Hospital ward: distant monitors, carts, low voices.
-prison_cell: Stone cell with dripping water and distant metal echoes.
-cafe_soft: Quiet cafe, soft chatter, cups clinking.
-lecture_hall: Lecture hall: quiet audience rustle, distant HVAC.
-horse_trot: Horse walking or trotting on a dirt road, hooves, light tack creak.
-horse_gallop: Fast gallop, pounding hooves, breath and leather.
-carriage_wheels: Wooden carriage on road, wheels creaking, harness jingle.
-ship_deck: Wooden sailing ship at sea: ropes, creaking hull, sails.
-train_interior: Train carriage: rhythmic wheels on rail, muffled cabin.
-airplane_cabin: Airplane cabin: steady engine drone, muffled air.
-battle_field: Distant battlefield: shouts, clashing metal, horns.
-war_drums: Drums and horns of an approaching army, tense.
-gunfight_ambient: Distant gunfire with echoes and shouting.
-arena_crowd: Stadium or arena crowd cheering or jeering.
-ritual_chant: Low chanted voices in a ritual, reverberant.
-temple_incense: Temple interior: soft bells, hushed chanting.
-qi_hum: Cultivation aura: low resonant hum, soft wind, faint shimmer.
-spirit_whispers: Faint ghostly whispers, eerie air.
-starship_bridge: Spaceship bridge: low electronic hum, faint console tones.
-spaceship_engine: Deep engine rumble in a spaceship corridor.
-alien_atmosphere: Alien planet: strange wind, unfamiliar chirps, low drone.
-space_station: Space station: steady air handling, distant clanks.
-tense_heartbeat: Muffled heartbeat under silence, for suspense. Requires explicit tension in text.
-clock_ticking: Slow ticking clock, tension.
-ominous_drone: Low dark drone, horror atmosphere.
-ballroom_party: Ballroom or party murmur: glasses, distant chatter. No music.
-rain_on_window: Rain against window glass heard from a warm room; intimate scenes."
+forest_day_birds (timeless): Daytime forest: birdsong, light leaf rustle, a distant woodpecker. Must not contain: people, engines, thunder, sirens.
+forest_night (timeless): Night forest: crickets, an occasional owl, soft wind in the trees. Must not contain: people, engines, thunder, sirens.
+open_field_wind (timeless): Open grassland or moor: steady wind through grass. Must not contain: birds, people, engines, thunder.
+mountain_wind (timeless): High exposed mountain wind: cold gusts and a sparse echo. Must not contain: people, engines, thunder, birds.
+ocean_waves (timeless): Surf on a beach: rhythmic waves and a slow swell. Must not contain: people, engines, sirens, thunder.
+river_stream (timeless): A stream or river running over stones. Must not contain: people, engines, thunder.
+jungle_insects (timeless): Tropical jungle: insects, distant monkeys, dripping foliage. Must not contain: people, engines, thunder.
+waterfall (timeless): A waterfall roaring into a pool. Must not contain: people, engines, thunder.
+lake_shore (timeless): A calm lake shore: gentle lapping water and reeds. Must not contain: people, engines, sirens, thunder.
+desert_wind (timeless): An empty desert: wind hissing over sand. Must not contain: birds, people, engines, thunder.
+wind_in_trees (timeless): Wind moving through a tall forest canopy, branches creaking. Must not contain: birds, people, engines, thunder.
+cave_drip (timeless): Inside a cave: slow water drips, a faint echo, still air. Must not contain: wind gusts, people, engines, thunder, music.
+meadow_insects (timeless): A summer meadow at dusk: crickets and grasshoppers, a light breeze. Must not contain: birds, people, engines, thunder.
+seabird_cliffs (timeless): Sea cliffs: seabirds calling over the surf. Must not contain: people, engines, sirens, speech.
+sea_storm (timeless): A rough sea in strong wind: heavy waves breaking, spray, no thunder. Must not contain: thunder, people, engines, sirens.
+campfire_night (timeless): A campfire at night: crackling wood, soft wind, a far-off owl. Must not contain: people, engines, thunder, sirens.
+light_rain (timeless): Gentle steady rain on leaves or ground. Must not contain: thunder, wind gusts, people, engines.
+heavy_rain (timeless): A downpour: dense, steady rain. Must not contain: thunder, people, engines, sirens.
+rain_on_roof (timeless): Rain drumming on a roof, heard from inside a building. Must not contain: thunder, people, traffic, engines.
+thunderstorm (timeless): Rain with distant rolling thunder, and nothing else. Must not contain: people, engines, sirens, music.
+storm_wind (timeless): Gusting storm wind through trees or open land. Must not contain: thunder, sirens, people, engines, music.
+snowfall_quiet (timeless): The muffled quiet of falling snow. Must not contain: wind gusts, people, engines, thunder.
+blizzard_wind (timeless): Howling snow wind: harsh and cold. Must not contain: people, engines, thunder, sirens.
+city_street_day (modern): A busy city street by day: traffic, footsteps, distant voices. Must not contain: sirens, alarms, music.
+city_night (modern): A city at night: light traffic and a humming sign. Must not contain: sirens, alarms, music, speech.
+market_crowd (historic): An open-air market without engines: vendors calling, many voices. Must not contain: engines, traffic, sirens, music, radio.
+village_square (historic): A small village square: a few voices, a cart, a dog barking. Must not contain: engines, traffic, sirens, music, radio.
+harbor_port (historic): An old harbour: gulls, ropes, water against wooden hulls. Must not contain: engines, cranes, sirens, music, traffic.
+crowd_murmur (historic): A large crowd murmuring, with no distinct words. Must not contain: traffic, engines, sirens, music, phones.
+tavern_crowd (historic): A busy tavern: many conversations, clinking mugs, a distant laugh. Must not contain: music, instruments, traffic, engines, sirens.
+castle_hall (historic): A large stone hall: a faint echo and distant footsteps. Must not contain: music, engines, sirens, crowd, speech.
+fireplace_crackle (timeless): A crackling fire in a room, soft pops. Must not contain: people, engines, thunder.
+kitchen_busy (historic): A kitchen at work: pots, chopping, sizzling. Must not contain: music, engines, sirens, radio.
+office_hum (modern): A modern office: HVAC hum, keyboards, a faint phone. Must not contain: sirens, music, speech, traffic.
+library_quiet (timeless): A library: near silence, a page turned now and then, soft room tone. Must not contain: music, engines, sirens, crowd, speech.
+hospital_ward (modern): A hospital ward: distant monitors, carts, a low voice. Must not contain: sirens, music, shouting.
+prison_cell (historic): A stone cell with dripping water and distant echoes of metal. Must not contain: engines, sirens, radio, music, speech.
+cafe_soft (modern): A quiet cafe: soft chatter and cups clinking. Must not contain: music, sirens, traffic.
+lecture_hall (modern): A lecture hall: a quiet audience rustle and distant ventilation. Must not contain: music, sirens, shouting, speech.
+forge_anvil (historic): A blacksmith's forge: hammer on anvil, bellows, a crackling fire. Must not contain: engines, power tools, sirens, music, radio.
+horse_trot (historic): A horse trotting on a dirt road: hooves, a light tack creak. Must not contain: cars, engines, traffic, sirens, speech.
+horse_gallop (historic): A horse galloping: pounding hooves, breath and leather. Must not contain: cars, engines, traffic, sirens, speech.
+carriage_wheels (historic): A wooden carriage on a road: wheels creaking, harness jingle. Must not contain: cars, engines, traffic, sirens, music.
+ship_deck (historic): A wooden sailing ship at sea: ropes, a creaking hull, flapping sails. Must not contain: engines, sirens, music, speech.
+train_interior (modern): A train carriage: rhythmic wheels on rail, a muffled cabin. Must not contain: sirens, music, announcements, shouting.
+airplane_cabin (modern): An airplane cabin: a steady engine drone and muffled air. Must not contain: sirens, music, announcements, shouting.
+subway_platform (modern): An underground platform: a train far off and an echoing hall. Must not contain: music, sirens, announcements.
+battle_field (historic): A distant battle: shouts, clashing metal, horns. Must not contain: gunfire, engines, sirens, music.
+war_drums (historic): Drums and horns of an approaching army, tense. Must not contain: melody, songs, engines, sirens, speech.
+gunfight_ambient (modern): Distant gunfire with echoes and shouting. Must not contain: sirens, engines, music.
+arena_crowd (modern): A stadium crowd cheering and jeering, far off. Must not contain: music, sirens, horns, whistles.
+ritual_chant (historic): Low chanted voices in a ritual, reverberant. Must not contain: instruments, engines, sirens, radio.
+temple_incense (historic): A temple interior: soft bells and hushed chanting. Must not contain: instruments, engines, sirens, radio.
+monastery_chant (historic): Monks chanting in a stone hall, long reverberant tones. Must not contain: instruments, engines, sirens, radio.
+qi_hum (timeless): A cultivation aura: a low resonant hum, soft wind, a faint shimmer. Must not contain: music, speech, engines, sirens.
+spirit_whispers (timeless): Faint, eerie air with unplaceable low tones. Must not contain: speech, music, engines, sirens.
+starship_bridge (futuristic): A spaceship bridge: a low electronic hum and faint console tones. Must not contain: music, speech, sirens.
+spaceship_engine (futuristic): A deep engine rumble in a spaceship corridor. Must not contain: music, speech, sirens.
+alien_atmosphere (futuristic): An alien planet: strange wind, unfamiliar chirps, a low drone. Must not contain: music, speech, sirens, human voices.
+space_station (futuristic): A space station: steady air handling and distant clanks. Must not contain: music, speech, sirens.
+tense_heartbeat (timeless): A muffled heartbeat under near silence, for explicit suspense only. Must not contain: music, engines, sirens, speech.
+clock_ticking (historic): A slow pendulum clock ticking in a quiet room. Must not contain: music, engines, sirens, speech.
+ominous_drone (timeless): A low, dark drone in a still, cold room, for a horror tone. Must not contain: music, speech, engines, sirens.
+ballroom_party (historic): A ballroom or party murmur: glasses and distant chatter, no music. Must not contain: music, engines, sirens, radio.
+rain_on_window (timeless): Rain against window glass, heard from a warm room. Must not contain: thunder, people, traffic, engines."
 `;

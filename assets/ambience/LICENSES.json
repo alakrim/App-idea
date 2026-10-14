@@ -1,5 +1,125 @@
 [
   {
+    "id": "forest_day_birds",
+    "file": "forest_day_birds.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/SamsterBirdies/sounds/745273/",
+    "author": "SamsterBirdies",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "forest_night",
+    "file": "forest_night.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/deleted_user_9900733/sounds/809851/",
+    "author": "deleted_user_9900733",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "river_stream",
+    "file": "river_stream.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/hanneswannerberger/sounds/275627/",
+    "author": "hanneswannerberger",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "waterfall",
+    "file": "waterfall.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/chiara_____/sounds/853107/",
+    "author": "chiara_____",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "cave_drip",
+    "file": "cave_drip.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/TSP-Talk/sounds/843936/",
+    "author": "TSP-Talk",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "meadow_insects",
+    "file": "meadow_insects.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/TRP/sounds/576367/",
+    "author": "TRP",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "light_rain",
+    "file": "light_rain.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/conleec/sounds/171980/",
+    "author": "conleec",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "heavy_rain",
+    "file": "heavy_rain.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/newlocknew/sounds/826025/",
+    "author": "newlocknew",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "rain_on_roof",
+    "file": "rain_on_roof.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/MrFossy/sounds/521773/",
+    "author": "MrFossy",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "snowfall_quiet",
+    "file": "snowfall_quiet.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/Kinoton/sounds/719961/",
+    "author": "Kinoton",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "library_quiet",
+    "file": "library_quiet.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/Bathulile231236/sounds/708234/",
+    "author": "Bathulile231236",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "crowd_murmur",
+    "file": "crowd_murmur.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/keus92/sounds/445228/",
+    "author": "keus92",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "city_street_day",
+    "file": "city_street_day.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/BonnyOrbit/sounds/645851/",
+    "author": "BonnyOrbit",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "city_night",
+    "file": "city_night.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/be_a_hero_not_a_patriot/sounds/332783/",
+    "author": "be_a_hero_not_a_patriot",
+    "date": "2026-10-14"
+  },
+  {
+    "id": "train_interior",
+    "file": "train_interior.m4a",
+    "license": "CC0 1.0 Universal (http://creativecommons.org/publicdomain/zero/1.0/)",
+    "source": "https://freesound.org/people/gladkiy/sounds/333944/",
+    "author": "gladkiy",
+    "date": "2026-10-14"
+  },
+  {
     "id": "base_rain",
     "file": "base_rain.m4a",
     "license": "Proprietary (generated in-house)",

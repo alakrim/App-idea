@@ -73,12 +73,22 @@ export const ChapterMemorySchema = z.object({
 });
 export type ChapterMemory = z.infer<typeof ChapterMemorySchema>;
 
+/**
+ * A spelling of an entity, stamped with the chapter that revealed it. A spelling that is only
+ * learned later must stay out of the earlier chapters' context, or the spoiler shield leaks it.
+ */
+export const EntityAliasSchema = z.object({
+  alias: z.string().min(1),
+  firstChapterOrder: z.number().finite(),
+});
+export type EntityAlias = z.infer<typeof EntityAliasSchema>;
+
 export const EntitySchema = z.object({
   id: IdSchema,
   seriesId: IdSchema,
   kind: EntityKindSchema,
   canonicalName: z.string().min(1),
-  aliases: z.array(z.string()),
+  aliases: z.array(EntityAliasSchema),
   firstChapterOrder: z.number().finite(),
 });
 export type Entity = z.infer<typeof EntitySchema>;

@@ -7,15 +7,18 @@ import {
   planBeds,
 } from '@/core/playback/ambience-scheduler';
 import { DUCKING_DEFAULTS, duckEnvelope } from '@/core/playback/ducking';
+import { BED_LEVEL_RANGE_DB, DUCKING_RANGE_DB, isInRange } from '@/core/playback/ranges';
 import {
   type RemoteCommand,
   type RemoteEvent,
   toRemoteCommand,
 } from '@/core/playback/remote-commands';
 import { buildTimeline, type ChapterTimeline } from '@/core/playback/timeline';
+import { systemTimers, type TimerPort } from '@/core/playback/timers';
 
 import type { AmbienceMixer } from './ambience-mixer';
 import type {
+  AmbienceMix,
   AudioEngine,
   ChapterLoad,
   LoadedSegment,
@@ -25,12 +28,6 @@ import type {
 } from './engine';
 import type { VoicePort, VoiceSegment, VoiceSnapshot } from './voice-port';
 
-export interface InterruptionEvent {
-  type: 'began' | 'ended';
-  /** Set by the OS on `ended`. Resume only when it is true. */
-  shouldResume: boolean;
-}
-
 /** A platform event feed. `subscribe` returns the function that stops it. */
 export interface PlatformEventSource<Event> {
   subscribe(callback: (event: Event) => void): Unsubscribe;
@@ -39,11 +36,22 @@ export interface PlatformEventSource<Event> {
 export interface LectioEngineDeps {
   voice: VoicePort;
   mixer: AmbienceMixer;
-  interruptions: PlatformEventSource<InterruptionEvent>;
   remote: PlatformEventSource<RemoteEvent>;
   /** Loudness of the bed a category resolves to. Omitted means every bed is the target loudness. */
   bedLufs?: (category: string) => number | null;
+  /** Schedules the bed fades. Tests drive it with a virtual clock. */
+  timers?: TimerPort;
 }
+
+/**
+ * Beds fade out this long after the voice stops, so a segment swap or a short buffer does not
+ * flicker them (P1-2). Resuming inside the delay keeps them sounding.
+ */
+export const BED_STOP_DELAY_MS = 350;
+/** The fade a bed takes when the voice stops, pauses, fails or leaves the chapter. */
+export const BED_FADE_OUT_MS = 600;
+/** The audio clock is suspended this long after the beds have faded, so an idle player holds no stream. */
+export const BED_SUSPEND_DELAY_MS = 2000;
 
 interface LoadedChapter {
   id: string;
@@ -61,8 +69,6 @@ const PREVIEW_INTENSITY = 'medium';
 
 const MIN_RATE = 0.5;
 const MAX_RATE = 2;
-const MIN_LEVEL_DB = -40;
-const MAX_LEVEL_DB = 0;
 
 function toVoiceSegment(segment: LoadedSegment): VoiceSegment {
   return { uri: segment.uri, durationMs: segment.durationMs };
@@ -84,24 +90,41 @@ function deriveState(snapshot: VoiceSnapshot, final: boolean): PlaybackState {
   return snapshot.playing ? 'playing' : 'paused';
 }
 
+const DEFAULT_MIX: AmbienceMix = {
+  enabled: true,
+  levelDb: DEFAULT_BED_LEVEL_DB,
+  duckingDb: DUCKING_DEFAULTS.duckingDb,
+};
+
 /**
  * Composes the voice and the ambience mixer into one AudioEngine. The voice drives everything.
- * Each snapshot updates the state, position and sentence. A sentence change re-plans the beds, and
- * the ducking ramp follows whether the voice is actively playing.
+ * Each snapshot updates the state, position and sentence. Beds follow the transport: they sound
+ * while the voice plays or buffers, and fade out after a short delay when it stops. The ducking
+ * stage dips the beds only while the voice plays, and it holds until the beds have faded, so a
+ * pause never makes them louder.
  */
 export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
   const { voice, mixer } = deps;
+  const timers = deps.timers ?? systemTimers;
   let chapter: LoadedChapter | null = null;
   let timeline: ChapterTimeline | null = null;
   let cues: AmbienceCue[] = [];
   let state: PlaybackState = 'idle';
   let positionMs = 0;
   let sentenceIdx = -1;
-  let beds: BedTarget[] = [];
-  let levelDb = DEFAULT_BED_LEVEL_DB;
-  let previewTimer: ReturnType<typeof setTimeout> | null = null;
+  let mix: AmbienceMix = DEFAULT_MIX;
+  /** The beds the current sentence wants. */
+  let desired: BedTarget[] = [];
+  /** The beds the mixer is playing, or fading out. */
+  let applied: BedTarget[] = [];
+  let stopTimer: unknown = null;
+  let fadeTimer: unknown = null;
+  let suspendTimer: unknown = null;
+  /** True from the moment beds start fading out until the fade ends. */
+  let duckHeld = false;
   let ducked = false;
-  let interruptedWhilePlaying = false;
+  let previewTimer: unknown = null;
+  let loadSeq = 0;
   let lastSnapshot: VoiceSnapshot | null = null;
   let disposed = false;
 
@@ -110,17 +133,90 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
   const remoteListeners = new Set<(command: RemoteCommand) => void>();
 
   const unsubscribeVoice = voice.onSnapshot(handleSnapshot);
-  const unsubscribeInterruptions = deps.interruptions.subscribe(handleInterruption);
   const unsubscribeRemote = deps.remote.subscribe(handleRemote);
+
+  function cancel(handle: unknown): void {
+    if (handle !== null) timers.clearTimeout(handle);
+  }
+
+  function bedsWanted(): boolean {
+    return chapter !== null && mix.enabled && (state === 'playing' || state === 'buffering');
+  }
+
+  function updateDucking(force = false): void {
+    const engaged = state === 'playing' || duckHeld;
+    if (engaged === ducked && !force) return;
+    ducked = engaged;
+    mixer.setDucking(
+      duckEnvelope({
+        duckingDb: mix.duckingDb,
+        attackMs: DUCKING_DEFAULTS.attackMs,
+        releaseMs: DUCKING_DEFAULTS.releaseMs,
+        voiceActive: engaged,
+      }),
+    );
+  }
+
+  /** Moves the mixer to the planned beds, while the transport wants them. Only the difference is sent. */
+  function syncBeds(): void {
+    if (!bedsWanted()) return;
+    const commands = diffBeds(applied, desired);
+    applied = desired;
+    if (commands.length > 0) mixer.apply(commands);
+  }
+
+  /** Fades every bed out. The ducking holds until the fade is over, then the clock is suspended. */
+  function stopBeds(): void {
+    cancel(stopTimer);
+    stopTimer = null;
+    if (applied.length === 0) return;
+    mixer.apply(
+      applied.map((bed) => ({ type: 'stop', cueId: bed.cueId, fadeMs: BED_FADE_OUT_MS })),
+    );
+    applied = [];
+    duckHeld = true;
+    updateDucking();
+    cancel(fadeTimer);
+    fadeTimer = timers.setTimeout(() => {
+      fadeTimer = null;
+      duckHeld = false;
+      updateDucking();
+      suspendTimer = timers.setTimeout(() => {
+        suspendTimer = null;
+        mixer.suspend();
+      }, BED_SUSPEND_DELAY_MS);
+    }, BED_FADE_OUT_MS);
+  }
+
+  function onTransportChanged(): void {
+    if (bedsWanted()) {
+      cancel(stopTimer);
+      stopTimer = null;
+      cancel(fadeTimer);
+      fadeTimer = null;
+      cancel(suspendTimer);
+      suspendTimer = null;
+      duckHeld = false;
+      updateDucking();
+      syncBeds();
+      return;
+    }
+    if (!mix.enabled) {
+      stopBeds();
+      updateDucking();
+      return;
+    }
+    if (applied.length > 0 && stopTimer === null) {
+      duckHeld = true;
+      stopTimer = timers.setTimeout(stopBeds, BED_STOP_DELAY_MS);
+    }
+    updateDucking();
+  }
 
   function setState(next: PlaybackState): void {
     if (next === state) return;
     state = next;
-    const voiceActive = next === 'playing';
-    if (voiceActive !== ducked) {
-      ducked = voiceActive;
-      mixer.setDucking(duckEnvelope({ ...DUCKING_DEFAULTS, voiceActive }));
-    }
+    onTransportChanged();
     for (const listener of stateListeners) listener(next);
   }
 
@@ -129,14 +225,11 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
     for (const listener of positionListeners) listener(update);
   }
 
-  /** Re-plans beds for a sentence. Commands are applied only for the difference. */
+  /** Plans the beds for a sentence and, while the transport wants them, sounds the plan. */
   function planAt(idx: number): void {
     sentenceIdx = idx;
-    if (idx < 0) return;
-    const next = planBeds(cues, idx, { levelDb, bedLufs: deps.bedLufs });
-    const commands = diffBeds(beds, next);
-    beds = next;
-    if (commands.length > 0) mixer.apply(commands);
+    desired = idx < 0 ? [] : planBeds(cues, idx, { levelDb: mix.levelDb, bedLufs: deps.bedLufs });
+    syncBeds();
   }
 
   function moveTo(ms: number): void {
@@ -156,21 +249,6 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
     emitPosition();
   }
 
-  function handleInterruption(event: InterruptionEvent): void {
-    if (disposed || !chapter) return;
-    if (event.type === 'began') {
-      if (state === 'playing') {
-        interruptedWhilePlaying = true;
-        voice.pause();
-      }
-      return;
-    }
-    if (interruptedWhilePlaying) {
-      interruptedWhilePlaying = false;
-      if (event.shouldResume) voice.play();
-    }
-  }
-
   function handleRemote(event: RemoteEvent): void {
     if (disposed || !chapter) return;
     const command = toRemoteCommand(event, {
@@ -188,10 +266,11 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
     async load(next: ChapterLoad, startMs: number): Promise<void> {
       if (disposed) throw new Error('the audio engine has been disposed');
       const built = buildTimeline(next.segments);
-      interruptedWhilePlaying = false;
+      const seq = ++loadSeq;
+      // The previous chapter's beds fade out now. Its timeline is gone.
+      stopBeds();
+      desired = [];
       lastSnapshot = null;
-      if (beds.length > 0) mixer.apply(diffBeds(beds, []));
-      beds = [];
       sentenceIdx = -1;
       cues = next.cues.filter((cue) => cue.enabled);
       chapter = {
@@ -212,9 +291,11 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
           coverUri: next.coverUri,
         });
       } catch (error) {
-        setState('error');
+        if (seq === loadSeq) setState('error');
         throw error;
       }
+      // A newer load, or a dispose, has taken over: this chapter's position must not move anything.
+      if (seq !== loadSeq || disposed) return;
       moveTo(start);
       planAt(timeline.positionToSentence(positionMs));
       emitPosition();
@@ -225,13 +306,11 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
       if (state === 'ended') {
         engine.seekTo(0);
       }
-      interruptedWhilePlaying = false;
       voice.play();
     },
 
     pause() {
       if (disposed || !chapter) return;
-      interruptedWhilePlaying = false;
       voice.pause();
     },
 
@@ -251,11 +330,13 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
       voice.setRate(rate);
     },
 
-    setVolume(volume: number) {
-      if (!(volume >= 0 && volume <= 1)) {
-        throw new RangeError(`volume must be between 0 and 1, got ${volume}`);
+    setVolume(nextVolume: number) {
+      if (!(nextVolume >= 0 && nextVolume <= 1)) {
+        throw new RangeError(`volume must be between 0 and 1, got ${nextVolume}`);
       }
-      voice.setVolume(volume);
+      voice.setVolume(nextVolume);
+      // The beds share the fade, so a sleep timer takes the whole mix down together.
+      mixer.setMasterGain(nextVolume);
     },
 
     appendSegments(segments: readonly LoadedSegment[], final: boolean) {
@@ -268,27 +349,29 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
       if (lastSnapshot) handleSnapshot(lastSnapshot);
     },
 
-    setAmbience(commands) {
+    setAmbienceMix(next: AmbienceMix) {
       if (disposed) return;
-      mixer.apply(commands);
-    },
-
-    setAmbienceMaster(enabled: boolean, nextLevelDb: number) {
-      if (!(nextLevelDb >= MIN_LEVEL_DB && nextLevelDb <= MAX_LEVEL_DB)) {
+      if (!isInRange(next.levelDb, BED_LEVEL_RANGE_DB)) {
         throw new RangeError(
-          `levelDb must be between ${MIN_LEVEL_DB} and ${MAX_LEVEL_DB}, got ${nextLevelDb}`,
+          `levelDb must be between ${BED_LEVEL_RANGE_DB.min} and ${BED_LEVEL_RANGE_DB.max}, got ${next.levelDb}`,
         );
       }
-      levelDb = nextLevelDb;
-      mixer.setMaster(enabled);
-      if (chapter && sentenceIdx >= 0) planAt(sentenceIdx);
+      if (!isInRange(next.duckingDb, DUCKING_RANGE_DB)) {
+        throw new RangeError(
+          `duckingDb must be between ${DUCKING_RANGE_DB.min} and ${DUCKING_RANGE_DB.max}, got ${next.duckingDb}`,
+        );
+      }
+      mix = { ...next };
+      updateDucking(true);
+      if (sentenceIdx >= 0) planAt(sentenceIdx);
+      if (!mix.enabled) stopBeds();
     },
 
     previewBed(category: string, previewLevelDb: number, durationMs: number) {
       if (disposed) return;
-      if (!(previewLevelDb >= MIN_LEVEL_DB && previewLevelDb <= MAX_LEVEL_DB)) {
+      if (!isInRange(previewLevelDb, BED_LEVEL_RANGE_DB)) {
         throw new RangeError(
-          `levelDb must be between ${MIN_LEVEL_DB} and ${MAX_LEVEL_DB}, got ${previewLevelDb}`,
+          `levelDb must be between ${BED_LEVEL_RANGE_DB.min} and ${BED_LEVEL_RANGE_DB.max}, got ${previewLevelDb}`,
         );
       }
       const gainDb = bedGainDb(
@@ -299,8 +382,8 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
       mixer.apply([
         { type: 'start', cueId: PREVIEW_CUE_ID, category, gainDb, fadeMs: PREVIEW_FADE_MS },
       ]);
-      if (previewTimer !== null) clearTimeout(previewTimer);
-      previewTimer = setTimeout(() => {
+      cancel(previewTimer);
+      previewTimer = timers.setTimeout(() => {
         previewTimer = null;
         if (!disposed) {
           mixer.apply([{ type: 'stop', cueId: PREVIEW_CUE_ID, fadeMs: PREVIEW_FADE_MS }]);
@@ -333,16 +416,19 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
       if (disposed) return;
       disposed = true;
       unsubscribeVoice();
-      unsubscribeInterruptions();
       unsubscribeRemote();
-      if (previewTimer !== null) clearTimeout(previewTimer);
+      for (const handle of [stopTimer, fadeTimer, suspendTimer, previewTimer]) cancel(handle);
+      stopTimer = null;
+      fadeTimer = null;
+      suspendTimer = null;
       previewTimer = null;
       voice.dispose();
       mixer.dispose();
       positionListeners.clear();
       stateListeners.clear();
       remoteListeners.clear();
-      beds = [];
+      desired = [];
+      applied = [];
       state = 'idle';
     },
   };

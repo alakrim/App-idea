@@ -1,7 +1,6 @@
 import * as Clipboard from 'expo-clipboard';
 import * as DocumentPicker from 'expo-document-picker';
-import { router } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -14,7 +13,11 @@ import {
 
 import { useSeries } from '@/db/hooks';
 import { usePipeline, type CostEstimate, type SourcePreview } from '@/features/pipeline/facade';
+import { PDF_MAX_BYTES, pdfTooLargeMessage } from '@/core/pipeline/limits';
+import { ConfirmSheet } from '@/features/shared/confirm-sheet';
+import { isEstimateUnknown } from '@/features/shared/estimate-price';
 import { formatFileSize } from '@/features/shared/format';
+import { goBackOrHome } from '@/features/shared/navigation';
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
 import { ClipboardPaste, FileText, TriangleAlert } from '@/ui/icons';
@@ -31,8 +34,10 @@ import {
   minTouchTarget,
   radius,
   space,
+  typography,
 } from '@/ui/tokens';
 
+import { createBlockedCopy } from './create-gate-copy';
 import { EstimateCard, type EstimateStatus } from './estimate-card';
 import { SourcePreviewCard } from './source-preview-card';
 import { isWebUrl } from './source-state';
@@ -46,6 +51,10 @@ import {
 } from './source-state';
 
 const DEBOUNCE_MS = 600;
+type EstimateOutcome = { kind: 'ready'; estimate: CostEstimate } | { kind: 'error' };
+
+/** The cost estimate runs once typing pauses, so it is not recomputed on every keystroke. */
+const ESTIMATE_DEBOUNCE_MS = 300;
 const MODE_OPTIONS: readonly SegmentedOption<SourceMode>[] = [
   { value: 'link', label: 'Link' },
   { value: 'pdf', label: 'PDF' },
@@ -98,12 +107,11 @@ export function AddChapterForm({ seriesId, sourceLang, targetLang }: AddChapterF
   const [text, setText] = useState('');
   const [title, setTitle] = useState('');
   const [titleEdited, setTitleEdited] = useState(false);
-  const [estimateResult, setEstimateResult] = useState<{
-    key: string;
-    estimate: CostEstimate;
-  } | null>(null);
+  const [estimateOutcome, setEstimateOutcome] = useState<EstimateOutcome | null>(null);
+  const [estimateRetry, setEstimateRetry] = useState(0);
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState<string | null>(null);
+  const [confirmingUnpriced, setConfirmingUnpriced] = useState(false);
   const [clipboardUrl, setClipboardUrl] = useState<string | null>(null);
 
   // Load the preview once the link has been still for a moment, and cancel any load it replaces.
@@ -157,42 +165,62 @@ export function AddChapterForm({ seriesId, sourceLang, targetLang }: AddChapterF
   // A link that is not a valid address has no preview, even if an earlier one is still in state.
   const linkNow = mode === 'link' && isWebUrl(url) ? link : ({ kind: 'idle' } as const);
   const readyPreview = linkNow.kind === 'ready' ? linkNow.preview : null;
-  const chars = sourceChars(mode, readyPreview, file, text);
-  const basisKey = `${mode}:${chars}:${sourceLang ?? ''}:${targetLang ?? ''}`;
+  const chars = useMemo(
+    () => sourceChars(mode, readyPreview, file, text),
+    [mode, readyPreview, file, text],
+  );
   useEffect(() => {
     if (chars === 0) return;
     let active = true;
-    void pipeline
-      .estimate({
-        chars,
-        sourceLang: sourceLang ?? null,
-        targetLang: targetLang ?? null,
-      })
-      .then((result: CostEstimate) => {
-        if (active) setEstimateResult({ key: basisKey, estimate: result });
-      });
+    const timer = setTimeout(() => {
+      void pipeline
+        .estimate({
+          chars,
+          sourceLang: sourceLang ?? null,
+          targetLang: targetLang ?? null,
+        })
+        .then((result: CostEstimate) => {
+          if (active) setEstimateOutcome({ kind: 'ready', estimate: result });
+        })
+        .catch(() => {
+          if (active) setEstimateOutcome({ kind: 'error' });
+        });
+    }, ESTIMATE_DEBOUNCE_MS);
     return () => {
       active = false;
+      clearTimeout(timer);
     };
-    // The key captures everything the estimate depends on, so the other values are not needed.
-  }, [pipeline, basisKey, chars, sourceLang, targetLang]);
+  }, [pipeline, chars, sourceLang, targetLang, estimateRetry]);
 
+  // Recomputes the estimate for the current source. A failed estimate goes back to loading at once.
+  const retryEstimate = useCallback(() => {
+    setEstimateOutcome((previous) => (previous?.kind === 'error' ? null : previous));
+    setEstimateRetry((count) => count + 1);
+  }, []);
+
+  // The last estimate stays on screen while the next one is worked out, so the figure does not flicker.
   const estimate: EstimateStatus =
     chars === 0
       ? { kind: 'idle' }
-      : estimateResult?.key === basisKey
-        ? { kind: 'ready', estimate: estimateResult.estimate }
-        : { kind: 'loading' };
+      : estimateOutcome === null
+        ? { kind: 'loading' }
+        : estimateOutcome.kind === 'ready'
+          ? { kind: 'ready', estimate: estimateOutcome.estimate }
+          : { kind: 'error' };
 
   const linkReady = readyPreview !== null && readyPreview.quality !== 'empty';
-  const canCreate = canCreateChapter({
+  // A cost the catalogue could not price is not a price: creating then needs an explicit yes.
+  const priceUnknown = estimate.kind === 'ready' && isEstimateUnknown(estimate.estimate);
+  const gate = {
     mode,
     linkReady,
     hasFile: file !== null,
     textLength: text.trim().length,
     title,
     creating,
-  });
+  };
+  const canCreate = canCreateChapter(gate);
+  const blockedCopy = canCreate ? null : createBlockedCopy(gate);
 
   const create = async () => {
     setCreating(true);
@@ -206,7 +234,7 @@ export function AddChapterForm({ seriesId, sourceLang, targetLang }: AddChapterF
             : { kind: 'text' as const, text: text.trim(), label: title.trim() };
       const chapterId = await pipeline.createChapter({ seriesId, title: title.trim(), source });
       pipeline.enqueue(chapterId);
-      router.back();
+      goBackOrHome();
     } catch {
       setCreateError("We couldn't save this chapter. Try again.");
     } finally {
@@ -215,15 +243,26 @@ export function AddChapterForm({ seriesId, sourceLang, targetLang }: AddChapterF
   };
 
   const pickPdf = async () => {
-    const result = await DocumentPicker.getDocumentAsync({
-      type: 'application/pdf',
-      copyToCacheDirectory: true,
-      multiple: false,
-    });
-    const asset = result.canceled ? undefined : result.assets[0];
-    if (asset) {
-      setFile({ uri: asset.uri, name: asset.name, size: asset.size ?? 0 });
-      if (!titleEdited) setTitle(titleFromFileName(asset.name));
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: 'application/pdf',
+        copyToCacheDirectory: true,
+        multiple: false,
+      });
+      const asset = result.canceled ? undefined : result.assets[0];
+      if (asset) {
+        // Refused here, before the file is read: a PDF over the limit never reaches the pipeline.
+        if (asset.size !== undefined && asset.size > PDF_MAX_BYTES) {
+          setFile(null);
+          setCreateError(pdfTooLargeMessage(asset.size));
+          return;
+        }
+        setCreateError(null);
+        setFile({ uri: asset.uri, name: asset.name, size: asset.size ?? 0 });
+        if (!titleEdited) setTitle(titleFromFileName(asset.name));
+      }
+    } catch {
+      setCreateError("We couldn't open that file. Choose it again.");
     }
   };
 
@@ -376,7 +415,7 @@ export function AddChapterForm({ seriesId, sourceLang, targetLang }: AddChapterF
           />
         ) : null}
 
-        <EstimateCard status={estimate} />
+        <EstimateCard status={estimate} onRetry={retryEstimate} />
 
         {createError ? (
           <Card style={styles.warning}>
@@ -400,10 +439,26 @@ export function AddChapterForm({ seriesId, sourceLang, targetLang }: AddChapterF
           fullWidth
           disabled={!canCreate}
           loading={creating}
-          onPress={() => void create()}
+          onPress={() => (priceUnknown ? setConfirmingUnpriced(true) : void create())}
           accessibilityHint="Creates the chapter and starts processing it"
         />
+        {blockedCopy !== null ? (
+          <Text variant="caption" tone="muted" align="center" testID="create-blocked-reason">
+            {blockedCopy}
+          </Text>
+        ) : null}
       </View>
+      <ConfirmSheet
+        visible={confirmingUnpriced}
+        title="Create without a price?"
+        message="The cost is unknown for now. Processing is billed to your own OpenRouter key."
+        confirmLabel="Create anyway"
+        onCancel={() => setConfirmingUnpriced(false)}
+        onConfirm={() => {
+          setConfirmingUnpriced(false);
+          void create();
+        }}
+      />
     </KeyboardAvoidingView>
   );
 }
@@ -519,8 +574,8 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
     borderWidth: hairline,
     padding: space.md,
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: typography.body.size,
+    lineHeight: typography.body.lineHeight,
   },
   warning: {
     gap: space.md,

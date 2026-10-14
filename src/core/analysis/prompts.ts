@@ -5,7 +5,7 @@ import { normalizeWhitespace } from '../text/normalize';
 import type { Lang, SentenceInput } from './types';
 
 /** Bump when the wording or the output shape changes. Stored with every analysis result. */
-export const PROMPT_VERSION = 'analysis-v2';
+export const PROMPT_VERSION = 'analysis-v3';
 
 export interface PromptPair {
   readonly system: string;
@@ -13,7 +13,7 @@ export interface PromptPair {
 }
 
 const CATEGORY_LINES = enabledCategories()
-  .map((c) => `${c.id}: ${c.description}`)
+  .map((c) => `${c.id} (${c.era}): ${c.contains} Must not contain: ${c.mustNotContain.join(', ')}.`)
   .join('\n');
 
 /**
@@ -24,8 +24,8 @@ export const ANALYSIS_SYSTEM_PROMPT = `You are the analysis engine of an audiobo
 
 OUTPUT
 Return only a JSON object. No prose, no code fence. Use this shape:
-{"memory": {"summary": string, "keyEvents": string[], "characters": [{"name": string, "aliases": string[], "role": string | null, "facts": string[]}], "places": [{"name": string, "facts": string[]}], "items": [{"name": string, "facts": string[]}], "relationships": [{"a": string, "b": string, "nature": string}], "openThreads": string[], "glossary": [{"term": string, "translation": string | null, "note": string | null}]}, "cues": [{"category": string, "startSentence": integer, "endSentence": integer, "intensity": "low" | "medium" | "high" | null, "confidence": number, "reason": string | null}]}
-Every key is always present. Use null for "role", "translation", "note", "intensity" and "reason" when you have nothing to say.
+{"memory": {"summary": string, "keyEvents": string[], "characters": [{"name": string, "aliases": string[], "role": string | null, "facts": string[]}], "places": [{"name": string, "facts": string[]}], "items": [{"name": string, "facts": string[]}], "relationships": [{"a": string, "b": string, "nature": string}], "openThreads": string[], "glossary": [{"term": string, "translation": string | null, "note": string | null}]}, "cues": [{"category": string, "startSentence": integer, "endSentence": integer, "intensity": "low" | "medium" | "high" | null, "confidence": number, "reason": string | null}], "setting": {"era": "timeless" | "historic" | "modern" | "futuristic" | null}}
+Every key is always present. Use null for "role", "translation", "note", "intensity", "reason" and "era" when you have nothing to say.
 
 MEMORY RULES
 - Facts come only from the passage you are given. No speculation and no inference beyond the text.
@@ -44,6 +44,9 @@ MEMORY RULES
 CUE RULES
 - category must be one of the ids listed under CATEGORIES, exactly as written. Never invent an id.
 - Choose a category only when the setting or sound is explicit or strongly implied by the text. Never cue a sound the text does not mention.
+- A category's sound must not be something its "Must not contain" list names. Pick a different category, or none, when the passage would bring one of those sounds in.
+- setting.era is the era of the place where the passage happens, not the era of the narration. "timeless": nature, weather, fire, water, wind, caves and quiet interiors with no technology. "historic": pre-industrial human life, such as castles, villages, taverns, markets without engines, sailing ships, horses and carts. "modern": the present-day technological world, such as cars, trains, offices, hospitals, aircraft and phones. "futuristic": science fiction, such as starships and alien worlds. Use null when the text does not place the scene.
+- Match every cue to the era of the setting. A timeless category fits any setting. A historic category fits a historic or modern setting. A modern category fits a modern or futuristic setting. A futuristic category fits only a futuristic setting. Never choose a modern category in a historic setting.
 - Never cue music.
 - A scene the text describes as silent gets no cue.
 - Prefer one bed per scene. Use two at most, and only when the scene really has two sources.

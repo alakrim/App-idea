@@ -4,6 +4,7 @@ import { useDb, useLiveRead } from '@/db/hooks';
 import { cueRepo } from '@/db/repos/cue-repo';
 import { usePipeline } from '@/features/pipeline/facade';
 import { useChapterProgressMap } from '@/features/pipeline/use-chapter-progress';
+import { goBackOrHome } from '@/features/shared/navigation';
 import { ErrorState } from '@/ui/error-state';
 import { Screen } from '@/ui/screen';
 
@@ -30,7 +31,7 @@ export function ChapterScreen({ chapterId, focusSentence = null }: ChapterScreen
           title="Chapter not found"
           message="It may have been deleted. Go back to the series."
           retryLabel="Go back"
-          onRetry={() => (router.canGoBack() ? router.back() : router.replace('/'))}
+          onRetry={goBackOrHome}
         />
       </Screen>
     );
@@ -47,9 +48,11 @@ export function ChapterScreen({ chapterId, focusSentence = null }: ChapterScreen
       jobs={data.jobs}
       paragraphs={data.paragraphs}
       cues={data.cues}
-      onBack={() => (router.canGoBack() ? router.back() : router.replace('/'))}
+      onBack={goBackOrHome}
       onPlay={(id) => router.push({ pathname: '/player', params: { chapterId: id } })}
       onRetry={(id) => pipeline.retry(id)}
+      onPrepare={(id) => pipeline.enqueue(id)}
+      onStop={(id) => pipeline.cancel(id)}
       onToggleCue={(cueId, enabled) => cueRepo.setEnabled(db, cueId, enabled)}
       focusSentence={focusSentence}
     />

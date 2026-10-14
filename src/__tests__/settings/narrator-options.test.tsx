@@ -5,6 +5,8 @@ import { OpenRouterProvider } from '@/app-shell/openrouter-provider';
 import { DEFAULT_NARRATION } from '@/core/defaults';
 import { FREE_NARRATOR_MODEL_ID, KOKORO_MODEL_ID } from '@/core/narration/options';
 import type { NarrationSettings } from '@/core/settings';
+import { setupController } from '@/features/player/__fixtures__/playback-fixtures';
+import { PlaybackProvider } from '@/features/player/player-provider';
 import type { CatalogState } from '@/features/settings/model-catalog';
 import { NarratorOptionList } from '@/features/settings/narrator-option-list';
 import {
@@ -90,14 +92,18 @@ async function renderList(props: {
     fetchImpl: () => Promise.reject(new Error('no network in tests')),
   });
   const onChoose = props.onChoose ?? jest.fn();
+  // The option cards preview through the playback layer, so they render under a playback controller.
+  const { controller } = setupController([]);
   await renderThemed(
     <OpenRouterProvider client={client}>
-      <NarratorOptionList
-        narration={NARRATION}
-        lang={props.lang ?? 'it'}
-        catalog={props.catalog ?? LIVE}
-        onChoose={onChoose}
-      />
+      <PlaybackProvider controller={controller}>
+        <NarratorOptionList
+          narration={NARRATION}
+          lang={props.lang ?? 'it'}
+          catalog={props.catalog ?? LIVE}
+          onChoose={onChoose}
+        />
+      </PlaybackProvider>
     </OpenRouterProvider>,
   );
   return { onChoose };

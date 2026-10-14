@@ -55,6 +55,31 @@ export function estimateSpeechCost(
   return chars * prompt;
 }
 
+/**
+ * The cost of one chat call: the provider's figure when it sent one, else the catalog price times
+ * the tokens, else null. Null means unknown. It is never zero, because zero reads as a real price.
+ */
+export function chatCostOrNull(
+  reported: number | null,
+  model: PricedModel | null,
+  promptTokens: number,
+  completionTokens: number,
+): number | null {
+  if (reported !== null) return reported;
+  return model ? estimateChatCost(model, promptTokens, completionTokens) : null;
+}
+
+/** The cost of one speech call, under the same rule as `chatCostOrNull`. */
+export function speechCostOrNull(
+  reported: number | null,
+  model: PricedModel | null,
+  chars: number,
+  seconds: number,
+): number | null {
+  if (reported !== null) return reported;
+  return model ? estimateSpeechCost(model, chars, seconds) : null;
+}
+
 /** Short money text for the UI: "< $0.01", "$0.55", "$2.16", "$12.3", "$1235". */
 export function formatUsd(amount: number): string {
   if (!Number.isFinite(amount))

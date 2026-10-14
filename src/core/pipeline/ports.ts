@@ -52,6 +52,8 @@ export interface StoredSentence {
   readonly kind: ParagraphKind;
   readonly text: string;
   readonly translated: string | null;
+  /** The language `translated` is written in. Null when there is no translation. */
+  readonly translatedLang: Lang | null;
   readonly charCount: number;
 }
 
@@ -72,13 +74,15 @@ export interface ChapterStore {
   replaceText(chapterId: Id, text: ChapterText): Promise<void>;
   getSentences(chapterId: Id): Promise<StoredSentence[]>;
   /**
-   * Stores the translations of every sentence. `partialIdx` lists the sentences that fell back to
-   * the source text. Those are stored with `translated: null`, so the UI can show them.
+   * Stores the translations of every sentence, each stamped with `lang`. `partialIdx` lists the
+   * sentences that fell back to the source text. Those are stored with `translated: null`, so the UI
+   * can show them.
    */
   setTranslations(
     chapterId: Id,
     translations: ReadonlyMap<number, string>,
     partialIdx: readonly number[],
+    lang: Lang,
   ): Promise<void>;
   /** Replaces the chapter's ambience cues. The store assigns ids and `enabled: true`. */
   saveCues(chapterId: Id, cues: readonly ValidatedCue[]): Promise<void>;
@@ -89,7 +93,11 @@ export interface ChapterStore {
   /** Memories of the series' chapters strictly before `beforeOrder`. */
   getPriorMemories(seriesId: Id, beforeOrder: number): Promise<ChapterMemoryRecord[]>;
   getEntities(seriesId: Id): Promise<EntitySnapshot>;
-  applyEntityResolution(seriesId: Id, resolution: EntityResolution): Promise<void>;
+  /**
+   * Applies one chapter's entity resolution. The chapter's facts from an earlier analysis are
+   * replaced, not added to, so a re-analysis never keeps facts the new run no longer makes.
+   */
+  applyEntityResolution(seriesId: Id, chapterId: Id, resolution: EntityResolution): Promise<void>;
   /** Stored segments of a chapter, in segment order. */
   listAudioSegments(chapterId: Id): Promise<AudioSegment[]>;
   saveAudioSegment(segment: AudioSegment): Promise<void>;
@@ -151,6 +159,7 @@ export interface PdfTextResult {
   /** The model that was billed for the parse. */
   readonly model: string;
   readonly usage: LlmUsage;
+  readonly generationId: string | null;
 }
 
 export interface PdfTextSource {
@@ -166,6 +175,7 @@ export interface TtsResult {
   readonly mime: string;
   /** Provider-reported cost in USD, or null when none was reported. */
   readonly costUsd: number | null;
+  readonly generationId: string | null;
 }
 
 export interface Tts {
@@ -208,6 +218,33 @@ export interface LlmPort {
   transportFor(modelId: string): LlmTransport;
 }
 
+/** What the network layer reports to the pipeline. */
+export type NetworkEvent =
+  /** A request attempt started. `timeoutMs` is how long it may run before it times out. */
+  | { readonly type: 'attempt'; readonly timeoutMs: number }
+  /** A request was retired as stale. It is retried at once, without counting against retries. */
+  | { readonly type: 'staleAbort' }
+  /** The app left the foreground. */
+  | { readonly type: 'backgrounded' }
+  /** The app returned to the foreground. */
+  | { readonly type: 'resumed' };
+
+/**
+ * The network as the pipeline sees it. An implementation must honour the abort of each request it
+ * retires, so a stage's call rejects promptly rather than hanging on a dead socket.
+ */
+export interface NetworkPort {
+  subscribe(listener: (event: NetworkEvent) => void): () => void;
+  /** Retires every request in flight as stale, so each is retried at once. Returns how many. */
+  retireInFlight(): number;
+}
+
+/** The device's storage, read before the stages spend money that would have nowhere to go. */
+export interface DeviceStorage {
+  /** The free space on the device, in bytes. */
+  freeBytes(): Promise<number>;
+}
+
 /** Every port the pipeline uses, in one object so that the runner and stages take a single argument. */
 export interface PipelinePorts {
   readonly chapters: ChapterStore;
@@ -219,7 +256,9 @@ export interface PipelinePorts {
   readonly tts: Tts;
   readonly audio: AudioFiles;
   readonly llm: LlmPort;
+  readonly network: NetworkPort;
   readonly catalog: Catalog;
+  readonly storage: DeviceStorage;
   readonly clock: Clock;
   readonly ids: IdGenerator;
 }

@@ -10,7 +10,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useSettings } from '@/features/settings/settings-store';
 import { Button } from '@/ui/button';
-import { BookOpen, Send, ShieldCheck } from '@/ui/icons';
+import { IconButton } from '@/ui/icon-button';
+import { BookOpen, ChevronLeft, Send, ShieldCheck } from '@/ui/icons';
 import type { LucideIcon } from '@/ui/icons';
 import { useMotion } from '@/ui/motion';
 import { Text } from '@/ui/text';
@@ -45,30 +46,46 @@ export interface OnboardingFlowProps {
 export function OnboardingFlow({ onFinish }: OnboardingFlowProps) {
   const { colors } = useTheme();
   const { patch } = useSettings();
+  const { reduced } = useMotion();
   const [step, setStep] = useState<StepIndex>(0);
 
   const next = () =>
     setStep((current) => (current < STEP_COUNT - 1 ? ((current + 1) as StepIndex) : current));
+  const back = () => setStep((current) => (current > 0 ? ((current - 1) as StepIndex) : current));
 
+  // The notice is read before any key is asked for. Accepting it is saved at once.
   const accept = () => {
-    patch({ contentNoticeAccepted: true, onboardingDone: true });
+    patch({ contentNoticeAccepted: true });
+    next();
+  };
+  const finish = () => {
+    patch({ onboardingDone: true });
     onFinish();
   };
 
   return (
     <SafeAreaView edges={['top', 'bottom']} style={[styles.root, { backgroundColor: colors.bg }]}>
+      <View style={styles.bar}>
+        {step > 0 ? (
+          <IconButton label="Back" icon={ChevronLeft} onPress={back} />
+        ) : (
+          <View style={styles.barSpacer} />
+        )}
+        <Button label="Skip setup" variant="ghost" onPress={finish} />
+      </View>
+
       <StepProgress step={step} />
 
       <Animated.View
         key={step}
-        entering={FadeInUp.duration(durations.emphasized)}
-        exiting={FadeOut.duration(durations.micro)}
+        entering={reduced ? undefined : FadeInUp.duration(durations.emphasized)}
+        exiting={reduced ? undefined : FadeOut.duration(durations.micro)}
         style={styles.body}
       >
         {step === 0 ? <ValueStep onNext={next} /> : null}
-        {step === 1 ? <ConnectStep onDone={next} onSkip={next} /> : null}
-        {step === 2 ? <NarratorStep onDone={next} /> : null}
-        {step === 3 ? <NoticeStep onAccept={accept} /> : null}
+        {step === 1 ? <NoticeStep onAccept={accept} /> : null}
+        {step === 2 ? <ConnectStep onDone={next} onSkip={next} /> : null}
+        {step === 3 ? <NarratorStep onDone={finish} /> : null}
       </Animated.View>
     </SafeAreaView>
   );
@@ -178,6 +195,16 @@ function NoticeStep({ onAccept }: { onAccept: () => void }) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+  },
+  bar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: space.sm,
+  },
+  barSpacer: {
+    width: minTouchTarget,
+    height: minTouchTarget,
   },
   progressTrack: {
     height: space.xxs,

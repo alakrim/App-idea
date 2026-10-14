@@ -9,11 +9,21 @@ import type { PipelineError, Stage } from '@/core/domain';
 
 export type JobStatus = 'pending' | 'running' | 'done' | 'failed' | 'skipped' | 'cancelled';
 
+/** Passages of a stage that narrates in passages: how many are saved, and how many in total. */
+export interface PassageProgress {
+  done: number;
+  total: number;
+}
+
 export interface StageProgress {
   stage: Stage;
   status: JobStatus;
   /** 0..1 within the stage. */
   progress: number;
+  /** When the stage started running, in epoch milliseconds. Null unless it is running. */
+  since: number | null;
+  /** Passages of a narration stage, or null for a stage that has none. */
+  passages: PassageProgress | null;
 }
 
 export interface ChapterProgress {
@@ -28,19 +38,25 @@ export interface ChapterProgress {
   totalSegments: number | null;
   costUsdSoFar: number;
   error: PipelineError | null;
+  /** The app came back to the foreground while this chapter was running, and no progress has come since. */
+  reconnecting: boolean;
 }
 
 export interface CostLine {
   stage: Stage;
-  usd: number;
+  /** The stage's price in USD. Null when it cannot be priced: unknown, never zero. */
+  usd: number | null;
   /** Human explanation, e.g. "≈ 7.2k tokens with Claude Haiku 5.5". */
   basis: string;
+  /** Why the price is unknown. Null when `usd` is a number. */
+  unknownReason: string | null;
 }
 
 export interface CostEstimate {
-  totalUsd: number;
-  lowUsd: number;
-  highUsd: number;
+  /** Null when any stage is unknown. */
+  totalUsd: number | null;
+  lowUsd: number | null;
+  highUsd: number | null;
   lines: CostLine[];
 }
 
@@ -79,6 +95,11 @@ export interface PipelineFacade {
   /** Queue processing. Idempotent if it is already queued or running. */
   enqueue(chapterId: string): void;
   cancel(chapterId: string): void;
+  /**
+   * Cancels the runs of these chapters and resolves once the queue has settled, or after a timeout.
+   * Rows and files must not be deleted while a run can still write them.
+   */
+  stop(chapterIds: readonly string[]): Promise<void>;
   /** Re-run from a stage (default: the first failed one). */
   retry(chapterId: string, from?: Stage): void;
   /** Re-run with OCR after a scanned-PDF failure (paid; the UI must confirm the cost first). */

@@ -7,7 +7,7 @@ function stage(
   status: StageProgress['status'],
   progress = 0,
 ): StageProgress {
-  return { stage: name, status, progress };
+  return { stage: name, status, progress, since: null, passages: null };
 }
 
 describe('stepStates', () => {

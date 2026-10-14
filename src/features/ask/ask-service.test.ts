@@ -98,7 +98,7 @@ function seedBook(db: Db): void {
     seriesId: SERIES,
     kind: 'character',
     canonicalName: 'Master Wen',
-    aliases: ['Wen'],
+    aliases: [{ alias: 'Wen', firstChapterOrder: 1 }],
     firstChapterOrder: 1,
   };
   const fact = (n: number, chapterN: number, order: number, text: string): EntityFact => ({
@@ -108,7 +108,7 @@ function seedBook(db: Db): void {
     chapterOrder: order,
     fact: text,
   });
-  memoryRepo.saveEntityResolution(db, SERIES, {
+  memoryRepo.saveEntityResolution(db, SERIES, id(1), {
     upserts: [lin, wen],
     newFacts: [
       fact(1, 1, 1, 'Trained under Master Wen'),
@@ -117,7 +117,12 @@ function seedBook(db: Db): void {
     ],
   });
 
-  positionRepo.record(db, SERIES, { chapterId: CUTOFF_CHAPTER, sentenceIdx: CUTOFF_SENTENCE }, T0);
+  positionRepo.record(
+    db,
+    SERIES,
+    { chapterId: CUTOFF_CHAPTER, sentenceIdx: CUTOFF_SENTENCE, positionMs: 0 },
+    T0,
+  );
 }
 
 function fakeClient(answer: string | ((input: ChatTextInput) => string)) {
@@ -261,6 +266,7 @@ describe('askQuestion persistence', () => {
     });
     expect(usageRepo.totalsBy(db, 'model')).toEqual([
       {
+        unknownCalls: 0,
         key: 'anthropic/test',
         calls: 1,
         promptTokens: 120,

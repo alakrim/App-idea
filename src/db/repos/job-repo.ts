@@ -2,7 +2,7 @@ import { and, desc, eq, inArray, sql } from 'drizzle-orm';
 
 import { PipelineErrorSchema } from '../../core/domain';
 import { parseJsonColumn } from '../json-column';
-import { jobs } from '../schema';
+import { chapters, jobs } from '../schema';
 
 import type { Job, JobStatus, Stage } from '../../core/domain';
 import type { Db } from '../types';
@@ -36,6 +36,20 @@ const ALL_STATUSES: readonly JobStatus[] = [
 ];
 
 export const jobRepo = {
+  /** Removes one stage's job of a chapter, so the stage runs again on its next pass. */
+  deleteStage(db: Db, chapterId: string, stage: Stage): void {
+    db.delete(jobs).where(and(eq(jobs.chapterId, chapterId), eq(jobs.stage, stage))).run();
+  },
+
+  /** Removes one stage's job from every chapter of a series. */
+  deleteStageForSeries(db: Db, seriesId: string, stage: Stage): void {
+    const chapterIds = db
+      .select({ id: chapters.id })
+      .from(chapters)
+      .where(eq(chapters.seriesId, seriesId));
+    db.delete(jobs).where(and(eq(jobs.stage, stage), inArray(jobs.chapterId, chapterIds))).run();
+  },
+
   /** One job per (chapter, stage). Writing again replaces the row, so each stage is resumable. */
   upsert(db: Db, job: Job): void {
     const values = {
@@ -74,6 +88,19 @@ export const jobRepo = {
     >;
     for (const row of rows) counts[row.status] = row.count;
     return counts;
+  },
+
+  /** The chapters whose jobs were touched most recently, newest first. Diagnostics reads their timings. */
+  recentChapterIds(db: Db, limit: number): string[] {
+    const lastActivity = sql`max(coalesce(${jobs.finishedAt}, ${jobs.startedAt}))`;
+    return db
+      .select({ chapterId: jobs.chapterId })
+      .from(jobs)
+      .groupBy(jobs.chapterId)
+      .orderBy(desc(lastActivity))
+      .limit(limit)
+      .all()
+      .map((row) => row.chapterId);
   },
 
   /** The most recent failed jobs, newest first. Diagnostics shows them to help with bug reports. */

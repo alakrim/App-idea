@@ -47,3 +47,6 @@ export const MEMORY_LIMITS = {
  * estimate. Latin text (about four characters per token) now fits four times as much per call.
  */
 export const MAX_CHUNK_TOKENS = 12000;
+
+/** Output tokens an analysis reply may use: twice the 900 it is expected to write (ADR-0006). */
+export const ANALYSIS_MAX_OUTPUT_TOKENS = 2 * 900;

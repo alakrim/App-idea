@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { BED_LEVEL_RANGE_DB, DUCKING_RANGE_DB } from '@/core/playback/ranges';
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
 import { Slider } from '@/ui/slider';
@@ -10,9 +11,6 @@ import { space } from '@/ui/tokens';
 import { SwitchCard, ValueHeading } from './setting-controls';
 import { useSettings } from './settings-store';
 import { formatDb } from './summaries';
-
-export const AMBIENCE_LEVEL_RANGE = { min: -30, max: -14 } as const;
-export const DUCKING_RANGE = { min: 0, max: 16 } as const;
 
 export interface AmbienceSettingsProps {
   /** Plays the sample bed at the given level. Omitted, the sample is not offered. */
@@ -48,8 +46,8 @@ export function AmbienceSettings({ onPlaySample }: AmbienceSettingsProps) {
         <Slider
           label="Ambience level"
           value={level}
-          min={AMBIENCE_LEVEL_RANGE.min}
-          max={AMBIENCE_LEVEL_RANGE.max}
+          min={BED_LEVEL_RANGE_DB.min}
+          max={BED_LEVEL_RANGE_DB.max}
           formatValue={formatDb}
           minimumLabel="Subtle"
           maximumLabel="Present"
@@ -67,8 +65,8 @@ export function AmbienceSettings({ onPlaySample }: AmbienceSettingsProps) {
         <Slider
           label="Ducking under voice"
           value={ducking}
-          min={DUCKING_RANGE.min}
-          max={DUCKING_RANGE.max}
+          min={DUCKING_RANGE_DB.min}
+          max={DUCKING_RANGE_DB.max}
           formatValue={(db) => `${Math.round(db)} decibels under voice`}
           minimumLabel="None"
           maximumLabel="Deep"

@@ -29,6 +29,7 @@ import type {
   CatalogModel,
   ChapterRecord,
   ChapterStore,
+  NetworkEvent,
   PdfTextResult,
   PersistedQueueItem,
   PipelinePorts,
@@ -108,10 +109,27 @@ export interface FakeOptions {
     request: LlmRequest,
     model: string,
   ) => LlmReply | undefined | Promise<LlmReply | undefined>;
-  readonly tts?: (text: string, profile: NarrationProfile) => TtsResult | Promise<TtsResult>;
+  /** Replaces the default narration. The signal is the one the stage passed to the call. */
+  readonly tts?: (
+    text: string,
+    profile: NarrationProfile,
+    signal: AbortSignal,
+  ) => TtsResult | Promise<TtsResult>;
   readonly catalog?: Record<string, CatalogModel>;
+  /** The free space the device reports, in bytes. Plenty by default. */
+  readonly freeBytes?: number;
   /** Overrides fields of the chapter's narration profile. */
   readonly narration?: Partial<NarrationProfile>;
+  /** Runs each time the pipeline retires in-flight requests. */
+  readonly onRetire?: () => void;
+}
+
+/** The network the pipeline sees. The test sends events and reads what the pipeline asked for. */
+export interface FakeNetwork {
+  /** How many times the pipeline asked to retire in-flight requests. */
+  retireCalls: number;
+  /** Sends an event to the pipeline, as the app's connection would. */
+  emit(event: NetworkEvent): void;
 }
 
 export interface FakeState {
@@ -147,6 +165,7 @@ export interface FakePorts {
   job(stage: Stage, id?: Id): Job | undefined;
   /** Adds a pasted-text chapter to the same series. */
   addChapter(id: Id, order: number, text: string): void;
+  readonly network: FakeNetwork;
 }
 
 const T0 = 1_700_000_000_000;
@@ -159,6 +178,7 @@ function storedFrom(text: ChapterText): StoredSentence[] {
     kind: s.kind,
     text: s.text,
     translated: null,
+    translatedLang: null,
     charCount: s.charCount,
   }));
 }
@@ -211,6 +231,13 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
   const catalog = options.catalog ?? CATALOG;
   let tick = 0;
   let nextId = 100;
+  const networkListeners = new Set<(event: NetworkEvent) => void>();
+  const network: FakeNetwork = {
+    retireCalls: 0,
+    emit(event) {
+      for (const listener of networkListeners) listener(event);
+    },
+  };
 
   const chapter: Chapter = {
     id: CHAPTER_ID,
@@ -313,14 +340,14 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     async getSentences(chapterId) {
       return state.sentences.get(chapterId) ?? [];
     },
-    async setTranslations(chapterId, translations, partialIdx) {
+    async setTranslations(chapterId, translations, partialIdx, lang) {
       const partial = new Set(partialIdx);
       state.sentences.set(
         chapterId,
-        (state.sentences.get(chapterId) ?? []).map((s) => ({
-          ...s,
-          translated: partial.has(s.idx) ? null : (translations.get(s.idx) ?? null),
-        })),
+        (state.sentences.get(chapterId) ?? []).map((s) => {
+          const translated = partial.has(s.idx) ? null : (translations.get(s.idx) ?? null);
+          return { ...s, translated, translatedLang: translated === null ? null : lang };
+        }),
       );
     },
     async saveCues(chapterId, cues) {
@@ -342,7 +369,8 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     async getEntities() {
       return { entities: [...state.entities], facts: [...state.facts] };
     },
-    async applyEntityResolution(_seriesId, resolution) {
+    async applyEntityResolution(_seriesId, chapterId, resolution) {
+      state.facts = state.facts.filter((fact) => fact.chapterId !== chapterId);
       for (const upsert of resolution.upserts) {
         const index = state.entities.findIndex((e) => e.id === upsert.id);
         if (index >= 0) state.entities[index] = upsert;
@@ -402,6 +430,19 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
   };
 
   const ports: PipelinePorts = {
+    network: {
+      subscribe(listener) {
+        networkListeners.add(listener);
+        return () => {
+          networkListeners.delete(listener);
+        };
+      },
+      retireInFlight() {
+        network.retireCalls += 1;
+        options.onRetire?.();
+        return 0;
+      },
+    },
     chapters,
     jobs,
     ledger: {
@@ -431,15 +472,15 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
         const result = options.pdf;
         if (typeof result === 'function') return result(engine);
         if (result) return result;
-        return { text: '', pages: [], model: 'pdf/parser', usage: FAKE_USAGE };
+        return { text: '', pages: [], model: 'pdf/parser', usage: FAKE_USAGE, generationId: null };
       },
     },
     tts: {
-      async synthesize({ text, profile }) {
+      async synthesize({ text, profile, signal }) {
         state.ttsCalls.push({ text, style: profile.style, voice: profile.voice });
-        if (options.tts) return options.tts(text, profile);
+        if (options.tts) return options.tts(text, profile, signal);
         const frames = Math.max(1, Math.ceil(text.length / 200));
-        return { bytes: mp3Bytes(frames), mime: 'audio/mpeg', costUsd: null };
+        return { bytes: mp3Bytes(frames), mime: 'audio/mpeg', costUsd: null, generationId: null };
       },
     },
     audio: {
@@ -458,6 +499,11 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
         return catalog[modelId] ?? null;
       },
     },
+    storage: {
+      async freeBytes() {
+        return options.freeBytes ?? 10 * 1024 * 1024 * 1024;
+      },
+    },
     clock: {
       now() {
         tick += 1;
@@ -470,6 +516,7 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
   return {
     ports,
     state,
+    network,
     addChapter: (id, order, text) => {
       state.chapters.set(id, {
         ...chapter,

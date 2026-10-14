@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports -- jest.mock factories load the stand-ins with require() */
-import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, render, screen, within } from '@testing-library/react-native';
 import { router } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -95,5 +95,29 @@ describe('MiniPlayerView', () => {
     await fireEvent.press(screen.getByRole('button', { name: 'Play' }));
 
     expect(onTogglePlay).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('MiniPlayerView controls (P2-11)', () => {
+  it('keeps the play control out of the open control, so each is reachable on its own', async () => {
+    await render(
+      <ThemeProvider initialMode="dark">
+        <MiniPlayerView
+          nowPlaying={{
+            title: 'Chapter 1',
+            subtitle: 'Rain fell.',
+            coverUri: null,
+            progress: 0.5,
+            playing: true,
+          }}
+          onOpen={jest.fn()}
+          onTogglePlay={jest.fn()}
+        />
+      </ThemeProvider>,
+    );
+
+    const open = screen.getByTestId('mini-player');
+    expect(within(open).queryByRole('button', { name: 'Pause' })).toBeNull();
+    expect(screen.getByRole('button', { name: 'Pause' })).toBeOnTheScreen();
   });
 });

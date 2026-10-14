@@ -56,8 +56,8 @@ export async function measureLoudness(file) {
   return { integratedLufs: Number(integrated[1]), truePeakDbtp: Number(truePeak[1]) };
 }
 
-/** Decodes an audio file to mono float32 PCM at SAMPLE_RATE (edit lists are honoured by ffmpeg). */
-export async function decodeMono(file) {
+/** Decodes an audio file to mono float32 PCM at `sampleRate` (edit lists are honoured by ffmpeg). */
+export async function decodeMono(file, sampleRate = SAMPLE_RATE) {
   const args = [
     '-hide_banner',
     '-nostdin',
@@ -68,7 +68,7 @@ export async function decodeMono(file) {
     '-ac',
     '1',
     '-ar',
-    String(SAMPLE_RATE),
+    String(sampleRate),
     '-f',
     'f32le',
     '-',

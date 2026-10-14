@@ -92,11 +92,15 @@ describe('onboarding flow', () => {
     jest.clearAllMocks();
   });
 
-  it('walks through value, key, narrator and notice, then saves onboarding as done', async () => {
+  it('reads the notice before the key, then saves onboarding as done after the narrator', async () => {
     const { onFinish } = await renderFlow();
 
     expect(screen.getByRole('header', { name: 'Any page, read to you.' })).toBeOnTheScreen();
     await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+
+    expect(await screen.findByRole('header', { name: 'Before you import' })).toBeOnTheScreen();
+    await fireEvent.press(screen.getByRole('button', { name: 'I understand' }));
+    expect(mockPatch).toHaveBeenCalledWith({ contentNoticeAccepted: true });
 
     expect(await screen.findByRole('header', { name: 'Connect OpenRouter' })).toBeOnTheScreen();
     await fireEvent.press(screen.getByRole('button', { name: 'Skip for now' }));
@@ -104,16 +108,37 @@ describe('onboarding flow', () => {
     expect(await screen.findByRole('header', { name: 'Choose your narrator' })).toBeOnTheScreen();
     await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
 
-    expect(await screen.findByRole('header', { name: 'Before you import' })).toBeOnTheScreen();
-    await fireEvent.press(screen.getByRole('button', { name: 'I understand' }));
+    expect(mockPatch).toHaveBeenLastCalledWith({ onboardingDone: true });
+    expect(onFinish).toHaveBeenCalledTimes(1);
+  });
 
-    expect(mockPatch).toHaveBeenCalledWith({ contentNoticeAccepted: true, onboardingDone: true });
+  it('goes back one step with the Back button, and not from the first step', async () => {
+    await renderFlow();
+    expect(screen.queryByRole('button', { name: 'Back' })).toBeNull();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    await screen.findByRole('header', { name: 'Before you import' });
+    await fireEvent.press(screen.getByRole('button', { name: 'Back' }));
+
+    expect(await screen.findByRole('header', { name: 'Any page, read to you.' })).toBeOnTheScreen();
+  });
+
+  it('lets the listener skip the whole flow from any step', async () => {
+    const { onFinish } = await renderFlow();
+    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    await screen.findByRole('header', { name: 'Before you import' });
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Skip setup' }));
+
+    expect(mockPatch).toHaveBeenLastCalledWith({ onboardingDone: true });
     expect(onFinish).toHaveBeenCalledTimes(1);
   });
 
   it('saves the narrator picked on the narrator step, and keeps it when it moves on', async () => {
     await renderFlow();
     await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    await screen.findByRole('header', { name: 'Before you import' });
+    await fireEvent.press(screen.getByRole('button', { name: 'I understand' }));
     await screen.findByRole('header', { name: 'Connect OpenRouter' });
     await fireEvent.press(screen.getByRole('button', { name: 'Skip for now' }));
     await screen.findByRole('header', { name: 'Choose your narrator' });
@@ -130,6 +155,8 @@ describe('onboarding flow', () => {
     jest.mocked(setApiKey).mockResolvedValue(undefined);
     const { view } = await renderFlow();
     await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    await screen.findByRole('header', { name: 'Before you import' });
+    await fireEvent.press(screen.getByRole('button', { name: 'I understand' }));
     await screen.findByRole('header', { name: 'Connect OpenRouter' });
 
     await fireEvent.changeText(screen.getByLabelText('OpenRouter key'), `  ${VALID_KEY}  `);
@@ -152,6 +179,8 @@ describe('onboarding flow', () => {
     });
     await renderFlow();
     await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    await screen.findByRole('header', { name: 'Before you import' });
+    await fireEvent.press(screen.getByRole('button', { name: 'I understand' }));
     await screen.findByRole('header', { name: 'Connect OpenRouter' });
 
     await fireEvent.changeText(screen.getByLabelText('OpenRouter key'), VALID_KEY);
@@ -170,6 +199,8 @@ describe('onboarding flow', () => {
     });
     await renderFlow();
     await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    await screen.findByRole('header', { name: 'Before you import' });
+    await fireEvent.press(screen.getByRole('button', { name: 'I understand' }));
     await screen.findByRole('header', { name: 'Connect OpenRouter' });
 
     await fireEvent.changeText(screen.getByLabelText('OpenRouter key'), VALID_KEY);
@@ -184,6 +215,8 @@ describe('onboarding flow', () => {
   it('rejects text that is not shaped like a key before any network call', async () => {
     await renderFlow();
     await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    await screen.findByRole('header', { name: 'Before you import' });
+    await fireEvent.press(screen.getByRole('button', { name: 'I understand' }));
     await screen.findByRole('header', { name: 'Connect OpenRouter' });
 
     await fireEvent.changeText(screen.getByLabelText('OpenRouter key'), 'hello there');

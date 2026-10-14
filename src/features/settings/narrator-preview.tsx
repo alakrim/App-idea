@@ -55,7 +55,7 @@ export function NarratorPreview({ request, label }: NarratorPreviewProps) {
           {preview.message}
         </Text>
       ) : null}
-      {preview.isPlaying ? (
+      {preview.isPlaying && preview.phase === 'ready' ? (
         <Text variant="caption" tone="accent" accessibilityLiveRegion="polite">
           Playing the sample…
         </Text>

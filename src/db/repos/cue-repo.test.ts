@@ -5,6 +5,7 @@ import { chapterRow, id, seriesRow } from '../__fixtures__/factories';
 import { createTestDb } from '../__fixtures__/test-db';
 
 import type { AmbienceCue } from '../../core/domain';
+import type { Db } from '../types';
 
 function cue(n: number, startSentence: number, overrides: Partial<AmbienceCue> = {}): AmbienceCue {
   return {
@@ -23,6 +24,12 @@ function cue(n: number, startSentence: number, overrides: Partial<AmbienceCue> =
   };
 }
 
+/** Adds one cue through the replace path, the only write the app uses. */
+function addCue(db: Db, next: AmbienceCue): void {
+  const existing = cueRepo.listForChapter(db, next.chapterId);
+  cueRepo.replaceForChapter(db, next.chapterId, [...existing, next]);
+}
+
 function setup() {
   const testDb = createTestDb();
   seriesRepo.insert(testDb.db, seriesRow(1));
@@ -34,8 +41,8 @@ function setup() {
 describe('cueRepo.replaceForChapter', () => {
   it('replaces the chapter cues and leaves other chapters alone', () => {
     const db = setup();
-    cueRepo.insert(db, cue(1, 4));
-    cueRepo.insert(db, cue(3, 2, { chapterId: id(2) }));
+    addCue(db, cue(1, 4));
+    addCue(db, cue(3, 2, { chapterId: id(2) }));
 
     cueRepo.replaceForChapter(db, id(1), [cue(5, 12, { category: 'rain' })]);
 
@@ -45,7 +52,7 @@ describe('cueRepo.replaceForChapter', () => {
 
   it('keeps the listener switch for a cue with the same category and range', () => {
     const db = setup();
-    cueRepo.insert(db, cue(1, 4));
+    addCue(db, cue(1, 4));
     cueRepo.setEnabled(db, id(101), false);
 
     cueRepo.replaceForChapter(db, id(1), [cue(9, 4, { enabled: true })]);
@@ -57,7 +64,7 @@ describe('cueRepo.replaceForChapter', () => {
 
   it('rejects a cue that belongs to another chapter and keeps the old cues', () => {
     const db = setup();
-    cueRepo.insert(db, cue(1, 4));
+    addCue(db, cue(1, 4));
 
     expect(() => cueRepo.replaceForChapter(db, id(1), [cue(2, 9, { chapterId: id(2) })])).toThrow(
       /belongs to chapter/,
@@ -69,16 +76,16 @@ describe('cueRepo.replaceForChapter', () => {
 describe('cueRepo', () => {
   it('lists a chapter cues in start order and only that chapter', () => {
     const db = setup();
-    cueRepo.insert(db, cue(2, 30));
-    cueRepo.insert(db, cue(1, 4));
-    cueRepo.insert(db, cue(3, 2, { chapterId: id(2) }));
+    addCue(db, cue(2, 30));
+    addCue(db, cue(1, 4));
+    addCue(db, cue(3, 2, { chapterId: id(2) }));
 
     expect(cueRepo.listForChapter(db, id(1)).map((c) => c.startSentence)).toEqual([4, 30]);
   });
 
   it('persists the enabled switch across reads', () => {
     const db = setup();
-    cueRepo.insert(db, cue(1, 4));
+    addCue(db, cue(1, 4));
 
     cueRepo.setEnabled(db, id(101), false);
 

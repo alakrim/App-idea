@@ -26,6 +26,11 @@ export function createMemoryLibraryFiles(): LibraryFiles & {
       const bytes = typeof value === 'string' ? new TextEncoder().encode(value) : value;
       return Buffer.from(bytes).toString('base64');
     },
+    async sizeOf(uri) {
+      const value = entries.get(pathOf(uri));
+      if (value === undefined) return null;
+      return typeof value === 'string' ? new TextEncoder().encode(value).byteLength : value.byteLength;
+    },
     async importFile(sourceUri, relativePath) {
       const value = entries.get(pathOf(sourceUri)) ?? new Uint8Array();
       entries.set(relativePath, value);

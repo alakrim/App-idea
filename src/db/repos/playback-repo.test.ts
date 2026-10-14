@@ -49,7 +49,7 @@ function setup(): Db {
   seriesRepo.insert(db, seriesRow(1, { title: 'The Harbour', coverTint: '#2B3A55' }));
   chapterRepo.insert(db, chapterRow(1, 1, 1, { title: 'Arrival' }));
   textRepo.replaceChapterText(db, id(1), chapterText(1, ['Rain fell.', 'The door opened.']));
-  textRepo.setTranslations(db, id(1), [{ idx: 0, translated: 'Il pleuvait.' }]);
+  textRepo.setTranslations(db, id(1), [{ idx: 0, translated: 'Il pleuvait.' }], 'it');
   db.insert(narrationProfiles)
     .values({
       id: PROFILE_ID,
@@ -85,9 +85,7 @@ describe('playbackRepo.getChapterForPlayback', () => {
 
   it('returns only enabled cues, in start order', () => {
     const db = setup();
-    cueRepo.insert(db, cue(2, true));
-    cueRepo.insert(db, cue(0, false));
-    cueRepo.insert(db, cue(1, true));
+    cueRepo.replaceForChapter(db, id(1), [cue(2, true), cue(0, false), cue(1, true)]);
 
     expect(playbackRepo.getChapterForPlayback(db, id(1))?.cues.map((c) => c.id)).toEqual([
       id(301),

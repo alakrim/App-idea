@@ -1,0 +1,233 @@
+{
+  "category": "horse_gallop",
+  "curatedOn": "2026-10-14",
+  "queries": [
+    "horse gallop hooves",
+    "horses running hooves",
+    "horse running loop",
+    "horses hooves gallop"
+  ],
+  "poolSize": 10,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 508504,
+      "name": "Horse Race",
+      "url": "https://freesound.org/people/AugustSandberg/sounds/508504/",
+      "author": "AugustSandberg",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 270.61,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 6,
+      "numDownloads": 311,
+      "previewUrl": "https://cdn.freesound.org/previews/508/508504_1934171-hq.mp3",
+      "score": 7.33,
+      "reasons": [
+        "+2.08 rating 4 from 6 ratings",
+        "+1.25 311 downloads",
+        "+2 at least 90 s",
+        "+1 tags horse",
+        "+1 name matches horse"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 481917,
+      "name": "R26-18-Foley Horse Hooves Walking.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/481917/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 177.8,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.75,
+      "numRatings": 8,
+      "numDownloads": 493,
+      "previewUrl": "https://cdn.freesound.org/previews/481/481917_2524442-hq.mp3",
+      "score": 6.8,
+      "reasons": [
+        "+2.45 rating 4.75 from 8 ratings",
+        "+1.35 493 downloads",
+        "+2 at least 90 s",
+        "+1 name matches horse, hooves"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 609250,
+      "name": "Journey To The Interweb",
+      "url": "https://freesound.org/people/Aemyn/sounds/609250/",
+      "author": "Aemyn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 508,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.33,
+      "numRatings": 294,
+      "numDownloads": 5579,
+      "previewUrl": "https://cdn.freesound.org/previews/609/609250_1445263-hq.mp3",
+      "score": 6.36,
+      "reasons": [
+        "+2.49 rating 4.33 from 294 ratings",
+        "+1.87 5579 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 564166,
+      "name": "Crashing Starship",
+      "url": "https://freesound.org/people/Aemyn/sounds/564166/",
+      "author": "Aemyn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 307.95,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.35,
+      "numRatings": 143,
+      "numDownloads": 4485,
+      "previewUrl": "https://cdn.freesound.org/previews/564/564166_1445263-hq.mp3",
+      "score": 6.32,
+      "reasons": [
+        "+2.49 rating 4.35 from 143 ratings",
+        "+1.83 4485 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 661435,
+      "name": "Defensible Twister",
+      "url": "https://freesound.org/people/Brazilio123/sounds/661435/",
+      "author": "Brazilio123",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 433,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.14,
+      "numRatings": 86,
+      "numDownloads": 2709,
+      "previewUrl": "https://cdn.freesound.org/previews/661/661435_14509684-hq.mp3",
+      "score": 6.04,
+      "reasons": [
+        "+2.33 rating 4.14 from 86 ratings",
+        "+1.72 2709 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 274898,
+      "name": "Maxheadroom's Galloping Horse (39 sec. loop)",
+      "url": "https://freesound.org/people/Podsburgh/sounds/274898/",
+      "author": "Podsburgh",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 39.41,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.59,
+      "numRatings": 74,
+      "numDownloads": 5612,
+      "previewUrl": "https://cdn.freesound.org/previews/274/274898_4869300-hq.mp3",
+      "score": 5.52,
+      "reasons": [
+        "+2.64 rating 4.59 from 74 ratings",
+        "+1.87 5612 downloads",
+        "-3 only 39.41 s",
+        "+3 tags horse, gallop, hooves",
+        "+1 name matches horse"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 619067,
+      "name": "Horse Galloping.mp3",
+      "url": "https://freesound.org/people/mrrap4food/sounds/619067/",
+      "author": "mrrap4food",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 31.88,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.77,
+      "numRatings": 30,
+      "numDownloads": 2268,
+      "previewUrl": "https://cdn.freesound.org/previews/619/619067_781461-hq.mp3",
+      "score": 5.37,
+      "reasons": [
+        "+2.69 rating 4.77 from 30 ratings",
+        "+1.68 2268 downloads",
+        "-3 only 31.88 s",
+        "+3 tags horse, gallop, hooves",
+        "+1 name matches horse"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 843303,
+      "name": "Coconut Horse Walking Sound Effects (Slow Gallop, Faster Gallop)",
+      "url": "https://freesound.org/people/BorzSounds/sounds/843303/",
+      "author": "BorzSounds",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 44.82,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 7,
+      "numDownloads": 209,
+      "previewUrl": "https://cdn.freesound.org/previews/843/843303_16979474-hq.mp3",
+      "score": 4.57,
+      "reasons": [
+        "+2.41 rating 4.71 from 7 ratings",
+        "+1.16 209 downloads",
+        "-3 only 44.82 s",
+        "+3 tags horse, gallop, hooves",
+        "+1 name matches horse, gallop"
+      ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 479742,
+      "name": "R14-05-Horses Gallop By.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/479742/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 41.19,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4,
+      "numRatings": 5,
+      "numDownloads": 134,
+      "previewUrl": "https://cdn.freesound.org/previews/479/479742_2524442-hq.mp3",
+      "score": 1.13,
+      "reasons": [
+        "+2.06 rating 4 from 5 ratings",
+        "+1.07 134 downloads",
+        "-3 only 41.19 s",
+        "+1 name matches gallop"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 479791,
+      "name": "R23-48-Team of Horses.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/479791/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 33.17,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 6,
+      "numDownloads": 99,
+      "previewUrl": "https://cdn.freesound.org/previews/479/479791_2524442-hq.mp3",
+      "score": 0.49,
+      "reasons": [
+        "+2.49 rating 5 from 6 ratings",
+        "+1 99 downloads",
+        "-3 only 33.17 s"
+      ]
+    }
+  ]
+}

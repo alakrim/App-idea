@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -17,6 +17,7 @@ import { hairline, radius, space } from '@/ui/tokens';
 import { describeDuration, formatClock, formatRemaining } from './format';
 import { PLAYER } from './layout';
 import { glideTo } from './motion';
+import { usePlayback, usePlaybackContent, usePlayerState } from './player-provider';
 import {
   SCRUB_STEP_MS,
   fractionToMs,
@@ -40,6 +41,83 @@ function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
 }
 
+interface ScrubberTicksProps {
+  tickMs: readonly number[];
+  durationMs: number;
+  color: string;
+}
+
+/**
+ * The sentence ticks. They depend only on the timeline, so they are drawn once per timeline and
+ * are not redrawn as the position moves (P2-10).
+ */
+const ScrubberTicks = memo(function ScrubberTicks({
+  tickMs,
+  durationMs,
+  color,
+}: ScrubberTicksProps) {
+  return (
+    <>
+      {tickMs.map((ms, index) => (
+        <View
+          key={index}
+          pointerEvents="none"
+          style={[
+            styles.tick,
+            {
+              left: `${clamp((ms / Math.max(1, durationMs)) * 100, 0, 100)}%`,
+              backgroundColor: color,
+            },
+          ]}
+        />
+      ))}
+    </>
+  );
+});
+
+interface ScrubberLabelsProps {
+  shownMs: number;
+  durationMs: number;
+}
+
+/** The elapsed and remaining clock. Only this small part follows the position every tick. */
+const ScrubberLabels = memo(function ScrubberLabels({ shownMs, durationMs }: ScrubberLabelsProps) {
+  return (
+    <View style={styles.labels} importantForAccessibility="no-hide-descendants">
+      <Text variant="caption" tone="muted" style={styles.tabular}>
+        {formatClock(shownMs)}
+      </Text>
+      <Text variant="caption" tone="muted" style={styles.tabular}>
+        {formatRemaining(durationMs - shownMs)}
+      </Text>
+    </View>
+  );
+});
+
+/**
+ * The scrubber wired to the playback store. It is the only part of the player that follows the
+ * position every tick, so the rest of the full player does not re-render with it (P2-10).
+ */
+export function PlayerScrubber() {
+  const controller = usePlayback();
+  const positionMs = usePlayerState((state) => state.positionMs);
+  const timeline = usePlaybackContent((content) => content.timeline);
+  const durationMs = timeline?.totalDurationMs ?? 0;
+  const tickMs = useMemo(
+    () =>
+      timeline
+        ? Array.from({ length: timeline.sentenceCount }, (_, idx) =>
+            timeline.sentenceToPosition(idx),
+          )
+        : [],
+    [timeline],
+  );
+  const onSeek = useCallback((ms: number) => controller.seekToMs(ms), [controller]);
+  return (
+    <Scrubber positionMs={positionMs} durationMs={durationMs} tickMs={tickMs} onSeek={onSeek} />
+  );
+}
+
 /**
  * The chapter timeline as a scrubber. Dragging is relative to where the finger lands, and dragging
  * down away from the track slows it, so long chapters can be placed to the second. The seek is
@@ -51,6 +129,7 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
   const [previewMs, setPreviewMs] = useState<number | null>(null);
   const shownMs = previewMs ?? positionMs;
   const enabled = durationMs > 0;
+  const tickColor = colors.decorativeFaint;
 
   const width = useSharedValue(0);
   const scrubbing = useSharedValue(false);
@@ -198,19 +277,7 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
           style={styles.hitArea}
         >
           <View style={[styles.track, { backgroundColor: colors.border }]}>
-            {tickMs.map((ms, index) => (
-              <View
-                key={index}
-                pointerEvents="none"
-                style={[
-                  styles.tick,
-                  {
-                    left: `${clamp((ms / Math.max(1, durationMs)) * 100, 0, 100)}%`,
-                    backgroundColor: colors.textFaint,
-                  },
-                ]}
-              />
-            ))}
+            <ScrubberTicks tickMs={tickMs} durationMs={durationMs} color={tickColor} />
             <Animated.View style={[styles.fill, { backgroundColor: colors.accent }, fillStyle]} />
           </View>
           <Animated.View
@@ -235,14 +302,7 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
           </Animated.View>
         </Animated.View>
       </GestureDetector>
-      <View style={styles.labels} importantForAccessibility="no-hide-descendants">
-        <Text variant="caption" tone="muted" style={styles.tabular}>
-          {formatClock(shownMs)}
-        </Text>
-        <Text variant="caption" tone="muted" style={styles.tabular}>
-          {formatRemaining(durationMs - shownMs)}
-        </Text>
-      </View>
+      <ScrubberLabels shownMs={shownMs} durationMs={durationMs} />
     </View>
   );
 }

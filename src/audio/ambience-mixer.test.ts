@@ -95,6 +95,8 @@ function createFakeContext() {
       return gain;
     },
     close: jest.fn(() => Promise.resolve()),
+    suspend: jest.fn(() => Promise.resolve()),
+    resume: jest.fn(() => Promise.resolve()),
   } satisfies MixerContext;
   return {
     context,
@@ -122,7 +124,7 @@ const bedGains = (gains: readonly FakeGain[]) => gains.slice(2);
 /** Lets pending decode promises settle, so the start callbacks run. */
 const flush = () => new Promise((resolve) => setImmediate(resolve));
 
-function setup(options: { cacheSize?: number; onError?: (e: unknown) => void } = {}) {
+function setup(options: { cacheBudgetBytes?: number; onError?: (e: unknown) => void } = {}) {
   const fake = createFakeContext();
   const createContext = jest.fn(() => fake.context);
   const resolveBed = jest.fn((category: string) => BEDS[category] ?? null);
@@ -133,11 +135,32 @@ function setup(options: { cacheSize?: number; onError?: (e: unknown) => void } =
 const start = (cueId: string, category: string, gainDb = -22, fadeMs = 2500) =>
   ({ type: 'start', cueId, category, gainDb, fadeMs }) as const;
 
+/** Decoded size of the 60 s test bed at the default rate and channel count. */
+const BED_BYTES = 60 * 48_000 * 4;
+
 describe('ambience mixer: lazy setup', () => {
-  it('does not create an audio context until something is played', () => {
+  it('does not create an audio context for gain changes, only for a bed', () => {
     const { createContext, mixer } = setup();
-    mixer.setMaster(true);
+    mixer.setMasterGain(0.5);
+    mixer.setDucking({ gainDb: -7, rampMs: 30 });
+    mixer.apply([{ type: 'stop', cueId: 'nothing', fadeMs: 100 }]);
+    mixer.suspend();
+    expect(createContext).not.toHaveBeenCalled();
+
+    mixer.apply([start('c1', 'light_rain')]);
     expect(createContext).toHaveBeenCalledTimes(1);
+  });
+
+  it('applies gain changes made before the context exists when it is created', async () => {
+    const { mixer, decodes, gains } = setup();
+    mixer.setMasterGain(0.25);
+    mixer.setDucking({ gainDb: -7, rampMs: 30 });
+    mixer.apply([start('c1', 'light_rain')]);
+    decodes[0]?.resolve({ duration: 60 });
+    await flush();
+    const [master, ducking] = gains;
+    expect(master?.gain.value).toBe(0.25);
+    expect(ducking?.gain.value).toBeCloseTo(10 ** (-7 / 20), 10);
   });
 
   it('wires bed, then bed gain, then master, then ducking, then destination', async () => {
@@ -249,8 +272,9 @@ describe('ambience mixer: buffer cache', () => {
     expect(context.decodeAudioData).toHaveBeenCalledTimes(1);
   });
 
-  it('evicts the least recently used buffer beyond the cache size', async () => {
-    const { mixer, decodes, context } = setup({ cacheSize: 2 });
+  it('evicts the least recently used buffer once the decoded bytes exceed the budget', async () => {
+    // Room for two decoded 60 s beds, but not three.
+    const { mixer, decodes, context } = setup({ cacheBudgetBytes: BED_BYTES * 2 + 1 });
     const categories = ['light_rain', 'forest_night', 'city_night'];
     categories.forEach((category, i) => mixer.apply([start(`c${i}`, category)]));
     decodes.forEach((d) => d.resolve({ duration: 60 }));
@@ -259,6 +283,81 @@ describe('ambience mixer: buffer cache', () => {
 
     mixer.apply([start('again', 'light_rain')]);
     expect(context.decodeAudioData).toHaveBeenCalledTimes(4);
+  });
+
+  it('keeps the newest buffer even when it alone is over the budget', async () => {
+    const { mixer, decodes, context } = setup({ cacheBudgetBytes: 1 });
+    mixer.apply([start('c1', 'light_rain')]);
+    decodes[0]?.resolve({ duration: 60 });
+    await flush();
+    mixer.apply([{ type: 'stop', cueId: 'c1', fadeMs: 0 }]);
+    mixer.apply([start('c2', 'light_rain')]);
+    await flush();
+    expect(context.decodeAudioData).toHaveBeenCalledTimes(1);
+  });
+
+  it('counts the sample rate and channels in the bytes a buffer holds', async () => {
+    // One stereo 10 s bed at 44.1 kHz is about 3.5 MB, so a 4 MB budget holds only the newest one.
+    // Counted as mono at 48 kHz, two would fit and nothing would be evicted.
+    const { mixer, decodes, context } = setup({ cacheBudgetBytes: 4_000_000 });
+    const categories = ['light_rain', 'forest_night', 'city_night'];
+    categories.forEach((category, i) => mixer.apply([start(`c${i}`, category)]));
+    decodes.forEach((d) => d.resolve({ duration: 10, sampleRate: 44_100, numberOfChannels: 2 }));
+    await flush();
+    expect(context.decodeAudioData).toHaveBeenCalledTimes(3);
+
+    mixer.apply([{ type: 'stop', cueId: 'c2', fadeMs: 0 }]);
+    mixer.apply([start('again', 'city_night')]);
+    expect(context.decodeAudioData).toHaveBeenCalledTimes(3);
+    mixer.apply([start('again2', 'forest_night')]);
+    expect(context.decodeAudioData).toHaveBeenCalledTimes(4);
+  });
+});
+
+describe('ambience mixer: master and ducking', () => {
+  it('ramps the master gain over 300 ms, and rejects a gain outside 0 to 1', async () => {
+    const { mixer, decodes, gains, setTime } = setup();
+    mixer.apply([start('c1', 'light_rain')]);
+    decodes[0]?.resolve({ duration: 60 });
+    await flush();
+    setTime(2);
+    mixer.setMasterGain(0);
+    const [master] = gains;
+    expect(master?.gain.ramps.at(-1)).toEqual({ value: 0, at: expect.closeTo(2.3, 10) });
+    expect(() => mixer.setMasterGain(1.5)).toThrow(RangeError);
+    expect(() => mixer.setMasterGain(Number.NaN)).toThrow(RangeError);
+  });
+
+  it('sets the ducking stage from a ramp request', async () => {
+    const { mixer, decodes, gains } = setup();
+    mixer.apply([start('c1', 'light_rain')]);
+    decodes[0]?.resolve({ duration: 60 });
+    await flush();
+    mixer.setDucking({ gainDb: -7, rampMs: 30 });
+    const [, ducking] = gains;
+    expect(ducking?.gain.ramps.at(-1)?.value).toBeCloseTo(10 ** (-7 / 20), 10);
+    expect(ducking?.gain.ramps.at(-1)?.at).toBeCloseTo(0.03, 10);
+  });
+});
+
+describe('ambience mixer: suspend', () => {
+  it('suspends the clock only when nothing sounds or decodes, and a start resumes it', async () => {
+    const { mixer, decodes, context } = setup();
+    mixer.apply([start('c1', 'light_rain')]);
+    mixer.suspend();
+    expect(context.suspend).not.toHaveBeenCalled();
+
+    decodes[0]?.resolve({ duration: 60 });
+    await flush();
+    mixer.apply([{ type: 'stop', cueId: 'c1', fadeMs: 0 }]);
+    mixer.suspend();
+    expect(context.suspend).toHaveBeenCalledTimes(1);
+
+    mixer.suspend();
+    expect(context.suspend).toHaveBeenCalledTimes(1);
+
+    mixer.apply([start('c2', 'light_rain')]);
+    expect(context.resume).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -283,19 +382,9 @@ describe('ambience mixer: failures and cleanup', () => {
     setTime(1);
     mixer.apply([{ type: 'stop', cueId: 'c1', fadeMs: 3000 }]);
     setTime(4.5);
-    mixer.apply([]);
+    mixer.apply([start('c2', 'forest_night')]);
     expect(sources[0]?.disconnected).toBe(true);
     expect(bedGains(gains)[0]?.disconnected).toBe(true);
-  });
-
-  it('sets the master gain with a ramp, and the ducking stage from a ramp request', () => {
-    const { mixer, gains } = setup();
-    mixer.setMaster(false);
-    mixer.setDucking({ gainDb: -7, rampMs: 30 });
-    const [master, ducking] = gains;
-    expect(master?.gain.ramps.at(-1)?.value).toBe(0);
-    expect(ducking?.gain.ramps.at(-1)?.value).toBeCloseTo(10 ** (-7 / 20), 10);
-    expect(ducking?.gain.ramps.at(-1)?.at).toBeCloseTo(0.03, 10);
   });
 
   it('dispose stops every sounding bed, closes the context, and ignores later calls', async () => {
@@ -307,7 +396,7 @@ describe('ambience mixer: failures and cleanup', () => {
     expect(sources[0]?.stopCalls).toEqual([undefined]);
     expect(context.close).toHaveBeenCalledTimes(1);
     mixer.apply([start('c2', 'light_rain')]);
-    mixer.setMaster(true);
+    mixer.setMasterGain(1);
     expect(createContext).toHaveBeenCalledTimes(1);
   });
 });

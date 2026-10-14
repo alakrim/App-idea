@@ -1,4 +1,4 @@
-import { contrastRatio, parseHex, relativeLuminance } from '@/ui/contrast';
+import { contrastRatio, flattenOver, parseHex, relativeLuminance } from '@/ui/contrast';
 import { fontAssets } from '@/ui/fonts';
 import { resolveScheme } from '@/ui/theme';
 import { palette, fontFamily, typography } from '@/ui/tokens';
@@ -16,10 +16,30 @@ describe('WCAG contrast helpers', () => {
   });
 });
 
-describe('text colour contrast (design-system.md: AA on bg and surface)', () => {
+describe('flattenOver', () => {
+  it('blends a translucent colour over the backdrop it sits on', () => {
+    expect(flattenOver('rgba(0,0,0,0.5)', '#FFFFFF')).toBe('#808080');
+    expect(flattenOver('rgba(255,255,255,1)', '#000000')).toBe('#FFFFFF');
+  });
+
+  it('returns a solid colour unchanged and rejects anything else', () => {
+    expect(flattenOver('#875010', '#FFFFFF')).toBe('#875010');
+    expect(() => flattenOver('hsl(0,0%,0%)', '#FFFFFF')).toThrow(/solid #RRGGBB/);
+  });
+});
+
+describe('text colour contrast (WCAG AA: 4.5:1 for text on every surface it sits on)', () => {
   const themes = ['dark', 'light'] as const;
-  const surfaces = ['bg', 'surface'] as const;
-  const textTokens = ['text', 'textMuted'] as const;
+  const surfaces = ['bg', 'surface', 'surfaceRaised'] as const;
+  const textTokens = [
+    'text',
+    'textMuted',
+    'textFaint',
+    'accent',
+    'success',
+    'warning',
+    'danger',
+  ] as const;
 
   for (const scheme of themes) {
     for (const surface of surfaces) {
@@ -31,19 +51,35 @@ describe('text colour contrast (design-system.md: AA on bg and surface)', () => 
       }
     }
   }
-});
-
-describe('accent contrast (UI review: light accent must be readable as text)', () => {
-  const themes = ['dark', 'light'] as const;
 
   for (const scheme of themes) {
-    it(`${scheme} accent meets 4.5:1 on bg and surface`, () => {
-      const colors = palette[scheme];
-      expect(contrastRatio(colors.accent, colors.bg)).toBeGreaterThanOrEqual(4.5);
-      expect(contrastRatio(colors.accent, colors.surface)).toBeGreaterThanOrEqual(4.5);
-    });
+    for (const surface of surfaces) {
+      it(`${scheme} accentOnSoft meets 4.5:1 on accentSoft over ${surface}`, () => {
+        const colors = palette[scheme];
+        const soft = flattenOver(colors.accentSoft, colors[surface]);
+        expect(contrastRatio(colors.accentOnSoft, soft)).toBeGreaterThanOrEqual(4.5);
+      });
+    }
+  }
+});
 
-    it(`${scheme} onAccent meets 4.5:1 on accent (primary button label)`, () => {
+describe('control outline contrast (WCAG 1.4.11: 3:1 for a boundary that identifies a control)', () => {
+  const themes = ['dark', 'light'] as const;
+  const surfaces = ['bg', 'surface', 'surfaceRaised'] as const;
+
+  for (const scheme of themes) {
+    for (const surface of surfaces) {
+      it(`${scheme} boundary meets 3:1 on ${surface}`, () => {
+        const colors = palette[scheme];
+        expect(contrastRatio(colors.boundary, colors[surface])).toBeGreaterThanOrEqual(3);
+      });
+    }
+  }
+});
+
+describe('onAccent contrast (primary button label)', () => {
+  for (const scheme of ['dark', 'light'] as const) {
+    it(`${scheme} onAccent meets 4.5:1 on accent`, () => {
       const colors = palette[scheme];
       expect(contrastRatio(colors.onAccent, colors.accent)).toBeGreaterThanOrEqual(4.5);
     });

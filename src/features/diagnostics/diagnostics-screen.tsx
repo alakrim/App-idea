@@ -17,6 +17,8 @@ import { deviceDiagnosticsDeps } from './device-deps';
 import { readEnvironment, type EnvironmentInfo } from './environment';
 import { resultHeadline, valueLines } from './format';
 import { LastCrashCard } from './last-crash-card';
+import { RECENT_CHAPTERS_PROBE_ID } from './recent-chapters';
+import { RecentChaptersSection } from './recent-chapters-section';
 import { buildReport, reportToJson, summarize } from './report';
 import { PROBES, runDiagnostics } from './run-all';
 
@@ -110,8 +112,11 @@ export function DiagnosticsScreen() {
       </Text>
 
       {PROBES.map((probe) => {
-        const result = results.find((entry) => entry.id === probe.spec.id);
-        return <ProbeRow key={probe.spec.id} label={probe.spec.label} result={result ?? null} />;
+        const result = results.find((entry) => entry.id === probe.spec.id) ?? null;
+        if (probe.spec.id === RECENT_CHAPTERS_PROBE_ID && result?.status === 'pass') {
+          return <RecentChaptersSection key={probe.spec.id} result={result} />;
+        }
+        return <ProbeRow key={probe.spec.id} label={probe.spec.label} result={result} />;
       })}
 
       {host}

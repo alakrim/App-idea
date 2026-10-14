@@ -79,11 +79,13 @@ export const analyzeStage: StageDefinition = {
         await chapters.saveMemory(memory);
 
         const current = await chapters.getEntities(series.id);
+        // This chapter's facts from an earlier analysis are replaced, so they are left out of the dedupe.
+        const otherFacts = current.facts.filter((fact) => fact.chapterId !== ctx.chapterId);
         const resolution = resolveEntities(current.entities, memory, chapter.order, {
           seriesId: series.id,
-          existingFacts: current.facts,
+          existingFacts: otherFacts,
         });
-        await chapters.applyEntityResolution(series.id, resolution);
+        await chapters.applyEntityResolution(series.id, ctx.chapterId, resolution);
       },
     };
   },

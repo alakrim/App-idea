@@ -2,12 +2,17 @@
  * A serial queue of chapters. One chapter runs at a time, in queue order. The user can move a
  * pending chapter or cancel one. The queue is persisted through the JobStore, so it resumes after an
  * app restart: the chapter that was running is first in the restored queue, and its jobs resume.
+ * While a chapter runs, a stall watchdog watches for a chapter that stops moving: the first stalls
+ * retire its requests in flight, and a stall beyond MAX_STALLS fails the chapter, keeping its saved
+ * passages.
  */
 import { toPipelineError } from './errors';
 import { runChapter } from './runner';
+import { MAX_STALLS, STALLED_ERROR, StallWatchdog } from './stall-watchdog';
 
+import type { PipelineError, Stage } from '../domain';
 import type { PipelineEvent } from './context';
-import type { PersistedQueueItem, PipelinePorts } from './ports';
+import type { Clock, NetworkEvent, PersistedQueueItem, PipelinePorts } from './ports';
 import type { RunOptions, RunOutcome } from './runner';
 
 /** Per-chapter options. They are persisted with the queue, so a restored chapter keeps them. */
@@ -22,6 +27,18 @@ export interface QueueSnapshot {
 
 export interface PipelineQueueOptions {
   readonly onEvent?: (event: PipelineEvent) => void;
+  /** The clock the stall watchdog reads. Defaults to the ports' clock. */
+  readonly clock?: Clock;
+  /**
+   * True while a platform foreground service keeps the JS runtime alive in the background. The
+   * watchdog then keeps counting when the app leaves the foreground, because nothing is frozen.
+   */
+  readonly keepsAliveInBackground?: () => boolean;
+  /**
+   * Called once when saving the queue starts to fail. The queue stays in memory, and every later
+   * change saves it again, so the next success clears the failure.
+   */
+  readonly onSaveFailed?: () => void;
 }
 
 interface Item {
@@ -30,17 +47,31 @@ interface Item {
   controller: AbortController | null;
 }
 
+/** The chapter running now, with what the watchdog and the events need to know about it. */
+interface ActiveRun {
+  readonly item: Item;
+  readonly watchdog: StallWatchdog;
+  /** The stage the run is in, so events name it. */
+  stage: Stage;
+  /** Set when the watchdog fails the run. The runner reads it through `stopped`. */
+  stopError: PipelineError | null;
+}
+
 export class PipelineQueue {
   private items: Item[] = [];
   private paused = false;
   private draining: Promise<void> | null = null;
   private persisting: Promise<void> = Promise.resolve();
   private readonly listeners = new Set<(snapshot: QueueSnapshot) => void>();
+  private active: ActiveRun | null = null;
+  private saveFailing = false;
 
   constructor(
     private readonly ports: PipelinePorts,
     private readonly options: PipelineQueueOptions = {},
-  ) {}
+  ) {
+    ports.network.subscribe((event) => this.onNetwork(event));
+  }
 
   snapshot(): QueueSnapshot {
     const running = this.items.find((item) => item.controller !== null) ?? null;
@@ -153,12 +184,14 @@ export class PipelineQueue {
       if (!item) break;
       item.controller = new AbortController();
       this.notify();
+      const run = this.startRun(item);
       let outcome: RunOutcome | null = null;
       try {
         outcome = await runChapter(item.chapterId, this.ports, {
           ...item.options,
           signal: item.controller.signal,
-          onEvent: this.options.onEvent,
+          stopped: () => run.stopError,
+          onEvent: (event) => this.observe(run, event),
         });
       } catch (thrown) {
         this.options.onEvent?.({
@@ -167,6 +200,9 @@ export class PipelineQueue {
           stage: 'extract',
           error: toPipelineError(thrown),
         });
+      } finally {
+        run.watchdog.stop();
+        this.active = null;
       }
       item.controller = null;
       if (outcome?.status === 'failed' && outcome.error.code === 'AUTH') {
@@ -181,14 +217,95 @@ export class PipelineQueue {
     }
   }
 
+  private startRun(item: Item): ActiveRun {
+    const run: ActiveRun = {
+      item,
+      stage: item.options.from ?? 'extract',
+      stopError: null,
+      watchdog: new StallWatchdog({
+        now: () => (this.options.clock ?? this.ports.clock).now(),
+        onStall: (stalls) => this.onStall(run, stalls),
+      }),
+    };
+    run.watchdog.start();
+    this.active = run;
+    return run;
+  }
+
+  /** Every runner event passes here. It counts as activity, and it tracks the stage the run is in. */
+  private observe(run: ActiveRun, event: PipelineEvent): void {
+    if (event.chapterId === run.item.chapterId) {
+      run.watchdog.touch();
+      if ('stage' in event) run.stage = event.stage;
+    }
+    this.options.onEvent?.(event);
+  }
+
+  /**
+   * The first stalls retire the requests in flight, so each is retried at once. A stall beyond
+   * MAX_STALLS fails the chapter; its finished passages stay saved.
+   */
+  private onStall(run: ActiveRun, stalls: number): void {
+    const chapterId = run.item.chapterId;
+    this.options.onEvent?.({ type: 'stall', chapterId, stage: run.stage, count: stalls });
+    if (stalls >= MAX_STALLS) {
+      run.stopError = STALLED_ERROR;
+      run.watchdog.stop();
+      run.item.controller?.abort();
+      return;
+    }
+    this.ports.network.retireInFlight();
+  }
+
+  private onNetwork(event: NetworkEvent): void {
+    const run = this.active;
+    switch (event.type) {
+      case 'attempt':
+        run?.watchdog.touch(event.timeoutMs);
+        return;
+      case 'staleAbort':
+        if (run) {
+          this.options.onEvent?.({
+            type: 'staleAbort',
+            chapterId: run.item.chapterId,
+            stage: run.stage,
+          });
+        }
+        return;
+      case 'backgrounded':
+        if (!this.options.keepsAliveInBackground?.()) run?.watchdog.suspend();
+        return;
+      case 'resumed':
+        if (run) {
+          run.watchdog.resume();
+          this.options.onEvent?.({ type: 'reconnecting', chapterId: run.item.chapterId });
+        }
+        return;
+    }
+  }
+
+  /**
+   * Saves the queue. It never rejects: a failed save is reported once through `onSaveFailed`, and the
+   * next change saves again. The queue itself is never lost from memory.
+   */
   private persist(): Promise<void> {
     const entries: PersistedQueueItem[] = this.items.map((item) => ({
       chapterId: item.chapterId,
       ...item.options,
     }));
-    const next = this.persisting.then(() => this.ports.jobs.saveQueue(entries));
-    // Each save reports its own failure, and a failed save does not block the ones after it.
-    this.persisting = next.catch(() => undefined);
+    const next = this.persisting
+      .then(() => this.ports.jobs.saveQueue(entries))
+      .then(
+        () => {
+          this.saveFailing = false;
+        },
+        () => {
+          if (this.saveFailing) return;
+          this.saveFailing = true;
+          this.options.onSaveFailed?.();
+        },
+      );
+    this.persisting = next;
     return next;
   }
 

@@ -1,39 +1,56 @@
 import { create, type StoreApi, type UseBoundStore } from 'zustand';
 
-import type { AudioEngine, ChapterLoad, LoadedSegment } from '@/audio/engine';
+import type { AudioEngine, ChapterLoad, LoadedSegment, PlaybackState } from '@/audio/engine';
 import type {
   AmbienceCue,
   AudioSegment,
-  ChapterStatus,
+  Bookmark,
   Paragraph,
-  PlaybackPoint,
   Sentence,
 } from '@/core/domain';
 import { DEFAULT_BED_LEVEL_DB } from '@/core/playback/ambience-scheduler';
+import { DUCKING_DEFAULTS } from '@/core/playback/ducking';
+import {
+  BED_LEVEL_RANGE_DB,
+  DUCKING_RANGE_DB,
+  PLAYBACK_RATE_RANGE,
+  clampToRange,
+} from '@/core/playback/ranges';
+import { isComplete } from '@/core/playback/playability';
 import { buildTimeline, type ChapterTimeline } from '@/core/playback/timeline';
+import { systemTimers } from '@/core/playback/timers';
 import type { ChapterForPlayback } from '@/db/repos/playback-repo';
-import type { PipelineFacade } from '@/features/pipeline/facade';
+import { findBookmark, type BookmarkGroup } from '@/features/bookmarks/bookmark-data';
+import type { ChapterProgress, PipelineFacade } from '@/features/pipeline/facade';
 
-import { createPlayerStore, type PlayerStore, type PlayerTimers } from './player-store';
+import {
+  createPlayerStore,
+  type PlayerStore,
+  type PlayerTimers,
+  type SavedPosition,
+} from './player-store';
 import { containsMs, sentenceRange } from './sentence-range';
 
 import type { PlaybackData } from './playback-data';
+import type { SampleOutput, SampleRequest } from './sample-output';
 
-/** Bed levels the engine accepts. */
-const MIN_BED_LEVEL_DB = -40;
-const MAX_BED_LEVEL_DB = 0;
-/** Going back within this many ms of a sentence start restarts that sentence instead of stepping back. */
-const RESTART_SENTENCE_MS = 2000;
 /** How long a settings sample of one bed plays. */
 export const BED_PREVIEW_MS = 8000;
+/** Going back within this many ms of a sentence start restarts that sentence instead of stepping back. */
+const RESTART_SENTENCE_MS = 2000;
 
 export type PlaybackStatus = 'idle' | 'loading' | 'ready' | 'unavailable' | 'error';
+
+/** Why a chapter could not play. A load failure is about the stored chapter, a playback one about the audio. */
+export type PlaybackFailure = 'load' | 'playback';
 
 export interface AmbienceSettings {
   /** The master switch for every bed. */
   enabled: boolean;
-  /** Bed level relative to the narration, from -40 to 0 dB. */
+  /** Bed level relative to the narration, in dB (BED_LEVEL_RANGE_DB). */
   levelDb: number;
+  /** How far beds dip under the voice, in dB (DUCKING_RANGE_DB). */
+  duckingDb: number;
 }
 
 /** What the player UI renders for the chapter in view. The store is separate from the engine's. */
@@ -42,8 +59,12 @@ export interface PlaybackContent {
   chapterId: string | null;
   seriesId: string | null;
   coverTint: string | null;
-  /** False while narration is still being generated. */
+  /** False while narration is still being generated. Only a finished or failed narration is final. */
   final: boolean;
+  /** True when processing has stopped before the chapter was finished, so its audio ends here for now. */
+  narrationPaused: boolean;
+  /** Set with `status: 'error'`: which failure to explain. */
+  failure: PlaybackFailure | null;
   paragraphs: readonly Paragraph[];
   sentences: readonly Sentence[];
   cues: readonly AmbienceCue[];
@@ -52,7 +73,30 @@ export interface PlaybackContent {
   /** The sentence on repeat (A-B loop on one sentence), or null. */
   loopSentenceIdx: number | null;
   ambience: AmbienceSettings;
+  /** The series' bookmarks, by chapter in reading order. Empty when no series is loaded. */
+  bookmarks: readonly BookmarkGroup[];
 }
+
+/** The result of bookmarking the current sentence: a new bookmark, or one removed again. */
+export type BookmarkToggle = { kind: 'added'; bookmark: Bookmark } | { kind: 'removed' };
+
+/** The saved ambience settings, read and written by the controller. Production wires it to settings. */
+export interface AmbiencePort {
+  read(): AmbienceSettings;
+  write(next: AmbienceSettings): void;
+  subscribe(listener: (next: AmbienceSettings) => void): () => void;
+}
+
+export interface PlaybackSampleState {
+  /** True while a sample plays and the narration is held. */
+  playing: boolean;
+}
+
+const INITIAL_AMBIENCE: AmbienceSettings = {
+  enabled: true,
+  levelDb: DEFAULT_BED_LEVEL_DB,
+  duckingDb: DUCKING_DEFAULTS.duckingDb,
+};
 
 const INITIAL_CONTENT: PlaybackContent = {
   status: 'idle',
@@ -60,23 +104,32 @@ const INITIAL_CONTENT: PlaybackContent = {
   seriesId: null,
   coverTint: null,
   final: true,
+  narrationPaused: false,
+  failure: null,
   paragraphs: [],
   sentences: [],
   cues: [],
   timeline: null,
   loopSentenceIdx: null,
-  ambience: { enabled: true, levelDb: DEFAULT_BED_LEVEL_DB },
+  ambience: INITIAL_AMBIENCE,
+  bookmarks: [],
 };
 
 export interface PlayChapterOptions {
   /** Start at this sentence instead of the saved position. */
   fromSentence?: number;
+  /** Start playing once the chapter is loaded. Auto-advance uses it, so listening carries on. */
+  autoplay?: boolean;
 }
 
 export interface PlaybackControllerDeps {
   data: PlaybackData;
   engine: AudioEngine;
   pipeline: Pick<PipelineFacade, 'subscribe'>;
+  ambience: AmbiencePort;
+  samples: SampleOutput;
+  /** The speed for a series that has none saved yet. Read when a chapter loads. */
+  defaultRate: () => number;
   timers?: PlayerTimers;
   now?: () => number;
 }
@@ -86,8 +139,15 @@ export interface PlaybackController {
   readonly player: PlayerStore;
   /** Content of the chapter in view, read through its hook. */
   readonly content: UseBoundStore<StoreApi<PlaybackContent>>;
-  /** Loads a chapter, resuming the saved position when it is the one last played. Never throws. */
+  /** Whether a sample is playing, read through its hook. */
+  readonly sample: UseBoundStore<StoreApi<PlaybackSampleState>>;
+  /**
+   * Loads a chapter at its own saved place, or from the start when it was finished. Never throws.
+   * The series' saved speed applies once it is ready.
+   */
   playChapter(chapterId: string, options?: PlayChapterOptions): Promise<void>;
+  /** Plays a bookmark or any other sentence: seeks in the chapter in view, or loads it first. */
+  jumpToSentence(chapterId: string, sentenceIdx: number): void;
   /** A user seek to a sentence. Ends a repeat unless the sentence is the one repeating. */
   seekToSentence(idx: number): void;
   /** A user seek in media ms. Ends a repeat when the target leaves the repeated sentence. */
@@ -97,15 +157,32 @@ export interface PlaybackController {
   stepSentence(direction: 'next' | 'previous'): void;
   /** Repeats one sentence until it is set to null or the listener seeks out of it. */
   setLoopSentence(idx: number | null): void;
+  /** Remembers the current speed for this series, so its chapters load at it from now on. */
+  saveRateForSeries(): void;
+  /** Bookmarks a sentence of the chapter in view, or removes its bookmark. Null when neither can happen. */
+  toggleBookmark(sentenceIdx: number): BookmarkToggle | null;
+  /** Saves the note of a bookmark, then refreshes the list. */
+  saveBookmarkNote(bookmarkId: string, note: string): void;
+  deleteBookmark(bookmarkId: string): void;
   setAmbience(patch: Partial<AmbienceSettings>): void;
   /** Plays one ambience bed for a few seconds at `levelDb`, for the settings sample. */
   previewBed(category: string, levelDb: number): void;
+  /**
+   * Plays a sample (a narrator's clip or a device voice line). The narration is paused for it and
+   * resumed afterwards if it was playing. A second sample replaces the first.
+   */
+  playSample(request: SampleRequest): void;
+  /** Stops the sample and resumes the narration if it had been playing. */
+  stopSample(): void;
   dispose(): void;
 }
 
-/** A chapter whose narration has finished, whatever it produced. */
-function isNarrationComplete(status: ChapterStatus): boolean {
-  return status === 'ready' || status === 'failed';
+/**
+ * Narration can still produce audio while a run is queued or running. In any other state it has
+ * stopped: it finished, failed or was cancelled. The player then ends at the audio it has.
+ */
+function isNarrationStopped(state: ChapterProgress['state']): boolean {
+  return state !== 'queued' && state !== 'running';
 }
 
 function toLoadedSegment(segment: AudioSegment): LoadedSegment {
@@ -122,14 +199,25 @@ function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
 }
 
+function sameAmbience(a: AmbienceSettings, b: AmbienceSettings): boolean {
+  return a.enabled === b.enabled && a.levelDb === b.levelDb && a.duckingDb === b.duckingDb;
+}
+
 /**
- * Wires the audio engine, the player store, the database and the pipeline together. It loads
- * chapters, resumes them, advances to the next ready chapter, appends narration as it arrives,
- * and enforces repeats. It holds no native or React code, so it runs under Jest.
+ * Wires the audio engine, the player store, the database, the pipeline and the sample output
+ * together. It loads chapters, resumes them, advances to the next ready chapter, appends narration
+ * as it arrives, enforces repeats, and applies the saved ambience settings. It holds no native or
+ * React code, so it runs under Jest.
  */
 export function createPlaybackController(deps: PlaybackControllerDeps): PlaybackController {
-  const { data, engine, pipeline } = deps;
-  const useContent = create<PlaybackContent>()(() => INITIAL_CONTENT);
+  const { data, engine, pipeline, ambience, samples } = deps;
+  const timers = deps.timers ?? systemTimers;
+  const initialAmbience = ambience.read();
+  const useContent = create<PlaybackContent>()(() => ({
+    ...INITIAL_CONTENT,
+    ambience: initialAmbience,
+  }));
+  const useSample = create<PlaybackSampleState>()(() => ({ playing: false }));
   const readContent = () => useContent.getState();
   const writeContent = (patch: Partial<PlaybackContent>) => useContent.setState(patch);
 
@@ -137,40 +225,91 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
   let segments: LoadedSegment[] = [];
   let loadToken = 0;
   let stopWatching: (() => void) | null = null;
+  let repeatTimer: unknown = null;
+  let sampleActive = false;
+  let resumeAfterSample = false;
+  let sampleToken = 0;
 
-  // Registered before the player store, so the auto-advance sees a still-set end-of-chapter timer.
+  engine.setAmbienceMix(initialAmbience);
+
+  // Registered before the player store, so the end of a chapter is read before the store's own
+  // listener clears the sleep timer.
   const unsubscribes: (() => void)[] = [
-    engine.onState((state) => {
-      if (state === 'ended') handleEnded();
-    }),
+    engine.onState(handleEngineState),
     engine.onPosition(({ positionMs }) => enforceRepeat(positionMs)),
+    ambience.subscribe((next) => applyAmbience(next)),
   ];
 
   const player = createPlayerStore({
     engine,
     savePosition: savePositionSafely,
-    timers: deps.timers,
+    timers,
     now: deps.now,
   });
 
-  function savePositionSafely(point: PlaybackPoint): void {
+  function savePositionSafely(point: SavedPosition): void {
     if (seriesId === null) return;
     try {
-      data.savePosition(seriesId, point.chapterId, point.sentenceIdx);
+      data.savePosition(seriesId, point.chapterId, {
+        sentenceIdx: point.sentenceIdx,
+        positionMs: point.positionMs,
+      });
     } catch (error) {
       // Position saves are best effort. The next tick saves again, so a failure is not fatal.
       console.warn('Could not save the listening position.', error);
     }
   }
 
+  function handleEngineState(state: PlaybackState): void {
+    if (state === 'error') {
+      // A failure while the chapter is in view replaces it with the error state. Its place is saved
+      // by the player store, so "Try again" resumes there.
+      if (readContent().status === 'ready') writeContent({ status: 'error', failure: 'playback' });
+      return;
+    }
+    if (state === 'ended') {
+      // Read the sleep timer now, before the store clears it. The advance itself runs after the
+      // engine has finished telling its listeners, so the store never sees a stale `ended`.
+      const stopAtChapterEnd = player.getState().sleepTimer.mode === 'endOfChapter';
+      void Promise.resolve().then(() => handleEnded(stopAtChapterEnd));
+    }
+  }
+
+  function applyAmbience(next: AmbienceSettings): void {
+    if (sameAmbience(readContent().ambience, next)) return;
+    writeContent({ ambience: next });
+    engine.setAmbienceMix(next);
+  }
+
+  function clearRepeatTimer(): void {
+    if (repeatTimer !== null) {
+      timers.clearTimeout(repeatTimer);
+      repeatTimer = null;
+    }
+  }
+
+  /**
+   * Keeps a repeated sentence repeating. The jump is scheduled from the predicted end, adjusted
+   * for the rate, so it lands on the boundary. The position event is the backstop when it is late.
+   */
   function enforceRepeat(positionMs: number): void {
+    clearRepeatTimer();
     const { loopSentenceIdx, timeline } = readContent();
     if (loopSentenceIdx === null || !timeline) return;
     const range = sentenceRange(timeline, loopSentenceIdx);
-    if (range && positionMs >= range.endMs) engine.seekTo(range.startMs);
+    if (!range) return;
+    if (positionMs >= range.endMs) {
+      engine.seekTo(range.startMs);
+      return;
+    }
+    const delayMs = (range.endMs - positionMs) / player.getState().rate;
+    repeatTimer = timers.setTimeout(() => {
+      repeatTimer = null;
+      if (readContent().loopSentenceIdx === loopSentenceIdx) engine.seekTo(range.startMs);
+    }, delayMs);
   }
 
-  function handleEnded(): void {
+  function handleEnded(stopAtChapterEnd: boolean): void {
     const { loopSentenceIdx, timeline } = readContent();
     const range =
       loopSentenceIdx !== null && timeline ? sentenceRange(timeline, loopSentenceIdx) : null;
@@ -180,15 +319,29 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       engine.seekTo(range.startMs);
       return;
     }
-    if (player.getState().sleepTimer.mode === 'endOfChapter') return;
+    markChapterFinished(readContent().chapterId, timeline);
+    if (stopAtChapterEnd) return;
     advanceToNext();
+  }
+
+  /** Records that the chapter was heard to its end, so it reads as finished and restarts from the top. */
+  function markChapterFinished(chapterId: string | null, timeline: ChapterTimeline | null): void {
+    if (chapterId === null || timeline === null || timeline.sentenceCount === 0) return;
+    try {
+      data.markFinished(chapterId, {
+        sentenceIdx: timeline.sentenceCount - 1,
+        positionMs: timeline.totalDurationMs,
+      });
+    } catch (error) {
+      console.warn('Could not mark the chapter as finished.', error);
+    }
   }
 
   function advanceToNext(): void {
     const current = player.getState().nowPlaying;
     if (!current || seriesId === null) return;
     const nextId = data.nextReadyChapterId(seriesId, current.chapterOrder);
-    if (nextId !== null) void playChapter(nextId);
+    if (nextId !== null) void playChapter(nextId, { autoplay: true });
   }
 
   function stopWatchingProgress(): void {
@@ -197,7 +350,8 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
 
   /**
    * Follows the pipeline while a chapter is still narrating. New segments are appended as they
-   * arrive, and the end of narration is passed to the engine so playback can finish.
+   * arrive. Only a finished or failed narration makes the chapter final. Every other state keeps
+   * the watch open, so a stall or a reconnect resumes on its own.
    */
   function watchProgress(chapterId: string): void {
     stopWatchingProgress();
@@ -212,21 +366,23 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
 
     unsubscribe = pipeline.subscribe(chapterId, (progress) => {
       if (!active) return;
-      const narrating = progress.state === 'queued' || progress.state === 'running';
+      const complete = isNarrationStopped(progress.state);
       if (readContent().status === 'unavailable') {
         // Nothing was playable when the chapter opened: start it once narration produces audio.
         if (data.segmentsFrom(chapterId, 0).length > 0) {
           stop();
           void playChapter(chapterId);
-        } else if (!narrating) {
+        } else if (complete) {
           stop();
         }
         return;
       }
-      if (progress.readySegments > segments.length || !narrating) {
-        appendFromData(chapterId, !narrating);
+      if (progress.readySegments > segments.length || complete) {
+        appendFromData(chapterId, complete);
       }
-      if (!narrating) stop();
+      // Stopped short of the whole chapter: the player says narration is paused, and it waits for more.
+      writeContent({ narrationPaused: complete && progress.state !== 'ready' });
+      if (complete) stop();
     });
     // The subscribe call emits the current snapshot at once, which may have stopped the watch already.
     if (!active) unsubscribe();
@@ -240,10 +396,28 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
     writeContent({ timeline: buildTimeline(segments), final });
   }
 
+  /** A chapter resumes at its own saved sentence. A finished one starts from the top. */
   function resumeSentence(chapterId: string): number {
-    if (seriesId === null) return 0;
-    const saved = data.currentPoint(seriesId);
-    return saved?.chapterId === chapterId ? saved.sentenceIdx : 0;
+    const saved = data.chapterPosition(chapterId);
+    return saved !== null && !saved.completed ? saved.sentenceIdx : 0;
+  }
+
+  /** The series' saved speed, or the default for a series that has none, kept inside the range. */
+  function rateFor(chapterSeriesId: string): number {
+    const saved = data.seriesPlaybackRate(chapterSeriesId) ?? deps.defaultRate();
+    return clampToRange(saved, PLAYBACK_RATE_RANGE);
+  }
+
+  /** Ends the sample. Resumes the narration only when it was held for the sample and asked to resume. */
+  function endSample(resume: boolean): void {
+    if (!sampleActive) return;
+    sampleToken += 1;
+    samples.stop();
+    sampleActive = false;
+    useSample.setState({ playing: false });
+    const shouldResume = resumeAfterSample && resume;
+    resumeAfterSample = false;
+    if (shouldResume) player.play();
   }
 
   async function playChapter(chapterId: string, options: PlayChapterOptions = {}): Promise<void> {
@@ -252,6 +426,7 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
     player.flushPosition();
     stopWatchingProgress();
     player.pause();
+    endSample(false);
     writeContent({
       status: 'loading',
       chapterId,
@@ -260,6 +435,8 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       cues: [],
       timeline: null,
       loopSentenceIdx: null,
+      narrationPaused: false,
+      failure: null,
     });
 
     try {
@@ -271,10 +448,16 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       seriesId = chapter.chapter.seriesId;
       const loaded = chapter.segments.map(toLoadedSegment);
       const timeline = buildTimeline(loaded);
-      const final = isNarrationComplete(chapter.chapter.status);
+      // Final when narration is done and the audio covers the text. Otherwise the watch below decides.
+      const final = isComplete({
+        narrateDone: chapter.chapter.status === 'ready',
+        passages: chapter.segments,
+        sentenceCount: chapter.sentences.length,
+      });
       const shared = sharedContent(chapter, chapterId);
 
       segments = loaded;
+      applyAmbience(ambience.read());
       if (loaded.length === 0) {
         writeContent({ ...shared, status: 'unavailable', final: false });
         if (!final) watchProgress(chapterId);
@@ -300,14 +483,14 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       await player.load(load, startMs);
       if (token !== loadToken) return;
 
-      const { ambience } = readContent();
-      engine.setAmbienceMaster(ambience.enabled, ambience.levelDb);
+      player.setRate(rateFor(chapter.chapter.seriesId));
       writeContent({ ...shared, status: 'ready', timeline, final });
+      if (options.autoplay) player.play();
       if (!final) watchProgress(chapterId);
     } catch (error) {
       if (token === loadToken) {
         console.warn('Could not start the chapter.', error);
-        writeContent({ status: 'error', chapterId });
+        writeContent({ status: 'error', chapterId, failure: 'load' });
       }
     }
   }
@@ -321,7 +504,13 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       sentences: chapter.sentences,
       cues: chapter.cues,
       loopSentenceIdx: null,
+      bookmarks: data.bookmarksOf(chapter.chapter.seriesId),
     };
+  }
+
+  function refreshBookmarks(): void {
+    const { seriesId: current } = readContent();
+    writeContent({ bookmarks: current === null ? [] : data.bookmarksOf(current) });
   }
 
   function seekToSentence(idx: number): void {
@@ -346,6 +535,7 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
   return {
     player,
     content: useContent,
+    sample: useSample,
 
     playChapter,
 
@@ -373,9 +563,25 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       }
     },
 
+    jumpToSentence(chapterId, sentenceIdx) {
+      const { chapterId: inView, status } = readContent();
+      if (chapterId === inView && status === 'ready') {
+        seekToSentence(sentenceIdx);
+        player.play();
+        return;
+      }
+      void playChapter(chapterId, { fromSentence: sentenceIdx, autoplay: true });
+    },
+
+    saveRateForSeries() {
+      if (seriesId === null) return;
+      data.saveSeriesPlaybackRate(seriesId, player.getState().rate);
+    },
+
     setLoopSentence(idx) {
       const { timeline } = readContent();
       if (idx === null || !timeline) {
+        clearRepeatTimer();
         writeContent({ loopSentenceIdx: null });
         return;
       }
@@ -385,29 +591,83 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       if (!containsMs(range, player.getState().positionMs)) player.seekTo(range.startMs);
     },
 
+    toggleBookmark(sentenceIdx) {
+      const { chapterId, seriesId: series, timeline, bookmarks } = readContent();
+      if (chapterId === null || series === null || !timeline) return null;
+      if (!timeline.isSentenceAvailable(sentenceIdx)) return null;
+      const existing = findBookmark(bookmarks, chapterId, sentenceIdx);
+      if (existing !== null) {
+        data.removeBookmark(existing.id);
+        refreshBookmarks();
+        return { kind: 'removed' };
+      }
+      const bookmark = data.addBookmark({
+        seriesId: series,
+        chapterId,
+        sentenceIdx,
+        positionMs: timeline.sentenceToPosition(sentenceIdx),
+      });
+      refreshBookmarks();
+      return { kind: 'added', bookmark };
+    },
+
+    saveBookmarkNote(bookmarkId, note) {
+      data.setBookmarkNote(bookmarkId, note);
+      refreshBookmarks();
+    },
+
+    deleteBookmark(bookmarkId) {
+      data.removeBookmark(bookmarkId);
+      refreshBookmarks();
+    },
+
     setAmbience(patch) {
       const current = readContent().ambience;
-      const next = {
+      const next: AmbienceSettings = {
         enabled: patch.enabled ?? current.enabled,
-        levelDb: clamp(patch.levelDb ?? current.levelDb, MIN_BED_LEVEL_DB, MAX_BED_LEVEL_DB),
+        levelDb: clampToRange(patch.levelDb ?? current.levelDb, BED_LEVEL_RANGE_DB),
+        duckingDb: clampToRange(patch.duckingDb ?? current.duckingDb, DUCKING_RANGE_DB),
       };
-      writeContent({ ambience: next });
-      engine.setAmbienceMaster(next.enabled, next.levelDb);
+      // The saved settings are the source of truth. Writing them also applies them to the engine.
+      ambience.write(next);
+      applyAmbience(next);
     },
 
     previewBed(category, levelDb) {
-      engine.previewBed(
-        category,
-        clamp(levelDb, MIN_BED_LEVEL_DB, MAX_BED_LEVEL_DB),
-        BED_PREVIEW_MS,
-      );
+      engine.previewBed(category, clampToRange(levelDb, BED_LEVEL_RANGE_DB), BED_PREVIEW_MS);
+    },
+
+    playSample(request) {
+      if (!sampleActive) {
+        const { state } = player.getState();
+        resumeAfterSample = state === 'playing' || state === 'buffering';
+        if (resumeAfterSample) player.pause();
+      }
+      sampleActive = true;
+      const token = ++sampleToken;
+      useSample.setState({ playing: true });
+      samples.play(request, () => {
+        if (token !== sampleToken) return;
+        sampleActive = false;
+        useSample.setState({ playing: false });
+        const shouldResume = resumeAfterSample;
+        resumeAfterSample = false;
+        if (shouldResume) player.play();
+      });
+    },
+
+    stopSample() {
+      endSample(true);
     },
 
     dispose() {
-      loadToken++;
+      loadToken += 1;
       stopWatchingProgress();
+      clearRepeatTimer();
+      endSample(false);
       for (const unsubscribe of unsubscribes) unsubscribe();
       player.dispose();
+      samples.dispose();
     },
   };
 }

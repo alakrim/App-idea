@@ -18,6 +18,7 @@ import type { ChapterText } from '@/core/text/build';
 import { audioSegmentRepo } from '@/db/repos/audio-segment-repo';
 import { chapterRepo } from '@/db/repos/chapter-repo';
 import { cueRepo } from '@/db/repos/cue-repo';
+import { jobRepo } from '@/db/repos/job-repo';
 import { memoryRepo } from '@/db/repos/memory-repo';
 import { narrationProfileRepo } from '@/db/repos/narration-profile-repo';
 import { seriesRepo } from '@/db/repos/series-repo';
@@ -81,21 +82,26 @@ export function createChapterStore(deps: ChapterStoreDeps): ChapterStore {
     },
 
     async replaceText(chapterId, text: ChapterText) {
-      textRepo.replaceChapterText(db, chapterId, {
-        paragraphs: text.paragraphs.map((p) => ({
-          idx: p.idx,
-          sentenceStart: p.sentenceStart,
-          sentenceEnd: p.sentenceEnd,
-          kind: p.kind,
-        })),
-        sentences: text.sentences.map((s) => ({
-          chapterId,
-          idx: s.idx,
-          paragraphIdx: s.paragraphIdx,
-          text: s.text,
-          translated: null,
-          charCount: s.charCount,
-        })),
+      // New sentences carry no translations, so the translate job must not still say it is done.
+      db.transaction((tx) => {
+        textRepo.replaceChapterText(tx, chapterId, {
+          paragraphs: text.paragraphs.map((p) => ({
+            idx: p.idx,
+            sentenceStart: p.sentenceStart,
+            sentenceEnd: p.sentenceEnd,
+            kind: p.kind,
+          })),
+          sentences: text.sentences.map((s) => ({
+            chapterId,
+            idx: s.idx,
+            paragraphIdx: s.paragraphIdx,
+            text: s.text,
+            translated: null,
+            translatedLang: null,
+            charCount: s.charCount,
+          })),
+        });
+        jobRepo.deleteStage(tx, chapterId, 'translate');
       });
     },
 
@@ -109,18 +115,19 @@ export function createChapterStore(deps: ChapterStoreDeps): ChapterStore {
         kind: kindOf.get(s.paragraphIdx) ?? 'text',
         text: s.text,
         translated: s.translated,
+        translatedLang: s.translatedLang,
         charCount: s.charCount,
       }));
     },
 
-    async setTranslations(chapterId, translations, partialIdx) {
+    async setTranslations(chapterId, translations, partialIdx, lang) {
       const fallback = new Set(partialIdx);
       const rows: Translation[] = [];
       for (const [idx, translated] of translations) {
         if (!fallback.has(idx)) rows.push({ idx, translated });
       }
       for (const idx of fallback) rows.push({ idx, translated: null });
-      textRepo.setTranslations(db, chapterId, rows);
+      textRepo.setTranslations(db, chapterId, rows, lang);
     },
 
     async saveCues(chapterId, cues: readonly ValidatedCue[]) {
@@ -157,8 +164,8 @@ export function createChapterStore(deps: ChapterStoreDeps): ChapterStore {
       };
     },
 
-    async applyEntityResolution(seriesId, resolution: EntityResolution) {
-      memoryRepo.saveEntityResolution(db, seriesId, resolution);
+    async applyEntityResolution(seriesId, chapterId, resolution: EntityResolution) {
+      memoryRepo.saveEntityResolution(db, seriesId, chapterId, resolution);
     },
 
     async listAudioSegments(chapterId) {

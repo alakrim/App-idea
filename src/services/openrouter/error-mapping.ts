@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { TOO_LARGE_TO_READ } from '@/core/extract/select';
+
 import { pipelineFailure } from './errors';
 
 import type { PipelineFailure } from './errors';
@@ -19,6 +21,10 @@ const IN_FLIGHT_BUDGET_SOURCE = 'openrouter_in_flight_budget';
 /** Matches OpenRouter's "this model cannot be served" messages, which arrive as 400 or 404. */
 const MODEL_UNAVAILABLE_PATTERN =
   /model[^.]*not (found|available|exist|supported)|no endpoints|not a valid model|unknown model/i;
+
+/** A 400 that says the prompt is longer than the model's context window. */
+const CONTEXT_LENGTH_PATTERN =
+  /context (length|window)|maximum context|too many tokens|prompt is too long|reduce the (length|input)/i;
 
 /** A 400 that refuses a setting: "Gemini TTS only supports response_format=\"pcm\"", "not supported". */
 const REFUSED_SETTING_PATTERN =
@@ -112,6 +118,10 @@ export function failureFromHttp(
       'This model is not available on OpenRouter right now. Choose another one in Settings.',
       { retryable: false, detail },
     );
+  }
+  if (status === 400 && CONTEXT_LENGTH_PATTERN.test(detail)) {
+    // Not retryable: the same input is too long again. The copy names the way out.
+    return pipelineFailure('INPUT_TOO_LONG', TOO_LARGE_TO_READ, { retryable: false, detail });
   }
   if (status === 400 && REFUSED_SETTING_PATTERN.test(detail)) {
     // Not retryable: the same request is refused again. Retrying with another format is the

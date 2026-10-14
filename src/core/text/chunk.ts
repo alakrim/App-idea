@@ -20,6 +20,13 @@ export interface TtsPlanOptions {
   maxChars?: number;
   /** Paragraphs shorter than this may be joined with a following text paragraph. Defaults to 120. */
   minChars?: number;
+  /** Longest segment in estimated speech seconds. Defaults to DEFAULT_TTS_MAX_SECONDS. */
+  maxSeconds?: number;
+  /**
+   * Longest first text segment in estimated speech seconds, so playback starts quickly. Defaults to
+   * DEFAULT_TTS_FIRST_MAX_SECONDS.
+   */
+  firstMaxSeconds?: number;
 }
 
 export interface LlmPlanOptions {
@@ -27,25 +34,36 @@ export interface LlmPlanOptions {
   overlapSentences: number;
 }
 
-export type TtsPlanInput = Pick<Sentence, 'idx' | 'paragraphIdx' | 'kind' | 'charCount'>;
+/** A sentence as the TTS planner sees it. `seconds` is its estimated speech time, zero when unknown. */
+export type TtsPlanInput = Pick<Sentence, 'idx' | 'paragraphIdx' | 'kind' | 'charCount'> & {
+  readonly seconds?: number;
+};
 
 /** Longest narration segment in characters, when the narrator does not ask for another size. */
 export const DEFAULT_TTS_MAX_CHARS = 600;
+/** Longest narration segment in speech seconds, when the narrator does not ask for another size. */
+export const DEFAULT_TTS_MAX_SECONDS = 40;
+/** Longest first text segment in speech seconds. Short, so the first audio arrives quickly. */
+export const DEFAULT_TTS_FIRST_MAX_SECONDS = 12;
 const DEFAULT_MIN_CHARS = 120;
+/** Absorbs floating-point error in the sums of per-character seconds. */
+const SECONDS_TOLERANCE = 1e-6;
 
 interface OpenSegment {
   start: number;
   end: number;
   chars: number;
+  seconds: number;
   paragraphIdx: number;
 }
 
 /**
  * Groups sentences into TTS segments.
  *
- * Greedy within a paragraph, up to `maxChars`. A segment never crosses a paragraph, except that a
- * paragraph shorter than `minChars` may continue into a following text paragraph. Headings get a
- * segment of their own, and so does any single sentence longer than `maxChars`.
+ * Greedy within a paragraph, up to `maxChars` characters and `maxSeconds` of speech. The first text
+ * segment of the chapter is held to `firstMaxSeconds`. A segment never crosses a paragraph, except
+ * that a paragraph shorter than `minChars` may continue into a following text paragraph. Headings
+ * get a segment of their own, and so does any single sentence over a limit.
  */
 export function planTtsSegments(
   sentences: readonly TtsPlanInput[],
@@ -53,8 +71,12 @@ export function planTtsSegments(
 ): TtsSegment[] {
   const maxChars = options.maxChars ?? DEFAULT_TTS_MAX_CHARS;
   const minChars = options.minChars ?? DEFAULT_MIN_CHARS;
+  const maxSeconds = options.maxSeconds ?? DEFAULT_TTS_MAX_SECONDS;
+  const firstMaxSeconds = options.firstMaxSeconds ?? DEFAULT_TTS_FIRST_MAX_SECONDS;
   assertPositiveInteger('maxChars', maxChars);
   assertNonNegativeInteger('minChars', minChars);
+  assertPositiveNumber('maxSeconds', maxSeconds);
+  assertPositiveNumber('firstMaxSeconds', firstMaxSeconds);
 
   const paragraphChars = new Map<number, number>();
   for (const sentence of sentences) {
@@ -63,41 +85,72 @@ export function planTtsSegments(
   }
 
   const segments: TtsSegment[] = [];
+  // Headings do not count as text. The first text segment has the short budget.
+  let textSegments = 0;
   let open: OpenSegment | undefined;
-  for (const sentence of sentences) {
-    if (sentence.kind === 'heading' || sentence.charCount > maxChars) {
-      if (open) segments.push(toSegment(open));
+  const secondsBudget = (): number => (textSegments === 0 ? firstMaxSeconds : maxSeconds);
+  const close = (): void => {
+    if (open) {
+      segments.push(toSegment(open));
+      textSegments += 1;
       open = undefined;
+    }
+  };
+
+  for (const sentence of sentences) {
+    const seconds = sentence.seconds ?? 0;
+    if (sentence.kind === 'heading') {
+      close();
       segments.push({ sentenceStart: sentence.idx, sentenceEnd: sentence.idx });
+      continue;
+    }
+    // A sentence over a limit on its own gets a segment of its own. If a segment is open, it is
+    // closed first, so the sentence's segment comes later and gets the full budget.
+    const ownBudget = open ? maxSeconds : secondsBudget();
+    if (sentence.charCount > maxChars || seconds > ownBudget + SECONDS_TOLERANCE) {
+      close();
+      segments.push({ sentenceStart: sentence.idx, sentenceEnd: sentence.idx });
+      textSegments += 1;
       continue;
     }
     if (open && sentence.paragraphIdx !== open.paragraphIdx) {
       const previousIsTiny = (paragraphChars.get(open.paragraphIdx) ?? 0) < minChars;
       const mayContinue =
-        previousIsTiny && sentence.kind === 'text' && open.chars + sentence.charCount <= maxChars;
-      if (!mayContinue) {
-        segments.push(toSegment(open));
-        open = undefined;
-      }
+        previousIsTiny &&
+        sentence.kind === 'text' &&
+        fits(open, sentence.charCount, seconds, maxChars, secondsBudget());
+      if (!mayContinue) close();
     }
-    if (open && open.chars + sentence.charCount > maxChars) {
-      segments.push(toSegment(open));
-      open = undefined;
-    }
+    if (open && !fits(open, sentence.charCount, seconds, maxChars, secondsBudget())) close();
     if (!open) {
       open = {
         start: sentence.idx,
         end: sentence.idx,
         chars: 0,
+        seconds: 0,
         paragraphIdx: sentence.paragraphIdx,
       };
     }
     open.end = sentence.idx;
     open.chars += sentence.charCount;
+    open.seconds += seconds;
     open.paragraphIdx = sentence.paragraphIdx;
   }
-  if (open) segments.push(toSegment(open));
+  close();
   return segments;
+}
+
+/** Whether a sentence can join the open segment without passing either limit. */
+function fits(
+  open: OpenSegment,
+  charCount: number,
+  seconds: number,
+  maxChars: number,
+  maxSeconds: number,
+): boolean {
+  return (
+    open.chars + charCount <= maxChars && open.seconds + seconds <= maxSeconds + SECONDS_TOLERANCE
+  );
 }
 
 function toSegment(open: OpenSegment): TtsSegment {
@@ -152,6 +205,12 @@ export function planLlmChunks(
 function assertPositiveInteger(name: string, value: number): void {
   if (!Number.isInteger(value) || value < 1) {
     throw new RangeError(`${name} must be a positive integer, got ${value}`);
+  }
+}
+
+function assertPositiveNumber(name: string, value: number): void {
+  if (!Number.isFinite(value) || value <= 0) {
+    throw new RangeError(`${name} must be a positive number, got ${value}`);
   }
 }
 

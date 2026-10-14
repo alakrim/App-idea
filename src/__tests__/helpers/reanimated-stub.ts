@@ -10,7 +10,7 @@ const layoutAnimation = { duration: () => layoutAnimation, delay: () => layoutAn
 
 module.exports = {
   __esModule: true,
-  default: { View: RN.View, ScrollView: RN.ScrollView, Text: RN.Text },
+  default: { View: RN.View, ScrollView: RN.ScrollView, FlatList: RN.FlatList, Text: RN.Text },
   useSharedValue: (initial: unknown) => ({ value: initial }),
   useAnimatedStyle: () => ({}),
   useAnimatedScrollHandler: () => () => undefined,

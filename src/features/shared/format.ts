@@ -11,6 +11,13 @@ export function formatDuration(ms: number): string {
   return hours > 0 ? `${hours} h ${rest} m` : `${rest} m`;
 }
 
+/** A step's elapsed time: "42 s", or "1 m 05 s" from a minute on. */
+export function formatElapsed(ms: number): string {
+  const seconds = Math.max(0, Math.floor(ms / 1000));
+  if (seconds < 60) return `${seconds} s`;
+  return `${Math.floor(seconds / 60)} m ${String(seconds % 60).padStart(2, '0')} s`;
+}
+
 export function formatChapterCount(count: number): string {
   return count === 1 ? '1 chapter' : `${count} chapters`;
 }
@@ -34,10 +41,9 @@ export function formatUsd(usd: number): string {
 export function formatCostEstimate(
   estimate: Pick<CostEstimate, 'totalUsd' | 'lowUsd' | 'highUsd'>,
 ): string {
-  const total = formatUsd(estimate.totalUsd);
-  const low = estimate.lowUsd.toFixed(2);
-  const high = estimate.highUsd.toFixed(2);
-  return `≈ ${total} (${low}–${high})`;
+  const { totalUsd, lowUsd, highUsd } = estimate;
+  if (totalUsd === null || lowUsd === null || highUsd === null) return 'Price unknown';
+  return `≈ ${formatUsd(totalUsd)} (${lowUsd.toFixed(2)}–${highUsd.toFixed(2)})`;
 }
 
 export function formatFileSize(bytes: number): string {

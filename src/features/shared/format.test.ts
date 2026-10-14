@@ -1,6 +1,7 @@
 import {
   formatCostEstimate,
   formatDuration,
+  formatElapsed,
   formatFileSize,
   formatSeriesSummary,
   formatUsd,
@@ -43,5 +44,14 @@ describe('formatFileSize', () => {
     expect(formatFileSize(512)).toBe('512 B');
     expect(formatFileSize(2048)).toBe('2 KB');
     expect(formatFileSize(2.5 * 1024 * 1024)).toBe('2.5 MB');
+  });
+});
+
+describe('formatElapsed', () => {
+  it('shows seconds under a minute, and minutes with two-digit seconds from a minute on', () => {
+    expect(formatElapsed(0)).toBe('0 s');
+    expect(formatElapsed(42_900)).toBe('42 s');
+    expect(formatElapsed(65_000)).toBe('1 m 05 s');
+    expect(formatElapsed(3_600_000)).toBe('60 m 00 s');
   });
 });

@@ -104,12 +104,12 @@ export function libraryEntriesFixture(): LibraryEntry[] {
 }
 
 const STAGES: StageProgress[] = [
-  { stage: 'extract', status: 'done', progress: 1 },
-  { stage: 'clean', status: 'done', progress: 1 },
-  { stage: 'segment', status: 'done', progress: 1 },
-  { stage: 'analyze', status: 'running', progress: 0.42 },
-  { stage: 'translate', status: 'pending', progress: 0 },
-  { stage: 'narrate', status: 'pending', progress: 0 },
+  { stage: 'extract', status: 'done', progress: 1, since: null, passages: null },
+  { stage: 'clean', status: 'done', progress: 1, since: null, passages: null },
+  { stage: 'segment', status: 'done', progress: 1, since: null, passages: null },
+  { stage: 'analyze', status: 'running', progress: 0.42, since: null, passages: null },
+  { stage: 'translate', status: 'pending', progress: 0, since: null, passages: null },
+  { stage: 'narrate', status: 'pending', progress: 0, since: null, passages: null },
 ];
 
 function live(
@@ -127,25 +127,33 @@ function live(
     totalSegments: 4,
     costUsdSoFar: 0.012,
     error,
+    reconnecting: false,
   };
 }
 
 export interface SeriesScreenFixture {
   series: Series;
   chapters: SeriesChapterItem[];
-  ocrPrices: Record<string, number>;
+  ocrPrices: Record<string, number | null>;
   resumeChapterId: string;
 }
 
 export function seriesScreenFixture(): SeriesScreenFixture {
   const rows: SeriesChapterItem[] = [
     {
-      record: { chapter: chapter(1, 1, 1, 'The Lamp at Tessport'), failure: null },
+      record: {
+        chapter: chapter(1, 1, 1, 'The Lamp at Tessport'),
+        failure: null,
+        listening: null,
+        playable: true,
+      },
       progress: null,
       failure: null,
     },
     {
       record: {
+        listening: null,
+        playable: true,
         chapter: chapter(2, 1, 2, 'The Bell Buoy', { durationMs: 27 * 60_000 }),
         failure: null,
       },
@@ -154,6 +162,8 @@ export function seriesScreenFixture(): SeriesScreenFixture {
     },
     {
       record: {
+        listening: null,
+        playable: false,
         chapter: chapter(3, 1, 3, 'Fog and Oil', { status: 'processing', durationMs: null }),
         failure: null,
       },
@@ -162,6 +172,8 @@ export function seriesScreenFixture(): SeriesScreenFixture {
     },
     {
       record: {
+        listening: null,
+        playable: false,
         chapter: chapter(4, 1, 4, 'The Salt Ledger', {
           status: 'failed',
           durationMs: null,
@@ -182,6 +194,8 @@ export function seriesScreenFixture(): SeriesScreenFixture {
     },
     {
       record: {
+        listening: null,
+        playable: false,
         chapter: chapter(5, 1, 5, 'Ledger of the Dead', {
           status: 'failed',
           durationMs: null,

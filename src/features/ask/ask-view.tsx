@@ -28,6 +28,7 @@ import {
   opacity,
   radius,
   space,
+  typography,
 } from '@/ui/tokens';
 
 import { AnswerCard } from './answer-card';
@@ -437,5 +438,5 @@ const styles = StyleSheet.create({
     borderRadius: radius.xl,
     borderWidth: hairline,
   },
-  input: { flex: 1, maxHeight: 120, paddingVertical: space.sm, fontSize: 16 },
+  input: { flex: 1, maxHeight: 120, paddingVertical: space.sm, fontSize: typography.body.size },
 });

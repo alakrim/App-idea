@@ -14,9 +14,14 @@ import type { StatusLookup, TrackedChapter } from './progress';
 
 const ID = '01J0000000000000000000CHAP';
 const NONE: StatusLookup = () => null;
+/** The time every test event is seen at. */
+const AT = 1_700_000_000_000;
 
 function run(events: PipelineEvent[], lookup: StatusLookup = NONE, start = emptyTracked()) {
-  return events.reduce<TrackedChapter>((state, event) => reduceEvent(state, event, lookup), start);
+  return events.reduce<TrackedChapter>(
+    (state, event) => reduceEvent(state, event, lookup, AT),
+    start,
+  );
 }
 
 type Status = 'running' | 'done' | 'skipped' | 'failed' | 'cancelled';
@@ -184,11 +189,81 @@ describe('reduceEvent', () => {
     let state = emptyTracked();
     let last = 0;
     for (const event of events) {
-      state = reduceEvent(state, event, NONE);
+      state = reduceEvent(state, event, NONE, AT);
       const overall = toChapterProgress(ID, state).overall;
       expect(overall).toBeGreaterThanOrEqual(last - 1e-12);
       last = overall;
     }
     expect(last).toBe(1);
+  });
+
+  it('records when a stage started running, and clears it once the stage settles', () => {
+    const running = run([stage('analyze', 'running')]);
+    expect(running.stages.analyze.since).toBe(AT);
+    expect(toChapterProgress(ID, running).stages.find((s) => s.stage === 'analyze')?.since).toBe(
+      AT,
+    );
+
+    const done = run([stage('analyze', 'running'), stage('analyze', 'done')]);
+    expect(done.stages.analyze.since).toBeNull();
+  });
+
+  it('carries the passage count of narration, and keeps it through progress with none', () => {
+    const tracked = run([
+      stage('narrate', 'running'),
+      {
+        type: 'progress',
+        chapterId: ID,
+        stage: 'narrate',
+        progress: 0.2,
+        passages: { done: 3, total: 15 },
+      },
+      { type: 'progress', chapterId: ID, stage: 'narrate', progress: 0.3 },
+    ]);
+    expect(tracked.stages.narrate.passages).toEqual({ done: 3, total: 15 });
+    expect(toChapterProgress(ID, tracked).stages[5]?.passages).toEqual({ done: 3, total: 15 });
+  });
+
+  it('shows the app as reconnecting until the next progress, stage or segment event', () => {
+    const waiting = run([stage('narrate', 'running'), { type: 'reconnecting', chapterId: ID }]);
+    expect(toChapterProgress(ID, waiting).reconnecting).toBe(true);
+
+    const cost = run([
+      stage('narrate', 'running'),
+      { type: 'reconnecting', chapterId: ID },
+      { type: 'cost', chapterId: ID, stage: 'narrate', usd: 0.01, totalUsd: 0.01 },
+    ]);
+    expect(toChapterProgress(ID, cost).reconnecting).toBe(true);
+
+    const moved = run([
+      stage('narrate', 'running'),
+      { type: 'reconnecting', chapterId: ID },
+      { type: 'progress', chapterId: ID, stage: 'narrate', progress: 0.1 },
+    ]);
+    expect(toChapterProgress(ID, moved).reconnecting).toBe(false);
+  });
+
+  it('starts every run without the reconnecting flag, and never reports it once ready', () => {
+    const fresh = startRun(run([{ type: 'reconnecting', chapterId: ID }]), 0);
+    expect(fresh.reconnecting).toBe(false);
+
+    const ready = run([
+      { type: 'reconnecting', chapterId: ID },
+      { type: 'done', chapterId: ID },
+    ]);
+    expect(toChapterProgress(ID, ready).reconnecting).toBe(false);
+  });
+
+  it('leaves the chapter unchanged on a stall or a stale retry, which the diagnostics keep', () => {
+    const before = run([stage('narrate', 'running')]);
+    const after = run(
+      [
+        { type: 'stall', chapterId: ID, stage: 'narrate', count: 1 },
+        { type: 'staleAbort', chapterId: ID, stage: 'narrate' },
+      ],
+      NONE,
+      before,
+    );
+    expect(after).toEqual(before);
   });
 });

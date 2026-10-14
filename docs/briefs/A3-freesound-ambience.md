@@ -1,6 +1,6 @@
 # Brief A3: Realistic ambience beds from Freesound (CC0 only)
 
-**Type**: implementation (build tooling + curated assets). **Blocked until `freesound.org` is allowed by the environment's network policy** (it returns 403 at the proxy as of 2026-10-11). Read `CLAUDE.md`, `docs/CONVENTIONS.md`, **ADR-0005** (with its amendments), `docs/research/R4-ambience.md`, `scripts/sounds/*` (the base-pack build: seamless loop with roll, −28 LUFS, AAC 64 kbps mono, manifest, LICENSES.json, verify), `src/audio/ambience-pack.ts`, `src/core/playback/resolve-bed.ts` and `src/core/analysis/ambience-taxonomy.ts`.
+**Type**: implementation (build tooling + curated assets). **Unblocked 2026-10-12**: the architect verified the Freesound API (search with the key → 200, 6,193 CC0 rain results) and the HQ preview CDN (200). Read `docs/research/R5-ambience-sources.md` first: it ranks the categories and names CC0 fallbacks. Read `CLAUDE.md`, `docs/CONVENTIONS.md`, **ADR-0005** (with its amendments), `docs/research/R4-ambience.md`, `scripts/sounds/*` (the base-pack build: seamless loop with roll, −28 LUFS, AAC 64 kbps mono, manifest, LICENSES.json, verify), `src/audio/ambience-pack.ts`, `src/core/playback/resolve-bed.ts` and `src/core/analysis/ambience-taxonomy.ts`.
 
 ## Goal
 Replace the synthetic beds with **real recordings** wherever the taxonomy needs them: horses, sword battle, tavern crowd, forest by day and night, rain on leaves and roofs, thunderstorm, river, ocean shore, city street, market, campfire, cave, ship deck, train, temple and so on. Start with **the ~24 categories the analysis model picks most** (rank them from the taxonomy's families and the R4 notes; justify the list). Every other category keeps its fallback chain.
@@ -30,6 +30,12 @@ The user's Freesound API key is stored **outside the repo** in `~/.config/lectio
    - the taxonomy's labels and icons are unchanged
    - add tests for resolution order
 6. **Audition page for the user**: an HTML file in the scratchpad (not the repo) with each new bed's player, its category, its Freesound link and author, and a 20 s mix under a −22 dB voice placeholder. The architect publishes it.
+
+## Additions (2026-10-12, from R5)
+- Use R5's ranked list of 24 categories, minus the 6 it assigns to AI generation (not in scope now). Build the other ~18 from Freesound CC0.
+- When Freesound has no good CC0 candidate for a category, you may use **BigSoundBank** (only files whose own page says CC0) or **OpenGameArt** (only files marked CC0). Record the source page URL and the quoted licence line in LICENSES.json.
+- Every candidate must be CC0. Reject a candidate if its licence is anything other than exactly CC0 (e.g. `http://creativecommons.org/publicdomain/zero/1.0/` on Freesound).
+- Use the **HQ MP3 preview** (128 kbps). It is enough for a 64 kbps mono AAC bed. Do not use OAuth downloads.
 
 ## Constraints
 - Do not run `npm install`. Do not commit. Respect Freesound API rate limits (2,000 requests a day, 60 a minute), with throttling and retries.

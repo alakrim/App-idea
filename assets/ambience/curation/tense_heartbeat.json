@@ -1,0 +1,200 @@
+{
+  "category": "tense_heartbeat",
+  "curatedOn": "2026-10-14",
+  "queries": [
+    "heartbeat ambience",
+    "heartbeat loop",
+    "heartbeat loop",
+    "heart beat ambience"
+  ],
+  "poolSize": 8,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 534998,
+      "name": "SteadyHeartRateMonitorLoop1Min.wav",
+      "url": "https://freesound.org/people/sidequesting/sounds/534998/",
+      "author": "sidequesting",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 60.94,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.82,
+      "numRatings": 61,
+      "numDownloads": 4135,
+      "previewUrl": "https://cdn.freesound.org/previews/534/534998_10247258-hq.mp3",
+      "score": 7.6,
+      "reasons": [
+        "+2.79 rating 4.82 from 61 ratings",
+        "+1.81 4135 downloads",
+        "+1 at least 60 s",
+        "+2 tags heartbeat, heart"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 667439,
+      "name": "I told you once again I don´t wanna hear any more1.wav",
+      "url": "https://freesound.org/people/Jim-Bretherick/sounds/667439/",
+      "author": "Jim-Bretherick",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 150,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 93,
+      "previewUrl": "https://cdn.freesound.org/previews/667/667439_10983022-hq.mp3",
+      "score": 5.18,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.99 93 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 250846,
+      "name": "Hearbeat sound (with gurgling)",
+      "url": "https://freesound.org/people/LookIMadeAThing/sounds/250846/",
+      "author": "LookIMadeAThing",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 228,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.61,
+      "numRatings": 38,
+      "numDownloads": 3746,
+      "previewUrl": "https://cdn.freesound.org/previews/250/250846_3968707-hq.mp3",
+      "score": 2.39,
+      "reasons": [
+        "+2.61 rating 4.61 from 38 ratings",
+        "+1.79 3746 downloads",
+        "+2 at least 90 s",
+        "+2 tags heartbeat, heart",
+        "-6 music (beat)"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 617154,
+      "name": "Hertz Beatz",
+      "url": "https://freesound.org/people/Beetlemuse/sounds/617154/",
+      "author": "Beetlemuse",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 66.06,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 89,
+      "previewUrl": "https://cdn.freesound.org/previews/617/617154_10334845-hq.mp3",
+      "score": 1.84,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+0.98 89 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags heart",
+        "-4 synth (synth)"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 197706,
+      "name": "Distant booming traffic",
+      "url": "https://freesound.org/people/peridactyloptrix/sounds/197706/",
+      "author": "peridactyloptrix",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 82.03,
+      "samplerate": 48000,
+      "channels": 6,
+      "avgRating": 4.1,
+      "numRatings": 10,
+      "numDownloads": 986,
+      "previewUrl": "https://cdn.freesound.org/previews/197/197706_2737063-hq.mp3",
+      "score": 1.17,
+      "reasons": [
+        "+2.17 rating 4.1 from 10 ratings",
+        "+1.5 986 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags heartbeat, heart",
+        "-6 music (beat)"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 745849,
+      "name": "Sand Night.wav",
+      "url": "https://freesound.org/people/ChristmasKrumble666/sounds/745849/",
+      "author": "ChristmasKrumble666",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 71.64,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 18,
+      "numDownloads": 347,
+      "previewUrl": "https://cdn.freesound.org/previews/745/745849_5820974-hq.mp3",
+      "score": -6.57,
+      "reasons": [
+        "+2.66 rating 4.83 from 18 ratings",
+        "+1.27 347 downloads",
+        "+1.5 at least 63 s",
+        "-6 music (beat, bpm)",
+        "-2 loop with music",
+        "-4 synth (synth)"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 522033,
+      "name": "HeartBeat_120bpm.wav",
+      "url": "https://freesound.org/people/BaDoink/sounds/522033/",
+      "author": "BaDoink",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 31.96,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 2.33,
+      "numRatings": 3,
+      "numDownloads": 57,
+      "previewUrl": "https://cdn.freesound.org/previews/522/522033_2019171-hq.mp3",
+      "score": -11.57,
+      "reasons": [
+        "+1.55 rating 2.33 from 3 ratings",
+        "+0.88 57 downloads",
+        "-3 only 31.96 s",
+        "+1 name matches heartbeat",
+        "-6 music (music, beats, guitar, bpm)",
+        "-2 loop with music",
+        "-4 synth (synthesizer)"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 248147,
+      "name": "Heart Beat Synthetic With Loop.wav",
+      "url": "https://freesound.org/people/afleetingspeck/sounds/248147/",
+      "author": "afleetingspeck",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 40.85,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 10,
+      "numDownloads": 891,
+      "previewUrl": "https://cdn.freesound.org/previews/248/248147_2522406-hq.mp3",
+      "score": -14.15,
+      "reasons": [
+        "+2.38 rating 4.5 from 10 ratings",
+        "+1.48 891 downloads",
+        "-3 only 40.85 s",
+        "+1 tags heart",
+        "-6 music (music, beat)",
+        "-2 loop with music",
+        "-4 synth (synthetic)",
+        "-4 sfx hit or beep (hit)"
+      ]
+    }
+  ]
+}

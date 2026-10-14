@@ -5,6 +5,7 @@
  * reports back through `complete` or `fail`.
  */
 import { StageFailure } from '@/core/pipeline/errors';
+import { PAGE_MAX_BYTES, utf8ByteLength } from '@/core/pipeline/limits';
 
 /** The host waits at most 12 s for the page, and this leaves room for its own load. */
 export const WEBVIEW_RENDER_TIMEOUT_MS = 15_000;
@@ -38,7 +39,11 @@ export class WebViewRenderQueue {
   } | null = null;
   private readonly listeners = new Set<() => void>();
 
-  constructor(private readonly timeoutMs: number = WEBVIEW_RENDER_TIMEOUT_MS) {}
+  constructor(
+    private readonly timeoutMs: number = WEBVIEW_RENDER_TIMEOUT_MS,
+    /** Rendered HTML above this size is refused, as a fetched page is. */
+    private readonly maxBytes: number = PAGE_MAX_BYTES,
+  ) {}
 
   /** Renders the page in the host and resolves with its HTML. Rejects when cancelled or failed. */
   render(url: string, signal: AbortSignal): Promise<string> {
@@ -78,6 +83,10 @@ export class WebViewRenderQueue {
   complete(id: number, html: string): void {
     if (this.active?.job.id !== id) return;
     const { job } = this.settle();
+    if (utf8ByteLength(html) > this.maxBytes) {
+      job.reject(tooLargeFailure());
+      return;
+    }
     job.resolve(html);
   }
 
@@ -124,6 +133,14 @@ export class WebViewRenderQueue {
   private notify(): void {
     for (const listener of this.listeners) listener();
   }
+}
+
+function tooLargeFailure(): StageFailure {
+  return new StageFailure(
+    'INPUT_TOO_LONG',
+    'This page is too large to be a single chapter. Paste the part you want instead.',
+    { retryable: false, detail: 'webview_over_size_limit' },
+  );
 }
 
 function renderFailure(detail: string): StageFailure {

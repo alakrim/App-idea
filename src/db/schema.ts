@@ -50,6 +50,8 @@ export const series = sqliteTable(
     narrationProfileId: text('narration_profile_id').references(() => narrationProfiles.id, {
       onDelete: 'set null',
     }),
+    /** The speed last used in this series. Null until the listener changes it. */
+    playbackRate: real('playback_rate'),
     createdAt: integer('created_at').notNull(),
     updatedAt: integer('updated_at').notNull(),
   },
@@ -103,6 +105,8 @@ export const sentences = sqliteTable(
     paragraphIdx: integer('paragraph_idx').notNull(),
     text: text('text').notNull(),
     translated: text('translated'),
+    /** The language `translated` is written in. Null with no translation. Narration reads it per sentence. */
+    translatedLang: text('translated_lang'),
     charCount: integer('char_count').notNull(),
   },
   (t) => [uniqueIndex('sentences_chapter_idx_uq').on(t.chapterId, t.idx)],
@@ -148,11 +152,25 @@ export const entities = sqliteTable(
       .references(() => series.id, { onDelete: 'cascade' }),
     kind: text('kind').$type<EntityKind>().notNull(),
     canonicalName: text('canonical_name').notNull(),
-    /** JSON: string[]. */
-    aliases: text('aliases').notNull(),
     firstChapterOrder: real('first_chapter_order').notNull(),
   },
   (t) => [index('entities_series_name_idx').on(t.seriesId, t.canonicalName)],
+);
+
+/**
+ * Every spelling of an entity, with the chapter order that revealed it. The spoiler cutoff reads
+ * this table, so an alias first revealed later is never shown to an earlier chapter's context.
+ */
+export const entityAliases = sqliteTable(
+  'entity_aliases',
+  {
+    entityId: text('entity_id')
+      .notNull()
+      .references(() => entities.id, { onDelete: 'cascade' }),
+    alias: text('alias').notNull(),
+    firstChapterOrder: real('first_chapter_order').notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.entityId, t.alias] })],
 );
 
 export const entityFacts = sqliteTable(
@@ -235,13 +253,50 @@ export const usageLedger = sqliteTable(
     promptTokens: integer('prompt_tokens').notNull(),
     completionTokens: integer('completion_tokens').notNull(),
     audioSeconds: real('audio_seconds'),
-    costUsd: real('cost_usd').notNull(),
+    /** Null when the call's cost is unknown. A zero here would read as a real price. */
+    costUsd: real('cost_usd'),
     generationId: text('generation_id'),
   },
   (t) => [
     index('usage_ledger_chapter_idx').on(t.chapterId),
     index('usage_ledger_at_idx').on(t.at),
     index('usage_ledger_model_idx').on(t.model),
+  ],
+);
+
+/**
+ * One row per chapter the listener has played: where they stopped, and whether they reached the
+ * end. Resume reads this row, so a chapter picks up its own place whichever chapter was last heard.
+ */
+export const chapterPositions = sqliteTable('chapter_positions', {
+  chapterId: text('chapter_id')
+    .primaryKey()
+    .references(() => chapters.id, { onDelete: 'cascade' }),
+  sentenceIdx: integer('sentence_idx').notNull(),
+  positionMs: integer('position_ms').notNull(),
+  completed: integer('completed', { mode: 'boolean' }).notNull().default(false),
+  updatedAt: integer('updated_at').notNull(),
+});
+
+/** A saved moment in a chapter. One bookmark per sentence, so a sentence is either marked or not. */
+export const bookmarks = sqliteTable(
+  'bookmarks',
+  {
+    id: text('id').primaryKey(),
+    seriesId: text('series_id')
+      .notNull()
+      .references(() => series.id, { onDelete: 'cascade' }),
+    chapterId: text('chapter_id')
+      .notNull()
+      .references(() => chapters.id, { onDelete: 'cascade' }),
+    sentenceIdx: integer('sentence_idx').notNull(),
+    positionMs: integer('position_ms').notNull(),
+    note: text('note'),
+    createdAt: integer('created_at').notNull(),
+  },
+  (t) => [
+    uniqueIndex('bookmarks_chapter_sentence_uq').on(t.chapterId, t.sentenceIdx),
+    index('bookmarks_series_idx').on(t.seriesId),
   ],
 );
 
@@ -315,6 +370,46 @@ export const vocab = sqliteTable(
   ],
 );
 
+/**
+ * A paid chunk's validated result, kept as soon as it completes. A retry of the same chunk (same
+ * input, model and prompt version) is served from here instead of being paid for again. `kind` is
+ * 'translation' or 'analysis'.
+ */
+export const chunkCache = sqliteTable(
+  'chunk_cache',
+  {
+    chapterId: text('chapter_id')
+      .notNull()
+      .references(() => chapters.id, { onDelete: 'cascade' }),
+    kind: text('kind').notNull(),
+    inputHash: text('input_hash').notNull(),
+    model: text('model').notNull(),
+    promptVersion: text('prompt_version').notNull(),
+    /** JSON: the chunk's validated result. */
+    result: text('result').notNull(),
+    createdAt: integer('created_at').notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.chapterId, t.kind, t.inputHash, t.model, t.promptVersion] })],
+);
+
+/**
+ * Live activity of a chapter's stage, for Diagnostics: when it last moved, and how often it stalled
+ * or had a request retired as stale. A stage's counts start again when the stage starts running.
+ */
+export const stageActivity = sqliteTable(
+  'stage_activity',
+  {
+    chapterId: text('chapter_id')
+      .notNull()
+      .references(() => chapters.id, { onDelete: 'cascade' }),
+    stage: text('stage').$type<Stage>().notNull(),
+    lastActivityAt: integer('last_activity_at').notNull(),
+    stallCount: integer('stall_count').notNull().default(0),
+    staleAbortCount: integer('stale_abort_count').notNull().default(0),
+  },
+  (t) => [primaryKey({ columns: [t.chapterId, t.stage] })],
+);
+
 export const settings = sqliteTable('settings', {
   key: text('key').primaryKey(),
   /** JSON: any value. Validated by the caller that owns the key. */
@@ -331,11 +426,16 @@ export const schema = {
   ambienceCues,
   chapterMemory,
   entities,
+  entityAliases,
   entityFacts,
   audioSegments,
   jobs,
+  stageActivity,
+  chunkCache,
   usageLedger,
   listeningPositions,
+  chapterPositions,
+  bookmarks,
   qaMessages,
   vocab,
   settings,

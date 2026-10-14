@@ -1,0 +1,186 @@
+{
+  "category": "battle_field",
+  "curatedOn": "2026-10-14",
+  "queries": [
+    "battle ambience distant",
+    "medieval battle sounds",
+    "battle ambience loop",
+    "war battlefield ambience"
+  ],
+  "poolSize": 8,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 568790,
+      "name": "sword against sword.wav",
+      "url": "https://freesound.org/people/Fenodyrie/sounds/568790/",
+      "author": "Fenodyrie",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 78.74,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.64,
+      "numRatings": 129,
+      "numDownloads": 11054,
+      "previewUrl": "https://cdn.freesound.org/previews/568/568790_6371307-hq.mp3",
+      "score": 8.19,
+      "reasons": [
+        "+2.69 rating 4.64 from 129 ratings",
+        "+2 11054 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags battle, medieval"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 534554,
+      "name": "Dropship Ambience",
+      "url": "https://freesound.org/people/waxsocks/sounds/534554/",
+      "author": "waxsocks",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 196.14,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 10,
+      "numDownloads": 381,
+      "previewUrl": "https://cdn.freesound.org/previews/534/534554_1766049-hq.mp3",
+      "score": 7.92,
+      "reasons": [
+        "+2.63 rating 5 from 10 ratings",
+        "+1.29 381 downloads",
+        "+2 at least 90 s",
+        "+2 tags battle, war"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 479569,
+      "name": "R22-08-Big Battle Ambience.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/479569/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 183.28,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 90,
+      "previewUrl": "https://cdn.freesound.org/previews/479/479569_2524442-hq.mp3",
+      "score": 6.04,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.98 90 downloads",
+        "+2 at least 90 s",
+        "+1 name matches battle"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 385895,
+      "name": "BattleField Ambience (Loop)",
+      "url": "https://freesound.org/people/banan_/sounds/385895/",
+      "author": "banan_",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 59.15,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.21,
+      "numRatings": 14,
+      "numDownloads": 1503,
+      "previewUrl": "https://cdn.freesound.org/previews/385/385895_7219680-hq.mp3",
+      "score": 5.86,
+      "reasons": [
+        "+2.27 rating 4.21 from 14 ratings",
+        "+1.59 1503 downloads",
+        "+2 tags battle, war"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 846338,
+      "name": "Loud Painful Robotic Malfunctioning Dark Ambience (Loop)",
+      "url": "https://freesound.org/people/Kierham/sounds/846338/",
+      "author": "Kierham",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 47.2,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.44,
+      "numRatings": 9,
+      "numDownloads": 304,
+      "previewUrl": "https://cdn.freesound.org/previews/846/846338_11617040-hq.mp3",
+      "score": 3.57,
+      "reasons": [
+        "+2.33 rating 4.44 from 9 ratings",
+        "+1.24 304 downloads"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 694371,
+      "name": "Fireworks/ Warzone 3",
+      "url": "https://freesound.org/people/NearTheAtmoshphere/sounds/694371/",
+      "author": "NearTheAtmoshphere",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 43.52,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 107,
+      "previewUrl": "https://cdn.freesound.org/previews/694/694371_2578040-hq.mp3",
+      "score": 2.31,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.02 107 downloads",
+        "-3 only 43.52 s",
+        "+2 tags battle, war"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 694373,
+      "name": "Fireworks/ Warzone 5",
+      "url": "https://freesound.org/people/NearTheAtmoshphere/sounds/694373/",
+      "author": "NearTheAtmoshphere",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 38.22,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 119,
+      "previewUrl": "https://cdn.freesound.org/previews/694/694373_2578040-hq.mp3",
+      "score": 2.1,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1.04 119 downloads",
+        "-3 only 38.22 s",
+        "+2 tags battle, war"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 675137,
+      "name": "S19-18 Distant pistol gun battle.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/675137/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 32.73,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 80,
+      "previewUrl": "https://cdn.freesound.org/previews/675/675137_2524442-hq.mp3",
+      "score": 1.15,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.95 80 downloads",
+        "-3 only 32.73 s",
+        "+1 name matches battle"
+      ]
+    }
+  ]
+}

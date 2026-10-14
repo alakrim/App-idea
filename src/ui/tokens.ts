@@ -13,9 +13,16 @@ export interface ThemeColors {
   border: string;
   text: string;
   textMuted: string;
+  /** Secondary text. Must reach 4.5:1 on every surface. */
   textFaint: string;
+  /** Icons, grabbers and ticks that are not read as text. Lower contrast by design. */
+  decorativeFaint: string;
+  /** Outline of a control (field, secondary button, switch track). Must reach 3:1 on its surface. */
+  boundary: string;
   accent: string;
   accentSoft: string;
+  /** Accent text drawn on accentSoft. Must reach 4.5:1 on the composited soft fill. */
+  accentOnSoft: string;
   onAccent: string;
   success: string;
   warning: string;
@@ -33,9 +40,12 @@ export const palette: Record<ThemeScheme, ThemeColors> = {
     border: '#2A2E38',
     text: '#ECE8E1',
     textMuted: '#9A968E',
-    textFaint: '#5E5B55',
+    textFaint: '#8E8980',
+    decorativeFaint: '#5E5B55',
+    boundary: '#6B7182',
     accent: '#E8A84A',
     accentSoft: 'rgba(232,168,74,0.14)',
+    accentOnSoft: '#E8A84A',
     onAccent: '#1A1206',
     success: '#6BBF8A',
     warning: '#E3B341',
@@ -50,12 +60,15 @@ export const palette: Record<ThemeScheme, ThemeColors> = {
     border: '#E6E0D4',
     text: '#1A1814',
     textMuted: '#6B655B',
-    textFaint: '#A39C90',
+    textFaint: '#6F695F',
+    decorativeFaint: '#A39C90',
+    boundary: '#8F877A',
     accent: '#965E10',
     accentSoft: 'rgba(150,94,16,0.10)',
+    accentOnSoft: '#875010',
     onAccent: '#FFFFFF',
-    success: '#2F8A55',
-    warning: '#9A6B00',
+    success: '#2A7A4B',
+    warning: '#8A6500',
     danger: '#C0392B',
     scrim: 'rgba(0,0,0,0.35)',
     shimmer: 'rgba(255,255,255,0.6)',
@@ -107,8 +120,10 @@ export type RadiusToken = keyof typeof radius;
 export const hairline = 1;
 export const topHighlight = 'rgba(255,255,255,0.04)';
 
-/** WCAG floor for touch targets on iOS and Android. */
-export const minTouchTarget = 44;
+/** Touch target floor. Above the WCAG 44 pt minimum, so the tap area stays comfortable on Android. */
+export const minTouchTarget = 48;
+/** Height of a thin progress track, such as a chapter's listening bar. */
+export const thinTrackHeight = 3;
 export const tabBarHeight = 56;
 
 export const fontFamily = {
@@ -148,6 +163,8 @@ export const typography = {
     uppercase: true,
   },
   reading: { size: 19, lineHeight: 30, fontFamily: fontFamily.literata.regular },
+  /** A quoted source line under a saved word: smaller than body, larger than a caption. */
+  quote: { size: 15, lineHeight: 22, fontFamily: fontFamily.inter.regular },
 } as const satisfies Record<string, TypeStyle>;
 export type TextVariant = keyof typeof typography;
 
@@ -164,8 +181,6 @@ export const illustration = {
   maxCopyWidth: 320,
 } as const;
 
-/** Largest cover shown on the full player. */
-export const playerCoverMaxWidth = 320;
 export const iconStrokeWidth = 1.75;
 
 export const springs = {

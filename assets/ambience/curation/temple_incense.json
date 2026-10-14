@@ -1,0 +1,218 @@
+{
+  "category": "temple_incense",
+  "curatedOn": "2026-10-14",
+  "queries": [
+    "temple ambience bells",
+    "buddhist temple ambience",
+    "temple bell ambience",
+    "buddhist bells loop"
+  ],
+  "poolSize": 9,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 468041,
+      "name": "Buddhist temple hum 02",
+      "url": "https://freesound.org/people/rucisko/sounds/468041/",
+      "author": "rucisko",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 147.52,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 263,
+      "previewUrl": "https://cdn.freesound.org/previews/468/468041_2978883-hq.mp3",
+      "score": 9.51,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.21 263 downloads",
+        "+2 at least 90 s",
+        "+3 tags temple, bells, buddhist",
+        "+1 name matches temple"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 462495,
+      "name": "hindu ceremony",
+      "url": "https://freesound.org/people/rucisko/sounds/462495/",
+      "author": "rucisko",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 119.84,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.57,
+      "numRatings": 7,
+      "numDownloads": 541,
+      "previewUrl": "https://cdn.freesound.org/previews/462/462495_2978883-hq.mp3",
+      "score": 7.71,
+      "reasons": [
+        "+2.34 rating 4.57 from 7 ratings",
+        "+1.37 541 downloads",
+        "+2 at least 90 s",
+        "+2 tags temple, bells"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 464459,
+      "name": "Buddhist temple hum 01",
+      "url": "https://freesound.org/people/rucisko/sounds/464459/",
+      "author": "rucisko",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 121.03,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 2.67,
+      "numRatings": 3,
+      "numDownloads": 119,
+      "previewUrl": "https://cdn.freesound.org/previews/464/464459_2978883-hq.mp3",
+      "score": 7.68,
+      "reasons": [
+        "+1.64 rating 2.67 from 3 ratings",
+        "+1.04 119 downloads",
+        "+2 at least 90 s",
+        "+2 tags temple, buddhist",
+        "+1 name matches temple"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 731225,
+      "name": "AMB-Early Morning,People,Movement,Bells-Indrayani Pith-Kirtipur,Nepal-11Oct2022",
+      "url": "https://freesound.org/people/soundandmelodies/sounds/731225/",
+      "author": "soundandmelodies",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 301.99,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 18,
+      "previewUrl": "https://cdn.freesound.org/previews/731/731225_10924423-hq.mp3",
+      "score": 7.51,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.64 18 downloads",
+        "+2 at least 90 s",
+        "+2 tags temple, bells",
+        "+1 name matches bells"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 514135,
+      "name": "zenkojibells_norm.wav",
+      "url": "https://freesound.org/people/earthmonkey1/sounds/514135/",
+      "author": "earthmonkey1",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 364.79,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.4,
+      "numRatings": 5,
+      "numDownloads": 295,
+      "previewUrl": "https://cdn.freesound.org/previews/514/514135_976024-hq.mp3",
+      "score": 7.45,
+      "reasons": [
+        "+2.21 rating 4.4 from 5 ratings",
+        "+1.24 295 downloads",
+        "+2 at least 90 s",
+        "+2 tags bells, buddhist"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 473789,
+      "name": "Temple Chanting and Coin Donations Tossed into Urns",
+      "url": "https://freesound.org/people/timothyd4y/sounds/473789/",
+      "author": "timothyd4y",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.93,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 135,
+      "previewUrl": "https://cdn.freesound.org/previews/473/473789_288104-hq.mp3",
+      "score": 7.44,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+1.07 135 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags temple, buddhist",
+        "+1 name matches temple"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 390290,
+      "name": "052016 maruyama shrine.mp3",
+      "url": "https://freesound.org/people/pflanigan/sounds/390290/",
+      "author": "pflanigan",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 200.14,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 84,
+      "previewUrl": "https://cdn.freesound.org/previews/390/390290_6132202-hq.mp3",
+      "score": 7.03,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.96 84 downloads",
+        "+2 at least 90 s",
+        "+2 tags temple, buddhist"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 443383,
+      "name": "Temple Ambience.wav",
+      "url": "https://freesound.org/people/kylecutsfilms/sounds/443383/",
+      "author": "kylecutsfilms",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 54.85,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 71,
+      "previewUrl": "https://cdn.freesound.org/previews/443/443383_4089273-hq.mp3",
+      "score": 4.8,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.93 71 downloads",
+        "+1 tags temple",
+        "+1 name matches temple"
+      ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 855297,
+      "name": "Tempio – Generative Bell Soundscape by Campana",
+      "url": "https://freesound.org/people/bassimat/sounds/855297/",
+      "author": "bassimat",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 309.9,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 27,
+      "previewUrl": "https://cdn.freesound.org/previews/855/855297_15636277-hq.mp3",
+      "score": -2.21,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.72 27 downloads",
+        "+2 at least 90 s",
+        "+2 tags bells, buddhist",
+        "+1 name matches bell",
+        "-6 music (music)",
+        "-4 synth (synthesizer)"
+      ]
+    }
+  ]
+}

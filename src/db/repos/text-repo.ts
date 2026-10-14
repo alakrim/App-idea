@@ -1,4 +1,4 @@
-import { and, asc, between, eq, sql } from 'drizzle-orm';
+import { and, asc, between, eq, inArray, sql } from 'drizzle-orm';
 
 import { chapters, paragraphs, sentences } from '../schema';
 
@@ -8,6 +8,11 @@ import type { SQL } from 'drizzle-orm';
 
 /** Rows are inserted in chunks to stay well under SQLite's bound-parameter limit. */
 const INSERT_CHUNK_SIZE = 100;
+/**
+ * Each translation chunk binds four values per sentence and one per idx in its IN list, so 120
+ * sentences stay well under SQLite's bound-parameter limit.
+ */
+const TRANSLATION_CHUNK_SIZE = 120;
 const DEFAULT_SEARCH_LIMIT = 20;
 const MAX_SEARCH_LIMIT = 100;
 /** The trigram index only matches terms of at least this many characters. */
@@ -24,6 +29,11 @@ export interface Translation {
   idx: number;
   /** Null when the sentence has no usable translation, so the UI shows the original. */
   translated: string | null;
+}
+
+/** A sentence with the language its translation is in, as stored. */
+export interface SentenceRow extends Sentence {
+  readonly translatedLang: string | null;
 }
 
 export interface SpoilerSafeQuery {
@@ -122,7 +132,7 @@ export const textRepo = {
   },
 
   /** Sentences with idx in [fromIdx, toIdx], inclusive, in reading order. */
-  getRange(db: Db, chapterId: string, fromIdx: number, toIdx: number): Sentence[] {
+  getRange(db: Db, chapterId: string, fromIdx: number, toIdx: number): SentenceRow[] {
     return db
       .select({
         chapterId: sentences.chapterId,
@@ -130,6 +140,7 @@ export const textRepo = {
         paragraphIdx: sentences.paragraphIdx,
         text: sentences.text,
         translated: sentences.translated,
+        translatedLang: sentences.translatedLang,
         charCount: sentences.charCount,
       })
       .from(sentences)
@@ -152,16 +163,60 @@ export const textRepo = {
       .all();
   },
 
-  /** Writes translations for one chapter in a single transaction. */
-  setTranslations(db: Db, chapterId: string, translations: Translation[]): void {
+  /**
+   * Writes translations for one chapter in one transaction, one UPDATE per chunk of sentences rather
+   * than one per sentence. A repeated idx keeps its last translation. Every translation is stamped
+   * with `lang`, the language it was written in. A sentence with no translation stores no language.
+   * Each UPDATE fires the search triggers once per row, as before, but the statement overhead is
+   * paid per chunk.
+   */
+  setTranslations(db: Db, chapterId: string, translations: Translation[], lang: string): void {
+    const latest = new Map(translations.map(({ idx, translated }) => [idx, translated] as const));
+    const entries = Array.from(latest);
+    if (entries.length === 0) return;
     db.transaction((tx) => {
-      for (const { idx, translated } of translations) {
+      for (let start = 0; start < entries.length; start += TRANSLATION_CHUNK_SIZE) {
+        const chunk = entries.slice(start, start + TRANSLATION_CHUNK_SIZE);
+        const branches = sql.join(
+          chunk.map(([idx, translated]) => sql`WHEN ${idx} THEN ${translated}`),
+          sql` `,
+        );
+        const langBranches = sql.join(
+          chunk.map(([idx, translated]) => sql`WHEN ${idx} THEN ${translated === null ? null : lang}`),
+          sql` `,
+        );
         tx.update(sentences)
-          .set({ translated })
-          .where(and(eq(sentences.chapterId, chapterId), eq(sentences.idx, idx)))
+          .set({
+            translated: sql`CASE ${sentences.idx} ${branches} END`,
+            translatedLang: sql`CASE ${sentences.idx} ${langBranches} END`,
+          })
+          .where(
+            and(
+              eq(sentences.chapterId, chapterId),
+              inArray(
+                sentences.idx,
+                chunk.map(([idx]) => idx),
+              ),
+            ),
+          )
           .run();
       }
     });
+  },
+
+  /**
+   * Drops every stored translation of a series' chapters, so none in another language can be read
+   * aloud. Runs in the same transaction as the target-language change that makes them stale.
+   */
+  clearTranslationsOfSeries(db: Db, seriesId: string): void {
+    const chapterIds = db
+      .select({ id: chapters.id })
+      .from(chapters)
+      .where(eq(chapters.seriesId, seriesId));
+    db.update(sentences)
+      .set({ translated: null, translatedLang: null })
+      .where(inArray(sentences.chapterId, chapterIds))
+      .run();
   },
 
   /**

@@ -37,15 +37,19 @@ export interface EstimateInput {
 
 export interface StageEstimate {
   readonly stage: CostStage;
-  readonly usd: number;
+  /** The stage's price in USD. Null when it cannot be priced: unknown, never zero. */
+  readonly usd: number | null;
   readonly basis: string;
+  /** Why the price is unknown. Null when `usd` is a number. */
+  readonly unknownReason: string | null;
 }
 
 export interface ChapterCostEstimate {
   readonly perStage: StageEstimate[];
-  readonly totalUsd: number;
-  readonly low: number;
-  readonly high: number;
+  /** Null when any stage is unknown, because the sum would undercount. */
+  readonly totalUsd: number | null;
+  readonly low: number | null;
+  readonly high: number | null;
 }
 
 /** Characters in one word of each script family (see the header comment). */
@@ -156,22 +160,29 @@ export async function estimateChapterCost(input: EstimateInput): Promise<Chapter
         outputTokens: translationTokens.output,
         basis: `${baseLanguage(input.sourceLang)} to ${baseLanguage(target)}, expansion ${expansion}`,
       })
-    : { stage: 'translation' as const, usd: 0, basis: 'no translation for this chapter' };
+    : {
+        stage: 'translation' as const,
+        usd: 0,
+        basis: 'no translation for this chapter',
+        unknownReason: null,
+      };
 
   const spokenChars = translates ? translationTokens.output * 4 : sourceChars;
   const narration = await speechStage(input, spokenChars, translates ? target : input.sourceLang);
 
   const perStage = [cleanup, analysis, translation, narration];
-  const range = (estimate: StageEstimate): { low: number; high: number } => ({
-    low: estimate.usd * (1 - SPREAD[estimate.stage]),
-    high: estimate.usd * (1 + SPREAD[estimate.stage]),
-  });
-  const ranges = perStage.map(range);
+  const priced = perStage.flatMap((estimate) =>
+    estimate.usd === null ? [] : [{ usd: estimate.usd, spread: SPREAD[estimate.stage] }],
+  );
+  // The total is unknown unless every stage is priced: a partial sum would undercount.
+  const complete = priced.length === perStage.length;
+  const sumOf = (value: (line: (typeof priced)[number]) => number): number =>
+    priced.reduce((total, line) => total + value(line), 0);
   return {
-    perStage: perStage.map(({ stage, usd, basis }) => ({ stage, usd, basis })),
-    totalUsd: perStage.reduce((sum, e) => sum + e.usd, 0),
-    low: ranges.reduce((sum, r) => sum + r.low, 0),
-    high: ranges.reduce((sum, r) => sum + r.high, 0),
+    perStage,
+    totalUsd: complete ? sumOf((line) => line.usd) : null,
+    low: complete ? sumOf((line) => line.usd * (1 - line.spread)) : null,
+    high: complete ? sumOf((line) => line.usd * (1 + line.spread)) : null,
   };
 }
 
@@ -187,13 +198,12 @@ async function chatStage(
   tokens: { inputTokens: number; outputTokens: number; basis: string },
 ): Promise<StageEstimate> {
   const model = await input.catalog.find(input.models[stage]);
-  if (!model) {
-    return { stage, usd: 0, basis: `pricing unavailable for ${input.models[stage]}` };
-  }
+  if (!model) return unpriced(stage, input.models[stage]);
   return {
     stage,
     usd: estimateChatCost(model, tokens.inputTokens, tokens.outputTokens),
     basis: `${tokens.inputTokens} input and ${tokens.outputTokens} output tokens; ${tokens.basis}`,
+    unknownReason: null,
   };
 }
 
@@ -204,17 +214,18 @@ async function speechStage(
   spokenLang: Lang,
 ): Promise<StageEstimate> {
   const model = await input.catalog.find(input.models.narration);
-  if (!model) {
-    return {
-      stage: 'narration',
-      usd: 0,
-      basis: `pricing unavailable for ${input.models.narration}`,
-    };
-  }
+  if (!model) return unpriced('narration', input.models.narration);
   const seconds = estimateSpeechSecondsForChars(chars, spokenLang);
   return {
     stage: 'narration',
     usd: estimateSpeechCost(model, chars, seconds),
     basis: `${Math.round(chars)} spoken characters, about ${Math.round(seconds)} s at the ${baseLanguage(spokenLang)} speech rate`,
+    unknownReason: null,
   };
+}
+
+/** A stage the catalogue cannot price. Its cost is unknown, so it is never added in as zero. */
+function unpriced(stage: CostStage, modelId: string): StageEstimate {
+  const reason = `pricing unavailable for ${modelId}`;
+  return { stage, usd: null, basis: reason, unknownReason: reason };
 }

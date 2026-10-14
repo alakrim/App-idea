@@ -44,9 +44,9 @@ export function SwitchCard({ title, description, value, onValueChange }: SwitchC
           accessibilityLabel={title}
           value={value}
           onValueChange={onValueChange}
-          trackColor={{ false: colors.border, true: colors.accent }}
+          trackColor={{ false: colors.boundary, true: colors.accent }}
           thumbColor={colors.text}
-          ios_backgroundColor={colors.border}
+          ios_backgroundColor={colors.boundary}
         />
       </View>
     </Card>

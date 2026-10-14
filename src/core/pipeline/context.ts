@@ -13,6 +13,12 @@ export interface SegmentReady {
 
 export type JobStatusEvent = 'running' | 'done' | 'skipped' | 'failed' | 'cancelled';
 
+/** Passages of a narration stage: how many are saved, and how many the chapter has. */
+export interface PassageCount {
+  readonly done: number;
+  readonly total: number;
+}
+
 export type PipelineEvent =
   | {
       readonly type: 'stage';
@@ -25,7 +31,21 @@ export type PipelineEvent =
       readonly chapterId: Id;
       readonly stage: Stage;
       readonly progress: number;
+      /** Set by the stages that work through passages (narration). */
+      readonly passages?: PassageCount;
     }
+  /** A stage stopped moving for too long. The run retries the stalled request, or fails the chapter. */
+  | {
+      readonly type: 'stall';
+      readonly chapterId: Id;
+      readonly stage: Stage;
+      /** The stalls of this run so far, from 1. */
+      readonly count: number;
+    }
+  /** A request of the running chapter was retired as stale and is retried at once. */
+  | { readonly type: 'staleAbort'; readonly chapterId: Id; readonly stage: Stage }
+  /** The app came back to the foreground while this chapter was running. */
+  | { readonly type: 'reconnecting'; readonly chapterId: Id }
   | { readonly type: 'segmentReady'; readonly chapterId: Id; readonly segment: SegmentReady }
   | {
       readonly type: 'cost';

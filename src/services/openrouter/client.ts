@@ -4,6 +4,7 @@ import { createModelCatalog } from './models';
 import { parsePdf } from './pdf';
 import { synthesizeSpeech } from './speech';
 import { createTransport } from './transport';
+import { createConnection } from '../network/connection';
 
 import type {
   ChatJsonInput,
@@ -17,6 +18,7 @@ import type { KeyCheck } from './key';
 import type { ModelCatalog } from './models';
 import type { PdfInput, PdfResult } from './pdf';
 import type { SpeechInput, SpeechResult } from './speech';
+import type { Connection } from '../network/connection';
 
 export interface OpenRouterClientOptions {
   /** Returns the user's key, or null when none is saved. Called before every request. */
@@ -30,10 +32,16 @@ export interface OpenRouterClientOptions {
   /** Longest passage accepted by synthesizeSpeech. */
   maxSpeechChars?: number;
   modelCacheTtlMs?: number;
+  /** Returns the saved model catalogue snapshot, or null. Read once, on the first model use. */
+  loadModelSnapshot?: () => string | null;
+  /** Receives the catalogue snapshot after each successful model fetch. Must not throw. */
+  onModelsFetched?: (snapshot: string) => void;
   fetchImpl?: typeof fetch;
   sleep?: (ms: number) => Promise<void>;
   random?: () => number;
   now?: () => number;
+  /** The connection whose stale requests are retried at once. Defaults to a private one. */
+  connection?: Pick<Connection, 'register'>;
 }
 
 export interface OpenRouterClient {
@@ -48,7 +56,8 @@ export interface OpenRouterClient {
 
 const defaults = {
   baseUrl: 'https://openrouter.ai/api/v1',
-  timeoutMs: 60_000,
+  /** Chat and JSON calls. Analysis prompts run to about 5k tokens, so the old 60 s was too short. */
+  timeoutMs: 120_000,
   maxRetries: 3,
   maxSpeechChars: 4_000,
   modelCacheTtlMs: 60 * 60 * 1000,
@@ -67,11 +76,14 @@ export function createOpenRouterClient(options: OpenRouterClientOptions): OpenRo
     sleep: options.sleep ?? ((ms) => new Promise<void>((resolve) => setTimeout(resolve, ms))),
     random: options.random ?? Math.random,
     now,
+    connection: options.connection ?? createConnection(),
   });
   const models = createModelCatalog({
     transport,
     ttlMs: options.modelCacheTtlMs ?? defaults.modelCacheTtlMs,
     now,
+    loadSnapshot: options.loadModelSnapshot,
+    onFetched: options.onModelsFetched,
   });
   const chatDeps = { transport, models };
 

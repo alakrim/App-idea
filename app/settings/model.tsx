@@ -1,4 +1,4 @@
-import { router, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { View } from 'react-native';
 
 import { useOpenRouter } from '@/app-shell/openrouter-provider';
@@ -8,6 +8,7 @@ import { ModelNotice } from '@/features/settings/model-notice';
 import { ModelPicker } from '@/features/settings/model-picker';
 import { SettingsPage } from '@/features/settings/settings-page';
 import { useSettings } from '@/features/settings/settings-store';
+import { goBackOrHome } from '@/features/shared/navigation';
 import { ErrorState } from '@/ui/error-state';
 import { Skeleton } from '@/ui/skeleton';
 import { space } from '@/ui/tokens';
@@ -23,7 +24,7 @@ export default function ModelPickerScreen() {
         <ErrorState
           message="This model setting does not exist."
           retryLabel="Go back"
-          onRetry={() => router.back()}
+          onRetry={goBackOrHome}
         />
       </SettingsPage>
     );
@@ -68,7 +69,7 @@ function Picker({ kind }: { kind: ModelKind }) {
           searchLabel={config.searchLabel}
           onSelect={(model) => {
             patch(config.patchFor(model));
-            router.back();
+            goBackOrHome();
           }}
           header={
             <>

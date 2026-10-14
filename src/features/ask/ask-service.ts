@@ -7,7 +7,9 @@ import type {
   QaMessage,
   SentenceRef,
 } from '@/core/domain';
+import { aliasesBefore } from '@/core/memory/aliases';
 import { buildPriorContext } from '@/core/memory/codex';
+import { paidCallEntry } from '@/core/llm/usage-entry';
 import { buildQaPrompt } from '@/core/memory/qa';
 import type { QaFtsHit } from '@/core/memory/qa';
 import { chapterRepo } from '@/db/repos/chapter-repo';
@@ -86,7 +88,10 @@ function gatherContext(
     QA_CODEX_BUDGET_TOKENS,
   );
 
-  const names = entities.flatMap((entity) => [entity.canonicalName, ...entity.aliases]);
+  const names = entities.flatMap((entity) => [
+    entity.canonicalName,
+    ...aliasesBefore(entity, cutoff.chapterOrder),
+  ]);
   const keywords = extractKeywords(question, names);
   const hits = searchPassages(db, seriesId, cutoff, keywords, numberByOrder);
 
@@ -210,18 +215,20 @@ export async function askQuestion(deps: AskDeps, request: AskRequest): Promise<A
   db.transaction((tx) => {
     qaRepo.append(tx, user);
     qaRepo.append(tx, assistant);
-    usageRepo.insert(tx, {
-      id: deps.newId(),
-      at: createdAt,
-      chapterId: null,
-      stage: 'qa',
-      model: reply.model,
-      promptTokens: reply.usage.promptTokens,
-      completionTokens: reply.usage.completionTokens,
-      audioSeconds: null,
-      costUsd: reply.usage.costUsd ?? 0,
-      generationId: reply.generationId,
-    });
+    usageRepo.insert(
+      tx,
+      paidCallEntry({
+        id: deps.newId(),
+        at: createdAt,
+        chapterId: null,
+        stage: 'qa',
+        model: reply.model,
+        promptTokens: reply.usage.promptTokens,
+        completionTokens: reply.usage.completionTokens,
+        costUsd: reply.usage.costUsd,
+        generationId: reply.generationId,
+      }),
+    );
   });
 
   return { kind: 'answered', user, assistant };

@@ -5,5 +5,5 @@ export const FAKE_USAGE: LlmUsage = { promptTokens: 100, completionTokens: 40, c
 
 /** A reply with the fake usage, for scripted transports. */
 export function reply(text: string, usage: Partial<LlmUsage> = {}): LlmReply {
-  return { text, usage: { ...FAKE_USAGE, ...usage } };
+  return { text, usage: { ...FAKE_USAGE, ...usage }, generationId: null };
 }

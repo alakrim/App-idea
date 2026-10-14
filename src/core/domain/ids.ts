@@ -9,7 +9,6 @@ export type Id = z.infer<typeof IdSchema>;
 
 /** Epoch milliseconds. Stored as INTEGER in SQLite. */
 export const TimestampSchema = z.number().int().nonnegative();
-export type Timestamp = z.infer<typeof TimestampSchema>;
 
 export type IdGenerator = () => Id;
 

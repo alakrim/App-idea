@@ -1,0 +1,234 @@
+{
+  "category": "horse_trot",
+  "curatedOn": "2026-10-14",
+  "queries": [
+    "horse hooves walking",
+    "horse trot dirt road",
+    "horse walking loop",
+    "horse hooves ambience"
+  ],
+  "poolSize": 10,
+  "candidates": [
+    {
+      "rank": 1,
+      "freesoundId": 481917,
+      "name": "R26-18-Foley Horse Hooves Walking.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/481917/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 177.8,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.75,
+      "numRatings": 8,
+      "numDownloads": 493,
+      "previewUrl": "https://cdn.freesound.org/previews/481/481917_2524442-hq.mp3",
+      "score": 6.8,
+      "reasons": [
+        "+2.45 rating 4.75 from 8 ratings",
+        "+1.35 493 downloads",
+        "+2 at least 90 s",
+        "+1 name matches horse, hooves"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 479743,
+      "name": "R14-10-Horse Long Steady Walk.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/479743/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 68.78,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.75,
+      "numRatings": 8,
+      "numDownloads": 308,
+      "previewUrl": "https://cdn.freesound.org/previews/479/479743_2524442-hq.mp3",
+      "score": 6.2,
+      "reasons": [
+        "+2.45 rating 4.75 from 8 ratings",
+        "+1.24 308 downloads",
+        "+1.5 at least 63 s",
+        "+1 name matches horse"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 870717,
+      "name": "Riding Horse Thru Mud, Rider's Perspective",
+      "url": "https://freesound.org/people/CHallSmith/sounds/870717/",
+      "author": "CHallSmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 50.34,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 36,
+      "previewUrl": "https://cdn.freesound.org/previews/870/870717_18412227-hq.mp3",
+      "score": 5.85,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.78 36 downloads",
+        "+2 tags hooves, hoof",
+        "+1 name matches horse"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 479531,
+      "name": "R03-45-Truck, Horses, People Being Evacuated.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/479531/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 111.35,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 1,
+      "numRatings": 1,
+      "numDownloads": 45,
+      "previewUrl": "https://cdn.freesound.org/previews/479/479531_2524442-hq.mp3",
+      "score": 4.39,
+      "reasons": [
+        "+1.56 rating 1 from 1 ratings",
+        "+0.83 45 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 640199,
+      "name": "horse weeding plowing",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/640199/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 43.96,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.85,
+      "numRatings": 20,
+      "numDownloads": 1190,
+      "previewUrl": "https://cdn.freesound.org/previews/640/640199_11519060-hq.mp3",
+      "score": 4.22,
+      "reasons": [
+        "+2.69 rating 4.85 from 20 ratings",
+        "+1.54 1190 downloads",
+        "-3 only 43.96 s",
+        "+2 tags horse, hoof",
+        "+1 name matches horse"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 479532,
+      "name": "R03-46-Truck, Horses, People Being Evacuated.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/479532/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 79.13,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 1,
+      "numRatings": 1,
+      "numDownloads": 39,
+      "previewUrl": "https://cdn.freesound.org/previews/479/479532_2524442-hq.mp3",
+      "score": 3.86,
+      "reasons": [
+        "+1.56 rating 1 from 1 ratings",
+        "+0.8 39 downloads",
+        "+1.5 at least 63 s"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 843303,
+      "name": "Coconut Horse Walking Sound Effects (Slow Gallop, Faster Gallop)",
+      "url": "https://freesound.org/people/BorzSounds/sounds/843303/",
+      "author": "BorzSounds",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 44.82,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 7,
+      "numDownloads": 209,
+      "previewUrl": "https://cdn.freesound.org/previews/843/843303_16979474-hq.mp3",
+      "score": 3.57,
+      "reasons": [
+        "+2.41 rating 4.71 from 7 ratings",
+        "+1.16 209 downloads",
+        "-3 only 44.82 s",
+        "+2 tags horse, hooves",
+        "+1 name matches horse"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 233345,
+      "name": "Horses.WAV",
+      "url": "https://freesound.org/people/Ornery/sounds/233345/",
+      "author": "Ornery",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 36.86,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.74,
+      "numRatings": 42,
+      "numDownloads": 4672,
+      "previewUrl": "https://cdn.freesound.org/previews/233/233345_737995-hq.mp3",
+      "score": 2.54,
+      "reasons": [
+        "+2.7 rating 4.74 from 42 ratings",
+        "+1.83 4672 downloads",
+        "-3 only 36.86 s",
+        "+1 tags hooves"
+      ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 841364,
+      "name": "🐎 Horse Carriage Sounds in Zakopane - Kuźnice | ASMR Ambience, Field Recording",
+      "url": "https://freesound.org/people/GirlWithSoundRecorder/sounds/841364/",
+      "author": "GirlWithSoundRecorder",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 39.89,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 60,
+      "previewUrl": "https://cdn.freesound.org/previews/841/841364_7834424-hq.mp3",
+      "score": 2.18,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+0.89 60 downloads",
+        "-3 only 39.89 s",
+        "+1 tags horse",
+        "+1 name matches horse"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 479679,
+      "name": "R13-07-Horse on Wood.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/479679/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 41.77,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 1,
+      "numRatings": 1,
+      "numDownloads": 74,
+      "previewUrl": "https://cdn.freesound.org/previews/479/479679_2524442-hq.mp3",
+      "score": 0.5,
+      "reasons": [
+        "+1.56 rating 1 from 1 ratings",
+        "+0.94 74 downloads",
+        "-3 only 41.77 s",
+        "+1 name matches horse"
+      ]
+    }
+  ]
+}

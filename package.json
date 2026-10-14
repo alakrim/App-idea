@@ -16,8 +16,12 @@
     "bundle:check": "expo export --platform android --output-dir dist/check && rm -rf dist/check",
     "boot:check": "node scripts/smoke/boot-bundle.mjs",
     "sounds:build": "node scripts/sounds/build-base-pack.mjs",
+    "sounds:curate": "node scripts/sounds/freesound-curate.mjs",
+    "sounds:screen": "node scripts/sounds/screen-run.mjs",
+    "sounds:build-real": "node scripts/sounds/build-freesound-pack.mjs",
     "sounds:verify": "node scripts/sounds/verify-pack.mjs",
-    "verify": "npm run typecheck && npm run lint && npm run worklet:check && npm run test && npm run bundle:check",
+    "sounds:test": "node --test scripts/sounds/*.test.mjs",
+    "verify": "npm run typecheck && npm run lint && npm run worklet:check && npm run sounds:test && npm run sounds:verify && npm run test && npm run bundle:check",
     "worklet:check": "node scripts/smoke/worklet-audit.cjs"
   },
   "dependencies": {
@@ -58,6 +62,7 @@
     "react-dom": "19.2.3",
     "react-native": "0.86.3",
     "react-native-audio-api": "^0.13.6",
+    "react-native-background-actions": "4.1.0",
     "react-native-gesture-handler": "~2.32.0",
     "react-native-reanimated": "4.5.1",
     "react-native-safe-area-context": "~5.7.0",

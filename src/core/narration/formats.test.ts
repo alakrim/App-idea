@@ -1,12 +1,15 @@
 import {
   containerOf,
   DEFAULT_PCM_FORMAT,
+  joinMp3,
+  joinWav,
   parsePcmContentType,
   pcmToWav,
   speechFormatFor,
   storableAudio,
   wavDurationMs,
 } from './formats';
+import { mp3DurationMs } from '../pipeline/mp3-duration';
 
 const ascii = (bytes: Uint8Array, offset: number, length: number): string =>
   String.fromCharCode(...bytes.subarray(offset, offset + length));
@@ -156,5 +159,118 @@ describe('containerOf and storableAudio', () => {
     expect(storableAudio(wav, 'audio/wav', 'wav')).toEqual({ bytes: wav, mime: 'audio/wav' });
     const mp3 = new Uint8Array([0xff, 0xfb]);
     expect(storableAudio(mp3, 'audio/mpeg', 'mp3')).toEqual({ bytes: mp3, mime: 'audio/mpeg' });
+  });
+});
+
+/** MPEG-1 Layer III frames at 44.1 kHz, 128 kbit/s: 417 bytes and 1,152 samples each. */
+function mp3Frames(count: number): Uint8Array {
+  const out = new Uint8Array(417 * count);
+  for (let i = 0; i < count; i += 1) out.set([0xff, 0xfb, 0x90, 0x00], i * 417);
+  return out;
+}
+
+function id3v2Tag(payload: number): Uint8Array {
+  const out = new Uint8Array(10 + payload);
+  out.set([0x49, 0x44, 0x33, 4, 0, 0, 0, 0, (payload >> 7) & 0x7f, payload & 0x7f], 0);
+  out.fill(0x55, 10);
+  return out;
+}
+
+function id3v1Tag(): Uint8Array {
+  const out = new Uint8Array(128).fill(0x20);
+  out.set([0x54, 0x41, 0x47], 0);
+  return out;
+}
+
+function concat(...parts: Uint8Array[]): Uint8Array {
+  const out = new Uint8Array(parts.reduce((sum, part) => sum + part.length, 0));
+  let offset = 0;
+  for (const part of parts) {
+    out.set(part, offset);
+    offset += part.length;
+  }
+  return out;
+}
+
+describe('joinWav', () => {
+  it('joins two PCM WAV files under one header, with the samples of both in order', () => {
+    const a = pcmToWav(new Uint8Array(24_000 * 2 * 3).fill(1), { rate: 24_000, channels: 1 });
+    const b = pcmToWav(new Uint8Array(24_000 * 2 * 2).fill(2), { rate: 24_000, channels: 1 });
+
+    const joined = joinWav(a, b);
+
+    expect(joined).not.toBeNull();
+    const out = joined as Uint8Array;
+    const view = new DataView(out.buffer, out.byteOffset, out.byteLength);
+    expect(out.length).toBe(44 + 24_000 * 2 * 5);
+    expect(view.getUint32(4, true)).toBe(36 + 24_000 * 2 * 5);
+    expect(view.getUint32(40, true)).toBe(24_000 * 2 * 5);
+    expect(out.subarray(44, 44 + 24_000 * 2 * 3)).toEqual(a.subarray(44));
+    expect(out.subarray(44 + 24_000 * 2 * 3)).toEqual(new Uint8Array(24_000 * 2 * 2).fill(2));
+  });
+
+  it('gives the duration as the sum of the two halves', () => {
+    const a = pcmToWav(new Uint8Array(24_000 * 2 * 3), { rate: 24_000, channels: 1 });
+    const b = pcmToWav(new Uint8Array(24_000 * 2 * 2), { rate: 24_000, channels: 1 });
+    const joined = joinWav(a, b) as Uint8Array;
+
+    expect(wavDurationMs(joined)).toBe(5_000);
+    expect(wavDurationMs(joined)).toBe((wavDurationMs(a) ?? 0) + (wavDurationMs(b) ?? 0));
+  });
+
+  it('refuses halves whose rate or channel count differ', () => {
+    const mono24 = pcmToWav(new Uint8Array(96), { rate: 24_000, channels: 1 });
+    const mono16 = pcmToWav(new Uint8Array(96), { rate: 16_000, channels: 1 });
+    const stereo24 = pcmToWav(new Uint8Array(96), { rate: 24_000, channels: 2 });
+
+    expect(joinWav(mono24, mono16)).toBeNull();
+    expect(joinWav(mono24, stereo24)).toBeNull();
+  });
+
+  it('refuses bytes that are not a PCM WAV file', () => {
+    const wav = pcmToWav(new Uint8Array(96), { rate: 24_000, channels: 1 });
+
+    expect(joinWav(wav, mp3Frames(2))).toBeNull();
+    expect(joinWav(mp3Frames(2), wav)).toBeNull();
+  });
+
+  it('measures a truncated second half by the data it holds', () => {
+    const a = pcmToWav(new Uint8Array(96), { rate: 24_000, channels: 1 });
+    const full = pcmToWav(new Uint8Array(24_000 * 2), { rate: 24_000, channels: 1 });
+    const truncated = full.subarray(0, full.length - 1_000);
+
+    const joined = joinWav(a, truncated) as Uint8Array;
+
+    expect(joined.length).toBe(44 + 96 + (truncated.length - 44));
+  });
+});
+
+describe('joinMp3', () => {
+  it('concatenates the frames of both files', () => {
+    const a = mp3Frames(2);
+    const b = mp3Frames(3);
+
+    expect(joinMp3(a, b)).toEqual(concat(a, b));
+  });
+
+  it('strips the ID3 tags of the second half, and keeps the first half as it is', () => {
+    const a = concat(id3v2Tag(20), mp3Frames(2));
+    const b = concat(id3v2Tag(40), mp3Frames(3));
+
+    expect(joinMp3(a, b)).toEqual(concat(a, mp3Frames(3)));
+  });
+
+  it('strips a trailing ID3v1 tag from both halves', () => {
+    const a = concat(mp3Frames(2), id3v1Tag());
+    const b = concat(mp3Frames(3), id3v1Tag());
+
+    expect(joinMp3(a, b)).toEqual(concat(mp3Frames(2), mp3Frames(3)));
+  });
+
+  it('plays as one file of the frames of both halves', () => {
+    const joined = joinMp3(concat(id3v2Tag(20), mp3Frames(2)), concat(id3v2Tag(20), mp3Frames(3)));
+
+    // Five 1,152-sample frames at 44.1 kHz.
+    expect(mp3DurationMs(joined)).toBe(Math.round((5 * 1152 * 1000) / 44_100));
   });
 });

@@ -1,0 +1,455 @@
+#!/usr/bin/env node
+// A4 content screening. For each bed target, screens the top curated Freesound candidates:
+//   1. AudioSet tags for every one-second frame (screen/tag.py, PANNs CNN14), cached under .cache/;
+//   2. the level of every second (ffmpeg, mono 44.1 kHz);
+//   3. the policy (screen-policy.mjs): denied families, required sounds, the cleanest 64 s window;
+//   4. the passing candidates re-ranked by CLAP text-audio similarity (screen/clap.py).
+// The verdict and its evidence go into assets/ambience/curation/<category>.json under `screening`. The
+// build (build-freesound-pack.mjs) only cuts a candidate whose screening passed. No key is used here.
+//
+// Run: npm run sounds:screen
+// Optional: -- --only=light_rain,heavy_rain   -- --no-clap (rank by curation order only)
+
+import { Buffer } from 'node:buffer';
+import { execFile } from 'node:child_process';
+import { mkdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { promisify } from 'node:util';
+
+import { z } from 'zod';
+
+import { frameLevelsDb } from './freesound-window.mjs';
+import { FREESOUND_TARGETS } from './freesound-targets.mjs';
+import { decodeMono } from './ffmpeg-tools.mjs';
+import {
+  chooseCandidate,
+  ALARM_FRAME_PROBABILITY,
+  DENY_FRAME_PROBABILITY,
+  familiesFor,
+  labelsFor,
+  parseAudiosetNames,
+  policyFor,
+  REQUIRED_FRACTION,
+  REQUIRED_FRAME_PROBABILITY,
+  screenCandidate,
+  SHORT_WINDOW_FRAMES,
+  WINDOW_FRAMES,
+} from './screen-policy.mjs';
+import {
+  AUDIOSET_CSV_PATH,
+  CLAP_MODEL,
+  CURATION_DIR,
+  PREVIEW_CACHE_DIR,
+  SCREEN_CANDIDATES,
+  SCREEN_CLAP_SCRIPT,
+  SCREEN_HF_HOME,
+  SCREEN_HOME,
+  SCREEN_PYTHON,
+  SCREEN_TAG_SCRIPT,
+  SCREEN_WORK_DIR,
+} from './pack-spec.mjs';
+
+const execFileAsync = promisify(execFile);
+const MODEL_SAMPLE_RATE = 32000;
+const LEVEL_SAMPLE_RATE = 44100;
+const MAX_BUFFER = 64 * 1024 * 1024;
+/** Clips tagged per Python process. Each decoded clip is held on disk only for its batch. */
+const TAG_BATCH = 12;
+/** Parallel preview downloads (the Freesound CDN is slow per connection). */
+const PREVIEW_CONCURRENCY = 24;
+
+const curationSchema = z
+  .object({
+    category: z.string(),
+    candidates: z.array(
+      z.object({
+        rank: z.number().int().positive(),
+        freesoundId: z.number().int().positive(),
+        name: z.string(),
+        url: z.string(),
+        author: z.string(),
+        durationSec: z.number().positive(),
+        previewUrl: z.string().url(),
+      }),
+    ),
+  })
+  .passthrough();
+
+const tagsSchema = z.object({
+  frameSeconds: z.literal(1),
+  frames: z.number().int().nonnegative(),
+  labels: z.array(z.string()),
+  perFrame: z.array(z.array(z.number())),
+  topClasses: z.array(z.object({ label: z.string(), max: z.number() })),
+});
+
+/** The environment the Python steps run in: no key, and a fake HOME so nothing lands in the real one. */
+function pythonEnv() {
+  return {
+    PATH: process.env.PATH ?? '/usr/bin:/bin',
+    HOME: SCREEN_HOME,
+    HF_HOME: SCREEN_HF_HOME,
+    LANG: 'C.UTF-8',
+    FFMPEG_PATH: process.env.FFMPEG_PATH ?? 'ffmpeg',
+    // The sandbox proxy re-signs HTTPS; the model download needs its CA bundle (never disable TLS).
+    ...(process.env.SSL_CERT_FILE ? { SSL_CERT_FILE: process.env.SSL_CERT_FILE } : {}),
+    ...(process.env.REQUESTS_CA_BUNDLE ? { REQUESTS_CA_BUNDLE: process.env.REQUESTS_CA_BUNDLE } : {}),
+  };
+}
+
+async function runPython(args) {
+  const { stdout } = await execFileAsync(SCREEN_PYTHON, ['-I', ...args], {
+    env: pythonEnv(),
+    maxBuffer: MAX_BUFFER,
+  });
+  return stdout;
+}
+
+async function fileExists(path) {
+  try {
+    return (await stat(path)).size > 0;
+  } catch (err) {
+    if (err.code === 'ENOENT') return false;
+    throw err;
+  }
+}
+
+async function readJson(path) {
+  return JSON.parse(await readFile(path, 'utf8'));
+}
+
+/** The preview is the candidate's HQ MP3 (A3). Cached; downloaded without the key, once per retry. */
+async function ensurePreview(candidate) {
+  const path = join(PREVIEW_CACHE_DIR, `${candidate.freesoundId}.mp3`);
+  if (await fileExists(path)) return path;
+  await mkdir(PREVIEW_CACHE_DIR, { recursive: true });
+  let lastError = null;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const response = await fetch(candidate.previewUrl);
+    if (response.ok) {
+      await writeFile(path, Buffer.from(await response.arrayBuffer()));
+      return path;
+    }
+    lastError = new Error(`preview download HTTP ${response.status}`);
+  }
+  throw lastError;
+}
+
+/**
+ * AudioSet tags for many clips, in batches: one Python process per batch loads the model once. Each
+ * clip is decoded to 32 kHz mono, tagged and cached under .cache/screen-work/tags/<id>.json. The cache
+ * is reused when it holds every label the policies read.
+ */
+async function tagClips(clips, labels) {
+  const pending = [];
+  for (const clip of clips) {
+    const cachePath = join(SCREEN_WORK_DIR, 'tags', `${clip.freesoundId}.json`);
+    const cached = (await fileExists(cachePath))
+      ? tagsSchema.parse(await readJson(cachePath))
+      : null;
+    if (cached && labels.every((label) => cached.labels.includes(label))) continue;
+    pending.push({ ...clip, cachePath });
+  }
+  if (pending.length === 0) return;
+  await mkdir(join(SCREEN_WORK_DIR, 'tags'), { recursive: true });
+  const labelsPath = join(SCREEN_WORK_DIR, 'labels.json');
+  await writeFile(labelsPath, JSON.stringify(labels));
+  for (let start = 0; start < pending.length; start += TAG_BATCH) {
+    const batch = pending.slice(start, start + TAG_BATCH);
+    console.log(`  tagging ${start + 1}-${start + batch.length} of ${pending.length} clips`);
+    const requests = [];
+    for (const clip of batch) {
+      const pcm = await decodeMono(clip.preview, MODEL_SAMPLE_RATE);
+      const raw = join(SCREEN_WORK_DIR, `${clip.freesoundId}.32k.f32`);
+      await writeFile(raw, Buffer.from(pcm.buffer, pcm.byteOffset, pcm.byteLength));
+      requests.push({ input: raw, output: `${clip.cachePath}.tmp` });
+    }
+    const requestsPath = join(SCREEN_WORK_DIR, 'tag-requests.json');
+    await writeFile(requestsPath, JSON.stringify(requests));
+    try {
+      await runPython([SCREEN_TAG_SCRIPT, labelsPath, requestsPath]);
+    } finally {
+      // Keep every clip the tagger finished, even when the batch fails part way: a rerun then
+      // resumes at the first clip without a cached result. Only audio and torn files are removed.
+      for (const clip of batch) await keepFinishedTags(clip);
+      for (const request of requests) await rm(request.input, { force: true });
+    }
+  }
+}
+
+/** Moves a finished tag file into the cache. A torn file (the process died mid-write) is deleted. */
+async function keepFinishedTags(clip) {
+  const tmp = `${clip.cachePath}.tmp`;
+  if (!(await fileExists(tmp))) return;
+  try {
+    tagsSchema.parse(await readJson(tmp));
+    await rename(tmp, clip.cachePath);
+  } catch {
+    await rm(tmp, { force: true });
+  }
+}
+
+/** Tags for a clip once tagClips has run: from the cache, which tagClips filled. */
+async function readTags(freesoundId) {
+  return tagsSchema.parse(await readJson(join(SCREEN_WORK_DIR, 'tags', `${freesoundId}.json`)));
+}
+
+/** The dB level of every whole second of the clip (the same time base as the tags). */
+async function levelsOf(preview) {
+  const pcm = await decodeMono(preview, LEVEL_SAMPLE_RATE);
+  return frameLevelsDb(pcm, LEVEL_SAMPLE_RATE);
+}
+
+function summarizeRejects(candidates) {
+  const reasons = [...new Set(candidates.filter((c) => c.verdict === 'reject').map((c) => c.reason))];
+  return reasons.slice(0, 2).join('; ');
+}
+
+/**
+ * Fetches the previews of every candidate in parallel. The CDN is slow per connection, so a single
+ * stream is about 80 KB/s and twelve streams together are several times faster. A failed fetch is
+ * retried when its target is prepared, and reported there.
+ */
+async function prefetchPreviews(entries) {
+  let next = 0;
+  const worker = async () => {
+    while (next < entries.length) {
+      const entry = entries[next];
+      next += 1;
+      try {
+        await ensurePreview(entry);
+      } catch {
+        // Reported by prepareTarget, which retries once more.
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: PREVIEW_CONCURRENCY }, worker));
+}
+
+/** Downloads and levels every candidate of one target. Screening itself runs after tagging. */
+async function prepareTarget(curation) {
+  const entries = curation.candidates.slice(0, SCREEN_CANDIDATES);
+  await prefetchPreviews(entries);
+  const candidates = [];
+  for (const entry of entries) {
+    const base = {
+      rank: entry.rank,
+      freesoundId: entry.freesoundId,
+      name: entry.name,
+      url: entry.url,
+      author: entry.author,
+      durationSec: Math.round(entry.durationSec * 10) / 10,
+    };
+    try {
+      const preview = await ensurePreview(entry);
+      candidates.push({ ...base, preview, levelsDb: await levelsOf(preview), error: null });
+    } catch (err) {
+      candidates.push({ ...base, preview: null, levelsDb: null, error: err.message.split('\n')[0] });
+    }
+  }
+  return candidates;
+}
+
+/** Applies the policy to the prepared candidates of one target, using the cached tags. */
+async function screenTarget(target, candidates, names) {
+  const policy = policyFor(target, names);
+  const out = [];
+  for (const c of candidates) {
+    if (c.error !== null) {
+      out.push({ ...c, verdict: 'reject', reason: `could not be screened: ${c.error}`, window: null, evidence: null, clapScore: null });
+      continue;
+    }
+    const tags = await readTags(c.freesoundId);
+    const result = screenCandidate({ tags, levelsDb: c.levelsDb, policy });
+    out.push({ ...c, ...result, clapScore: null });
+  }
+  return { target, policy, candidates: out };
+}
+
+/** The candidate to use among the passing ones: highest CLAP score, else the earliest in curation order. */
+function chosenOf(candidates) {
+  const chosen = chooseCandidate(candidates);
+  if (!chosen) return null;
+  return {
+    freesoundId: chosen.freesoundId,
+    windowStartSeconds: chosen.window.startSeconds,
+    windowSeconds: chosen.window.lengthSeconds,
+    loopSeconds: chosen.window.loopSeconds,
+    steadinessDb: chosen.window.steadinessDb,
+    clapScore: chosen.clapScore ?? null,
+  };
+}
+
+/**
+ * Deletes the previews and tags of the candidates that did not pass, once their verdict is recorded
+ * (the evidence stays in the curation file). Passing previews stay: the build and CLAP need them.
+ */
+async function pruneRejects(candidates) {
+  for (const c of candidates) {
+    if (c.verdict === 'pass') continue;
+    await rm(join(PREVIEW_CACHE_DIR, `${c.freesoundId}.mp3`), { force: true });
+    await rm(join(SCREEN_WORK_DIR, 'tags', `${c.freesoundId}.json`), { force: true });
+  }
+}
+
+function screeningRecord({ target, policy, candidates, clapModel, screenedOn }) {
+  const chosen = chosenOf(candidates);
+  let unfilledReason = null;
+  if (!chosen) {
+    unfilledReason =
+      candidates.length === 0
+        ? 'no CC0 candidates found on Freesound'
+        : summarizeRejects(candidates) || 'no candidate passed the screen';
+  }
+  return {
+    screenedOn,
+    tagger: 'PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames',
+    reranker: clapModel,
+    thresholds: {
+      denyFrameProbability: DENY_FRAME_PROBABILITY,
+      alarmFrameProbability: ALARM_FRAME_PROBABILITY,
+      requiredFrameProbability: REQUIRED_FRAME_PROBABILITY,
+      requiredFraction: REQUIRED_FRACTION,
+      longWindowSeconds: WINDOW_FRAMES,
+      shortWindowSeconds: SHORT_WINDOW_FRAMES,
+    },
+    policy: {
+      families: familiesFor(target),
+      exempt: target.screen.exempt,
+      required: policy.required,
+      clapPrompt: policy.clap,
+    },
+    verdict: chosen ? 'filled' : 'unfilled',
+    unfilledReason,
+    chosen,
+    candidates: candidates.map((c) => ({
+      rank: c.rank,
+      freesoundId: c.freesoundId,
+      name: c.name,
+      url: c.url,
+      author: c.author,
+      durationSec: c.durationSec,
+      verdict: c.verdict,
+      reason: c.reason ?? null,
+      window: c.window ?? null,
+      clapScore: c.clapScore ?? null,
+      evidence: c.evidence ?? null,
+    })),
+  };
+}
+
+/**
+ * CLAP re-rank, one batch for every passing candidate of every category. Previews that were pruned are
+ * downloaded again. Each curation record gets its scores and the chosen candidate is recomputed.
+ */
+async function clapPhase(targets, screenedOn) {
+  const files = [];
+  for (const target of targets) {
+    const path = join(CURATION_DIR, `${target.id}.json`);
+    const record = await readJson(path);
+    if (record.screening?.verdict === undefined) continue;
+    files.push({ target, path, record });
+  }
+  const requests = [];
+  for (const { target, record } of files) {
+    for (const c of record.screening.candidates.filter((x) => x.verdict === 'pass')) {
+      const preview = await ensurePreview({ freesoundId: c.freesoundId, previewUrl: c.previewUrl ?? previewUrlOf(record, c.freesoundId) });
+      requests.push({
+        id: `${target.id}:${c.freesoundId}`,
+        audio: preview,
+        startSeconds: c.window.startSeconds,
+        lengthSeconds: c.window.lengthSeconds,
+        prompt: target.screen.clap,
+      });
+    }
+  }
+  const scores = {};
+  if (requests.length > 0) {
+    const requestsPath = join(SCREEN_WORK_DIR, 'clap-requests.json');
+    const outPath = join(SCREEN_WORK_DIR, 'clap-scores.json');
+    await writeFile(requestsPath, JSON.stringify(requests));
+    await runPython([SCREEN_CLAP_SCRIPT, requestsPath, outPath]);
+    Object.assign(scores, z.object({ scores: z.record(z.string(), z.number()) }).parse(await readJson(outPath)).scores);
+  }
+  for (const { target, path, record } of files) {
+    const candidates = record.screening.candidates.map((c) => ({
+      ...c,
+      clapScore: c.verdict === 'pass' ? (scores[`${target.id}:${c.freesoundId}`] ?? null) : null,
+    }));
+    const chosen = chosenOf(candidates);
+    await writeFile(
+      path,
+      `${JSON.stringify({
+        ...record,
+        screening: {
+          ...record.screening,
+          screenedOn,
+          reranker: CLAP_MODEL,
+          candidates,
+          chosen,
+          verdict: chosen ? 'filled' : 'unfilled',
+          unfilledReason: chosen ? null : record.screening.unfilledReason,
+        },
+      }, null, 2)}\n`,
+    );
+    console.log(`${target.id.padEnd(18)} ${chosen ? `${chosen.freesoundId} at ${chosen.windowStartSeconds} s (CLAP ${chosen.clapScore ?? 'n/a'})` : 'UNFILLED'}`);
+  }
+}
+
+/** The Freesound preview URL of a candidate, from its curation entry in the same record. */
+function previewUrlOf(record, freesoundId) {
+  const entry = record.candidates.find((c) => c.freesoundId === freesoundId);
+  if (!entry) throw new Error(`no curation entry for ${freesoundId}`);
+  return entry.previewUrl;
+}
+
+function onlyFilter(args) {
+  const flag = args.find((arg) => arg.startsWith('--only='));
+  if (!flag) return null;
+  return new Set(flag.slice('--only='.length).split(',').filter((id) => id.length > 0));
+}
+
+/**
+ * Streams the categories: each one is fetched, tagged, screened and pruned before the next starts, so the
+ * disk holds the passing previews only. Then one CLAP batch re-ranks the passers (unless --no-clap).
+ */
+async function main() {
+  const args = process.argv.slice(2);
+  const useClap = !args.includes('--no-clap');
+  const only = onlyFilter(args);
+  const targets = FREESOUND_TARGETS.filter((target) => only === null || only.has(target.id));
+  const names = parseAudiosetNames(await readFile(AUDIOSET_CSV_PATH, 'utf8'));
+  const unionLabels = [...new Set(FREESOUND_TARGETS.flatMap((t) => labelsFor(policyFor(t, names))))];
+  const screenedOn = new Date().toISOString().slice(0, 10);
+  await mkdir(SCREEN_WORK_DIR, { recursive: true });
+
+  for (const target of targets) {
+    const path = join(CURATION_DIR, `${target.id}.json`);
+    const curation = curationSchema.parse(await readJson(path));
+    console.log(`screening ${target.id} (${Math.min(curation.candidates.length, SCREEN_CANDIDATES)} candidates)`);
+    const prepared = await prepareTarget(curation);
+    const clips = [...new Map(prepared.filter((c) => c.preview).map((c) => [c.freesoundId, c])).values()];
+    await tagClips(clips, unionLabels);
+    const screened = await screenTarget(target, prepared, names);
+    await pruneRejects(screened.candidates);
+    const record = screeningRecord({
+      target,
+      policy: screened.policy,
+      candidates: screened.candidates,
+      clapModel: null,
+      screenedOn,
+    });
+    const current = await readJson(path);
+    await writeFile(path, `${JSON.stringify({ ...current, screening: record }, null, 2)}\n`);
+    const passed = screened.candidates.filter((c) => c.verdict === 'pass').length;
+    console.log(`  ${target.id}: ${passed} passed of ${screened.candidates.length}; ${record.verdict === 'filled' ? `chosen ${record.chosen.freesoundId}` : `UNFILLED: ${record.unfilledReason}`}`);
+  }
+
+  if (useClap) await clapPhase(targets, screenedOn);
+  console.log(`screened ${targets.length} categories; screening written to ${CURATION_DIR}`);
+}
+
+main().catch((err) => {
+  console.error(err.message);
+  process.exitCode = 1;
+});

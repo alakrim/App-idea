@@ -104,7 +104,7 @@ describe('chapterRepo', () => {
   it('keeps listening-position order snapshots in step with a move', () => {
     const { db } = createTestDb();
     seedSeries(db, 3);
-    positionRepo.record(db, id(1), { chapterId: id(3), sentenceIdx: 0 }, T0);
+    positionRepo.record(db, id(1), { chapterId: id(3), sentenceIdx: 0, positionMs: 0 }, T0);
 
     chapterRepo.moveBetween(db, id(3), { previousId: null, nextId: id(1) }, T0);
 
@@ -135,7 +135,14 @@ describe('chapterRepo', () => {
     expect(chapterRepo.get(db, id(1))).toBeNull();
     expect(textRepo.getRange(db, id(1), 0, 10)).toEqual([]);
     expect(usageRepo.totalsBy(db, 'chapter')).toEqual([
-      { key: null, calls: 1, promptTokens: 10, completionTokens: 5, costUsd: 0.01 },
+      {
+        key: null,
+        calls: 1,
+        promptTokens: 10,
+        completionTokens: 5,
+        costUsd: 0.01,
+        unknownCalls: 0,
+      },
     ]);
   });
 
@@ -144,7 +151,7 @@ describe('chapterRepo', () => {
     seedSeries(db, 3);
     textRepo.replaceChapterText(db, id(1), chapterText(1, ['One.', 'Two.', 'Three.']));
     // Chapter 2 has no text, so the nearest previous chapter with text is chapter 1.
-    positionRepo.record(db, id(1), { chapterId: id(3), sentenceIdx: 0 }, T0);
+    positionRepo.record(db, id(1), { chapterId: id(3), sentenceIdx: 0, positionMs: 0 }, T0);
 
     chapterRepo.delete(db, id(3));
 
@@ -162,8 +169,8 @@ describe('chapterRepo', () => {
     textRepo.replaceChapterText(db, id(1), chapterText(1, ['One.', 'Two.', 'Three.']));
     textRepo.replaceChapterText(db, id(2), chapterText(2, ['Four.', 'Five.']));
     // Furthest reaches chapter 2, then the listener seeks back to chapter 1.
-    positionRepo.record(db, id(1), { chapterId: id(2), sentenceIdx: 0 }, T0);
-    positionRepo.record(db, id(1), { chapterId: id(1), sentenceIdx: 1 }, T0 + 1);
+    positionRepo.record(db, id(1), { chapterId: id(2), sentenceIdx: 0, positionMs: 0 }, T0);
+    positionRepo.record(db, id(1), { chapterId: id(1), sentenceIdx: 1, positionMs: 0 }, T0 + 1);
 
     chapterRepo.delete(db, id(2));
 
@@ -177,7 +184,7 @@ describe('chapterRepo', () => {
     const { db } = createTestDb();
     seedSeries(db, 2);
     textRepo.replaceChapterText(db, id(2), chapterText(2, ['Only.']));
-    positionRepo.record(db, id(1), { chapterId: id(2), sentenceIdx: 0 }, T0);
+    positionRepo.record(db, id(1), { chapterId: id(2), sentenceIdx: 0, positionMs: 0 }, T0);
 
     chapterRepo.delete(db, id(2));
 
@@ -188,7 +195,7 @@ describe('chapterRepo', () => {
     const { db } = createTestDb();
     seedSeries(db, 2);
     textRepo.replaceChapterText(db, id(1), chapterText(1, ['One.']));
-    positionRepo.record(db, id(1), { chapterId: id(1), sentenceIdx: 0 }, T0);
+    positionRepo.record(db, id(1), { chapterId: id(1), sentenceIdx: 0, positionMs: 0 }, T0);
 
     chapterRepo.delete(db, id(2));
 

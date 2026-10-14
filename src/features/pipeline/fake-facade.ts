@@ -84,12 +84,19 @@ function idleSnapshot(chapterId: string): ChapterProgress {
   return {
     chapterId,
     state: 'idle',
-    stages: STAGES.map((stage) => ({ stage, status: 'pending', progress: 0 })),
+    stages: STAGES.map((stage) => ({
+      stage,
+      status: 'pending',
+      progress: 0,
+      since: null,
+      passages: null,
+    })),
     overall: 0,
     readySegments: 0,
     totalSegments: null,
     costUsdSoFar: 0,
     error: null,
+    reconnecting: false,
   };
 }
 
@@ -137,6 +144,14 @@ export function createFakePipeline(options: FakePipelineOptions): PipelineFacade
       stage,
       status: run.slots[stage].status,
       progress: run.slots[stage].progress,
+      since: null,
+      passages:
+        stage === 'narrate' && run.slots[stage].status === 'running'
+          ? {
+              done: Math.floor(run.slots[stage].progress * NARRATION_SEGMENTS),
+              total: NARRATION_SEGMENTS,
+            }
+          : null,
     }));
     const narrate = run.slots.narrate;
     return {
@@ -154,6 +169,7 @@ export function createFakePipeline(options: FakePipelineOptions): PipelineFacade
         0,
       ),
       error: run.error,
+      reconnecting: false,
     };
   }
 
@@ -306,6 +322,7 @@ export function createFakePipeline(options: FakePipelineOptions): PipelineFacade
       db,
       run.chapterId,
       text.sentences.map((s) => ({ idx: s.idx, translated: fakeTranslation(s.text, target) })),
+      target,
     );
   }
 
@@ -371,6 +388,16 @@ export function createFakePipeline(options: FakePipelineOptions): PipelineFacade
     return STAGES.find((stage) => run.slots[stage].status === 'failed') ?? 'extract';
   }
 
+  function cancelRun(chapterId: string): void {
+    const run = runFor(chapterId);
+    clearTimer(run);
+    run.state = 'cancelled';
+    run.active = null;
+    jobRepo.cancelUnfinished(db, chapterId, clock());
+    setChapterStatus(run, 'draft');
+    emit(run);
+  }
+
   return {
     async previewUrl(url, signal) {
       await delay(previewMs, signal);
@@ -412,14 +439,12 @@ export function createFakePipeline(options: FakePipelineOptions): PipelineFacade
       start(run, 'extract');
     },
 
+    async stop(chapterIds) {
+      for (const chapterId of chapterIds) cancelRun(chapterId);
+    },
+
     cancel(chapterId) {
-      const run = runFor(chapterId);
-      clearTimer(run);
-      run.state = 'cancelled';
-      run.active = null;
-      jobRepo.cancelUnfinished(db, chapterId, clock());
-      setChapterStatus(run, 'draft');
-      emit(run);
+      cancelRun(chapterId);
     },
 
     retry(chapterId, from) {
@@ -476,17 +501,17 @@ export function fakePreview(url: string): SourcePreview {
 export function fakeEstimate({ chars, sourceLang, targetLang }: EstimateArgs): CostEstimate {
   const translates = targetLang !== null && targetLang !== sourceLang;
   const total = chars * FAKE_USD_PER_CHAR * (translates ? 1.2 : 1);
+  const line = (stage: CostLine['stage'], usd: number, basis: string): CostLine => ({
+    stage,
+    usd,
+    basis,
+    unknownReason: null,
+  });
   const lines: CostLine[] = [
-    {
-      stage: 'clean',
-      usd: total * 0.14,
-      basis: `About ${Math.round(chars / 4000)}k tokens of cleanup`,
-    },
-    { stage: 'analyze', usd: total * 0.3, basis: 'Ambience and memory, one pass' },
-    ...(translates
-      ? [{ stage: 'translate' as const, usd: total * 0.26, basis: `Into ${targetLang}` }]
-      : []),
-    { stage: 'narrate', usd: total * 0.3, basis: 'Narration of the full text' },
+    line('clean', total * 0.14, `About ${Math.round(chars / 4000)}k tokens of cleanup`),
+    line('analyze', total * 0.3, 'Ambience and memory, one pass'),
+    ...(translates ? [line('translate', total * 0.26, `Into ${targetLang}`)] : []),
+    line('narrate', total * 0.3, 'Narration of the full text'),
   ];
   return { totalUsd: total, lowUsd: total * 0.75, highUsd: total * 1.5, lines };
 }

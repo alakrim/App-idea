@@ -1,5 +1,6 @@
 import { nameKeys, normalizeName, resolveEntities } from './entities';
 import {
+  alias,
   emptyMemory,
   entity,
   fact,
@@ -73,7 +74,7 @@ describe('resolveEntities', () => {
   });
 
   it('matches an existing entity by alias and records the new spelling as an alias', () => {
-    const existing = [entity({ id: 'E1', canonicalName: 'Ana Ruiz', aliases: ['Ana'] })];
+    const existing = [entity({ id: 'E1', canonicalName: 'Ana Ruiz', aliases: [alias('Ana', 1)] })];
     const memory = emptyMemory({
       characters: [{ name: 'La Capitana', aliases: ['Ana Ruiz'], facts: ['commands the ship'] }],
     });
@@ -82,11 +83,12 @@ describe('resolveEntities', () => {
       newId,
     });
 
+    // The new spelling is stamped with the chapter that revealed it.
     expect(upserts).toEqual([
       expect.objectContaining({
         id: 'E1',
         canonicalName: 'Ana Ruiz',
-        aliases: ['Ana', 'La Capitana'],
+        aliases: [alias('Ana', 1), alias('La Capitana', 5)],
       }),
     ]);
     expect(newFacts).toEqual([
@@ -139,7 +141,7 @@ describe('resolveEntities', () => {
     });
     const { upserts, newFacts } = resolveEntities([], memory, 1, { seriesId: SERIES_ID, newId });
     expect(upserts).toHaveLength(1);
-    expect(upserts[0]?.aliases).toEqual(['Boris']);
+    expect(upserts[0]?.aliases).toEqual([alias('Boris', 1)]);
     expect(newFacts.map((f) => f.fact)).toEqual(['a sailor', 'quiet']);
   });
 
@@ -167,10 +169,48 @@ describe('resolveEntities', () => {
     expect(upserts.map((e) => e.id)).toEqual(['E1']);
   });
 
+  it('does not match a spelling first revealed in a later chapter', () => {
+    // "The Prince" is revealed in chapter 9. Chapter 3 is resolved on its own, so it cannot link to Jon.
+    const existing = [
+      entity({
+        id: 'E1',
+        canonicalName: 'Jon',
+        aliases: [alias('The Prince', 9)],
+        firstChapterOrder: 1,
+      }),
+    ];
+    const memory = emptyMemory({
+      characters: [{ name: 'The Prince', aliases: [], facts: ['Rules the north'] }],
+    });
+
+    const { upserts } = resolveEntities(existing, memory, 3, { seriesId: SERIES_ID, newId });
+
+    expect(upserts).toEqual([expect.objectContaining({ canonicalName: 'The Prince' })]);
+    expect(upserts.every((e) => e.id !== 'E1')).toBe(true);
+  });
+
+  it('matches a spelling revealed in the chapter being resolved', () => {
+    const existing = [
+      entity({
+        id: 'E1',
+        canonicalName: 'Jon',
+        aliases: [alias('The Prince', 9)],
+        firstChapterOrder: 1,
+      }),
+    ];
+    const memory = emptyMemory({
+      characters: [{ name: 'The Prince', aliases: [], facts: ['Rules the north'] }],
+    });
+
+    const { upserts } = resolveEntities(existing, memory, 9, { seriesId: SERIES_ID, newId });
+
+    expect(upserts).toEqual([expect.objectContaining({ id: 'E1' })]);
+  });
+
   it('does not mutate the input entities', () => {
-    const existing = [entity({ id: 'E1', canonicalName: 'Ana', aliases: ['A'] })];
+    const existing = [entity({ id: 'E1', canonicalName: 'Ana', aliases: [alias('A', 1)] })];
     const memory = emptyMemory({ characters: [{ name: 'Ana Ruiz', aliases: [], facts: [] }] });
     resolveEntities(existing, memory, 1, { seriesId: SERIES_ID, newId });
-    expect(existing[0]).toEqual(entity({ id: 'E1', canonicalName: 'Ana', aliases: ['A'] }));
+    expect(existing[0]).toEqual(entity({ id: 'E1', canonicalName: 'Ana', aliases: [alias('A', 1)] }));
   });
 });

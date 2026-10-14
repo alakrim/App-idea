@@ -1,9 +1,12 @@
 import type { BedCommand } from '@/core/playback/ambience-scheduler';
 import { type DuckRamp, dbToLinear } from '@/core/playback/ducking';
 
-/** Master on/off fades over this long, so toggling ambience never clicks. */
+/** Master gain changes (ambience toggles, sleep fades) ramp over this long, so they never click. */
 const MASTER_RAMP_MS = 300;
-const DEFAULT_CACHE_SIZE = 4;
+/** Decoded beds kept in memory. A 60 s mono bed at 48 kHz is about 11.5 MB, so this holds four. */
+export const DEFAULT_CACHE_BUDGET_BYTES = 48 * 1024 * 1024;
+const DEFAULT_SAMPLE_RATE = 48_000;
+const BYTES_PER_SAMPLE = 4;
 
 /**
  * A bundled bed the category resolved to. `asset` is the `require()` id that decodes it. `lufs` is
@@ -30,6 +33,9 @@ export type ResolveBed = (categoryId: string) => ResolvedBed | null;
  */
 export interface MixerBuffer {
   readonly duration: number;
+  /** Optional so that minimal test doubles stay valid. Real decoded buffers always carry them. */
+  readonly sampleRate?: number;
+  readonly numberOfChannels?: number;
 }
 
 export interface MixerParam {
@@ -64,15 +70,24 @@ export interface MixerContext {
   createBufferSource(): MixerBufferSource;
   createGain(): MixerGain;
   close(): Promise<void>;
+  /** Pauses the audio clock while nothing sounds. Optional: test doubles may omit it. */
+  suspend?(): Promise<void>;
+  /** Restarts the audio clock after a suspend. Optional, as for `suspend`. */
+  resume?(): Promise<void>;
 }
 
 export interface AmbienceMixer {
   /** Applies planner commands. Unknown categories are skipped without an error. */
   apply(commands: readonly BedCommand[]): void;
-  /** Fades the whole ambience bus in or out. Beds keep their state while it is off. */
-  setMaster(enabled: boolean): void;
+  /** The ambience bus gain, from 0 (silent) to 1. Sleep fades drive it, so beds fade with the voice. */
+  setMasterGain(gain: number): void;
   /** Ramps the ducking stage that sits between the master bus and the output. */
   setDucking(ramp: DuckRamp): void;
+  /**
+   * Suspends the audio clock, as long as no bed is sounding or decoding. The next start resumes
+   * it, so an idle player holds no audio stream.
+   */
+  suspend(): void;
   dispose(): void;
 }
 
@@ -80,8 +95,8 @@ export interface AmbienceMixerOptions {
   resolveBed: ResolveBed;
   /** Creates the audio context on first use, so nothing touches native audio until needed. */
   createContext: () => MixerContext;
-  /** Decoded buffers kept in memory. The default is 4. */
-  cacheSize?: number;
+  /** Bytes of decoded buffers kept in memory. The default is 48 MB. */
+  cacheBudgetBytes?: number;
   onError?: (error: unknown) => void;
 }
 
@@ -105,6 +120,12 @@ interface RetiredBed extends SoundingBed {
   endAt: number;
 }
 
+interface CacheEntry {
+  decoding: Promise<MixerBuffer>;
+  /** Zero until the decode finishes, so a decode in flight is never evicted for its size. */
+  bytes: number;
+}
+
 /** Schedules a linear ramp from the param's current value. Cancelling first keeps it predictable. */
 function rampTo(param: MixerParam, value: number, rampMs: number, now: number): void {
   param.cancelScheduledValues(now);
@@ -112,32 +133,45 @@ function rampTo(param: MixerParam, value: number, rampMs: number, now: number): 
   param.linearRampToValueAtTime(value, now + rampMs / 1000);
 }
 
+/** Memory a decoded buffer holds: samples times channels, at 32-bit float. */
+export function decodedBytes(buffer: MixerBuffer): number {
+  const rate = buffer.sampleRate ?? DEFAULT_SAMPLE_RATE;
+  const channels = buffer.numberOfChannels ?? 1;
+  return Math.ceil(buffer.duration * rate) * channels * BYTES_PER_SAMPLE;
+}
+
 /**
  * Plays ambience beds on one AudioContext: each bed is a looping buffer source into its own gain,
  * then into the master gain and the ducking gain. Every fade is scheduled on the audio clock, so
- * a stop can never leave an orphan source running. Decoded buffers live in a small LRU cache.
+ * a stop can never leave an orphan source running. The context is created by the first bed, not
+ * by a gain change. Decoded buffers live in an LRU cache bounded by their bytes.
  */
 export function createAmbienceMixer(options: AmbienceMixerOptions): AmbienceMixer {
-  const cacheSize = options.cacheSize ?? DEFAULT_CACHE_SIZE;
+  const budgetBytes = options.cacheBudgetBytes ?? DEFAULT_CACHE_BUDGET_BYTES;
   let context: MixerContext | null = null;
   let graph: Graph | null = null;
   let disposed = false;
+  let suspended = false;
+  /** Gain changes made before the context exists. They are applied when it is created. */
+  let masterGain = 1;
+  let ducking: DuckRamp = { gainDb: 0, rampMs: 0 };
   const sounding = new Map<string, SoundingBed>();
   const pending = new Map<string, PendingBed>();
   const retired: RetiredBed[] = [];
-  const buffers = new Map<string, Promise<MixerBuffer>>();
+  /** Insertion order is the LRU order: the first entry is the least recently used. */
+  const buffers = new Map<string, CacheEntry>();
 
   function ensureGraph(): { context: MixerContext; graph: Graph } {
     if (!context || !graph) {
       const created = options.createContext();
       const master = created.createGain();
-      const ducking = created.createGain();
-      master.gain.value = 1;
-      ducking.gain.value = 1;
-      master.connect(ducking);
-      ducking.connect(created.destination);
+      const ducker = created.createGain();
+      master.gain.value = masterGain;
+      ducker.gain.value = dbToLinear(ducking.gainDb);
+      master.connect(ducker);
+      ducker.connect(created.destination);
       context = created;
-      graph = { master, ducking };
+      graph = { master, ducking: ducker };
     }
     return { context, graph };
   }
@@ -154,23 +188,43 @@ export function createAmbienceMixer(options: AmbienceMixerOptions): AmbienceMixe
     }
   }
 
+  function resumeIfSuspended(ctx: MixerContext): void {
+    if (!suspended) return;
+    suspended = false;
+    ctx.resume?.().catch((error: unknown) => options.onError?.(error));
+  }
+
+  /** Drops least recently used buffers until the decoded ones fit the budget. */
+  function evictToBudget(keepId: string): void {
+    let total = 0;
+    for (const entry of buffers.values()) total += entry.bytes;
+    for (const [id, entry] of buffers) {
+      if (total <= budgetBytes) break;
+      if (id === keepId) continue;
+      buffers.delete(id);
+      total -= entry.bytes;
+    }
+  }
+
   function loadBuffer(bed: ResolvedBed, decodeContext: MixerContext): Promise<MixerBuffer> {
     const cached = buffers.get(bed.id);
     if (cached) {
       buffers.delete(bed.id);
       buffers.set(bed.id, cached);
-      return cached;
+      return cached.decoding;
     }
-    const decoding = decodeContext.decodeAudioData(bed.asset);
-    buffers.set(bed.id, decoding);
-    decoding.catch(() => {
-      if (buffers.get(bed.id) === decoding) buffers.delete(bed.id);
-    });
-    for (const oldest of buffers.keys()) {
-      if (buffers.size <= cacheSize) break;
-      buffers.delete(oldest);
-    }
-    return decoding;
+    const entry: CacheEntry = { decoding: decodeContext.decodeAudioData(bed.asset), bytes: 0 };
+    buffers.set(bed.id, entry);
+    entry.decoding.then(
+      (buffer) => {
+        entry.bytes = decodedBytes(buffer);
+        evictToBudget(bed.id);
+      },
+      () => {
+        if (buffers.get(bed.id) === entry) buffers.delete(bed.id);
+      },
+    );
+    return entry.decoding;
   }
 
   function startSource(
@@ -249,7 +303,11 @@ export function createAmbienceMixer(options: AmbienceMixerOptions): AmbienceMixe
   return {
     apply(commands) {
       if (disposed) return;
+      const starts = commands.some((command) => command.type === 'start');
+      // Nothing is created until a bed starts. A stop before any start has nothing to stop.
+      if (!starts && context === null) return;
       const { context: ctx } = ensureGraph();
+      if (starts) resumeIfSuspended(ctx);
       sweepRetired(ctx.currentTime);
       for (const command of commands) {
         if (command.type === 'start') start(command);
@@ -258,16 +316,28 @@ export function createAmbienceMixer(options: AmbienceMixerOptions): AmbienceMixe
       }
     },
 
-    setMaster(enabled) {
+    setMasterGain(gain) {
       if (disposed) return;
-      const { context: ctx, graph: g } = ensureGraph();
-      rampTo(g.master.gain, enabled ? 1 : 0, MASTER_RAMP_MS, ctx.currentTime);
+      if (!(gain >= 0 && gain <= 1)) {
+        throw new RangeError(`master gain must be between 0 and 1, got ${gain}`);
+      }
+      masterGain = gain;
+      if (context && graph) rampTo(graph.master.gain, gain, MASTER_RAMP_MS, context.currentTime);
     },
 
     setDucking(ramp) {
       if (disposed) return;
-      const { context: ctx, graph: g } = ensureGraph();
-      rampTo(g.ducking.gain, dbToLinear(ramp.gainDb), ramp.rampMs, ctx.currentTime);
+      ducking = ramp;
+      if (context && graph) {
+        rampTo(graph.ducking.gain, dbToLinear(ramp.gainDb), ramp.rampMs, context.currentTime);
+      }
+    },
+
+    suspend() {
+      if (disposed || !context || suspended) return;
+      if (sounding.size > 0 || pending.size > 0) return;
+      suspended = true;
+      context.suspend?.().catch((error: unknown) => options.onError?.(error));
     },
 
     dispose() {

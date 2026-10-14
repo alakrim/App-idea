@@ -40,6 +40,11 @@ export function createExpoLibraryFiles(): LibraryFiles {
       return new File(uri).base64();
     },
 
+    async sizeOf(uri) {
+      const file = new File(uri);
+      return file.exists ? file.size : null;
+    },
+
     async importFile(sourceUri, relativePath) {
       const destination = fileAt(relativePath);
       if (destination.exists) destination.delete();

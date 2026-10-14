@@ -19,3 +19,6 @@ npm-debug.*
 yarn-error.*
 *.tsbuildinfo
 expo-env.d.ts
+
+# Downloaded sound previews (A3 build cache)
+.cache/

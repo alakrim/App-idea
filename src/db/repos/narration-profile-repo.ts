@@ -1,5 +1,3 @@
-import { eq } from 'drizzle-orm';
-
 import { NarrationProfileSchema } from '../../core/domain';
 import { narrationProfiles } from '../schema';
 
@@ -18,10 +16,5 @@ export const narrationProfileRepo = {
       .values(valid)
       .onConflictDoUpdate({ target: narrationProfiles.id, set: { name: valid.name } })
       .run();
-  },
-
-  get(db: Db, id: string): NarrationProfile | null {
-    const row = db.select().from(narrationProfiles).where(eq(narrationProfiles.id, id)).get();
-    return row ? NarrationProfileSchema.parse(row) : null;
   },
 };

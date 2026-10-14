@@ -23,6 +23,28 @@ describe('WebViewRenderQueue', () => {
     expect(queue.current()).toBeNull();
   });
 
+  it('refuses rendered HTML over the page size limit, and moves on to the next page', async () => {
+    const queue = new WebViewRenderQueue(1000, 16);
+    const big = queue.render('https://a.example/1', controller().signal);
+    const next = queue.render('https://a.example/2', controller().signal);
+
+    queue.complete(1, '<html>0123456789 too big</html>');
+    await expect(big).rejects.toMatchObject({
+      error: { code: 'INPUT_TOO_LONG', retryable: false },
+    });
+    expect(queue.current()?.id).toBe(2);
+    queue.complete(2, 'small');
+    await expect(next).resolves.toBe('small');
+  });
+
+  it('measures the size in UTF-8 bytes, so multi-byte HTML counts in full', async () => {
+    const queue = new WebViewRenderQueue(1000, 10);
+    const pending = queue.render('https://a.example/1', controller().signal);
+    // Four characters, twelve bytes: over a 10-byte limit although the string is short.
+    queue.complete(1, '日本語字');
+    await expect(pending).rejects.toBeInstanceOf(StageFailure);
+  });
+
   it('ignores a report for a request that is not the active one', async () => {
     const queue = new WebViewRenderQueue(1000);
     const pending = queue.render('https://a.example/1', controller().signal);

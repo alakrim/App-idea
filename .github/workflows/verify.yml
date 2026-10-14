@@ -1,0 +1,48 @@
+# Runs the repo's full gate (`npm run verify`) on every pull request and on pushes to the main line.
+# The gate is the same one the protocol requires before a task is marked done (see CLAUDE.md).
+name: verify
+
+on:
+  pull_request:
+  push:
+    branches: [main, claude/charming-fermat-srbk25]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      # Jest keeps its transform cache in the OS temp dir (/tmp/jest_<uid>) by default.
+      - uses: actions/cache@v4
+        with:
+          path: /tmp/jest_*
+          key: jest-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ github.sha }}
+          restore-keys: |
+            jest-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-
+
+      # The sound pack check decodes the committed beds with ffmpeg. Install it only if the image lacks it.
+      - name: Ensure ffmpeg
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+          ffmpeg -version | head -1
+
+      - run: npm ci
+
+      - run: npm run verify

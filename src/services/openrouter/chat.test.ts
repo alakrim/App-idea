@@ -139,6 +139,50 @@ describe('chatJson parsing', () => {
     expect(result.model).toBe('test/model');
   });
 
+  it('reports every completed call, so a failed repair keeps the first call usage', async () => {
+    const { deps } = makeDeps((call) => {
+      const attempt = bodyOf(call).messages;
+      // The repair call is the one that carries the assistant's first reply.
+      return Array.isArray(attempt) && attempt.length > 2
+        ? chatReply('still not json', { cost: 0.002, id: 'gen-repair' })
+        : chatReply('not json at all', { cost: 0.001, id: 'gen-first' });
+    });
+    const reported: unknown[] = [];
+
+    await expect(
+      chatJson(deps, jsonInput({ onCall: (call) => void reported.push(call) })),
+    ).rejects.toMatchObject({ error: { code: 'LLM_INVALID_OUTPUT' } });
+
+    expect(reported).toEqual([
+      {
+        usage: { promptTokens: 10, completionTokens: 5, costUsd: 0.001 },
+        generationId: 'gen-first',
+        model: 'test/model',
+      },
+      {
+        usage: { promptTokens: 10, completionTokens: 5, costUsd: 0.002 },
+        generationId: 'gen-repair',
+        model: 'test/model',
+      },
+    ]);
+  });
+
+  it('reports the first call when the repair call itself fails on the network', async () => {
+    let calls = 0;
+    const { deps } = makeDeps(() => {
+      calls += 1;
+      if (calls === 1) return chatReply('not json', { cost: 0.001, id: 'gen-first' });
+      throw new TypeError('Network request failed');
+    });
+    const reported: { generationId: string | null }[] = [];
+
+    await expect(
+      chatJson(deps, jsonInput({ onCall: (call) => void reported.push(call) })),
+    ).rejects.toBeInstanceOf(PipelineFailure);
+
+    expect(reported.map((call) => call.generationId)).toEqual(['gen-first']);
+  });
+
   it('reports costUsd as null when the response carries no cost', async () => {
     const { deps } = makeDeps(() => chatReply(JSON.stringify(validMemory)));
     const result = await chatJson(deps, jsonInput());

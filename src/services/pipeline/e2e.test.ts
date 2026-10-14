@@ -97,6 +97,7 @@ function buildWorld(webview: WebViewExtractor = noWebView): World {
     openrouter,
     files,
     webview,
+    storage: { freeBytes: async () => 10 * 1024 * 1024 * 1024 },
     fetchImpl: network.fetchImpl,
     clock,
     ids: createIdGenerator({ now: clock.now }),
@@ -133,6 +134,12 @@ function describeEvent(event: PipelineEvent): string | null {
       return 'done';
     case 'progress':
       return null;
+    case 'stall':
+      return `stall ${event.stage} #${event.count}`;
+    case 'staleAbort':
+      return `staleAbort ${event.stage}`;
+    case 'reconnecting':
+      return 'reconnecting';
   }
 }
 
@@ -286,7 +293,7 @@ describe('pipeline end to end (URL to playable chapter)', () => {
     expect(callsNamed(network, 'chapter_translation')).toBeGreaterThanOrEqual(1);
     expect(network.speechCount()).toBe(segments.length);
 
-    const totalUsd = usage.reduce((sum, u) => sum + u.costUsd, 0);
+    const totalUsd = usage.reduce((sum, u) => sum + (u.costUsd ?? 0), 0);
     const elapsedMs = Date.now() - world.startedAt;
     dumpTrace('URL chapter, Italian', world.trace);
     if (TRACE) {

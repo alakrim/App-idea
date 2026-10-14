@@ -1,0 +1,9 @@
+# Pinned Python deps for the A4 ambience screening step (scripts/sounds/screen). Install into a venv
+# under .cache/ (never committed):
+#   python3.13 -m venv .cache/venv-screen
+#   .cache/venv-screen/bin/pip install --index-url https://download.pytorch.org/whl/cpu torch==2.9.1
+#   .cache/venv-screen/bin/pip install -r scripts/sounds/screen/requirements.txt
+# torch is installed from the CPU index above (no CUDA wheels).
+numpy==2.2.6
+panns-inference==0.1.1
+transformers==4.57.6

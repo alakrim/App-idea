@@ -5,14 +5,14 @@
  */
 import type { Chapter, ChapterSource, Id, JobStatus, Stage, IdGenerator } from '@/core/domain';
 import { decode, detectCharset } from '@/core/extract/charset';
-import { extractArticle } from '@/core/extract/pipeline';
+import { loadPipeline } from '@/core/extract/load';
 import type { PipelineEvent } from '@/core/pipeline/context';
 import { estimateChapterCost } from '@/core/pipeline/estimate';
 import type { CostStage } from '@/core/pipeline/estimate';
 import type { Clock, Fetcher, PipelinePorts } from '@/core/pipeline/ports';
 import { createPipelineQueue } from '@/core/pipeline/queue';
 import type { PipelineQueue, QueueRunOptions, QueueSnapshot } from '@/core/pipeline/queue';
-import { FETCH_LIMITS } from '@/core/pipeline/stages/web-extract';
+import { FETCH_LIMITS } from '@/core/pipeline/limits';
 import { estimateWordCount } from '@/core/text/word-count';
 import { guessLanguage } from '@/core/translate/detect';
 import { audioSegmentRepo } from '@/db/repos/audio-segment-repo';
@@ -20,6 +20,7 @@ import { chapterRepo } from '@/db/repos/chapter-repo';
 import { jobRepo } from '@/db/repos/job-repo';
 import { seriesRepo } from '@/db/repos/series-repo';
 import { settingsRepo } from '@/db/repos/settings-repo';
+import { stageActivityRepo } from '@/db/repos/stage-activity-repo';
 import { usageRepo } from '@/db/repos/usage-repo';
 import type { Db } from '@/db/types';
 import type {
@@ -31,6 +32,7 @@ import type {
   SourcePreview,
 } from '@/features/pipeline/facade';
 
+import { activityOf } from './activity';
 import { reduceEvent, emptyTracked, startRun, STAGE_ORDER, toChapterProgress } from './progress';
 import { excerptOf, findNextChapterUrl, qualityOf } from './source-preview';
 
@@ -44,6 +46,8 @@ export interface PipelineServiceDeps {
   readonly files: LibraryFiles;
   readonly clock: Clock;
   readonly ids: IdGenerator;
+  /** True while a foreground service keeps the runtime alive in the background. See the queue. */
+  readonly keepsAliveInBackground?: () => boolean;
 }
 
 export interface PipelineService {
@@ -51,6 +55,8 @@ export interface PipelineService {
   readonly queue: PipelineQueue;
   /** Every runner event, in order, for the app's lifecycle (toasts, keep-awake). */
   subscribeEvents(listener: (event: PipelineEvent) => void): () => void;
+  /** Called when the queue first fails to save, so the app can say so. */
+  subscribeSaveFailures(listener: () => void): () => void;
 }
 
 const COST_STAGE_OF: Readonly<Record<CostStage, Stage>> = {
@@ -106,14 +112,19 @@ function sourceOf(input: ChapterInput, libraryPdfUri: string | undefined): Chapt
 }
 
 export function createPipelineService(deps: PipelineServiceDeps): PipelineService {
-  const { db, ports, fetcher, files, clock, ids } = deps;
+  const { db, ports, fetcher, files, clock, ids, keepsAliveInBackground } = deps;
   const tracked = new Map<string, TrackedChapter>();
   const progressListeners = new Map<string, Set<(progress: ChapterProgress) => void>>();
   const eventListeners = new Set<(event: PipelineEvent) => void>();
+  const saveFailureListeners = new Set<() => void>();
   const runsStarted = new Set<string>();
 
   const queue = createPipelineQueue(ports, {
     onEvent: (event) => handleEvent(event),
+    keepsAliveInBackground,
+    onSaveFailed: () => {
+      for (const listener of saveFailureListeners) listener();
+    },
   });
 
   function jobStatusOf(chapterId: Id, stage: Stage): JobStatus | null {
@@ -121,7 +132,7 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
   }
 
   function ledgerTotalOf(chapterId: Id): number {
-    return usageRepo.totalsBy(db, 'chapter').find((row) => row.key === chapterId)?.costUsd ?? 0;
+    return usageRepo.totalCostForChapter(db, chapterId);
   }
 
   /** The state of a chapter that has no live run: what its row and its jobs say. */
@@ -136,14 +147,14 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
         const job = jobs.get(stage);
         const status: JobStatus = !job || job.status === 'running' ? 'pending' : job.status;
         const progress = status === 'done' || status === 'skipped' ? 1 : (job?.progress ?? 0);
-        return [stage, { status, progress }];
+        return [stage, { status, progress, since: null, passages: null }];
       }),
     ) as TrackedChapter['stages'];
     const failed = STAGE_ORDER.map((stage) => jobs.get(stage)).find(
       (job) => job?.status === 'failed',
     );
     const ready = chapter.status === 'ready';
-    const segments = audioSegmentRepo.listByChapter(db, chapterId).length;
+    const segments = audioSegmentRepo.countByChapter(db, chapterId);
     return {
       state: ready ? 'ready' : chapter.status === 'failed' ? 'failed' : 'idle',
       stages,
@@ -152,6 +163,7 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
       costBaseUsd: ledgerTotalOf(chapterId),
       runCostUsd: 0,
       error: failed?.error ?? null,
+      reconnecting: false,
     };
   }
 
@@ -183,13 +195,36 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
     for (const listener of listeners) listener(current);
   }
 
+  /** What Diagnostics keeps: when each stage last moved, and how often it stalled or went stale. */
+  function recordActivity(event: PipelineEvent, at: number): void {
+    const update = activityOf(event);
+    if (update === null) return;
+    const { chapterId, stage } = update;
+    switch (update.kind) {
+      case 'start':
+        stageActivityRepo.startStage(db, chapterId, stage, at);
+        return;
+      case 'touch':
+        stageActivityRepo.touch(db, chapterId, stage, at);
+        return;
+      case 'stall':
+        stageActivityRepo.countStall(db, chapterId, stage, at);
+        return;
+      case 'staleAbort':
+        stageActivityRepo.countStaleAbort(db, chapterId, stage, at);
+        return;
+    }
+  }
+
   function handleEvent(event: PipelineEvent): void {
     const chapterId = event.chapterId;
     const current = trackedOf(chapterId);
+    const at = clock.now();
     tracked.set(
       chapterId,
-      reduceEvent(current, event, (stage) => jobStatusOf(chapterId, stage)),
+      reduceEvent(current, event, (stage) => jobStatusOf(chapterId, stage), at),
     );
+    recordActivity(event, at);
     if (
       event.type === 'done' ||
       (event.type === 'stage' && ['failed', 'cancelled'].includes(event.status))
@@ -225,6 +260,7 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
       const fetched = await fetcher.fetch(url, abort, FETCH_LIMITS);
       const charset = detectCharset(fetched.bytes, fetched.contentType ?? undefined);
       const html = decodeOrEmpty(fetched.bytes, charset);
+      const { extractArticle } = await loadPipeline();
       const result = await extractArticle({
         bytes: fetched.bytes,
         contentType: fetched.contentType ?? undefined,
@@ -238,7 +274,7 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
         wordCount: estimateWordCount(text),
         detectedLang: best?.lang ?? (text === '' ? null : guessLanguage(text)),
         quality: qualityOf(result.decision, text),
-        nextChapterUrl: html === null ? null : findNextChapterUrl(html, fetched.finalUrl),
+        nextChapterUrl: html === null ? null : await findNextChapterUrl(html, fetched.finalUrl),
       };
       return preview;
     },
@@ -266,6 +302,7 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
           stage: COST_STAGE_OF[line.stage],
           usd: line.usd,
           basis: line.basis,
+          unknownReason: line.unknownReason,
         }));
       return {
         totalUsd: estimate.totalUsd,
@@ -312,6 +349,11 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
       queueChapter(chapterId, {});
     },
 
+    async stop(chapterIds) {
+      for (const chapterId of chapterIds) queue.cancel(chapterId).catch(() => undefined);
+      await untilSettled(queue.idle(), STOP_TIMEOUT_MS);
+    },
+
     cancel(chapterId) {
       const wasRunning = queue.snapshot().running === chapterId;
       queue.cancel(chapterId).catch(() => undefined);
@@ -355,7 +397,25 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
         eventListeners.delete(listener);
       };
     },
+    subscribeSaveFailures(listener) {
+      saveFailureListeners.add(listener);
+      return () => {
+        saveFailureListeners.delete(listener);
+      };
+    },
   };
+}
+
+/** How long a delete waits for a run to stop. A run that does not stop in time is left to finish its write. */
+const STOP_TIMEOUT_MS = 10_000;
+
+/** Resolves when `settled` does, or after `ms`, whichever comes first. */
+function untilSettled(settled: Promise<void>, ms: number): Promise<void> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<void>((resolve) => {
+    timer = setTimeout(resolve, ms);
+  });
+  return Promise.race([settled, timeout]).finally(() => clearTimeout(timer));
 }
 
 function decodeOrEmpty(bytes: Uint8Array, charset: string): string | null {

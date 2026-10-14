@@ -21,7 +21,7 @@ function setup() {
 describe('readLibrary', () => {
   it('reports chapter totals, and listening state only where something was played', () => {
     const db = setup();
-    positionRepo.record(db, id(1), { chapterId: id(12), sentenceIdx: 4 }, T0 + 50);
+    positionRepo.record(db, id(1), { chapterId: id(12), sentenceIdx: 4, positionMs: 0 }, T0 + 50);
 
     const entries = readLibrary(db);
     const harbour = entries.find((entry) => entry.series.id === id(1));
@@ -42,8 +42,8 @@ describe('readLibrary', () => {
 describe('continueListening', () => {
   it('picks the series listened to most recently, and none when nothing was played', () => {
     const db = setup();
-    positionRepo.record(db, id(2), { chapterId: id(21), sentenceIdx: 0 }, T0 + 10);
-    positionRepo.record(db, id(1), { chapterId: id(11), sentenceIdx: 3 }, T0 + 99);
+    positionRepo.record(db, id(2), { chapterId: id(21), sentenceIdx: 0, positionMs: 0 }, T0 + 10);
+    positionRepo.record(db, id(1), { chapterId: id(11), sentenceIdx: 3, positionMs: 0 }, T0 + 99);
 
     expect(continueListening(readLibrary(db))?.series.id).toBe(id(1));
     expect(continueListening(readLibrary(setup()))).toBeNull();

@@ -184,6 +184,27 @@ describe('retries and backoff', () => {
   });
 });
 
+describe('chat timeout', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('waits 120 seconds for a chat call before it gives up', async () => {
+    const { client, calls } = makeClient(hangUntilAborted, { maxRetries: 0 });
+    const outcome = captureFailure(client.chatText({ model: 'm', user: 'hi' }));
+
+    await jest.advanceTimersByTimeAsync(0);
+    expect(calls).toHaveLength(1);
+    await jest.advanceTimersByTimeAsync(119_999);
+    expect(calls[0]?.signal?.aborted).toBe(false);
+    await jest.advanceTimersByTimeAsync(1);
+    expect((await outcome).error.code).toBe('NETWORK');
+  });
+});
+
 describe('timeouts and cancellation', () => {
   it('times out with a retryable NETWORK error', async () => {
     const { client, calls } = makeClient(hangUntilAborted, { timeoutMs: 5, maxRetries: 0 });

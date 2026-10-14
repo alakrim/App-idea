@@ -91,9 +91,47 @@ describe('vocab save and explanation', () => {
     gate.resolve(result());
   });
 
+  it('records the first call when the explanation fails, and stores an unknown cost as null', async () => {
+    const db = seed();
+    const chatJson = jest.fn(async (input: ChatJsonInput<unknown>) => {
+      input.onCall?.({
+        usage: { promptTokens: 50, completionTokens: 10, costUsd: null },
+        generationId: 'gen-repair',
+        model: 'anthropic/test',
+      });
+      throw new PipelineFailure({ code: 'LLM_INVALID_OUTPUT', message: 'Bad reply.', retryable: true });
+    });
+    const actions = harness(db, chatJson);
+
+    actions.saveToVocab({
+      seriesId: id(1),
+      chapterId: id(1),
+      sentenceIdx: 0,
+      text: 'Il tramonto era bellissimo.',
+      selection: 'bellissimo',
+    });
+    await flush();
+
+    expect(usageRepo.totalsBy(db, 'model')).toEqual([
+      {
+        key: 'anthropic/test',
+        calls: 1,
+        promptTokens: 50,
+        completionTokens: 10,
+        costUsd: 0,
+        unknownCalls: 1,
+      },
+    ]);
+  });
+
   it('fills the explanation, records the usage and clears the pending state', async () => {
     const db = seed();
-    const chatJson = jest.fn(async () => result());
+    // The client reports each completed call through onCall, as the real chatJson does.
+    const chatJson = jest.fn(async (input: ChatJsonInput<unknown>) => {
+      const reply = result();
+      input.onCall?.({ usage: reply.usage, generationId: reply.generationId, model: reply.model });
+      return reply;
+    });
     const actions = harness(db, chatJson);
 
     const savedId = actions.saveToVocab({
@@ -112,7 +150,14 @@ describe('vocab save and explanation', () => {
     expect(actions.isPending(savedId)).toBe(false);
     expect(actions.failureOf(savedId)).toBeNull();
     expect(usageRepo.totalsBy(db, 'model')).toEqual([
-      { key: 'anthropic/test', calls: 1, promptTokens: 80, completionTokens: 20, costUsd: 0.001 },
+      {
+        key: 'anthropic/test',
+        calls: 1,
+        promptTokens: 80,
+        completionTokens: 20,
+        costUsd: 0.001,
+        unknownCalls: 0,
+      },
     ]);
   });
 
@@ -186,6 +231,27 @@ describe('vocab save and explanation', () => {
 
     expect(second).toBe(first);
     expect(vocabRepo.list(db)).toHaveLength(1);
+  });
+
+  it('tells the caller a word is already saved before a second save would find the old entry', () => {
+    const db = seed();
+    const actions = harness(
+      db,
+      jest.fn(() => new Promise(() => undefined)),
+    );
+    const input = {
+      seriesId: id(1),
+      chapterId: id(1),
+      sentenceIdx: 0,
+      text: 'Il tramonto era bellissimo.',
+      selection: 'bellissimo',
+    };
+
+    expect(actions.hasSaved(input)).toBe(false);
+    actions.saveToVocab(input);
+
+    expect(actions.hasSaved(input)).toBe(true);
+    expect(actions.hasSaved({ ...input, sentenceIdx: 1 })).toBe(false);
   });
 
   it('saves the whole sentence, clipped, when nothing is selected', () => {

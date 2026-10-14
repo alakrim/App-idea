@@ -47,6 +47,17 @@ function setup(): Db {
 }
 
 describe('audioSegmentRepo', () => {
+  it('counts a chapter segments without reading them, and counts only that chapter', () => {
+    const db = setup();
+    audioSegmentRepo.insert(db, segment(0));
+    audioSegmentRepo.insert(db, segment(1));
+    audioSegmentRepo.insert(db, segment(0, { id: id(777), chapterId: id(2) }));
+
+    expect(audioSegmentRepo.countByChapter(db, id(1))).toBe(2);
+    expect(audioSegmentRepo.countByChapter(db, id(2))).toBe(1);
+    expect(audioSegmentRepo.countByChapter(db, id(3))).toBe(0);
+  });
+
   it('round-trips a segment with its sentence offsets', () => {
     const db = setup();
     audioSegmentRepo.insert(db, segment(0));
@@ -75,7 +86,9 @@ describe('audioSegmentRepo', () => {
   it('rejects a segment whose sentence range is inverted', () => {
     const db = setup();
 
-    expect(() => audioSegmentRepo.insert(db, segment(0, { sentenceStart: 3, sentenceEnd: 1 }))).toThrow();
+    expect(() =>
+      audioSegmentRepo.insert(db, segment(0, { sentenceStart: 3, sentenceEnd: 1 })),
+    ).toThrow();
     expect(audioSegmentRepo.listByChapter(db, id(1))).toEqual([]);
   });
 
@@ -99,5 +112,28 @@ describe('audioSegmentRepo', () => {
       .run();
 
     expect(() => audioSegmentRepo.listByChapter(db, id(1))).toThrow(DbValidationError);
+  });
+
+  it('replaces the passage saved at the same index, so a renarration overwrites it in place', () => {
+    const db = setup();
+    audioSegmentRepo.insert(db, segment(0));
+
+    audioSegmentRepo.insert(db, segment(0, { id: id(900), inputHash: 'new-hash', durationMs: 7000 }));
+
+    const rows = audioSegmentRepo.listByChapter(db, id(1));
+    expect(rows).toHaveLength(1);
+    expect(rows[0]).toMatchObject({ idx: 0, inputHash: 'new-hash', durationMs: 7000 });
+  });
+
+  it('lists only the chapters of one series whose first passage is saved', () => {
+    const db = setup();
+    seriesRepo.insert(db, seriesRow(2));
+    chapterRepo.insert(db, chapterRow(3, 2, 1));
+    audioSegmentRepo.insert(db, segment(0));
+    audioSegmentRepo.insert(db, segment(1, { id: id(901), chapterId: id(2) }));
+    audioSegmentRepo.insert(db, segment(0, { id: id(902), chapterId: id(3) }));
+
+    expect([...audioSegmentRepo.playableChapterIds(db, id(1))]).toEqual([id(1)]);
+    expect([...audioSegmentRepo.playableChapterIds(db, id(2))]).toEqual([id(3)]);
   });
 });

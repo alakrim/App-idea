@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react';
 
 import type { IdGenerator, Lang } from '@/core/domain';
+import { paidCallEntry } from '@/core/llm/usage-entry';
 import type { Settings } from '@/core/settings';
 import {
   buildVocabPrompt,
@@ -41,6 +42,8 @@ export interface SaveToVocabInput {
  */
 export interface VocabActions {
   saveToVocab(input: SaveToVocabInput): string;
+  /** True when this word or sentence is already saved, so a save would only find the old entry. */
+  hasSaved(input: SaveToVocabInput): boolean;
   retryExplanation(id: string): void;
   isPending(id: string): boolean;
   failureOf(id: string): string | null;
@@ -63,6 +66,19 @@ export function createVocabActions(deps: VocabActionsDeps): VocabActions {
   const failures = new Map<string, string>();
   const listeners = new Set<() => void>();
   let version = 0;
+
+  /** The entry already saved for this term in this sentence, if there is one. */
+  const findSaved = (input: SaveToVocabInput) => {
+    const term = termOf(input);
+    return vocabRepo
+      .list(db, { seriesId: input.seriesId })
+      .find(
+        (item) =>
+          item.chapterId === input.chapterId &&
+          item.sentenceIdx === input.sentenceIdx &&
+          item.term === term,
+      );
+  };
 
   const changed = (): void => {
     version += 1;
@@ -94,23 +110,27 @@ export function createVocabActions(deps: VocabActionsDeps): VocabActions {
         jsonSchemaName: VOCAB_JSON_SCHEMA_NAME,
         temperature: EXPLAIN_TEMPERATURE,
         maxTokens: EXPLAIN_MAX_TOKENS,
+        // Every completed call is recorded as it finishes, so a failed repair still counts.
+        onCall: (call) =>
+          usageRepo.insert(
+            db,
+            paidCallEntry({
+              id: newId(),
+              at: now(),
+              chapterId: item.chapterId,
+              stage: 'vocab',
+              model: call.model,
+              promptTokens: call.usage.promptTokens,
+              completionTokens: call.usage.completionTokens,
+              costUsd: call.usage.costUsd,
+              generationId: call.generationId,
+            }),
+          ),
       })
-      .then(({ data, usage, model, generationId }) => {
+      .then(({ data }) => {
         vocabRepo.setExplanation(db, id, {
           translation: data.translation,
           explanation: data.explanation,
-        });
-        usageRepo.insert(db, {
-          id: newId(),
-          at: now(),
-          chapterId: item.chapterId,
-          stage: 'vocab',
-          model,
-          promptTokens: usage.promptTokens,
-          completionTokens: usage.completionTokens,
-          audioSeconds: null,
-          costUsd: usage.costUsd ?? 0,
-          generationId,
         });
       })
       .catch((error: unknown) => {
@@ -123,19 +143,15 @@ export function createVocabActions(deps: VocabActionsDeps): VocabActions {
   };
 
   return {
+    hasSaved(input) {
+      return findSaved(input) !== undefined;
+    },
+
     saveToVocab(input) {
-      const selected = input.selection?.trim() ?? '';
-      const term = [...(selected || input.text.trim())].slice(0, MAX_TERM_LENGTH).join('');
+      const term = termOf(input);
       if (term === '') throw new Error('Select a word or phrase to save.');
 
-      const duplicate = vocabRepo
-        .list(db, { seriesId: input.seriesId })
-        .find(
-          (item) =>
-            item.chapterId === input.chapterId &&
-            item.sentenceIdx === input.sentenceIdx &&
-            item.term === term,
-        );
+      const duplicate = findSaved(input);
       if (duplicate) return duplicate.id;
 
       const series = seriesRepo.get(db, input.seriesId);
@@ -176,6 +192,12 @@ export function createVocabActions(deps: VocabActionsDeps): VocabActions {
       };
     },
   };
+}
+
+/** The term a save would store: the selection, else the sentence, cut to the length limit. */
+function termOf(input: SaveToVocabInput): string {
+  const selected = input.selection?.trim() ?? '';
+  return [...(selected || input.text.trim())].slice(0, MAX_TERM_LENGTH).join('');
 }
 
 export const VocabActionsContext = createContext<VocabActions | null>(null);

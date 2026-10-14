@@ -125,3 +125,18 @@ describe('failureFromHttp 429 handling', () => {
     expect(failure.error.retryable).toBe(false);
   });
 });
+
+describe('failureFromHttp context length', () => {
+  it('maps a prompt longer than the context window to INPUT_TOO_LONG, not an unsupported setting', () => {
+    const failure = failureFromHttp(
+      400,
+      JSON.stringify({ error: { message: "This model's maximum context length is 128000 tokens." } }),
+      null,
+    );
+    expect(failure.error).toMatchObject({
+      code: 'INPUT_TOO_LONG',
+      retryable: false,
+      message: "This page is too large to read. Try the article's own link or a PDF.",
+    });
+  });
+});
