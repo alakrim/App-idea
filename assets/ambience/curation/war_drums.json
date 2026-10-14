@@ -1,11 +1,13 @@
 {
   "category": "war_drums",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "war drums",
-    "battle drums ambience"
+    "battle drums ambience",
+    "drum loop ambience",
+    "tribal drums ambience"
   ],
-  "poolSize": 21,
+  "poolSize": 44,
   "candidates": [
     {
       "rank": 1,
@@ -42,12 +44,12 @@
       "channels": 2,
       "avgRating": 4.93,
       "numRatings": 14,
-      "numDownloads": 1635,
+      "numDownloads": 1636,
       "previewUrl": "https://cdn.freesound.org/previews/125/125933_296888-hq.mp3",
       "score": 7.77,
       "reasons": [
         "+2.66 rating 4.93 from 14 ratings",
-        "+1.61 1635 downloads",
+        "+1.61 1636 downloads",
         "+1.5 at least 63 s",
         "+2 tags drums, war"
       ]
@@ -64,18 +66,40 @@
       "channels": 2,
       "avgRating": 4.64,
       "numRatings": 39,
-      "numDownloads": 4000,
+      "numDownloads": 4001,
       "previewUrl": "https://cdn.freesound.org/previews/125/125932_296888-hq.mp3",
       "score": 7.43,
       "reasons": [
         "+2.63 rating 4.64 from 39 ratings",
-        "+1.8 4000 downloads",
+        "+1.8 4001 downloads",
         "+2 at least 90 s",
         "+1 tags war"
       ]
     },
     {
       "rank": 4,
+      "freesoundId": 632623,
+      "name": "Tribal Dark Night Forest Sounds Thriller Horror Scary Atmo Folk Ethno Drum Cinematic Surrround.wav",
+      "url": "https://freesound.org/people/szegvari/sounds/632623/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 96.57,
+      "samplerate": 48000,
+      "channels": 6,
+      "avgRating": 4.39,
+      "numRatings": 56,
+      "numDownloads": 1407,
+      "previewUrl": "https://cdn.freesound.org/previews/632/632623_2282212-hq.mp3",
+      "score": 7.06,
+      "reasons": [
+        "+2.49 rating 4.39 from 56 ratings",
+        "+1.57 1407 downloads",
+        "+2 at least 90 s",
+        "+1 tags tribal"
+      ]
+    },
+    {
+      "rank": 5,
       "freesoundId": 125931,
       "name": "reenactment1.aif",
       "url": "https://freesound.org/people/alienistcog/sounds/125931/",
@@ -86,18 +110,60 @@
       "channels": 2,
       "avgRating": 3.67,
       "numRatings": 6,
-      "numDownloads": 525,
+      "numDownloads": 526,
       "previewUrl": "https://cdn.freesound.org/previews/125/125931_296888-hq.mp3",
       "score": 6.8,
       "reasons": [
         "+1.94 rating 3.67 from 6 ratings",
-        "+1.36 525 downloads",
+        "+1.36 526 downloads",
         "+1.5 at least 63 s",
         "+2 tags drums, war"
       ]
     },
     {
-      "rank": 5,
+      "rank": 6,
+      "freesoundId": 534018,
+      "name": "Sci-fi Ambient Drone.wav",
+      "url": "https://freesound.org/people/LookIMadeAThing/sounds/534018/",
+      "author": "LookIMadeAThing",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 165,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.93,
+      "numRatings": 69,
+      "numDownloads": 1962,
+      "previewUrl": "https://cdn.freesound.org/previews/534/534018_3968707-hq.mp3",
+      "score": 6.52,
+      "reasons": [
+        "+2.87 rating 4.93 from 69 ratings",
+        "+1.65 1962 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 609250,
+      "name": "Journey To The Interweb",
+      "url": "https://freesound.org/people/Aemyn/sounds/609250/",
+      "author": "Aemyn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 508,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.33,
+      "numRatings": 294,
+      "numDownloads": 5579,
+      "previewUrl": "https://cdn.freesound.org/previews/609/609250_1445263-hq.mp3",
+      "score": 6.36,
+      "reasons": [
+        "+2.49 rating 4.33 from 294 ratings",
+        "+1.87 5579 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 8,
       "freesoundId": 366659,
       "name": "Poorsyria.wav",
       "url": "https://freesound.org/people/vumseplutten1709/sounds/366659/",
@@ -119,7 +185,28 @@
       ]
     },
     {
-      "rank": 6,
+      "rank": 9,
+      "freesoundId": 534020,
+      "name": "Sci-fi Ambient Drone - Dry",
+      "url": "https://freesound.org/people/LookIMadeAThing/sounds/534020/",
+      "author": "LookIMadeAThing",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 158,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.94,
+      "numRatings": 18,
+      "numDownloads": 567,
+      "previewUrl": "https://cdn.freesound.org/previews/534/534020_3968707-hq.mp3",
+      "score": 6.1,
+      "reasons": [
+        "+2.72 rating 4.94 from 18 ratings",
+        "+1.38 567 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 10,
       "freesoundId": 871671,
       "name": "cinematic_drum_loop_shellshock_143",
       "url": "https://freesound.org/people/harrisonlace/sounds/871671/",
@@ -130,18 +217,186 @@
       "channels": 2,
       "avgRating": 5,
       "numRatings": 2,
-      "numDownloads": 37,
+      "numDownloads": 39,
       "previewUrl": "https://cdn.freesound.org/previews/871/871671_9839964-hq.mp3",
-      "score": 5.99,
+      "score": 6,
       "reasons": [
         "+2.2 rating 5 from 2 ratings",
-        "+0.79 37 downloads",
+        "+0.8 39 downloads",
         "+1 at least 60 s",
         "+2 tags war, battle"
       ]
     },
     {
-      "rank": 7,
+      "rank": 11,
+      "freesoundId": 512674,
+      "name": "Smooth 68.6 CM.mp3",
+      "url": "https://freesound.org/people/Drumartist/sounds/512674/",
+      "author": "Drumartist",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 70.65,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 35,
+      "numDownloads": 1781,
+      "previewUrl": "https://cdn.freesound.org/previews/512/512674_7140634-hq.mp3",
+      "score": 5.87,
+      "reasons": [
+        "+2.75 rating 4.83 from 35 ratings",
+        "+1.63 1781 downloads",
+        "+1.5 at least 63 s"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 512671,
+      "name": "Smooth 68.5 CM .mp3",
+      "url": "https://freesound.org/people/Drumartist/sounds/512671/",
+      "author": "Drumartist",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 70.65,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.76,
+      "numRatings": 21,
+      "numDownloads": 447,
+      "previewUrl": "https://cdn.freesound.org/previews/512/512671_7140634-hq.mp3",
+      "score": 5.47,
+      "reasons": [
+        "+2.64 rating 4.76 from 21 ratings",
+        "+1.33 447 downloads",
+        "+1.5 at least 63 s"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 512670,
+      "name": "Smooth 68.1 CM.mp3",
+      "url": "https://freesound.org/people/Drumartist/sounds/512670/",
+      "author": "Drumartist",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 70.65,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.87,
+      "numRatings": 15,
+      "numDownloads": 351,
+      "previewUrl": "https://cdn.freesound.org/previews/512/512670_7140634-hq.mp3",
+      "score": 5.42,
+      "reasons": [
+        "+2.64 rating 4.87 from 15 ratings",
+        "+1.27 351 downloads",
+        "+1.5 at least 63 s"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 512672,
+      "name": "Smooth 68.4 CM.mp3",
+      "url": "https://freesound.org/people/Drumartist/sounds/512672/",
+      "author": "Drumartist",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 70.65,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.81,
+      "numRatings": 16,
+      "numDownloads": 360,
+      "previewUrl": "https://cdn.freesound.org/previews/512/512672_7140634-hq.mp3",
+      "score": 5.4,
+      "reasons": [
+        "+2.63 rating 4.81 from 16 ratings",
+        "+1.28 360 downloads",
+        "+1.5 at least 63 s"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 867644,
+      "name": "Deep Ocean Rumble – Dark Sea Ambience",
+      "url": "https://freesound.org/people/bassimat/sounds/867644/",
+      "author": "bassimat",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 300,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 6,
+      "numDownloads": 54,
+      "previewUrl": "https://cdn.freesound.org/previews/867/867644_15636277-hq.mp3",
+      "score": 5.29,
+      "reasons": [
+        "+2.42 rating 4.83 from 6 ratings",
+        "+0.87 54 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 512668,
+      "name": "Smooth 68.3 CM .mp3",
+      "url": "https://freesound.org/people/Drumartist/sounds/512668/",
+      "author": "Drumartist",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 70.65,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.7,
+      "numRatings": 10,
+      "numDownloads": 377,
+      "previewUrl": "https://cdn.freesound.org/previews/512/512668_7140634-hq.mp3",
+      "score": 5.26,
+      "reasons": [
+        "+2.47 rating 4.7 from 10 ratings",
+        "+1.29 377 downloads",
+        "+1.5 at least 63 s"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 512669,
+      "name": "Smooth 68.2 CM.mp3",
+      "url": "https://freesound.org/people/Drumartist/sounds/512669/",
+      "author": "Drumartist",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 70.65,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.46,
+      "numRatings": 13,
+      "numDownloads": 294,
+      "previewUrl": "https://cdn.freesound.org/previews/512/512669_7140634-hq.mp3",
+      "score": 5.13,
+      "reasons": [
+        "+2.4 rating 4.46 from 13 ratings",
+        "+1.23 294 downloads",
+        "+1.5 at least 63 s"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 867642,
+      "name": "Gentle Ocean Waves – Calm Shore Ambience",
+      "url": "https://freesound.org/people/bassimat/sounds/867642/",
+      "author": "bassimat",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 300,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 45,
+      "previewUrl": "https://cdn.freesound.org/previews/867/867642_15636277-hq.mp3",
+      "score": 5.03,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+0.83 45 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 19,
       "freesoundId": 632099,
       "name": "war_drums.mp3",
       "url": "https://freesound.org/people/nicovize/sounds/632099/",
@@ -164,7 +419,30 @@
       ]
     },
     {
-      "rank": 8,
+      "rank": 20,
+      "freesoundId": 474988,
+      "name": "Mysterious Ambience with Drums.wav",
+      "url": "https://freesound.org/people/DeVern/sounds/474988/",
+      "author": "DeVern",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 41.51,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.82,
+      "numRatings": 22,
+      "numDownloads": 549,
+      "previewUrl": "https://cdn.freesound.org/previews/474/474988_2866779-hq.mp3",
+      "score": 3.05,
+      "reasons": [
+        "+2.68 rating 4.82 from 22 ratings",
+        "+1.37 549 downloads",
+        "-3 only 41.51 s",
+        "+1 tags tribal",
+        "+1 name matches drums"
+      ]
+    },
+    {
+      "rank": 21,
       "freesoundId": 396324,
       "name": "HeavyMachineGun.wav",
       "url": "https://freesound.org/people/SuperPhat/sounds/396324/",
@@ -175,816 +453,107 @@
       "channels": 2,
       "avgRating": 4.7,
       "numRatings": 73,
-      "numDownloads": 4376,
+      "numDownloads": 4377,
       "previewUrl": "https://cdn.freesound.org/previews/396/396324_7542558-hq.mp3",
       "score": 2.54,
       "reasons": [
         "+2.72 rating 4.7 from 73 ratings",
-        "+1.82 4376 downloads",
+        "+1.82 4377 downloads",
         "-3 only 36.48 s",
         "+1 tags war"
       ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 417148,
+      "name": "Slowfiringheavyweapon.wav",
+      "url": "https://freesound.org/people/SuperPhat/sounds/417148/",
+      "author": "SuperPhat",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 35.41,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.87,
+      "numRatings": 63,
+      "numDownloads": 2587,
+      "previewUrl": "https://cdn.freesound.org/previews/417/417148_7542558-hq.mp3",
+      "score": 2.54,
+      "reasons": [
+        "+2.83 rating 4.87 from 63 ratings",
+        "+1.71 2587 downloads",
+        "-3 only 35.41 s",
+        "+1 tags war"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 262876,
+      "name": "Musical - Native American Day of the Dead Celebtration with Pipes, Whip Cracks, Drums.wav",
+      "url": "https://freesound.org/people/jaegrover/sounds/262876/",
+      "author": "jaegrover",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 98.3,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.34,
+      "numRatings": 35,
+      "numDownloads": 1884,
+      "previewUrl": "https://cdn.freesound.org/previews/262/262876_4337854-hq.mp3",
+      "score": 2.07,
+      "reasons": [
+        "+2.43 rating 4.34 from 35 ratings",
+        "+1.64 1884 downloads",
+        "+2 at least 90 s",
+        "+1 tags tribal",
+        "+1 name matches drums",
+        "-6 music (musical)"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 582368,
+      "name": "KadenceMix",
+      "url": "https://freesound.org/people/Bigvegie/sounds/582368/",
+      "author": "Bigvegie",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 199.14,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 76,
+      "previewUrl": "https://cdn.freesound.org/previews/582/582368_11740799-hq.mp3",
+      "score": 1.82,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.94 76 downloads",
+        "+2 at least 90 s",
+        "+1 tags war",
+        "-4 synth (synthetic)"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 456121,
+      "name": "Sound library for scratching (100 BPM) by Bronxio",
+      "url": "https://freesound.org/people/Bronxio/sounds/456121/",
+      "author": "Bronxio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 98.49,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.44,
+      "numRatings": 250,
+      "numDownloads": 10317,
+      "previewUrl": "https://cdn.freesound.org/previews/456/456121_997039-hq.mp3",
+      "score": 1.57,
+      "reasons": [
+        "+2.57 rating 4.44 from 250 ratings",
+        "+2 10317 downloads",
+        "+2 at least 90 s",
+        "+1 tags battle",
+        "-6 music (bpm)"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [
-        "brass",
-        "percussion"
-      ],
-      "required": [
-        [
-          "Drum",
-          "Snare drum",
-          "Bass drum",
-          "Drum roll"
-        ]
-      ],
-      "clapPrompt": "drums and horns of an approaching army, tense, no melody"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Drum / Snare drum / Bass drum / Drum roll; no 64 s window is free of denied sounds: Music reaches 0.893 (at 8 s)",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 347981,
-        "name": "Battle preparations.wav",
-        "url": "https://freesound.org/people/madmanmusic/sounds/347981/",
-        "author": "madmanmusic",
-        "durationSec": 113.5,
-        "verdict": "reject",
-        "reason": "required sound absent: Drum / Snare drum / Bass drum / Drum roll",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 113,
-          "cleanSeconds": 47,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8523
-            },
-            {
-              "label": "Bow-wow",
-              "max": 0.8504
-            },
-            {
-              "label": "Music",
-              "max": 0.839
-            },
-            {
-              "label": "Animal",
-              "max": 0.7936
-            },
-            {
-              "label": "Dog",
-              "max": 0.7919
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.852,
-              "atSecond": 86
-            },
-            {
-              "label": "Music",
-              "max": 0.839,
-              "atSecond": 19
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.363,
-              "atSecond": 48
-            },
-            {
-              "label": "Helicopter",
-              "max": 0.22,
-              "atSecond": 48
-            },
-            {
-              "label": "Crowd",
-              "max": 0.219,
-              "atSecond": 1
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.201,
-              "atSecond": 12
-            },
-            {
-              "label": "Engine",
-              "max": 0.158,
-              "atSecond": 36
-            },
-            {
-              "label": "Siren",
-              "max": 0.121,
-              "atSecond": 51
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.078,
-              "atSecond": 20
-            },
-            {
-              "label": "Fire engine, fire truck (siren)",
-              "max": 0.072,
-              "atSecond": 51
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drum",
-                "Snare drum",
-                "Bass drum",
-                "Drum roll"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 125933,
-        "name": "reenactment3.aif",
-        "url": "https://freesound.org/people/alienistcog/sounds/125933/",
-        "author": "alienistcog",
-        "durationSec": 74.5,
-        "verdict": "reject",
-        "reason": "required sound absent: Drum / Snare drum / Bass drum / Drum roll",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 74,
-          "cleanSeconds": 2,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.9263
-            },
-            {
-              "label": "Music",
-              "max": 0.76
-            },
-            {
-              "label": "Drum",
-              "max": 0.7007
-            },
-            {
-              "label": "Clip-clop",
-              "max": 0.6317
-            },
-            {
-              "label": "Horse",
-              "max": 0.6225
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.926,
-              "atSecond": 41
-            },
-            {
-              "label": "Music",
-              "max": 0.76,
-              "atSecond": 11
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.375,
-              "atSecond": 4
-            },
-            {
-              "label": "Train",
-              "max": 0.353,
-              "atSecond": 17
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.29,
-              "atSecond": 34
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.282,
-              "atSecond": 17
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.235,
-              "atSecond": 17
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.153,
-              "atSecond": 34
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drum",
-                "Snare drum",
-                "Bass drum",
-                "Drum roll"
-              ],
-              "fraction": 0.351
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 125932,
-        "name": "reenactment2.aif",
-        "url": "https://freesound.org/people/alienistcog/sounds/125932/",
-        "author": "alienistcog",
-        "durationSec": 345.9,
-        "verdict": "reject",
-        "reason": "required sound absent: Drum / Snare drum / Bass drum / Drum roll",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 345,
-          "cleanSeconds": 7,
-          "topClasses": [
-            {
-              "label": "Artillery fire",
-              "max": 0.9552
-            },
-            {
-              "label": "Speech",
-              "max": 0.919
-            },
-            {
-              "label": "Whip",
-              "max": 0.8034
-            },
-            {
-              "label": "Animal",
-              "max": 0.8019
-            },
-            {
-              "label": "Fireworks",
-              "max": 0.7977
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Artillery fire",
-              "max": 0.955,
-              "atSecond": 296
-            },
-            {
-              "label": "Speech",
-              "max": 0.919,
-              "atSecond": 242
-            },
-            {
-              "label": "Fireworks",
-              "max": 0.798,
-              "atSecond": 8
-            },
-            {
-              "label": "Music",
-              "max": 0.764,
-              "atSecond": 312
-            },
-            {
-              "label": "Gunshot, gunfire",
-              "max": 0.749,
-              "atSecond": 16
-            },
-            {
-              "label": "Honk",
-              "max": 0.692,
-              "atSecond": 115
-            },
-            {
-              "label": "Machine gun",
-              "max": 0.531,
-              "atSecond": 112
-            },
-            {
-              "label": "Firecracker",
-              "max": 0.495,
-              "atSecond": 129
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.4,
-              "atSecond": 197
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.256,
-              "atSecond": 336
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.166,
-              "atSecond": 154
-            },
-            {
-              "label": "Child speech, kid speaking",
-              "max": 0.152,
-              "atSecond": 260
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drum",
-                "Snare drum",
-                "Bass drum",
-                "Drum roll"
-              ],
-              "fraction": 0.014
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 125931,
-        "name": "reenactment1.aif",
-        "url": "https://freesound.org/people/alienistcog/sounds/125931/",
-        "author": "alienistcog",
-        "durationSec": 73.7,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Music reaches 0.893 (at 8 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 73,
-          "cleanSeconds": 0,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.8927
-            },
-            {
-              "label": "Drum",
-              "max": 0.7531
-            },
-            {
-              "label": "Speech",
-              "max": 0.7497
-            },
-            {
-              "label": "Percussion",
-              "max": 0.6366
-            },
-            {
-              "label": "Drum roll",
-              "max": 0.6034
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.893,
-              "atSecond": 8
-            },
-            {
-              "label": "Speech",
-              "max": 0.75,
-              "atSecond": 2
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.421,
-              "atSecond": 31
-            },
-            {
-              "label": "Machine gun",
-              "max": 0.254,
-              "atSecond": 25
-            },
-            {
-              "label": "Gunshot, gunfire",
-              "max": 0.233,
-              "atSecond": 25
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.223,
-              "atSecond": 69
-            },
-            {
-              "label": "Brass instrument",
-              "max": 0.204,
-              "atSecond": 9
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.158,
-              "atSecond": 3
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drum",
-                "Snare drum",
-                "Bass drum",
-                "Drum roll"
-              ],
-              "fraction": 0.575
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 366659,
-        "name": "Poorsyria.wav",
-        "url": "https://freesound.org/people/vumseplutten1709/sounds/366659/",
-        "author": "vumseplutten1709",
-        "durationSec": 176.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Drum / Snare drum / Bass drum / Drum roll",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 176,
-          "cleanSeconds": 42,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.944
-            },
-            {
-              "label": "Whale vocalization",
-              "max": 0.9011
-            },
-            {
-              "label": "Speech",
-              "max": 0.8735
-            },
-            {
-              "label": "Animal",
-              "max": 0.8139
-            },
-            {
-              "label": "Timpani",
-              "max": 0.813
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.944,
-              "atSecond": 47
-            },
-            {
-              "label": "Speech",
-              "max": 0.873,
-              "atSecond": 83
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.676,
-              "atSecond": 52
-            },
-            {
-              "label": "Gunshot, gunfire",
-              "max": 0.656,
-              "atSecond": 56
-            },
-            {
-              "label": "Electronic music",
-              "max": 0.653,
-              "atSecond": 47
-            },
-            {
-              "label": "Synthesizer",
-              "max": 0.633,
-              "atSecond": 47
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.59,
-              "atSecond": 56
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.466,
-              "atSecond": 109
-            },
-            {
-              "label": "Car",
-              "max": 0.445,
-              "atSecond": 144
-            },
-            {
-              "label": "Guitar",
-              "max": 0.392,
-              "atSecond": 18
-            },
-            {
-              "label": "Bass guitar",
-              "max": 0.388,
-              "atSecond": 18
-            },
-            {
-              "label": "Machine gun",
-              "max": 0.386,
-              "atSecond": 56
-            },
-            {
-              "label": "Plucked string instrument",
-              "max": 0.338,
-              "atSecond": 18
-            },
-            {
-              "label": "Helicopter",
-              "max": 0.291,
-              "atSecond": 84
-            },
-            {
-              "label": "Double bass",
-              "max": 0.219,
-              "atSecond": 105
-            },
-            {
-              "label": "Singing",
-              "max": 0.187,
-              "atSecond": 70
-            },
-            {
-              "label": "Siren",
-              "max": 0.064,
-              "atSecond": 37
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drum",
-                "Snare drum",
-                "Bass drum",
-                "Drum roll"
-              ],
-              "fraction": 0.045
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 871671,
-        "name": "cinematic_drum_loop_shellshock_143",
-        "url": "https://freesound.org/people/harrisonlace/sounds/871671/",
-        "author": "harrisonlace",
-        "durationSec": 60.4,
-        "verdict": "reject",
-        "reason": "clip has 60 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 60,
-          "cleanSeconds": 1,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.877
-            },
-            {
-              "label": "Timpani",
-              "max": 0.6126
-            },
-            {
-              "label": "Fireworks",
-              "max": 0.5296
-            },
-            {
-              "label": "Throbbing",
-              "max": 0.4108
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.3891
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.877,
-              "atSecond": 51
-            },
-            {
-              "label": "Fireworks",
-              "max": 0.53,
-              "atSecond": 14
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.389,
-              "atSecond": 34
-            },
-            {
-              "label": "Electronic music",
-              "max": 0.326,
-              "atSecond": 36
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.229,
-              "atSecond": 30
-            },
-            {
-              "label": "Drum machine",
-              "max": 0.212,
-              "atSecond": 58
-            },
-            {
-              "label": "Gunshot, gunfire",
-              "max": 0.169,
-              "atSecond": 30
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drum",
-                "Snare drum",
-                "Bass drum",
-                "Drum roll"
-              ],
-              "fraction": 0.333
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 632099,
-        "name": "war_drums.mp3",
-        "url": "https://freesound.org/people/nicovize/sounds/632099/",
-        "author": "nicovize",
-        "durationSec": 38.7,
-        "verdict": "reject",
-        "reason": "clip has 38 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 38,
-          "cleanSeconds": 0,
-          "topClasses": [
-            {
-              "label": "Drum",
-              "max": 0.8407
-            },
-            {
-              "label": "Music",
-              "max": 0.7986
-            },
-            {
-              "label": "Drum roll",
-              "max": 0.7761
-            },
-            {
-              "label": "Timpani",
-              "max": 0.7723
-            },
-            {
-              "label": "Snare drum",
-              "max": 0.7445
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.799,
-              "atSecond": 8
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.452,
-              "atSecond": 9
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drum",
-                "Snare drum",
-                "Bass drum",
-                "Drum roll"
-              ],
-              "fraction": 0.921
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 396324,
-        "name": "HeavyMachineGun.wav",
-        "url": "https://freesound.org/people/SuperPhat/sounds/396324/",
-        "author": "SuperPhat",
-        "durationSec": 36.5,
-        "verdict": "reject",
-        "reason": "clip has 36 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 36,
-          "cleanSeconds": 3,
-          "topClasses": [
-            {
-              "label": "Machine gun",
-              "max": 0.7752
-            },
-            {
-              "label": "Gunshot, gunfire",
-              "max": 0.7256
-            },
-            {
-              "label": "Rain",
-              "max": 0.4369
-            },
-            {
-              "label": "Thunder",
-              "max": 0.3943
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.3318
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Machine gun",
-              "max": 0.775,
-              "atSecond": 1
-            },
-            {
-              "label": "Gunshot, gunfire",
-              "max": 0.726,
-              "atSecond": 1
-            },
-            {
-              "label": "Thunder",
-              "max": 0.394,
-              "atSecond": 32
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.332,
-              "atSecond": 31
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.248,
-              "atSecond": 32
-            },
-            {
-              "label": "Explosion",
-              "max": 0.161,
-              "atSecond": 31
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drum",
-                "Snare drum",
-                "Bass drum",
-                "Drum roll"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

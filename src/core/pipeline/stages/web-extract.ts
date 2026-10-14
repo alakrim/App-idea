@@ -9,7 +9,10 @@ import { loadPipeline } from '@/core/extract/load';
 import {
   applySelection,
   buildSelectionPrompt,
+  chunkForSelection,
+  MAX_SELECTION_CHUNKS,
   parseSelectionResponse,
+  TOO_LARGE_TO_READ,
   selectionSchema,
 } from '@/core/extract/select';
 import type { Block } from '@/core/extract/types';
@@ -19,6 +22,10 @@ import { StageFailure } from '../errors';
 import { FETCH_LIMITS } from '../limits';
 
 import type { StageContext } from '../context';
+
+/** Output tokens one index of a keep list takes, and the fixed JSON around the list. */
+const SELECTION_TOKENS_PER_INDEX = 4;
+const SELECTION_REPLY_TOKENS = 16;
 
 export const SELECTION_JSON_SCHEMA: JsonSchemaSpec = {
   name: 'index_selection',
@@ -68,24 +75,46 @@ export async function extractWebPage(ctx: StageContext, url: string): Promise<We
 }
 
 /**
- * Asks the cleanup model which blocks to keep. A reply that fails validation keeps every block,
- * so a bad reply can never blank a chapter. The cost of the call is recorded either way.
+ * Asks the cleanup model which blocks to keep, one call per chunk of the page, so no prompt grows
+ * past the model's context. A reply that fails validation keeps its chunk whole, so a bad reply can
+ * never blank a chapter. The cost of every call is recorded either way.
  */
-async function selectBlocks(
+export async function selectBlocks(
   ctx: StageContext,
   blocks: readonly Block[],
   meta: { title: string | null; lang: string | null },
 ): Promise<readonly Block[]> {
+  const chunks = chunkForSelection(blocks);
+  if (chunks.length > MAX_SELECTION_CHUNKS) {
+    throw new StageFailure('INPUT_TOO_LONG', TOO_LARGE_TO_READ, {
+      retryable: false,
+      detail: `selection_chunks=${chunks.length}`,
+    });
+  }
   const model = ctx.record.settings.cleanupModel;
   const transport = ctx.meter.transport(model, ctx.ports.llm.transportFor(model));
-  const prompt = buildSelectionPrompt(blocks, meta);
-  const reply = await transport({
-    system: prompt.system,
-    user: prompt.user,
-    jsonSchema: SELECTION_JSON_SCHEMA,
-    signal: ctx.signal,
-  });
-  const selection = parseSelectionResponse(reply.text);
-  if (!selection) return blocks;
-  return applySelection(blocks, selection.keep).blocks;
+  const keep: number[] = [];
+  for (const chunk of chunks) {
+    const prompt = buildSelectionPrompt(
+      chunk.map((item) => item.block),
+      meta,
+    );
+    const reply = await transport({
+      system: prompt.system,
+      user: prompt.user,
+      jsonSchema: SELECTION_JSON_SCHEMA,
+      signal: ctx.signal,
+      // A keep list is a few tokens per block, so twice that bounds the reply well above any valid answer.
+      maxOutputTokens: 2 * (chunk.length * SELECTION_TOKENS_PER_INDEX + SELECTION_REPLY_TOKENS),
+    });
+    const selection = parseSelectionResponse(reply.text);
+    const kept = selection
+      ? selection.keep.filter((position) => position < chunk.length)
+      : chunk.map((_, position) => position);
+    for (const position of kept) {
+      const item = chunk[position];
+      if (item) keep.push(item.index);
+    }
+  }
+  return applySelection(blocks, keep).blocks;
 }

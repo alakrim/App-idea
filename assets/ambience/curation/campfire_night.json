@@ -5,9 +5,11 @@
     "campfire night ambience",
     "campfire crackling outdoors",
     "campfire ambience",
-    "fire crackle outdoors night"
+    "fire crackle outdoors night",
+    "campfire crackle ambience",
+    "fire outdoors night wood"
   ],
-  "poolSize": 14,
+  "poolSize": 16,
   "candidates": [
     {
       "rank": 1,
@@ -186,522 +188,181 @@
         "+1 tags fire",
         "+1 name matches campfire"
       ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 342369,
+      "name": "Sounds of the forest night.mp3",
+      "url": "https://freesound.org/people/Kingcornz/sounds/342369/",
+      "author": "Kingcornz",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 60.57,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.74,
+      "numRatings": 27,
+      "numDownloads": 1631,
+      "previewUrl": "https://cdn.freesound.org/previews/342/342369_4804147-hq.mp3",
+      "score": 6.27,
+      "reasons": [
+        "+2.66 rating 4.74 from 27 ratings",
+        "+1.61 1631 downloads",
+        "+1 at least 60 s",
+        "+1 tags fire"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 410734,
+      "name": "brushwood in the fire 2",
+      "url": "https://freesound.org/people/Selector/sounds/410734/",
+      "author": "Selector",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 34.48,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 12,
+      "numDownloads": 636,
+      "previewUrl": "https://cdn.freesound.org/previews/410/410734_270868-hq.mp3",
+      "score": 4.98,
+      "reasons": [
+        "+2.58 rating 4.83 from 12 ratings",
+        "+1.4 636 downloads",
+        "-3 only 34.48 s",
+        "+3 tags campfire, fire, crackling",
+        "+1 name matches fire"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 805466,
+      "name": "Night Crickets 02",
+      "url": "https://freesound.org/people/Vrymaa/sounds/805466/",
+      "author": "Vrymaa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 61.12,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.74,
+      "numRatings": 23,
+      "numDownloads": 402,
+      "previewUrl": "https://cdn.freesound.org/previews/805/805466_13973196-hq.mp3",
+      "score": 4.94,
+      "reasons": [
+        "+2.64 rating 4.74 from 23 ratings",
+        "+1.3 402 downloads",
+        "+1 at least 60 s"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 714776,
+      "name": "FIREBurn_Сampfire In The Suburbs 01_KVV_FREE",
+      "url": "https://freesound.org/people/KVV_Audio/sounds/714776/",
+      "author": "KVV_Audio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 48.66,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 60,
+      "previewUrl": "https://cdn.freesound.org/previews/714/714776_12846320-hq.mp3",
+      "score": 4.77,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.89 60 downloads",
+        "+2 tags campfire, fire"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 849567,
+      "name": "Crackling fire",
+      "url": "https://freesound.org/people/tedmasterweb/sounds/849567/",
+      "author": "tedmasterweb",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 51.18,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 33,
+      "previewUrl": "https://cdn.freesound.org/previews/849/849567_2242311-hq.mp3",
+      "score": 4.06,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+0.77 33 downloads",
+        "+1 name matches fire"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 734642,
+      "name": "Night crickets",
+      "url": "https://freesound.org/people/Vrymaa/sounds/734642/",
+      "author": "Vrymaa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 33.61,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.9,
+      "numRatings": 30,
+      "numDownloads": 676,
+      "previewUrl": "https://cdn.freesound.org/previews/734/734642_13973196-hq.mp3",
+      "score": 1.19,
+      "reasons": [
+        "+2.78 rating 4.9 from 30 ratings",
+        "+1.42 676 downloads",
+        "-3 only 33.61 s"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 404525,
+      "name": "Stereo_BubbleWrapFire.wav",
+      "url": "https://freesound.org/people/DCLV/sounds/404525/",
+      "author": "DCLV",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 40,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 2,
+      "numDownloads": 179,
+      "previewUrl": "https://cdn.freesound.org/previews/404/404525_7864277-hq.mp3",
+      "score": 1.11,
+      "reasons": [
+        "+1.98 rating 4 from 2 ratings",
+        "+1.13 179 downloads",
+        "-3 only 40 s",
+        "+1 tags fire"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 537531,
+      "name": "digital campfire",
+      "url": "https://freesound.org/people/vekoN/sounds/537531/",
+      "author": "vekoN",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 43.64,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.53,
+      "numRatings": 17,
+      "numDownloads": 605,
+      "previewUrl": "https://cdn.freesound.org/previews/537/537531_11045610-hq.mp3",
+      "score": 0.86,
+      "reasons": [
+        "+2.47 rating 4.53 from 17 ratings",
+        "+1.39 605 downloads",
+        "-3 only 43.64 s",
+        "+3 tags campfire, fire, crackling",
+        "+1 name matches campfire",
+        "-4 synth (synth)"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Fire",
-          "Crackle"
-        ]
-      ],
-      "clapPrompt": "a campfire at night with crackling wood and soft wind, no people"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Fire / Crackle; clip has 45 s; a window needs 64 s",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 681366,
-        "name": "Campfire (Position 1)",
-        "url": "https://freesound.org/people/SKrafft/sounds/681366/",
-        "author": "SKrafft",
-        "durationSec": 83.6,
-        "verdict": "reject",
-        "reason": "required sound absent: Fire / Crackle",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 83,
-          "cleanSeconds": 83,
-          "topClasses": [
-            {
-              "label": "Whip",
-              "max": 0.8256
-            },
-            {
-              "label": "Chop",
-              "max": 0.6329
-            },
-            {
-              "label": "Crushing",
-              "max": 0.3824
-            },
-            {
-              "label": "Finger snapping",
-              "max": 0.2949
-            },
-            {
-              "label": "Tearing",
-              "max": 0.2376
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Fire",
-                "Crackle"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 802195,
-        "name": "Fire-Nature Sounds",
-        "url": "https://freesound.org/people/MamickaBeeGames/sounds/802195/",
-        "author": "MamickaBeeGames",
-        "durationSec": 247.2,
-        "verdict": "reject",
-        "reason": "required sound absent: Fire / Crackle",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 247,
-          "cleanSeconds": 235,
-          "topClasses": [
-            {
-              "label": "Cricket",
-              "max": 0.7568
-            },
-            {
-              "label": "Insect",
-              "max": 0.6206
-            },
-            {
-              "label": "Owl",
-              "max": 0.4449
-            },
-            {
-              "label": "Music",
-              "max": 0.3706
-            },
-            {
-              "label": "Animal",
-              "max": 0.3158
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.371,
-              "atSecond": 72
-            },
-            {
-              "label": "Speech",
-              "max": 0.21,
-              "atSecond": 5
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.198,
-              "atSecond": 73
-            },
-            {
-              "label": "Fire alarm",
-              "max": 0.121,
-              "atSecond": 10
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Fire",
-                "Crackle"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 62487,
-        "name": "1103campfire1.wav",
-        "url": "https://freesound.org/people/moxobna/sounds/62487/",
-        "author": "moxobna",
-        "durationSec": 81.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Fire / Crackle",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 81,
-          "cleanSeconds": 79,
-          "topClasses": [
-            {
-              "label": "Cricket",
-              "max": 0.9383
-            },
-            {
-              "label": "Insect",
-              "max": 0.9288
-            },
-            {
-              "label": "Animal",
-              "max": 0.39
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.2265
-            },
-            {
-              "label": "Patter",
-              "max": 0.2209
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.227,
-              "atSecond": 4
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Fire",
-                "Crackle"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 186316,
-        "name": "Nighttime Bonfire 1",
-        "url": "https://freesound.org/people/samararaine/sounds/186316/",
-        "author": "samararaine",
-        "durationSec": 101.4,
-        "verdict": "reject",
-        "reason": "required sound absent: Fire / Crackle",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 101,
-          "cleanSeconds": 98,
-          "topClasses": [
-            {
-              "label": "Tearing",
-              "max": 0.4055
-            },
-            {
-              "label": "Static",
-              "max": 0.3211
-            },
-            {
-              "label": "White noise",
-              "max": 0.2465
-            },
-            {
-              "label": "Fire",
-              "max": 0.246
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.1752
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.175,
-              "atSecond": 1
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Fire",
-                "Crackle"
-              ],
-              "fraction": 0.03
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 187079,
-        "name": "Nighttime Bonfire 2",
-        "url": "https://freesound.org/people/samararaine/sounds/187079/",
-        "author": "samararaine",
-        "durationSec": 101.4,
-        "verdict": "reject",
-        "reason": "required sound absent: Fire / Crackle",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 101,
-          "cleanSeconds": 98,
-          "topClasses": [
-            {
-              "label": "Tearing",
-              "max": 0.4016
-            },
-            {
-              "label": "Static",
-              "max": 0.3211
-            },
-            {
-              "label": "White noise",
-              "max": 0.2465
-            },
-            {
-              "label": "Fire",
-              "max": 0.246
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.1619
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.162,
-              "atSecond": 10
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Fire",
-                "Crackle"
-              ],
-              "fraction": 0.03
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 836535,
-        "name": "Hearthfire (Louder)",
-        "url": "https://freesound.org/people/SilverIllusionist/sounds/836535/",
-        "author": "SilverIllusionist",
-        "durationSec": 80,
-        "verdict": "reject",
-        "reason": "required sound absent: Fire / Crackle",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 80,
-          "cleanSeconds": 47,
-          "topClasses": [
-            {
-              "label": "Finger snapping",
-              "max": 0.4828
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.3702
-            },
-            {
-              "label": "Animal",
-              "max": 0.313
-            },
-            {
-              "label": "Fire",
-              "max": 0.289
-            },
-            {
-              "label": "Arrow",
-              "max": 0.2788
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.37,
-              "atSecond": 57
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.262,
-              "atSecond": 71
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.153,
-              "atSecond": 71
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Fire",
-                "Crackle"
-              ],
-              "fraction": 0.013
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 766127,
-        "name": "Ambience_Campsite_Night",
-        "url": "https://freesound.org/people/LizzBitzz/sounds/766127/",
-        "author": "LizzBitzz",
-        "durationSec": 159.7,
-        "verdict": "reject",
-        "reason": "required sound absent: Fire / Crackle",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 159,
-          "cleanSeconds": 147,
-          "topClasses": [
-            {
-              "label": "Cat",
-              "max": 0.6721
-            },
-            {
-              "label": "Animal",
-              "max": 0.5787
-            },
-            {
-              "label": "Domestic animals, pets",
-              "max": 0.5604
-            },
-            {
-              "label": "Insect",
-              "max": 0.3623
-            },
-            {
-              "label": "Speech",
-              "max": 0.3541
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.354,
-              "atSecond": 113
-            },
-            {
-              "label": "Music",
-              "max": 0.178,
-              "atSecond": 152
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Fire",
-                "Crackle"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 410736,
-        "name": "campfire in the open field 3",
-        "url": "https://freesound.org/people/Selector/sounds/410736/",
-        "author": "Selector",
-        "durationSec": 45.8,
-        "verdict": "reject",
-        "reason": "clip has 45 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 45,
-          "cleanSeconds": 10,
-          "topClasses": [
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.4366
-            },
-            {
-              "label": "Wind",
-              "max": 0.4021
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.3405
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.304
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.2052
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.437,
-              "atSecond": 0
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.34,
-              "atSecond": 0
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.304,
-              "atSecond": 14
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.205,
-              "atSecond": 0
-            },
-            {
-              "label": "Thunder",
-              "max": 0.156,
-              "atSecond": 23
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Fire",
-                "Crackle"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

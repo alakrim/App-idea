@@ -5,9 +5,11 @@
     "blacksmith forge ambience",
     "anvil hammer forge",
     "blacksmith hammer anvil",
-    "hammering metal workshop"
+    "hammering metal workshop",
+    "blacksmith ambience loop",
+    "metal workshop ambience"
   ],
-  "poolSize": 14,
+  "poolSize": 18,
   "candidates": [
     {
       "rank": 1,
@@ -167,6 +169,48 @@
     },
     {
       "rank": 8,
+      "freesoundId": 766013,
+      "name": "Workshop ambience",
+      "url": "https://freesound.org/people/SoundDesigner0101/sounds/766013/",
+      "author": "SoundDesigner0101",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 131.44,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 88,
+      "previewUrl": "https://cdn.freesound.org/previews/766/766013_15695818-hq.mp3",
+      "score": 5.17,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.97 88 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 636866,
+      "name": "Artists Workshop.wav",
+      "url": "https://freesound.org/people/Alex_hears_things/sounds/636866/",
+      "author": "Alex_hears_things",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 68.08,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 457,
+      "previewUrl": "https://cdn.freesound.org/previews/636/636866_2309965-hq.mp3",
+      "score": 4.89,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1.33 457 downloads",
+        "+1.5 at least 63 s"
+      ]
+    },
+    {
+      "rank": 10,
       "freesoundId": 26801,
       "name": "metal workshop quiet 5.wav",
       "url": "https://freesound.org/people/Walter_Odington/sounds/26801/",
@@ -185,687 +229,179 @@
         "+1.14 191 downloads",
         "+1.5 at least 63 s"
       ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 635605,
+      "name": "metal workshop grinding hammering heard from office corridor upstairs narrow nearby perspective.flac",
+      "url": "https://freesound.org/people/kyles/sounds/635605/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 186.56,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 24,
+      "previewUrl": "https://cdn.freesound.org/previews/635/635605_612689-hq.mp3",
+      "score": 4.76,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.7 24 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 731244,
+      "name": "AMB-Street,Car,Bike,Horn,People,MetalWorkshop-Lalitpur,Nepal-14Jul2023,1221H",
+      "url": "https://freesound.org/people/soundandmelodies/sounds/731244/",
+      "author": "soundandmelodies",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 194.57,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 3,
+      "numRatings": 1,
+      "numDownloads": 53,
+      "previewUrl": "https://cdn.freesound.org/previews/731/731244_10924423-hq.mp3",
+      "score": 4.68,
+      "reasons": [
+        "+1.81 rating 3 from 1 ratings",
+        "+0.87 53 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 675468,
+      "name": "S24-22 Blacksmith hitting anvil with hammer; two versions.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/675468/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 46.21,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 4,
+      "numDownloads": 62,
+      "previewUrl": "https://cdn.freesound.org/previews/675/675468_2524442-hq.mp3",
+      "score": 4.27,
+      "reasons": [
+        "+2.38 rating 5 from 4 ratings",
+        "+0.9 62 downloads",
+        "+1 name matches blacksmith, anvil, hammer"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 859943,
+      "name": "ambient_brazilianwoods_goncalves_birds_monkeys_metalclink",
+      "url": "https://freesound.org/people/pa_909/sounds/859943/",
+      "author": "pa_909",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 53.74,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 33,
+      "previewUrl": "https://cdn.freesound.org/previews/859/859943_3111223-hq.mp3",
+      "score": 2.64,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.77 33 downloads"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 635608,
+      "name": "metal workshop grinding welding hammering voices quebecois2 Val d'or, Quebec, Canada.flac",
+      "url": "https://freesound.org/people/kyles/sounds/635608/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 253.22,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.33,
+      "numRatings": 3,
+      "numDownloads": 38,
+      "previewUrl": "https://cdn.freesound.org/previews/635/635608_612689-hq.mp3",
+      "score": 0.9,
+      "reasons": [
+        "+2.11 rating 4.33 from 3 ratings",
+        "+0.8 38 downloads",
+        "+2 at least 90 s",
+        "-4 voice or speech (voices)"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 26798,
+      "name": "metal workshop quiet 2.wav",
+      "url": "https://freesound.org/people/Walter_Odington/sounds/26798/",
+      "author": "Walter_Odington",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 35.48,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.63,
+      "numRatings": 4,
+      "numDownloads": 831,
+      "previewUrl": "https://cdn.freesound.org/previews/26/26798_48671-hq.mp3",
+      "score": 0.71,
+      "reasons": [
+        "+2.25 rating 4.63 from 4 ratings",
+        "+1.46 831 downloads",
+        "-3 only 35.48 s"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 635604,
+      "name": "metal workshop grinding welding hammering voices quebecois1 Val d'or, Quebec, Canada.flac",
+      "url": "https://freesound.org/people/kyles/sounds/635604/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 358.84,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 44,
+      "previewUrl": "https://cdn.freesound.org/previews/635/635604_612689-hq.mp3",
+      "score": 0.7,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.83 44 downloads",
+        "+2 at least 90 s",
+        "-4 voice or speech (voices)"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 703642,
+      "name": "The sound environment of a festival of medieval culture. Sounds of hammer hitting an anvil. The work of a blacksmith.",
+      "url": "https://freesound.org/people/hobonski/sounds/703642/",
+      "author": "hobonski",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 94.2,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 19,
+      "numDownloads": 612,
+      "previewUrl": "https://cdn.freesound.org/previews/703/703642_15247766-hq.mp3",
+      "score": 0.16,
+      "reasons": [
+        "+2.77 rating 5 from 19 ratings",
+        "+1.39 612 downloads",
+        "+2 at least 90 s",
+        "+3 tags blacksmith, anvil, hammer",
+        "+1 name matches blacksmith, anvil, hammer",
+        "-6 music (music)",
+        "-4 voice or speech (voices)"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Hammer",
-          "Clang",
-          "Clatter"
-        ]
-      ],
-      "clapPrompt": "a blacksmith forge with hammer on anvil and a crackling fire"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "no 64 s window is free of denied sounds: Speech reaches 0.693 (at 37 s); required sound absent: Hammer / Clang / Clatter",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 254370,
-        "name": "By ther blacksmith-002.wav",
-        "url": "https://freesound.org/people/Emmaproductions/sounds/254370/",
-        "author": "Emmaproductions",
-        "durationSec": 78.8,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Speech reaches 0.693 (at 37 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 78,
-          "cleanSeconds": 60,
-          "topClasses": [
-            {
-              "label": "Hammer",
-              "max": 0.8404
-            },
-            {
-              "label": "Dishes, pots, and pans",
-              "max": 0.7259
-            },
-            {
-              "label": "Speech",
-              "max": 0.6933
-            },
-            {
-              "label": "Cutlery, silverware",
-              "max": 0.6498
-            },
-            {
-              "label": "Scissors",
-              "max": 0.6403
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.693,
-              "atSecond": 37
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.398,
-              "atSecond": 32
-            },
-            {
-              "label": "Music",
-              "max": 0.333,
-              "atSecond": 40
-            },
-            {
-              "label": "Train",
-              "max": 0.207,
-              "atSecond": 32
-            },
-            {
-              "label": "Bicycle bell",
-              "max": 0.152,
-              "atSecond": 44
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hammer",
-                "Clang",
-                "Clatter"
-              ],
-              "fraction": 0.577
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 137836,
-        "name": "Blacksmith Workshop.WAV",
-        "url": "https://freesound.org/people/thefilmbakery/sounds/137836/",
-        "author": "thefilmbakery",
-        "durationSec": 130,
-        "verdict": "reject",
-        "reason": "required sound absent: Hammer / Clang / Clatter",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 130,
-          "cleanSeconds": 105,
-          "topClasses": [
-            {
-              "label": "Hammer",
-              "max": 0.8745
-            },
-            {
-              "label": "Scissors",
-              "max": 0.821
-            },
-            {
-              "label": "Speech",
-              "max": 0.8202
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.5857
-            },
-            {
-              "label": "Chink, clink",
-              "max": 0.55
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.82,
-              "atSecond": 96
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.586,
-              "atSecond": 103
-            },
-            {
-              "label": "Train",
-              "max": 0.233,
-              "atSecond": 65
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.225,
-              "atSecond": 103
-            },
-            {
-              "label": "Tools",
-              "max": 0.212,
-              "atSecond": 119
-            },
-            {
-              "label": "Music",
-              "max": 0.209,
-              "atSecond": 122
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.191,
-              "atSecond": 103
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.161,
-              "atSecond": 65
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.151,
-              "atSecond": 65
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hammer",
-                "Clang",
-                "Clatter"
-              ],
-              "fraction": 0.208
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 395860,
-        "name": "Hammering metall.wav",
-        "url": "https://freesound.org/people/jokallset/sounds/395860/",
-        "author": "jokallset",
-        "durationSec": 81.2,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Music reaches 0.46 (at 56 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 81,
-          "cleanSeconds": 54,
-          "topClasses": [
-            {
-              "label": "Hammer",
-              "max": 0.949
-            },
-            {
-              "label": "Music",
-              "max": 0.4603
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.2806
-            },
-            {
-              "label": "Clang",
-              "max": 0.234
-            },
-            {
-              "label": "Percussion",
-              "max": 0.2236
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.46,
-              "atSecond": 56
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.281,
-              "atSecond": 36
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hammer",
-                "Clang",
-                "Clatter"
-              ],
-              "fraction": 0.741
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 395862,
-        "name": "Hammering anvil resonance.wav",
-        "url": "https://freesound.org/people/jokallset/sounds/395862/",
-        "author": "jokallset",
-        "durationSec": 73.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Hammer / Clang / Clatter",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 73,
-          "cleanSeconds": 30,
-          "topClasses": [
-            {
-              "label": "Hammer",
-              "max": 0.7869
-            },
-            {
-              "label": "Bicycle bell",
-              "max": 0.6292
-            },
-            {
-              "label": "Music",
-              "max": 0.5113
-            },
-            {
-              "label": "Percussion",
-              "max": 0.3498
-            },
-            {
-              "label": "Marimba, xylophone",
-              "max": 0.3449
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Bicycle bell",
-              "max": 0.629,
-              "atSecond": 43
-            },
-            {
-              "label": "Music",
-              "max": 0.511,
-              "atSecond": 0
-            },
-            {
-              "label": "Marimba, xylophone",
-              "max": 0.345,
-              "atSecond": 62
-            },
-            {
-              "label": "Bell",
-              "max": 0.321,
-              "atSecond": 43
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.285,
-              "atSecond": 70
-            },
-            {
-              "label": "Drum",
-              "max": 0.206,
-              "atSecond": 29
-            },
-            {
-              "label": "Fire alarm",
-              "max": 0.147,
-              "atSecond": 13
-            },
-            {
-              "label": "Smoke detector, smoke alarm",
-              "max": 0.114,
-              "atSecond": 13
-            },
-            {
-              "label": "Alarm",
-              "max": 0.085,
-              "atSecond": 8
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hammer",
-                "Clang",
-                "Clatter"
-              ],
-              "fraction": 0.26
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 254371,
-        "name": "By the blacksmith-001.wav",
-        "url": "https://freesound.org/people/Emmaproductions/sounds/254371/",
-        "author": "Emmaproductions",
-        "durationSec": 50,
-        "verdict": "reject",
-        "reason": "clip has 50 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 50,
-          "cleanSeconds": 40,
-          "topClasses": [
-            {
-              "label": "Hammer",
-              "max": 0.8767
-            },
-            {
-              "label": "Speech",
-              "max": 0.7982
-            },
-            {
-              "label": "Stir",
-              "max": 0.4169
-            },
-            {
-              "label": "Chink, clink",
-              "max": 0.3506
-            },
-            {
-              "label": "Music",
-              "max": 0.2517
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.798,
-              "atSecond": 41
-            },
-            {
-              "label": "Music",
-              "max": 0.252,
-              "atSecond": 9
-            },
-            {
-              "label": "Tools",
-              "max": 0.155,
-              "atSecond": 30
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hammer",
-                "Clang",
-                "Clatter"
-              ],
-              "fraction": 0.42
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 395861,
-        "name": "Hammering anvil.wav",
-        "url": "https://freesound.org/people/jokallset/sounds/395861/",
-        "author": "jokallset",
-        "durationSec": 52.6,
-        "verdict": "reject",
-        "reason": "clip has 52 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 52,
-          "cleanSeconds": 25,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.7178
-            },
-            {
-              "label": "Hammer",
-              "max": 0.6383
-            },
-            {
-              "label": "Music",
-              "max": 0.4812
-            },
-            {
-              "label": "Bicycle bell",
-              "max": 0.4579
-            },
-            {
-              "label": "Percussion",
-              "max": 0.3392
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.718,
-              "atSecond": 34
-            },
-            {
-              "label": "Music",
-              "max": 0.481,
-              "atSecond": 47
-            },
-            {
-              "label": "Bicycle bell",
-              "max": 0.458,
-              "atSecond": 38
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.328,
-              "atSecond": 9
-            },
-            {
-              "label": "Drum",
-              "max": 0.311,
-              "atSecond": 47
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.292,
-              "atSecond": 47
-            },
-            {
-              "label": "Tools",
-              "max": 0.151,
-              "atSecond": 5
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hammer",
-                "Clang",
-                "Clatter"
-              ],
-              "fraction": 0.231
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 26802,
-        "name": "metal workshop quiet.wav",
-        "url": "https://freesound.org/people/Walter_Odington/sounds/26802/",
-        "author": "Walter_Odington",
-        "durationSec": 71,
-        "verdict": "reject",
-        "reason": "required sound absent: Hammer / Clang / Clatter",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 70,
-          "cleanSeconds": 52,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.7656
-            },
-            {
-              "label": "Rub",
-              "max": 0.6458
-            },
-            {
-              "label": "Filing (rasp)",
-              "max": 0.6398
-            },
-            {
-              "label": "Writing",
-              "max": 0.5869
-            },
-            {
-              "label": "Train",
-              "max": 0.5052
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.766,
-              "atSecond": 37
-            },
-            {
-              "label": "Train",
-              "max": 0.505,
-              "atSecond": 42
-            },
-            {
-              "label": "Speech",
-              "max": 0.452,
-              "atSecond": 0
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.442,
-              "atSecond": 43
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.391,
-              "atSecond": 42
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.37,
-              "atSecond": 42
-            },
-            {
-              "label": "Sawing",
-              "max": 0.165,
-              "atSecond": 20
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hammer",
-                "Clang",
-                "Clatter"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 26801,
-        "name": "metal workshop quiet 5.wav",
-        "url": "https://freesound.org/people/Walter_Odington/sounds/26801/",
-        "author": "Walter_Odington",
-        "durationSec": 64.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Hammer / Clang / Clatter",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 64,
-          "cleanSeconds": 4,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8326
-            },
-            {
-              "label": "Animal",
-              "max": 0.4018
-            },
-            {
-              "label": "Pink noise",
-              "max": 0.3363
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.2873
-            },
-            {
-              "label": "Music",
-              "max": 0.2779
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.833,
-              "atSecond": 56
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.287,
-              "atSecond": 19
-            },
-            {
-              "label": "Music",
-              "max": 0.278,
-              "atSecond": 25
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.177,
-              "atSecond": 16
-            },
-            {
-              "label": "Emergency vehicle",
-              "max": 0.155,
-              "atSecond": 16
-            },
-            {
-              "label": "Siren",
-              "max": 0.11,
-              "atSecond": 16
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hammer",
-                "Clang",
-                "Clatter"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

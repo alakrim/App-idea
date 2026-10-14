@@ -1,14 +1,39 @@
 {
   "category": "city_night",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "city night ambience",
-    "night city atmosphere"
+    "night city atmosphere",
+    "city night ambience loop",
+    "urban night ambience"
   ],
-  "poolSize": 52,
+  "poolSize": 84,
   "candidates": [
     {
       "rank": 1,
+      "freesoundId": 423644,
+      "name": "City at Night_Ambience.wav",
+      "url": "https://freesound.org/people/YellowJacketStudios/sounds/423644/",
+      "author": "YellowJacketStudios",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 93.79,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.91,
+      "numRatings": 23,
+      "numDownloads": 1918,
+      "previewUrl": "https://cdn.freesound.org/previews/423/423644_2347916-hq.mp3",
+      "score": 10.39,
+      "reasons": [
+        "+2.75 rating 4.91 from 23 ratings",
+        "+1.64 1918 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, night, urban",
+        "+1 name matches city, night"
+      ]
+    },
+    {
+      "rank": 2,
       "freesoundId": 384476,
       "name": "Cologne at night, Quiet street with cars passing by in the distance (Surround)",
       "url": "https://freesound.org/people/Pfannkuchn/sounds/384476/",
@@ -19,19 +44,42 @@
       "channels": 4,
       "avgRating": 4.92,
       "numRatings": 12,
-      "numDownloads": 421,
+      "numDownloads": 422,
       "previewUrl": "https://cdn.freesound.org/previews/384/384476_627541-hq.mp3",
       "score": 9.94,
       "reasons": [
         "+2.63 rating 4.92 from 12 ratings",
-        "+1.31 421 downloads",
+        "+1.31 422 downloads",
         "+2 at least 90 s",
         "+3 tags city, night, urban",
         "+1 name matches night"
       ]
     },
     {
-      "rank": 2,
+      "rank": 3,
+      "freesoundId": 384473,
+      "name": "Cologne at Night, General Ambience (Surround)",
+      "url": "https://freesound.org/people/Pfannkuchn/sounds/384473/",
+      "author": "Pfannkuchn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 193.04,
+      "samplerate": 48000,
+      "channels": 4,
+      "avgRating": 4.67,
+      "numRatings": 12,
+      "numDownloads": 677,
+      "previewUrl": "https://cdn.freesound.org/previews/384/384473_627541-hq.mp3",
+      "score": 9.91,
+      "reasons": [
+        "+2.49 rating 4.67 from 12 ratings",
+        "+1.42 677 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, night, urban",
+        "+1 name matches night"
+      ]
+    },
+    {
+      "rank": 4,
       "freesoundId": 427841,
       "name": "Ambience City Quiet Night Air Tone",
       "url": "https://freesound.org/people/leonelmail/sounds/427841/",
@@ -42,19 +90,19 @@
       "channels": 2,
       "avgRating": 4.86,
       "numRatings": 49,
-      "numDownloads": 4774,
+      "numDownloads": 4776,
       "previewUrl": "https://cdn.freesound.org/previews/427/427841_4437257-hq.mp3",
       "score": 9.64,
       "reasons": [
         "+2.8 rating 4.86 from 49 ratings",
-        "+1.84 4774 downloads",
+        "+1.84 4776 downloads",
         "+2 at least 90 s",
         "+2 tags city, night",
         "+1 name matches city, night"
       ]
     },
     {
-      "rank": 3,
+      "rank": 5,
       "freesoundId": 752436,
       "name": "Walking through the bustling night market in the downtown area",
       "url": "https://freesound.org/people/lastraindrop/sounds/752436/",
@@ -77,7 +125,7 @@
       ]
     },
     {
-      "rank": 4,
+      "rank": 6,
       "freesoundId": 332783,
       "name": "city ambience, pedestrian subway, outside, night, distant traffic, trains and railway station announcements - Stereo preview.wav",
       "url": "https://freesound.org/people/be_a_hero_not_a_patriot/sounds/332783/",
@@ -88,19 +136,19 @@
       "channels": 2,
       "avgRating": 4.93,
       "numRatings": 28,
-      "numDownloads": 2258,
+      "numDownloads": 2259,
       "previewUrl": "https://cdn.freesound.org/previews/332/332783_5804919-hq.mp3",
       "score": 9.46,
       "reasons": [
         "+2.78 rating 4.93 from 28 ratings",
-        "+1.68 2258 downloads",
+        "+1.68 2259 downloads",
         "+2 at least 90 s",
         "+2 tags city, night",
         "+1 name matches city, night"
       ]
     },
     {
-      "rank": 5,
+      "rank": 7,
       "freesoundId": 237329,
       "name": "Night city atmosphere",
       "url": "https://freesound.org/people/Soundkrampf/sounds/237329/",
@@ -111,19 +159,19 @@
       "channels": 2,
       "avgRating": 4.8,
       "numRatings": 107,
-      "numDownloads": 18773,
+      "numDownloads": 18774,
       "previewUrl": "https://cdn.freesound.org/previews/237/237329_3435865-hq.mp3",
       "score": 9.31,
       "reasons": [
         "+2.81 rating 4.8 from 107 ratings",
-        "+2 18773 downloads",
+        "+2 18774 downloads",
         "+1.5 at least 63 s",
         "+2 tags city, night",
         "+1 name matches city, night"
       ]
     },
     {
-      "rank": 6,
+      "rank": 8,
       "freesoundId": 556228,
       "name": "Silent City Evening Atmosphere",
       "url": "https://freesound.org/people/Basbazooka/sounds/556228/",
@@ -146,7 +194,7 @@
       ]
     },
     {
-      "rank": 7,
+      "rank": 9,
       "freesoundId": 332785,
       "name": "city ambience, pedestrian subway, at entrance, night, distant traffic, trains and railway station announcements - Stereo preview.wav",
       "url": "https://freesound.org/people/be_a_hero_not_a_patriot/sounds/332785/",
@@ -157,19 +205,19 @@
       "channels": 2,
       "avgRating": 4.77,
       "numRatings": 22,
-      "numDownloads": 1468,
+      "numDownloads": 1469,
       "previewUrl": "https://cdn.freesound.org/previews/332/332785_5804919-hq.mp3",
       "score": 9.24,
       "reasons": [
         "+2.65 rating 4.77 from 22 ratings",
-        "+1.58 1468 downloads",
+        "+1.58 1469 downloads",
         "+2 at least 90 s",
         "+2 tags city, night",
         "+1 name matches city, night"
       ]
     },
     {
-      "rank": 8,
+      "rank": 10,
       "freesoundId": 380781,
       "name": "Backyard with wind at night.wav",
       "url": "https://freesound.org/people/BonnyOrbit/sounds/380781/",
@@ -190,546 +238,351 @@
         "+2 tags city, night",
         "+1 name matches night"
       ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 455949,
+      "name": "Night atmosphere Wind City",
+      "url": "https://freesound.org/people/Jeffreys2/sounds/455949/",
+      "author": "Jeffreys2",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 332.4,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.73,
+      "numRatings": 15,
+      "numDownloads": 1496,
+      "previewUrl": "https://cdn.freesound.org/previews/455/455949_2278647-hq.mp3",
+      "score": 9.16,
+      "reasons": [
+        "+2.57 rating 4.73 from 15 ratings",
+        "+1.59 1496 downloads",
+        "+2 at least 90 s",
+        "+2 tags city, night",
+        "+1 name matches city, night"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 495866,
+      "name": "City Ambience Distant Stereo.wav",
+      "url": "https://freesound.org/people/Yakobb1/sounds/495866/",
+      "author": "Yakobb1",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 172,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 17,
+      "numDownloads": 536,
+      "previewUrl": "https://cdn.freesound.org/previews/495/495866_6709775-hq.mp3",
+      "score": 9.11,
+      "reasons": [
+        "+2.74 rating 5 from 17 ratings",
+        "+1.36 536 downloads",
+        "+2 at least 90 s",
+        "+2 tags city, night",
+        "+1 name matches city"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 719961,
+      "name": "Snowfall Ambience, City",
+      "url": "https://freesound.org/people/Kinoton/sounds/719961/",
+      "author": "Kinoton",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 180,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.93,
+      "numRatings": 15,
+      "numDownloads": 578,
+      "previewUrl": "https://cdn.freesound.org/previews/719/719961_2247456-hq.mp3",
+      "score": 9.06,
+      "reasons": [
+        "+2.68 rating 4.93 from 15 ratings",
+        "+1.38 578 downloads",
+        "+2 at least 90 s",
+        "+2 tags night, urban",
+        "+1 name matches city"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 395939,
+      "name": "Night in Haiti: crickets, dogs, some sounds of the city far away",
+      "url": "https://freesound.org/people/felix.blume/sounds/395939/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 201.05,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 18,
+      "numDownloads": 654,
+      "previewUrl": "https://cdn.freesound.org/previews/395/395939_1661766-hq.mp3",
+      "score": 8.97,
+      "reasons": [
+        "+2.56 rating 4.67 from 18 ratings",
+        "+1.41 654 downloads",
+        "+2 at least 90 s",
+        "+2 tags city, night",
+        "+1 name matches city, night"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 502176,
+      "name": "Street Atmosphere in Chile, during the night in Valparaiso (Ferrari Street)",
+      "url": "https://freesound.org/people/felix.blume/sounds/502176/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 301.4,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.59,
+      "numRatings": 17,
+      "numDownloads": 848,
+      "previewUrl": "https://cdn.freesound.org/previews/502/502176_1661766-hq.mp3",
+      "score": 8.97,
+      "reasons": [
+        "+2.51 rating 4.59 from 17 ratings",
+        "+1.46 848 downloads",
+        "+2 at least 90 s",
+        "+2 tags city, night",
+        "+1 name matches night"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 501340,
+      "name": "Harbor during the night (Valparaiso, Chile)",
+      "url": "https://freesound.org/people/felix.blume/sounds/501340/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 246.51,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.82,
+      "numRatings": 11,
+      "numDownloads": 608,
+      "previewUrl": "https://cdn.freesound.org/previews/501/501340_1661766-hq.mp3",
+      "score": 8.95,
+      "reasons": [
+        "+2.55 rating 4.82 from 11 ratings",
+        "+1.39 608 downloads",
+        "+2 at least 90 s",
+        "+2 tags city, night",
+        "+1 name matches night"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 649075,
+      "name": "Ambient - night - city - far away party walla - crowd - insects - air.wav",
+      "url": "https://freesound.org/people/ValentinPetiteau/sounds/649075/",
+      "author": "ValentinPetiteau",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 271.57,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.7,
+      "numRatings": 10,
+      "numDownloads": 673,
+      "previewUrl": "https://cdn.freesound.org/previews/649/649075_10443988-hq.mp3",
+      "score": 8.89,
+      "reasons": [
+        "+2.47 rating 4.7 from 10 ratings",
+        "+1.41 673 downloads",
+        "+2 at least 90 s",
+        "+2 tags city, night",
+        "+1 name matches city, night"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 634976,
+      "name": "AMB dogs barking, church bell, distant city traffic (ST)",
+      "url": "https://freesound.org/people/tferrino/sounds/634976/",
+      "author": "tferrino",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 185.9,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 7,
+      "numDownloads": 433,
+      "previewUrl": "https://cdn.freesound.org/previews/634/634976_7891112-hq.mp3",
+      "score": 8.85,
+      "reasons": [
+        "+2.53 rating 5 from 7 ratings",
+        "+1.32 433 downloads",
+        "+2 at least 90 s",
+        "+2 tags city, night",
+        "+1 name matches city"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 557193,
+      "name": "Ghost Town Night Ambient",
+      "url": "https://freesound.org/people/szegvari/sounds/557193/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 150.63,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.53,
+      "numRatings": 17,
+      "numDownloads": 443,
+      "previewUrl": "https://cdn.freesound.org/previews/557/557193_2282212-hq.mp3",
+      "score": 8.8,
+      "reasons": [
+        "+2.47 rating 4.53 from 17 ratings",
+        "+1.32 443 downloads",
+        "+2 at least 90 s",
+        "+2 tags city, night",
+        "+1 name matches night"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 563504,
+      "name": "Tel Aviv city at night ambience",
+      "url": "https://freesound.org/people/khenshom/sounds/563504/",
+      "author": "khenshom",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 79.33,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 3.67,
+      "numRatings": 3,
+      "numDownloads": 488,
+      "previewUrl": "https://cdn.freesound.org/previews/563/563504_6652872-hq.mp3",
+      "score": 8.77,
+      "reasons": [
+        "+1.92 rating 3.67 from 3 ratings",
+        "+1.34 488 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags city, night, urban",
+        "+1 name matches city, night"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 486875,
+      "name": "Ambience Urban Night Plaça Primavera",
+      "url": "https://freesound.org/people/bitlab_coop/sounds/486875/",
+      "author": "bitlab_coop",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 190.38,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 6,
+      "numDownloads": 821,
+      "previewUrl": "https://cdn.freesound.org/previews/486/486875_9872712-hq.mp3",
+      "score": 8.74,
+      "reasons": [
+        "+2.28 rating 4.5 from 6 ratings",
+        "+1.46 821 downloads",
+        "+2 at least 90 s",
+        "+2 tags night, urban",
+        "+1 name matches night"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 346948,
+      "name": "2 a.m City ambiece",
+      "url": "https://freesound.org/people/idulink/sounds/346948/",
+      "author": "idulink",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 573.95,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 8,
+      "numDownloads": 328,
+      "previewUrl": "https://cdn.freesound.org/previews/346/346948_5558173-hq.mp3",
+      "score": 8.71,
+      "reasons": [
+        "+2.45 rating 4.75 from 8 ratings",
+        "+1.26 328 downloads",
+        "+2 at least 90 s",
+        "+2 tags city, night",
+        "+1 name matches city"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 669611,
+      "name": "Forest atmosphere at night with cicada, cricket, bird, city hum, distant car horn at one point, recorded in Amazon rainforest",
+      "url": "https://freesound.org/people/felix.blume/sounds/669611/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 181,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 7,
+      "numDownloads": 212,
+      "previewUrl": "https://cdn.freesound.org/previews/669/669611_1661766-hq.mp3",
+      "score": 8.7,
+      "reasons": [
+        "+2.53 rating 5 from 7 ratings",
+        "+1.16 212 downloads",
+        "+2 at least 90 s",
+        "+2 tags city, night",
+        "+1 name matches city, night"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 630584,
+      "name": "AMB CITY NIGHT QUIET GARBAGE-TRUCK",
+      "url": "https://freesound.org/people/tferrino/sounds/630584/",
+      "author": "tferrino",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 399.32,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.64,
+      "numRatings": 11,
+      "numDownloads": 290,
+      "previewUrl": "https://cdn.freesound.org/previews/630/630584_7891112-hq.mp3",
+      "score": 8.69,
+      "reasons": [
+        "+2.46 rating 4.64 from 11 ratings",
+        "+1.23 290 downloads",
+        "+2 at least 90 s",
+        "+2 tags city, night",
+        "+1 name matches city, night"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 486872,
+      "name": "Ambience Urban Night Plaça Comerç",
+      "url": "https://freesound.org/people/bitlab_coop/sounds/486872/",
+      "author": "bitlab_coop",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 157.13,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 592,
+      "previewUrl": "https://cdn.freesound.org/previews/486/486872_9872712-hq.mp3",
+      "score": 8.68,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+1.39 592 downloads",
+        "+2 at least 90 s",
+        "+2 tags night, urban",
+        "+1 name matches night"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [
-        "vehicles",
-        "engines"
-      ],
-      "required": [
-        [
-          "Traffic noise, roadway noise",
-          "Vehicle",
-          "Car",
-          "Motor vehicle (road)"
-        ]
-      ],
-      "clapPrompt": "a city at night with light traffic and a humming sign, no sirens"
-    },
-    "verdict": "filled",
-    "unfilledReason": null,
-    "chosen": {
-      "freesoundId": 332783,
-      "windowStartSeconds": 156,
-      "windowSeconds": 64,
-      "steadinessDb": 0.677,
-      "clapScore": 0.47
-    },
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 384476,
-        "name": "Cologne at night, Quiet street with cars passing by in the distance (Surround)",
-        "url": "https://freesound.org/people/Pfannkuchn/sounds/384476/",
-        "author": "Pfannkuchn",
-        "durationSec": 204.7,
-        "verdict": "reject",
-        "reason": "required sound absent: Traffic noise, roadway noise / Vehicle / Car / Motor vehicle (road)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 204,
-          "cleanSeconds": 199,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.6919
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.659
-            },
-            {
-              "label": "Car",
-              "max": 0.4376
-            },
-            {
-              "label": "Bird",
-              "max": 0.2396
-            },
-            {
-              "label": "Owl",
-              "max": 0.201
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.692,
-              "atSecond": 119
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.471
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 427841,
-        "name": "Ambience City Quiet Night Air Tone",
-        "url": "https://freesound.org/people/leonelmail/sounds/427841/",
-        "author": "leonelmail",
-        "durationSec": 139.5,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 33,
-          "lengthSeconds": 64,
-          "steadinessDb": 0.496
-        },
-        "clapScore": 0.2753,
-        "evidence": {
-          "frames": 139,
-          "cleanSeconds": 139,
-          "topClasses": [
-            {
-              "label": "Vehicle",
-              "max": 0.5583
-            },
-            {
-              "label": "Car",
-              "max": 0.264
-            },
-            {
-              "label": "Field recording",
-              "max": 0.2512
-            },
-            {
-              "label": "White noise",
-              "max": 0.1304
-            },
-            {
-              "label": "Thunder",
-              "max": 0.1293
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.928
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 752436,
-        "name": "Walking through the bustling night market in the downtown area",
-        "url": "https://freesound.org/people/lastraindrop/sounds/752436/",
-        "author": "lastraindrop",
-        "durationSec": 485.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Traffic noise, roadway noise / Vehicle / Car / Motor vehicle (road)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 485,
-          "cleanSeconds": 9,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.9327
-            },
-            {
-              "label": "Speech",
-              "max": 0.913
-            },
-            {
-              "label": "Run",
-              "max": 0.8093
-            },
-            {
-              "label": "Insect",
-              "max": 0.7399
-            },
-            {
-              "label": "Bee, wasp, etc.",
-              "max": 0.5718
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.933,
-              "atSecond": 474
-            },
-            {
-              "label": "Speech",
-              "max": 0.913,
-              "atSecond": 313
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.547,
-              "atSecond": 311
-            },
-            {
-              "label": "Chatter",
-              "max": 0.517,
-              "atSecond": 315
-            },
-            {
-              "label": "Guitar",
-              "max": 0.443,
-              "atSecond": 311
-            },
-            {
-              "label": "Honk",
-              "max": 0.441,
-              "atSecond": 35
-            },
-            {
-              "label": "Plucked string instrument",
-              "max": 0.44,
-              "atSecond": 311
-            },
-            {
-              "label": "Child speech, kid speaking",
-              "max": 0.262,
-              "atSecond": 407
-            },
-            {
-              "label": "Hubbub, speech noise, speech babble",
-              "max": 0.225,
-              "atSecond": 415
-            },
-            {
-              "label": "Crowd",
-              "max": 0.216,
-              "atSecond": 129
-            },
-            {
-              "label": "Electronic music",
-              "max": 0.214,
-              "atSecond": 303
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.089
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 332783,
-        "name": "city ambience, pedestrian subway, outside, night, distant traffic, trains and railway station announcements - Stereo preview.wav",
-        "url": "https://freesound.org/people/be_a_hero_not_a_patriot/sounds/332783/",
-        "author": "be_a_hero_not_a_patriot",
-        "durationSec": 270.9,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 156,
-          "lengthSeconds": 64,
-          "steadinessDb": 0.677
-        },
-        "clapScore": 0.47,
-        "evidence": {
-          "frames": 270,
-          "cleanSeconds": 270,
-          "topClasses": [
-            {
-              "label": "Vehicle",
-              "max": 0.563
-            },
-            {
-              "label": "Field recording",
-              "max": 0.3836
-            },
-            {
-              "label": "Train",
-              "max": 0.3154
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.2131
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.2067
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.819
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 237329,
-        "name": "Night city atmosphere",
-        "url": "https://freesound.org/people/Soundkrampf/sounds/237329/",
-        "author": "Soundkrampf",
-        "durationSec": 67.7,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Speech reaches 0.746 (at 7 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 67,
-          "cleanSeconds": 62,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.7455
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.6259
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.2724
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.2644
-            },
-            {
-              "label": "Field recording",
-              "max": 0.262
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.746,
-              "atSecond": 7
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.94
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 556228,
-        "name": "Silent City Evening Atmosphere",
-        "url": "https://freesound.org/people/Basbazooka/sounds/556228/",
-        "author": "Basbazooka",
-        "durationSec": 148.2,
-        "verdict": "reject",
-        "reason": "required sound absent: Traffic noise, roadway noise / Vehicle / Car / Motor vehicle (road)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 148,
-          "cleanSeconds": 145,
-          "topClasses": [
-            {
-              "label": "Cat",
-              "max": 0.699
-            },
-            {
-              "label": "Animal",
-              "max": 0.5663
-            },
-            {
-              "label": "Domestic animals, pets",
-              "max": 0.5609
-            },
-            {
-              "label": "Meow",
-              "max": 0.5545
-            },
-            {
-              "label": "Goose",
-              "max": 0.5506
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Honk",
-              "max": 0.543,
-              "atSecond": 134
-            },
-            {
-              "label": "Speech",
-              "max": 0.288,
-              "atSecond": 118
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.074
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 332785,
-        "name": "city ambience, pedestrian subway, at entrance, night, distant traffic, trains and railway station announcements - Stereo preview.wav",
-        "url": "https://freesound.org/people/be_a_hero_not_a_patriot/sounds/332785/",
-        "author": "be_a_hero_not_a_patriot",
-        "durationSec": 208.9,
-        "verdict": "reject",
-        "reason": "required sound absent: Traffic noise, roadway noise / Vehicle / Car / Motor vehicle (road)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 208,
-          "cleanSeconds": 208,
-          "topClasses": [
-            {
-              "label": "Vehicle",
-              "max": 0.3944
-            },
-            {
-              "label": "Car",
-              "max": 0.2057
-            },
-            {
-              "label": "Accelerating, revving, vroom",
-              "max": 0.1327
-            },
-            {
-              "label": "Field recording",
-              "max": 0.1083
-            },
-            {
-              "label": "White noise",
-              "max": 0.1007
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.298
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 380781,
-        "name": "Backyard with wind at night.wav",
-        "url": "https://freesound.org/people/BonnyOrbit/sounds/380781/",
-        "author": "BonnyOrbit",
-        "durationSec": 302.8,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 12,
-          "lengthSeconds": 64,
-          "steadinessDb": 0.688
-        },
-        "clapScore": 0.3039,
-        "evidence": {
-          "frames": 302,
-          "cleanSeconds": 302,
-          "topClasses": [
-            {
-              "label": "Vehicle",
-              "max": 0.6259
-            },
-            {
-              "label": "Train",
-              "max": 0.5738
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.3956
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.3845
-            },
-            {
-              "label": "Field recording",
-              "max": 0.365
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.957
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

@@ -1,11 +1,13 @@
 {
   "category": "rain_on_window",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "rain on window glass",
-    "rain against window"
+    "rain against window",
+    "rain window loop",
+    "rain on glass ambience"
   ],
-  "poolSize": 30,
+  "poolSize": 40,
   "candidates": [
     {
       "rank": 1,
@@ -19,12 +21,12 @@
       "channels": 2,
       "avgRating": 4.79,
       "numRatings": 28,
-      "numDownloads": 1347,
+      "numDownloads": 1348,
       "previewUrl": "https://cdn.freesound.org/previews/243/243781_997601-hq.mp3",
       "score": 9.76,
       "reasons": [
         "+2.69 rating 4.79 from 28 ratings",
-        "+1.56 1347 downloads",
+        "+1.57 1348 downloads",
         "+1.5 at least 63 s",
         "+3 tags window, glass, rain",
         "+1 name matches window, rain"
@@ -65,12 +67,12 @@
       "channels": 2,
       "avgRating": 4.88,
       "numRatings": 17,
-      "numDownloads": 777,
+      "numDownloads": 780,
       "previewUrl": "https://cdn.freesound.org/previews/158/158690_179538-hq.mp3",
       "score": 9.12,
       "reasons": [
         "+2.68 rating 4.88 from 17 ratings",
-        "+1.45 777 downloads",
+        "+1.45 780 downloads",
         "+2 at least 90 s",
         "+2 tags window, rain",
         "+1 name matches window, rain"
@@ -190,612 +192,391 @@
         "+2 tags window, rain",
         "+1 name matches window, rain"
       ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 752100,
+      "name": "raindrops tapping against window interior 02",
+      "url": "https://freesound.org/people/fluctuating_frequency/sounds/752100/",
+      "author": "fluctuating_frequency",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 157.55,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 119,
+      "previewUrl": "https://cdn.freesound.org/previews/752/752100_2911101-hq.mp3",
+      "score": 8.34,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.04 119 downloads",
+        "+2 at least 90 s",
+        "+2 tags window, rain",
+        "+1 name matches window"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 752099,
+      "name": "raindrops tapping against window interior 01",
+      "url": "https://freesound.org/people/fluctuating_frequency/sounds/752099/",
+      "author": "fluctuating_frequency",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 459.14,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 118,
+      "previewUrl": "https://cdn.freesound.org/previews/752/752099_2911101-hq.mp3",
+      "score": 8.23,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.04 118 downloads",
+        "+2 at least 90 s",
+        "+2 tags window, rain",
+        "+1 name matches window"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 324498,
+      "name": "INT Rain on window B.wav",
+      "url": "https://freesound.org/people/deleted_user_2104797/sounds/324498/",
+      "author": "deleted_user_2104797",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 155.03,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.2,
+      "numRatings": 5,
+      "numDownloads": 127,
+      "previewUrl": "https://cdn.freesound.org/previews/324/324498_2104797-hq.mp3",
+      "score": 8.19,
+      "reasons": [
+        "+2.14 rating 4.2 from 5 ratings",
+        "+1.05 127 downloads",
+        "+2 at least 90 s",
+        "+2 tags window, rain",
+        "+1 name matches window, rain"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 541291,
+      "name": "Rain From Inside a Car Loop (1)",
+      "url": "https://freesound.org/people/OwlStorm/sounds/541291/",
+      "author": "OwlStorm",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 67,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 568,
+      "previewUrl": "https://cdn.freesound.org/previews/541/541291_140737-hq.mp3",
+      "score": 8.17,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+1.38 568 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags window, rain",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 324501,
+      "name": "INT Rain on window E.wav",
+      "url": "https://freesound.org/people/deleted_user_2104797/sounds/324501/",
+      "author": "deleted_user_2104797",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 240.87,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 129,
+      "previewUrl": "https://cdn.freesound.org/previews/324/324501_2104797-hq.mp3",
+      "score": 8.12,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1.06 129 downloads",
+        "+2 at least 90 s",
+        "+2 tags window, rain",
+        "+1 name matches window, rain"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 797667,
+      "name": "Rain pattering loop",
+      "url": "https://freesound.org/people/HenKonen/sounds/797667/",
+      "author": "HenKonen",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 110.35,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 41,
+      "previewUrl": "https://cdn.freesound.org/previews/797/797667_10938187-hq.mp3",
+      "score": 8.01,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.81 41 downloads",
+        "+2 at least 90 s",
+        "+2 tags window, rain",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 238100,
+      "name": "Rainstorm against windows.wav",
+      "url": "https://freesound.org/people/Coolzy_McChoochoo/sounds/238100/",
+      "author": "Coolzy_McChoochoo",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.12,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 4,
+      "numDownloads": 148,
+      "previewUrl": "https://cdn.freesound.org/previews/238/238100_3847920-hq.mp3",
+      "score": 7.96,
+      "reasons": [
+        "+2.38 rating 5 from 4 ratings",
+        "+1.09 148 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags window, glass, rain"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 574673,
+      "name": "Rain on window PEI summer 03.wav",
+      "url": "https://freesound.org/people/TRP/sounds/574673/",
+      "author": "TRP",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 64.14,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 146,
+      "previewUrl": "https://cdn.freesound.org/previews/574/574673_97550-hq.mp3",
+      "score": 7.79,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+1.08 146 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags window, rain",
+        "+1 name matches window, rain"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 629031,
+      "name": "Heavy Rain on Window Close up.wav",
+      "url": "https://freesound.org/people/leesparey/sounds/629031/",
+      "author": "leesparey",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 222.88,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 4,
+      "numDownloads": 120,
+      "previewUrl": "https://cdn.freesound.org/previews/629/629031_4893432-hq.mp3",
+      "score": 7.42,
+      "reasons": [
+        "+2.38 rating 5 from 4 ratings",
+        "+1.04 120 downloads",
+        "+2 at least 90 s",
+        "+1 tags rain",
+        "+1 name matches window, rain"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 541290,
+      "name": "Rain From Inside a Car Loop (2)",
+      "url": "https://freesound.org/people/OwlStorm/sounds/541290/",
+      "author": "OwlStorm",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 51.48,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 23,
+      "numDownloads": 720,
+      "previewUrl": "https://cdn.freesound.org/previews/541/541290_140737-hq.mp3",
+      "score": 7.12,
+      "reasons": [
+        "+2.69 rating 4.83 from 23 ratings",
+        "+1.43 720 downloads",
+        "+2 tags window, rain",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 541292,
+      "name": "Windscreen Wipers in the Rain Loop (3)",
+      "url": "https://freesound.org/people/OwlStorm/sounds/541292/",
+      "author": "OwlStorm",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 46.54,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.79,
+      "numRatings": 14,
+      "numDownloads": 612,
+      "previewUrl": "https://cdn.freesound.org/previews/541/541292_140737-hq.mp3",
+      "score": 6.98,
+      "reasons": [
+        "+2.59 rating 4.79 from 14 ratings",
+        "+1.39 612 downloads",
+        "+2 tags window, rain",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 621908,
+      "name": "(3) wind and rain.wav",
+      "url": "https://freesound.org/people/clothespeg/sounds/621908/",
+      "author": "clothespeg",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 145.1,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 58,
+      "previewUrl": "https://cdn.freesound.org/previews/621/621908_13451617-hq.mp3",
+      "score": 6.95,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.89 58 downloads",
+        "+2 at least 90 s",
+        "+1 tags rain",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 360756,
+      "name": "Rain drops against window.mp3",
+      "url": "https://freesound.org/people/dnlburnett/sounds/360756/",
+      "author": "dnlburnett",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 59.78,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.56,
+      "numRatings": 18,
+      "numDownloads": 794,
+      "previewUrl": "https://cdn.freesound.org/previews/360/360756_5658680-hq.mp3",
+      "score": 6.94,
+      "reasons": [
+        "+2.49 rating 4.56 from 18 ratings",
+        "+1.45 794 downloads",
+        "+2 tags window, rain",
+        "+1 name matches window, rain"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 738091,
+      "name": "massive storm breaks overhead loop",
+      "url": "https://freesound.org/people/soundofsong/sounds/738091/",
+      "author": "soundofsong",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 140.12,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 14,
+      "numDownloads": 235,
+      "previewUrl": "https://cdn.freesound.org/previews/738/738091_9782868-hq.mp3",
+      "score": 6.89,
+      "reasons": [
+        "+2.7 rating 5 from 14 ratings",
+        "+1.19 235 downloads",
+        "+2 at least 90 s",
+        "+1 tags rain"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 541288,
+      "name": "Windscreen Wipers in the Rain Loop (1)",
+      "url": "https://freesound.org/people/OwlStorm/sounds/541288/",
+      "author": "OwlStorm",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 46.93,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 9,
+      "numDownloads": 366,
+      "previewUrl": "https://cdn.freesound.org/previews/541/541288_140737-hq.mp3",
+      "score": 6.88,
+      "reasons": [
+        "+2.6 rating 5 from 9 ratings",
+        "+1.28 366 downloads",
+        "+2 tags window, rain",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 681401,
+      "name": "Rain against closed window",
+      "url": "https://freesound.org/people/SpooksJH/sounds/681401/",
+      "author": "SpooksJH",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 66.27,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.6,
+      "numRatings": 5,
+      "numDownloads": 112,
+      "previewUrl": "https://cdn.freesound.org/previews/681/681401_14426029-hq.mp3",
+      "score": 6.81,
+      "reasons": [
+        "+2.29 rating 4.6 from 5 ratings",
+        "+1.03 112 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags rain",
+        "+1 name matches window, rain"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 797660,
+      "name": "Interior Wind Rain Plastic",
+      "url": "https://freesound.org/people/SecureSubset/sounds/797660/",
+      "author": "SecureSubset",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 88.25,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 4,
+      "numDownloads": 67,
+      "previewUrl": "https://cdn.freesound.org/previews/797/797660_16752880-hq.mp3",
+      "score": 6.79,
+      "reasons": [
+        "+2.38 rating 5 from 4 ratings",
+        "+0.92 67 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags rain",
+        "+1 name matches rain"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Rain on surface",
-          "Raindrop",
-          "Rain"
-        ]
-      ],
-      "clapPrompt": "rain against window glass heard from a warm room, no thunder"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Rain on surface / Raindrop / Rain; no 64 s window is free of denied sounds: Thunder reaches 0.541 (at 435 s)",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 243781,
-        "name": "rain against window 2",
-        "url": "https://freesound.org/people/bastipictures/sounds/243781/",
-        "author": "bastipictures",
-        "durationSec": 65,
-        "verdict": "reject",
-        "reason": "required sound absent: Rain on surface / Raindrop / Rain",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 65,
-          "cleanSeconds": 23,
-          "topClasses": [
-            {
-              "label": "Sewing machine",
-              "max": 0.5267
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.4709
-            },
-            {
-              "label": "Rain on surface",
-              "max": 0.3702
-            },
-            {
-              "label": "Rain",
-              "max": 0.3527
-            },
-            {
-              "label": "Engine",
-              "max": 0.3071
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Sewing machine",
-              "max": 0.527,
-              "atSecond": 21
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.471,
-              "atSecond": 58
-            },
-            {
-              "label": "Engine",
-              "max": 0.307,
-              "atSecond": 33
-            },
-            {
-              "label": "Car",
-              "max": 0.164,
-              "atSecond": 43
-            },
-            {
-              "label": "Music",
-              "max": 0.151,
-              "atSecond": 35
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain on surface",
-                "Raindrop",
-                "Rain"
-              ],
-              "fraction": 0.077
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 158691,
-        "name": "Distant Thunder and Rain from Half Open Window 2.aif",
-        "url": "https://freesound.org/people/RutgerMuller/sounds/158691/",
-        "author": "RutgerMuller",
-        "durationSec": 104,
-        "verdict": "reject",
-        "reason": "required sound absent: Rain on surface / Raindrop / Rain",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 104,
-          "cleanSeconds": 89,
-          "topClasses": [
-            {
-              "label": "Thunder",
-              "max": 0.7568
-            },
-            {
-              "label": "Rain on surface",
-              "max": 0.6606
-            },
-            {
-              "label": "Rain",
-              "max": 0.6579
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.6569
-            },
-            {
-              "label": "Raindrop",
-              "max": 0.5334
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.757,
-              "atSecond": 43
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.657,
-              "atSecond": 43
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.4,
-              "atSecond": 47
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.301,
-              "atSecond": 48
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.26,
-              "atSecond": 47
-            },
-            {
-              "label": "Ship",
-              "max": 0.155,
-              "atSecond": 47
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain on surface",
-                "Raindrop",
-                "Rain"
-              ],
-              "fraction": 0.423
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 158690,
-        "name": "Rain from Half Open Window 1.aif",
-        "url": "https://freesound.org/people/RutgerMuller/sounds/158690/",
-        "author": "RutgerMuller",
-        "durationSec": 308,
-        "verdict": "reject",
-        "reason": "required sound absent: Rain on surface / Raindrop / Rain",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 308,
-          "cleanSeconds": 299,
-          "topClasses": [
-            {
-              "label": "Rain on surface",
-              "max": 0.6521
-            },
-            {
-              "label": "Rain",
-              "max": 0.6298
-            },
-            {
-              "label": "Pink noise",
-              "max": 0.6084
-            },
-            {
-              "label": "Raindrop",
-              "max": 0.4577
-            },
-            {
-              "label": "Tick-tock",
-              "max": 0.3258
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.259,
-              "atSecond": 76
-            },
-            {
-              "label": "Thunder",
-              "max": 0.248,
-              "atSecond": 44
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.184,
-              "atSecond": 44
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain on surface",
-                "Raindrop",
-                "Rain"
-              ],
-              "fraction": 0.36
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 158689,
-        "name": "Rain from Half Open Window 2.aif",
-        "url": "https://freesound.org/people/RutgerMuller/sounds/158689/",
-        "author": "RutgerMuller",
-        "durationSec": 208,
-        "verdict": "reject",
-        "reason": "required sound absent: Rain on surface / Raindrop / Rain",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 208,
-          "cleanSeconds": 206,
-          "topClasses": [
-            {
-              "label": "Rain",
-              "max": 0.628
-            },
-            {
-              "label": "Rain on surface",
-              "max": 0.6015
-            },
-            {
-              "label": "Pink noise",
-              "max": 0.5518
-            },
-            {
-              "label": "Raindrop",
-              "max": 0.4113
-            },
-            {
-              "label": "Thunder",
-              "max": 0.3054
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.305,
-              "atSecond": 115
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.241,
-              "atSecond": 115
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.164,
-              "atSecond": 29
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain on surface",
-                "Raindrop",
-                "Rain"
-              ],
-              "fraction": 0.298
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 158692,
-        "name": "Distant Thunder and Rain from Half Open Window 1.aif",
-        "url": "https://freesound.org/people/RutgerMuller/sounds/158692/",
-        "author": "RutgerMuller",
-        "durationSec": 88,
-        "verdict": "reject",
-        "reason": "required sound absent: Rain on surface / Raindrop / Rain",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 88,
-          "cleanSeconds": 60,
-          "topClasses": [
-            {
-              "label": "Thunder",
-              "max": 0.8035
-            },
-            {
-              "label": "Pink noise",
-              "max": 0.6439
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.6413
-            },
-            {
-              "label": "Rain",
-              "max": 0.6398
-            },
-            {
-              "label": "Rain on surface",
-              "max": 0.4959
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.803,
-              "atSecond": 32
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.641,
-              "atSecond": 26
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.343,
-              "atSecond": 30
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.306,
-              "atSecond": 40
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.239,
-              "atSecond": 59
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain on surface",
-                "Raindrop",
-                "Rain"
-              ],
-              "fraction": 0.386
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 324497,
-        "name": "INT Rain on window C.wav",
-        "url": "https://freesound.org/people/deleted_user_2104797/sounds/324497/",
-        "author": "deleted_user_2104797",
-        "durationSec": 552.7,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Thunder reaches 0.541 (at 435 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 552,
-          "cleanSeconds": 492,
-          "topClasses": [
-            {
-              "label": "Splinter",
-              "max": 0.8934
-            },
-            {
-              "label": "Wood",
-              "max": 0.843
-            },
-            {
-              "label": "Rain",
-              "max": 0.8206
-            },
-            {
-              "label": "Rain on surface",
-              "max": 0.7859
-            },
-            {
-              "label": "Bird",
-              "max": 0.6774
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.541,
-              "atSecond": 435
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.499,
-              "atSecond": 435
-            },
-            {
-              "label": "Sewing machine",
-              "max": 0.412,
-              "atSecond": 110
-            },
-            {
-              "label": "Music",
-              "max": 0.341,
-              "atSecond": 505
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.2,
-              "atSecond": 483
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain on surface",
-                "Raindrop",
-                "Rain"
-              ],
-              "fraction": 0.611
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 324499,
-        "name": "INT Rain on window A.wav",
-        "url": "https://freesound.org/people/deleted_user_2104797/sounds/324499/",
-        "author": "deleted_user_2104797",
-        "durationSec": 165.3,
-        "verdict": "reject",
-        "reason": "required sound absent: Rain on surface / Raindrop / Rain",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 165,
-          "cleanSeconds": 164,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.2719
-            },
-            {
-              "label": "Animal",
-              "max": 0.254
-            },
-            {
-              "label": "Tick-tock",
-              "max": 0.1801
-            },
-            {
-              "label": "Tick",
-              "max": 0.1556
-            },
-            {
-              "label": "Bird",
-              "max": 0.152
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.272,
-              "atSecond": 14
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain on surface",
-                "Raindrop",
-                "Rain"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 324502,
-        "name": "INT Rain on window D.wav",
-        "url": "https://freesound.org/people/deleted_user_2104797/sounds/324502/",
-        "author": "deleted_user_2104797",
-        "durationSec": 172.9,
-        "verdict": "reject",
-        "reason": "required sound absent: Rain on surface / Raindrop / Rain",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 172,
-          "cleanSeconds": 162,
-          "topClasses": [
-            {
-              "label": "Rain",
-              "max": 0.7671
-            },
-            {
-              "label": "Thunder",
-              "max": 0.732
-            },
-            {
-              "label": "Tick-tock",
-              "max": 0.6455
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.6346
-            },
-            {
-              "label": "Rain on surface",
-              "max": 0.5619
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.732,
-              "atSecond": 94
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.635,
-              "atSecond": 94
-            },
-            {
-              "label": "Music",
-              "max": 0.422,
-              "atSecond": 78
-            },
-            {
-              "label": "Speech",
-              "max": 0.168,
-              "atSecond": 77
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.155,
-              "atSecond": 148
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain on surface",
-                "Raindrop",
-                "Rain"
-              ],
-              "fraction": 0.07
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

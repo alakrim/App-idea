@@ -147,17 +147,34 @@ describe('memoryRepo entities and facts', () => {
       newFacts: [fact(1, 1, 1, 'Is a disciple')],
     };
 
-    memoryRepo.saveEntityResolution(db, id(1), resolution);
-    memoryRepo.saveEntityResolution(db, id(1), resolution);
+    memoryRepo.saveEntityResolution(db, id(1), id(1), resolution);
+    memoryRepo.saveEntityResolution(db, id(1), id(1), resolution);
 
     expect(memoryRepo.listEntities(db, id(1))).toEqual([LIN_MO]);
     expect(memoryRepo.listFactsBefore(db, id(1), 9)).toHaveLength(1);
   });
 
+  it('replaces a chapter\'s facts on re-analysis, rather than adding to them', () => {
+    const { db } = createTestDb();
+    seedSeries(db);
+    memoryRepo.saveEntityResolution(db, id(1), id(1), {
+      upserts: [LIN_MO],
+      newFacts: [fact(1, 1, 1, 'Is a disciple'), fact(2, 1, 1, 'Lives by the sea')],
+    });
+
+    // The second analysis of chapter 1 finds only one of those facts.
+    memoryRepo.saveEntityResolution(db, id(1), id(1), {
+      upserts: [LIN_MO],
+      newFacts: [fact(3, 1, 1, 'Is a disciple')],
+    });
+
+    expect(memoryRepo.listFacts(db, id(1)).map((f) => f.fact)).toEqual(['Is a disciple']);
+  });
+
   it('lists only facts revealed strictly before the cutoff order', () => {
     const { db } = createTestDb();
     seedSeries(db);
-    memoryRepo.saveEntityResolution(db, id(1), {
+    memoryRepo.saveEntityResolution(db, id(1), id(1), {
       upserts: [LIN_MO],
       newFacts: [fact(1, 1, 1, 'Is a disciple'), fact(2, 3, 3, 'Is the master')],
     });
@@ -173,7 +190,7 @@ describe('memoryRepo entities and facts', () => {
     const foreign = { ...LIN_MO, id: id(102), seriesId: id(2) };
 
     expect(() =>
-      memoryRepo.saveEntityResolution(db, id(1), {
+      memoryRepo.saveEntityResolution(db, id(1), id(1), {
         upserts: [LIN_MO, foreign],
         newFacts: [fact(1, 1, 1, 'Is a disciple')],
       }),
@@ -187,7 +204,7 @@ describe('memoryRepo.listFacts', () => {
   it('lists every fact of the series, in chapter order, and no other series', () => {
     const { db } = createTestDb();
     seedSeries(db);
-    memoryRepo.saveEntityResolution(db, id(1), {
+    memoryRepo.saveEntityResolution(db, id(1), id(1), {
       upserts: [LIN_MO],
       newFacts: [fact(2, 3, 3, 'Is the master'), fact(1, 1, 1, 'Is a disciple')],
     });

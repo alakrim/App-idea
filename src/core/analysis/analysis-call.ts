@@ -1,3 +1,4 @@
+import { ANALYSIS_MAX_OUTPUT_TOKENS } from './limits';
 import { ANALYSIS_JSON_SCHEMA, analysisResponseSchema, normalizeMemory } from './schemas';
 import { stripNulls } from './strip-nulls';
 import { parseJsonReply } from '../llm/json';
@@ -81,6 +82,7 @@ export async function runAnalysisCall(
     jsonSchema: ANALYSIS_JSON_SCHEMA,
     signal,
     cacheSystem: true,
+    maxOutputTokens: ANALYSIS_MAX_OUTPUT_TOKENS,
   });
   const firstOutcome = parseAnalysisReply(first.text);
   if (firstOutcome.ok) return { ...firstOutcome.value, usage: first.usage };
@@ -91,6 +93,7 @@ export async function runAnalysisCall(
     jsonSchema: ANALYSIS_JSON_SCHEMA,
     signal,
     cacheSystem: true,
+    maxOutputTokens: ANALYSIS_MAX_OUTPUT_TOKENS,
   });
   const usage = addUsage(first.usage, second.usage);
   const repaired = parseAnalysisReply(second.text);

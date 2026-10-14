@@ -1,11 +1,13 @@
 {
   "category": "cafe_soft",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "cafe ambience",
-    "coffee shop ambience"
+    "coffee shop ambience",
+    "cafe ambience loop",
+    "coffee shop people ambience"
   ],
-  "poolSize": 57,
+  "poolSize": 59,
   "candidates": [
     {
       "rank": 1,
@@ -19,12 +21,12 @@
       "channels": 1,
       "avgRating": 4.47,
       "numRatings": 32,
-      "numDownloads": 3404,
+      "numDownloads": 3407,
       "previewUrl": "https://cdn.freesound.org/previews/370/370973_5835751-hq.mp3",
       "score": 10.27,
       "reasons": [
         "+2.5 rating 4.47 from 32 ratings",
-        "+1.77 3404 downloads",
+        "+1.77 3407 downloads",
         "+2 at least 90 s",
         "+3 tags cafe, coffee, restaurant",
         "+1 name matches coffee"
@@ -88,12 +90,12 @@
       "channels": 2,
       "avgRating": 4.78,
       "numRatings": 37,
-      "numDownloads": 2445,
+      "numDownloads": 2446,
       "previewUrl": "https://cdn.freesound.org/previews/437/437461_2010973-hq.mp3",
       "score": 9.42,
       "reasons": [
         "+2.72 rating 4.78 from 37 ratings",
-        "+1.69 2445 downloads",
+        "+1.69 2446 downloads",
         "+2 at least 90 s",
         "+2 tags cafe, restaurant",
         "+1 name matches cafe"
@@ -111,12 +113,12 @@
       "channels": 2,
       "avgRating": 4.91,
       "numRatings": 11,
-      "numDownloads": 628,
+      "numDownloads": 632,
       "previewUrl": "https://cdn.freesound.org/previews/746/746428_7581660-hq.mp3",
       "score": 9,
       "reasons": [
         "+2.6 rating 4.91 from 11 ratings",
-        "+1.4 628 downloads",
+        "+1.4 632 downloads",
         "+2 at least 90 s",
         "+2 tags cafe, restaurant",
         "+1 name matches cafe"
@@ -179,660 +181,408 @@
       "channels": 2,
       "avgRating": 4.88,
       "numRatings": 33,
-      "numDownloads": 4497,
+      "numDownloads": 4498,
       "previewUrl": "https://cdn.freesound.org/previews/214/214993_4023529-hq.mp3",
       "score": 8.6,
       "reasons": [
         "+2.77 rating 4.88 from 33 ratings",
-        "+1.83 4497 downloads",
+        "+1.83 4498 downloads",
         "+2 at least 90 s",
         "+1 tags cafe",
         "+1 name matches cafe"
       ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 482990,
+      "name": "People talking at cafe ambience",
+      "url": "https://freesound.org/people/priesjensen/sounds/482990/",
+      "author": "priesjensen",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 137.44,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.43,
+      "numRatings": 113,
+      "numDownloads": 22387,
+      "previewUrl": "https://cdn.freesound.org/previews/482/482990_8972317-hq.mp3",
+      "score": 8.55,
+      "reasons": [
+        "+2.55 rating 4.43 from 113 ratings",
+        "+2 22387 downloads",
+        "+2 at least 90 s",
+        "+1 tags cafe",
+        "+1 name matches cafe"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 332271,
+      "name": "Cafe ambient sound.mp3",
+      "url": "https://freesound.org/people/evsecrets/sounds/332271/",
+      "author": "evsecrets",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 150.58,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.72,
+      "numRatings": 29,
+      "numDownloads": 2895,
+      "previewUrl": "https://cdn.freesound.org/previews/332/332271_2367065-hq.mp3",
+      "score": 8.39,
+      "reasons": [
+        "+2.66 rating 4.72 from 29 ratings",
+        "+1.73 2895 downloads",
+        "+2 at least 90 s",
+        "+1 tags cafe",
+        "+1 name matches cafe"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 214994,
+      "name": "Ambient sound inside cafe kitchen.aif",
+      "url": "https://freesound.org/people/4team/sounds/214994/",
+      "author": "4team",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 301,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.6,
+      "numRatings": 15,
+      "numDownloads": 3559,
+      "previewUrl": "https://cdn.freesound.org/previews/214/214994_4023529-hq.mp3",
+      "score": 8.27,
+      "reasons": [
+        "+2.49 rating 4.6 from 15 ratings",
+        "+1.78 3559 downloads",
+        "+2 at least 90 s",
+        "+1 tags cafe",
+        "+1 name matches cafe"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 403064,
+      "name": "MS-STEREO Coffee Shop, 6 People, low chatter, refrigerator, barista movement, customers entering 2.WAV",
+      "url": "https://freesound.org/people/AwenAudio/sounds/403064/",
+      "author": "AwenAudio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 133.12,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.79,
+      "numRatings": 19,
+      "numDownloads": 1793,
+      "previewUrl": "https://cdn.freesound.org/previews/403/403064_4940561-hq.mp3",
+      "score": 8.27,
+      "reasons": [
+        "+2.64 rating 4.79 from 19 ratings",
+        "+1.63 1793 downloads",
+        "+2 at least 90 s",
+        "+1 tags coffee",
+        "+1 name matches coffee"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 403065,
+      "name": "MS STEREO Coffee Shop, 6 People, low chatter, refrigerator, barista movement 1.WAV",
+      "url": "https://freesound.org/people/AwenAudio/sounds/403065/",
+      "author": "AwenAudio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 140.79,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.86,
+      "numRatings": 14,
+      "numDownloads": 1299,
+      "previewUrl": "https://cdn.freesound.org/previews/403/403065_4940561-hq.mp3",
+      "score": 8.18,
+      "reasons": [
+        "+2.63 rating 4.86 from 14 ratings",
+        "+1.56 1299 downloads",
+        "+2 at least 90 s",
+        "+1 tags coffee",
+        "+1 name matches coffee"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 579500,
+      "name": "cafe ambience",
+      "url": "https://freesound.org/people/mikemoons/sounds/579500/",
+      "author": "mikemoons",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 15,
+      "numDownloads": 1291,
+      "previewUrl": "https://cdn.freesound.org/previews/579/579500_13066934-hq.mp3",
+      "score": 8.16,
+      "reasons": [
+        "+2.61 rating 4.8 from 15 ratings",
+        "+1.56 1291 downloads",
+        "+2 at least 90 s",
+        "+1 tags cafe",
+        "+1 name matches cafe"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 680688,
+      "name": "Very Busy Coffee Shop Ambience",
+      "url": "https://freesound.org/people/wesleywestmusic/sounds/680688/",
+      "author": "wesleywestmusic",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 62.41,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 4,
+      "numDownloads": 134,
+      "previewUrl": "https://cdn.freesound.org/previews/680/680688_14164674-hq.mp3",
+      "score": 8.11,
+      "reasons": [
+        "+2.04 rating 4 from 4 ratings",
+        "+1.07 134 downloads",
+        "+1 at least 60 s",
+        "+3 tags cafe, coffee, restaurant",
+        "+1 name matches coffee"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 399346,
+      "name": "Stadt-Landshut-Cafe-outside-Summer-2017.wav",
+      "url": "https://freesound.org/people/dobro2000/sounds/399346/",
+      "author": "dobro2000",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 396.53,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.77,
+      "numRatings": 13,
+      "numDownloads": 1018,
+      "previewUrl": "https://cdn.freesound.org/previews/399/399346_291103-hq.mp3",
+      "score": 8.07,
+      "reasons": [
+        "+2.56 rating 4.77 from 13 ratings",
+        "+1.5 1018 downloads",
+        "+2 at least 90 s",
+        "+1 tags cafe",
+        "+1 name matches cafe"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 774539,
+      "name": "Coffee shop ambience",
+      "url": "https://freesound.org/people/thadzo/sounds/774539/",
+      "author": "thadzo",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 455.6,
+      "samplerate": 8000,
+      "channels": 1,
+      "avgRating": 4,
+      "numRatings": 5,
+      "numDownloads": 92,
+      "previewUrl": "https://cdn.freesound.org/previews/774/774539_14911928-hq.mp3",
+      "score": 8.05,
+      "reasons": [
+        "+2.06 rating 4 from 5 ratings",
+        "+0.98 92 downloads",
+        "+2 at least 90 s",
+        "-1 sample rate 8000 Hz",
+        "+3 tags cafe, coffee, restaurant",
+        "+1 name matches coffee"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 635967,
+      "name": "Beachside Cafe with Birds at Jade Mountain St. Lucia",
+      "url": "https://freesound.org/people/el_boss/sounds/635967/",
+      "author": "el_boss",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 148.76,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 3.67,
+      "numRatings": 3,
+      "numDownloads": 150,
+      "previewUrl": "https://cdn.freesound.org/previews/635/635967_9129912-hq.mp3",
+      "score": 8.01,
+      "reasons": [
+        "+1.92 rating 3.67 from 3 ratings",
+        "+1.09 150 downloads",
+        "+2 at least 90 s",
+        "+2 tags cafe, restaurant",
+        "+1 name matches cafe"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 233283,
+      "name": "Ambience Coffee Shop 4 .wav",
+      "url": "https://freesound.org/people/JarredGibb/sounds/233283/",
+      "author": "JarredGibb",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 177.34,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 6,
+      "numDownloads": 634,
+      "previewUrl": "https://cdn.freesound.org/previews/233/233283_4056007-hq.mp3",
+      "score": 7.89,
+      "reasons": [
+        "+2.49 rating 5 from 6 ratings",
+        "+1.4 634 downloads",
+        "+2 at least 90 s",
+        "+1 tags coffee",
+        "+1 name matches coffee"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 233285,
+      "name": "Ambience Coffee Shop 5 .wav",
+      "url": "https://freesound.org/people/JarredGibb/sounds/233285/",
+      "author": "JarredGibb",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 180.56,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 8,
+      "numDownloads": 731,
+      "previewUrl": "https://cdn.freesound.org/previews/233/233285_4056007-hq.mp3",
+      "score": 7.88,
+      "reasons": [
+        "+2.45 rating 4.75 from 8 ratings",
+        "+1.43 731 downloads",
+        "+2 at least 90 s",
+        "+1 tags coffee",
+        "+1 name matches coffee"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 214995,
+      "name": "Ambient sound inside cafe bar.aif",
+      "url": "https://freesound.org/people/4team/sounds/214995/",
+      "author": "4team",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 301,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.29,
+      "numRatings": 14,
+      "numDownloads": 1141,
+      "previewUrl": "https://cdn.freesound.org/previews/214/214995_4023529-hq.mp3",
+      "score": 7.84,
+      "reasons": [
+        "+2.31 rating 4.29 from 14 ratings",
+        "+1.53 1141 downloads",
+        "+2 at least 90 s",
+        "+1 tags cafe",
+        "+1 name matches cafe"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 403066,
+      "name": "MS-STEREO Coffee Shop, 6 People, low chatter, refrigerator,  barista making milk shake, customers entering 3.WAV",
+      "url": "https://freesound.org/people/AwenAudio/sounds/403066/",
+      "author": "AwenAudio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 151.33,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.45,
+      "numRatings": 11,
+      "numDownloads": 757,
+      "previewUrl": "https://cdn.freesound.org/previews/403/403066_4940561-hq.mp3",
+      "score": 7.81,
+      "reasons": [
+        "+2.37 rating 4.45 from 11 ratings",
+        "+1.44 757 downloads",
+        "+2 at least 90 s",
+        "+1 tags coffee",
+        "+1 name matches coffee"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 512253,
+      "name": "370973__waweee__coffee-shop-ambience_remastered_no_coughs.wav",
+      "url": "https://freesound.org/people/C_Rogers/sounds/512253/",
+      "author": "C_Rogers",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 294.08,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 350,
+      "previewUrl": "https://cdn.freesound.org/previews/512/512253_3569783-hq.mp3",
+      "score": 7.64,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+1.27 350 downloads",
+        "+2 at least 90 s",
+        "+1 tags coffee",
+        "+1 name matches coffee"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 233280,
+      "name": "Ambience Coffee Shop 1 .wav",
+      "url": "https://freesound.org/people/JarredGibb/sounds/233280/",
+      "author": "JarredGibb",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 191.02,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 435,
+      "previewUrl": "https://cdn.freesound.org/previews/233/233280_4056007-hq.mp3",
+      "score": 7.62,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.32 435 downloads",
+        "+2 at least 90 s",
+        "+1 tags coffee",
+        "+1 name matches coffee"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 233282,
+      "name": "Ambience Coffee Shop 3 .wav",
+      "url": "https://freesound.org/people/JarredGibb/sounds/233282/",
+      "author": "JarredGibb",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 171.54,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 394,
+      "previewUrl": "https://cdn.freesound.org/previews/233/233282_4056007-hq.mp3",
+      "score": 7.6,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.3 394 downloads",
+        "+2 at least 90 s",
+        "+1 tags coffee",
+        "+1 name matches coffee"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Chatter",
-          "Conversation",
-          "Crowd",
-          "Hubbub, speech noise, speech babble"
-        ]
-      ],
-      "clapPrompt": "a quiet cafe with soft chatter and cups clinking, no music"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 370973,
-        "name": "coffee shop ambience",
-        "url": "https://freesound.org/people/waweee/sounds/370973/",
-        "author": "waweee",
-        "durationSec": 296,
-        "verdict": "reject",
-        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 296,
-          "cleanSeconds": 283,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8656
-            },
-            {
-              "label": "Music",
-              "max": 0.5182
-            },
-            {
-              "label": "Female speech, woman speaking",
-              "max": 0.4767
-            },
-            {
-              "label": "Chatter",
-              "max": 0.4566
-            },
-            {
-              "label": "Cough",
-              "max": 0.3117
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.518,
-              "atSecond": 255
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chatter",
-                "Conversation",
-                "Crowd",
-                "Hubbub, speech noise, speech babble"
-              ],
-              "fraction": 0.034
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 260062,
-        "name": "Busy Coffee Shop Counter Field Recording",
-        "url": "https://freesound.org/people/mhtaylor67/sounds/260062/",
-        "author": "mhtaylor67",
-        "durationSec": 236,
-        "verdict": "reject",
-        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 236,
-          "cleanSeconds": 183,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.9033
-            },
-            {
-              "label": "Music",
-              "max": 0.8393
-            },
-            {
-              "label": "Chatter",
-              "max": 0.66
-            },
-            {
-              "label": "Dishes, pots, and pans",
-              "max": 0.6489
-            },
-            {
-              "label": "Train",
-              "max": 0.5051
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.839,
-              "atSecond": 106
-            },
-            {
-              "label": "Train",
-              "max": 0.505,
-              "atSecond": 214
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.425,
-              "atSecond": 111
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.404,
-              "atSecond": 214
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.35,
-              "atSecond": 214
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.18,
-              "atSecond": 170
-            },
-            {
-              "label": "Subway, metro, underground",
-              "max": 0.175,
-              "atSecond": 44
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chatter",
-                "Conversation",
-                "Crowd",
-                "Hubbub, speech noise, speech babble"
-              ],
-              "fraction": 0.225
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 453074,
-        "name": "370973__waweee__coffee-shop-ambience_remastered.mp3",
-        "url": "https://freesound.org/people/C_Rogers/sounds/453074/",
-        "author": "C_Rogers",
-        "durationSec": 296,
-        "verdict": "reject",
-        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 296,
-          "cleanSeconds": 268,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8921
-            },
-            {
-              "label": "Music",
-              "max": 0.8117
-            },
-            {
-              "label": "Chopping (food)",
-              "max": 0.7289
-            },
-            {
-              "label": "Chatter",
-              "max": 0.5955
-            },
-            {
-              "label": "Cough",
-              "max": 0.5954
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.812,
-              "atSecond": 255
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.255,
-              "atSecond": 253
-            },
-            {
-              "label": "Train",
-              "max": 0.201,
-              "atSecond": 253
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chatter",
-                "Conversation",
-                "Crowd",
-                "Hubbub, speech noise, speech babble"
-              ],
-              "fraction": 0.057
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 437461,
-        "name": "QUIET CAFE, CHATTER, MILK FROTHING MACHINE, atmos atmosphere wildtrack ambience.mp3",
-        "url": "https://freesound.org/people/Anya_Media/sounds/437461/",
-        "author": "Anya_Media",
-        "durationSec": 120.7,
-        "verdict": "reject",
-        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 120,
-          "cleanSeconds": 97,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.872
-            },
-            {
-              "label": "Music",
-              "max": 0.7252
-            },
-            {
-              "label": "Hair dryer",
-              "max": 0.6561
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.3254
-            },
-            {
-              "label": "Snake",
-              "max": 0.2694
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.725,
-              "atSecond": 116
-            },
-            {
-              "label": "Hair dryer",
-              "max": 0.656,
-              "atSecond": 47
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.325,
-              "atSecond": 10
-            },
-            {
-              "label": "Train",
-              "max": 0.259,
-              "atSecond": 10
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.244,
-              "atSecond": 116
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.193,
-              "atSecond": 10
-            },
-            {
-              "label": "Tambourine",
-              "max": 0.162,
-              "atSecond": 93
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.152,
-              "atSecond": 10
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chatter",
-                "Conversation",
-                "Crowd",
-                "Hubbub, speech noise, speech babble"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 746428,
-        "name": "Miss Michelle's cafe in Discovery Mountain -- small cafe ambience - room tone - small crowd",
-        "url": "https://freesound.org/people/douglasbruce@look.ca/sounds/746428/",
-        "author": "douglasbruce@look.ca",
-        "durationSec": 151.2,
-        "verdict": "reject",
-        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 151,
-          "cleanSeconds": 125,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8293
-            },
-            {
-              "label": "Music",
-              "max": 0.5784
-            },
-            {
-              "label": "Tick-tock",
-              "max": 0.4382
-            },
-            {
-              "label": "Tick",
-              "max": 0.3721
-            },
-            {
-              "label": "Female speech, woman speaking",
-              "max": 0.3652
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.578,
-              "atSecond": 136
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chatter",
-                "Conversation",
-                "Crowd",
-                "Hubbub, speech noise, speech babble"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 540299,
-        "name": "Cofee shop Ambience .wav",
-        "url": "https://freesound.org/people/aidansamuel/sounds/540299/",
-        "author": "aidansamuel",
-        "durationSec": 136.6,
-        "verdict": "reject",
-        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 136,
-          "cleanSeconds": 124,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8571
-            },
-            {
-              "label": "Music",
-              "max": 0.8127
-            },
-            {
-              "label": "Hammer",
-              "max": 0.4616
-            },
-            {
-              "label": "Animal",
-              "max": 0.4253
-            },
-            {
-              "label": "Clip-clop",
-              "max": 0.3207
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.813,
-              "atSecond": 15
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.188,
-              "atSecond": 71
-            },
-            {
-              "label": "Train",
-              "max": 0.159,
-              "atSecond": 71
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.158,
-              "atSecond": 62
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chatter",
-                "Conversation",
-                "Crowd",
-                "Hubbub, speech noise, speech babble"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 813868,
-        "name": "Coffee Shop Ambience , Northtown Coffee, Arcata, CA",
-        "url": "https://freesound.org/people/CVLTIV8R/sounds/813868/",
-        "author": "CVLTIV8R",
-        "durationSec": 144.7,
-        "verdict": "reject",
-        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 144,
-          "cleanSeconds": 54,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8595
-            },
-            {
-              "label": "Clip-clop",
-              "max": 0.673
-            },
-            {
-              "label": "Horse",
-              "max": 0.5684
-            },
-            {
-              "label": "Animal",
-              "max": 0.562
-            },
-            {
-              "label": "Train",
-              "max": 0.5483
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Train",
-              "max": 0.548,
-              "atSecond": 69
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.54,
-              "atSecond": 15
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.437,
-              "atSecond": 69
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.392,
-              "atSecond": 69
-            },
-            {
-              "label": "Subway, metro, underground",
-              "max": 0.354,
-              "atSecond": 33
-            },
-            {
-              "label": "Music",
-              "max": 0.342,
-              "atSecond": 116
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.279,
-              "atSecond": 15
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.2,
-              "atSecond": 15
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chatter",
-                "Conversation",
-                "Crowd",
-                "Hubbub, speech noise, speech babble"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 214993,
-        "name": "Ambient sound inside cafe dining.aif",
-        "url": "https://freesound.org/people/4team/sounds/214993/",
-        "author": "4team",
-        "durationSec": 301.7,
-        "verdict": "reject",
-        "reason": "required sound absent: Chatter / Conversation / Crowd / Hubbub, speech noise, speech babble",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 301,
-          "cleanSeconds": 257,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8936
-            },
-            {
-              "label": "Music",
-              "max": 0.8193
-            },
-            {
-              "label": "Dishes, pots, and pans",
-              "max": 0.7984
-            },
-            {
-              "label": "Cutlery, silverware",
-              "max": 0.7423
-            },
-            {
-              "label": "Train",
-              "max": 0.6814
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.819,
-              "atSecond": 145
-            },
-            {
-              "label": "Train",
-              "max": 0.681,
-              "atSecond": 187
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.575,
-              "atSecond": 187
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.561,
-              "atSecond": 187
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.272,
-              "atSecond": 39
-            },
-            {
-              "label": "Train wheels squealing",
-              "max": 0.26,
-              "atSecond": 187
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.193,
-              "atSecond": 145
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chatter",
-                "Conversation",
-                "Crowd",
-                "Hubbub, speech noise, speech babble"
-              ],
-              "fraction": 0.023
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

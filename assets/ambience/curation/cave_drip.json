@@ -1,11 +1,13 @@
 {
   "category": "cave_drip",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "cave ambience drips",
-    "cave water drip echo"
+    "cave water drip echo",
+    "cave drip water echo",
+    "dripping cave ambience"
   ],
-  "poolSize": 23,
+  "poolSize": 29,
   "candidates": [
     {
       "rank": 1,
@@ -19,12 +21,12 @@
       "channels": 2,
       "avgRating": 4.8,
       "numRatings": 399,
-      "numDownloads": 30829,
+      "numDownloads": 30833,
       "previewUrl": "https://cdn.freesound.org/previews/177/177958_985466-hq.mp3",
       "score": 10.34,
       "reasons": [
         "+2.84 rating 4.8 from 399 ratings",
-        "+2 30829 downloads",
+        "+2 30833 downloads",
         "+1.5 at least 63 s",
         "+3 tags cave, drip, cavern",
         "+1 name matches cave"
@@ -32,6 +34,29 @@
     },
     {
       "rank": 2,
+      "freesoundId": 343742,
+      "name": "cave 01",
+      "url": "https://freesound.org/people/rucisko/sounds/343742/",
+      "author": "rucisko",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 75.53,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.86,
+      "numRatings": 21,
+      "numDownloads": 852,
+      "previewUrl": "https://cdn.freesound.org/previews/343/343742_2978883-hq.mp3",
+      "score": 8.66,
+      "reasons": [
+        "+2.7 rating 4.86 from 21 ratings",
+        "+1.47 852 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags cave, drip",
+        "+1 name matches cave"
+      ]
+    },
+    {
+      "rank": 3,
       "freesoundId": 516566,
       "name": "Dark Dungeon Ambience",
       "url": "https://freesound.org/people/Kinoton/sounds/516566/",
@@ -42,18 +67,18 @@
       "channels": 2,
       "avgRating": 4.84,
       "numRatings": 64,
-      "numDownloads": 2066,
+      "numDownloads": 2069,
       "previewUrl": "https://cdn.freesound.org/previews/516/516566_2247456-hq.mp3",
       "score": 8.47,
       "reasons": [
         "+2.81 rating 4.84 from 64 ratings",
-        "+1.66 2066 downloads",
+        "+1.66 2069 downloads",
         "+2 at least 90 s",
         "+2 tags cave, drips"
       ]
     },
     {
-      "rank": 3,
+      "rank": 4,
       "freesoundId": 381418,
       "name": "Water Through Drain (With Reverb).wav",
       "url": "https://freesound.org/people/clif_creates/sounds/381418/",
@@ -75,7 +100,7 @@
       ]
     },
     {
-      "rank": 4,
+      "rank": 5,
       "freesoundId": 162116,
       "name": "Water Dripping (Large Echo)",
       "url": "https://freesound.org/people/editor_adp/sounds/162116/",
@@ -97,7 +122,7 @@
       ]
     },
     {
-      "rank": 5,
+      "rank": 6,
       "freesoundId": 535048,
       "name": "ambient noise.wav",
       "url": "https://freesound.org/people/patchytherat/sounds/535048/",
@@ -119,7 +144,7 @@
       ]
     },
     {
-      "rank": 6,
+      "rank": 7,
       "freesoundId": 843938,
       "name": "Teufelsfelsen Forest Ambience – Distant Cave Drips with Aircraft & Dog (Pirmasens Field Recording) - 20250814_007",
       "url": "https://freesound.org/people/TSP-Talk/sounds/843938/",
@@ -142,7 +167,7 @@
       ]
     },
     {
-      "rank": 7,
+      "rank": 8,
       "freesoundId": 740041,
       "name": "Cave Ambience",
       "url": "https://freesound.org/people/pointlessperson1/sounds/740041/",
@@ -153,19 +178,19 @@
       "channels": 2,
       "avgRating": 4.67,
       "numRatings": 12,
-      "numDownloads": 602,
+      "numDownloads": 603,
       "previewUrl": "https://cdn.freesound.org/previews/740/740041_13151007-hq.mp3",
       "score": 7.88,
       "reasons": [
         "+2.49 rating 4.67 from 12 ratings",
-        "+1.39 602 downloads",
+        "+1.39 603 downloads",
         "+2 at least 90 s",
         "+1 tags cave",
         "+1 name matches cave"
       ]
     },
     {
-      "rank": 8,
+      "rank": 9,
       "freesoundId": 843936,
       "name": "Teufelsfelsen Cave Dripping Water – Distant Aircraft Overflight (Pirmasens Field Recording) - 20250814_006",
       "url": "https://freesound.org/people/TSP-Talk/sounds/843936/",
@@ -186,612 +211,359 @@
         "+2 tags cave, drips",
         "+1 name matches cave"
       ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 177031,
+      "name": "Droplets in a cave",
+      "url": "https://freesound.org/people/iampagan/sounds/177031/",
+      "author": "iampagan",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 53.75,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.63,
+      "numRatings": 49,
+      "numDownloads": 7028,
+      "previewUrl": "https://cdn.freesound.org/previews/177/177031_2484711-hq.mp3",
+      "score": 7.57,
+      "reasons": [
+        "+2.65 rating 4.63 from 49 ratings",
+        "+1.92 7028 downloads",
+        "+2 tags cave, drip",
+        "+1 name matches cave"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 636109,
+      "name": "ambience cave6.ogg",
+      "url": "https://freesound.org/people/fonografico/sounds/636109/",
+      "author": "fonografico",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 300,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.4,
+      "numRatings": 5,
+      "numDownloads": 266,
+      "previewUrl": "https://cdn.freesound.org/previews/636/636109_11705708-hq.mp3",
+      "score": 7.43,
+      "reasons": [
+        "+2.21 rating 4.4 from 5 ratings",
+        "+1.21 266 downloads",
+        "+2 at least 90 s",
+        "+2 tags cave, drip"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 844043,
+      "name": "Teufelsfelsen Walking Journey – Forest Rock and Cave Ambience (Pirmasens Field Recording) - 20250814_009",
+      "url": "https://freesound.org/people/TSP-Talk/sounds/844043/",
+      "author": "TSP-Talk",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 233.09,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 97,
+      "previewUrl": "https://cdn.freesound.org/previews/844/844043_14079354-hq.mp3",
+      "score": 7.36,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+1 97 downloads",
+        "+2 at least 90 s",
+        "+1 tags cave",
+        "+1 name matches cave"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 565143,
+      "name": "CaveMixA.mp3",
+      "url": "https://freesound.org/people/blackatomproductions/sounds/565143/",
+      "author": "blackatomproductions",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 247.78,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 20,
+      "numDownloads": 1235,
+      "previewUrl": "https://cdn.freesound.org/previews/565/565143_12186594-hq.mp3",
+      "score": 7.2,
+      "reasons": [
+        "+2.66 rating 4.8 from 20 ratings",
+        "+1.55 1235 downloads",
+        "+2 at least 90 s",
+        "+1 tags cave"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 843954,
+      "name": "Teufelsfelsen Forest Ambience – Distant Dog Calls & Crickets (Pirmasens Field Recording) - 20250814_008",
+      "url": "https://freesound.org/people/TSP-Talk/sounds/843954/",
+      "author": "TSP-Talk",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 272.98,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 63,
+      "previewUrl": "https://cdn.freesound.org/previews/843/843954_14079354-hq.mp3",
+      "score": 6.97,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.9 63 downloads",
+        "+2 at least 90 s",
+        "+2 tags cave, drips"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 636105,
+      "name": "ambience cave4.ogg",
+      "url": "https://freesound.org/people/fonografico/sounds/636105/",
+      "author": "fonografico",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 265.03,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 250,
+      "previewUrl": "https://cdn.freesound.org/previews/636/636105_11705708-hq.mp3",
+      "score": 6.49,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+1.2 250 downloads",
+        "+2 at least 90 s",
+        "+1 tags cave"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 636124,
+      "name": "ambience large cave variation.ogg",
+      "url": "https://freesound.org/people/fonografico/sounds/636124/",
+      "author": "fonografico",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 60,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 4,
+      "numDownloads": 145,
+      "previewUrl": "https://cdn.freesound.org/previews/636/636124_11705708-hq.mp3",
+      "score": 6.46,
+      "reasons": [
+        "+2.38 rating 5 from 4 ratings",
+        "+1.08 145 downloads",
+        "+1 at least 60 s",
+        "+1 tags cave",
+        "+1 name matches cave"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 636107,
+      "name": "ambience cave2.ogg",
+      "url": "https://freesound.org/people/fonografico/sounds/636107/",
+      "author": "fonografico",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 265.18,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 4,
+      "numDownloads": 278,
+      "previewUrl": "https://cdn.freesound.org/previews/636/636107_11705708-hq.mp3",
+      "score": 6.43,
+      "reasons": [
+        "+2.21 rating 4.5 from 4 ratings",
+        "+1.22 278 downloads",
+        "+2 at least 90 s",
+        "+1 tags cave"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 636110,
+      "name": "ambience cave5.ogg",
+      "url": "https://freesound.org/people/fonografico/sounds/636110/",
+      "author": "fonografico",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 300,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 260,
+      "previewUrl": "https://cdn.freesound.org/previews/636/636110_11705708-hq.mp3",
+      "score": 6.4,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.21 260 downloads",
+        "+2 at least 90 s",
+        "+1 tags cave"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 564166,
+      "name": "Crashing Starship",
+      "url": "https://freesound.org/people/Aemyn/sounds/564166/",
+      "author": "Aemyn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 307.95,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.35,
+      "numRatings": 143,
+      "numDownloads": 4484,
+      "previewUrl": "https://cdn.freesound.org/previews/564/564166_1445263-hq.mp3",
+      "score": 6.32,
+      "reasons": [
+        "+2.49 rating 4.35 from 143 ratings",
+        "+1.83 4484 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 135437,
+      "name": "WATER DRIPPING ECHO LOW PITCHED COMPRESSED SLOWED.wav",
+      "url": "https://freesound.org/people/mlsprovideos/sounds/135437/",
+      "author": "mlsprovideos",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 192.82,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 3.5,
+      "numRatings": 4,
+      "numDownloads": 291,
+      "previewUrl": "https://cdn.freesound.org/previews/135/135437_2415245-hq.mp3",
+      "score": 6.11,
+      "reasons": [
+        "+1.88 rating 3.5 from 4 ratings",
+        "+1.23 291 downloads",
+        "+2 at least 90 s",
+        "+1 tags cave"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 661435,
+      "name": "Defensible Twister",
+      "url": "https://freesound.org/people/Brazilio123/sounds/661435/",
+      "author": "Brazilio123",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 433,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.14,
+      "numRatings": 86,
+      "numDownloads": 2709,
+      "previewUrl": "https://cdn.freesound.org/previews/661/661435_14509684-hq.mp3",
+      "score": 6.04,
+      "reasons": [
+        "+2.33 rating 4.14 from 86 ratings",
+        "+1.72 2709 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 135410,
+      "name": "WATER DRIPPING ECHO HIGH PITCH.wav",
+      "url": "https://freesound.org/people/mlsprovideos/sounds/135410/",
+      "author": "mlsprovideos",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 79.15,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 3.86,
+      "numRatings": 7,
+      "numDownloads": 246,
+      "previewUrl": "https://cdn.freesound.org/previews/135/135410_2415245-hq.mp3",
+      "score": 5.73,
+      "reasons": [
+        "+2.03 rating 3.86 from 7 ratings",
+        "+1.2 246 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags cave"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 135150,
+      "name": "WATER DRIPPING ECHO.wav",
+      "url": "https://freesound.org/people/mlsprovideos/sounds/135150/",
+      "author": "mlsprovideos",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 79.24,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 3.92,
+      "numRatings": 38,
+      "numDownloads": 3259,
+      "previewUrl": "https://cdn.freesound.org/previews/135/135150_2415245-hq.mp3",
+      "score": 5.41,
+      "reasons": [
+        "+2.15 rating 3.92 from 38 ratings",
+        "+1.76 3259 downloads",
+        "+1.5 at least 63 s"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 344750,
+      "name": "Cave Echo (Water SFX remixed).wav",
+      "url": "https://freesound.org/people/a23spyro/sounds/344750/",
+      "author": "a23spyro",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 49.36,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 3.5,
+      "numRatings": 2,
+      "numDownloads": 100,
+      "previewUrl": "https://cdn.freesound.org/previews/344/344750_5461008-hq.mp3",
+      "score": 4.88,
+      "reasons": [
+        "+1.88 rating 3.5 from 2 ratings",
+        "+1 100 downloads",
+        "+1 tags cave",
+        "+1 name matches cave"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 611927,
+      "name": "ambience in a large cave",
+      "url": "https://freesound.org/people/fonografico/sounds/611927/",
+      "author": "fonografico",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 299.38,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.89,
+      "numRatings": 9,
+      "numDownloads": 401,
+      "previewUrl": "https://cdn.freesound.org/previews/611/611927_11705708-hq.mp3",
+      "score": 4.85,
+      "reasons": [
+        "+2.54 rating 4.89 from 9 ratings",
+        "+1.3 401 downloads",
+        "+2 at least 90 s",
+        "+2 tags cave, drip",
+        "+1 name matches cave",
+        "-4 synth (synthetic)"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Drip",
-          "Water"
-        ]
-      ],
-      "clapPrompt": "inside a cave, slow water drips and a faint echo, still air"
-    },
-    "verdict": "filled",
-    "unfilledReason": null,
-    "chosen": {
-      "freesoundId": 843938,
-      "windowStartSeconds": 84,
-      "windowSeconds": 64,
-      "steadinessDb": 2.807,
-      "clapScore": 0.6314
-    },
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 177958,
-        "name": "Water Dripping in Cave.wav",
-        "url": "https://freesound.org/people/Sclolex/sounds/177958/",
-        "author": "Sclolex",
-        "durationSec": 89.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Drip / Water",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 89,
-          "cleanSeconds": 87,
-          "topClasses": [
-            {
-              "label": "Sonar",
-              "max": 0.4765
-            },
-            {
-              "label": "Tick",
-              "max": 0.4504
-            },
-            {
-              "label": "Busy signal",
-              "max": 0.3758
-            },
-            {
-              "label": "Silence",
-              "max": 0.2791
-            },
-            {
-              "label": "Tick-tock",
-              "max": 0.2356
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Busy signal",
-              "max": 0.376,
-              "atSecond": 25
-            },
-            {
-              "label": "Music",
-              "max": 0.18,
-              "atSecond": 68
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drip",
-                "Water"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 516566,
-        "name": "Dark Dungeon Ambience",
-        "url": "https://freesound.org/people/Kinoton/sounds/516566/",
-        "author": "Kinoton",
-        "durationSec": 180,
-        "verdict": "reject",
-        "reason": "required sound absent: Drip / Water",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 180,
-          "cleanSeconds": 23,
-          "topClasses": [
-            {
-              "label": "Rumble",
-              "max": 0.7651
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.7436
-            },
-            {
-              "label": "Music",
-              "max": 0.5546
-            },
-            {
-              "label": "Car",
-              "max": 0.4458
-            },
-            {
-              "label": "Field recording",
-              "max": 0.3276
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.744,
-              "atSecond": 134
-            },
-            {
-              "label": "Music",
-              "max": 0.555,
-              "atSecond": 20
-            },
-            {
-              "label": "Car",
-              "max": 0.446,
-              "atSecond": 44
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drip",
-                "Water"
-              ],
-              "fraction": 0.006
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 381418,
-        "name": "Water Through Drain (With Reverb).wav",
-        "url": "https://freesound.org/people/clif_creates/sounds/381418/",
-        "author": "clif_creates",
-        "durationSec": 65.6,
-        "verdict": "reject",
-        "reason": "required sound absent: Drip / Water",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 65,
-          "cleanSeconds": 53,
-          "topClasses": [
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.4843
-            },
-            {
-              "label": "Pour",
-              "max": 0.4793
-            },
-            {
-              "label": "Water",
-              "max": 0.4347
-            },
-            {
-              "label": "Speech",
-              "max": 0.3415
-            },
-            {
-              "label": "Rowboat, canoe, kayak",
-              "max": 0.3362
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.484,
-              "atSecond": 53
-            },
-            {
-              "label": "Speech",
-              "max": 0.342,
-              "atSecond": 55
-            },
-            {
-              "label": "Rowboat, canoe, kayak",
-              "max": 0.336,
-              "atSecond": 53
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.299,
-              "atSecond": 53
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drip",
-                "Water"
-              ],
-              "fraction": 0.431
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 162116,
-        "name": "Water Dripping (Large Echo)",
-        "url": "https://freesound.org/people/editor_adp/sounds/162116/",
-        "author": "editor_adp",
-        "durationSec": 64.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Drip / Water",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 64,
-          "cleanSeconds": 22,
-          "topClasses": [
-            {
-              "label": "Jingle bell",
-              "max": 0.7
-            },
-            {
-              "label": "Music",
-              "max": 0.6528
-            },
-            {
-              "label": "Cymbal",
-              "max": 0.4058
-            },
-            {
-              "label": "Hi-hat",
-              "max": 0.3818
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.2897
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Jingle bell",
-              "max": 0.7,
-              "atSecond": 58
-            },
-            {
-              "label": "Music",
-              "max": 0.653,
-              "atSecond": 34
-            },
-            {
-              "label": "Cymbal",
-              "max": 0.406,
-              "atSecond": 13
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.29,
-              "atSecond": 36
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drip",
-                "Water"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 535048,
-        "name": "ambient noise.wav",
-        "url": "https://freesound.org/people/patchytherat/sounds/535048/",
-        "author": "patchytherat",
-        "durationSec": 362.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Drip / Water",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 362,
-          "cleanSeconds": 182,
-          "topClasses": [
-            {
-              "label": "Gong",
-              "max": 0.8973
-            },
-            {
-              "label": "Rumble",
-              "max": 0.4691
-            },
-            {
-              "label": "Music",
-              "max": 0.4518
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.3601
-            },
-            {
-              "label": "Timpani",
-              "max": 0.221
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Gong",
-              "max": 0.897,
-              "atSecond": 163
-            },
-            {
-              "label": "Music",
-              "max": 0.452,
-              "atSecond": 75
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.36,
-              "atSecond": 274
-            },
-            {
-              "label": "Car",
-              "max": 0.187,
-              "atSecond": 171
-            },
-            {
-              "label": "Singing bowl",
-              "max": 0.162,
-              "atSecond": 358
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drip",
-                "Water"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 843938,
-        "name": "Teufelsfelsen Forest Ambience – Distant Cave Drips with Aircraft & Dog (Pirmasens Field Recording) - 20250814_007",
-        "url": "https://freesound.org/people/TSP-Talk/sounds/843938/",
-        "author": "TSP-Talk",
-        "durationSec": 520,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 84,
-          "lengthSeconds": 64,
-          "steadinessDb": 2.807
-        },
-        "clapScore": 0.6314,
-        "evidence": {
-          "frames": 520,
-          "cleanSeconds": 500,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.5759
-            },
-            {
-              "label": "Water tap, faucet",
-              "max": 0.5132
-            },
-            {
-              "label": "Dog",
-              "max": 0.5084
-            },
-            {
-              "label": "Animal",
-              "max": 0.5048
-            },
-            {
-              "label": "Bow-wow",
-              "max": 0.4985
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.576,
-              "atSecond": 292
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.304,
-              "atSecond": 444
-            },
-            {
-              "label": "Thunder",
-              "max": 0.299,
-              "atSecond": 460
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.207,
-              "atSecond": 460
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drip",
-                "Water"
-              ],
-              "fraction": 0.594
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 740041,
-        "name": "Cave Ambience",
-        "url": "https://freesound.org/people/pointlessperson1/sounds/740041/",
-        "author": "pointlessperson1",
-        "durationSec": 480,
-        "verdict": "reject",
-        "reason": "required sound absent: Drip / Water",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 479,
-          "cleanSeconds": 404,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.5524
-            },
-            {
-              "label": "Whistling",
-              "max": 0.5348
-            },
-            {
-              "label": "Theremin",
-              "max": 0.5213
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.4718
-            },
-            {
-              "label": "Sigh",
-              "max": 0.4401
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.552,
-              "atSecond": 419
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.472,
-              "atSecond": 136
-            },
-            {
-              "label": "Emergency vehicle",
-              "max": 0.399,
-              "atSecond": 228
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.355,
-              "atSecond": 228
-            },
-            {
-              "label": "Siren",
-              "max": 0.314,
-              "atSecond": 374
-            },
-            {
-              "label": "Fire engine, fire truck (siren)",
-              "max": 0.23,
-              "atSecond": 228
-            },
-            {
-              "label": "Whistle",
-              "max": 0.178,
-              "atSecond": 342
-            },
-            {
-              "label": "Civil defense siren",
-              "max": 0.123,
-              "atSecond": 374
-            },
-            {
-              "label": "Ambulance (siren)",
-              "max": 0.063,
-              "atSecond": 228
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drip",
-                "Water"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 843936,
-        "name": "Teufelsfelsen Cave Dripping Water – Distant Aircraft Overflight (Pirmasens Field Recording) - 20250814_006",
-        "url": "https://freesound.org/people/TSP-Talk/sounds/843936/",
-        "author": "TSP-Talk",
-        "durationSec": 496.6,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 421,
-          "lengthSeconds": 64,
-          "steadinessDb": 4.59
-        },
-        "clapScore": 0.5979,
-        "evidence": {
-          "frames": 496,
-          "cleanSeconds": 494,
-          "topClasses": [
-            {
-              "label": "Drip",
-              "max": 0.6648
-            },
-            {
-              "label": "Water tap, faucet",
-              "max": 0.6415
-            },
-            {
-              "label": "Bathtub (filling or washing)",
-              "max": 0.5987
-            },
-            {
-              "label": "Water",
-              "max": 0.5905
-            },
-            {
-              "label": "Sink (filling or washing)",
-              "max": 0.517
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Gong",
-              "max": 0.216,
-              "atSecond": 131
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Drip",
-                "Water"
-              ],
-              "fraction": 0.962
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

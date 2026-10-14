@@ -1,14 +1,39 @@
 {
   "category": "office_hum",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "office ambience hum",
-    "open plan office background"
+    "open plan office background",
+    "office ambience loop",
+    "office room tone"
   ],
-  "poolSize": 8,
+  "poolSize": 39,
   "candidates": [
     {
       "rank": 1,
+      "freesoundId": 456207,
+      "name": "Empty Office Room Tone",
+      "url": "https://freesound.org/people/richwise/sounds/456207/",
+      "author": "richwise",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 472.05,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.78,
+      "numRatings": 69,
+      "numDownloads": 5302,
+      "previewUrl": "https://cdn.freesound.org/previews/456/456207_1481531-hq.mp3",
+      "score": 8.63,
+      "reasons": [
+        "+2.77 rating 4.78 from 69 ratings",
+        "+1.86 5302 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 2,
       "freesoundId": 725718,
       "name": "Typing Office chatter in background",
       "url": "https://freesound.org/people/SduggySounds/sounds/725718/",
@@ -31,7 +56,191 @@
       ]
     },
     {
-      "rank": 2,
+      "rank": 3,
+      "freesoundId": 203304,
+      "name": "Room Tone Office 12",
+      "url": "https://freesound.org/people/mzui/sounds/203304/",
+      "author": "mzui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 134.66,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.6,
+      "numRatings": 20,
+      "numDownloads": 4062,
+      "previewUrl": "https://cdn.freesound.org/previews/203/203304_658546-hq.mp3",
+      "score": 8.34,
+      "reasons": [
+        "+2.54 rating 4.6 from 20 ratings",
+        "+1.8 4062 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 203306,
+      "name": "Room Tone Office 13",
+      "url": "https://freesound.org/people/mzui/sounds/203306/",
+      "author": "mzui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120.66,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.46,
+      "numRatings": 26,
+      "numDownloads": 4638,
+      "previewUrl": "https://cdn.freesound.org/previews/203/203306_658546-hq.mp3",
+      "score": 8.31,
+      "reasons": [
+        "+2.48 rating 4.46 from 26 ratings",
+        "+1.83 4638 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 203305,
+      "name": "Room Tone Office 11",
+      "url": "https://freesound.org/people/mzui/sounds/203305/",
+      "author": "mzui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 119.17,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 15,
+      "numDownloads": 2914,
+      "previewUrl": "https://cdn.freesound.org/previews/203/203305_658546-hq.mp3",
+      "score": 8.26,
+      "reasons": [
+        "+2.53 rating 4.67 from 15 ratings",
+        "+1.73 2914 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 203303,
+      "name": "Room Tone Office Industrial Ambience 09",
+      "url": "https://freesound.org/people/mzui/sounds/203303/",
+      "author": "mzui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 124.67,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 9,
+      "numDownloads": 1385,
+      "previewUrl": "https://cdn.freesound.org/previews/203/203303_658546-hq.mp3",
+      "score": 8.01,
+      "reasons": [
+        "+2.44 rating 4.67 from 9 ratings",
+        "+1.57 1385 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 135097,
+      "name": "Room Tone Office Quiet Distant Traffic.wav",
+      "url": "https://freesound.org/people/mzui/sounds/135097/",
+      "author": "mzui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 66.33,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.7,
+      "numRatings": 27,
+      "numDownloads": 3877,
+      "previewUrl": "https://cdn.freesound.org/previews/135/135097_658546-hq.mp3",
+      "score": 7.93,
+      "reasons": [
+        "+2.64 rating 4.7 from 27 ratings",
+        "+1.79 3877 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 203295,
+      "name": "Room Tone Office Industrial Ambience 03",
+      "url": "https://freesound.org/people/mzui/sounds/203295/",
+      "author": "mzui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 113.21,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 6,
+      "numDownloads": 466,
+      "previewUrl": "https://cdn.freesound.org/previews/203/203295_658546-hq.mp3",
+      "score": 7.82,
+      "reasons": [
+        "+2.49 rating 5 from 6 ratings",
+        "+1.33 466 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 203297,
+      "name": "Room Tone Office Industrial Ambience 01",
+      "url": "https://freesound.org/people/mzui/sounds/203297/",
+      "author": "mzui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 133.76,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 581,
+      "previewUrl": "https://cdn.freesound.org/previews/203/203297_658546-hq.mp3",
+      "score": 7.82,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.38 581 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 203294,
+      "name": "Room Tone Office Industrial Ambience 04",
+      "url": "https://freesound.org/people/mzui/sounds/203294/",
+      "author": "mzui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 94.53,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 6,
+      "numDownloads": 328,
+      "previewUrl": "https://cdn.freesound.org/previews/203/203294_658546-hq.mp3",
+      "score": 7.68,
+      "reasons": [
+        "+2.42 rating 4.83 from 6 ratings",
+        "+1.26 328 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 11,
       "freesoundId": 862604,
       "name": "Office Ambience",
       "url": "https://freesound.org/people/BeaconStudio/sounds/862604/",
@@ -54,7 +263,236 @@
       ]
     },
     {
-      "rank": 3,
+      "rank": 12,
+      "freesoundId": 203301,
+      "name": "Room Tone Office Industrial Ambience 05",
+      "url": "https://freesound.org/people/mzui/sounds/203301/",
+      "author": "mzui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 121.94,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 4,
+      "numDownloads": 348,
+      "previewUrl": "https://cdn.freesound.org/previews/203/203301_658546-hq.mp3",
+      "score": 7.65,
+      "reasons": [
+        "+2.38 rating 5 from 4 ratings",
+        "+1.27 348 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 203299,
+      "name": "Room Tone Office Industrial Ambience 07",
+      "url": "https://freesound.org/people/mzui/sounds/203299/",
+      "author": "mzui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 126,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.86,
+      "numRatings": 7,
+      "numDownloads": 176,
+      "previewUrl": "https://cdn.freesound.org/previews/203/203299_658546-hq.mp3",
+      "score": 7.59,
+      "reasons": [
+        "+2.47 rating 4.86 from 7 ratings",
+        "+1.12 176 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 203300,
+      "name": "Room Tone Office Industrial Ambience 06",
+      "url": "https://freesound.org/people/mzui/sounds/203300/",
+      "author": "mzui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 121.86,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 279,
+      "previewUrl": "https://cdn.freesound.org/previews/203/203300_658546-hq.mp3",
+      "score": 7.59,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+1.22 279 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 203298,
+      "name": "Room Tone Office Industrial Ambience 08",
+      "url": "https://freesound.org/people/mzui/sounds/203298/",
+      "author": "mzui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 132.44,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 234,
+      "previewUrl": "https://cdn.freesound.org/previews/203/203298_658546-hq.mp3",
+      "score": 7.48,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.19 234 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 203302,
+      "name": "Room Tone Office Industrial Ambience 10",
+      "url": "https://freesound.org/people/mzui/sounds/203302/",
+      "author": "mzui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 110.08,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 238,
+      "previewUrl": "https://cdn.freesound.org/previews/203/203302_658546-hq.mp3",
+      "score": 7.48,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+1.19 238 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 454167,
+      "name": "room tone office hallway small bassy wider.flac",
+      "url": "https://freesound.org/people/kyles/sounds/454167/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 114.46,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.2,
+      "numRatings": 5,
+      "numDownloads": 444,
+      "previewUrl": "https://cdn.freesound.org/previews/454/454167_612689-hq.mp3",
+      "score": 7.46,
+      "reasons": [
+        "+2.14 rating 4.2 from 5 ratings",
+        "+1.32 444 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 637804,
+      "name": "room tone office hallway heavy ventilation.flac",
+      "url": "https://freesound.org/people/kyles/sounds/637804/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 109.96,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 161,
+      "previewUrl": "https://cdn.freesound.org/previews/637/637804_612689-hq.mp3",
+      "score": 7.4,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.1 161 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 203296,
+      "name": "Room Tone Office Industrial Ambience 02",
+      "url": "https://freesound.org/people/mzui/sounds/203296/",
+      "author": "mzui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 132.63,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.4,
+      "numRatings": 5,
+      "numDownloads": 222,
+      "previewUrl": "https://cdn.freesound.org/previews/203/203296_658546-hq.mp3",
+      "score": 7.39,
+      "reasons": [
+        "+2.21 rating 4.4 from 5 ratings",
+        "+1.17 222 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 405052,
+      "name": "room tone office noisy air tone but not air conditioning overlooking street with throaty traffic Sonia's office Saravena, Colombia 2016.flac",
+      "url": "https://freesound.org/people/kyles/sounds/405052/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 142.56,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 4,
+      "numDownloads": 424,
+      "previewUrl": "https://cdn.freesound.org/previews/405/405052_612689-hq.mp3",
+      "score": 7.36,
+      "reasons": [
+        "+2.04 rating 4 from 4 ratings",
+        "+1.31 424 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 482878,
+      "name": "RoomTone2.wav",
+      "url": "https://freesound.org/people/CantikFrantik/sounds/482878/",
+      "author": "CantikFrantik",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 193.35,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 28,
+      "numDownloads": 1876,
+      "previewUrl": "https://cdn.freesound.org/previews/482/482878_10321007-hq.mp3",
+      "score": 7.28,
+      "reasons": [
+        "+2.65 rating 4.71 from 28 ratings",
+        "+1.64 1876 downloads",
+        "+2 at least 90 s",
+        "+1 tags office"
+      ]
+    },
+    {
+      "rank": 22,
       "freesoundId": 708021,
       "name": "Empty Office Space Room Tone with Aircon SFX",
       "url": "https://freesound.org/people/Soup_UnderScore/sounds/708021/",
@@ -65,1005 +503,82 @@
       "channels": 1,
       "avgRating": 4.72,
       "numRatings": 32,
-      "numDownloads": 1223,
+      "numDownloads": 1224,
       "previewUrl": "https://cdn.freesound.org/previews/708/708021_14714083-hq.mp3",
       "score": 7.21,
       "reasons": [
         "+2.67 rating 4.72 from 32 ratings",
-        "+1.54 1223 downloads",
+        "+1.54 1224 downloads",
         "+2 at least 90 s",
         "+1 name matches office"
       ]
     },
     {
-      "rank": 4,
-      "freesoundId": 609250,
-      "name": "Journey To The Interweb",
-      "url": "https://freesound.org/people/Aemyn/sounds/609250/",
-      "author": "Aemyn",
+      "rank": 23,
+      "freesoundId": 506236,
+      "name": "ATM_INT_OfficeLessCompsHighWindOutsideREJ_ST_F8MKH41670.wav",
+      "url": "https://freesound.org/people/tbsound101/sounds/506236/",
+      "author": "tbsound101",
       "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 508,
+      "durationSec": 174.6,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 10,
+      "numDownloads": 759,
+      "previewUrl": "https://cdn.freesound.org/previews/506/506236_10432520-hq.mp3",
+      "score": 6.97,
+      "reasons": [
+        "+2.52 rating 4.8 from 10 ratings",
+        "+1.44 759 downloads",
+        "+2 at least 90 s",
+        "+1 tags office"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 451063,
+      "name": "room tone large office +subway train passing heard through the wall or ceiling Queens NY MS.wav",
+      "url": "https://freesound.org/people/kyles/sounds/451063/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 333,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 3.33,
+      "numRatings": 3,
+      "numDownloads": 159,
+      "previewUrl": "https://cdn.freesound.org/previews/451/451063_612689-hq.mp3",
+      "score": 6.93,
+      "reasons": [
+        "+1.83 rating 3.33 from 3 ratings",
+        "+1.1 159 downloads",
+        "+2 at least 90 s",
+        "+1 tags office",
+        "+1 name matches office"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 262901,
+      "name": "Drone 1",
+      "url": "https://freesound.org/people/staticpony1/sounds/262901/",
+      "author": "staticpony1",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 296,
       "samplerate": 44100,
       "channels": 2,
-      "avgRating": 4.33,
-      "numRatings": 294,
-      "numDownloads": 5573,
-      "previewUrl": "https://cdn.freesound.org/previews/609/609250_1445263-hq.mp3",
-      "score": 6.36,
+      "avgRating": 4.57,
+      "numRatings": 7,
+      "numDownloads": 214,
+      "previewUrl": "https://cdn.freesound.org/previews/262/262901_4508519-hq.mp3",
+      "score": 6.51,
       "reasons": [
-        "+2.49 rating 4.33 from 294 ratings",
-        "+1.87 5573 downloads",
-        "+2 at least 90 s"
-      ]
-    },
-    {
-      "rank": 5,
-      "freesoundId": 474832,
-      "name": "RoomTone07",
-      "url": "https://freesound.org/people/richwise/sounds/474832/",
-      "author": "richwise",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 599.75,
-      "samplerate": 48000,
-      "channels": 2,
-      "avgRating": 4.83,
-      "numRatings": 35,
-      "numDownloads": 1451,
-      "previewUrl": "https://cdn.freesound.org/previews/474/474832_1481531-hq.mp3",
-      "score": 6.33,
-      "reasons": [
-        "+2.75 rating 4.83 from 35 ratings",
-        "+1.58 1451 downloads",
-        "+2 at least 90 s"
-      ]
-    },
-    {
-      "rank": 6,
-      "freesoundId": 564166,
-      "name": "Crashing Starship",
-      "url": "https://freesound.org/people/Aemyn/sounds/564166/",
-      "author": "Aemyn",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 307.95,
-      "samplerate": 48000,
-      "channels": 2,
-      "avgRating": 4.35,
-      "numRatings": 143,
-      "numDownloads": 4484,
-      "previewUrl": "https://cdn.freesound.org/previews/564/564166_1445263-hq.mp3",
-      "score": 6.32,
-      "reasons": [
-        "+2.49 rating 4.35 from 143 ratings",
-        "+1.83 4484 downloads",
-        "+2 at least 90 s"
-      ]
-    },
-    {
-      "rank": 7,
-      "freesoundId": 661435,
-      "name": "Defensible Twister",
-      "url": "https://freesound.org/people/Brazilio123/sounds/661435/",
-      "author": "Brazilio123",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 433,
-      "samplerate": 48000,
-      "channels": 2,
-      "avgRating": 4.14,
-      "numRatings": 86,
-      "numDownloads": 2707,
-      "previewUrl": "https://cdn.freesound.org/previews/661/661435_14509684-hq.mp3",
-      "score": 6.04,
-      "reasons": [
-        "+2.33 rating 4.14 from 86 ratings",
-        "+1.72 2707 downloads",
-        "+2 at least 90 s"
-      ]
-    },
-    {
-      "rank": 8,
-      "freesoundId": 556390,
-      "name": "Quiet City Atmos.mp3",
-      "url": "https://freesound.org/people/Anya_Media/sounds/556390/",
-      "author": "Anya_Media",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 409.05,
-      "samplerate": 48000,
-      "channels": 2,
-      "avgRating": 5,
-      "numRatings": 6,
-      "numDownloads": 463,
-      "previewUrl": "https://cdn.freesound.org/previews/556/556390_2010973-hq.mp3",
-      "score": 5.82,
-      "reasons": [
-        "+2.49 rating 5 from 6 ratings",
-        "+1.33 463 downloads",
-        "+2 at least 90 s"
+        "+2.34 rating 4.57 from 7 ratings",
+        "+1.17 214 downloads",
+        "+2 at least 90 s",
+        "+1 tags office"
       ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Air conditioning",
-          "Mechanical fan",
-          "Typing",
-          "Computer keyboard"
-        ]
-      ],
-      "clapPrompt": "a modern office with HVAC hum and keyboards, no speech"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 725718,
-        "name": "Typing Office chatter in background",
-        "url": "https://freesound.org/people/SduggySounds/sounds/725718/",
-        "author": "SduggySounds",
-        "durationSec": 101.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 101,
-          "cleanSeconds": 83,
-          "topClasses": [
-            {
-              "label": "Typing",
-              "max": 0.8264
-            },
-            {
-              "label": "Speech",
-              "max": 0.8178
-            },
-            {
-              "label": "Computer keyboard",
-              "max": 0.7936
-            },
-            {
-              "label": "Writing",
-              "max": 0.5489
-            },
-            {
-              "label": "Tick",
-              "max": 0.3959
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.818,
-              "atSecond": 17
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.331,
-              "atSecond": 22
-            },
-            {
-              "label": "Car",
-              "max": 0.194,
-              "atSecond": 85
-            },
-            {
-              "label": "Whispering",
-              "max": 0.177,
-              "atSecond": 44
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Air conditioning",
-                "Mechanical fan",
-                "Typing",
-                "Computer keyboard"
-              ],
-              "fraction": 0.406
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 862604,
-        "name": "Office Ambience",
-        "url": "https://freesound.org/people/BeaconStudio/sounds/862604/",
-        "author": "BeaconStudio",
-        "durationSec": 65.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 65,
-          "cleanSeconds": 63,
-          "topClasses": [
-            {
-              "label": "Typing",
-              "max": 0.8096
-            },
-            {
-              "label": "Computer keyboard",
-              "max": 0.758
-            },
-            {
-              "label": "Finger snapping",
-              "max": 0.7063
-            },
-            {
-              "label": "Tick-tock",
-              "max": 0.3809
-            },
-            {
-              "label": "Tick",
-              "max": 0.3187
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.186,
-              "atSecond": 39
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Air conditioning",
-                "Mechanical fan",
-                "Typing",
-                "Computer keyboard"
-              ],
-              "fraction": 0.169
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 708021,
-        "name": "Empty Office Space Room Tone with Aircon SFX",
-        "url": "https://freesound.org/people/Soup_UnderScore/sounds/708021/",
-        "author": "Soup_UnderScore",
-        "durationSec": 128,
-        "verdict": "reject",
-        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 128,
-          "cleanSeconds": 101,
-          "topClasses": [
-            {
-              "label": "Vehicle",
-              "max": 0.4044
-            },
-            {
-              "label": "Car",
-              "max": 0.1622
-            },
-            {
-              "label": "White noise",
-              "max": 0.1566
-            },
-            {
-              "label": "Music",
-              "max": 0.1118
-            },
-            {
-              "label": "Microwave oven",
-              "max": 0.0909
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.404,
-              "atSecond": 101
-            },
-            {
-              "label": "Car",
-              "max": 0.162,
-              "atSecond": 101
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Air conditioning",
-                "Mechanical fan",
-                "Typing",
-                "Computer keyboard"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 609250,
-        "name": "Journey To The Interweb",
-        "url": "https://freesound.org/people/Aemyn/sounds/609250/",
-        "author": "Aemyn",
-        "durationSec": 508,
-        "verdict": "reject",
-        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 508,
-          "cleanSeconds": 128,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.9644
-            },
-            {
-              "label": "Speech",
-              "max": 0.8717
-            },
-            {
-              "label": "Printer",
-              "max": 0.835
-            },
-            {
-              "label": "Clip-clop",
-              "max": 0.8219
-            },
-            {
-              "label": "Animal",
-              "max": 0.8179
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.964,
-              "atSecond": 475
-            },
-            {
-              "label": "Speech",
-              "max": 0.872,
-              "atSecond": 349
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.747,
-              "atSecond": 62
-            },
-            {
-              "label": "Ice cream truck, ice cream van",
-              "max": 0.698,
-              "atSecond": 193
-            },
-            {
-              "label": "Telephone bell ringing",
-              "max": 0.62,
-              "atSecond": 451
-            },
-            {
-              "label": "Wind chime",
-              "max": 0.607,
-              "atSecond": 410
-            },
-            {
-              "label": "Telephone",
-              "max": 0.547,
-              "atSecond": 450
-            },
-            {
-              "label": "Chime",
-              "max": 0.525,
-              "atSecond": 410
-            },
-            {
-              "label": "Jackhammer",
-              "max": 0.473,
-              "atSecond": 10
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.382,
-              "atSecond": 62
-            },
-            {
-              "label": "Car",
-              "max": 0.364,
-              "atSecond": 343
-            },
-            {
-              "label": "Honk",
-              "max": 0.331,
-              "atSecond": 365
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.323,
-              "atSecond": 291
-            },
-            {
-              "label": "Train",
-              "max": 0.313,
-              "atSecond": 304
-            },
-            {
-              "label": "Engine",
-              "max": 0.31,
-              "atSecond": 43
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.305,
-              "atSecond": 106
-            },
-            {
-              "label": "Ringtone",
-              "max": 0.278,
-              "atSecond": 153
-            },
-            {
-              "label": "Bell",
-              "max": 0.248,
-              "atSecond": 93
-            },
-            {
-              "label": "Bicycle bell",
-              "max": 0.247,
-              "atSecond": 360
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.245,
-              "atSecond": 62
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.216,
-              "atSecond": 388
-            },
-            {
-              "label": "Guitar",
-              "max": 0.215,
-              "atSecond": 31
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.202,
-              "atSecond": 304
-            },
-            {
-              "label": "Sewing machine",
-              "max": 0.2,
-              "atSecond": 24
-            },
-            {
-              "label": "Plucked string instrument",
-              "max": 0.194,
-              "atSecond": 31
-            },
-            {
-              "label": "Bus",
-              "max": 0.193,
-              "atSecond": 330
-            },
-            {
-              "label": "Engine knocking",
-              "max": 0.181,
-              "atSecond": 359
-            },
-            {
-              "label": "Radio",
-              "max": 0.166,
-              "atSecond": 4
-            },
-            {
-              "label": "Electronic music",
-              "max": 0.156,
-              "atSecond": 433
-            },
-            {
-              "label": "Video game music",
-              "max": 0.156,
-              "atSecond": 106
-            },
-            {
-              "label": "Motorboat, speedboat",
-              "max": 0.156,
-              "atSecond": 317
-            },
-            {
-              "label": "Siren",
-              "max": 0.149,
-              "atSecond": 145
-            },
-            {
-              "label": "Fire alarm",
-              "max": 0.109,
-              "atSecond": 16
-            },
-            {
-              "label": "Alarm",
-              "max": 0.095,
-              "atSecond": 16
-            },
-            {
-              "label": "Vehicle horn, car horn, honking",
-              "max": 0.093,
-              "atSecond": 337
-            },
-            {
-              "label": "Alarm clock",
-              "max": 0.074,
-              "atSecond": 16
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.065,
-              "atSecond": 333
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Air conditioning",
-                "Mechanical fan",
-                "Typing",
-                "Computer keyboard"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 474832,
-        "name": "RoomTone07",
-        "url": "https://freesound.org/people/richwise/sounds/474832/",
-        "author": "richwise",
-        "durationSec": 599.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 599,
-          "cleanSeconds": 516,
-          "topClasses": [
-            {
-              "label": "White noise",
-              "max": 0.279
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.2502
-            },
-            {
-              "label": "Microwave oven",
-              "max": 0.1425
-            },
-            {
-              "label": "Inside, small room",
-              "max": 0.0629
-            },
-            {
-              "label": "Mechanical fan",
-              "max": 0.0586
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.25,
-              "atSecond": 217
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Air conditioning",
-                "Mechanical fan",
-                "Typing",
-                "Computer keyboard"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 564166,
-        "name": "Crashing Starship",
-        "url": "https://freesound.org/people/Aemyn/sounds/564166/",
-        "author": "Aemyn",
-        "durationSec": 308,
-        "verdict": "reject",
-        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 307,
-          "cleanSeconds": 26,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8549
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.7907
-            },
-            {
-              "label": "Music",
-              "max": 0.7847
-            },
-            {
-              "label": "Reversing beeps",
-              "max": 0.7815
-            },
-            {
-              "label": "Train",
-              "max": 0.6161
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.855,
-              "atSecond": 4
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.791,
-              "atSecond": 289
-            },
-            {
-              "label": "Music",
-              "max": 0.785,
-              "atSecond": 23
-            },
-            {
-              "label": "Reversing beeps",
-              "max": 0.781,
-              "atSecond": 289
-            },
-            {
-              "label": "Train",
-              "max": 0.616,
-              "atSecond": 105
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.532,
-              "atSecond": 105
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.498,
-              "atSecond": 105
-            },
-            {
-              "label": "Ice cream truck, ice cream van",
-              "max": 0.469,
-              "atSecond": 286
-            },
-            {
-              "label": "Truck",
-              "max": 0.463,
-              "atSecond": 285
-            },
-            {
-              "label": "Emergency vehicle",
-              "max": 0.328,
-              "atSecond": 115
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.316,
-              "atSecond": 131
-            },
-            {
-              "label": "Jet engine",
-              "max": 0.256,
-              "atSecond": 135
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.25,
-              "atSecond": 303
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.232,
-              "atSecond": 131
-            },
-            {
-              "label": "Bagpipes",
-              "max": 0.215,
-              "atSecond": 9
-            },
-            {
-              "label": "Siren",
-              "max": 0.203,
-              "atSecond": 115
-            },
-            {
-              "label": "Bus",
-              "max": 0.194,
-              "atSecond": 217
-            },
-            {
-              "label": "Car",
-              "max": 0.191,
-              "atSecond": 104
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.162,
-              "atSecond": 115
-            },
-            {
-              "label": "Traffic noise, roadway noise",
-              "max": 0.16,
-              "atSecond": 104
-            },
-            {
-              "label": "Ambulance (siren)",
-              "max": 0.156,
-              "atSecond": 115
-            },
-            {
-              "label": "Fire engine, fire truck (siren)",
-              "max": 0.132,
-              "atSecond": 115
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Air conditioning",
-                "Mechanical fan",
-                "Typing",
-                "Computer keyboard"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 661435,
-        "name": "Defensible Twister",
-        "url": "https://freesound.org/people/Brazilio123/sounds/661435/",
-        "author": "Brazilio123",
-        "durationSec": 433,
-        "verdict": "reject",
-        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 433,
-          "cleanSeconds": 18,
-          "topClasses": [
-            {
-              "label": "Train",
-              "max": 0.7963
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.7242
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.6985
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.6553
-            },
-            {
-              "label": "Speech",
-              "max": 0.4846
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Train",
-              "max": 0.796,
-              "atSecond": 30
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.724,
-              "atSecond": 71
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.698,
-              "atSecond": 71
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.655,
-              "atSecond": 51
-            },
-            {
-              "label": "Speech",
-              "max": 0.485,
-              "atSecond": 170
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.431,
-              "atSecond": 51
-            },
-            {
-              "label": "Music",
-              "max": 0.375,
-              "atSecond": 223
-            },
-            {
-              "label": "Jet engine",
-              "max": 0.368,
-              "atSecond": 412
-            },
-            {
-              "label": "Train wheels squealing",
-              "max": 0.344,
-              "atSecond": 71
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.292,
-              "atSecond": 51
-            },
-            {
-              "label": "Hair dryer",
-              "max": 0.267,
-              "atSecond": 42
-            },
-            {
-              "label": "Vacuum cleaner",
-              "max": 0.246,
-              "atSecond": 42
-            },
-            {
-              "label": "Subway, metro, underground",
-              "max": 0.243,
-              "atSecond": 30
-            },
-            {
-              "label": "Aircraft engine",
-              "max": 0.215,
-              "atSecond": 51
-            },
-            {
-              "label": "Engine",
-              "max": 0.157,
-              "atSecond": 351
-            },
-            {
-              "label": "Train horn",
-              "max": 0.081,
-              "atSecond": 46
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Air conditioning",
-                "Mechanical fan",
-                "Typing",
-                "Computer keyboard"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 556390,
-        "name": "Quiet City Atmos.mp3",
-        "url": "https://freesound.org/people/Anya_Media/sounds/556390/",
-        "author": "Anya_Media",
-        "durationSec": 409.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Air conditioning / Mechanical fan / Typing / Computer keyboard",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 409,
-          "cleanSeconds": 404,
-          "topClasses": [
-            {
-              "label": "Train",
-              "max": 0.2883
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.2857
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.2107
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.1976
-            },
-            {
-              "label": "Music",
-              "max": 0.1292
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Train",
-              "max": 0.288,
-              "atSecond": 146
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.286,
-              "atSecond": 150
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.211,
-              "atSecond": 146
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.198,
-              "atSecond": 146
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Air conditioning",
-                "Mechanical fan",
-                "Typing",
-                "Computer keyboard"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

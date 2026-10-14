@@ -5,9 +5,11 @@
     "hospital ward ambience",
     "hospital background monitors",
     "hospital ambience",
-    "hospital corridor ambience"
+    "hospital corridor ambience",
+    "hospital ambience loop",
+    "hospital room ambience"
   ],
-  "poolSize": 30,
+  "poolSize": 33,
   "candidates": [
     {
       "rank": 1,
@@ -44,12 +46,12 @@
       "channels": 1,
       "avgRating": 4.87,
       "numRatings": 15,
-      "numDownloads": 709,
+      "numDownloads": 710,
       "previewUrl": "https://cdn.freesound.org/previews/679/679048_7891112-hq.mp3",
       "score": 8.07,
       "reasons": [
         "+2.64 rating 4.87 from 15 ratings",
-        "+1.43 709 downloads",
+        "+1.43 710 downloads",
         "+2 at least 90 s",
         "+1 tags hospital",
         "+1 name matches hospital"
@@ -136,12 +138,12 @@
       "channels": 1,
       "avgRating": 4.36,
       "numRatings": 28,
-      "numDownloads": 771,
+      "numDownloads": 772,
       "previewUrl": "https://cdn.freesound.org/previews/679/679047_7891112-hq.mp3",
       "score": 7.86,
       "reasons": [
         "+2.42 rating 4.36 from 28 ratings",
-        "+1.44 771 downloads",
+        "+1.44 772 downloads",
         "+2 at least 90 s",
         "+1 tags hospital",
         "+1 name matches hospital"
@@ -192,784 +194,397 @@
         "+1 tags hospital",
         "+1 name matches hospital"
       ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 708208,
+      "name": "X-Ray Room Ambience: Veterinary hospital, monotoned low rumble. Recorded with ZoomH6 in Stereo, with Rifle Microphone.",
+      "url": "https://freesound.org/people/Kate_is_yellow/sounds/708208/",
+      "author": "Kate_is_yellow",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 167.44,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 4,
+      "numDownloads": 438,
+      "previewUrl": "https://cdn.freesound.org/previews/708/708208_14710317-hq.mp3",
+      "score": 7.7,
+      "reasons": [
+        "+2.38 rating 5 from 4 ratings",
+        "+1.32 438 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 388452,
+      "name": "Prayer in hospital (Polish).wav",
+      "url": "https://freesound.org/people/vovere/sounds/388452/",
+      "author": "vovere",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 301.82,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.44,
+      "numRatings": 9,
+      "numDownloads": 507,
+      "previewUrl": "https://cdn.freesound.org/previews/388/388452_3122595-hq.mp3",
+      "score": 7.68,
+      "reasons": [
+        "+2.33 rating 4.44 from 9 ratings",
+        "+1.35 507 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 707790,
+      "name": "Pretoria_Urology_Hospital_1",
+      "url": "https://freesound.org/people/TheGreenEyedGhost/sounds/707790/",
+      "author": "TheGreenEyedGhost",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 238.5,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 7,
+      "numDownloads": 345,
+      "previewUrl": "https://cdn.freesound.org/previews/707/707790_14713637-hq.mp3",
+      "score": 7.68,
+      "reasons": [
+        "+2.41 rating 4.71 from 7 ratings",
+        "+1.27 345 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 618352,
+      "name": "HOSPITAL - LONG CORRIDOR - ATMO / AMB (03)",
+      "url": "https://freesound.org/people/tferrino/sounds/618352/",
+      "author": "tferrino",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 85.22,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 17,
+      "numDownloads": 639,
+      "previewUrl": "https://cdn.freesound.org/previews/618/618352_7891112-hq.mp3",
+      "score": 7.48,
+      "reasons": [
+        "+2.57 rating 4.71 from 17 ratings",
+        "+1.4 639 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 557013,
+      "name": "kwun tong hospital ambience9.wav",
+      "url": "https://freesound.org/people/martian/sounds/557013/",
+      "author": "martian",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 121.97,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 346,
+      "previewUrl": "https://cdn.freesound.org/previews/557/557013_84709-hq.mp3",
+      "score": 7.47,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.27 346 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 806062,
+      "name": "AMBPark Under a chestnut tree in a small hospital park, light rain and ambience, Karlskrona, Sweden",
+      "url": "https://freesound.org/people/vhio/sounds/806062/",
+      "author": "vhio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 354.23,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 134,
+      "previewUrl": "https://cdn.freesound.org/previews/806/806062_15774433-hq.mp3",
+      "score": 7.43,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+1.07 134 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 731231,
+      "name": "AMB-Hospital,Walla,ChairMovement,Dhulikhel,Nepal-30Jul2023,10.50.47",
+      "url": "https://freesound.org/people/soundandmelodies/sounds/731231/",
+      "author": "soundandmelodies",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 161.28,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.6,
+      "numRatings": 5,
+      "numDownloads": 176,
+      "previewUrl": "https://cdn.freesound.org/previews/731/731231_10924423-hq.mp3",
+      "score": 7.41,
+      "reasons": [
+        "+2.29 rating 4.6 from 5 ratings",
+        "+1.12 176 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 680592,
+      "name": "Hospital Hallway Ambience.MP3",
+      "url": "https://freesound.org/people/emilyzitek/sounds/680592/",
+      "author": "emilyzitek",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.27,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.88,
+      "numRatings": 8,
+      "numDownloads": 451,
+      "previewUrl": "https://cdn.freesound.org/previews/680/680592_13652149-hq.mp3",
+      "score": 7.34,
+      "reasons": [
+        "+2.51 rating 4.88 from 8 ratings",
+        "+1.33 451 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 670070,
+      "name": "Room Tone, Empty Hospital",
+      "url": "https://freesound.org/people/Kinoton/sounds/670070/",
+      "author": "Kinoton",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 180,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.89,
+      "numRatings": 18,
+      "numDownloads": 730,
+      "previewUrl": "https://cdn.freesound.org/previews/670/670070_2247456-hq.mp3",
+      "score": 7.12,
+      "reasons": [
+        "+2.69 rating 4.89 from 18 ratings",
+        "+1.43 730 downloads",
+        "+2 at least 90 s",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 675151,
+      "name": "S12-04 Small group hospital walla.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/675151/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 75.38,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 3.67,
+      "numRatings": 3,
+      "numDownloads": 148,
+      "previewUrl": "https://cdn.freesound.org/previews/675/675151_2524442-hq.mp3",
+      "score": 6.51,
+      "reasons": [
+        "+1.92 rating 3.67 from 3 ratings",
+        "+1.09 148 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 652419,
+      "name": "Street at day near hospital",
+      "url": "https://freesound.org/people/Azrael1905/sounds/652419/",
+      "author": "Azrael1905",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 85.09,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 3,
+      "numRatings": 1,
+      "numDownloads": 200,
+      "previewUrl": "https://cdn.freesound.org/previews/652/652419_3548359-hq.mp3",
+      "score": 6.46,
+      "reasons": [
+        "+1.81 rating 3 from 1 ratings",
+        "+1.15 200 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags hospital",
+        "+1 name matches hospital"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 870989,
+      "name": "Quiet Doctor's Office Waiting Room",
+      "url": "https://freesound.org/people/qubodup/sounds/870989/",
+      "author": "qubodup",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 167.56,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 34,
+      "previewUrl": "https://cdn.freesound.org/previews/870/870989_71257-hq.mp3",
+      "score": 6.07,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+0.77 34 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 614463,
+      "name": "15. leaves through a window (roomtone)",
+      "url": "https://freesound.org/people/secondbody/sounds/614463/",
+      "author": "secondbody",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 122.7,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.33,
+      "numRatings": 3,
+      "numDownloads": 284,
+      "previewUrl": "https://cdn.freesound.org/previews/614/614463_155898-hq.mp3",
+      "score": 5.34,
+      "reasons": [
+        "+2.11 rating 4.33 from 3 ratings",
+        "+1.23 284 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 527438,
+      "name": "emergency room hospital.wav",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/527438/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 209.32,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.74,
+      "numRatings": 35,
+      "numDownloads": 4075,
+      "previewUrl": "https://cdn.freesound.org/previews/527/527438_11519060-hq.mp3",
+      "score": 4.5,
+      "reasons": [
+        "+2.69 rating 4.74 from 35 ratings",
+        "+1.81 4075 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital",
+        "-4 voice or speech (voices)"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 614805,
+      "name": "hospital_hallway_waiting_room.flac",
+      "url": "https://freesound.org/people/rthijs/sounds/614805/",
+      "author": "rthijs",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 155.59,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.63,
+      "numRatings": 19,
+      "numDownloads": 2002,
+      "previewUrl": "https://cdn.freesound.org/previews/614/614805_6803900-hq.mp3",
+      "score": 4.2,
+      "reasons": [
+        "+2.55 rating 4.63 from 19 ratings",
+        "+1.65 2002 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital",
+        "-4 voice or speech (voices)"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 348109,
+      "name": "Suburban hospital ambience - Moscow region, mostly old ladies & gents calmly talking and walking around, door closes, general noises XY mics .wav",
+      "url": "https://freesound.org/people/gladkiy/sounds/348109/",
+      "author": "gladkiy",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 213.16,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.64,
+      "numRatings": 14,
+      "numDownloads": 1638,
+      "previewUrl": "https://cdn.freesound.org/previews/348/348109_2364707-hq.mp3",
+      "score": 4.11,
+      "reasons": [
+        "+2.51 rating 4.64 from 14 ratings",
+        "+1.61 1638 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital",
+        "-4 voice or speech (talking)"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 348110,
+      "name": "Suburban hospital ambience - Moscow region, mostly old ladies & gents calmly talking and walking around, door closes, general noises OMNI mics.wav",
+      "url": "https://freesound.org/people/gladkiy/sounds/348110/",
+      "author": "gladkiy",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 213.16,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 11,
+      "numDownloads": 489,
+      "previewUrl": "https://cdn.freesound.org/previews/348/348110_2364707-hq.mp3",
+      "score": 3.99,
+      "reasons": [
+        "+2.65 rating 5 from 11 ratings",
+        "+1.35 489 downloads",
+        "+2 at least 90 s",
+        "+1 tags hospital",
+        "+1 name matches hospital",
+        "-4 voice or speech (talking)"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [
-        "Beep, bleep"
-      ],
-      "required": [
-        [
-          "Beep, bleep",
-          "Air conditioning",
-          "Mechanical fan"
-        ]
-      ],
-      "clapPrompt": "a hospital ward with distant monitors and carts"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Beep, bleep / Air conditioning / Mechanical fan",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 733585,
-        "name": "Hospital reception, seating area ambience",
-        "url": "https://freesound.org/people/misperpodcast/sounds/733585/",
-        "author": "misperpodcast",
-        "durationSec": 210.4,
-        "verdict": "reject",
-        "reason": "required sound absent: Beep, bleep / Air conditioning / Mechanical fan",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 210,
-          "cleanSeconds": 59,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8067
-            },
-            {
-              "label": "Music",
-              "max": 0.6006
-            },
-            {
-              "label": "Insect",
-              "max": 0.4888
-            },
-            {
-              "label": "Clip-clop",
-              "max": 0.4859
-            },
-            {
-              "label": "Bee, wasp, etc.",
-              "max": 0.4571
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.807,
-              "atSecond": 18
-            },
-            {
-              "label": "Music",
-              "max": 0.601,
-              "atSecond": 88
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.396,
-              "atSecond": 35
-            },
-            {
-              "label": "Train",
-              "max": 0.234,
-              "atSecond": 69
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.167,
-              "atSecond": 3
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.15,
-              "atSecond": 204
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Beep, bleep",
-                "Air conditioning",
-                "Mechanical fan"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 679048,
-        "name": "HOSPITAL ICU HALLWAY - ATMO AMBIENT (02/02)",
-        "url": "https://freesound.org/people/tferrino/sounds/679048/",
-        "author": "tferrino",
-        "durationSec": 172.4,
-        "verdict": "reject",
-        "reason": "required sound absent: Beep, bleep / Air conditioning / Mechanical fan",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 172,
-          "cleanSeconds": 56,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.8709
-            },
-            {
-              "label": "Speech",
-              "max": 0.8205
-            },
-            {
-              "label": "Train",
-              "max": 0.5792
-            },
-            {
-              "label": "Animal",
-              "max": 0.5791
-            },
-            {
-              "label": "Cat",
-              "max": 0.4773
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.871,
-              "atSecond": 71
-            },
-            {
-              "label": "Speech",
-              "max": 0.821,
-              "atSecond": 116
-            },
-            {
-              "label": "Train",
-              "max": 0.579,
-              "atSecond": 42
-            },
-            {
-              "label": "Siren",
-              "max": 0.429,
-              "atSecond": 72
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.421,
-              "atSecond": 83
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.419,
-              "atSecond": 42
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.397,
-              "atSecond": 42
-            },
-            {
-              "label": "Female speech, woman speaking",
-              "max": 0.386,
-              "atSecond": 23
-            },
-            {
-              "label": "Narration, monologue",
-              "max": 0.319,
-              "atSecond": 22
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.287,
-              "atSecond": 112
-            },
-            {
-              "label": "Civil defense siren",
-              "max": 0.262,
-              "atSecond": 79
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.174,
-              "atSecond": 112
-            },
-            {
-              "label": "Car",
-              "max": 0.165,
-              "atSecond": 83
-            },
-            {
-              "label": "Train horn",
-              "max": 0.058,
-              "atSecond": 42
-            },
-            {
-              "label": "Fire engine, fire truck (siren)",
-              "max": 0.051,
-              "atSecond": 72
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Beep, bleep",
-                "Air conditioning",
-                "Mechanical fan"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 618353,
-        "name": "HOSPITAL - LONG CORRIDOR - ATMO / AMB (02)",
-        "url": "https://freesound.org/people/tferrino/sounds/618353/",
-        "author": "tferrino",
-        "durationSec": 106.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Beep, bleep / Air conditioning / Mechanical fan",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 106,
-          "cleanSeconds": 67,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.802
-            },
-            {
-              "label": "Music",
-              "max": 0.724
-            },
-            {
-              "label": "Train",
-              "max": 0.5965
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.4747
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.4658
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.802,
-              "atSecond": 6
-            },
-            {
-              "label": "Music",
-              "max": 0.724,
-              "atSecond": 99
-            },
-            {
-              "label": "Train",
-              "max": 0.596,
-              "atSecond": 19
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.475,
-              "atSecond": 19
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.466,
-              "atSecond": 19
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.389,
-              "atSecond": 19
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.277,
-              "atSecond": 70
-            },
-            {
-              "label": "Violin, fiddle",
-              "max": 0.169,
-              "atSecond": 70
-            },
-            {
-              "label": "Female speech, woman speaking",
-              "max": 0.153,
-              "atSecond": 2
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Beep, bleep",
-                "Air conditioning",
-                "Mechanical fan"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 618354,
-        "name": "HOSPITAL - LONG CORRIDOR - ATMO / AMB (01)",
-        "url": "https://freesound.org/people/tferrino/sounds/618354/",
-        "author": "tferrino",
-        "durationSec": 101.9,
-        "verdict": "reject",
-        "reason": "required sound absent: Beep, bleep / Air conditioning / Mechanical fan",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 101,
-          "cleanSeconds": 66,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.627
-            },
-            {
-              "label": "Music",
-              "max": 0.3771
-            },
-            {
-              "label": "Basketball bounce",
-              "max": 0.2914
-            },
-            {
-              "label": "Snort",
-              "max": 0.1473
-            },
-            {
-              "label": "Singing",
-              "max": 0.106
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.627,
-              "atSecond": 12
-            },
-            {
-              "label": "Music",
-              "max": 0.377,
-              "atSecond": 34
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Beep, bleep",
-                "Air conditioning",
-                "Mechanical fan"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 640627,
-        "name": "Pediatric Hospital - Reception / Corridor (Coimbra, Portugal)",
-        "url": "https://freesound.org/people/tferrino/sounds/640627/",
-        "author": "tferrino",
-        "durationSec": 153,
-        "verdict": "reject",
-        "reason": "required sound absent: Beep, bleep / Air conditioning / Mechanical fan",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 153,
-          "cleanSeconds": 8,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8698
-            },
-            {
-              "label": "Music",
-              "max": 0.6552
-            },
-            {
-              "label": "Bird",
-              "max": 0.6467
-            },
-            {
-              "label": "Hoot",
-              "max": 0.64
-            },
-            {
-              "label": "Owl",
-              "max": 0.635
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.87,
-              "atSecond": 146
-            },
-            {
-              "label": "Music",
-              "max": 0.655,
-              "atSecond": 82
-            },
-            {
-              "label": "Train",
-              "max": 0.29,
-              "atSecond": 94
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.236,
-              "atSecond": 99
-            },
-            {
-              "label": "Female speech, woman speaking",
-              "max": 0.227,
-              "atSecond": 29
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.208,
-              "atSecond": 94
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.206,
-              "atSecond": 94
-            },
-            {
-              "label": "Male speech, man speaking",
-              "max": 0.16,
-              "atSecond": 57
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Beep, bleep",
-                "Air conditioning",
-                "Mechanical fan"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 679047,
-        "name": "HOSPITAL ICU HALLWAY - ATMO AMBIENT (01/02)",
-        "url": "https://freesound.org/people/tferrino/sounds/679047/",
-        "author": "tferrino",
-        "durationSec": 152.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Beep, bleep / Air conditioning / Mechanical fan",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 152,
-          "cleanSeconds": 30,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8264
-            },
-            {
-              "label": "Music",
-              "max": 0.7611
-            },
-            {
-              "label": "Bee, wasp, etc.",
-              "max": 0.5978
-            },
-            {
-              "label": "Insect",
-              "max": 0.583
-            },
-            {
-              "label": "Train",
-              "max": 0.5649
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.826,
-              "atSecond": 48
-            },
-            {
-              "label": "Music",
-              "max": 0.761,
-              "atSecond": 3
-            },
-            {
-              "label": "Train",
-              "max": 0.565,
-              "atSecond": 137
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.466,
-              "atSecond": 137
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.45,
-              "atSecond": 137
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.352,
-              "atSecond": 137
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.228,
-              "atSecond": 32
-            },
-            {
-              "label": "Siren",
-              "max": 0.069,
-              "atSecond": 128
-            },
-            {
-              "label": "Train horn",
-              "max": 0.056,
-              "atSecond": 137
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Beep, bleep",
-                "Air conditioning",
-                "Mechanical fan"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 640628,
-        "name": "Pediatric Hospital - Entrance Hall (Coimbra, Portugal)",
-        "url": "https://freesound.org/people/tferrino/sounds/640628/",
-        "author": "tferrino",
-        "durationSec": 194.2,
-        "verdict": "reject",
-        "reason": "required sound absent: Beep, bleep / Air conditioning / Mechanical fan",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 194,
-          "cleanSeconds": 51,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.812
-            },
-            {
-              "label": "Music",
-              "max": 0.5224
-            },
-            {
-              "label": "Animal",
-              "max": 0.473
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.4343
-            },
-            {
-              "label": "Domestic animals, pets",
-              "max": 0.3669
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.812,
-              "atSecond": 92
-            },
-            {
-              "label": "Music",
-              "max": 0.522,
-              "atSecond": 91
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.434,
-              "atSecond": 80
-            },
-            {
-              "label": "Microwave oven",
-              "max": 0.276,
-              "atSecond": 61
-            },
-            {
-              "label": "Child speech, kid speaking",
-              "max": 0.256,
-              "atSecond": 30
-            },
-            {
-              "label": "Female speech, woman speaking",
-              "max": 0.175,
-              "atSecond": 92
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Beep, bleep",
-                "Air conditioning",
-                "Mechanical fan"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 640626,
-        "name": "Pediatric Hospital - Waiting Room - Speaker Announcement (Coimbra, Portugal)",
-        "url": "https://freesound.org/people/tferrino/sounds/640626/",
-        "author": "tferrino",
-        "durationSec": 138.2,
-        "verdict": "reject",
-        "reason": "required sound absent: Beep, bleep / Air conditioning / Mechanical fan",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 138,
-          "cleanSeconds": 52,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8736
-            },
-            {
-              "label": "Music",
-              "max": 0.8071
-            },
-            {
-              "label": "Male speech, man speaking",
-              "max": 0.5331
-            },
-            {
-              "label": "Train",
-              "max": 0.5024
-            },
-            {
-              "label": "Narration, monologue",
-              "max": 0.3722
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.874,
-              "atSecond": 16
-            },
-            {
-              "label": "Music",
-              "max": 0.807,
-              "atSecond": 123
-            },
-            {
-              "label": "Male speech, man speaking",
-              "max": 0.533,
-              "atSecond": 16
-            },
-            {
-              "label": "Train",
-              "max": 0.502,
-              "atSecond": 72
-            },
-            {
-              "label": "Narration, monologue",
-              "max": 0.372,
-              "atSecond": 16
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.352,
-              "atSecond": 72
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.332,
-              "atSecond": 72
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.311,
-              "atSecond": 72
-            },
-            {
-              "label": "Female speech, woman speaking",
-              "max": 0.302,
-              "atSecond": 11
-            },
-            {
-              "label": "Siren",
-              "max": 0.179,
-              "atSecond": 88
-            },
-            {
-              "label": "Subway, metro, underground",
-              "max": 0.164,
-              "atSecond": 72
-            },
-            {
-              "label": "Singing",
-              "max": 0.153,
-              "atSecond": 56
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Beep, bleep",
-                "Air conditioning",
-                "Mechanical fan"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

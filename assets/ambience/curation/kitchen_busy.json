@@ -1,14 +1,154 @@
 {
   "category": "kitchen_busy",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "kitchen ambience cooking",
-    "kitchen sizzling pots"
+    "kitchen sizzling pots",
+    "kitchen ambience loop",
+    "cooking kitchen sounds"
   ],
-  "poolSize": 22,
+  "poolSize": 49,
   "candidates": [
     {
       "rank": 1,
+      "freesoundId": 616820,
+      "name": "Cooking, lighting gas stove, sizzles, wok, frying (2012).wav",
+      "url": "https://freesound.org/people/TRP/sounds/616820/",
+      "author": "TRP",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 254.02,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 6,
+      "numDownloads": 428,
+      "previewUrl": "https://cdn.freesound.org/previews/616/616820_97550-hq.mp3",
+      "score": 9.74,
+      "reasons": [
+        "+2.42 rating 4.83 from 6 ratings",
+        "+1.32 428 downloads",
+        "+2 at least 90 s",
+        "+3 tags kitchen, cooking, sizzle",
+        "+1 name matches cooking"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 260448,
+      "name": "Kitchen_Hob_Burner_Gas_Fire_Flame_Ignition_Cooking.wav",
+      "url": "https://freesound.org/people/tompallant/sounds/260448/",
+      "author": "tompallant",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 79.27,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.86,
+      "numRatings": 22,
+      "numDownloads": 2807,
+      "previewUrl": "https://cdn.freesound.org/previews/260/260448_257367-hq.mp3",
+      "score": 8.93,
+      "reasons": [
+        "+2.71 rating 4.86 from 22 ratings",
+        "+1.72 2807 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags kitchen, cooking",
+        "+1 name matches kitchen, cooking"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 513142,
+      "name": "kitchen splatter egg sandwich.wav",
+      "url": "https://freesound.org/people/blue.shifts/sounds/513142/",
+      "author": "blue.shifts",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 86.19,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 4,
+      "numDownloads": 178,
+      "previewUrl": "https://cdn.freesound.org/previews/513/513142_8933947-hq.mp3",
+      "score": 8.67,
+      "reasons": [
+        "+2.04 rating 4 from 4 ratings",
+        "+1.13 178 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags kitchen, cooking, sizzle",
+        "+1 name matches kitchen"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 468529,
+      "name": "Cooking.WAV",
+      "url": "https://freesound.org/people/siller19/sounds/468529/",
+      "author": "siller19",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 77.16,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.6,
+      "numRatings": 15,
+      "numDownloads": 858,
+      "previewUrl": "https://cdn.freesound.org/previews/468/468529_3259685-hq.mp3",
+      "score": 8.46,
+      "reasons": [
+        "+2.49 rating 4.6 from 15 ratings",
+        "+1.47 858 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags kitchen, cooking",
+        "+1 name matches cooking"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 405027,
+      "name": "cooking sounds and metal utensils preparing meal in hut kitchen bgsound Saravena, Colombia 2016.flac",
+      "url": "https://freesound.org/people/kyles/sounds/405027/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 111.91,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 3.75,
+      "numRatings": 8,
+      "numDownloads": 753,
+      "previewUrl": "https://cdn.freesound.org/previews/405/405027_612689-hq.mp3",
+      "score": 8.43,
+      "reasons": [
+        "+1.99 rating 3.75 from 8 ratings",
+        "+1.44 753 downloads",
+        "+2 at least 90 s",
+        "+2 tags kitchen, cooking",
+        "+1 name matches kitchen, cooking"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 405026,
+      "name": "cooking sounds preparing meal in big open kitchen with soup spanish voices bg Saravena, Colombia 2016.flac",
+      "url": "https://freesound.org/people/kyles/sounds/405026/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 172.06,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 3.8,
+      "numRatings": 5,
+      "numDownloads": 617,
+      "previewUrl": "https://cdn.freesound.org/previews/405/405026_612689-hq.mp3",
+      "score": 8.38,
+      "reasons": [
+        "+1.99 rating 3.8 from 5 ratings",
+        "+1.4 617 downloads",
+        "+2 at least 90 s",
+        "+2 tags kitchen, cooking",
+        "+1 name matches kitchen, cooking"
+      ]
+    },
+    {
+      "rank": 7,
       "freesoundId": 512511,
       "name": "Kitchen Ambience",
       "url": "https://freesound.org/people/brunoboselli/sounds/512511/",
@@ -19,19 +159,19 @@
       "channels": 2,
       "avgRating": 4.9,
       "numRatings": 21,
-      "numDownloads": 1569,
+      "numDownloads": 1571,
       "previewUrl": "https://cdn.freesound.org/previews/512/512511_300738-hq.mp3",
       "score": 8.32,
       "reasons": [
         "+2.73 rating 4.9 from 21 ratings",
-        "+1.6 1569 downloads",
+        "+1.6 1571 downloads",
         "+1 at least 60 s",
         "+2 tags kitchen, cooking",
         "+1 name matches kitchen"
       ]
     },
     {
-      "rank": 2,
+      "rank": 8,
       "freesoundId": 271443,
       "name": "Fast Food Restaurant",
       "url": "https://freesound.org/people/lauramellis/sounds/271443/",
@@ -53,7 +193,7 @@
       ]
     },
     {
-      "rank": 3,
+      "rank": 9,
       "freesoundId": 514176,
       "name": "Bowl knife cooking dishes mixing-bowl.wav",
       "url": "https://freesound.org/people/shachory/sounds/514176/",
@@ -76,7 +216,53 @@
       ]
     },
     {
-      "rank": 4,
+      "rank": 10,
+      "freesoundId": 847873,
+      "name": "Kitchen Cutting Board 01",
+      "url": "https://freesound.org/people/bernhoftbret/sounds/847873/",
+      "author": "bernhoftbret",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 2,
+      "numDownloads": 57,
+      "previewUrl": "https://cdn.freesound.org/previews/847/847873_12637308-hq.mp3",
+      "score": 7.97,
+      "reasons": [
+        "+2.09 rating 4.5 from 2 ratings",
+        "+0.88 57 downloads",
+        "+2 at least 90 s",
+        "+2 tags kitchen, cooking",
+        "+1 name matches kitchen"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 402658,
+      "name": "Ambient Kitchen loop.wav",
+      "url": "https://freesound.org/people/Ziggystardust72/sounds/402658/",
+      "author": "Ziggystardust72",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 106.54,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.64,
+      "numRatings": 14,
+      "numDownloads": 787,
+      "previewUrl": "https://cdn.freesound.org/previews/402/402658_1789622-hq.mp3",
+      "score": 7.95,
+      "reasons": [
+        "+2.51 rating 4.64 from 14 ratings",
+        "+1.45 787 downloads",
+        "+2 at least 90 s",
+        "+1 tags kitchen",
+        "+1 name matches kitchen"
+      ]
+    },
+    {
+      "rank": 12,
       "freesoundId": 138048,
       "name": "cooking_onions_in_oil_ambience.wav",
       "url": "https://freesound.org/people/daboy291/sounds/138048/",
@@ -99,7 +285,53 @@
       ]
     },
     {
-      "rank": 5,
+      "rank": 13,
+      "freesoundId": 523893,
+      "name": "Kitchen FX",
+      "url": "https://freesound.org/people/Evil_Ear_Recordings/sounds/523893/",
+      "author": "Evil_Ear_Recordings",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 64.77,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 167,
+      "previewUrl": "https://cdn.freesound.org/previews/523/523893_2515377-hq.mp3",
+      "score": 7.91,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.11 167 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags kitchen, cooking",
+        "+1 name matches kitchen"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 759115,
+      "name": "random sound recorded in my kitchen",
+      "url": "https://freesound.org/people/naotokui/sounds/759115/",
+      "author": "naotokui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 304.81,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 43,
+      "previewUrl": "https://cdn.freesound.org/previews/759/759115_16419027-hq.mp3",
+      "score": 7.88,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.82 43 downloads",
+        "+2 at least 90 s",
+        "+2 tags kitchen, cooking",
+        "+1 name matches kitchen"
+      ]
+    },
+    {
+      "rank": 15,
       "freesoundId": 176033,
       "name": "ambience_rural_kitchen_silence.aiff",
       "url": "https://freesound.org/people/patobottos/sounds/176033/",
@@ -110,19 +342,42 @@
       "channels": 2,
       "avgRating": 4.63,
       "numRatings": 8,
-      "numDownloads": 500,
+      "numDownloads": 501,
       "previewUrl": "https://cdn.freesound.org/previews/176/176033_881494-hq.mp3",
       "score": 7.74,
       "reasons": [
         "+2.39 rating 4.63 from 8 ratings",
-        "+1.35 500 downloads",
+        "+1.35 501 downloads",
         "+2 at least 90 s",
         "+1 tags kitchen",
         "+1 name matches kitchen"
       ]
     },
     {
-      "rank": 6,
+      "rank": 16,
+      "freesoundId": 759116,
+      "name": "random sound recorded in my kitchen",
+      "url": "https://freesound.org/people/naotokui/sounds/759116/",
+      "author": "naotokui",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 285.58,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 45,
+      "previewUrl": "https://cdn.freesound.org/previews/759/759116_16419027-hq.mp3",
+      "score": 7.71,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.83 45 downloads",
+        "+2 at least 90 s",
+        "+2 tags kitchen, cooking",
+        "+1 name matches kitchen"
+      ]
+    },
+    {
+      "rank": 17,
       "freesoundId": 178506,
       "name": "woman_cooking_rural_kitchen.aiff",
       "url": "https://freesound.org/people/patobottos/sounds/178506/",
@@ -145,7 +400,7 @@
       ]
     },
     {
-      "rank": 7,
+      "rank": 18,
       "freesoundId": 554583,
       "name": "Apartman ambience - Making tea",
       "url": "https://freesound.org/people/Frigus_XIII/sounds/554583/",
@@ -167,7 +422,7 @@
       ]
     },
     {
-      "rank": 8,
+      "rank": 19,
       "freesoundId": 862622,
       "name": "Sausages Sizzling in a Pan with Boiling Eggs Kitchen Ambience",
       "url": "https://freesound.org/people/bassimat/sounds/862622/",
@@ -178,669 +433,149 @@
       "channels": 2,
       "avgRating": 5,
       "numRatings": 4,
-      "numDownloads": 86,
+      "numDownloads": 88,
       "previewUrl": "https://cdn.freesound.org/previews/862/862622_15636277-hq.mp3",
-      "score": 7.34,
+      "score": 7.35,
       "reasons": [
         "+2.38 rating 5 from 4 ratings",
-        "+0.97 86 downloads",
+        "+0.97 88 downloads",
         "+1 at least 60 s",
         "+2 tags kitchen, cooking",
         "+1 name matches kitchen"
       ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 686689,
+      "name": "AirFryer Operation.WAV",
+      "url": "https://freesound.org/people/ivoliYT/sounds/686689/",
+      "author": "ivoliYT",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 337.2,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 119,
+      "previewUrl": "https://cdn.freesound.org/previews/686/686689_14961185-hq.mp3",
+      "score": 7.1,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1.04 119 downloads",
+        "+2 at least 90 s",
+        "+2 tags kitchen, cooking"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 862444,
+      "name": "Boiling Eggs in a Pot",
+      "url": "https://freesound.org/people/bassimat/sounds/862444/",
+      "author": "bassimat",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 184,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 3.86,
+      "numRatings": 7,
+      "numDownloads": 94,
+      "previewUrl": "https://cdn.freesound.org/previews/862/862444_15636277-hq.mp3",
+      "score": 7.02,
+      "reasons": [
+        "+2.03 rating 3.86 from 7 ratings",
+        "+0.99 94 downloads",
+        "+2 at least 90 s",
+        "+2 tags kitchen, cooking"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 451287,
+      "name": "Boiling water (Cooking paella)",
+      "url": "https://freesound.org/people/bolkmar/sounds/451287/",
+      "author": "bolkmar",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 56.04,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 15,
+      "numDownloads": 774,
+      "previewUrl": "https://cdn.freesound.org/previews/451/451287_2927958-hq.mp3",
+      "score": 6.98,
+      "reasons": [
+        "+2.53 rating 4.67 from 15 ratings",
+        "+1.44 774 downloads",
+        "+2 tags kitchen, cooking",
+        "+1 name matches cooking"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 745109,
+      "name": "frying pan screeching on top of stove",
+      "url": "https://freesound.org/people/mayo.nap/sounds/745109/",
+      "author": "mayo.nap",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 126.02,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 74,
+      "previewUrl": "https://cdn.freesound.org/previews/745/745109_16155702-hq.mp3",
+      "score": 6.81,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.94 74 downloads",
+        "+2 at least 90 s",
+        "+2 tags kitchen, cooking"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 618152,
+      "name": "7. Savory Sounds from the Kitchen",
+      "url": "https://freesound.org/people/WrightBrandBacon/sounds/618152/",
+      "author": "WrightBrandBacon",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 116.79,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 2,
+      "numRatings": 1,
+      "numDownloads": 102,
+      "previewUrl": "https://cdn.freesound.org/previews/618/618152_13702313-hq.mp3",
+      "score": 6.69,
+      "reasons": [
+        "+1.69 rating 2 from 1 ratings",
+        "+1.01 102 downloads",
+        "+2 at least 90 s",
+        "+1 tags kitchen",
+        "+1 name matches kitchen"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 75070,
+      "name": "yakiniku_stereo120_quiet_orderattheend.wav",
+      "url": "https://freesound.org/people/markystar/sounds/75070/",
+      "author": "markystar",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 182.58,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 3.8,
+      "numRatings": 5,
+      "numDownloads": 362,
+      "previewUrl": "https://cdn.freesound.org/previews/75/75070_384438-hq.mp3",
+      "score": 6.27,
+      "reasons": [
+        "+1.99 rating 3.8 from 5 ratings",
+        "+1.28 362 downloads",
+        "+2 at least 90 s",
+        "+1 tags cooking"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Frying (food)",
-          "Sizzle",
-          "Chopping (food)",
-          "Cutlery, silverware",
-          "Pour"
-        ]
-      ],
-      "clapPrompt": "a kitchen at work with pots, chopping and sizzling, no appliances"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "clip has 62 s; a window needs 64 s; required sound absent: Frying (food) / Sizzle / Chopping (food) / Cutlery, silverware / Pour",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 512511,
-        "name": "Kitchen Ambience",
-        "url": "https://freesound.org/people/brunoboselli/sounds/512511/",
-        "author": "brunoboselli",
-        "durationSec": 63,
-        "verdict": "reject",
-        "reason": "clip has 62 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 62,
-          "cleanSeconds": 59,
-          "topClasses": [
-            {
-              "label": "Water tap, faucet",
-              "max": 0.6256
-            },
-            {
-              "label": "Bathtub (filling or washing)",
-              "max": 0.6004
-            },
-            {
-              "label": "Dishes, pots, and pans",
-              "max": 0.5453
-            },
-            {
-              "label": "Water",
-              "max": 0.5203
-            },
-            {
-              "label": "Sink (filling or washing)",
-              "max": 0.4792
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Beep, bleep",
-              "max": 0.361,
-              "atSecond": 25
-            },
-            {
-              "label": "Music",
-              "max": 0.341,
-              "atSecond": 26
-            },
-            {
-              "label": "Smoke detector, smoke alarm",
-              "max": 0.053,
-              "atSecond": 25
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Frying (food)",
-                "Sizzle",
-                "Chopping (food)",
-                "Cutlery, silverware",
-                "Pour"
-              ],
-              "fraction": 0.129
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 271443,
-        "name": "Fast Food Restaurant",
-        "url": "https://freesound.org/people/lauramellis/sounds/271443/",
-        "author": "lauramellis",
-        "durationSec": 352,
-        "verdict": "reject",
-        "reason": "required sound absent: Frying (food) / Sizzle / Chopping (food) / Cutlery, silverware / Pour",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 351,
-          "cleanSeconds": 220,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8897
-            },
-            {
-              "label": "Music",
-              "max": 0.6634
-            },
-            {
-              "label": "Pigeon, dove",
-              "max": 0.532
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.5163
-            },
-            {
-              "label": "Bird",
-              "max": 0.511
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.663,
-              "atSecond": 208
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.516,
-              "atSecond": 345
-            },
-            {
-              "label": "Train",
-              "max": 0.376,
-              "atSecond": 30
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.266,
-              "atSecond": 30
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.245,
-              "atSecond": 30
-            },
-            {
-              "label": "Alarm clock",
-              "max": 0.067,
-              "atSecond": 207
-            },
-            {
-              "label": "Vehicle horn, car horn, honking",
-              "max": 0.06,
-              "atSecond": 31
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Frying (food)",
-                "Sizzle",
-                "Chopping (food)",
-                "Cutlery, silverware",
-                "Pour"
-              ],
-              "fraction": 0.003
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 514176,
-        "name": "Bowl knife cooking dishes mixing-bowl.wav",
-        "url": "https://freesound.org/people/shachory/sounds/514176/",
-        "author": "shachory",
-        "durationSec": 116,
-        "verdict": "reject",
-        "reason": "required sound absent: Frying (food) / Sizzle / Chopping (food) / Cutlery, silverware / Pour",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 115,
-          "cleanSeconds": 73,
-          "topClasses": [
-            {
-              "label": "Knock",
-              "max": 0.9083
-            },
-            {
-              "label": "Music",
-              "max": 0.8942
-            },
-            {
-              "label": "Computer keyboard",
-              "max": 0.6618
-            },
-            {
-              "label": "Synthesizer",
-              "max": 0.631
-            },
-            {
-              "label": "Typing",
-              "max": 0.624
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.894,
-              "atSecond": 31
-            },
-            {
-              "label": "Synthesizer",
-              "max": 0.631,
-              "atSecond": 31
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.494,
-              "atSecond": 68
-            },
-            {
-              "label": "Piano",
-              "max": 0.415,
-              "atSecond": 68
-            },
-            {
-              "label": "Keyboard (musical)",
-              "max": 0.382,
-              "atSecond": 68
-            },
-            {
-              "label": "Plucked string instrument",
-              "max": 0.253,
-              "atSecond": 67
-            },
-            {
-              "label": "Electric piano",
-              "max": 0.236,
-              "atSecond": 68
-            },
-            {
-              "label": "Guitar",
-              "max": 0.221,
-              "atSecond": 67
-            },
-            {
-              "label": "Drum machine",
-              "max": 0.206,
-              "atSecond": 31
-            },
-            {
-              "label": "Electronic music",
-              "max": 0.172,
-              "atSecond": 31
-            },
-            {
-              "label": "Telephone dialing, DTMF",
-              "max": 0.171,
-              "atSecond": 32
-            },
-            {
-              "label": "Alarm clock",
-              "max": 0.068,
-              "atSecond": 32
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Frying (food)",
-                "Sizzle",
-                "Chopping (food)",
-                "Cutlery, silverware",
-                "Pour"
-              ],
-              "fraction": 0.052
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 138048,
-        "name": "cooking_onions_in_oil_ambience.wav",
-        "url": "https://freesound.org/people/daboy291/sounds/138048/",
-        "author": "daboy291",
-        "durationSec": 64,
-        "verdict": "reject",
-        "reason": "clip has 63 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 63,
-          "cleanSeconds": 62,
-          "topClasses": [
-            {
-              "label": "Frying (food)",
-              "max": 0.8692
-            },
-            {
-              "label": "Stir",
-              "max": 0.7067
-            },
-            {
-              "label": "Sizzle",
-              "max": 0.5564
-            },
-            {
-              "label": "Water",
-              "max": 0.4517
-            },
-            {
-              "label": "Water tap, faucet",
-              "max": 0.3829
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.164,
-              "atSecond": 50
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Frying (food)",
-                "Sizzle",
-                "Chopping (food)",
-                "Cutlery, silverware",
-                "Pour"
-              ],
-              "fraction": 0.889
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 176033,
-        "name": "ambience_rural_kitchen_silence.aiff",
-        "url": "https://freesound.org/people/patobottos/sounds/176033/",
-        "author": "patobottos",
-        "durationSec": 310.3,
-        "verdict": "reject",
-        "reason": "required sound absent: Frying (food) / Sizzle / Chopping (food) / Cutlery, silverware / Pour",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 310,
-          "cleanSeconds": 261,
-          "topClasses": [
-            {
-              "label": "Animal",
-              "max": 0.7632
-            },
-            {
-              "label": "Music",
-              "max": 0.7201
-            },
-            {
-              "label": "Speech",
-              "max": 0.7094
-            },
-            {
-              "label": "Clip-clop",
-              "max": 0.4919
-            },
-            {
-              "label": "Horse",
-              "max": 0.4687
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.72,
-              "atSecond": 304
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.437,
-              "atSecond": 117
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.219,
-              "atSecond": 239
-            },
-            {
-              "label": "Car",
-              "max": 0.211,
-              "atSecond": 117
-            },
-            {
-              "label": "Rowboat, canoe, kayak",
-              "max": 0.176,
-              "atSecond": 18
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Frying (food)",
-                "Sizzle",
-                "Chopping (food)",
-                "Cutlery, silverware",
-                "Pour"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 178506,
-        "name": "woman_cooking_rural_kitchen.aiff",
-        "url": "https://freesound.org/people/patobottos/sounds/178506/",
-        "author": "patobottos",
-        "durationSec": 182.4,
-        "verdict": "reject",
-        "reason": "required sound absent: Frying (food) / Sizzle / Chopping (food) / Cutlery, silverware / Pour",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 182,
-          "cleanSeconds": 148,
-          "topClasses": [
-            {
-              "label": "Cricket",
-              "max": 0.9275
-            },
-            {
-              "label": "Insect",
-              "max": 0.8913
-            },
-            {
-              "label": "Bathtub (filling or washing)",
-              "max": 0.8887
-            },
-            {
-              "label": "Chicken, rooster",
-              "max": 0.875
-            },
-            {
-              "label": "Clip-clop",
-              "max": 0.8225
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.674,
-              "atSecond": 152
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.159,
-              "atSecond": 121
-            },
-            {
-              "label": "Honk",
-              "max": 0.146,
-              "atSecond": 2
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Frying (food)",
-                "Sizzle",
-                "Chopping (food)",
-                "Cutlery, silverware",
-                "Pour"
-              ],
-              "fraction": 0.011
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 554583,
-        "name": "Apartman ambience - Making tea",
-        "url": "https://freesound.org/people/Frigus_XIII/sounds/554583/",
-        "author": "Frigus_XIII",
-        "durationSec": 146.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Frying (food) / Sizzle / Chopping (food) / Cutlery, silverware / Pour",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 146,
-          "cleanSeconds": 77,
-          "topClasses": [
-            {
-              "label": "Finger snapping",
-              "max": 0.8842
-            },
-            {
-              "label": "Music",
-              "max": 0.7989
-            },
-            {
-              "label": "Camera",
-              "max": 0.775
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.5306
-            },
-            {
-              "label": "Tick-tock",
-              "max": 0.5018
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.799,
-              "atSecond": 77
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.531,
-              "atSecond": 77
-            },
-            {
-              "label": "Guitar",
-              "max": 0.319,
-              "atSecond": 77
-            },
-            {
-              "label": "Plucked string instrument",
-              "max": 0.315,
-              "atSecond": 77
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.288,
-              "atSecond": 106
-            },
-            {
-              "label": "Train",
-              "max": 0.164,
-              "atSecond": 70
-            },
-            {
-              "label": "Sewing machine",
-              "max": 0.162,
-              "atSecond": 142
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Frying (food)",
-                "Sizzle",
-                "Chopping (food)",
-                "Cutlery, silverware",
-                "Pour"
-              ],
-              "fraction": 0.027
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 862622,
-        "name": "Sausages Sizzling in a Pan with Boiling Eggs Kitchen Ambience",
-        "url": "https://freesound.org/people/bassimat/sounds/862622/",
-        "author": "bassimat",
-        "durationSec": 61.1,
-        "verdict": "reject",
-        "reason": "clip has 61 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 61,
-          "cleanSeconds": 59,
-          "topClasses": [
-            {
-              "label": "Bird",
-              "max": 0.5686
-            },
-            {
-              "label": "Pigeon, dove",
-              "max": 0.4855
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.467
-            },
-            {
-              "label": "Frying (food)",
-              "max": 0.4321
-            },
-            {
-              "label": "Sizzle",
-              "max": 0.422
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.467,
-              "atSecond": 59
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Frying (food)",
-                "Sizzle",
-                "Chopping (food)",
-                "Cutlery, silverware",
-                "Pour"
-              ],
-              "fraction": 0.131
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

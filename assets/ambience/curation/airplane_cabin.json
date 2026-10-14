@@ -1,11 +1,13 @@
 {
   "category": "airplane_cabin",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "airplane cabin ambience",
-    "aircraft cabin engine hum"
+    "aircraft cabin engine hum",
+    "plane cabin ambience loop",
+    "airplane ambience loop"
   ],
-  "poolSize": 30,
+  "poolSize": 36,
   "candidates": [
     {
       "rank": 1,
@@ -65,12 +67,12 @@
       "channels": 4,
       "avgRating": 4.67,
       "numRatings": 6,
-      "numDownloads": 199,
+      "numDownloads": 200,
       "previewUrl": "https://cdn.freesound.org/previews/433/433003_138-hq.mp3",
       "score": 8.5,
       "reasons": [
         "+2.35 rating 4.67 from 6 ratings",
-        "+1.15 199 downloads",
+        "+1.15 200 downloads",
         "+2 at least 90 s",
         "+2 tags airplane, plane",
         "+1 name matches airplane, cabin"
@@ -190,552 +192,394 @@
         "+2 tags cabin, plane",
         "+1 name matches airplane, cabin"
       ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 845957,
+      "name": "Takeoff – Cabin Ambience",
+      "url": "https://freesound.org/people/ElevatorFan2020/sounds/845957/",
+      "author": "ElevatorFan2020",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 106.23,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 84,
+      "previewUrl": "https://cdn.freesound.org/previews/845/845957_14269391-hq.mp3",
+      "score": 8.03,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.96 84 downloads",
+        "+2 at least 90 s",
+        "+2 tags airplane, cabin",
+        "+1 name matches cabin"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 868889,
+      "name": "Airplane_Inside_Sitting_Traveling_2",
+      "url": "https://freesound.org/people/SMKoski02/sounds/868889/",
+      "author": "SMKoski02",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 164.97,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 1,
+      "previewUrl": "https://cdn.freesound.org/previews/868/868889_9892794-hq.mp3",
+      "score": 8.03,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.15 1 downloads",
+        "+2 at least 90 s",
+        "+3 tags airplane, aircraft, cabin, plane",
+        "+1 name matches airplane"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 868883,
+      "name": "Airplane_Inside_Sitting_Landing_Eurowings_1",
+      "url": "https://freesound.org/people/SMKoski02/sounds/868883/",
+      "author": "SMKoski02",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 553.06,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 0,
+      "previewUrl": "https://cdn.freesound.org/previews/868/868883_9892794-hq.mp3",
+      "score": 7.88,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0 0 downloads",
+        "+2 at least 90 s",
+        "+3 tags airplane, aircraft, cabin, plane",
+        "+1 name matches airplane"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 868888,
+      "name": "Airplane_Inside_Sitting_Traveling_1",
+      "url": "https://freesound.org/people/SMKoski02/sounds/868888/",
+      "author": "SMKoski02",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 343.37,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 0,
+      "previewUrl": "https://cdn.freesound.org/previews/868/868888_9892794-hq.mp3",
+      "score": 7.88,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0 0 downloads",
+        "+2 at least 90 s",
+        "+3 tags airplane, aircraft, cabin, plane",
+        "+1 name matches airplane"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 573143,
+      "name": "Airplane small inflight cabin BAHAMAS 180218.wav",
+      "url": "https://freesound.org/people/TRP/sounds/573143/",
+      "author": "TRP",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 231.22,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 96,
+      "previewUrl": "https://cdn.freesound.org/previews/573/573143_97550-hq.mp3",
+      "score": 7.87,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.99 96 downloads",
+        "+2 at least 90 s",
+        "+2 tags airplane, cabin",
+        "+1 name matches airplane, cabin"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 845956,
+      "name": "Safety Demonstration - Cabin Ambience",
+      "url": "https://freesound.org/people/ElevatorFan2020/sounds/845956/",
+      "author": "ElevatorFan2020",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 177.9,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 33,
+      "previewUrl": "https://cdn.freesound.org/previews/845/845956_14269391-hq.mp3",
+      "score": 7.83,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.77 33 downloads",
+        "+2 at least 90 s",
+        "+2 tags airplane, cabin",
+        "+1 name matches cabin"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 412003,
+      "name": "Airplane From Beijing to Moscow",
+      "url": "https://freesound.org/people/triadtravelogues/sounds/412003/",
+      "author": "triadtravelogues",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 190.03,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 6,
+      "numDownloads": 167,
+      "previewUrl": "https://cdn.freesound.org/previews/412/412003_6492282-hq.mp3",
+      "score": 7.6,
+      "reasons": [
+        "+2.49 rating 5 from 6 ratings",
+        "+1.11 167 downloads",
+        "+2 at least 90 s",
+        "+1 tags airplane",
+        "+1 name matches airplane"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 853736,
+      "name": "Airplane Cabin (after take-off) - 2",
+      "url": "https://freesound.org/people/jasonm911/sounds/853736/",
+      "author": "jasonm911",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 17,
+      "previewUrl": "https://cdn.freesound.org/previews/853/853736_1800474-hq.mp3",
+      "score": 7.5,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.63 17 downloads",
+        "+2 at least 90 s",
+        "+2 tags cabin, plane",
+        "+1 name matches airplane, cabin"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 853737,
+      "name": "Airplane Cabin (mid-flight) - 1",
+      "url": "https://freesound.org/people/jasonm911/sounds/853737/",
+      "author": "jasonm911",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 13,
+      "previewUrl": "https://cdn.freesound.org/previews/853/853737_1800474-hq.mp3",
+      "score": 7.45,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.57 13 downloads",
+        "+2 at least 90 s",
+        "+2 tags cabin, plane",
+        "+1 name matches airplane, cabin"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 845955,
+      "name": "Landing - Cabin Ambience",
+      "url": "https://freesound.org/people/ElevatorFan2020/sounds/845955/",
+      "author": "ElevatorFan2020",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 199.62,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 10,
+      "previewUrl": "https://cdn.freesound.org/previews/845/845955_14269391-hq.mp3",
+      "score": 7.4,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.52 10 downloads",
+        "+2 at least 90 s",
+        "+2 tags airplane, cabin",
+        "+1 name matches cabin"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 853738,
+      "name": "Airplane Cabin (mid-flight) - 2",
+      "url": "https://freesound.org/people/jasonm911/sounds/853738/",
+      "author": "jasonm911",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 10,
+      "previewUrl": "https://cdn.freesound.org/previews/853/853738_1800474-hq.mp3",
+      "score": 7.4,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.52 10 downloads",
+        "+2 at least 90 s",
+        "+2 tags cabin, plane",
+        "+1 name matches airplane, cabin"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 853735,
+      "name": "Airplane Cabin (after take-off) - 1",
+      "url": "https://freesound.org/people/jasonm911/sounds/853735/",
+      "author": "jasonm911",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 9,
+      "previewUrl": "https://cdn.freesound.org/previews/853/853735_1800474-hq.mp3",
+      "score": 7.38,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.5 9 downloads",
+        "+2 at least 90 s",
+        "+2 tags cabin, plane",
+        "+1 name matches airplane, cabin"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 853739,
+      "name": "Airplane Cabin (landing) - 1",
+      "url": "https://freesound.org/people/jasonm911/sounds/853739/",
+      "author": "jasonm911",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 6,
+      "previewUrl": "https://cdn.freesound.org/previews/853/853739_1800474-hq.mp3",
+      "score": 7.3,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.42 6 downloads",
+        "+2 at least 90 s",
+        "+2 tags cabin, plane",
+        "+1 name matches airplane, cabin"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 853740,
+      "name": "Airplane Cabin (landing) - 2",
+      "url": "https://freesound.org/people/jasonm911/sounds/853740/",
+      "author": "jasonm911",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 5,
+      "previewUrl": "https://cdn.freesound.org/previews/853/853740_1800474-hq.mp3",
+      "score": 7.26,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.39 5 downloads",
+        "+2 at least 90 s",
+        "+2 tags cabin, plane",
+        "+1 name matches airplane, cabin"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 853741,
+      "name": "Airplane Cabin (landing) - 3",
+      "url": "https://freesound.org/people/jasonm911/sounds/853741/",
+      "author": "jasonm911",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 3,
+      "previewUrl": "https://cdn.freesound.org/previews/853/853741_1800474-hq.mp3",
+      "score": 7.18,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.3 3 downloads",
+        "+2 at least 90 s",
+        "+2 tags cabin, plane",
+        "+1 name matches airplane, cabin"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 239475,
+      "name": "New Jersey Backyard in Springtime Ambience (loop)",
+      "url": "https://freesound.org/people/hargissssound/sounds/239475/",
+      "author": "hargissssound",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 170.3,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 6,
+      "numDownloads": 581,
+      "previewUrl": "https://cdn.freesound.org/previews/239/239475_387219-hq.mp3",
+      "score": 6.73,
+      "reasons": [
+        "+2.35 rating 4.67 from 6 ratings",
+        "+1.38 581 downloads",
+        "+2 at least 90 s",
+        "+1 tags airplane"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 564166,
+      "name": "Crashing Starship",
+      "url": "https://freesound.org/people/Aemyn/sounds/564166/",
+      "author": "Aemyn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 307.95,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.35,
+      "numRatings": 143,
+      "numDownloads": 4485,
+      "previewUrl": "https://cdn.freesound.org/previews/564/564166_1445263-hq.mp3",
+      "score": 6.32,
+      "reasons": [
+        "+2.49 rating 4.35 from 143 ratings",
+        "+1.83 4485 downloads",
+        "+2 at least 90 s"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [
-        "vehicles",
-        "engines"
-      ],
-      "required": [
-        [
-          "Aircraft",
-          "Fixed-wing aircraft, airplane",
-          "Aircraft engine",
-          "Jet engine"
-        ]
-      ],
-      "clapPrompt": "an airplane cabin with a steady engine drone and muffled air"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Aircraft / Fixed-wing aircraft, airplane / Aircraft engine / Jet engine",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 433002,
-        "name": "amb, airplane cabin, passenger chatter, seatbelt announcement, fuma-bformat.wav",
-        "url": "https://freesound.org/people/drewhalasz/sounds/433002/",
-        "author": "drewhalasz",
-        "durationSec": 189.4,
-        "verdict": "reject",
-        "reason": "required sound absent: Aircraft / Fixed-wing aircraft, airplane / Aircraft engine / Jet engine",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 189,
-          "cleanSeconds": 116,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8685
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.6385
-            },
-            {
-              "label": "Bleat",
-              "max": 0.3045
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.2937
-            },
-            {
-              "label": "Animal",
-              "max": 0.2831
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.868,
-              "atSecond": 91
-            },
-            {
-              "label": "Honk",
-              "max": 0.144,
-              "atSecond": 123
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Aircraft",
-                "Fixed-wing aircraft, airplane",
-                "Aircraft engine",
-                "Jet engine"
-              ],
-              "fraction": 0.021
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 456092,
-        "name": "Airplane cabin ambience / atmosphere Airbus A330-300",
-        "url": "https://freesound.org/people/FillSoko/sounds/456092/",
-        "author": "FillSoko",
-        "durationSec": 154.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Aircraft / Fixed-wing aircraft, airplane / Aircraft engine / Jet engine",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 154,
-          "cleanSeconds": 152,
-          "topClasses": [
-            {
-              "label": "Vehicle",
-              "max": 0.6534
-            },
-            {
-              "label": "Car",
-              "max": 0.3016
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.2762
-            },
-            {
-              "label": "Air conditioning",
-              "max": 0.2577
-            },
-            {
-              "label": "Train",
-              "max": 0.2181
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Microwave oven",
-              "max": 0.162,
-              "atSecond": 137
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Aircraft",
-                "Fixed-wing aircraft, airplane",
-                "Aircraft engine",
-                "Jet engine"
-              ],
-              "fraction": 0.045
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 433003,
-        "name": "amb, airplane cabin, fuma-bformat.wav",
-        "url": "https://freesound.org/people/drewhalasz/sounds/433003/",
-        "author": "drewhalasz",
-        "durationSec": 170,
-        "verdict": "reject",
-        "reason": "required sound absent: Aircraft / Fixed-wing aircraft, airplane / Aircraft engine / Jet engine",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 169,
-          "cleanSeconds": 95,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.7816
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.669
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.2715
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.2438
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.2101
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.782,
-              "atSecond": 136
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Aircraft",
-                "Fixed-wing aircraft, airplane",
-                "Aircraft engine",
-                "Jet engine"
-              ],
-              "fraction": 0.006
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 433012,
-        "name": "amb, airplane cabin, announcement, 5.0 (LCRLsRs).wav",
-        "url": "https://freesound.org/people/drewhalasz/sounds/433012/",
-        "author": "drewhalasz",
-        "durationSec": 189.4,
-        "verdict": "reject",
-        "reason": "required sound absent: Aircraft / Fixed-wing aircraft, airplane / Aircraft engine / Jet engine",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 189,
-          "cleanSeconds": 106,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.844
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.7258
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.3935
-            },
-            {
-              "label": "Train",
-              "max": 0.3494
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.3303
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.844,
-              "atSecond": 91
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Aircraft",
-                "Fixed-wing aircraft, airplane",
-                "Aircraft engine",
-                "Jet engine"
-              ],
-              "fraction": 0.439
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 487604,
-        "name": "Airplane Landing - Inside Cabin.WAV",
-        "url": "https://freesound.org/people/Bpianoholic/sounds/487604/",
-        "author": "Bpianoholic",
-        "durationSec": 250.9,
-        "verdict": "reject",
-        "reason": "required sound absent: Aircraft / Fixed-wing aircraft, airplane / Aircraft engine / Jet engine",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 250,
-          "cleanSeconds": 163,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8871
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.7528
-            },
-            {
-              "label": "Thunder",
-              "max": 0.5708
-            },
-            {
-              "label": "Animal",
-              "max": 0.4841
-            },
-            {
-              "label": "Music",
-              "max": 0.4599
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.887,
-              "atSecond": 208
-            },
-            {
-              "label": "Thunder",
-              "max": 0.571,
-              "atSecond": 167
-            },
-            {
-              "label": "Music",
-              "max": 0.46,
-              "atSecond": 4
-            },
-            {
-              "label": "Female speech, woman speaking",
-              "max": 0.437,
-              "atSecond": 237
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.396,
-              "atSecond": 167
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.231,
-              "atSecond": 147
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Aircraft",
-                "Fixed-wing aircraft, airplane",
-                "Aircraft engine",
-                "Jet engine"
-              ],
-              "fraction": 0.244
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 627056,
-        "name": "Airplane_Cabine ambiance (during flight).wav",
-        "url": "https://freesound.org/people/KaleidacousticsAudio/sounds/627056/",
-        "author": "KaleidacousticsAudio",
-        "durationSec": 295.4,
-        "verdict": "reject",
-        "reason": "required sound absent: Aircraft / Fixed-wing aircraft, airplane / Aircraft engine / Jet engine",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 295,
-          "cleanSeconds": 194,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8574
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.6175
-            },
-            {
-              "label": "Field recording",
-              "max": 0.423
-            },
-            {
-              "label": "Music",
-              "max": 0.3256
-            },
-            {
-              "label": "Mouse",
-              "max": 0.2944
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.857,
-              "atSecond": 63
-            },
-            {
-              "label": "Music",
-              "max": 0.326,
-              "atSecond": 0
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Aircraft",
-                "Fixed-wing aircraft, airplane",
-                "Aircraft engine",
-                "Jet engine"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 868887,
-        "name": "Airplane_Inside_Sitting_PA_Speaker_SafetyInstructions_1",
-        "url": "https://freesound.org/people/SMKoski02/sounds/868887/",
-        "author": "SMKoski02",
-        "durationSec": 184.7,
-        "verdict": "reject",
-        "reason": "required sound absent: Aircraft / Fixed-wing aircraft, airplane / Aircraft engine / Jet engine",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 184,
-          "cleanSeconds": 11,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8913
-            },
-            {
-              "label": "Music",
-              "max": 0.88
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.6491
-            },
-            {
-              "label": "Female speech, woman speaking",
-              "max": 0.5625
-            },
-            {
-              "label": "Train",
-              "max": 0.4771
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.891,
-              "atSecond": 19
-            },
-            {
-              "label": "Music",
-              "max": 0.88,
-              "atSecond": 33
-            },
-            {
-              "label": "Female speech, woman speaking",
-              "max": 0.563,
-              "atSecond": 54
-            },
-            {
-              "label": "Narration, monologue",
-              "max": 0.24,
-              "atSecond": 109
-            },
-            {
-              "label": "Male speech, man speaking",
-              "max": 0.209,
-              "atSecond": 34
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Aircraft",
-                "Fixed-wing aircraft, airplane",
-                "Aircraft engine",
-                "Jet engine"
-              ],
-              "fraction": 0.005
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 853742,
-        "name": "Airplane Cabin (near ground)",
-        "url": "https://freesound.org/people/jasonm911/sounds/853742/",
-        "author": "jasonm911",
-        "durationSec": 120,
-        "verdict": "reject",
-        "reason": "required sound absent: Aircraft / Fixed-wing aircraft, airplane / Aircraft engine / Jet engine",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 120,
-          "cleanSeconds": 118,
-          "topClasses": [
-            {
-              "label": "Vehicle",
-              "max": 0.7284
-            },
-            {
-              "label": "Train",
-              "max": 0.4696
-            },
-            {
-              "label": "Field recording",
-              "max": 0.3786
-            },
-            {
-              "label": "Music",
-              "max": 0.3758
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.3689
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.376,
-              "atSecond": 16
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Aircraft",
-                "Fixed-wing aircraft, airplane",
-                "Aircraft engine",
-                "Jet engine"
-              ],
-              "fraction": 0.35
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

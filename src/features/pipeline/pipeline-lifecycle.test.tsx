@@ -104,6 +104,7 @@ function fakeRuntime() {
         eventListener = null;
       };
     },
+    subscribeSaveFailures: () => () => undefined,
   };
   return {
     runtime: runtime as unknown as PipelineRuntime,

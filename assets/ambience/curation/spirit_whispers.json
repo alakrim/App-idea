@@ -1,458 +1,565 @@
 {
   "category": "spirit_whispers",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "ghost whispers ambience",
-    "eerie whispers air"
+    "eerie whispers air",
+    "eerie ambience loop",
+    "ghostly wind ambience"
   ],
-  "poolSize": 3,
+  "poolSize": 39,
   "candidates": [
     {
       "rank": 1,
-      "freesoundId": 837985,
-      "name": "Textural SFX – Bubbling  & Fire",
-      "url": "https://freesound.org/people/Artem_Zaitsev/sounds/837985/",
-      "author": "Artem_Zaitsev",
+      "freesoundId": 557191,
+      "name": "Little dark house soundscape",
+      "url": "https://freesound.org/people/szegvari/sounds/557191/",
+      "author": "szegvari",
       "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 60.06,
-      "samplerate": 48000,
+      "durationSec": 148.72,
+      "samplerate": 44100,
       "channels": 2,
-      "avgRating": 4.25,
-      "numRatings": 4,
-      "numDownloads": 100,
-      "previewUrl": "https://cdn.freesound.org/previews/837/837985_15618458-hq.mp3",
-      "score": 4.13,
+      "avgRating": 4.76,
+      "numRatings": 17,
+      "numDownloads": 465,
+      "previewUrl": "https://cdn.freesound.org/previews/557/557191_2282212-hq.mp3",
+      "score": 7.94,
       "reasons": [
-        "+2.13 rating 4.25 from 4 ratings",
-        "+1 100 downloads",
-        "+1 at least 60 s"
+        "+2.61 rating 4.76 from 17 ratings",
+        "+1.33 465 downloads",
+        "+2 at least 90 s",
+        "+2 tags ghost, eerie"
       ]
     },
     {
       "rank": 2,
-      "freesoundId": 530683,
-      "name": "ambient ghost",
-      "url": "https://freesound.org/people/s-light/sounds/530683/",
-      "author": "s-light",
+      "freesoundId": 569912,
+      "name": "Mystic Jungle rain",
+      "url": "https://freesound.org/people/szegvari/sounds/569912/",
+      "author": "szegvari",
       "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 300,
-      "samplerate": 48000,
+      "durationSec": 122,
+      "samplerate": 44100,
       "channels": 2,
-      "avgRating": 4.9,
-      "numRatings": 10,
-      "numDownloads": 488,
-      "previewUrl": "https://cdn.freesound.org/previews/530/530683_2154914-hq.mp3",
-      "score": 0.92,
+      "avgRating": 4.46,
+      "numRatings": 13,
+      "numDownloads": 1087,
+      "previewUrl": "https://cdn.freesound.org/previews/569/569912_2282212-hq.mp3",
+      "score": 7.91,
       "reasons": [
-        "+2.58 rating 4.9 from 10 ratings",
-        "+1.34 488 downloads",
+        "+2.4 rating 4.46 from 13 ratings",
+        "+1.52 1087 downloads",
         "+2 at least 90 s",
-        "+1 name matches ghost",
-        "-6 music (remix)"
+        "+2 tags ghost, eerie"
       ]
     },
     {
       "rank": 3,
-      "freesoundId": 725604,
-      "name": "Winter Winds Leaving The Front Yard",
-      "url": "https://freesound.org/people/WhiteNoiseSleeper/sounds/725604/",
-      "author": "WhiteNoiseSleeper",
+      "freesoundId": 557193,
+      "name": "Ghost Town Night Ambient",
+      "url": "https://freesound.org/people/szegvari/sounds/557193/",
+      "author": "szegvari",
       "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 476.99,
+      "durationSec": 150.63,
       "samplerate": 44100,
       "channels": 2,
-      "avgRating": 4.29,
+      "avgRating": 4.53,
       "numRatings": 17,
-      "numDownloads": 283,
-      "previewUrl": "https://cdn.freesound.org/previews/725/725604_15753134-hq.mp3",
-      "score": -0.44,
+      "numDownloads": 443,
+      "previewUrl": "https://cdn.freesound.org/previews/557/557193_2282212-hq.mp3",
+      "score": 7.8,
       "reasons": [
-        "+2.34 rating 4.29 from 17 ratings",
-        "+1.23 283 downloads",
+        "+2.47 rating 4.53 from 17 ratings",
+        "+1.32 443 downloads",
         "+2 at least 90 s",
-        "-6 music (soundtrack, instrumental)"
+        "+1 tags ghost",
+        "+1 name matches ghost"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 534018,
+      "name": "Sci-fi Ambient Drone.wav",
+      "url": "https://freesound.org/people/LookIMadeAThing/sounds/534018/",
+      "author": "LookIMadeAThing",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 165,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.93,
+      "numRatings": 69,
+      "numDownloads": 1962,
+      "previewUrl": "https://cdn.freesound.org/previews/534/534018_3968707-hq.mp3",
+      "score": 7.52,
+      "reasons": [
+        "+2.87 rating 4.93 from 69 ratings",
+        "+1.65 1962 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 103340,
+      "name": "Dark_Ambience.wav",
+      "url": "https://freesound.org/people/CaCtUs2003/sounds/103340/",
+      "author": "CaCtUs2003",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 164.29,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.69,
+      "numRatings": 54,
+      "numDownloads": 3165,
+      "previewUrl": "https://cdn.freesound.org/previews/103/103340_1438822-hq.mp3",
+      "score": 7.44,
+      "reasons": [
+        "+2.69 rating 4.69 from 54 ratings",
+        "+1.75 3165 downloads",
+        "+2 at least 90 s",
+        "+1 tags whispers"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 558650,
+      "name": "Space Cabin Dark Ambient",
+      "url": "https://freesound.org/people/szegvari/sounds/558650/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 147.2,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.96,
+      "numRatings": 26,
+      "numDownloads": 798,
+      "previewUrl": "https://cdn.freesound.org/previews/558/558650_2282212-hq.mp3",
+      "score": 7.25,
+      "reasons": [
+        "+2.79 rating 4.96 from 26 ratings",
+        "+1.45 798 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 362670,
+      "name": "Creepy Background Noise 1 (Loopable).wav",
+      "url": "https://freesound.org/people/Osiruswaltz/sounds/362670/",
+      "author": "Osiruswaltz",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 77.19,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.79,
+      "numRatings": 63,
+      "numDownloads": 6175,
+      "previewUrl": "https://cdn.freesound.org/previews/362/362670_4574070-hq.mp3",
+      "score": 7.17,
+      "reasons": [
+        "+2.77 rating 4.79 from 63 ratings",
+        "+1.9 6175 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 370168,
+      "name": "Creepy Background Noise 1 (Longer & Deeper).wav",
+      "url": "https://freesound.org/people/Osiruswaltz/sounds/370168/",
+      "author": "Osiruswaltz",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 296.45,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.72,
+      "numRatings": 25,
+      "numDownloads": 983,
+      "previewUrl": "https://cdn.freesound.org/previews/370/370168_4574070-hq.mp3",
+      "score": 7.13,
+      "reasons": [
+        "+2.64 rating 4.72 from 25 ratings",
+        "+1.5 983 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 565841,
+      "name": "Atmosphere dark 1",
+      "url": "https://freesound.org/people/szegvari/sounds/565841/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 162.35,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.89,
+      "numRatings": 18,
+      "numDownloads": 734,
+      "previewUrl": "https://cdn.freesound.org/previews/565/565841_2282212-hq.mp3",
+      "score": 7.12,
+      "reasons": [
+        "+2.69 rating 4.89 from 18 ratings",
+        "+1.43 734 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 534020,
+      "name": "Sci-fi Ambient Drone - Dry",
+      "url": "https://freesound.org/people/LookIMadeAThing/sounds/534020/",
+      "author": "LookIMadeAThing",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 158,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.94,
+      "numRatings": 18,
+      "numDownloads": 567,
+      "previewUrl": "https://cdn.freesound.org/previews/534/534020_3968707-hq.mp3",
+      "score": 7.1,
+      "reasons": [
+        "+2.72 rating 4.94 from 18 ratings",
+        "+1.38 567 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 567377,
+      "name": "Waiting_ Thriller",
+      "url": "https://freesound.org/people/szegvari/sounds/567377/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 101.61,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.9,
+      "numRatings": 10,
+      "numDownloads": 502,
+      "previewUrl": "https://cdn.freesound.org/previews/567/567377_2282212-hq.mp3",
+      "score": 6.93,
+      "reasons": [
+        "+2.58 rating 4.9 from 10 ratings",
+        "+1.35 502 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 412243,
+      "name": "Vertigo",
+      "url": "https://freesound.org/people/banan_/sounds/412243/",
+      "author": "banan_",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 100.94,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.82,
+      "numRatings": 11,
+      "numDownloads": 515,
+      "previewUrl": "https://cdn.freesound.org/previews/412/412243_7219680-hq.mp3",
+      "score": 6.91,
+      "reasons": [
+        "+2.55 rating 4.82 from 11 ratings",
+        "+1.36 515 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 565840,
+      "name": "Atmosphere dark 2",
+      "url": "https://freesound.org/people/szegvari/sounds/565840/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 156.38,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.77,
+      "numRatings": 13,
+      "numDownloads": 412,
+      "previewUrl": "https://cdn.freesound.org/previews/565/565840_2282212-hq.mp3",
+      "score": 6.87,
+      "reasons": [
+        "+2.56 rating 4.77 from 13 ratings",
+        "+1.31 412 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 565839,
+      "name": "Atmosphere dark 3",
+      "url": "https://freesound.org/people/szegvari/sounds/565839/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 156.38,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 12,
+      "numDownloads": 444,
+      "previewUrl": "https://cdn.freesound.org/previews/565/565839_2282212-hq.mp3",
+      "score": 6.86,
+      "reasons": [
+        "+2.54 rating 4.75 from 12 ratings",
+        "+1.32 444 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 868503,
+      "name": "Eerie Atmosphere Loop",
+      "url": "https://freesound.org/people/heavenscalamity/sounds/868503/",
+      "author": "heavenscalamity",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 235.98,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 14,
+      "numDownloads": 259,
+      "previewUrl": "https://cdn.freesound.org/previews/868/868503_19129126-hq.mp3",
+      "score": 6.75,
+      "reasons": [
+        "+2.55 rating 4.71 from 14 ratings",
+        "+1.21 259 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 558649,
+      "name": "Space Cabin Dark",
+      "url": "https://freesound.org/people/szegvari/sounds/558649/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 147.2,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.25,
+      "numRatings": 12,
+      "numDownloads": 451,
+      "previewUrl": "https://cdn.freesound.org/previews/558/558649_2282212-hq.mp3",
+      "score": 6.6,
+      "reasons": [
+        "+2.27 rating 4.25 from 12 ratings",
+        "+1.33 451 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 567376,
+      "name": "Slow Time Thriller",
+      "url": "https://freesound.org/people/szegvari/sounds/567376/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 101.61,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 6,
+      "numDownloads": 356,
+      "previewUrl": "https://cdn.freesound.org/previews/567/567376_2282212-hq.mp3",
+      "score": 6.56,
+      "reasons": [
+        "+2.28 rating 4.5 from 6 ratings",
+        "+1.28 356 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 567378,
+      "name": "Village Thriller",
+      "url": "https://freesound.org/people/szegvari/sounds/567378/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 101.61,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 191,
+      "previewUrl": "https://cdn.freesound.org/previews/567/567378_2282212-hq.mp3",
+      "score": 6.5,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+1.14 191 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 352542,
+      "name": "Fragment from A DISTANT PAST_-12_[loop]",
+      "url": "https://freesound.org/people/cabled_mess/sounds/352542/",
+      "author": "cabled_mess",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 113.33,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.38,
+      "numRatings": 8,
+      "numDownloads": 261,
+      "previewUrl": "https://cdn.freesound.org/previews/352/352542_5450487-hq.mp3",
+      "score": 6.49,
+      "reasons": [
+        "+2.28 rating 4.38 from 8 ratings",
+        "+1.21 261 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 567375,
+      "name": "Street Fantasy  Thriller",
+      "url": "https://freesound.org/people/szegvari/sounds/567375/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 101.61,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 216,
+      "previewUrl": "https://cdn.freesound.org/previews/567/567375_2282212-hq.mp3",
+      "score": 6.47,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.17 216 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 567373,
+      "name": "Street Thriller 1",
+      "url": "https://freesound.org/people/szegvari/sounds/567373/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 101.61,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.4,
+      "numRatings": 5,
+      "numDownloads": 239,
+      "previewUrl": "https://cdn.freesound.org/previews/567/567373_2282212-hq.mp3",
+      "score": 6.4,
+      "reasons": [
+        "+2.21 rating 4.4 from 5 ratings",
+        "+1.19 239 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 561003,
+      "name": "Shadow King Temple",
+      "url": "https://freesound.org/people/szegvari/sounds/561003/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 85,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.88,
+      "numRatings": 8,
+      "numDownloads": 492,
+      "previewUrl": "https://cdn.freesound.org/previews/561/561003_2282212-hq.mp3",
+      "score": 6.36,
+      "reasons": [
+        "+2.51 rating 4.88 from 8 ratings",
+        "+1.35 492 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 636116,
+      "name": "ghost town without any person and only wind.wav",
+      "url": "https://freesound.org/people/fonografico/sounds/636116/",
+      "author": "fonografico",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 61,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 149,
+      "previewUrl": "https://cdn.freesound.org/previews/636/636116_11705708-hq.mp3",
+      "score": 6.15,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1.09 149 downloads",
+        "+1 at least 60 s",
+        "+1 tags ghost",
+        "+1 name matches ghost"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 869200,
+      "name": "Slow Echoing Wind Chimes 2– Deep Ambient Drone Loop",
+      "url": "https://freesound.org/people/kkenny101/sounds/869200/",
+      "author": "kkenny101",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 495.96,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 37,
+      "previewUrl": "https://cdn.freesound.org/previews/869/869200_17997500-hq.mp3",
+      "score": 5.99,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.79 37 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 869199,
+      "name": "Slow Echoing Wind Chimes 1– Deep Ambient Drone Loop",
+      "url": "https://freesound.org/people/kkenny101/sounds/869199/",
+      "author": "kkenny101",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 247.98,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 35,
+      "previewUrl": "https://cdn.freesound.org/previews/869/869199_17997500-hq.mp3",
+      "score": 5.97,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.78 35 downloads",
+        "+2 at least 90 s",
+        "+1 tags eerie"
       ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Wind",
-          "Hum",
-          "Humming"
-        ]
-      ],
-      "clapPrompt": "faint eerie air with unplaceable low tones"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "clip has 60 s; a window needs 64 s; required sound absent: Wind / Hum / Humming",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 837985,
-        "name": "Textural SFX – Bubbling  & Fire",
-        "url": "https://freesound.org/people/Artem_Zaitsev/sounds/837985/",
-        "author": "Artem_Zaitsev",
-        "durationSec": 60.1,
-        "verdict": "reject",
-        "reason": "clip has 60 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 60,
-          "cleanSeconds": 54,
-          "topClasses": [
-            {
-              "label": "Scratch",
-              "max": 0.3147
-            },
-            {
-              "label": "Firecracker",
-              "max": 0.1966
-            },
-            {
-              "label": "Fireworks",
-              "max": 0.1833
-            },
-            {
-              "label": "Shuffling cards",
-              "max": 0.13
-            },
-            {
-              "label": "Scratching (performance technique)",
-              "max": 0.1193
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Firecracker",
-              "max": 0.197,
-              "atSecond": 24
-            },
-            {
-              "label": "Fireworks",
-              "max": 0.183,
-              "atSecond": 24
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Hum",
-                "Humming"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 530683,
-        "name": "ambient ghost",
-        "url": "https://freesound.org/people/s-light/sounds/530683/",
-        "author": "s-light",
-        "durationSec": 300,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Hum / Humming",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 300,
-          "cleanSeconds": 39,
-          "topClasses": [
-            {
-              "label": "Thunder",
-              "max": 0.7199
-            },
-            {
-              "label": "Music",
-              "max": 0.718
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.6963
-            },
-            {
-              "label": "Timpani",
-              "max": 0.546
-            },
-            {
-              "label": "Field recording",
-              "max": 0.5116
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.72,
-              "atSecond": 164
-            },
-            {
-              "label": "Music",
-              "max": 0.718,
-              "atSecond": 21
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.696,
-              "atSecond": 145
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.503,
-              "atSecond": 164
-            },
-            {
-              "label": "Train",
-              "max": 0.497,
-              "atSecond": 15
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.426,
-              "atSecond": 63
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.408,
-              "atSecond": 63
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.392,
-              "atSecond": 181
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.382,
-              "atSecond": 181
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.292,
-              "atSecond": 74
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.264,
-              "atSecond": 21
-            },
-            {
-              "label": "Car",
-              "max": 0.264,
-              "atSecond": 71
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.26,
-              "atSecond": 174
-            },
-            {
-              "label": "Subway, metro, underground",
-              "max": 0.203,
-              "atSecond": 15
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.198,
-              "atSecond": 206
-            },
-            {
-              "label": "Aircraft engine",
-              "max": 0.185,
-              "atSecond": 141
-            },
-            {
-              "label": "Drum",
-              "max": 0.18,
-              "atSecond": 21
-            },
-            {
-              "label": "Bus",
-              "max": 0.168,
-              "atSecond": 22
-            },
-            {
-              "label": "Ship",
-              "max": 0.164,
-              "atSecond": 81
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.161,
-              "atSecond": 174
-            },
-            {
-              "label": "Truck",
-              "max": 0.156,
-              "atSecond": 22
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Hum",
-                "Humming"
-              ],
-              "fraction": 0.01
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 725604,
-        "name": "Winter Winds Leaving The Front Yard",
-        "url": "https://freesound.org/people/WhiteNoiseSleeper/sounds/725604/",
-        "author": "WhiteNoiseSleeper",
-        "durationSec": 477,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Hum / Humming",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 476,
-          "cleanSeconds": 176,
-          "topClasses": [
-            {
-              "label": "Rain",
-              "max": 0.7298
-            },
-            {
-              "label": "Thunder",
-              "max": 0.7213
-            },
-            {
-              "label": "Rain on surface",
-              "max": 0.6296
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.6109
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.579
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.721,
-              "atSecond": 79
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.611,
-              "atSecond": 79
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.579,
-              "atSecond": 97
-            },
-            {
-              "label": "Speech",
-              "max": 0.429,
-              "atSecond": 341
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.311,
-              "atSecond": 308
-            },
-            {
-              "label": "Train",
-              "max": 0.281,
-              "atSecond": 172
-            },
-            {
-              "label": "Music",
-              "max": 0.278,
-              "atSecond": 365
-            },
-            {
-              "label": "Reversing beeps",
-              "max": 0.257,
-              "atSecond": 442
-            },
-            {
-              "label": "Car",
-              "max": 0.218,
-              "atSecond": 148
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.204,
-              "atSecond": 172
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.203,
-              "atSecond": 375
-            },
-            {
-              "label": "Wind chime",
-              "max": 0.202,
-              "atSecond": 399
-            },
-            {
-              "label": "Chime",
-              "max": 0.161,
-              "atSecond": 399
-            },
-            {
-              "label": "Truck",
-              "max": 0.16,
-              "atSecond": 442
-            },
-            {
-              "label": "Traffic noise, roadway noise",
-              "max": 0.155,
-              "atSecond": 34
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Hum",
-                "Humming"
-              ],
-              "fraction": 0.002
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

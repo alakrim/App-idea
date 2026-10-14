@@ -99,15 +99,34 @@ describe('updateSeries', () => {
   });
 });
 
+/** Records each stop, and what the database still held when it was asked to stop. */
+function withStops(deps: SeriesServiceDeps, db: Db) {
+  const stops: { ids: string[]; chapterRowsAtStop: number }[] = [];
+  return {
+    stops,
+    removal: {
+      ...deps,
+      stopRuns: async (chapterIds: readonly string[]) => {
+        stops.push({
+          ids: [...chapterIds],
+          chapterRowsAtStop: chapterRepo.listBySeries(db, id(1)).length,
+        });
+      },
+    },
+  };
+}
+
 describe('deleteSeries', () => {
-  it('removes the series, its chapters and every file they own', () => {
+  it('stops every run of the series before removing its rows and files', async () => {
     const { db, deps, deleted } = setup();
     seriesRepo.insert(db, seriesRow(1, { coverUri: 'file:///covers/a.jpg' }));
     chapterRepo.insert(db, chapterRow(1, 1, 1));
     chapterRepo.insert(db, chapterRow(2, 1, 2));
+    const { stops, removal } = withStops(deps, db);
 
-    deleteSeries(deps, id(1));
+    await deleteSeries(removal, id(1));
 
+    expect(stops).toEqual([{ ids: [id(1), id(2)], chapterRowsAtStop: 2 }]);
     expect(seriesRepo.get(db, id(1))).toBeNull();
     expect(chapterRepo.listBySeries(db, id(1))).toEqual([]);
     expect(deleted.chapters).toEqual([id(1), id(2)]);
@@ -116,15 +135,35 @@ describe('deleteSeries', () => {
 });
 
 describe('deleteChapter', () => {
-  it('removes the chapter row and then its files', () => {
+  it('stops the chapter run, then removes the chapter row and its files', async () => {
     const { db, deps, deleted } = setup();
     seriesRepo.insert(db, seriesRow(1));
     chapterRepo.insert(db, chapterRow(1, 1, 1));
+    const { stops, removal } = withStops(deps, db);
 
-    deleteChapter(deps, id(1));
+    await deleteChapter(removal, id(1));
 
+    expect(stops).toEqual([{ ids: [id(1)], chapterRowsAtStop: 1 }]);
     expect(chapterRepo.get(db, id(1))).toBeNull();
     expect(deleted.chapters).toEqual([id(1)]);
+  });
+
+  it('does not remove the rows while a run is still stopping', async () => {
+    const { db, deps } = setup();
+    seriesRepo.insert(db, seriesRow(1));
+    chapterRepo.insert(db, chapterRow(1, 1, 1));
+    let release: () => void = () => undefined;
+    const removal = {
+      ...deps,
+      stopRuns: () => new Promise<void>((resolve) => (release = resolve)),
+    };
+
+    const pending = deleteChapter(removal, id(1));
+    expect(chapterRepo.get(db, id(1))).not.toBeNull();
+
+    release();
+    await pending;
+    expect(chapterRepo.get(db, id(1))).toBeNull();
   });
 });
 

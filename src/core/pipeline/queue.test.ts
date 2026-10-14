@@ -502,4 +502,27 @@ describe('PipelineQueue: stalls and the network', () => {
     fake.network.emit({ type: 'staleAbort' });
     expect(events.filter((e) => e.type === 'staleAbort')).toEqual([]);
   });
+
+  it('keeps the queue when saving fails, reports the failure once, and saves again on the next change', async () => {
+    const fake = createFakePorts({ sourceText: TEXT });
+    let failing = true;
+    const saved: string[][] = [];
+    fake.ports.jobs.saveQueue = async (items) => {
+      if (failing) throw new Error('disk is full');
+      saved.push(items.map((item) => item.chapterId));
+    };
+    const failures: number[] = [];
+    const queue = createPipelineQueue(fake.ports, { onSaveFailed: () => failures.push(1) });
+
+    await queue.enqueue(CHAPTER_ID);
+    await queue.enqueue(ulid(9));
+
+    expect(queue.snapshot().pending.length + (queue.snapshot().running ? 1 : 0)).toBeGreaterThan(0);
+    expect(failures).toEqual([1]);
+
+    failing = false;
+    await queue.enqueue(ulid(10));
+    expect(failures).toEqual([1]);
+    expect(saved.at(-1)).toContain(ulid(10));
+  });
 });

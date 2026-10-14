@@ -16,6 +16,11 @@ export interface LlmRequest {
   readonly jsonSchema?: JsonSchemaSpec;
   readonly signal?: AbortSignal;
   /**
+   * The most output tokens the reply may use: twice the output the stage expects for this request.
+   * It caps what a runaway reply can cost, and a reply that hits it fails validation rather than billing on.
+   */
+  readonly maxOutputTokens?: number;
+  /**
    * The system text is static across calls, so the provider may cache it. Providers that need an
    * explicit cache breakpoint get one; the others cache automatically and ignore the flag.
    */

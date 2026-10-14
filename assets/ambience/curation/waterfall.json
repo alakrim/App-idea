@@ -1,14 +1,61 @@
 {
   "category": "waterfall",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "waterfall ambience",
-    "waterfall nature recording"
+    "waterfall nature recording",
+    "waterfall loop",
+    "cascade water forest"
   ],
-  "poolSize": 49,
+  "poolSize": 79,
   "candidates": [
     {
       "rank": 1,
+      "freesoundId": 466955,
+      "name": "Night close to a river, crickets and frogs, bird sometimes.",
+      "url": "https://freesound.org/people/felix.blume/sounds/466955/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 171.61,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.49,
+      "numRatings": 115,
+      "numDownloads": 11570,
+      "previewUrl": "https://cdn.freesound.org/previews/466/466955_1661766-hq.mp3",
+      "score": 9.58,
+      "reasons": [
+        "+2.58 rating 4.49 from 115 ratings",
+        "+2 11570 downloads",
+        "+2 at least 90 s",
+        "+3 tags waterfall, water, cascade"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 765094,
+      "name": "Sound of a waterfall in Loop",
+      "url": "https://freesound.org/people/alejandro2752t/sounds/765094/",
+      "author": "alejandro2752t",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 193.25,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.78,
+      "numRatings": 9,
+      "numDownloads": 98,
+      "previewUrl": "https://cdn.freesound.org/previews/765/765094_16542098-hq.mp3",
+      "score": 9.49,
+      "reasons": [
+        "+2.49 rating 4.78 from 9 ratings",
+        "+1 98 downloads",
+        "+2 at least 90 s",
+        "+3 tags waterfall, water, cascade",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 3,
       "freesoundId": 632107,
       "name": "Hidden waterfall.WAV",
       "url": "https://freesound.org/people/BassmanJourney/sounds/632107/",
@@ -31,7 +78,30 @@
       ]
     },
     {
-      "rank": 2,
+      "rank": 4,
+      "freesoundId": 466954,
+      "name": "Night close to a river, crickets and frogs, waterfall in background (on the left)",
+      "url": "https://freesound.org/people/felix.blume/sounds/466954/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 177.18,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 102,
+      "previewUrl": "https://cdn.freesound.org/previews/466/466954_1661766-hq.mp3",
+      "score": 9.07,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1.01 102 downloads",
+        "+2 at least 90 s",
+        "+3 tags waterfall, water, cascade",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 5,
       "freesoundId": 853107,
       "name": "Waterfall",
       "url": "https://freesound.org/people/chiara_____/sounds/853107/",
@@ -54,7 +124,7 @@
       ]
     },
     {
-      "rank": 3,
+      "rank": 6,
       "freesoundId": 442475,
       "name": "Big waterfall in forest.wav",
       "url": "https://freesound.org/people/BonnyOrbit/sounds/442475/",
@@ -77,7 +147,30 @@
       ]
     },
     {
-      "rank": 4,
+      "rank": 7,
+      "freesoundId": 621107,
+      "name": "Waterfall / Dam / River in Suburbs",
+      "url": "https://freesound.org/people/hargissssound/sounds/621107/",
+      "author": "hargissssound",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 179.87,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 11,
+      "numDownloads": 222,
+      "previewUrl": "https://cdn.freesound.org/previews/621/621107_387219-hq.mp3",
+      "score": 8.82,
+      "reasons": [
+        "+2.65 rating 5 from 11 ratings",
+        "+1.17 222 downloads",
+        "+2 at least 90 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 8,
       "freesoundId": 872740,
       "name": "Waterfall_Ambience_Risan_Montenegro",
       "url": "https://freesound.org/people/SignatureSoundsOrg/sounds/872740/",
@@ -100,7 +193,7 @@
       ]
     },
     {
-      "rank": 5,
+      "rank": 9,
       "freesoundId": 623797,
       "name": "Waterfall in La Palma island (Bosque de Los Tilos)",
       "url": "https://freesound.org/people/nomadas/sounds/623797/",
@@ -123,7 +216,7 @@
       ]
     },
     {
-      "rank": 6,
+      "rank": 10,
       "freesoundId": 415997,
       "name": "field recording atmo waterfall weir zoom h2n",
       "url": "https://freesound.org/people/Garuda1982/sounds/415997/",
@@ -146,7 +239,30 @@
       ]
     },
     {
-      "rank": 7,
+      "rank": 11,
+      "freesoundId": 868968,
+      "name": "Waterfall, Frogs and Insects - Rorota Trail, French Guiana",
+      "url": "https://freesound.org/people/felix.blume/sounds/868968/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 300.38,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 12,
+      "previewUrl": "https://cdn.freesound.org/previews/868/868968_1661766-hq.mp3",
+      "score": 8.43,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.56 12 downloads",
+        "+2 at least 90 s",
+        "+3 tags waterfall, water, cascade",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 12,
       "freesoundId": 614702,
       "name": "waterfall reservoir field recording",
       "url": "https://freesound.org/people/Garuda1982/sounds/614702/",
@@ -169,7 +285,7 @@
       ]
     },
     {
-      "rank": 8,
+      "rank": 13,
       "freesoundId": 855904,
       "name": "Waterfall at Boise Creek CA",
       "url": "https://freesound.org/people/CVLTIV8R/sounds/855904/",
@@ -190,591 +306,282 @@
         "+2 tags waterfall, water",
         "+1 name matches waterfall"
       ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 274259,
+      "name": "Waterfall Loop",
+      "url": "https://freesound.org/people/kwahmah_02/sounds/274259/",
+      "author": "kwahmah_02",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 69.85,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.31,
+      "numRatings": 16,
+      "numDownloads": 991,
+      "previewUrl": "https://cdn.freesound.org/previews/274/274259_4486188-hq.mp3",
+      "score": 8.34,
+      "reasons": [
+        "+2.34 rating 4.31 from 16 ratings",
+        "+1.5 991 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 627937,
+      "name": "Stream_Waterfall_Wales.wav",
+      "url": "https://freesound.org/people/innov8ting/sounds/627937/",
+      "author": "innov8ting",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 207.62,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 133,
+      "previewUrl": "https://cdn.freesound.org/previews/627/627937_211652-hq.mp3",
+      "score": 8.27,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+1.06 133 downloads",
+        "+2 at least 90 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 442624,
+      "name": "Waterfall in forest from far.wav",
+      "url": "https://freesound.org/people/BonnyOrbit/sounds/442624/",
+      "author": "BonnyOrbit",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 68.59,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.86,
+      "numRatings": 7,
+      "numDownloads": 229,
+      "previewUrl": "https://cdn.freesound.org/previews/442/442624_5902878-hq.mp3",
+      "score": 8.15,
+      "reasons": [
+        "+2.47 rating 4.86 from 7 ratings",
+        "+1.18 229 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 872739,
+      "name": "Waterfall_Above_Risan_Montenegro",
+      "url": "https://freesound.org/people/SignatureSoundsOrg/sounds/872739/",
+      "author": "SignatureSoundsOrg",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.75,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 14,
+      "previewUrl": "https://cdn.freesound.org/previews/872/872739_19205925-hq.mp3",
+      "score": 8.15,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.59 14 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags waterfall, water, cascade",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 416318,
+      "name": "Haifoss Waterfall",
+      "url": "https://freesound.org/people/tammarpokk/sounds/416318/",
+      "author": "tammarpokk",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 77.07,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.6,
+      "numRatings": 10,
+      "numDownloads": 271,
+      "previewUrl": "https://cdn.freesound.org/previews/416/416318_8167110-hq.mp3",
+      "score": 8.14,
+      "reasons": [
+        "+2.42 rating 4.6 from 10 ratings",
+        "+1.22 271 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 442431,
+      "name": "Small waterfall in mountain forest.WAV",
+      "url": "https://freesound.org/people/BonnyOrbit/sounds/442431/",
+      "author": "BonnyOrbit",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 62.23,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 12,
+      "numDownloads": 1017,
+      "previewUrl": "https://cdn.freesound.org/previews/442/442431_5902878-hq.mp3",
+      "score": 7.91,
+      "reasons": [
+        "+2.4 rating 4.5 from 12 ratings",
+        "+1.5 1017 downloads",
+        "+1 at least 60 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 442476,
+      "name": "Big waterfall from above.wav",
+      "url": "https://freesound.org/people/BonnyOrbit/sounds/442476/",
+      "author": "BonnyOrbit",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 79.07,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 170,
+      "previewUrl": "https://cdn.freesound.org/previews/442/442476_5902878-hq.mp3",
+      "score": 7.91,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.12 170 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 351359,
+      "name": "Water, Waterfall, Mortar, Dam, Flow, River, Creek, Stream_benniknop_11",
+      "url": "https://freesound.org/people/benniknop/sounds/351359/",
+      "author": "benniknop",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 60,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.92,
+      "numRatings": 12,
+      "numDownloads": 305,
+      "previewUrl": "https://cdn.freesound.org/previews/351/351359_2821704-hq.mp3",
+      "score": 7.87,
+      "reasons": [
+        "+2.63 rating 4.92 from 12 ratings",
+        "+1.24 305 downloads",
+        "+1 at least 60 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 607821,
+      "name": "waterfall roars and birds chirp",
+      "url": "https://freesound.org/people/PostProdDog/sounds/607821/",
+      "author": "PostProdDog",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 146.88,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 3,
+      "numRatings": 2,
+      "numDownloads": 157,
+      "previewUrl": "https://cdn.freesound.org/previews/607/607821_6911631-hq.mp3",
+      "score": 7.87,
+      "reasons": [
+        "+1.77 rating 3 from 2 ratings",
+        "+1.1 157 downloads",
+        "+2 at least 90 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 679101,
+      "name": "The Fermona Waterfall (Ferrera di Varese - Italy).wav",
+      "url": "https://freesound.org/people/IlMotografo/sounds/679101/",
+      "author": "IlMotografo",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 108.3,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 69,
+      "previewUrl": "https://cdn.freesound.org/previews/679/679101_12704565-hq.mp3",
+      "score": 7.8,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.92 69 downloads",
+        "+2 at least 90 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 855647,
+      "name": "260501_Waterfall - Xiufeng Waterfall, Taiwan - Ambient Field Recording",
+      "url": "https://freesound.org/people/BayTsai/sounds/855647/",
+      "author": "BayTsai",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 150.56,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 10,
+      "previewUrl": "https://cdn.freesound.org/previews/855/855647_17078888-hq.mp3",
+      "score": 7.58,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.52 10 downloads",
+        "+2 at least 90 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 351360,
+      "name": "Water, Waterfall, Mortar, Dam, Flow, River, Creek, Stream_benniknop_13",
+      "url": "https://freesound.org/people/benniknop/sounds/351360/",
+      "author": "benniknop",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 60,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 160,
+      "previewUrl": "https://cdn.freesound.org/previews/351/351360_2821704-hq.mp3",
+      "score": 7.54,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.1 160 downloads",
+        "+1 at least 60 s",
+        "+2 tags waterfall, water",
+        "+1 name matches waterfall"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Waterfall",
-          "Water",
-          "Stream"
-        ]
-      ],
-      "clapPrompt": "a waterfall roaring into a pool, no people"
-    },
-    "verdict": "filled",
-    "unfilledReason": null,
-    "chosen": {
-      "freesoundId": 872740,
-      "windowStartSeconds": 5,
-      "windowSeconds": 64,
-      "steadinessDb": 0.105,
-      "clapScore": 0.4504
-    },
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 632107,
-        "name": "Hidden waterfall.WAV",
-        "url": "https://freesound.org/people/BassmanJourney/sounds/632107/",
-        "author": "BassmanJourney",
-        "durationSec": 136.9,
-        "verdict": "reject",
-        "reason": "required sound absent: Waterfall / Water / Stream",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 136,
-          "cleanSeconds": 135,
-          "topClasses": [
-            {
-              "label": "Pink noise",
-              "max": 0.5362
-            },
-            {
-              "label": "Stream",
-              "max": 0.5352
-            },
-            {
-              "label": "Static",
-              "max": 0.4946
-            },
-            {
-              "label": "Rain",
-              "max": 0.3325
-            },
-            {
-              "label": "White noise",
-              "max": 0.3312
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.172,
-              "atSecond": 123
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Waterfall",
-                "Water",
-                "Stream"
-              ],
-              "fraction": 0.213
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 853107,
-        "name": "Waterfall",
-        "url": "https://freesound.org/people/chiara_____/sounds/853107/",
-        "author": "chiara_____",
-        "durationSec": 127.3,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 22,
-          "lengthSeconds": 64,
-          "steadinessDb": 0.237
-        },
-        "clapScore": 0.3771,
-        "evidence": {
-          "frames": 127,
-          "cleanSeconds": 127,
-          "topClasses": [
-            {
-              "label": "Pink noise",
-              "max": 0.5425
-            },
-            {
-              "label": "Waterfall",
-              "max": 0.3822
-            },
-            {
-              "label": "Stream",
-              "max": 0.1876
-            },
-            {
-              "label": "White noise",
-              "max": 0.1729
-            },
-            {
-              "label": "Waves, surf",
-              "max": 0.1669
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Waterfall",
-                "Water",
-                "Stream"
-              ],
-              "fraction": 0.764
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 442475,
-        "name": "Big waterfall in forest.wav",
-        "url": "https://freesound.org/people/BonnyOrbit/sounds/442475/",
-        "author": "BonnyOrbit",
-        "durationSec": 115.2,
-        "verdict": "reject",
-        "reason": "required sound absent: Waterfall / Water / Stream",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 115,
-          "cleanSeconds": 82,
-          "topClasses": [
-            {
-              "label": "Waves, surf",
-              "max": 0.5956
-            },
-            {
-              "label": "Ocean",
-              "max": 0.5709
-            },
-            {
-              "label": "Waterfall",
-              "max": 0.5233
-            },
-            {
-              "label": "Stream",
-              "max": 0.4357
-            },
-            {
-              "label": "Rain",
-              "max": 0.3712
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.307,
-              "atSecond": 67
-            },
-            {
-              "label": "Train",
-              "max": 0.3,
-              "atSecond": 2
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.283,
-              "atSecond": 113
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.259,
-              "atSecond": 2
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.221,
-              "atSecond": 67
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.207,
-              "atSecond": 2
-            },
-            {
-              "label": "Engine",
-              "max": 0.173,
-              "atSecond": 70
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Waterfall",
-                "Water",
-                "Stream"
-              ],
-              "fraction": 0.443
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 872740,
-        "name": "Waterfall_Ambience_Risan_Montenegro",
-        "url": "https://freesound.org/people/SignatureSoundsOrg/sounds/872740/",
-        "author": "SignatureSoundsOrg",
-        "durationSec": 215.8,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 5,
-          "lengthSeconds": 64,
-          "steadinessDb": 0.105
-        },
-        "clapScore": 0.4504,
-        "evidence": {
-          "frames": 215,
-          "cleanSeconds": 215,
-          "topClasses": [
-            {
-              "label": "Pink noise",
-              "max": 0.7149
-            },
-            {
-              "label": "Waterfall",
-              "max": 0.42
-            },
-            {
-              "label": "White noise",
-              "max": 0.2022
-            },
-            {
-              "label": "Noise",
-              "max": 0.1524
-            },
-            {
-              "label": "Stream",
-              "max": 0.1366
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Waterfall",
-                "Water",
-                "Stream"
-              ],
-              "fraction": 0.767
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 623797,
-        "name": "Waterfall in La Palma island (Bosque de Los Tilos)",
-        "url": "https://freesound.org/people/nomadas/sounds/623797/",
-        "author": "nomadas",
-        "durationSec": 118.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Waterfall / Water / Stream",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 118,
-          "cleanSeconds": 118,
-          "topClasses": [
-            {
-              "label": "Static",
-              "max": 0.7741
-            },
-            {
-              "label": "Noise",
-              "max": 0.5963
-            },
-            {
-              "label": "White noise",
-              "max": 0.4699
-            },
-            {
-              "label": "Pink noise",
-              "max": 0.3548
-            },
-            {
-              "label": "Waterfall",
-              "max": 0.1947
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Waterfall",
-                "Water",
-                "Stream"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 415997,
-        "name": "field recording atmo waterfall weir zoom h2n",
-        "url": "https://freesound.org/people/Garuda1982/sounds/415997/",
-        "author": "Garuda1982",
-        "durationSec": 118.7,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 0,
-          "lengthSeconds": 64,
-          "steadinessDb": 0.266
-        },
-        "clapScore": 0.4384,
-        "evidence": {
-          "frames": 118,
-          "cleanSeconds": 118,
-          "topClasses": [
-            {
-              "label": "Pink noise",
-              "max": 0.7152
-            },
-            {
-              "label": "Waterfall",
-              "max": 0.4132
-            },
-            {
-              "label": "White noise",
-              "max": 0.2167
-            },
-            {
-              "label": "Noise",
-              "max": 0.125
-            },
-            {
-              "label": "Stream",
-              "max": 0.1089
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Waterfall",
-                "Water",
-                "Stream"
-              ],
-              "fraction": 0.61
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 614702,
-        "name": "waterfall reservoir field recording",
-        "url": "https://freesound.org/people/Garuda1982/sounds/614702/",
-        "author": "Garuda1982",
-        "durationSec": 240.3,
-        "verdict": "reject",
-        "reason": "required sound absent: Waterfall / Water / Stream",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 240,
-          "cleanSeconds": 1,
-          "topClasses": [
-            {
-              "label": "Waves, surf",
-              "max": 0.7281
-            },
-            {
-              "label": "Thunder",
-              "max": 0.7157
-            },
-            {
-              "label": "Ocean",
-              "max": 0.6798
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.6031
-            },
-            {
-              "label": "Rain",
-              "max": 0.5329
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.716,
-              "atSecond": 158
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.603,
-              "atSecond": 158
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.503,
-              "atSecond": 197
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.428,
-              "atSecond": 38
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.414,
-              "atSecond": 214
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.273,
-              "atSecond": 214
-            },
-            {
-              "label": "Ship",
-              "max": 0.206,
-              "atSecond": 115
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.187,
-              "atSecond": 142
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Waterfall",
-                "Water",
-                "Stream"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 855904,
-        "name": "Waterfall at Boise Creek CA",
-        "url": "https://freesound.org/people/CVLTIV8R/sounds/855904/",
-        "author": "CVLTIV8R",
-        "durationSec": 307.5,
-        "verdict": "reject",
-        "reason": "required sound absent: Waterfall / Water / Stream",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 307,
-          "cleanSeconds": 49,
-          "topClasses": [
-            {
-              "label": "Waves, surf",
-              "max": 0.7046
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.66
-            },
-            {
-              "label": "Ocean",
-              "max": 0.6463
-            },
-            {
-              "label": "Waterfall",
-              "max": 0.504
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.4004
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.66,
-              "atSecond": 281
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.4,
-              "atSecond": 281
-            },
-            {
-              "label": "Propeller, airscrew",
-              "max": 0.297,
-              "atSecond": 281
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.257,
-              "atSecond": 76
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.251,
-              "atSecond": 306
-            },
-            {
-              "label": "Jet engine",
-              "max": 0.241,
-              "atSecond": 166
-            },
-            {
-              "label": "Train",
-              "max": 0.228,
-              "atSecond": 192
-            },
-            {
-              "label": "Engine",
-              "max": 0.189,
-              "atSecond": 223
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.176,
-              "atSecond": 192
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.165,
-              "atSecond": 192
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Waterfall",
-                "Water",
-                "Stream"
-              ],
-              "fraction": 0.417
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

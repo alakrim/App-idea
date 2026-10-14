@@ -16,7 +16,7 @@ import { rankCandidates } from './freesound-score.mjs';
 import { FREESOUND_TARGETS } from './freesound-targets.mjs';
 import { CC0_FILTER, CURATION_DIR } from './pack-spec.mjs';
 
-const TOP_CANDIDATES = 8;
+const TOP_CANDIDATES = 25;
 const PAGE_SIZE = 30;
 const CURATED_ON = new Date().toISOString().slice(0, 10);
 

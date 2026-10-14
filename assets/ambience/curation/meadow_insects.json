@@ -1,11 +1,13 @@
 {
   "category": "meadow_insects",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "summer meadow crickets",
-    "grasshoppers field ambience"
+    "grasshoppers field ambience",
+    "crickets summer field",
+    "grasshoppers meadow"
   ],
-  "poolSize": 13,
+  "poolSize": 49,
   "candidates": [
     {
       "rank": 1,
@@ -19,12 +21,12 @@
       "channels": 2,
       "avgRating": 4.91,
       "numRatings": 11,
-      "numDownloads": 555,
+      "numDownloads": 556,
       "previewUrl": "https://cdn.freesound.org/previews/639/639459_2061858-hq.mp3",
       "score": 9.97,
       "reasons": [
         "+2.6 rating 4.91 from 11 ratings",
-        "+1.37 555 downloads",
+        "+1.37 556 downloads",
         "+2 at least 90 s",
         "+3 tags crickets, meadow, insects",
         "+1 name matches meadow"
@@ -32,6 +34,98 @@
     },
     {
       "rank": 2,
+      "freesoundId": 529670,
+      "name": "french meadow on the ground.wav",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/529670/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 209.58,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.9,
+      "numRatings": 10,
+      "numDownloads": 371,
+      "previewUrl": "https://cdn.freesound.org/previews/529/529670_11519060-hq.mp3",
+      "score": 9.86,
+      "reasons": [
+        "+2.58 rating 4.9 from 10 ratings",
+        "+1.29 371 downloads",
+        "+2 at least 90 s",
+        "+3 tags grasshopper, meadow, insects",
+        "+1 name matches meadow"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 538794,
+      "name": "Meadow with foreground grasshopper",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/538794/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 341.08,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 12,
+      "numDownloads": 339,
+      "previewUrl": "https://cdn.freesound.org/previews/538/538794_11519060-hq.mp3",
+      "score": 9.76,
+      "reasons": [
+        "+2.49 rating 4.67 from 12 ratings",
+        "+1.27 339 downloads",
+        "+2 at least 90 s",
+        "+3 tags grasshopper, meadow, insects",
+        "+1 name matches meadow, grasshopper"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 751465,
+      "name": "Crickets chirping in the Night at the Forest 001",
+      "url": "https://freesound.org/people/Borgory/sounds/751465/",
+      "author": "Borgory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 180.63,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.81,
+      "numRatings": 26,
+      "numDownloads": 802,
+      "previewUrl": "https://cdn.freesound.org/previews/751/751465_801011-hq.mp3",
+      "score": 9.15,
+      "reasons": [
+        "+2.7 rating 4.81 from 26 ratings",
+        "+1.45 802 downloads",
+        "+2 at least 90 s",
+        "+2 tags crickets, insects",
+        "+1 name matches crickets"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 440574,
+      "name": "crickets.wav",
+      "url": "https://freesound.org/people/ES335-001/sounds/440574/",
+      "author": "ES335-001",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 258.25,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 11,
+      "numDownloads": 614,
+      "previewUrl": "https://cdn.freesound.org/previews/440/440574_39142-hq.mp3",
+      "score": 9.04,
+      "reasons": [
+        "+2.65 rating 5 from 11 ratings",
+        "+1.39 614 downloads",
+        "+2 at least 90 s",
+        "+2 tags crickets, insects",
+        "+1 name matches crickets"
+      ]
+    },
+    {
+      "rank": 6,
       "freesoundId": 414907,
       "name": "Summer afternoon Meadow ATM birds and crickets.wav",
       "url": "https://freesound.org/people/DanGasior/sounds/414907/",
@@ -42,19 +136,180 @@
       "channels": 2,
       "avgRating": 4.91,
       "numRatings": 11,
-      "numDownloads": 649,
+      "numDownloads": 650,
       "previewUrl": "https://cdn.freesound.org/previews/414/414907_428137-hq.mp3",
       "score": 9.01,
       "reasons": [
         "+2.6 rating 4.91 from 11 ratings",
-        "+1.41 649 downloads",
+        "+1.41 650 downloads",
         "+2 at least 90 s",
         "+2 tags meadow, insects",
         "+1 name matches crickets, meadow"
       ]
     },
     {
-      "rank": 3,
+      "rank": 7,
+      "freesoundId": 524028,
+      "name": "grasshopper Meadow city park.wav",
+      "url": "https://freesound.org/people/Garuda1982/sounds/524028/",
+      "author": "Garuda1982",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 174.31,
+      "samplerate": 192000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 14,
+      "numDownloads": 361,
+      "previewUrl": "https://cdn.freesound.org/previews/524/524028_2061858-hq.mp3",
+      "score": 8.98,
+      "reasons": [
+        "+2.7 rating 5 from 14 ratings",
+        "+1.28 361 downloads",
+        "+2 at least 90 s",
+        "+2 tags grasshopper, meadow",
+        "+1 name matches meadow, grasshopper"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 538696,
+      "name": "meadow with faraway cock",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/538696/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 316.42,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 12,
+      "numDownloads": 497,
+      "previewUrl": "https://cdn.freesound.org/previews/538/538696_11519060-hq.mp3",
+      "score": 8.93,
+      "reasons": [
+        "+2.58 rating 4.83 from 12 ratings",
+        "+1.35 497 downloads",
+        "+2 at least 90 s",
+        "+2 tags grasshopper, meadow",
+        "+1 name matches meadow"
+      ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 751467,
+      "name": "Crickets chirping in the Night at the Forest 003 Crickets stopps chirping",
+      "url": "https://freesound.org/people/Borgory/sounds/751467/",
+      "author": "Borgory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 175.96,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 9,
+      "numDownloads": 586,
+      "previewUrl": "https://cdn.freesound.org/previews/751/751467_801011-hq.mp3",
+      "score": 8.82,
+      "reasons": [
+        "+2.44 rating 4.67 from 9 ratings",
+        "+1.38 586 downloads",
+        "+2 at least 90 s",
+        "+2 tags crickets, insects",
+        "+1 name matches crickets"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 751466,
+      "name": "Crickets chirping in the Night at the Forest 002",
+      "url": "https://freesound.org/people/Borgory/sounds/751466/",
+      "author": "Borgory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 175.96,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.55,
+      "numRatings": 11,
+      "numDownloads": 543,
+      "previewUrl": "https://cdn.freesound.org/previews/751/751466_801011-hq.mp3",
+      "score": 8.78,
+      "reasons": [
+        "+2.41 rating 4.55 from 11 ratings",
+        "+1.37 543 downloads",
+        "+2 at least 90 s",
+        "+2 tags crickets, insects",
+        "+1 name matches crickets"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 571094,
+      "name": "180831 Night field insects chorus crickets traffic PEC.mp3",
+      "url": "https://freesound.org/people/TRP/sounds/571094/",
+      "author": "TRP",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 141.14,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 6,
+      "numDownloads": 305,
+      "previewUrl": "https://cdn.freesound.org/previews/571/571094_97550-hq.mp3",
+      "score": 8.73,
+      "reasons": [
+        "+2.49 rating 5 from 6 ratings",
+        "+1.24 305 downloads",
+        "+2 at least 90 s",
+        "+2 tags crickets, insects",
+        "+1 name matches crickets"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 718405,
+      "name": "meadow with oriole",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/718405/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 284.62,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.89,
+      "numRatings": 9,
+      "numDownloads": 169,
+      "previewUrl": "https://cdn.freesound.org/previews/718/718405_11519060-hq.mp3",
+      "score": 8.66,
+      "reasons": [
+        "+2.54 rating 4.89 from 9 ratings",
+        "+1.12 169 downloads",
+        "+2 at least 90 s",
+        "+2 tags meadow, insects",
+        "+1 name matches meadow"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 751468,
+      "name": "Crickets chirping at Night 001",
+      "url": "https://freesound.org/people/Borgory/sounds/751468/",
+      "author": "Borgory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 180.63,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 8,
+      "numDownloads": 180,
+      "previewUrl": "https://cdn.freesound.org/previews/751/751468_801011-hq.mp3",
+      "score": 8.58,
+      "reasons": [
+        "+2.45 rating 4.75 from 8 ratings",
+        "+1.13 180 downloads",
+        "+2 at least 90 s",
+        "+2 tags crickets, insects",
+        "+1 name matches crickets"
+      ]
+    },
+    {
+      "rank": 14,
       "freesoundId": 692842,
       "name": "insects pasture.wav",
       "url": "https://freesound.org/people/bruno.auzet/sounds/692842/",
@@ -76,7 +331,99 @@
       ]
     },
     {
-      "rank": 4,
+      "rank": 15,
+      "freesoundId": 571208,
+      "name": "180903 Evening summer insects crickets thick country field PEC.mp3",
+      "url": "https://freesound.org/people/TRP/sounds/571208/",
+      "author": "TRP",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 168.82,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 4,
+      "numDownloads": 199,
+      "previewUrl": "https://cdn.freesound.org/previews/571/571208_97550-hq.mp3",
+      "score": 8.53,
+      "reasons": [
+        "+2.38 rating 5 from 4 ratings",
+        "+1.15 199 downloads",
+        "+2 at least 90 s",
+        "+2 tags crickets, insects",
+        "+1 name matches crickets"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 751470,
+      "name": "Crickets chirping at Night 003",
+      "url": "https://freesound.org/people/Borgory/sounds/751470/",
+      "author": "Borgory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 179.13,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 6,
+      "numDownloads": 161,
+      "previewUrl": "https://cdn.freesound.org/previews/751/751470_801011-hq.mp3",
+      "score": 8.53,
+      "reasons": [
+        "+2.42 rating 4.83 from 6 ratings",
+        "+1.1 161 downloads",
+        "+2 at least 90 s",
+        "+2 tags crickets, insects",
+        "+1 name matches crickets"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 751471,
+      "name": "20240816_Crickets_in_the_Night_001",
+      "url": "https://freesound.org/people/Borgory/sounds/751471/",
+      "author": "Borgory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 246.88,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 120,
+      "previewUrl": "https://cdn.freesound.org/previews/751/751471_801011-hq.mp3",
+      "score": 8.48,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.04 120 downloads",
+        "+2 at least 90 s",
+        "+2 tags crickets, insects",
+        "+1 name matches crickets"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 234295,
+      "name": "RJ Stefanski - Summer Crickets and Cicadas.WAV",
+      "url": "https://freesound.org/people/RJStefanski/sounds/234295/",
+      "author": "RJStefanski",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 369,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 153,
+      "previewUrl": "https://cdn.freesound.org/previews/234/234295_4232604-hq.mp3",
+      "score": 8.39,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+1.09 153 downloads",
+        "+2 at least 90 s",
+        "+2 tags crickets, insects",
+        "+1 name matches crickets"
+      ]
+    },
+    {
+      "rank": 19,
       "freesoundId": 576367,
       "name": "Field, meadow, insects, crickets, summer day, NOTL, 10.mp3",
       "url": "https://freesound.org/people/TRP/sounds/576367/",
@@ -99,7 +446,99 @@
       ]
     },
     {
-      "rank": 5,
+      "rank": 20,
+      "freesoundId": 805467,
+      "name": "Crickets - Jungle & Summer day",
+      "url": "https://freesound.org/people/Vrymaa/sounds/805467/",
+      "author": "Vrymaa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 85.5,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.91,
+      "numRatings": 11,
+      "numDownloads": 243,
+      "previewUrl": "https://cdn.freesound.org/previews/805/805467_13973196-hq.mp3",
+      "score": 8.3,
+      "reasons": [
+        "+2.6 rating 4.91 from 11 ratings",
+        "+1.19 243 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags crickets, insects",
+        "+1 name matches crickets"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 751472,
+      "name": "20240816_Crickets_in_the_Night_002",
+      "url": "https://freesound.org/people/Borgory/sounds/751472/",
+      "author": "Borgory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 136.04,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 129,
+      "previewUrl": "https://cdn.freesound.org/previews/751/751472_801011-hq.mp3",
+      "score": 8.25,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.06 129 downloads",
+        "+2 at least 90 s",
+        "+2 tags crickets, insects",
+        "+1 name matches crickets"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 751469,
+      "name": "Crickets chirping at Night 002",
+      "url": "https://freesound.org/people/Borgory/sounds/751469/",
+      "author": "Borgory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 178.67,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 120,
+      "previewUrl": "https://cdn.freesound.org/previews/751/751469_801011-hq.mp3",
+      "score": 8.24,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.04 120 downloads",
+        "+2 at least 90 s",
+        "+2 tags crickets, insects",
+        "+1 name matches crickets"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 524593,
+      "name": "romanian summer meadow.wav",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/524593/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 260.1,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.88,
+      "numRatings": 24,
+      "numDownloads": 802,
+      "previewUrl": "https://cdn.freesound.org/previews/524/524593_11519060-hq.mp3",
+      "score": 8.18,
+      "reasons": [
+        "+2.73 rating 4.88 from 24 ratings",
+        "+1.45 802 downloads",
+        "+2 at least 90 s",
+        "+1 tags meadow",
+        "+1 name matches meadow"
+      ]
+    },
+    {
+      "rank": 24,
       "freesoundId": 585318,
       "name": "Indian summer evening Norway Crickets and Birds.wav",
       "url": "https://freesound.org/people/LarsErikErtzgaardRingen/sounds/585318/",
@@ -122,570 +561,26 @@
       ]
     },
     {
-      "rank": 6,
-      "freesoundId": 717573,
-      "name": "220611 Field meadow summer, busy birds insects distant traffic, EM272st, NOTL 9pm",
-      "url": "https://freesound.org/people/TRP/sounds/717573/",
-      "author": "TRP",
+      "rank": 25,
+      "freesoundId": 353273,
+      "name": "Coyotes with night ambiance.wav",
+      "url": "https://freesound.org/people/romancito/sounds/353273/",
+      "author": "romancito",
       "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 133.52,
-      "samplerate": 48000,
-      "channels": 2,
-      "avgRating": 5,
-      "numRatings": 8,
-      "numDownloads": 198,
-      "previewUrl": "https://cdn.freesound.org/previews/717/717573_97550-hq.mp3",
-      "score": 7.72,
-      "reasons": [
-        "+2.57 rating 5 from 8 ratings",
-        "+1.15 198 downloads",
-        "+2 at least 90 s",
-        "+1 tags meadow",
-        "+1 name matches meadow"
-      ]
-    },
-    {
-      "rank": 7,
-      "freesoundId": 203598,
-      "name": "CricketsandTawnyOwl.wav",
-      "url": "https://freesound.org/people/raoul_slayer/sounds/203598/",
-      "author": "raoul_slayer",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 140.35,
-      "samplerate": 96000,
-      "channels": 2,
-      "avgRating": 4.83,
-      "numRatings": 30,
-      "numDownloads": 2087,
-      "previewUrl": "https://cdn.freesound.org/previews/203/203598_548893-hq.mp3",
-      "score": 7.39,
-      "reasons": [
-        "+2.73 rating 4.83 from 30 ratings",
-        "+1.66 2087 downloads",
-        "+2 at least 90 s",
-        "+1 tags crickets"
-      ]
-    },
-    {
-      "rank": 8,
-      "freesoundId": 59103,
-      "name": "emmentaler farm ambience-crickets at dusk.wav",
-      "url": "https://freesound.org/people/Zozzy/sounds/59103/",
-      "author": "Zozzy",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 90.81,
+      "durationSec": 115.36,
       "samplerate": 44100,
       "channels": 2,
-      "avgRating": 3.5,
-      "numRatings": 4,
-      "numDownloads": 684,
-      "previewUrl": "https://cdn.freesound.org/previews/59/59103_91975-hq.mp3",
-      "score": 7.29,
+      "avgRating": 4.8,
+      "numRatings": 10,
+      "numDownloads": 664,
+      "previewUrl": "https://cdn.freesound.org/previews/353/353273_203903-hq.mp3",
+      "score": 7.94,
       "reasons": [
-        "+1.88 rating 3.5 from 4 ratings",
-        "+1.42 684 downloads",
+        "+2.52 rating 4.8 from 10 ratings",
+        "+1.41 664 downloads",
         "+2 at least 90 s",
-        "+1 tags crickets",
-        "+1 name matches crickets"
+        "+2 tags crickets, insects"
       ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Insect",
-          "Cricket"
-        ]
-      ],
-      "clapPrompt": "a summer meadow at dusk with crickets and grasshoppers, no people"
-    },
-    "verdict": "filled",
-    "unfilledReason": null,
-    "chosen": {
-      "freesoundId": 576367,
-      "windowStartSeconds": 20,
-      "windowSeconds": 64,
-      "steadinessDb": 0.182,
-      "clapScore": 0.5425
-    },
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 639459,
-        "name": "summer meadow with wind",
-        "url": "https://freesound.org/people/Garuda1982/sounds/639459/",
-        "author": "Garuda1982",
-        "durationSec": 133.4,
-        "verdict": "reject",
-        "reason": "required sound absent: Insect / Cricket",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 133,
-          "cleanSeconds": 129,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.5866
-            },
-            {
-              "label": "Pink noise",
-              "max": 0.5623
-            },
-            {
-              "label": "Environmental noise",
-              "max": 0.5487
-            },
-            {
-              "label": "Waves, surf",
-              "max": 0.3623
-            },
-            {
-              "label": "Insect",
-              "max": 0.3452
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.587,
-              "atSecond": 68
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.199,
-              "atSecond": 68
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket"
-              ],
-              "fraction": 0.083
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 414907,
-        "name": "Summer afternoon Meadow ATM birds and crickets.wav",
-        "url": "https://freesound.org/people/DanGasior/sounds/414907/",
-        "author": "DanGasior",
-        "durationSec": 121.3,
-        "verdict": "reject",
-        "reason": "required sound absent: Insect / Cricket",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 121,
-          "cleanSeconds": 116,
-          "topClasses": [
-            {
-              "label": "Bird",
-              "max": 0.6004
-            },
-            {
-              "label": "Insect",
-              "max": 0.577
-            },
-            {
-              "label": "Chirp, tweet",
-              "max": 0.5519
-            },
-            {
-              "label": "Cricket",
-              "max": 0.4833
-            },
-            {
-              "label": "Bird vocalization, bird call, bird song",
-              "max": 0.4704
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.261,
-              "atSecond": 108
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket"
-              ],
-              "fraction": 0.091
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 692842,
-        "name": "insects pasture.wav",
-        "url": "https://freesound.org/people/bruno.auzet/sounds/692842/",
-        "author": "bruno.auzet",
-        "durationSec": 512.3,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 55,
-          "lengthSeconds": 64,
-          "steadinessDb": 0.576
-        },
-        "clapScore": 0.5316,
-        "evidence": {
-          "frames": 512,
-          "cleanSeconds": 478,
-          "topClasses": [
-            {
-              "label": "Insect",
-              "max": 0.9032
-            },
-            {
-              "label": "Cricket",
-              "max": 0.8943
-            },
-            {
-              "label": "Bee, wasp, etc.",
-              "max": 0.8661
-            },
-            {
-              "label": "Fly, housefly",
-              "max": 0.7596
-            },
-            {
-              "label": "Speech",
-              "max": 0.6684
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.668,
-              "atSecond": 322
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.327,
-              "atSecond": 495
-            },
-            {
-              "label": "Music",
-              "max": 0.326,
-              "atSecond": 491
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket"
-              ],
-              "fraction": 0.594
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 576367,
-        "name": "Field, meadow, insects, crickets, summer day, NOTL, 10.mp3",
-        "url": "https://freesound.org/people/TRP/sounds/576367/",
-        "author": "TRP",
-        "durationSec": 111.8,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 20,
-          "lengthSeconds": 64,
-          "steadinessDb": 0.182
-        },
-        "clapScore": 0.5425,
-        "evidence": {
-          "frames": 111,
-          "cleanSeconds": 111,
-          "topClasses": [
-            {
-              "label": "Cricket",
-              "max": 0.9075
-            },
-            {
-              "label": "Insect",
-              "max": 0.8478
-            },
-            {
-              "label": "Bee, wasp, etc.",
-              "max": 0.3335
-            },
-            {
-              "label": "Hiss",
-              "max": 0.2465
-            },
-            {
-              "label": "Environmental noise",
-              "max": 0.2269
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket"
-              ],
-              "fraction": 0.964
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 585318,
-        "name": "Indian summer evening Norway Crickets and Birds.wav",
-        "url": "https://freesound.org/people/LarsErikErtzgaardRingen/sounds/585318/",
-        "author": "LarsErikErtzgaardRingen",
-        "durationSec": 107.2,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Vehicle reaches 0.31 (at 103 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 107,
-          "cleanSeconds": 101,
-          "topClasses": [
-            {
-              "label": "Cricket",
-              "max": 0.8567
-            },
-            {
-              "label": "Insect",
-              "max": 0.7671
-            },
-            {
-              "label": "Chicken, rooster",
-              "max": 0.5816
-            },
-            {
-              "label": "Cluck",
-              "max": 0.344
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.3095
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.31,
-              "atSecond": 103
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket"
-              ],
-              "fraction": 0.822
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 717573,
-        "name": "220611 Field meadow summer, busy birds insects distant traffic, EM272st, NOTL 9pm",
-        "url": "https://freesound.org/people/TRP/sounds/717573/",
-        "author": "TRP",
-        "durationSec": 133.5,
-        "verdict": "reject",
-        "reason": "required sound absent: Insect / Cricket",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 133,
-          "cleanSeconds": 132,
-          "topClasses": [
-            {
-              "label": "Cricket",
-              "max": 0.8755
-            },
-            {
-              "label": "Insect",
-              "max": 0.8166
-            },
-            {
-              "label": "Owl",
-              "max": 0.5078
-            },
-            {
-              "label": "Environmental noise",
-              "max": 0.4135
-            },
-            {
-              "label": "Bird",
-              "max": 0.3364
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Honk",
-              "max": 0.057,
-              "atSecond": 36
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket"
-              ],
-              "fraction": 0.444
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 203598,
-        "name": "CricketsandTawnyOwl.wav",
-        "url": "https://freesound.org/people/raoul_slayer/sounds/203598/",
-        "author": "raoul_slayer",
-        "durationSec": 140.4,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 64,
-          "lengthSeconds": 64,
-          "steadinessDb": 0.498
-        },
-        "clapScore": 0.5085,
-        "evidence": {
-          "frames": 140,
-          "cleanSeconds": 140,
-          "topClasses": [
-            {
-              "label": "Cricket",
-              "max": 0.8955
-            },
-            {
-              "label": "Owl",
-              "max": 0.8183
-            },
-            {
-              "label": "Insect",
-              "max": 0.807
-            },
-            {
-              "label": "Hoot",
-              "max": 0.7424
-            },
-            {
-              "label": "Frog",
-              "max": 0.5531
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket"
-              ],
-              "fraction": 0.779
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 59103,
-        "name": "emmentaler farm ambience-crickets at dusk.wav",
-        "url": "https://freesound.org/people/Zozzy/sounds/59103/",
-        "author": "Zozzy",
-        "durationSec": 90.8,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Music reaches 0.234 (at 63 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 90,
-          "cleanSeconds": 85,
-          "topClasses": [
-            {
-              "label": "Cricket",
-              "max": 0.9342
-            },
-            {
-              "label": "Insect",
-              "max": 0.8945
-            },
-            {
-              "label": "Music",
-              "max": 0.2343
-            },
-            {
-              "label": "Hoot",
-              "max": 0.1784
-            },
-            {
-              "label": "Speech",
-              "max": 0.1525
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.234,
-              "atSecond": 63
-            },
-            {
-              "label": "Speech",
-              "max": 0.153,
-              "atSecond": 19
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket"
-              ],
-              "fraction": 1
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

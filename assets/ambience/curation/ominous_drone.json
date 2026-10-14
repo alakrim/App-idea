@@ -1,11 +1,13 @@
 {
   "category": "ominous_drone",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "dark drone ambience",
-    "low drone horror"
+    "low drone horror",
+    "drone ambience loop",
+    "horror drone ambience"
   ],
-  "poolSize": 60,
+  "poolSize": 114,
   "candidates": [
     {
       "rank": 1,
@@ -19,12 +21,12 @@
       "channels": 2,
       "avgRating": 4.92,
       "numRatings": 113,
-      "numDownloads": 7472,
+      "numDownloads": 7473,
       "previewUrl": "https://cdn.freesound.org/previews/421/421826_2247456-hq.mp3",
       "score": 10.83,
       "reasons": [
         "+2.9 rating 4.92 from 113 ratings",
-        "+1.94 7472 downloads",
+        "+1.94 7473 downloads",
         "+2 at least 90 s",
         "+3 tags drone, dark, horror",
         "+1 name matches drone"
@@ -78,6 +80,29 @@
     },
     {
       "rank": 4,
+      "freesoundId": 631650,
+      "name": "Dark Myst Horror Thriller Mood Drone Atmo Atmosphere Cinematic Film Movie Surround.wav",
+      "url": "https://freesound.org/people/szegvari/sounds/631650/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 115.17,
+      "samplerate": 48000,
+      "channels": 6,
+      "avgRating": 4.89,
+      "numRatings": 27,
+      "numDownloads": 701,
+      "previewUrl": "https://cdn.freesound.org/previews/631/631650_2282212-hq.mp3",
+      "score": 10.18,
+      "reasons": [
+        "+2.75 rating 4.89 from 27 ratings",
+        "+1.42 701 downloads",
+        "+2 at least 90 s",
+        "+3 tags drone, dark, horror",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 5,
       "freesoundId": 266413,
       "name": "Drone_DarkEmptiness.wav",
       "url": "https://freesound.org/people/ceich93/sounds/266413/",
@@ -100,7 +125,7 @@
       ]
     },
     {
-      "rank": 5,
+      "rank": 6,
       "freesoundId": 612645,
       "name": "Slow Time Winter Temple Atmo Asia Ambience Fantasy Dark Drone Cinematic Surround.wav",
       "url": "https://freesound.org/people/szegvari/sounds/612645/",
@@ -111,19 +136,19 @@
       "channels": 6,
       "avgRating": 4.62,
       "numRatings": 21,
-      "numDownloads": 808,
+      "numDownloads": 809,
       "previewUrl": "https://cdn.freesound.org/previews/612/612645_2282212-hq.mp3",
       "score": 10.01,
       "reasons": [
         "+2.55 rating 4.62 from 21 ratings",
-        "+1.45 808 downloads",
+        "+1.45 809 downloads",
         "+2 at least 90 s",
         "+3 tags drone, dark, horror",
         "+1 name matches drone"
       ]
     },
     {
-      "rank": 6,
+      "rank": 7,
       "freesoundId": 860781,
       "name": "Low Frequency Vibrating Drone with Heart Pressure Rumbles and Booms",
       "url": "https://freesound.org/people/bassimat/sounds/860781/",
@@ -134,19 +159,65 @@
       "channels": 2,
       "avgRating": 4.68,
       "numRatings": 19,
-      "numDownloads": 425,
+      "numDownloads": 428,
       "previewUrl": "https://cdn.freesound.org/previews/860/860781_15636277-hq.mp3",
       "score": 9.89,
       "reasons": [
         "+2.58 rating 4.68 from 19 ratings",
-        "+1.31 425 downloads",
+        "+1.32 428 downloads",
         "+2 at least 90 s",
         "+3 tags drone, dark, horror",
         "+1 name matches drone"
       ]
     },
     {
-      "rank": 7,
+      "rank": 8,
+      "freesoundId": 786902,
+      "name": "Doomed Drone",
+      "url": "https://freesound.org/people/Soparnik/sounds/786902/",
+      "author": "Soparnik",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 125.67,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.91,
+      "numRatings": 11,
+      "numDownloads": 328,
+      "previewUrl": "https://cdn.freesound.org/previews/786/786902_16110885-hq.mp3",
+      "score": 9.86,
+      "reasons": [
+        "+2.6 rating 4.91 from 11 ratings",
+        "+1.26 328 downloads",
+        "+2 at least 90 s",
+        "+3 tags drone, dark, horror",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 609149,
+      "name": "Dark Planet - Dark Horror Thriller Atmo Drone Sound Amb Surround.wav",
+      "url": "https://freesound.org/people/szegvari/sounds/609149/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 71.76,
+      "samplerate": 96000,
+      "channels": 6,
+      "avgRating": 4.71,
+      "numRatings": 34,
+      "numDownloads": 968,
+      "previewUrl": "https://cdn.freesound.org/previews/609/609149_2282212-hq.mp3",
+      "score": 9.66,
+      "reasons": [
+        "+2.66 rating 4.71 from 34 ratings",
+        "+1.49 968 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags drone, dark, horror",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 10,
       "freesoundId": 466567,
       "name": "Electronic Minute No 262 - cinematic doomsday drone.wav",
       "url": "https://freesound.org/people/gis_sweden/sounds/466567/",
@@ -169,7 +240,7 @@
       ]
     },
     {
-      "rank": 8,
+      "rank": 11,
       "freesoundId": 516566,
       "name": "Dark Dungeon Ambience",
       "url": "https://freesound.org/people/Kinoton/sounds/516566/",
@@ -180,810 +251,327 @@
       "channels": 2,
       "avgRating": 4.84,
       "numRatings": 64,
-      "numDownloads": 2066,
+      "numDownloads": 2069,
       "previewUrl": "https://cdn.freesound.org/previews/516/516566_2247456-hq.mp3",
       "score": 9.47,
       "reasons": [
         "+2.81 rating 4.84 from 64 ratings",
-        "+1.66 2066 downloads",
+        "+1.66 2069 downloads",
         "+2 at least 90 s",
         "+3 tags drone, dark, horror"
       ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 532211,
+      "name": "Storm Pulsation Drone Fantasy SFX Loop Cinematic 200614_0005_01.wav",
+      "url": "https://freesound.org/people/szegvari/sounds/532211/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 69.98,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 12,
+      "numDownloads": 376,
+      "previewUrl": "https://cdn.freesound.org/previews/532/532211_2282212-hq.mp3",
+      "score": 9.46,
+      "reasons": [
+        "+2.67 rating 5 from 12 ratings",
+        "+1.29 376 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags drone, dark, horror",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 333220,
+      "name": "Horror Ambience",
+      "url": "https://freesound.org/people/Robster881/sounds/333220/",
+      "author": "Robster881",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 232.09,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 42,
+      "numDownloads": 1796,
+      "previewUrl": "https://cdn.freesound.org/previews/333/333220_1755315-hq.mp3",
+      "score": 9.4,
+      "reasons": [
+        "+2.77 rating 4.83 from 42 ratings",
+        "+1.63 1796 downloads",
+        "+2 at least 90 s",
+        "+3 tags drone, dark, horror"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 865550,
+      "name": "Dark Atmospheric Drone (Time-Stretched, Seamless Loop)",
+      "url": "https://freesound.org/people/kkenny101/sounds/865550/",
+      "author": "kkenny101",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 158.36,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 3.83,
+      "numRatings": 6,
+      "numDownloads": 181,
+      "previewUrl": "https://cdn.freesound.org/previews/865/865550_17997500-hq.mp3",
+      "score": 9.14,
+      "reasons": [
+        "+2.01 rating 3.83 from 6 ratings",
+        "+1.13 181 downloads",
+        "+2 at least 90 s",
+        "+3 tags drone, dark, horror",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 758478,
+      "name": "Dark horror ambience",
+      "url": "https://freesound.org/people/LukaCafuka/sounds/758478/",
+      "author": "LukaCafuka",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 98.96,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.52,
+      "numRatings": 29,
+      "numDownloads": 811,
+      "previewUrl": "https://cdn.freesound.org/previews/758/758478_16236894-hq.mp3",
+      "score": 8.98,
+      "reasons": [
+        "+2.53 rating 4.52 from 29 ratings",
+        "+1.45 811 downloads",
+        "+2 at least 90 s",
+        "+3 tags drone, dark, horror"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 842963,
+      "name": "Alien jungle",
+      "url": "https://freesound.org/people/szegvari/sounds/842963/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 92.27,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.73,
+      "numRatings": 15,
+      "numDownloads": 243,
+      "previewUrl": "https://cdn.freesound.org/previews/842/842963_2282212-hq.mp3",
+      "score": 8.76,
+      "reasons": [
+        "+2.57 rating 4.73 from 15 ratings",
+        "+1.19 243 downloads",
+        "+2 at least 90 s",
+        "+3 tags drone, dark, horror"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 352542,
+      "name": "Fragment from A DISTANT PAST_-12_[loop]",
+      "url": "https://freesound.org/people/cabled_mess/sounds/352542/",
+      "author": "cabled_mess",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 113.33,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.38,
+      "numRatings": 8,
+      "numDownloads": 261,
+      "previewUrl": "https://cdn.freesound.org/previews/352/352542_5450487-hq.mp3",
+      "score": 8.49,
+      "reasons": [
+        "+2.28 rating 4.38 from 8 ratings",
+        "+1.21 261 downloads",
+        "+2 at least 90 s",
+        "+3 tags drone, dark, horror"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 266414,
+      "name": "Drone_BowedCybmal.wav",
+      "url": "https://freesound.org/people/ceich93/sounds/266414/",
+      "author": "ceich93",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 49.73,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.95,
+      "numRatings": 43,
+      "numDownloads": 1665,
+      "previewUrl": "https://cdn.freesound.org/previews/266/266414_4457609-hq.mp3",
+      "score": 8.46,
+      "reasons": [
+        "+2.85 rating 4.95 from 43 ratings",
+        "+1.61 1665 downloads",
+        "+3 tags drone, dark, horror",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 869200,
+      "name": "Slow Echoing Wind Chimes 2– Deep Ambient Drone Loop",
+      "url": "https://freesound.org/people/kkenny101/sounds/869200/",
+      "author": "kkenny101",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 495.96,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 37,
+      "previewUrl": "https://cdn.freesound.org/previews/869/869200_17997500-hq.mp3",
+      "score": 7.99,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.79 37 downloads",
+        "+2 at least 90 s",
+        "+2 tags drone, dark",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 515240,
+      "name": "Ambient Sound #1",
+      "url": "https://freesound.org/people/danlucaz/sounds/515240/",
+      "author": "danlucaz",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 180.87,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.91,
+      "numRatings": 11,
+      "numDownloads": 562,
+      "previewUrl": "https://cdn.freesound.org/previews/515/515240_9996727-hq.mp3",
+      "score": 7.98,
+      "reasons": [
+        "+2.6 rating 4.91 from 11 ratings",
+        "+1.38 562 downloads",
+        "+2 at least 90 s",
+        "+2 tags drone, dark"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 869199,
+      "name": "Slow Echoing Wind Chimes 1– Deep Ambient Drone Loop",
+      "url": "https://freesound.org/people/kkenny101/sounds/869199/",
+      "author": "kkenny101",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 247.98,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 35,
+      "previewUrl": "https://cdn.freesound.org/previews/869/869199_17997500-hq.mp3",
+      "score": 7.97,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.78 35 downloads",
+        "+2 at least 90 s",
+        "+2 tags drone, dark",
+        "+1 name matches drone"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 515241,
+      "name": "Ambient Sound #2",
+      "url": "https://freesound.org/people/danlucaz/sounds/515241/",
+      "author": "danlucaz",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 166.35,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.9,
+      "numRatings": 10,
+      "numDownloads": 475,
+      "previewUrl": "https://cdn.freesound.org/previews/515/515241_9996727-hq.mp3",
+      "score": 7.91,
+      "reasons": [
+        "+2.58 rating 4.9 from 10 ratings",
+        "+1.34 475 downloads",
+        "+2 at least 90 s",
+        "+2 tags drone, dark"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 869911,
+      "name": "Eerie Whistling Loop",
+      "url": "https://freesound.org/people/kkenny101/sounds/869911/",
+      "author": "kkenny101",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 71.91,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 6,
+      "numDownloads": 106,
+      "previewUrl": "https://cdn.freesound.org/previews/869/869911_17997500-hq.mp3",
+      "score": 7.87,
+      "reasons": [
+        "+2.35 rating 4.67 from 6 ratings",
+        "+1.01 106 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags drone, dark, horror"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 201516,
+      "name": "Pressure_Deep.wav",
+      "url": "https://freesound.org/people/iamdead324/sounds/201516/",
+      "author": "iamdead324",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 67.98,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 5,
+      "numDownloads": 309,
+      "previewUrl": "https://cdn.freesound.org/previews/201/201516_3571602-hq.mp3",
+      "score": 7.81,
+      "reasons": [
+        "+2.06 rating 4 from 5 ratings",
+        "+1.25 309 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags drone, dark, horror"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 567183,
+      "name": "lowgrowl.wav",
+      "url": "https://freesound.org/people/wgwgsa/sounds/567183/",
+      "author": "wgwgsa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 74.85,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 2,
+      "numDownloads": 84,
+      "previewUrl": "https://cdn.freesound.org/previews/567/567183_3545785-hq.mp3",
+      "score": 7.55,
+      "reasons": [
+        "+2.09 rating 4.5 from 2 ratings",
+        "+0.96 84 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags drone, dark, horror"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Hum",
-          "Humming",
-          "Mains hum",
-          "Sine wave"
-        ]
-      ],
-      "clapPrompt": "a low dark drone in a still, cold room"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 421826,
-        "name": "Dark Cave Drone",
-        "url": "https://freesound.org/people/Kinoton/sounds/421826/",
-        "author": "Kinoton",
-        "durationSec": 256.9,
-        "verdict": "reject",
-        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 256,
-          "cleanSeconds": 195,
-          "topClasses": [
-            {
-              "label": "Rumble",
-              "max": 0.6596
-            },
-            {
-              "label": "Gong",
-              "max": 0.5621
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.3564
-            },
-            {
-              "label": "Music",
-              "max": 0.2358
-            },
-            {
-              "label": "Car",
-              "max": 0.1595
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Gong",
-              "max": 0.562,
-              "atSecond": 21
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.356,
-              "atSecond": 236
-            },
-            {
-              "label": "Music",
-              "max": 0.236,
-              "atSecond": 0
-            },
-            {
-              "label": "Car",
-              "max": 0.16,
-              "atSecond": 55
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hum",
-                "Humming",
-                "Mains hum",
-                "Sine wave"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 266412,
-        "name": "Drone_OminousDistortion.wav",
-        "url": "https://freesound.org/people/ceich93/sounds/266412/",
-        "author": "ceich93",
-        "durationSec": 103.9,
-        "verdict": "reject",
-        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 103,
-          "cleanSeconds": 0,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.8471
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.7226
-            },
-            {
-              "label": "Gong",
-              "max": 0.6131
-            },
-            {
-              "label": "Car",
-              "max": 0.4396
-            },
-            {
-              "label": "Rumble",
-              "max": 0.3837
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.847,
-              "atSecond": 76
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.723,
-              "atSecond": 72
-            },
-            {
-              "label": "Gong",
-              "max": 0.613,
-              "atSecond": 91
-            },
-            {
-              "label": "Car",
-              "max": 0.44,
-              "atSecond": 72
-            },
-            {
-              "label": "Ambient music",
-              "max": 0.245,
-              "atSecond": 88
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.227,
-              "atSecond": 76
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.222,
-              "atSecond": 56
-            },
-            {
-              "label": "Electronic music",
-              "max": 0.194,
-              "atSecond": 33
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.184,
-              "atSecond": 56
-            },
-            {
-              "label": "Foghorn",
-              "max": 0.07,
-              "atSecond": 86
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hum",
-                "Humming",
-                "Mains hum",
-                "Sine wave"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 534018,
-        "name": "Sci-fi Ambient Drone.wav",
-        "url": "https://freesound.org/people/LookIMadeAThing/sounds/534018/",
-        "author": "LookIMadeAThing",
-        "durationSec": 165,
-        "verdict": "reject",
-        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 165,
-          "cleanSeconds": 17,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.9165
-            },
-            {
-              "label": "Didgeridoo",
-              "max": 0.8209
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.7404
-            },
-            {
-              "label": "Guitar",
-              "max": 0.612
-            },
-            {
-              "label": "Plucked string instrument",
-              "max": 0.5101
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.916,
-              "atSecond": 69
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.74,
-              "atSecond": 94
-            },
-            {
-              "label": "Guitar",
-              "max": 0.612,
-              "atSecond": 106
-            },
-            {
-              "label": "Plucked string instrument",
-              "max": 0.51,
-              "atSecond": 106
-            },
-            {
-              "label": "Synthesizer",
-              "max": 0.447,
-              "atSecond": 63
-            },
-            {
-              "label": "Ambient music",
-              "max": 0.282,
-              "atSecond": 108
-            },
-            {
-              "label": "Electronic music",
-              "max": 0.26,
-              "atSecond": 122
-            },
-            {
-              "label": "Electric guitar",
-              "max": 0.207,
-              "atSecond": 106
-            },
-            {
-              "label": "Bass guitar",
-              "max": 0.196,
-              "atSecond": 33
-            },
-            {
-              "label": "Fire alarm",
-              "max": 0.091,
-              "atSecond": 44
-            },
-            {
-              "label": "Siren",
-              "max": 0.064,
-              "atSecond": 122
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hum",
-                "Humming",
-                "Mains hum",
-                "Sine wave"
-              ],
-              "fraction": 0.006
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 266413,
-        "name": "Drone_DarkEmptiness.wav",
-        "url": "https://freesound.org/people/ceich93/sounds/266413/",
-        "author": "ceich93",
-        "durationSec": 87.2,
-        "verdict": "reject",
-        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 87,
-          "cleanSeconds": 10,
-          "topClasses": [
-            {
-              "label": "Vehicle",
-              "max": 0.6126
-            },
-            {
-              "label": "Rumble",
-              "max": 0.3463
-            },
-            {
-              "label": "Music",
-              "max": 0.2458
-            },
-            {
-              "label": "Car",
-              "max": 0.2378
-            },
-            {
-              "label": "Field recording",
-              "max": 0.2154
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.613,
-              "atSecond": 51
-            },
-            {
-              "label": "Music",
-              "max": 0.246,
-              "atSecond": 60
-            },
-            {
-              "label": "Car",
-              "max": 0.238,
-              "atSecond": 45
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.154,
-              "atSecond": 53
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hum",
-                "Humming",
-                "Mains hum",
-                "Sine wave"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 612645,
-        "name": "Slow Time Winter Temple Atmo Asia Ambience Fantasy Dark Drone Cinematic Surround.wav",
-        "url": "https://freesound.org/people/szegvari/sounds/612645/",
-        "author": "szegvari",
-        "durationSec": 103.5,
-        "verdict": "reject",
-        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 103,
-          "cleanSeconds": 0,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.8665
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.7027
-            },
-            {
-              "label": "Train",
-              "max": 0.6762
-            },
-            {
-              "label": "Scary music",
-              "max": 0.6445
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.5616
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.867,
-              "atSecond": 72
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.703,
-              "atSecond": 67
-            },
-            {
-              "label": "Train",
-              "max": 0.676,
-              "atSecond": 28
-            },
-            {
-              "label": "Scary music",
-              "max": 0.645,
-              "atSecond": 75
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.562,
-              "atSecond": 28
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.537,
-              "atSecond": 28
-            },
-            {
-              "label": "Car",
-              "max": 0.479,
-              "atSecond": 25
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.403,
-              "atSecond": 67
-            },
-            {
-              "label": "Gong",
-              "max": 0.359,
-              "atSecond": 78
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.265,
-              "atSecond": 67
-            },
-            {
-              "label": "Propeller, airscrew",
-              "max": 0.256,
-              "atSecond": 67
-            },
-            {
-              "label": "Ambient music",
-              "max": 0.237,
-              "atSecond": 71
-            },
-            {
-              "label": "Race car, auto racing",
-              "max": 0.202,
-              "atSecond": 25
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.186,
-              "atSecond": 30
-            },
-            {
-              "label": "Singing bowl",
-              "max": 0.183,
-              "atSecond": 13
-            },
-            {
-              "label": "Subway, metro, underground",
-              "max": 0.173,
-              "atSecond": 100
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.157,
-              "atSecond": 84
-            },
-            {
-              "label": "Train horn",
-              "max": 0.097,
-              "atSecond": 28
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hum",
-                "Humming",
-                "Mains hum",
-                "Sine wave"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 860781,
-        "name": "Low Frequency Vibrating Drone with Heart Pressure Rumbles and Booms",
-        "url": "https://freesound.org/people/bassimat/sounds/860781/",
-        "author": "bassimat",
-        "durationSec": 423.2,
-        "verdict": "reject",
-        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 423,
-          "cleanSeconds": 8,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.7767
-            },
-            {
-              "label": "Gong",
-              "max": 0.5612
-            },
-            {
-              "label": "Singing bowl",
-              "max": 0.4942
-            },
-            {
-              "label": "Chirp tone",
-              "max": 0.478
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.3133
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.777,
-              "atSecond": 0
-            },
-            {
-              "label": "Gong",
-              "max": 0.561,
-              "atSecond": 237
-            },
-            {
-              "label": "Singing bowl",
-              "max": 0.494,
-              "atSecond": 202
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.313,
-              "atSecond": 0
-            },
-            {
-              "label": "Ambient music",
-              "max": 0.265,
-              "atSecond": 373
-            },
-            {
-              "label": "Guitar",
-              "max": 0.212,
-              "atSecond": 0
-            },
-            {
-              "label": "Synthesizer",
-              "max": 0.187,
-              "atSecond": 45
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hum",
-                "Humming",
-                "Mains hum",
-                "Sine wave"
-              ],
-              "fraction": 0.007
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 466567,
-        "name": "Electronic Minute No 262 - cinematic doomsday drone.wav",
-        "url": "https://freesound.org/people/gis_sweden/sounds/466567/",
-        "author": "gis_sweden",
-        "durationSec": 107.7,
-        "verdict": "reject",
-        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 107,
-          "cleanSeconds": 30,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.7491
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.6321
-            },
-            {
-              "label": "Rumble",
-              "max": 0.5989
-            },
-            {
-              "label": "Gong",
-              "max": 0.5447
-            },
-            {
-              "label": "Synthesizer",
-              "max": 0.5159
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.749,
-              "atSecond": 101
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.632,
-              "atSecond": 67
-            },
-            {
-              "label": "Gong",
-              "max": 0.545,
-              "atSecond": 58
-            },
-            {
-              "label": "Synthesizer",
-              "max": 0.516,
-              "atSecond": 100
-            },
-            {
-              "label": "Ambient music",
-              "max": 0.385,
-              "atSecond": 101
-            },
-            {
-              "label": "Car",
-              "max": 0.295,
-              "atSecond": 67
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.288,
-              "atSecond": 100
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.219,
-              "atSecond": 83
-            },
-            {
-              "label": "Engine",
-              "max": 0.207,
-              "atSecond": 13
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.173,
-              "atSecond": 83
-            },
-            {
-              "label": "Keyboard (musical)",
-              "max": 0.158,
-              "atSecond": 100
-            },
-            {
-              "label": "Singing bowl",
-              "max": 0.152,
-              "atSecond": 99
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hum",
-                "Humming",
-                "Mains hum",
-                "Sine wave"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 516566,
-        "name": "Dark Dungeon Ambience",
-        "url": "https://freesound.org/people/Kinoton/sounds/516566/",
-        "author": "Kinoton",
-        "durationSec": 180,
-        "verdict": "reject",
-        "reason": "required sound absent: Hum / Humming / Mains hum / Sine wave",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 180,
-          "cleanSeconds": 23,
-          "topClasses": [
-            {
-              "label": "Rumble",
-              "max": 0.7651
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.7436
-            },
-            {
-              "label": "Music",
-              "max": 0.5546
-            },
-            {
-              "label": "Car",
-              "max": 0.4458
-            },
-            {
-              "label": "Field recording",
-              "max": 0.3276
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.744,
-              "atSecond": 134
-            },
-            {
-              "label": "Music",
-              "max": 0.555,
-              "atSecond": 20
-            },
-            {
-              "label": "Car",
-              "max": 0.446,
-              "atSecond": 44
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Hum",
-                "Humming",
-                "Mains hum",
-                "Sine wave"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

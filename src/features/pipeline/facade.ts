@@ -95,6 +95,11 @@ export interface PipelineFacade {
   /** Queue processing. Idempotent if it is already queued or running. */
   enqueue(chapterId: string): void;
   cancel(chapterId: string): void;
+  /**
+   * Cancels the runs of these chapters and resolves once the queue has settled, or after a timeout.
+   * Rows and files must not be deleted while a run can still write them.
+   */
+  stop(chapterIds: readonly string[]): Promise<void>;
   /** Re-run from a stage (default: the first failed one). */
   retry(chapterId: string, from?: Stage): void;
   /** Re-run with OCR after a scanned-PDF failure (paid; the UI must confirm the cost first). */

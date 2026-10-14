@@ -190,8 +190,15 @@ export const memoryRepo = {
    * repeated alias or fact is left as it is, so a retried chapter is idempotent and the first
    * reveal of a spelling is the one kept.
    */
-  saveEntityResolution(db: Db, seriesId: string, resolution: EntityResolution): void {
+  saveEntityResolution(
+    db: Db,
+    seriesId: string,
+    chapterId: string,
+    resolution: EntityResolution,
+  ): void {
     db.transaction((tx) => {
+      // The chapter's facts from an earlier analysis go first: the resolution was built without them.
+      tx.delete(entityFacts).where(eq(entityFacts.chapterId, chapterId)).run();
       for (const entity of resolution.upserts) {
         if (entity.seriesId !== seriesId) {
           throw new Error(`Entity ${entity.id} belongs to series ${entity.seriesId}`);

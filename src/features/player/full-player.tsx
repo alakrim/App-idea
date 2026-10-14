@@ -208,8 +208,11 @@ function ReadyPlayer() {
   const availableCount = timeline?.sentenceCount ?? 0;
   const busy = playState === 'loading' || playState === 'buffering';
   const playing = playState === 'playing';
-  /** Out of audio while processing is stopped: calm copy, not a spinner (P1-5). */
-  const showPaused = narrationPaused && playState === 'buffering';
+  /**
+   * Narration has stopped short of the chapter: the player is waiting for audio, or has reached the
+   * end of what exists. Calm copy, not a spinner (P1-5), and the same whichever of the two it is.
+   */
+  const showPaused = narrationPaused && (playState === 'buffering' || playState === 'ended');
 
   const activeCues = useMemo(() => activeAmbience(cues, sentenceIdx), [cues, sentenceIdx]);
   const activeNames = activeCues.map((entry) => entry.label);

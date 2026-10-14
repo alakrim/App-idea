@@ -57,7 +57,7 @@ const realManifestSchema = z.array(
   z.object({
     ...commonFields,
     /** A4: 60 s, or 45 s for a bed cut from a 46 s window. Base-pack rows have no field and are 60 s. */
-    loopSeconds: z.union([z.literal(60), z.literal(45)]),
+    loopSeconds: z.union([z.literal(60), z.literal(45)]).optional(),
     source: z.literal('freesound'),
     freesoundId: z.number().int().positive(),
     author: z.string().min(1),

@@ -1,11 +1,13 @@
 {
   "category": "heavy_rain",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "heavy rain downpour",
-    "heavy rain ambience"
+    "heavy rain ambience",
+    "heavy rain loop",
+    "rain storm downpour ambience"
   ],
-  "poolSize": 56,
+  "poolSize": 80,
   "candidates": [
     {
       "rank": 1,
@@ -42,12 +44,12 @@
       "channels": 2,
       "avgRating": 4.43,
       "numRatings": 14,
-      "numDownloads": 592,
+      "numDownloads": 594,
       "previewUrl": "https://cdn.freesound.org/previews/435/435222_8224400-hq.mp3",
-      "score": 9.77,
+      "score": 9.78,
       "reasons": [
         "+2.39 rating 4.43 from 14 ratings",
-        "+1.39 592 downloads",
+        "+1.39 594 downloads",
         "+2 at least 90 s",
         "+3 tags rain, heavy, downpour",
         "+1 name matches rain"
@@ -170,6 +172,29 @@
     },
     {
       "rank": 8,
+      "freesoundId": 827255,
+      "name": "Torrential Downpour (loud) with Thunder",
+      "url": "https://freesound.org/people/RealSquink/sounds/827255/",
+      "author": "RealSquink",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 399.92,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 70,
+      "previewUrl": "https://cdn.freesound.org/previews/827/827255_12262933-hq.mp3",
+      "score": 9.22,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+0.93 70 downloads",
+        "+2 at least 90 s",
+        "+3 tags rain, heavy, downpour",
+        "+1 name matches downpour"
+      ]
+    },
+    {
+      "rank": 9,
       "freesoundId": 501007,
       "name": "Ambience - Living Room with Exterior Rain Falling",
       "url": "https://freesound.org/people/RavenWolfProds/sounds/501007/",
@@ -190,601 +215,372 @@
         "+2 tags rain, heavy",
         "+1 name matches rain"
       ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 435220,
+      "name": "Mild rain turning to heavy one",
+      "url": "https://freesound.org/people/dersinnsspace/sounds/435220/",
+      "author": "dersinnsspace",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 149.03,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.33,
+      "numRatings": 3,
+      "numDownloads": 124,
+      "previewUrl": "https://cdn.freesound.org/previews/435/435220_8224400-hq.mp3",
+      "score": 9.16,
+      "reasons": [
+        "+2.11 rating 4.33 from 3 ratings",
+        "+1.05 124 downloads",
+        "+2 at least 90 s",
+        "+3 tags rain, heavy, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 164206,
+      "name": "Rain very heavy with thunder.wav",
+      "url": "https://freesound.org/people/Danjocross/sounds/164206/",
+      "author": "Danjocross",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 122.85,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 18,
+      "numDownloads": 951,
+      "previewUrl": "https://cdn.freesound.org/previews/164/164206_2977885-hq.mp3",
+      "score": 9.15,
+      "reasons": [
+        "+2.66 rating 4.83 from 18 ratings",
+        "+1.49 951 downloads",
+        "+2 at least 90 s",
+        "+2 tags rain, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 872569,
+      "name": "Interior | Heavy rain on velux window / skylight / rooflight / roof window",
+      "url": "https://freesound.org/people/Anya_Media/sounds/872569/",
+      "author": "Anya_Media",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 137.54,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 33,
+      "previewUrl": "https://cdn.freesound.org/previews/872/872569_2010973-hq.mp3",
+      "score": 8.96,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.77 33 downloads",
+        "+2 at least 90 s",
+        "+3 tags rain, heavy, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 26221,
+      "name": "light rain in city.wav",
+      "url": "https://freesound.org/people/Walter_Odington/sounds/26221/",
+      "author": "Walter_Odington",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 186.32,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.12,
+      "numRatings": 37,
+      "numDownloads": 1993,
+      "previewUrl": "https://cdn.freesound.org/previews/26/26221_48671-hq.mp3",
+      "score": 8.94,
+      "reasons": [
+        "+2.29 rating 4.12 from 37 ratings",
+        "+1.65 1993 downloads",
+        "+2 at least 90 s",
+        "+2 tags rain, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 26220,
+      "name": "heavey rain.wav",
+      "url": "https://freesound.org/people/Walter_Odington/sounds/26220/",
+      "author": "Walter_Odington",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 117.1,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.28,
+      "numRatings": 39,
+      "numDownloads": 1010,
+      "previewUrl": "https://cdn.freesound.org/previews/26/26220_48671-hq.mp3",
+      "score": 8.9,
+      "reasons": [
+        "+2.39 rating 4.28 from 39 ratings",
+        "+1.5 1010 downloads",
+        "+2 at least 90 s",
+        "+2 tags rain, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 847891,
+      "name": "Sudden Rain Squall on Plastic Roof-Binaural (Natural Fades)",
+      "url": "https://freesound.org/people/lonemonk/sounds/847891/",
+      "author": "lonemonk",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 112,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 30,
+      "previewUrl": "https://cdn.freesound.org/previews/847/847891_230160-hq.mp3",
+      "score": 8.81,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.75 30 downloads",
+        "+2 at least 90 s",
+        "+3 tags rain, heavy, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 26222,
+      "name": "medium heavey rain.wav",
+      "url": "https://freesound.org/people/Walter_Odington/sounds/26222/",
+      "author": "Walter_Odington",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 105.6,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.11,
+      "numRatings": 22,
+      "numDownloads": 756,
+      "previewUrl": "https://cdn.freesound.org/previews/26/26222_48671-hq.mp3",
+      "score": 8.69,
+      "reasons": [
+        "+2.25 rating 4.11 from 22 ratings",
+        "+1.44 756 downloads",
+        "+2 at least 90 s",
+        "+2 tags rain, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 634529,
+      "name": "fran_freesound_downpour_metal_roof.wav",
+      "url": "https://freesound.org/people/Fran%20Freesound/sounds/634529/",
+      "author": "Fran Freesound",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 67.26,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 59,
+      "previewUrl": "https://cdn.freesound.org/previews/634/634529_1072138-hq.mp3",
+      "score": 8.69,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+0.89 59 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags rain, heavy, downpour",
+        "+1 name matches downpour"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 844116,
+      "name": "heavy rain ambience city day",
+      "url": "https://freesound.org/people/Artiom_Constantinov/sounds/844116/",
+      "author": "Artiom_Constantinov",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 363.05,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.78,
+      "numRatings": 9,
+      "numDownloads": 141,
+      "previewUrl": "https://cdn.freesound.org/previews/844/844116_7254491-hq.mp3",
+      "score": 8.57,
+      "reasons": [
+        "+2.49 rating 4.78 from 9 ratings",
+        "+1.08 141 downloads",
+        "+2 at least 90 s",
+        "+2 tags rain, heavy",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 859807,
+      "name": "STORM_Thunderstorm.Residential Area.Balcony.Moderate Rain.Thunderclaps 1_EM",
+      "url": "https://freesound.org/people/newlocknew/sounds/859807/",
+      "author": "newlocknew",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 243.39,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.6,
+      "numRatings": 15,
+      "numDownloads": 137,
+      "previewUrl": "https://cdn.freesound.org/previews/859/859807_5828667-hq.mp3",
+      "score": 8.56,
+      "reasons": [
+        "+2.49 rating 4.6 from 15 ratings",
+        "+1.07 137 downloads",
+        "+2 at least 90 s",
+        "+2 tags rain, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 810880,
+      "name": "Thunder + Rain - Courtyard",
+      "url": "https://freesound.org/people/Vrymaa/sounds/810880/",
+      "author": "Vrymaa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 121.64,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 120,
+      "previewUrl": "https://cdn.freesound.org/previews/810/810880_13973196-hq.mp3",
+      "score": 8.48,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.04 120 downloads",
+        "+2 at least 90 s",
+        "+2 tags rain, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 810879,
+      "name": "Interior Rain",
+      "url": "https://freesound.org/people/Vrymaa/sounds/810879/",
+      "author": "Vrymaa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 127.42,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.5,
+      "numRatings": 6,
+      "numDownloads": 207,
+      "previewUrl": "https://cdn.freesound.org/previews/810/810879_13973196-hq.mp3",
+      "score": 8.44,
+      "reasons": [
+        "+2.28 rating 4.5 from 6 ratings",
+        "+1.16 207 downloads",
+        "+2 at least 90 s",
+        "+2 tags rain, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 344994,
+      "name": "Lightning 4-30-2016.aif",
+      "url": "https://freesound.org/people/AVstudent/sounds/344994/",
+      "author": "AVstudent",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 543.21,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.25,
+      "numRatings": 36,
+      "numDownloads": 3479,
+      "previewUrl": "https://cdn.freesound.org/previews/344/344994_5610899-hq.mp3",
+      "score": 8.14,
+      "reasons": [
+        "+2.37 rating 4.25 from 36 ratings",
+        "+1.77 3479 downloads",
+        "+2 at least 90 s",
+        "+2 tags rain, downpour"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 835888,
+      "name": "Heavy Rain with Thunder",
+      "url": "https://freesound.org/people/Artem_Zaitsev/sounds/835888/",
+      "author": "Artem_Zaitsev",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 170.05,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 71,
+      "previewUrl": "https://cdn.freesound.org/previews/835/835888_15618458-hq.mp3",
+      "score": 8.13,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.93 71 downloads",
+        "+2 at least 90 s",
+        "+2 tags rain, heavy",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 590977,
+      "name": "Rain_Heavy_001.wav",
+      "url": "https://freesound.org/people/cartoonrob/sounds/590977/",
+      "author": "cartoonrob",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 60.03,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 75,
+      "previewUrl": "https://cdn.freesound.org/previews/590/590977_1778576-hq.mp3",
+      "score": 8,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.94 75 downloads",
+        "+1 at least 60 s",
+        "+3 tags rain, heavy, downpour",
+        "+1 name matches rain"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 705730,
+      "name": "Heavy rainfall.",
+      "url": "https://freesound.org/people/mudflea2/sounds/705730/",
+      "author": "mudflea2",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 545.81,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 1,
+      "numDownloads": 118,
+      "previewUrl": "https://cdn.freesound.org/previews/705/705730_15236906-hq.mp3",
+      "score": 7.98,
+      "reasons": [
+        "+1.94 rating 4 from 1 ratings",
+        "+1.04 118 downloads",
+        "+2 at least 90 s",
+        "+3 tags rain, heavy, downpour"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": null,
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Rain",
-          "Raindrop",
-          "Rain on surface"
-        ]
-      ],
-      "clapPrompt": "heavy rain pouring down, dense and steady, no thunder, no people"
-    },
-    "verdict": "filled",
-    "unfilledReason": null,
-    "chosen": {
-      "freesoundId": 826025,
-      "windowStartSeconds": 30,
-      "windowSeconds": 64,
-      "steadinessDb": 0.569,
-      "clapScore": null
-    },
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 826025,
-        "name": "RAIN_Summer Rain.City Yard.Entrance Canopy.Eaves Leaking.Drops On Plants And Asphalt 3_EM",
-        "url": "https://freesound.org/people/newlocknew/sounds/826025/",
-        "author": "newlocknew",
-        "durationSec": 205.2,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 30,
-          "lengthSeconds": 64,
-          "loopSeconds": 60,
-          "steadinessDb": 0.569
-        },
-        "clapScore": null,
-        "evidence": {
-          "frames": 205,
-          "cleanSeconds": 205,
-          "topClasses": [
-            {
-              "label": "Rain on surface",
-              "max": 0.8707
-            },
-            {
-              "label": "Rain",
-              "max": 0.854
-            },
-            {
-              "label": "Raindrop",
-              "max": 0.7179
-            },
-            {
-              "label": "Train",
-              "max": 0.1445
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.1335
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain",
-                "Raindrop",
-                "Rain on surface"
-              ],
-              "fraction": 1
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 435222,
-        "name": "Heavy rain with thuder",
-        "url": "https://freesound.org/people/dersinnsspace/sounds/435222/",
-        "author": "dersinnsspace",
-        "durationSec": 100,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Thunder reaches 0.488 (at 83 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 100,
-          "cleanSeconds": 83,
-          "topClasses": [
-            {
-              "label": "Rain on surface",
-              "max": 0.7294
-            },
-            {
-              "label": "Rain",
-              "max": 0.7257
-            },
-            {
-              "label": "Thunder",
-              "max": 0.488
-            },
-            {
-              "label": "Raindrop",
-              "max": 0.4438
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.4239
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.488,
-              "atSecond": 83
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.424,
-              "atSecond": 83
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.371,
-              "atSecond": 0
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain",
-                "Raindrop",
-                "Rain on surface"
-              ],
-              "fraction": 0.59
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 717843,
-        "name": "230405 Rain heavy, concrete, trees, M10 ParaEM272s, Toronto 7am",
-        "url": "https://freesound.org/people/TRP/sounds/717843/",
-        "author": "TRP",
-        "durationSec": 117,
-        "verdict": "reject",
-        "reason": "required sound absent: Rain / Raindrop / Rain on surface",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 116,
-          "cleanSeconds": 114,
-          "topClasses": [
-            {
-              "label": "Thunder",
-              "max": 0.8251
-            },
-            {
-              "label": "Rain",
-              "max": 0.7639
-            },
-            {
-              "label": "Pink noise",
-              "max": 0.7528
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.7369
-            },
-            {
-              "label": "Rain on surface",
-              "max": 0.6789
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.825,
-              "atSecond": 96
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.737,
-              "atSecond": 96
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain",
-                "Raindrop",
-                "Rain on surface"
-              ],
-              "fraction": 0.328
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 616446,
-        "name": "Heavy rain pouring with water stream on concrete",
-        "url": "https://freesound.org/people/AdrianoAnjos/sounds/616446/",
-        "author": "AdrianoAnjos",
-        "durationSec": 110.3,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 41,
-          "lengthSeconds": 64,
-          "loopSeconds": 60,
-          "steadinessDb": 0.698
-        },
-        "clapScore": null,
-        "evidence": {
-          "frames": 110,
-          "cleanSeconds": 110,
-          "topClasses": [
-            {
-              "label": "Rain on surface",
-              "max": 0.7977
-            },
-            {
-              "label": "Rain",
-              "max": 0.7845
-            },
-            {
-              "label": "Raindrop",
-              "max": 0.6662
-            },
-            {
-              "label": "Water",
-              "max": 0.2069
-            },
-            {
-              "label": "Gush",
-              "max": 0.164
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain",
-                "Raindrop",
-                "Rain on surface"
-              ],
-              "fraction": 0.964
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 512965,
-        "name": "Heavy rain Larnaca",
-        "url": "https://freesound.org/people/ratdh9/sounds/512965/",
-        "author": "ratdh9",
-        "durationSec": 108.8,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 14,
-          "lengthSeconds": 46,
-          "loopSeconds": 45,
-          "steadinessDb": 1.925
-        },
-        "clapScore": null,
-        "evidence": {
-          "frames": 108,
-          "cleanSeconds": 95,
-          "topClasses": [
-            {
-              "label": "Rain",
-              "max": 0.6738
-            },
-            {
-              "label": "Rain on surface",
-              "max": 0.6488
-            },
-            {
-              "label": "Pink noise",
-              "max": 0.5487
-            },
-            {
-              "label": "Raindrop",
-              "max": 0.4167
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.3874
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.387,
-              "atSecond": 69
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.32,
-              "atSecond": 98
-            },
-            {
-              "label": "Thunder",
-              "max": 0.319,
-              "atSecond": 97
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.28,
-              "atSecond": 97
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.227,
-              "atSecond": 69
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain",
-                "Raindrop",
-                "Rain on surface"
-              ],
-              "fraction": 0.546
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 592996,
-        "name": "heavy rain on a small tent hq",
-        "url": "https://freesound.org/people/Petrosilia/sounds/592996/",
-        "author": "Petrosilia",
-        "durationSec": 67,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Firecracker reaches 0.294 (at 6 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 67,
-          "cleanSeconds": 56,
-          "topClasses": [
-            {
-              "label": "Rain on surface",
-              "max": 0.6532
-            },
-            {
-              "label": "Rain",
-              "max": 0.5685
-            },
-            {
-              "label": "Raindrop",
-              "max": 0.4106
-            },
-            {
-              "label": "Firecracker",
-              "max": 0.2939
-            },
-            {
-              "label": "Fireworks",
-              "max": 0.2154
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Firecracker",
-              "max": 0.294,
-              "atSecond": 6
-            },
-            {
-              "label": "Fireworks",
-              "max": 0.215,
-              "atSecond": 56
-            },
-            {
-              "label": "Applause",
-              "max": 0.159,
-              "atSecond": 27
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain",
-                "Raindrop",
-                "Rain on surface"
-              ],
-              "fraction": 0.716
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 581639,
-        "name": "rain and thunder.m4a",
-        "url": "https://freesound.org/people/KayGood/sounds/581639/",
-        "author": "KayGood",
-        "durationSec": 263.4,
-        "verdict": "reject",
-        "reason": "required sound absent: Rain / Raindrop / Rain on surface",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 263,
-          "cleanSeconds": 200,
-          "topClasses": [
-            {
-              "label": "Rain",
-              "max": 0.7696
-            },
-            {
-              "label": "Thunder",
-              "max": 0.7613
-            },
-            {
-              "label": "Rain on surface",
-              "max": 0.7492
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.6665
-            },
-            {
-              "label": "Pink noise",
-              "max": 0.6183
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.761,
-              "atSecond": 83
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.666,
-              "atSecond": 83
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.562,
-              "atSecond": 3
-            },
-            {
-              "label": "Train",
-              "max": 0.346,
-              "atSecond": 193
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.275,
-              "atSecond": 193
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.261,
-              "atSecond": 193
-            },
-            {
-              "label": "Car",
-              "max": 0.203,
-              "atSecond": 3
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.17,
-              "atSecond": 137
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain",
-                "Raindrop",
-                "Rain on surface"
-              ],
-              "fraction": 0.308
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 501007,
-        "name": "Ambience - Living Room with Exterior Rain Falling",
-        "url": "https://freesound.org/people/RavenWolfProds/sounds/501007/",
-        "author": "RavenWolfProds",
-        "durationSec": 268.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Rain / Raindrop / Rain on surface",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 268,
-          "cleanSeconds": 250,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.6401
-            },
-            {
-              "label": "Tick-tock",
-              "max": 0.5765
-            },
-            {
-              "label": "Tick",
-              "max": 0.4162
-            },
-            {
-              "label": "Chime",
-              "max": 0.3364
-            },
-            {
-              "label": "Marimba, xylophone",
-              "max": 0.3341
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.64,
-              "atSecond": 157
-            },
-            {
-              "label": "Chime",
-              "max": 0.336,
-              "atSecond": 118
-            },
-            {
-              "label": "Marimba, xylophone",
-              "max": 0.334,
-              "atSecond": 156
-            },
-            {
-              "label": "Wind chime",
-              "max": 0.314,
-              "atSecond": 118
-            },
-            {
-              "label": "Singing bowl",
-              "max": 0.263,
-              "atSecond": 158
-            },
-            {
-              "label": "Train",
-              "max": 0.15,
-              "atSecond": 151
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Rain",
-                "Raindrop",
-                "Rain on surface"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

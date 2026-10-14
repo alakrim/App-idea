@@ -5,9 +5,11 @@
     "chanting ritual ambience",
     "monks chant reverb",
     "gregorian chant",
-    "monks singing ambience"
+    "monks singing ambience",
+    "chanting loop",
+    "choir chant ambience"
   ],
-  "poolSize": 6,
+  "poolSize": 16,
   "candidates": [
     {
       "rank": 1,
@@ -33,6 +35,71 @@
     },
     {
       "rank": 2,
+      "freesoundId": 869824,
+      "name": "CHOIR_Serbian_Orthodox_Ambience_",
+      "url": "https://freesound.org/people/SignatureSoundsOrg/sounds/869824/",
+      "author": "SignatureSoundsOrg",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 100.8,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 1,
+      "previewUrl": "https://cdn.freesound.org/previews/869/869824_19205925-hq.mp3",
+      "score": 6.03,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.15 1 downloads",
+        "+2 at least 90 s",
+        "+2 tags chant, chanting"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 869834,
+      "name": "CHOIR_Serbian_Orthodox_Ambience_18",
+      "url": "https://freesound.org/people/SignatureSoundsOrg/sounds/869834/",
+      "author": "SignatureSoundsOrg",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 83.64,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 3,
+      "previewUrl": "https://cdn.freesound.org/previews/869/869834_19205925-hq.mp3",
+      "score": 5.68,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.3 3 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags chant, chanting"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 318673,
+      "name": "funbeats.mp3",
+      "url": "https://freesound.org/people/hypnogurl71/sounds/318673/",
+      "author": "hypnogurl71",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 113.18,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 134,
+      "previewUrl": "https://cdn.freesound.org/previews/318/318673_5350029-hq.mp3",
+      "score": 5.36,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+1.07 134 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 5,
       "freesoundId": 628648,
       "name": "Reggaemonks.wav",
       "url": "https://freesound.org/people/Marcker/sounds/628648/",
@@ -53,7 +120,28 @@
       ]
     },
     {
-      "rank": 3,
+      "rank": 6,
+      "freesoundId": 869836,
+      "name": "CHOIR_Serbian_Orthodox_Ambience_4",
+      "url": "https://freesound.org/people/SignatureSoundsOrg/sounds/869836/",
+      "author": "SignatureSoundsOrg",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 51.47,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 3,
+      "previewUrl": "https://cdn.freesound.org/previews/869/869836_19205925-hq.mp3",
+      "score": 4.18,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.3 3 downloads",
+        "+2 tags chant, chanting"
+      ]
+    },
+    {
+      "rank": 7,
       "freesoundId": 437475,
       "name": "Short eerie chorus",
       "url": "https://freesound.org/people/ThomEvans/sounds/437475/",
@@ -75,7 +163,30 @@
       ]
     },
     {
-      "rank": 4,
+      "rank": 8,
+      "freesoundId": 825858,
+      "name": "Monastery atmosphere - Monk chant + chimes",
+      "url": "https://freesound.org/people/Vrymaa/sounds/825858/",
+      "author": "Vrymaa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 82.91,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 20,
+      "numDownloads": 296,
+      "previewUrl": "https://cdn.freesound.org/previews/825/825858_13973196-hq.mp3",
+      "score": 2.36,
+      "reasons": [
+        "+2.63 rating 4.75 from 20 ratings",
+        "+1.24 296 downloads",
+        "+1.5 at least 63 s",
+        "+1 name matches chant",
+        "-4 sfx hit or beep (chime)"
+      ]
+    },
+    {
+      "rank": 9,
       "freesoundId": 262876,
       "name": "Musical - Native American Day of the Dead Celebtration with Pipes, Whip Cracks, Drums.wav",
       "url": "https://freesound.org/people/jaegrover/sounds/262876/",
@@ -98,7 +209,31 @@
       ]
     },
     {
-      "rank": 5,
+      "rank": 10,
+      "freesoundId": 747807,
+      "name": "Ecclesiastical organ chant choral1",
+      "url": "https://freesound.org/people/Jim-Bretherick/sounds/747807/",
+      "author": "Jim-Bretherick",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 148.46,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.64,
+      "numRatings": 11,
+      "numDownloads": 310,
+      "previewUrl": "https://cdn.freesound.org/previews/747/747807_10983022-hq.mp3",
+      "score": 1.71,
+      "reasons": [
+        "+2.46 rating 4.64 from 11 ratings",
+        "+1.25 310 downloads",
+        "+2 at least 90 s",
+        "+1 tags chant",
+        "+1 name matches chant",
+        "-6 music (music)"
+      ]
+    },
+    {
+      "rank": 11,
       "freesoundId": 333930,
       "name": "Echoes from a Distant Past.wav",
       "url": "https://freesound.org/people/BuytheField/sounds/333930/",
@@ -120,7 +255,51 @@
       ]
     },
     {
-      "rank": 6,
+      "rank": 12,
+      "freesoundId": 869839,
+      "name": "CHOIR_Serbian_Orthodox_Ambience_7",
+      "url": "https://freesound.org/people/SignatureSoundsOrg/sounds/869839/",
+      "author": "SignatureSoundsOrg",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 31.74,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 4,
+      "previewUrl": "https://cdn.freesound.org/previews/869/869839_19205925-hq.mp3",
+      "score": 1.22,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.35 4 downloads",
+        "-3 only 31.74 s",
+        "+2 tags chant, chanting"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 869840,
+      "name": "CHOIR_Serbian_Orthodox_Ambience_8",
+      "url": "https://freesound.org/people/SignatureSoundsOrg/sounds/869840/",
+      "author": "SignatureSoundsOrg",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 31.31,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 4,
+      "previewUrl": "https://cdn.freesound.org/previews/869/869840_19205925-hq.mp3",
+      "score": 1.22,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.35 4 downloads",
+        "-3 only 31.31 s",
+        "+2 tags chant, chanting"
+      ]
+    },
+    {
+      "rank": 14,
       "freesoundId": 462735,
       "name": "monk music 01",
       "url": "https://freesound.org/people/rucisko/sounds/462735/",
@@ -141,655 +320,50 @@
         "+1 tags monks",
         "-6 music (music, beat)"
       ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 725707,
+      "name": "Exp_Upset Crowd Yelling CHANTING_Loop_01",
+      "url": "https://freesound.org/people/mglennsound/sounds/725707/",
+      "author": "mglennsound",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 40.6,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 295,
+      "previewUrl": "https://cdn.freesound.org/previews/725/725707_14787385-hq.mp3",
+      "score": 0.53,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.24 295 downloads",
+        "-3 only 40.6 s"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 412348,
+      "name": "Hip-hop 165 bpm.mp3",
+      "url": "https://freesound.org/people/KasDonatov/sounds/412348/",
+      "author": "KasDonatov",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 42.7,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.29,
+      "numRatings": 7,
+      "numDownloads": 247,
+      "previewUrl": "https://cdn.freesound.org/previews/412/412348_7791228-hq.mp3",
+      "score": -7.58,
+      "reasons": [
+        "+2.22 rating 4.29 from 7 ratings",
+        "+1.2 247 downloads",
+        "-3 only 42.7 s",
+        "-6 music (bpm)",
+        "-2 loop with music"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Chant",
-          "Singing",
-          "Choir",
-          "Male singing",
-          "Female singing"
-        ]
-      ],
-      "clapPrompt": "low chanted voices in a ritual, reverberant"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Chant / Singing / Choir / Male singing / Female singing; clip has 40 s; a window needs 64 s",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 780488,
-        "name": "Gregorian choir & organ in Rome",
-        "url": "https://freesound.org/people/tullio/sounds/780488/",
-        "author": "tullio",
-        "durationSec": 65.3,
-        "verdict": "reject",
-        "reason": "required sound absent: Chant / Singing / Choir / Male singing / Female singing",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 65,
-          "cleanSeconds": 0,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.8742
-            },
-            {
-              "label": "Scary music",
-              "max": 0.795
-            },
-            {
-              "label": "Mantra",
-              "max": 0.6922
-            },
-            {
-              "label": "Gong",
-              "max": 0.6128
-            },
-            {
-              "label": "Chant",
-              "max": 0.5608
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.874,
-              "atSecond": 43
-            },
-            {
-              "label": "Scary music",
-              "max": 0.795,
-              "atSecond": 43
-            },
-            {
-              "label": "Gong",
-              "max": 0.613,
-              "atSecond": 35
-            },
-            {
-              "label": "Ambient music",
-              "max": 0.261,
-              "atSecond": 45
-            },
-            {
-              "label": "New-age music",
-              "max": 0.249,
-              "atSecond": 26
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.247,
-              "atSecond": 51
-            },
-            {
-              "label": "Tubular bells",
-              "max": 0.19,
-              "atSecond": 59
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chant",
-                "Singing",
-                "Choir",
-                "Male singing",
-                "Female singing"
-              ],
-              "fraction": 0.169
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 628648,
-        "name": "Reggaemonks.wav",
-        "url": "https://freesound.org/people/Marcker/sounds/628648/",
-        "author": "Marcker",
-        "durationSec": 66,
-        "verdict": "reject",
-        "reason": "required sound absent: Chant / Singing / Choir / Male singing / Female singing",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 65,
-          "cleanSeconds": 0,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.9142
-            },
-            {
-              "label": "Scary music",
-              "max": 0.531
-            },
-            {
-              "label": "Video game music",
-              "max": 0.3694
-            },
-            {
-              "label": "Mantra",
-              "max": 0.3212
-            },
-            {
-              "label": "Chant",
-              "max": 0.3206
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.914,
-              "atSecond": 9
-            },
-            {
-              "label": "Scary music",
-              "max": 0.531,
-              "atSecond": 51
-            },
-            {
-              "label": "Video game music",
-              "max": 0.369,
-              "atSecond": 15
-            },
-            {
-              "label": "Organ",
-              "max": 0.28,
-              "atSecond": 45
-            },
-            {
-              "label": "Theme music",
-              "max": 0.255,
-              "atSecond": 38
-            },
-            {
-              "label": "Background music",
-              "max": 0.239,
-              "atSecond": 53
-            },
-            {
-              "label": "Ambient music",
-              "max": 0.22,
-              "atSecond": 26
-            },
-            {
-              "label": "New-age music",
-              "max": 0.188,
-              "atSecond": 34
-            },
-            {
-              "label": "Keyboard (musical)",
-              "max": 0.178,
-              "atSecond": 45
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.173,
-              "atSecond": 45
-            },
-            {
-              "label": "Soundtrack music",
-              "max": 0.168,
-              "atSecond": 38
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.168,
-              "atSecond": 18
-            },
-            {
-              "label": "Hammond organ",
-              "max": 0.152,
-              "atSecond": 45
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chant",
-                "Singing",
-                "Choir",
-                "Male singing",
-                "Female singing"
-              ],
-              "fraction": 0.062
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 437475,
-        "name": "Short eerie chorus",
-        "url": "https://freesound.org/people/ThomEvans/sounds/437475/",
-        "author": "ThomEvans",
-        "durationSec": 40.4,
-        "verdict": "reject",
-        "reason": "clip has 40 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 40,
-          "cleanSeconds": 1,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.7617
-            },
-            {
-              "label": "New-age music",
-              "max": 0.4624
-            },
-            {
-              "label": "Ambient music",
-              "max": 0.2917
-            },
-            {
-              "label": "Scary music",
-              "max": 0.2431
-            },
-            {
-              "label": "Gong",
-              "max": 0.2369
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.762,
-              "atSecond": 4
-            },
-            {
-              "label": "New-age music",
-              "max": 0.462,
-              "atSecond": 4
-            },
-            {
-              "label": "Ambient music",
-              "max": 0.292,
-              "atSecond": 30
-            },
-            {
-              "label": "Scary music",
-              "max": 0.243,
-              "atSecond": 14
-            },
-            {
-              "label": "Gong",
-              "max": 0.237,
-              "atSecond": 21
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chant",
-                "Singing",
-                "Choir",
-                "Male singing",
-                "Female singing"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 262876,
-        "name": "Musical - Native American Day of the Dead Celebtration with Pipes, Whip Cracks, Drums.wav",
-        "url": "https://freesound.org/people/jaegrover/sounds/262876/",
-        "author": "jaegrover",
-        "durationSec": 98.3,
-        "verdict": "reject",
-        "reason": "required sound absent: Chant / Singing / Choir / Male singing / Female singing",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 98,
-          "cleanSeconds": 4,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.8767
-            },
-            {
-              "label": "Train",
-              "max": 0.6958
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.6311
-            },
-            {
-              "label": "Bow-wow",
-              "max": 0.6071
-            },
-            {
-              "label": "Animal",
-              "max": 0.607
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.877,
-              "atSecond": 45
-            },
-            {
-              "label": "Train",
-              "max": 0.696,
-              "atSecond": 0
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.631,
-              "atSecond": 80
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.601,
-              "atSecond": 0
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.543,
-              "atSecond": 0
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.506,
-              "atSecond": 93
-            },
-            {
-              "label": "Emergency vehicle",
-              "max": 0.387,
-              "atSecond": 36
-            },
-            {
-              "label": "Fire engine, fire truck (siren)",
-              "max": 0.297,
-              "atSecond": 36
-            },
-            {
-              "label": "Siren",
-              "max": 0.257,
-              "atSecond": 36
-            },
-            {
-              "label": "Truck",
-              "max": 0.234,
-              "atSecond": 80
-            },
-            {
-              "label": "Subway, metro, underground",
-              "max": 0.204,
-              "atSecond": 0
-            },
-            {
-              "label": "Reversing beeps",
-              "max": 0.192,
-              "atSecond": 80
-            },
-            {
-              "label": "Fireworks",
-              "max": 0.185,
-              "atSecond": 95
-            },
-            {
-              "label": "Train wheels squealing",
-              "max": 0.183,
-              "atSecond": 24
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.171,
-              "atSecond": 87
-            },
-            {
-              "label": "Firecracker",
-              "max": 0.153,
-              "atSecond": 95
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.118,
-              "atSecond": 36
-            },
-            {
-              "label": "Ambulance (siren)",
-              "max": 0.109,
-              "atSecond": 36
-            },
-            {
-              "label": "Train horn",
-              "max": 0.063,
-              "atSecond": 0
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chant",
-                "Singing",
-                "Choir",
-                "Male singing",
-                "Female singing"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 333930,
-        "name": "Echoes from a Distant Past.wav",
-        "url": "https://freesound.org/people/BuytheField/sounds/333930/",
-        "author": "BuytheField",
-        "durationSec": 72.2,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Music reaches 0.688 (at 62 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 72,
-          "cleanSeconds": 8,
-          "topClasses": [
-            {
-              "label": "Choir",
-              "max": 0.8346
-            },
-            {
-              "label": "Music",
-              "max": 0.6883
-            },
-            {
-              "label": "Mantra",
-              "max": 0.6028
-            },
-            {
-              "label": "Singing",
-              "max": 0.5699
-            },
-            {
-              "label": "Chant",
-              "max": 0.568
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.688,
-              "atSecond": 62
-            },
-            {
-              "label": "Gospel music",
-              "max": 0.379,
-              "atSecond": 27
-            },
-            {
-              "label": "Christian music",
-              "max": 0.284,
-              "atSecond": 27
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.26,
-              "atSecond": 40
-            },
-            {
-              "label": "Train",
-              "max": 0.249,
-              "atSecond": 29
-            },
-            {
-              "label": "Vehicle horn, car horn, honking",
-              "max": 0.068,
-              "atSecond": 15
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chant",
-                "Singing",
-                "Choir",
-                "Male singing",
-                "Female singing"
-              ],
-              "fraction": 0.792
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 462735,
-        "name": "monk music 01",
-        "url": "https://freesound.org/people/rucisko/sounds/462735/",
-        "author": "rucisko",
-        "durationSec": 245.2,
-        "verdict": "reject",
-        "reason": "required sound absent: Chant / Singing / Choir / Male singing / Female singing",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 245,
-          "cleanSeconds": 0,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.8772
-            },
-            {
-              "label": "Bell",
-              "max": 0.6288
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.5008
-            },
-            {
-              "label": "Tambourine",
-              "max": 0.4933
-            },
-            {
-              "label": "Bicycle bell",
-              "max": 0.3188
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.877,
-              "atSecond": 171
-            },
-            {
-              "label": "Bell",
-              "max": 0.629,
-              "atSecond": 64
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.501,
-              "atSecond": 68
-            },
-            {
-              "label": "Tambourine",
-              "max": 0.493,
-              "atSecond": 172
-            },
-            {
-              "label": "Bicycle bell",
-              "max": 0.319,
-              "atSecond": 28
-            },
-            {
-              "label": "Marimba, xylophone",
-              "max": 0.285,
-              "atSecond": 41
-            },
-            {
-              "label": "Jingle bell",
-              "max": 0.284,
-              "atSecond": 137
-            },
-            {
-              "label": "Tubular bells",
-              "max": 0.279,
-              "atSecond": 9
-            },
-            {
-              "label": "Drum",
-              "max": 0.235,
-              "atSecond": 79
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chant",
-                "Singing",
-                "Choir",
-                "Male singing",
-                "Female singing"
-              ],
-              "fraction": 0.004
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

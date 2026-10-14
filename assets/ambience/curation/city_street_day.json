@@ -1,11 +1,13 @@
 {
   "category": "city_street_day",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "city street ambience",
-    "busy street traffic"
+    "busy street traffic",
+    "city street ambience loop",
+    "urban street ambience"
   ],
-  "poolSize": 60,
+  "poolSize": 90,
   "candidates": [
     {
       "rank": 1,
@@ -55,6 +57,29 @@
     },
     {
       "rank": 3,
+      "freesoundId": 405149,
+      "name": "Busy urban rush hour street.WAV",
+      "url": "https://freesound.org/people/logancircle2/sounds/405149/",
+      "author": "logancircle2",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 512.52,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.64,
+      "numRatings": 11,
+      "numDownloads": 1347,
+      "previewUrl": "https://cdn.freesound.org/previews/405/405149_3694371-hq.mp3",
+      "score": 10.03,
+      "reasons": [
+        "+2.46 rating 4.64 from 11 ratings",
+        "+1.56 1347 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic, urban",
+        "+1 name matches street"
+      ]
+    },
+    {
+      "rank": 4,
       "freesoundId": 608158,
       "name": "Street People Cars City Fantasy Traffic Noise Ambience Atmosphere - Mastered ST.wav",
       "url": "https://freesound.org/people/szegvari/sounds/608158/",
@@ -65,19 +90,19 @@
       "channels": 2,
       "avgRating": 4.8,
       "numRatings": 10,
-      "numDownloads": 667,
+      "numDownloads": 669,
       "previewUrl": "https://cdn.freesound.org/previews/608/608158_2282212-hq.mp3",
       "score": 9.94,
       "reasons": [
         "+2.52 rating 4.8 from 10 ratings",
-        "+1.41 667 downloads",
+        "+1.41 669 downloads",
         "+2 at least 90 s",
         "+3 tags city, street, traffic",
         "+1 name matches city, street, traffic"
       ]
     },
     {
-      "rank": 4,
+      "rank": 5,
       "freesoundId": 384475,
       "name": "Cologne City, Tarffic on a street with barking dog (Surround)",
       "url": "https://freesound.org/people/Pfannkuchn/sounds/384475/",
@@ -88,19 +113,19 @@
       "channels": 4,
       "avgRating": 4.73,
       "numRatings": 11,
-      "numDownloads": 528,
+      "numDownloads": 529,
       "previewUrl": "https://cdn.freesound.org/previews/384/384475_627541-hq.mp3",
       "score": 9.87,
       "reasons": [
         "+2.51 rating 4.73 from 11 ratings",
-        "+1.36 528 downloads",
+        "+1.36 529 downloads",
         "+2 at least 90 s",
         "+3 tags city, street, traffic, urban",
         "+1 name matches city, street"
       ]
     },
     {
-      "rank": 5,
+      "rank": 6,
       "freesoundId": 561463,
       "name": "Ambience from 5th floor balcony in Sao Paulo Brazil traffic construction machine pile driver foundation walla",
       "url": "https://freesound.org/people/anapb/sounds/561463/",
@@ -123,7 +148,7 @@
       ]
     },
     {
-      "rank": 6,
+      "rank": 7,
       "freesoundId": 727873,
       "name": "ambience, city, preobrazhenskaya street, traffic, winter, moscow",
       "url": "https://freesound.org/people/AlexanderChe/sounds/727873/",
@@ -146,7 +171,7 @@
       ]
     },
     {
-      "rank": 7,
+      "rank": 8,
       "freesoundId": 608157,
       "name": "Street People Cars City Fantasy Traffic Noise Ambience Atmosphere - Mastered Surround.wav",
       "url": "https://freesound.org/people/szegvari/sounds/608157/",
@@ -169,7 +194,7 @@
       ]
     },
     {
-      "rank": 8,
+      "rank": 9,
       "freesoundId": 406871,
       "name": "traffic medium Middle East busy street echo throaty cars motorcycles horn honks2 Gaza 2016.wav",
       "url": "https://freesound.org/people/kyles/sounds/406871/",
@@ -190,629 +215,373 @@
         "+3 tags city, street, traffic",
         "+1 name matches street, traffic"
       ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 723607,
+      "name": "Ciudad de Mexico DF Colonia Roma Busy Street traffic urban city ambience Ed Larez VSNR",
+      "url": "https://freesound.org/people/visionear/sounds/723607/",
+      "author": "visionear",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 87.84,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.95,
+      "numRatings": 19,
+      "numDownloads": 888,
+      "previewUrl": "https://cdn.freesound.org/previews/723/723607_10869493-hq.mp3",
+      "score": 9.71,
+      "reasons": [
+        "+2.73 rating 4.95 from 19 ratings",
+        "+1.47 888 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags city, street, traffic, urban",
+        "+1 name matches city, street, traffic"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 720507,
+      "name": "Walking through the noisy food commercial street",
+      "url": "https://freesound.org/people/lastraindrop/sounds/720507/",
+      "author": "lastraindrop",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 526.46,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 424,
+      "previewUrl": "https://cdn.freesound.org/previews/720/720507_12768873-hq.mp3",
+      "score": 9.68,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+1.31 424 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic, urban",
+        "+1 name matches street"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 384474,
+      "name": "Cologne City, Street traffic and people talking in front of a bar (Surround)",
+      "url": "https://freesound.org/people/Pfannkuchn/sounds/384474/",
+      "author": "Pfannkuchn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 101.35,
+      "samplerate": 48000,
+      "channels": 4,
+      "avgRating": 4.33,
+      "numRatings": 6,
+      "numDownloads": 532,
+      "previewUrl": "https://cdn.freesound.org/previews/384/384474_627541-hq.mp3",
+      "score": 9.58,
+      "reasons": [
+        "+2.22 rating 4.33 from 6 ratings",
+        "+1.36 532 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic, urban",
+        "+1 name matches city, street, traffic"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 407335,
+      "name": "traffic medium Middle East busy street echo throaty cars motorcycles horn honks2 Gaza Strip 2016.wav",
+      "url": "https://freesound.org/people/kyles/sounds/407335/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 165.71,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 330,
+      "previewUrl": "https://cdn.freesound.org/previews/407/407335_612689-hq.mp3",
+      "score": 9.56,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.26 330 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic",
+        "+1 name matches street, traffic"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 453805,
+      "name": "city traffic medium busy wet +bus pull up, stop, leave across the street Verdun, Montreal, Canada.flac",
+      "url": "https://freesound.org/people/kyles/sounds/453805/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 389.49,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 294,
+      "previewUrl": "https://cdn.freesound.org/previews/453/453805_612689-hq.mp3",
+      "score": 9.53,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+1.23 294 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic",
+        "+1 name matches city, street, traffic"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 463901,
+      "name": "street ambience.wav",
+      "url": "https://freesound.org/people/OutofPhaze/sounds/463901/",
+      "author": "OutofPhaze",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 127.45,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.25,
+      "numRatings": 4,
+      "numDownloads": 590,
+      "previewUrl": "https://cdn.freesound.org/previews/463/463901_8044044-hq.mp3",
+      "score": 9.51,
+      "reasons": [
+        "+2.13 rating 4.25 from 4 ratings",
+        "+1.39 590 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic",
+        "+1 name matches street"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 462494,
+      "name": "busy city 05",
+      "url": "https://freesound.org/people/rucisko/sounds/462494/",
+      "author": "rucisko",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 60.82,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.36,
+      "numRatings": 64,
+      "numDownloads": 14926,
+      "previewUrl": "https://cdn.freesound.org/previews/462/462494_2978883-hq.mp3",
+      "score": 9.47,
+      "reasons": [
+        "+2.47 rating 4.36 from 64 ratings",
+        "+2 14926 downloads",
+        "+1 at least 60 s",
+        "+3 tags city, street, traffic",
+        "+1 name matches city"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 407334,
+      "name": "traffic medium Middle East busy street near market throaty cars horn honks arabic voices1 +close kid middle, ambulance pass siren pulse end Gaza Strip 2016.wav",
+      "url": "https://freesound.org/people/kyles/sounds/407334/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 267.02,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 187,
+      "previewUrl": "https://cdn.freesound.org/previews/407/407334_612689-hq.mp3",
+      "score": 9.34,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+1.14 187 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic",
+        "+1 name matches street, traffic"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 252799,
+      "name": "BS_street traffic Warsaw Poland 2014-10-24.wav",
+      "url": "https://freesound.org/people/szczur_banshee/sounds/252799/",
+      "author": "szczur_banshee",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 144.2,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 235,
+      "previewUrl": "https://cdn.freesound.org/previews/252/252799_1732954-hq.mp3",
+      "score": 9.25,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1.19 235 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic, urban",
+        "+1 name matches street, traffic"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 406874,
+      "name": "traffic medium Middle East busy street near market throaty cars horn honks arabic voices2 +horse trot by near end Gaza 2016.wav",
+      "url": "https://freesound.org/people/kyles/sounds/406874/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 202.87,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 128,
+      "previewUrl": "https://cdn.freesound.org/previews/406/406874_612689-hq.mp3",
+      "score": 9.25,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.06 128 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic",
+        "+1 name matches street, traffic"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 622736,
+      "name": "AMBCnst Ambience jackhammer on street recorded from 5th floor balcony in Sao Paulo Brazil",
+      "url": "https://freesound.org/people/anapb/sounds/622736/",
+      "author": "anapb",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 109.27,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 200,
+      "previewUrl": "https://cdn.freesound.org/previews/622/622736_2886338-hq.mp3",
+      "score": 9.21,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1.15 200 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic, urban",
+        "+1 name matches street"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 700948,
+      "name": "Background traffic noise",
+      "url": "https://freesound.org/people/Froey_/sounds/700948/",
+      "author": "Froey_",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 79.14,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 7,
+      "numDownloads": 209,
+      "previewUrl": "https://cdn.freesound.org/previews/700/700948_8331855-hq.mp3",
+      "score": 9.19,
+      "reasons": [
+        "+2.53 rating 5 from 7 ratings",
+        "+1.16 209 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags city, street, traffic",
+        "+1 name matches traffic"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 215289,
+      "name": "01 brooklyn street day wet streets.flac",
+      "url": "https://freesound.org/people/pushkin/sounds/215289/",
+      "author": "pushkin",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.59,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 366,
+      "previewUrl": "https://cdn.freesound.org/previews/215/215289_336074-hq.mp3",
+      "score": 9.08,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.28 366 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags city, street, traffic",
+        "+1 name matches street"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 815536,
+      "name": "Inside Shared Car from Ramallah to Birzeit – People Talking, Engine Sound, Street Noise, Car Horns",
+      "url": "https://freesound.org/people/sounds_from_palestine/sounds/815536/",
+      "author": "sounds_from_palestine",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 157.13,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.2,
+      "numRatings": 5,
+      "numDownloads": 67,
+      "previewUrl": "https://cdn.freesound.org/previews/815/815536_17247322-hq.mp3",
+      "score": 9.05,
+      "reasons": [
+        "+2.14 rating 4.2 from 5 ratings",
+        "+0.92 67 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, urban",
+        "+1 name matches street"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 406870,
+      "name": "traffic medium Middle East busy street near market throaty cars horn honks arabic voices1 +close kid middle, ambulance pass siren pulse end Gaza 2016.wav",
+      "url": "https://freesound.org/people/kyles/sounds/406870/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 267.47,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 1,
+      "numDownloads": 149,
+      "previewUrl": "https://cdn.freesound.org/previews/406/406870_612689-hq.mp3",
+      "score": 9.03,
+      "reasons": [
+        "+1.94 rating 4 from 1 ratings",
+        "+1.09 149 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic",
+        "+1 name matches street, traffic"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 444660,
+      "name": "CityNoise_Soft_48k.wav",
+      "url": "https://freesound.org/people/MirkaElina/sounds/444660/",
+      "author": "MirkaElina",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 91.04,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.61,
+      "numRatings": 18,
+      "numDownloads": 988,
+      "previewUrl": "https://cdn.freesound.org/previews/444/444660_4213224-hq.mp3",
+      "score": 9.02,
+      "reasons": [
+        "+2.53 rating 4.61 from 18 ratings",
+        "+1.5 988 downloads",
+        "+2 at least 90 s",
+        "+3 tags city, street, traffic"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [
-        "vehicles",
-        "engines"
-      ],
-      "required": [
-        [
-          "Traffic noise, roadway noise",
-          "Vehicle",
-          "Car",
-          "Motor vehicle (road)"
-        ]
-      ],
-      "clapPrompt": "a busy city street by day with traffic and footsteps, no sirens"
-    },
-    "verdict": "filled",
-    "unfilledReason": null,
-    "chosen": {
-      "freesoundId": 645851,
-      "windowStartSeconds": 43,
-      "windowSeconds": 64,
-      "steadinessDb": 0.647,
-      "clapScore": 0.2923
-    },
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 645851,
-        "name": "City streets from far away.wav",
-        "url": "https://freesound.org/people/BonnyOrbit/sounds/645851/",
-        "author": "BonnyOrbit",
-        "durationSec": 156,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 43,
-          "lengthSeconds": 64,
-          "steadinessDb": 0.647
-        },
-        "clapScore": 0.2923,
-        "evidence": {
-          "frames": 156,
-          "cleanSeconds": 156,
-          "topClasses": [
-            {
-              "label": "Vehicle",
-              "max": 0.5305
-            },
-            {
-              "label": "Field recording",
-              "max": 0.2848
-            },
-            {
-              "label": "Bee, wasp, etc.",
-              "max": 0.1901
-            },
-            {
-              "label": "Insect",
-              "max": 0.1884
-            },
-            {
-              "label": "Car",
-              "max": 0.1664
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.981
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 417388,
-        "name": "Amazing street ambience sounds.wav",
-        "url": "https://freesound.org/people/dersinnsspace/sounds/417388/",
-        "author": "dersinnsspace",
-        "durationSec": 153.6,
-        "verdict": "reject",
-        "reason": "required sound absent: Traffic noise, roadway noise / Vehicle / Car / Motor vehicle (road)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 153,
-          "cleanSeconds": 150,
-          "topClasses": [
-            {
-              "label": "Train",
-              "max": 0.8452
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.7392
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.7027
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.6897
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.397
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.259,
-              "atSecond": 140
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.444
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 608158,
-        "name": "Street People Cars City Fantasy Traffic Noise Ambience Atmosphere - Mastered ST.wav",
-        "url": "https://freesound.org/people/szegvari/sounds/608158/",
-        "author": "szegvari",
-        "durationSec": 123.9,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Thunder reaches 0.445 (at 7 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 123,
-          "cleanSeconds": 112,
-          "topClasses": [
-            {
-              "label": "Vehicle",
-              "max": 0.8037
-            },
-            {
-              "label": "Train",
-              "max": 0.7323
-            },
-            {
-              "label": "Speech",
-              "max": 0.6606
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.6435
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.6426
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.445,
-              "atSecond": 7
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.38,
-              "atSecond": 1
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.284,
-              "atSecond": 7
-            },
-            {
-              "label": "Lawn mower",
-              "max": 0.157,
-              "atSecond": 64
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.935
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 384475,
-        "name": "Cologne City, Tarffic on a street with barking dog (Surround)",
-        "url": "https://freesound.org/people/Pfannkuchn/sounds/384475/",
-        "author": "Pfannkuchn",
-        "durationSec": 200.5,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 15,
-          "lengthSeconds": 64,
-          "steadinessDb": 4.587
-        },
-        "clapScore": 0.2341,
-        "evidence": {
-          "frames": 200,
-          "cleanSeconds": 198,
-          "topClasses": [
-            {
-              "label": "Vehicle",
-              "max": 0.8093
-            },
-            {
-              "label": "Speech",
-              "max": 0.7961
-            },
-            {
-              "label": "Animal",
-              "max": 0.6849
-            },
-            {
-              "label": "Bow-wow",
-              "max": 0.6771
-            },
-            {
-              "label": "Dog",
-              "max": 0.6053
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.251,
-              "atSecond": 145
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.515
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 561463,
-        "name": "Ambience from 5th floor balcony in Sao Paulo Brazil traffic construction machine pile driver foundation walla",
-        "url": "https://freesound.org/people/anapb/sounds/561463/",
-        "author": "anapb",
-        "durationSec": 162.1,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Music reaches 0.747 (at 17 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 162,
-          "cleanSeconds": 148,
-          "topClasses": [
-            {
-              "label": "Train",
-              "max": 0.8263
-            },
-            {
-              "label": "Music",
-              "max": 0.7471
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.7394
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.7276
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.7016
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.747,
-              "atSecond": 17
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.532,
-              "atSecond": 17
-            },
-            {
-              "label": "Siren",
-              "max": 0.449,
-              "atSecond": 131
-            },
-            {
-              "label": "Ambulance (siren)",
-              "max": 0.4,
-              "atSecond": 131
-            },
-            {
-              "label": "Vehicle horn, car horn, honking",
-              "max": 0.312,
-              "atSecond": 86
-            },
-            {
-              "label": "Drum",
-              "max": 0.213,
-              "atSecond": 17
-            },
-            {
-              "label": "Guitar",
-              "max": 0.182,
-              "atSecond": 17
-            },
-            {
-              "label": "Fire engine, fire truck (siren)",
-              "max": 0.156,
-              "atSecond": 131
-            },
-            {
-              "label": "Air horn, truck horn",
-              "max": 0.061,
-              "atSecond": 132
-            },
-            {
-              "label": "Train horn",
-              "max": 0.058,
-              "atSecond": 25
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.87
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 727873,
-        "name": "ambience, city, preobrazhenskaya street, traffic, winter, moscow",
-        "url": "https://freesound.org/people/AlexanderChe/sounds/727873/",
-        "author": "AlexanderChe",
-        "durationSec": 118.1,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Vehicle horn, car horn, honking reaches 0.388 (at 86 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 118,
-          "cleanSeconds": 115,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.6252
-            },
-            {
-              "label": "Waves, surf",
-              "max": 0.5856
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.5745
-            },
-            {
-              "label": "Car",
-              "max": 0.5356
-            },
-            {
-              "label": "Ocean",
-              "max": 0.5033
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle horn, car horn, honking",
-              "max": 0.388,
-              "atSecond": 86
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.264,
-              "atSecond": 46
-            },
-            {
-              "label": "Music",
-              "max": 0.193,
-              "atSecond": 83
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.695
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 608157,
-        "name": "Street People Cars City Fantasy Traffic Noise Ambience Atmosphere - Mastered Surround.wav",
-        "url": "https://freesound.org/people/szegvari/sounds/608157/",
-        "author": "szegvari",
-        "durationSec": 123.9,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Thunder reaches 0.473 (at 7 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 123,
-          "cleanSeconds": 112,
-          "topClasses": [
-            {
-              "label": "Vehicle",
-              "max": 0.8013
-            },
-            {
-              "label": "Train",
-              "max": 0.7294
-            },
-            {
-              "label": "Speech",
-              "max": 0.6635
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.6387
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.6377
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.473,
-              "atSecond": 7
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.368,
-              "atSecond": 1
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.307,
-              "atSecond": 7
-            },
-            {
-              "label": "Lawn mower",
-              "max": 0.159,
-              "atSecond": 64
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.935
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 406871,
-        "name": "traffic medium Middle East busy street echo throaty cars motorcycles horn honks2 Gaza 2016.wav",
-        "url": "https://freesound.org/people/kyles/sounds/406871/",
-        "author": "kyles",
-        "durationSec": 166,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Reversing beeps reaches 0.507 (at 8 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 166,
-          "cleanSeconds": 126,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.7895
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.7271
-            },
-            {
-              "label": "Toot",
-              "max": 0.6983
-            },
-            {
-              "label": "Car",
-              "max": 0.6521
-            },
-            {
-              "label": "Reversing beeps",
-              "max": 0.5069
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Reversing beeps",
-              "max": 0.507,
-              "atSecond": 8
-            },
-            {
-              "label": "Music",
-              "max": 0.483,
-              "atSecond": 105
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.352,
-              "atSecond": 142
-            },
-            {
-              "label": "Vehicle horn, car horn, honking",
-              "max": 0.337,
-              "atSecond": 100
-            },
-            {
-              "label": "Car alarm",
-              "max": 0.144,
-              "atSecond": 94
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.124,
-              "atSecond": 133
-            },
-            {
-              "label": "Siren",
-              "max": 0.105,
-              "atSecond": 113
-            },
-            {
-              "label": "Ambulance (siren)",
-              "max": 0.089,
-              "atSecond": 113
-            },
-            {
-              "label": "Fire engine, fire truck (siren)",
-              "max": 0.058,
-              "atSecond": 133
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Traffic noise, roadway noise",
-                "Vehicle",
-                "Car",
-                "Motor vehicle (road)"
-              ],
-              "fraction": 0.91
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

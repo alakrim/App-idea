@@ -264,6 +264,8 @@ export interface ChatRawInput {
    * (anthropic/*, google/gemini*, qwen/*). Other models cache automatically, and the flag does nothing.
    */
   cacheSystem?: boolean;
+  /** Caps the reply's output tokens. Sent as max_tokens. */
+  maxTokens?: number;
 }
 
 export interface ChatRawResult {

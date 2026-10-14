@@ -5,9 +5,11 @@
     "storm at sea waves wind",
     "rough sea storm ambience",
     "storm waves ocean wind",
-    "stormy sea ambience loop"
+    "stormy sea ambience loop",
+    "storm sea waves loop",
+    "rough sea wind ambience"
   ],
-  "poolSize": 21,
+  "poolSize": 24,
   "candidates": [
     {
       "rank": 1,
@@ -113,12 +115,12 @@
       "channels": 1,
       "avgRating": 4.8,
       "numRatings": 10,
-      "numDownloads": 397,
+      "numDownloads": 398,
       "previewUrl": "https://cdn.freesound.org/previews/616/616222_3755886-hq.mp3",
-      "score": 9.82,
+      "score": 9.83,
       "reasons": [
         "+2.52 rating 4.8 from 10 ratings",
-        "+1.3 397 downloads",
+        "+1.3 398 downloads",
         "+2 at least 90 s",
         "+3 tags sea, storm, waves, wind",
         "+1 name matches sea, storm"
@@ -182,765 +184,372 @@
       "channels": 2,
       "avgRating": 4.61,
       "numRatings": 356,
-      "numDownloads": 16694,
+      "numDownloads": 16695,
       "previewUrl": "https://cdn.freesound.org/previews/469/469009_9518146-hq.mp3",
       "score": 9.7,
       "reasons": [
         "+2.7 rating 4.61 from 356 ratings",
-        "+2 16694 downloads",
+        "+2 16695 downloads",
         "+2 at least 90 s",
         "+3 tags storm, waves, wind"
       ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 867645,
+      "name": "Powerful Storm Waves – Rough Sea and Surf",
+      "url": "https://freesound.org/people/bassimat/sounds/867645/",
+      "author": "bassimat",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 300,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 8,
+      "numDownloads": 149,
+      "previewUrl": "https://cdn.freesound.org/previews/867/867645_15636277-hq.mp3",
+      "score": 9.66,
+      "reasons": [
+        "+2.57 rating 5 from 8 ratings",
+        "+1.09 149 downloads",
+        "+2 at least 90 s",
+        "+3 tags sea, storm, waves",
+        "+1 name matches sea, storm, waves"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 706466,
+      "name": "strong waves on rocks.wav",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/706466/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 233.45,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 6,
+      "numDownloads": 93,
+      "previewUrl": "https://cdn.freesound.org/previews/706/706466_11519060-hq.mp3",
+      "score": 9.48,
+      "reasons": [
+        "+2.49 rating 5 from 6 ratings",
+        "+0.99 93 downloads",
+        "+2 at least 90 s",
+        "+3 tags sea, storm, waves, wind",
+        "+1 name matches waves"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 426074,
+      "name": "11ft waves breaking on sandy beach in the distance from the top of the cliff",
+      "url": "https://freesound.org/people/chris_dagorne/sounds/426074/",
+      "author": "chris_dagorne",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 62.38,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 12,
+      "numDownloads": 1226,
+      "previewUrl": "https://cdn.freesound.org/previews/426/426074_3380363-hq.mp3",
+      "score": 9.08,
+      "reasons": [
+        "+2.54 rating 4.75 from 12 ratings",
+        "+1.54 1226 downloads",
+        "+1 at least 60 s",
+        "+3 tags sea, storm, waves",
+        "+1 name matches waves"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 706471,
+      "name": "strong wind on coastal path.wav",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/706471/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 267.5,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 25,
+      "numDownloads": 603,
+      "previewUrl": "https://cdn.freesound.org/previews/706/706471_11519060-hq.mp3",
+      "score": 9.08,
+      "reasons": [
+        "+2.69 rating 4.8 from 25 ratings",
+        "+1.39 603 downloads",
+        "+2 at least 90 s",
+        "+3 tags sea, storm, wind"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 582331,
+      "name": "Summer Beach Storm (2)",
+      "url": "https://freesound.org/people/peterjohncooper/sounds/582331/",
+      "author": "peterjohncooper",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 74.97,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 1,
+      "numDownloads": 141,
+      "previewUrl": "https://cdn.freesound.org/previews/582/582331_4415538-hq.mp3",
+      "score": 8.51,
+      "reasons": [
+        "+1.94 rating 4 from 1 ratings",
+        "+1.08 141 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags sea, storm, waves, wind",
+        "+1 name matches storm"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 835518,
+      "name": "CapeCoast_Ghana_Waves1_NK",
+      "url": "https://freesound.org/people/Kanny100/sounds/835518/",
+      "author": "Kanny100",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 118.92,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.6,
+      "numRatings": 5,
+      "numDownloads": 134,
+      "previewUrl": "https://cdn.freesound.org/previews/835/835518_14222808-hq.mp3",
+      "score": 8.35,
+      "reasons": [
+        "+2.29 rating 4.6 from 5 ratings",
+        "+1.07 134 downloads",
+        "+2 at least 90 s",
+        "+3 tags sea, storm, waves, wind"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 547222,
+      "name": "Sea Ambiance Water Waves",
+      "url": "https://freesound.org/people/tawix/sounds/547222/",
+      "author": "tawix",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 50.98,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.64,
+      "numRatings": 39,
+      "numDownloads": 2623,
+      "previewUrl": "https://cdn.freesound.org/previews/547/547222_4699399-hq.mp3",
+      "score": 8.34,
+      "reasons": [
+        "+2.63 rating 4.64 from 39 ratings",
+        "+1.71 2623 downloads",
+        "+3 tags sea, storm, waves, wind",
+        "+1 name matches sea, waves"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 676655,
+      "name": "230204_002 Sopot Wind and rough sea by the boulevard.wav",
+      "url": "https://freesound.org/people/MaciekKubera/sounds/676655/",
+      "author": "MaciekKubera",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 108.42,
+      "samplerate": 96000,
+      "channels": 4,
+      "avgRating": 4.5,
+      "numRatings": 2,
+      "numDownloads": 65,
+      "previewUrl": "https://cdn.freesound.org/previews/676/676655_2332564-hq.mp3",
+      "score": 8,
+      "reasons": [
+        "+2.09 rating 4.5 from 2 ratings",
+        "+0.91 65 downloads",
+        "+2 at least 90 s",
+        "+2 tags sea, wind",
+        "+1 name matches sea"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 835519,
+      "name": "CapeCoast_Ghana_Waves2_NK",
+      "url": "https://freesound.org/people/Kanny100/sounds/835519/",
+      "author": "Kanny100",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 76.64,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.86,
+      "numRatings": 7,
+      "numDownloads": 91,
+      "previewUrl": "https://cdn.freesound.org/previews/835/835519_14222808-hq.mp3",
+      "score": 7.95,
+      "reasons": [
+        "+2.47 rating 4.86 from 7 ratings",
+        "+0.98 91 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags sea, storm, waves, wind"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 695861,
+      "name": "Loud waves - no wind.mp3",
+      "url": "https://freesound.org/people/WesleyHoy/sounds/695861/",
+      "author": "WesleyHoy",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 181.42,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 26,
+      "previewUrl": "https://cdn.freesound.org/previews/695/695861_15105934-hq.mp3",
+      "score": 6.59,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.72 26 downloads",
+        "+2 at least 90 s",
+        "+1 tags waves",
+        "+1 name matches waves"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 609250,
+      "name": "Journey To The Interweb",
+      "url": "https://freesound.org/people/Aemyn/sounds/609250/",
+      "author": "Aemyn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 508,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.33,
+      "numRatings": 294,
+      "numDownloads": 5579,
+      "previewUrl": "https://cdn.freesound.org/previews/609/609250_1445263-hq.mp3",
+      "score": 6.36,
+      "reasons": [
+        "+2.49 rating 4.33 from 294 ratings",
+        "+1.87 5579 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 564166,
+      "name": "Crashing Starship",
+      "url": "https://freesound.org/people/Aemyn/sounds/564166/",
+      "author": "Aemyn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 307.95,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.35,
+      "numRatings": 143,
+      "numDownloads": 4484,
+      "previewUrl": "https://cdn.freesound.org/previews/564/564166_1445263-hq.mp3",
+      "score": 6.32,
+      "reasons": [
+        "+2.49 rating 4.35 from 143 ratings",
+        "+1.83 4484 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 661435,
+      "name": "Defensible Twister",
+      "url": "https://freesound.org/people/Brazilio123/sounds/661435/",
+      "author": "Brazilio123",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 433,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.14,
+      "numRatings": 86,
+      "numDownloads": 2709,
+      "previewUrl": "https://cdn.freesound.org/previews/661/661435_14509684-hq.mp3",
+      "score": 6.04,
+      "reasons": [
+        "+2.33 rating 4.14 from 86 ratings",
+        "+1.72 2709 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 427086,
+      "name": "Sound of waves on the Black Sea coast.",
+      "url": "https://freesound.org/people/Black_River_Phonogram/sounds/427086/",
+      "author": "Black_River_Phonogram",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 30.55,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.35,
+      "numRatings": 46,
+      "numDownloads": 5772,
+      "previewUrl": "https://cdn.freesound.org/previews/427/427086_5548565-hq.mp3",
+      "score": 5.33,
+      "reasons": [
+        "+2.45 rating 4.35 from 46 ratings",
+        "+1.88 5772 downloads",
+        "-3 only 30.55 s",
+        "+3 tags sea, storm, waves, wind",
+        "+1 name matches sea, waves"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 336152,
+      "name": "Ambiance4.ogg",
+      "url": "https://freesound.org/people/Isaac200000/sounds/336152/",
+      "author": "Isaac200000",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 30.37,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 24,
+      "numDownloads": 1891,
+      "previewUrl": "https://cdn.freesound.org/previews/336/336152_2906575-hq.mp3",
+      "score": 4.26,
+      "reasons": [
+        "+2.63 rating 4.71 from 24 ratings",
+        "+1.64 1891 downloads",
+        "-3 only 30.37 s",
+        "+3 tags storm, waves, wind"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 541027,
+      "name": "Music Calm Beach Waves",
+      "url": "https://freesound.org/people/szegvari/sounds/541027/",
+      "author": "szegvari",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 46.08,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 3.13,
+      "numRatings": 16,
+      "numDownloads": 247,
+      "previewUrl": "https://cdn.freesound.org/previews/541/541027_2282212-hq.mp3",
+      "score": 0.86,
+      "reasons": [
+        "+1.66 rating 3.13 from 16 ratings",
+        "+1.2 247 downloads",
+        "+3 tags sea, storm, waves, wind",
+        "+1 name matches waves",
+        "-6 music (music)"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Wind",
-          "Wind noise (microphone)"
-        ],
-        [
-          "Ocean",
-          "Waves, surf",
-          "Water"
-        ]
-      ],
-      "clapPrompt": "a rough sea in strong wind, heavy waves breaking and spray, no thunder"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Wind / Wind noise (microphone); no 64 s window is free of denied sounds: Wind noise (microphone) reaches 0.54 (at 57 s)",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 544119,
-        "name": "atlantic storm.wav",
-        "url": "https://freesound.org/people/bruno.auzet/sounds/544119/",
-        "author": "bruno.auzet",
-        "durationSec": 128,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Wind noise (microphone)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 128,
-          "cleanSeconds": 74,
-          "topClasses": [
-            {
-              "label": "Waves, surf",
-              "max": 0.8231
-            },
-            {
-              "label": "Ocean",
-              "max": 0.8002
-            },
-            {
-              "label": "Pink noise",
-              "max": 0.716
-            },
-            {
-              "label": "Wind",
-              "max": 0.6203
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.5887
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.589,
-              "atSecond": 33
-            },
-            {
-              "label": "Thunder",
-              "max": 0.502,
-              "atSecond": 83
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.4,
-              "atSecond": 83
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.342,
-              "atSecond": 73
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.289,
-              "atSecond": 73
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.21,
-              "atSecond": 46
-            },
-            {
-              "label": "Ship",
-              "max": 0.178,
-              "atSecond": 66
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0.344
-            },
-            {
-              "group": [
-                "Ocean",
-                "Waves, surf",
-                "Water"
-              ],
-              "fraction": 0.656
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 426075,
-        "name": "Big waves breaking and splashing against groyne",
-        "url": "https://freesound.org/people/chris_dagorne/sounds/426075/",
-        "author": "chris_dagorne",
-        "durationSec": 233.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Wind noise (microphone)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 233,
-          "cleanSeconds": 74,
-          "topClasses": [
-            {
-              "label": "Waves, surf",
-              "max": 0.8524
-            },
-            {
-              "label": "Ocean",
-              "max": 0.8162
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.721
-            },
-            {
-              "label": "Pink noise",
-              "max": 0.637
-            },
-            {
-              "label": "Wind",
-              "max": 0.6077
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.721,
-              "atSecond": 155
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.587,
-              "atSecond": 155
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.536,
-              "atSecond": 155
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.324,
-              "atSecond": 31
-            },
-            {
-              "label": "Thunder",
-              "max": 0.296,
-              "atSecond": 90
-            },
-            {
-              "label": "Ship",
-              "max": 0.257,
-              "atSecond": 125
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.224,
-              "atSecond": 163
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0.266
-            },
-            {
-              "group": [
-                "Ocean",
-                "Waves, surf",
-                "Water"
-              ],
-              "fraction": 0.764
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 441108,
-        "name": "Amb_Storm_Pier.wav",
-        "url": "https://freesound.org/people/cribbler/sounds/441108/",
-        "author": "cribbler",
-        "durationSec": 91.7,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Wind noise (microphone) reaches 0.54 (at 57 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 91,
-          "cleanSeconds": 20,
-          "topClasses": [
-            {
-              "label": "Waves, surf",
-              "max": 0.779
-            },
-            {
-              "label": "Ocean",
-              "max": 0.7305
-            },
-            {
-              "label": "Wind",
-              "max": 0.5588
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.54
-            },
-            {
-              "label": "Pink noise",
-              "max": 0.5339
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.54,
-              "atSecond": 57
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.397,
-              "atSecond": 62
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.307,
-              "atSecond": 70
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.272,
-              "atSecond": 57
-            },
-            {
-              "label": "Ship",
-              "max": 0.257,
-              "atSecond": 70
-            },
-            {
-              "label": "Thunder",
-              "max": 0.168,
-              "atSecond": 20
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0.571
-            },
-            {
-              "group": [
-                "Ocean",
-                "Waves, surf",
-                "Water"
-              ],
-              "fraction": 0.857
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 575787,
-        "name": "Sea travel",
-        "url": "https://freesound.org/people/szegvari/sounds/575787/",
-        "author": "szegvari",
-        "durationSec": 98,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Wind noise (microphone)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 98,
-          "cleanSeconds": 17,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.6996
-            },
-            {
-              "label": "Train",
-              "max": 0.6273
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.611
-            },
-            {
-              "label": "Train wheels squealing",
-              "max": 0.5987
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.5701
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.7,
-              "atSecond": 36
-            },
-            {
-              "label": "Train",
-              "max": 0.627,
-              "atSecond": 49
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.611,
-              "atSecond": 38
-            },
-            {
-              "label": "Train wheels squealing",
-              "max": 0.599,
-              "atSecond": 49
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.57,
-              "atSecond": 49
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.532,
-              "atSecond": 49
-            },
-            {
-              "label": "Scary music",
-              "max": 0.454,
-              "atSecond": 56
-            },
-            {
-              "label": "Car",
-              "max": 0.214,
-              "atSecond": 23
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.201,
-              "atSecond": 13
-            },
-            {
-              "label": "Thunder",
-              "max": 0.182,
-              "atSecond": 80
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.178,
-              "atSecond": 16
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0
-            },
-            {
-              "group": [
-                "Ocean",
-                "Waves, surf",
-                "Water"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 616222,
-        "name": "storm_sea_close.WAV",
-        "url": "https://freesound.org/people/frodeims/sounds/616222/",
-        "author": "frodeims",
-        "durationSec": 148.4,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Boat, Water vehicle reaches 0.62 (at 32 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 148,
-          "cleanSeconds": 19,
-          "topClasses": [
-            {
-              "label": "Waves, surf",
-              "max": 0.8543
-            },
-            {
-              "label": "Ocean",
-              "max": 0.8256
-            },
-            {
-              "label": "Wind",
-              "max": 0.6415
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.6196
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.5965
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.62,
-              "atSecond": 32
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.596,
-              "atSecond": 5
-            },
-            {
-              "label": "Thunder",
-              "max": 0.587,
-              "atSecond": 16
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.532,
-              "atSecond": 39
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.465,
-              "atSecond": 16
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.335,
-              "atSecond": 32
-            },
-            {
-              "label": "Ship",
-              "max": 0.255,
-              "atSecond": 60
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0.703
-            },
-            {
-              "group": [
-                "Ocean",
-                "Waves, surf",
-                "Water"
-              ],
-              "fraction": 0.845
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 706465,
-        "name": "strong wind and sea.wav",
-        "url": "https://freesound.org/people/bruno.auzet/sounds/706465/",
-        "author": "bruno.auzet",
-        "durationSec": 196,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Wind noise (microphone)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 196,
-          "cleanSeconds": 49,
-          "topClasses": [
-            {
-              "label": "Waves, surf",
-              "max": 0.7781
-            },
-            {
-              "label": "Ocean",
-              "max": 0.7317
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.52
-            },
-            {
-              "label": "Wind",
-              "max": 0.5102
-            },
-            {
-              "label": "Pink noise",
-              "max": 0.433
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.52,
-              "atSecond": 79
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.403,
-              "atSecond": 111
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.375,
-              "atSecond": 110
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.28,
-              "atSecond": 111
-            },
-            {
-              "label": "Ship",
-              "max": 0.244,
-              "atSecond": 158
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0.357
-            },
-            {
-              "group": [
-                "Ocean",
-                "Waves, surf",
-                "Water"
-              ],
-              "fraction": 0.648
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 426076,
-        "name": "Storm waves breaking on sandy beach in Bournemouth - clean recording",
-        "url": "https://freesound.org/people/chris_dagorne/sounds/426076/",
-        "author": "chris_dagorne",
-        "durationSec": 84.4,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Wind noise (microphone)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 84,
-          "cleanSeconds": 8,
-          "topClasses": [
-            {
-              "label": "Waves, surf",
-              "max": 0.7075
-            },
-            {
-              "label": "Ocean",
-              "max": 0.6709
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.5352
-            },
-            {
-              "label": "Wind",
-              "max": 0.5208
-            },
-            {
-              "label": "Thunder",
-              "max": 0.4552
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.535,
-              "atSecond": 36
-            },
-            {
-              "label": "Thunder",
-              "max": 0.455,
-              "atSecond": 66
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.339,
-              "atSecond": 5
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.323,
-              "atSecond": 66
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.26,
-              "atSecond": 36
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.202,
-              "atSecond": 36
-            },
-            {
-              "label": "Ship",
-              "max": 0.172,
-              "atSecond": 27
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0.333
-            },
-            {
-              "group": [
-                "Ocean",
-                "Waves, surf",
-                "Water"
-              ],
-              "fraction": 0.631
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 469009,
-        "name": "Relaxing, Mountains, Rivers, Streams, Running Water",
-        "url": "https://freesound.org/people/INNORECORDS/sounds/469009/",
-        "author": "INNORECORDS",
-        "durationSec": 299.9,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Wind noise (microphone)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 299,
-          "cleanSeconds": 299,
-          "topClasses": [
-            {
-              "label": "Stream",
-              "max": 0.4209
-            },
-            {
-              "label": "Trickle, dribble",
-              "max": 0.2361
-            },
-            {
-              "label": "Pour",
-              "max": 0.2292
-            },
-            {
-              "label": "Water",
-              "max": 0.1714
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.0783
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0
-            },
-            {
-              "group": [
-                "Ocean",
-                "Waves, surf",
-                "Water"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

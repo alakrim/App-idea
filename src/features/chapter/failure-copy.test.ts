@@ -20,7 +20,6 @@ describe('retry policy: non-retryable failures say what to change', () => {
     ['AUTH', 'Check your OpenRouter key in Settings, then try again.'],
     ['INSUFFICIENT_CREDITS', 'Add credit to your OpenRouter account, then try again.'],
     ['INPUT_TOO_LONG', 'Use a shorter source, then try again.'],
-    ['STORAGE_FULL', 'Free up space on this phone, then try again.'],
     ['CONTENT_EMPTY', 'Check the source, or use another one, then try again.'],
     ['CONTENT_BLOCKED', 'Check the source, or use another one, then try again.'],
     ['PARSE_FAILED', 'Check the source, or use another one, then try again.'],
@@ -46,5 +45,14 @@ describe('retry policy: non-retryable failures say what to change', () => {
 describe('failureCopy without a recorded error', () => {
   it('falls back to the generic stopped copy', () => {
     expect(failureCopy(null)).toBe(STOPPED_COPY);
+  });
+});
+
+describe('STORAGE_FULL', () => {
+  it('is retryable once space is freed, so its message alone says what to do', () => {
+    expect(changeHint(failure('STORAGE_FULL', true))).toBeNull();
+    expect(failureCopy(failure('STORAGE_FULL', true, 'Your phone is out of storage. Free up some space, then tap Try again.'))).toBe(
+      'Your phone is out of storage. Free up some space, then tap Try again.',
+    );
   });
 });

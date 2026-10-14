@@ -1,11 +1,13 @@
 {
   "category": "forest_night",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "forest night crickets",
-    "night forest ambience"
+    "night forest ambience",
+    "night forest crickets ambience",
+    "owl night forest"
   ],
-  "poolSize": 52,
+  "poolSize": 83,
   "candidates": [
     {
       "rank": 1,
@@ -19,12 +21,12 @@
       "channels": 2,
       "avgRating": 4.82,
       "numRatings": 196,
-      "numDownloads": 19060,
+      "numDownloads": 19061,
       "previewUrl": "https://cdn.freesound.org/previews/333/333221_2098408-hq.mp3",
       "score": 10.84,
       "reasons": [
         "+2.84 rating 4.82 from 196 ratings",
-        "+2 19060 downloads",
+        "+2 19061 downloads",
         "+2 at least 90 s",
         "+3 tags night, crickets, forest",
         "+1 name matches night, crickets"
@@ -42,12 +44,12 @@
       "channels": 2,
       "avgRating": 4.76,
       "numRatings": 286,
-      "numDownloads": 21491,
+      "numDownloads": 21494,
       "previewUrl": "https://cdn.freesound.org/previews/328/328293_1661766-hq.mp3",
       "score": 10.81,
       "reasons": [
         "+2.81 rating 4.76 from 286 ratings",
-        "+2 21491 downloads",
+        "+2 21494 downloads",
         "+2 at least 90 s",
         "+3 tags night, crickets, forest",
         "+1 name matches night, crickets, forest"
@@ -55,6 +57,52 @@
     },
     {
       "rank": 3,
+      "freesoundId": 466955,
+      "name": "Night close to a river, crickets and frogs, bird sometimes.",
+      "url": "https://freesound.org/people/felix.blume/sounds/466955/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 171.61,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.49,
+      "numRatings": 115,
+      "numDownloads": 11570,
+      "previewUrl": "https://cdn.freesound.org/previews/466/466955_1661766-hq.mp3",
+      "score": 10.58,
+      "reasons": [
+        "+2.58 rating 4.49 from 115 ratings",
+        "+2 11570 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 532301,
+      "name": "Night Woods",
+      "url": "https://freesound.org/people/widgetstudios/sounds/532301/",
+      "author": "widgetstudios",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 207.62,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.78,
+      "numRatings": 55,
+      "numDownloads": 3552,
+      "previewUrl": "https://cdn.freesound.org/previews/532/532301_2669618-hq.mp3",
+      "score": 10.53,
+      "reasons": [
+        "+2.76 rating 4.78 from 55 ratings",
+        "+1.78 3552 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night"
+      ]
+    },
+    {
+      "rank": 5,
       "freesoundId": 751465,
       "name": "Crickets chirping in the Night at the Forest 001",
       "url": "https://freesound.org/people/Borgory/sounds/751465/",
@@ -65,19 +113,19 @@
       "channels": 2,
       "avgRating": 4.81,
       "numRatings": 26,
-      "numDownloads": 801,
+      "numDownloads": 802,
       "previewUrl": "https://cdn.freesound.org/previews/751/751465_801011-hq.mp3",
       "score": 10.15,
       "reasons": [
         "+2.7 rating 4.81 from 26 ratings",
-        "+1.45 801 downloads",
+        "+1.45 802 downloads",
         "+2 at least 90 s",
         "+3 tags night, crickets, forest",
         "+1 name matches night, crickets, forest"
       ]
     },
     {
-      "rank": 4,
+      "rank": 6,
       "freesoundId": 809851,
       "name": "Night forest #2",
       "url": "https://freesound.org/people/deleted_user_9900733/sounds/809851/",
@@ -88,19 +136,19 @@
       "channels": 2,
       "avgRating": 4.92,
       "numRatings": 13,
-      "numDownloads": 484,
+      "numDownloads": 487,
       "previewUrl": "https://cdn.freesound.org/previews/809/809851_9900733-hq.mp3",
       "score": 9.99,
       "reasons": [
         "+2.65 rating 4.92 from 13 ratings",
-        "+1.34 484 downloads",
+        "+1.34 487 downloads",
         "+2 at least 90 s",
         "+3 tags night, crickets, forest",
         "+1 name matches night, forest"
       ]
     },
     {
-      "rank": 5,
+      "rank": 7,
       "freesoundId": 819503,
       "name": "Night ambience near a farm",
       "url": "https://freesound.org/people/LukaCafuka/sounds/819503/",
@@ -123,7 +171,7 @@
       ]
     },
     {
-      "rank": 6,
+      "rank": 8,
       "freesoundId": 376815,
       "name": "Toads and frogs in the amazonian forest at night",
       "url": "https://freesound.org/people/felix.blume/sounds/376815/",
@@ -146,7 +194,30 @@
       ]
     },
     {
-      "rank": 7,
+      "rank": 9,
+      "freesoundId": 615011,
+      "name": "Insect Buildup Forest",
+      "url": "https://freesound.org/people/absent1010/sounds/615011/",
+      "author": "absent1010",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 125.19,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 9,
+      "numDownloads": 354,
+      "previewUrl": "https://cdn.freesound.org/previews/615/615011_2528723-hq.mp3",
+      "score": 9.87,
+      "reasons": [
+        "+2.6 rating 5 from 9 ratings",
+        "+1.28 354 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches forest"
+      ]
+    },
+    {
+      "rank": 10,
       "freesoundId": 751467,
       "name": "Crickets chirping in the Night at the Forest 003 Crickets stopps chirping",
       "url": "https://freesound.org/people/Borgory/sounds/751467/",
@@ -169,7 +240,7 @@
       ]
     },
     {
-      "rank": 8,
+      "rank": 11,
       "freesoundId": 699141,
       "name": "Night_Breeze_Crickets_Kuipto_Forrest_adelaide_Australia_ambience 01.wav",
       "url": "https://freesound.org/people/roisin.gleeson/sounds/699141/",
@@ -190,557 +261,328 @@
         "+3 tags night, crickets, forest",
         "+1 name matches night, crickets"
       ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 750874,
+      "name": "Crickets at night in a forest",
+      "url": "https://freesound.org/people/LukaCafuka/sounds/750874/",
+      "author": "LukaCafuka",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 190,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.39,
+      "numRatings": 23,
+      "numDownloads": 603,
+      "previewUrl": "https://cdn.freesound.org/previews/750/750874_16236894-hq.mp3",
+      "score": 9.81,
+      "reasons": [
+        "+2.42 rating 4.39 from 23 ratings",
+        "+1.39 603 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets, forest"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 751466,
+      "name": "Crickets chirping in the Night at the Forest 002",
+      "url": "https://freesound.org/people/Borgory/sounds/751466/",
+      "author": "Borgory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 175.96,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.55,
+      "numRatings": 11,
+      "numDownloads": 543,
+      "previewUrl": "https://cdn.freesound.org/previews/751/751466_801011-hq.mp3",
+      "score": 9.78,
+      "reasons": [
+        "+2.41 rating 4.55 from 11 ratings",
+        "+1.37 543 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets, forest"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 825635,
+      "name": "Night Insects in September - Midwest US (loop)",
+      "url": "https://freesound.org/people/NickTayloe/sounds/825635/",
+      "author": "NickTayloe",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 160,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.59,
+      "numRatings": 17,
+      "numDownloads": 326,
+      "previewUrl": "https://cdn.freesound.org/previews/825/825635_11606594-hq.mp3",
+      "score": 9.76,
+      "reasons": [
+        "+2.51 rating 4.59 from 17 ratings",
+        "+1.26 326 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 531534,
+      "name": "2020_July_11_Portugal_Evora_Night_Cattle_Cows_Crickets_Distance_Night_Ambience.WAV",
+      "url": "https://freesound.org/people/siddharthgovindan/sounds/531534/",
+      "author": "siddharthgovindan",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 293.56,
+      "samplerate": 48000,
+      "channels": 5,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 270,
+      "previewUrl": "https://cdn.freesound.org/previews/531/531534_3947621-hq.mp3",
+      "score": 9.65,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.22 270 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 467022,
+      "name": "Night in Gran Sabana, crickets",
+      "url": "https://freesound.org/people/felix.blume/sounds/467022/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 153.34,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 7,
+      "numDownloads": 146,
+      "previewUrl": "https://cdn.freesound.org/previews/467/467022_1661766-hq.mp3",
+      "score": 9.61,
+      "reasons": [
+        "+2.53 rating 5 from 7 ratings",
+        "+1.08 146 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 530472,
+      "name": "Night Field",
+      "url": "https://freesound.org/people/SinewaveLab/sounds/530472/",
+      "author": "SinewaveLab",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 164.99,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 7,
+      "numDownloads": 243,
+      "previewUrl": "https://cdn.freesound.org/previews/530/530472_7552915-hq.mp3",
+      "score": 9.6,
+      "reasons": [
+        "+2.41 rating 4.71 from 7 ratings",
+        "+1.19 243 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 467024,
+      "name": "Frogs, toads and crickets during the night in Gran Sabana",
+      "url": "https://freesound.org/people/felix.blume/sounds/467024/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 147.62,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.86,
+      "numRatings": 7,
+      "numDownloads": 171,
+      "previewUrl": "https://cdn.freesound.org/previews/467/467024_1661766-hq.mp3",
+      "score": 9.59,
+      "reasons": [
+        "+2.47 rating 4.86 from 7 ratings",
+        "+1.12 171 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 751468,
+      "name": "Crickets chirping at Night 001",
+      "url": "https://freesound.org/people/Borgory/sounds/751468/",
+      "author": "Borgory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 180.63,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 8,
+      "numDownloads": 180,
+      "previewUrl": "https://cdn.freesound.org/previews/751/751468_801011-hq.mp3",
+      "score": 9.58,
+      "reasons": [
+        "+2.45 rating 4.75 from 8 ratings",
+        "+1.13 180 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 751470,
+      "name": "Crickets chirping at Night 003",
+      "url": "https://freesound.org/people/Borgory/sounds/751470/",
+      "author": "Borgory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 179.13,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 6,
+      "numDownloads": 161,
+      "previewUrl": "https://cdn.freesound.org/previews/751/751470_801011-hq.mp3",
+      "score": 9.53,
+      "reasons": [
+        "+2.42 rating 4.83 from 6 ratings",
+        "+1.1 161 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 751471,
+      "name": "20240816_Crickets_in_the_Night_001",
+      "url": "https://freesound.org/people/Borgory/sounds/751471/",
+      "author": "Borgory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 246.88,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 120,
+      "previewUrl": "https://cdn.freesound.org/previews/751/751471_801011-hq.mp3",
+      "score": 9.48,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.04 120 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 587907,
+      "name": "Forest at Night Ambience",
+      "url": "https://freesound.org/people/timothyd4y/sounds/587907/",
+      "author": "timothyd4y",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 129.71,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.93,
+      "numRatings": 54,
+      "numDownloads": 1371,
+      "previewUrl": "https://cdn.freesound.org/previews/587/587907_288104-hq.mp3",
+      "score": 9.42,
+      "reasons": [
+        "+2.85 rating 4.93 from 54 ratings",
+        "+1.57 1371 downloads",
+        "+2 at least 90 s",
+        "+2 tags night, crickets",
+        "+1 name matches night, forest"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 410357,
+      "name": "Small wood at night close to Rio de Janeiro (on the way to Pedra Bonita)",
+      "url": "https://freesound.org/people/felix.blume/sounds/410357/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 262.52,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.96,
+      "numRatings": 24,
+      "numDownloads": 1086,
+      "previewUrl": "https://cdn.freesound.org/previews/410/410357_1661766-hq.mp3",
+      "score": 9.3,
+      "reasons": [
+        "+2.78 rating 4.96 from 24 ratings",
+        "+1.52 1086 downloads",
+        "+2 at least 90 s",
+        "+2 tags night, forest",
+        "+1 name matches night"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 467021,
+      "name": "Night in Gran Sabana, crickets, bird sometimes",
+      "url": "https://freesound.org/people/felix.blume/sounds/467021/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 170.88,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 84,
+      "previewUrl": "https://cdn.freesound.org/previews/467/467021_1661766-hq.mp3",
+      "score": 9.26,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+0.96 84 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 751472,
+      "name": "20240816_Crickets_in_the_Night_002",
+      "url": "https://freesound.org/people/Borgory/sounds/751472/",
+      "author": "Borgory",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 136.04,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 129,
+      "previewUrl": "https://cdn.freesound.org/previews/751/751472_801011-hq.mp3",
+      "score": 9.25,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.06 129 downloads",
+        "+2 at least 90 s",
+        "+3 tags night, crickets, forest",
+        "+1 name matches night, crickets"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Insect",
-          "Cricket",
-          "Owl",
-          "Frog"
-        ]
-      ],
-      "clapPrompt": "night forest with crickets and soft wind in the trees, no people"
-    },
-    "verdict": "filled",
-    "unfilledReason": null,
-    "chosen": {
-      "freesoundId": 809851,
-      "windowStartSeconds": 21,
-      "windowSeconds": 64,
-      "steadinessDb": 0.278,
-      "clapScore": 0.6572
-    },
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 333221,
-        "name": "Night Crickets Back Porch.aiff",
-        "url": "https://freesound.org/people/hdfreema/sounds/333221/",
-        "author": "hdfreema",
-        "durationSec": 220.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Insect / Cricket / Owl / Frog",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 220,
-          "cleanSeconds": 219,
-          "topClasses": [
-            {
-              "label": "White noise",
-              "max": 0.3032
-            },
-            {
-              "label": "Cricket",
-              "max": 0.2499
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.1646
-            },
-            {
-              "label": "Insect",
-              "max": 0.1451
-            },
-            {
-              "label": "Buzz",
-              "max": 0.095
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.165,
-              "atSecond": 131
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket",
-                "Owl",
-                "Frog"
-              ],
-              "fraction": 0.009
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 328293,
-        "name": "Forest at night, crickets, cicadas and insects in the Sian Ka'an Biosphere Reserve",
-        "url": "https://freesound.org/people/felix.blume/sounds/328293/",
-        "author": "felix.blume",
-        "durationSec": 300.6,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 2,
-          "lengthSeconds": 64,
-          "steadinessDb": 0.689
-        },
-        "clapScore": 0.3993,
-        "evidence": {
-          "frames": 300,
-          "cleanSeconds": 298,
-          "topClasses": [
-            {
-              "label": "Cricket",
-              "max": 0.9056
-            },
-            {
-              "label": "Insect",
-              "max": 0.8248
-            },
-            {
-              "label": "Environmental noise",
-              "max": 0.2383
-            },
-            {
-              "label": "Chime",
-              "max": 0.1715
-            },
-            {
-              "label": "Wind chime",
-              "max": 0.1669
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Chime",
-              "max": 0.171,
-              "atSecond": 268
-            },
-            {
-              "label": "Wind chime",
-              "max": 0.167,
-              "atSecond": 268
-            },
-            {
-              "label": "Fire alarm",
-              "max": 0.058,
-              "atSecond": 215
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket",
-                "Owl",
-                "Frog"
-              ],
-              "fraction": 0.977
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 751465,
-        "name": "Crickets chirping in the Night at the Forest 001",
-        "url": "https://freesound.org/people/Borgory/sounds/751465/",
-        "author": "Borgory",
-        "durationSec": 180.6,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 80,
-          "lengthSeconds": 64,
-          "steadinessDb": 1.254
-        },
-        "clapScore": 0.4808,
-        "evidence": {
-          "frames": 180,
-          "cleanSeconds": 180,
-          "topClasses": [
-            {
-              "label": "Cricket",
-              "max": 0.9628
-            },
-            {
-              "label": "Insect",
-              "max": 0.9425
-            },
-            {
-              "label": "Squeal",
-              "max": 0.1025
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.0956
-            },
-            {
-              "label": "Animal",
-              "max": 0.0744
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket",
-                "Owl",
-                "Frog"
-              ],
-              "fraction": 0.989
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 809851,
-        "name": "Night forest #2",
-        "url": "https://freesound.org/people/deleted_user_9900733/sounds/809851/",
-        "author": "deleted_user_9900733",
-        "durationSec": 491.7,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 21,
-          "lengthSeconds": 64,
-          "steadinessDb": 0.278
-        },
-        "clapScore": 0.6572,
-        "evidence": {
-          "frames": 491,
-          "cleanSeconds": 489,
-          "topClasses": [
-            {
-              "label": "Cricket",
-              "max": 0.6571
-            },
-            {
-              "label": "Insect",
-              "max": 0.5692
-            },
-            {
-              "label": "Environmental noise",
-              "max": 0.4848
-            },
-            {
-              "label": "Speech",
-              "max": 0.3925
-            },
-            {
-              "label": "Animal",
-              "max": 0.3913
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.393,
-              "atSecond": 246
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket",
-                "Owl",
-                "Frog"
-              ],
-              "fraction": 0.741
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 819503,
-        "name": "Night ambience near a farm",
-        "url": "https://freesound.org/people/LukaCafuka/sounds/819503/",
-        "author": "LukaCafuka",
-        "durationSec": 179.3,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Music reaches 0.575 (at 65 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 179,
-          "cleanSeconds": 147,
-          "topClasses": [
-            {
-              "label": "Cricket",
-              "max": 0.9446
-            },
-            {
-              "label": "Insect",
-              "max": 0.8891
-            },
-            {
-              "label": "Animal",
-              "max": 0.7378
-            },
-            {
-              "label": "Cat",
-              "max": 0.7257
-            },
-            {
-              "label": "Music",
-              "max": 0.5752
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.575,
-              "atSecond": 65
-            },
-            {
-              "label": "Speech",
-              "max": 0.24,
-              "atSecond": 12
-            },
-            {
-              "label": "Smoke detector, smoke alarm",
-              "max": 0.124,
-              "atSecond": 24
-            },
-            {
-              "label": "Fire alarm",
-              "max": 0.068,
-              "atSecond": 24
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket",
-                "Owl",
-                "Frog"
-              ],
-              "fraction": 0.95
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 376815,
-        "name": "Toads and frogs in the amazonian forest at night",
-        "url": "https://freesound.org/people/felix.blume/sounds/376815/",
-        "author": "felix.blume",
-        "durationSec": 181,
-        "verdict": "reject",
-        "reason": "required sound absent: Insect / Cricket / Owl / Frog",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 181,
-          "cleanSeconds": 25,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.9066
-            },
-            {
-              "label": "Frog",
-              "max": 0.8653
-            },
-            {
-              "label": "Animal",
-              "max": 0.7723
-            },
-            {
-              "label": "Baby cry, infant cry",
-              "max": 0.6133
-            },
-            {
-              "label": "Domestic animals, pets",
-              "max": 0.6001
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.907,
-              "atSecond": 14
-            },
-            {
-              "label": "Music",
-              "max": 0.237,
-              "atSecond": 167
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.222,
-              "atSecond": 59
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket",
-                "Owl",
-                "Frog"
-              ],
-              "fraction": 0.204
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 751467,
-        "name": "Crickets chirping in the Night at the Forest 003 Crickets stopps chirping",
-        "url": "https://freesound.org/people/Borgory/sounds/751467/",
-        "author": "Borgory",
-        "durationSec": 176,
-        "verdict": "reject",
-        "reason": "required sound absent: Insect / Cricket / Owl / Frog",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 175,
-          "cleanSeconds": 22,
-          "topClasses": [
-            {
-              "label": "Cricket",
-              "max": 0.9282
-            },
-            {
-              "label": "Insect",
-              "max": 0.8692
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.6041
-            },
-            {
-              "label": "Smoke detector, smoke alarm",
-              "max": 0.2743
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.262
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.604,
-              "atSecond": 88
-            },
-            {
-              "label": "Smoke detector, smoke alarm",
-              "max": 0.274,
-              "atSecond": 13
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.262,
-              "atSecond": 88
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.233,
-              "atSecond": 88
-            },
-            {
-              "label": "Fire alarm",
-              "max": 0.135,
-              "atSecond": 13
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket",
-                "Owl",
-                "Frog"
-              ],
-              "fraction": 0.126
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 699141,
-        "name": "Night_Breeze_Crickets_Kuipto_Forrest_adelaide_Australia_ambience 01.wav",
-        "url": "https://freesound.org/people/roisin.gleeson/sounds/699141/",
-        "author": "roisin.gleeson",
-        "durationSec": 82.2,
-        "verdict": "reject",
-        "reason": "required sound absent: Insect / Cricket / Owl / Frog",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 82,
-          "cleanSeconds": 82,
-          "topClasses": [
-            {
-              "label": "Animal",
-              "max": 0.2551
-            },
-            {
-              "label": "Mouse",
-              "max": 0.2393
-            },
-            {
-              "label": "Cricket",
-              "max": 0.1273
-            },
-            {
-              "label": "Purr",
-              "max": 0.1087
-            },
-            {
-              "label": "Insect",
-              "max": 0.1035
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Insect",
-                "Cricket",
-                "Owl",
-                "Frog"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

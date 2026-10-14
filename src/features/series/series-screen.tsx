@@ -47,6 +47,10 @@ export function SeriesScreen({ seriesId }: SeriesScreenProps) {
   const deps = useSeriesDeps();
   const db = useDb();
   const pipeline = usePipeline();
+  const removal = useMemo(
+    () => ({ ...deps, stopRuns: (chapterIds: readonly string[]) => pipeline.stop(chapterIds) }),
+    [deps, pipeline],
+  );
   const chapterIds = useMemo(
     () => data.chapters.map((record) => record.chapter.id),
     [data.chapters],
@@ -178,8 +182,7 @@ export function SeriesScreen({ seriesId }: SeriesScreenProps) {
         onCancel={() => setDeletingSeries(false)}
         onConfirm={() => {
           setDeletingSeries(false);
-          deleteSeries(deps, seriesId);
-          goBack();
+          void deleteSeries(removal, seriesId).then(goBack);
         }}
       />
 
@@ -255,7 +258,7 @@ export function SeriesScreen({ seriesId }: SeriesScreenProps) {
         destructive
         onCancel={() => setDeletingChapter(null)}
         onConfirm={() => {
-          if (deletingChapter) deleteChapter(deps, deletingChapter);
+          if (deletingChapter) void deleteChapter(removal, deletingChapter);
           setDeletingChapter(null);
         }}
       />

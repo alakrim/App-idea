@@ -5,7 +5,9 @@
     "seabirds cliffs ambience",
     "seagulls sea cliff",
     "seagull ambience",
-    "sea birds ambience"
+    "sea birds ambience",
+    "seagulls cliffs ambience",
+    "gulls coast ambience"
   ],
   "poolSize": 59,
   "candidates": [
@@ -186,781 +188,377 @@
         "+2 at least 90 s",
         "+1 tags seagull"
       ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 798395,
+      "name": "BIRDSong Blackbirds, tits, and various other birds on a forest trail, Korrö, Sweden",
+      "url": "https://freesound.org/people/vhio/sounds/798395/",
+      "author": "vhio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 421.7,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 8,
+      "numDownloads": 173,
+      "previewUrl": "https://cdn.freesound.org/previews/798/798395_15774433-hq.mp3",
+      "score": 6.69,
+      "reasons": [
+        "+2.57 rating 5 from 8 ratings",
+        "+1.12 173 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 806062,
+      "name": "AMBPark Under a chestnut tree in a small hospital park, light rain and ambience, Karlskrona, Sweden",
+      "url": "https://freesound.org/people/vhio/sounds/806062/",
+      "author": "vhio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 354.23,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 134,
+      "previewUrl": "https://cdn.freesound.org/previews/806/806062_15774433-hq.mp3",
+      "score": 6.43,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+1.07 134 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 393320,
+      "name": "Night on Long Island.mp3",
+      "url": "https://freesound.org/people/TruWord/sounds/393320/",
+      "author": "TruWord",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 120.62,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 2,
+      "numDownloads": 198,
+      "previewUrl": "https://cdn.freesound.org/previews/393/393320_1880689-hq.mp3",
+      "score": 6.24,
+      "reasons": [
+        "+2.09 rating 4.5 from 2 ratings",
+        "+1.15 198 downloads",
+        "+2 at least 90 s",
+        "+1 tags gulls"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 804703,
+      "name": "AMBTown Quiet street between apartments with a few pedestrians, in the morning, Karlskrona, Sweden",
+      "url": "https://freesound.org/people/vhio/sounds/804703/",
+      "author": "vhio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 408.43,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 2,
+      "numDownloads": 118,
+      "previewUrl": "https://cdn.freesound.org/previews/804/804703_15774433-hq.mp3",
+      "score": 6.13,
+      "reasons": [
+        "+2.09 rating 4.5 from 2 ratings",
+        "+1.04 118 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 714165,
+      "name": "Brontë Beach in winter in Sydney Australia",
+      "url": "https://freesound.org/people/khenshom/sounds/714165/",
+      "author": "khenshom",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 66.91,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 232,
+      "previewUrl": "https://cdn.freesound.org/previews/714/714165_6652872-hq.mp3",
+      "score": 6.12,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.18 232 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags cliff"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 804700,
+      "name": "AMBSea Waterfront area with wooden bridges, traffic and birds, Karlskrona, Sweden",
+      "url": "https://freesound.org/people/vhio/sounds/804700/",
+      "author": "vhio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 479,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 46,
+      "previewUrl": "https://cdn.freesound.org/previews/804/804700_15774433-hq.mp3",
+      "score": 6.03,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.84 46 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 806063,
+      "name": "AMBBird Great crested grebes nesting and many other birds, in the reeds by a forest, Lindesnäs, Sweden",
+      "url": "https://freesound.org/people/vhio/sounds/806063/",
+      "author": "vhio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 277.42,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 30,
+      "previewUrl": "https://cdn.freesound.org/previews/806/806063_15774433-hq.mp3",
+      "score": 5.94,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.75 30 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 519507,
+      "name": "sg01.wav",
+      "url": "https://freesound.org/people/l0vebliss/sounds/519507/",
+      "author": "l0vebliss",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 75.5,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 112,
+      "previewUrl": "https://cdn.freesound.org/previews/519/519507_3189774-hq.mp3",
+      "score": 5.82,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+1.03 112 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags seagull"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 790352,
+      "name": "Seaside Morning Post Rain Ambience - Hambantota, Sri Lanka",
+      "url": "https://freesound.org/people/seventhsamurai/sounds/790352/",
+      "author": "seventhsamurai",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 180.81,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 9,
+      "numDownloads": 256,
+      "previewUrl": "https://cdn.freesound.org/previews/790/790352_3288322-hq.mp3",
+      "score": 5.8,
+      "reasons": [
+        "+2.6 rating 5 from 9 ratings",
+        "+1.2 256 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 637120,
+      "name": "Birds ambience nature",
+      "url": "https://freesound.org/people/xkeril/sounds/637120/",
+      "author": "xkeril",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 125.4,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 6,
+      "numDownloads": 356,
+      "previewUrl": "https://cdn.freesound.org/previews/637/637120_13504080-hq.mp3",
+      "score": 5.76,
+      "reasons": [
+        "+2.49 rating 5 from 6 ratings",
+        "+1.28 356 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 528410,
+      "name": "Woodville Wetlands ambiences 2020_06_27 (12).wav",
+      "url": "https://freesound.org/people/luanaudio/sounds/528410/",
+      "author": "luanaudio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 167.55,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 51,
+      "previewUrl": "https://cdn.freesound.org/previews/528/528410_4178110-hq.mp3",
+      "score": 5.73,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.86 51 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 528416,
+      "name": "ok Woodville Wetlands ambiences 2020_06_27 (13).wav",
+      "url": "https://freesound.org/people/luanaudio/sounds/528416/",
+      "author": "luanaudio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 220.01,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 50,
+      "previewUrl": "https://cdn.freesound.org/previews/528/528416_4178110-hq.mp3",
+      "score": 5.73,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.85 50 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 528411,
+      "name": "Woodville Wetlands ambiences 2020_06_27 (10).wav",
+      "url": "https://freesound.org/people/luanaudio/sounds/528411/",
+      "author": "luanaudio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 564.62,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 38,
+      "previewUrl": "https://cdn.freesound.org/previews/528/528411_4178110-hq.mp3",
+      "score": 5.67,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.8 38 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 528412,
+      "name": "Woodville Wetlands ambiences 2020_06_27 (8).wav",
+      "url": "https://freesound.org/people/luanaudio/sounds/528412/",
+      "author": "luanaudio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 137.67,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 37,
+      "previewUrl": "https://cdn.freesound.org/previews/528/528412_4178110-hq.mp3",
+      "score": 5.66,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.79 37 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 536487,
+      "name": "ducks at the lake.wav",
+      "url": "https://freesound.org/people/monotraum/sounds/536487/",
+      "author": "monotraum",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 105.52,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.42,
+      "numRatings": 12,
+      "numDownloads": 402,
+      "previewUrl": "https://cdn.freesound.org/previews/536/536487_1756543-hq.mp3",
+      "score": 5.66,
+      "reasons": [
+        "+2.36 rating 4.42 from 12 ratings",
+        "+1.3 402 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 519506,
+      "name": "sg02.wav",
+      "url": "https://freesound.org/people/l0vebliss/sounds/519506/",
+      "author": "l0vebliss",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 86.5,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 76,
+      "previewUrl": "https://cdn.freesound.org/previews/519/519506_3189774-hq.mp3",
+      "score": 5.65,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+0.94 76 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags seagull"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 789074,
+      "name": "AMBForst Small forest ambience with birds on a headland, Karlskrona, Sweden",
+      "url": "https://freesound.org/people/vhio/sounds/789074/",
+      "author": "vhio",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 403.73,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 2,
+      "numRatings": 1,
+      "numDownloads": 82,
+      "previewUrl": "https://cdn.freesound.org/previews/789/789074_15774433-hq.mp3",
+      "score": 5.65,
+      "reasons": [
+        "+1.69 rating 2 from 1 ratings",
+        "+0.96 82 downloads",
+        "+2 at least 90 s",
+        "+1 tags seagull"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Bird",
-          "Bird vocalization, bird call, bird song",
-          "Fowl",
-          "Chirp, tweet"
-        ]
-      ],
-      "clapPrompt": "seabirds calling over the surf at sea cliffs, no people"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "no 64 s window is free of denied sounds: Honk reaches 0.65 (at 64 s); required sound absent: Bird / Bird vocalization, bird call, bird song / Fowl / Chirp, tweet",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 317676,
-        "name": "STC_moewen.flac",
-        "url": "https://freesound.org/people/nikitralala/sounds/317676/",
-        "author": "nikitralala",
-        "durationSec": 90.6,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Honk reaches 0.65 (at 64 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 90,
-          "cleanSeconds": 50,
-          "topClasses": [
-            {
-              "label": "Animal",
-              "max": 0.7746
-            },
-            {
-              "label": "Cat",
-              "max": 0.7722
-            },
-            {
-              "label": "Fowl",
-              "max": 0.7613
-            },
-            {
-              "label": "Crow",
-              "max": 0.7554
-            },
-            {
-              "label": "Domestic animals, pets",
-              "max": 0.7157
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Honk",
-              "max": 0.65,
-              "atSecond": 64
-            },
-            {
-              "label": "Speech",
-              "max": 0.26,
-              "atSecond": 76
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.2,
-              "atSecond": 0
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Bird",
-                "Bird vocalization, bird call, bird song",
-                "Fowl",
-                "Chirp, tweet"
-              ],
-              "fraction": 0.544
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 630433,
-        "name": "Sea_Seagulls on cliff.wav",
-        "url": "https://freesound.org/people/KaleidacousticsAudio/sounds/630433/",
-        "author": "KaleidacousticsAudio",
-        "durationSec": 70.2,
-        "verdict": "reject",
-        "reason": "required sound absent: Bird / Bird vocalization, bird call, bird song / Fowl / Chirp, tweet",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 70,
-          "cleanSeconds": 36,
-          "topClasses": [
-            {
-              "label": "Fowl",
-              "max": 0.9077
-            },
-            {
-              "label": "Goose",
-              "max": 0.866
-            },
-            {
-              "label": "Honk",
-              "max": 0.848
-            },
-            {
-              "label": "Animal",
-              "max": 0.7953
-            },
-            {
-              "label": "Cat",
-              "max": 0.7884
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Honk",
-              "max": 0.848,
-              "atSecond": 56
-            },
-            {
-              "label": "Speech",
-              "max": 0.345,
-              "atSecond": 15
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.185,
-              "atSecond": 51
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Bird",
-                "Bird vocalization, bird call, bird song",
-                "Fowl",
-                "Chirp, tweet"
-              ],
-              "fraction": 0.443
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 155747,
-        "name": "Seagulls screeching on the beach, on the peruvian shore.",
-        "url": "https://freesound.org/people/felix.blume/sounds/155747/",
-        "author": "felix.blume",
-        "durationSec": 121,
-        "verdict": "reject",
-        "reason": "required sound absent: Bird / Bird vocalization, bird call, bird song / Fowl / Chirp, tweet",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 120,
-          "cleanSeconds": 4,
-          "topClasses": [
-            {
-              "label": "Animal",
-              "max": 0.7279
-            },
-            {
-              "label": "Waves, surf",
-              "max": 0.6768
-            },
-            {
-              "label": "Ocean",
-              "max": 0.6284
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.6167
-            },
-            {
-              "label": "Cat",
-              "max": 0.5382
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.617,
-              "atSecond": 24
-            },
-            {
-              "label": "Train",
-              "max": 0.483,
-              "atSecond": 64
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.472,
-              "atSecond": 46
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.403,
-              "atSecond": 64
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.366,
-              "atSecond": 64
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.254,
-              "atSecond": 38
-            },
-            {
-              "label": "Speech",
-              "max": 0.237,
-              "atSecond": 36
-            },
-            {
-              "label": "Thunder",
-              "max": 0.184,
-              "atSecond": 77
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.167,
-              "atSecond": 24
-            },
-            {
-              "label": "Ship",
-              "max": 0.156,
-              "atSecond": 23
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Bird",
-                "Bird vocalization, bird call, bird song",
-                "Fowl",
-                "Chirp, tweet"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 634434,
-        "name": "quiet morning 01",
-        "url": "https://freesound.org/people/rucisko/sounds/634434/",
-        "author": "rucisko",
-        "durationSec": 399.5,
-        "verdict": "reject",
-        "reason": "required sound absent: Bird / Bird vocalization, bird call, bird song / Fowl / Chirp, tweet",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 399,
-          "cleanSeconds": 13,
-          "topClasses": [
-            {
-              "label": "Crow",
-              "max": 0.7128
-            },
-            {
-              "label": "Owl",
-              "max": 0.6799
-            },
-            {
-              "label": "Caw",
-              "max": 0.6503
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.6459
-            },
-            {
-              "label": "Cat",
-              "max": 0.6259
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.646,
-              "atSecond": 104
-            },
-            {
-              "label": "Honk",
-              "max": 0.575,
-              "atSecond": 321
-            },
-            {
-              "label": "Speech",
-              "max": 0.475,
-              "atSecond": 255
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.35,
-              "atSecond": 229
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.338,
-              "atSecond": 155
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.298,
-              "atSecond": 229
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.187,
-              "atSecond": 155
-            },
-            {
-              "label": "Ship",
-              "max": 0.154,
-              "atSecond": 389
-            },
-            {
-              "label": "Foghorn",
-              "max": 0.113,
-              "atSecond": 264
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Bird",
-                "Bird vocalization, bird call, bird song",
-                "Fowl",
-                "Chirp, tweet"
-              ],
-              "fraction": 0.048
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 517678,
-        "name": "Seagulls by the sea",
-        "url": "https://freesound.org/people/TeTeNoise/sounds/517678/",
-        "author": "TeTeNoise",
-        "durationSec": 194.5,
-        "verdict": "reject",
-        "reason": "required sound absent: Bird / Bird vocalization, bird call, bird song / Fowl / Chirp, tweet",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 194,
-          "cleanSeconds": 35,
-          "topClasses": [
-            {
-              "label": "Crow",
-              "max": 0.8784
-            },
-            {
-              "label": "Animal",
-              "max": 0.8227
-            },
-            {
-              "label": "Goose",
-              "max": 0.6712
-            },
-            {
-              "label": "Speech",
-              "max": 0.6691
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.6628
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.669,
-              "atSecond": 26
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.663,
-              "atSecond": 49
-            },
-            {
-              "label": "Rowboat, canoe, kayak",
-              "max": 0.56,
-              "atSecond": 49
-            },
-            {
-              "label": "Honk",
-              "max": 0.521,
-              "atSecond": 68
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.516,
-              "atSecond": 167
-            },
-            {
-              "label": "Helicopter",
-              "max": 0.283,
-              "atSecond": 72
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.264,
-              "atSecond": 98
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.248,
-              "atSecond": 98
-            },
-            {
-              "label": "Ship",
-              "max": 0.156,
-              "atSecond": 98
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Bird",
-                "Bird vocalization, bird call, bird song",
-                "Fowl",
-                "Chirp, tweet"
-              ],
-              "fraction": 0.077
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 853455,
-        "name": "Seagull Beach Ambience Loop",
-        "url": "https://freesound.org/people/kkenny101/sounds/853455/",
-        "author": "kkenny101",
-        "durationSec": 268.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Bird / Bird vocalization, bird call, bird song / Fowl / Chirp, tweet",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 268,
-          "cleanSeconds": 165,
-          "topClasses": [
-            {
-              "label": "Cat",
-              "max": 0.8471
-            },
-            {
-              "label": "Animal",
-              "max": 0.8155
-            },
-            {
-              "label": "Domestic animals, pets",
-              "max": 0.7642
-            },
-            {
-              "label": "Honk",
-              "max": 0.7606
-            },
-            {
-              "label": "Goose",
-              "max": 0.7364
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Honk",
-              "max": 0.761,
-              "atSecond": 232
-            },
-            {
-              "label": "Music",
-              "max": 0.728,
-              "atSecond": 69
-            },
-            {
-              "label": "Speech",
-              "max": 0.597,
-              "atSecond": 188
-            },
-            {
-              "label": "Siren",
-              "max": 0.455,
-              "atSecond": 155
-            },
-            {
-              "label": "Civil defense siren",
-              "max": 0.332,
-              "atSecond": 155
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.255,
-              "atSecond": 231
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.052,
-              "atSecond": 54
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Bird",
-                "Bird vocalization, bird call, bird song",
-                "Fowl",
-                "Chirp, tweet"
-              ],
-              "fraction": 0.168
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 323001,
-        "name": "Alcatraz Soundscape.wav",
-        "url": "https://freesound.org/people/Kevzog/sounds/323001/",
-        "author": "Kevzog",
-        "durationSec": 157.6,
-        "verdict": "reject",
-        "reason": "required sound absent: Bird / Bird vocalization, bird call, bird song / Fowl / Chirp, tweet",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 157,
-          "cleanSeconds": 18,
-          "topClasses": [
-            {
-              "label": "Animal",
-              "max": 0.8703
-            },
-            {
-              "label": "Honk",
-              "max": 0.8412
-            },
-            {
-              "label": "Goose",
-              "max": 0.8353
-            },
-            {
-              "label": "Dog",
-              "max": 0.8085
-            },
-            {
-              "label": "Domestic animals, pets",
-              "max": 0.8013
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Honk",
-              "max": 0.841,
-              "atSecond": 64
-            },
-            {
-              "label": "Music",
-              "max": 0.789,
-              "atSecond": 84
-            },
-            {
-              "label": "Ice cream truck, ice cream van",
-              "max": 0.75,
-              "atSecond": 77
-            },
-            {
-              "label": "Speech",
-              "max": 0.699,
-              "atSecond": 5
-            },
-            {
-              "label": "Wind chime",
-              "max": 0.571,
-              "atSecond": 152
-            },
-            {
-              "label": "Chime",
-              "max": 0.518,
-              "atSecond": 152
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.485,
-              "atSecond": 44
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.276,
-              "atSecond": 52
-            },
-            {
-              "label": "Train",
-              "max": 0.239,
-              "atSecond": 137
-            },
-            {
-              "label": "Tubular bells",
-              "max": 0.226,
-              "atSecond": 152
-            },
-            {
-              "label": "Reversing beeps",
-              "max": 0.221,
-              "atSecond": 131
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.167,
-              "atSecond": 137
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.151,
-              "atSecond": 137
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Bird",
-                "Bird vocalization, bird call, bird song",
-                "Fowl",
-                "Chirp, tweet"
-              ],
-              "fraction": 0.166
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 243664,
-        "name": "Seaside Thunder",
-        "url": "https://freesound.org/people/HarryPeeks/sounds/243664/",
-        "author": "HarryPeeks",
-        "durationSec": 140.3,
-        "verdict": "reject",
-        "reason": "required sound absent: Bird / Bird vocalization, bird call, bird song / Fowl / Chirp, tweet",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 140,
-          "cleanSeconds": 81,
-          "topClasses": [
-            {
-              "label": "Thunder",
-              "max": 0.8134
-            },
-            {
-              "label": "Honk",
-              "max": 0.675
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.6414
-            },
-            {
-              "label": "Goose",
-              "max": 0.6351
-            },
-            {
-              "label": "Fowl",
-              "max": 0.535
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.813,
-              "atSecond": 127
-            },
-            {
-              "label": "Honk",
-              "max": 0.675,
-              "atSecond": 67
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.641,
-              "atSecond": 127
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.377,
-              "atSecond": 16
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.341,
-              "atSecond": 91
-            },
-            {
-              "label": "Music",
-              "max": 0.305,
-              "atSecond": 12
-            },
-            {
-              "label": "Speech",
-              "max": 0.266,
-              "atSecond": 138
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.233,
-              "atSecond": 43
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.112,
-              "atSecond": 18
-            },
-            {
-              "label": "Siren",
-              "max": 0.093,
-              "atSecond": 18
-            },
-            {
-              "label": "Ambulance (siren)",
-              "max": 0.074,
-              "atSecond": 18
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Bird",
-                "Bird vocalization, bird call, bird song",
-                "Fowl",
-                "Chirp, tweet"
-              ],
-              "fraction": 0.036
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

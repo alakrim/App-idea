@@ -369,7 +369,8 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     async getEntities() {
       return { entities: [...state.entities], facts: [...state.facts] };
     },
-    async applyEntityResolution(_seriesId, resolution) {
+    async applyEntityResolution(_seriesId, chapterId, resolution) {
+      state.facts = state.facts.filter((fact) => fact.chapterId !== chapterId);
       for (const upsert of resolution.upserts) {
         const index = state.entities.findIndex((e) => e.id === upsert.id);
         if (index >= 0) state.entities[index] = upsert;

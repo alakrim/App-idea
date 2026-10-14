@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 import { SELECTION_SYSTEM_PROMPT } from './prompts';
 import { parseJsonReply } from '../llm/json';
+import { estimateTokens } from '../text/chunk';
 
 import type { Block } from './types';
 
@@ -10,6 +11,14 @@ export const PROMPT_BLOCK_CHARS = 300;
 /** A selection that would drop more than this share of the characters is refused. */
 export const MAX_DROPPED_CHAR_SHARE = 0.7;
 const MAX_KEEP_INDICES = 10_000;
+/** Prompt tokens of blocks sent in one selection call. Each call stays far inside the model's context. */
+export const SELECTION_CHUNK_TOKENS = 6_000;
+/** A page that needs more calls than this is refused, so a huge noisy page never runs up a bill. */
+export const MAX_SELECTION_CHUNKS = 12;
+/** The copy when a page is too noisy or too long for the cleanup pass. Names the way out. */
+export const TOO_LARGE_TO_READ = "This page is too large to read. Try the article's own link or a PDF.";
+/** Tokens the `[index] ` prefix of each prompt line adds. */
+const LINE_PREFIX_TOKENS = 4;
 
 export const selectionSchema = z.object({
   keep: z.array(z.number().int().nonnegative()).max(MAX_KEEP_INDICES),
@@ -89,4 +98,37 @@ export function applySelection(
     return { blocks: [...blocks], applied: false, warning: 'selection_dropped_too_much' };
   }
   return { blocks: kept, applied: true, warning: null };
+}
+
+/** One block that goes to the model, with its index in the page's full block list. */
+export interface ChunkItem {
+  readonly index: number;
+  readonly block: Block;
+}
+
+/**
+ * Splits the blocks that carry text into consecutive chunks, each within `budgetTokens` of prompt.
+ * Blocks with no text are dropped first, since they have nothing to select. Each item keeps its
+ * index in the full list, so the model's keep list maps back to the page whichever chunk it is in.
+ */
+export function chunkForSelection(
+  blocks: readonly Block[],
+  budgetTokens: number = SELECTION_CHUNK_TOKENS,
+): ChunkItem[][] {
+  const chunks: ChunkItem[][] = [];
+  let current: ChunkItem[] = [];
+  let currentTokens = 0;
+  blocks.forEach((block, index) => {
+    if (block.text.trim() === '') return;
+    const tokens = estimateTokens(truncateChars(block.text, PROMPT_BLOCK_CHARS)) + LINE_PREFIX_TOKENS;
+    if (current.length > 0 && currentTokens + tokens > budgetTokens) {
+      chunks.push(current);
+      current = [];
+      currentTokens = 0;
+    }
+    current.push({ index, block });
+    currentTokens += tokens;
+  });
+  if (current.length > 0) chunks.push(current);
+  return chunks;
 }

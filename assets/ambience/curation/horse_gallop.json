@@ -1,11 +1,13 @@
 {
   "category": "horse_gallop",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "horse gallop hooves",
-    "horses running hooves"
+    "horses running hooves",
+    "horse running loop",
+    "horses hooves gallop"
   ],
-  "poolSize": 6,
+  "poolSize": 10,
   "candidates": [
     {
       "rank": 1,
@@ -54,6 +56,69 @@
     },
     {
       "rank": 3,
+      "freesoundId": 609250,
+      "name": "Journey To The Interweb",
+      "url": "https://freesound.org/people/Aemyn/sounds/609250/",
+      "author": "Aemyn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 508,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.33,
+      "numRatings": 294,
+      "numDownloads": 5579,
+      "previewUrl": "https://cdn.freesound.org/previews/609/609250_1445263-hq.mp3",
+      "score": 6.36,
+      "reasons": [
+        "+2.49 rating 4.33 from 294 ratings",
+        "+1.87 5579 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 564166,
+      "name": "Crashing Starship",
+      "url": "https://freesound.org/people/Aemyn/sounds/564166/",
+      "author": "Aemyn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 307.95,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.35,
+      "numRatings": 143,
+      "numDownloads": 4485,
+      "previewUrl": "https://cdn.freesound.org/previews/564/564166_1445263-hq.mp3",
+      "score": 6.32,
+      "reasons": [
+        "+2.49 rating 4.35 from 143 ratings",
+        "+1.83 4485 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 661435,
+      "name": "Defensible Twister",
+      "url": "https://freesound.org/people/Brazilio123/sounds/661435/",
+      "author": "Brazilio123",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 433,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.14,
+      "numRatings": 86,
+      "numDownloads": 2709,
+      "previewUrl": "https://cdn.freesound.org/previews/661/661435_14509684-hq.mp3",
+      "score": 6.04,
+      "reasons": [
+        "+2.33 rating 4.14 from 86 ratings",
+        "+1.72 2709 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 6,
       "freesoundId": 274898,
       "name": "Maxheadroom's Galloping Horse (39 sec. loop)",
       "url": "https://freesound.org/people/Podsburgh/sounds/274898/",
@@ -76,7 +141,7 @@
       ]
     },
     {
-      "rank": 4,
+      "rank": 7,
       "freesoundId": 619067,
       "name": "Horse Galloping.mp3",
       "url": "https://freesound.org/people/mrrap4food/sounds/619067/",
@@ -99,7 +164,7 @@
       ]
     },
     {
-      "rank": 5,
+      "rank": 8,
       "freesoundId": 843303,
       "name": "Coconut Horse Walking Sound Effects (Slow Gallop, Faster Gallop)",
       "url": "https://freesound.org/people/BorzSounds/sounds/843303/",
@@ -110,19 +175,19 @@
       "channels": 2,
       "avgRating": 4.71,
       "numRatings": 7,
-      "numDownloads": 208,
+      "numDownloads": 209,
       "previewUrl": "https://cdn.freesound.org/previews/843/843303_16979474-hq.mp3",
       "score": 4.57,
       "reasons": [
         "+2.41 rating 4.71 from 7 ratings",
-        "+1.16 208 downloads",
+        "+1.16 209 downloads",
         "-3 only 44.82 s",
         "+3 tags horse, gallop, hooves",
         "+1 name matches horse, gallop"
       ]
     },
     {
-      "rank": 6,
+      "rank": 9,
       "freesoundId": 479742,
       "name": "R14-05-Horses Gallop By.wav",
       "url": "https://freesound.org/people/craigsmith/sounds/479742/",
@@ -142,522 +207,27 @@
         "-3 only 41.19 s",
         "+1 name matches gallop"
       ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 479791,
+      "name": "R23-48-Team of Horses.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/479791/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 33.17,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 6,
+      "numDownloads": 99,
+      "previewUrl": "https://cdn.freesound.org/previews/479/479791_2524442-hq.mp3",
+      "score": 0.49,
+      "reasons": [
+        "+2.49 rating 5 from 6 ratings",
+        "+1 99 downloads",
+        "-3 only 33.17 s"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Clip-clop",
-          "Horse",
-          "Neigh, whinny"
-        ]
-      ],
-      "clapPrompt": "a horse galloping, pounding hooves and breath"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Clip-clop / Horse / Neigh, whinny; clip has 39 s; a window needs 64 s",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 508504,
-        "name": "Horse Race",
-        "url": "https://freesound.org/people/AugustSandberg/sounds/508504/",
-        "author": "AugustSandberg",
-        "durationSec": 270.6,
-        "verdict": "reject",
-        "reason": "required sound absent: Clip-clop / Horse / Neigh, whinny",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 270,
-          "cleanSeconds": 20,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.9473
-            },
-            {
-              "label": "Music",
-              "max": 0.9121
-            },
-            {
-              "label": "Clip-clop",
-              "max": 0.8556
-            },
-            {
-              "label": "Male speech, man speaking",
-              "max": 0.846
-            },
-            {
-              "label": "Neigh, whinny",
-              "max": 0.7666
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.947,
-              "atSecond": 261
-            },
-            {
-              "label": "Music",
-              "max": 0.912,
-              "atSecond": 165
-            },
-            {
-              "label": "Male speech, man speaking",
-              "max": 0.846,
-              "atSecond": 102
-            },
-            {
-              "label": "Narration, monologue",
-              "max": 0.764,
-              "atSecond": 148
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.612,
-              "atSecond": 232
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.522,
-              "atSecond": 40
-            },
-            {
-              "label": "Radio",
-              "max": 0.465,
-              "atSecond": 214
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.381,
-              "atSecond": 164
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.362,
-              "atSecond": 40
-            },
-            {
-              "label": "Speech synthesizer",
-              "max": 0.33,
-              "atSecond": 17
-            },
-            {
-              "label": "Synthetic singing",
-              "max": 0.33,
-              "atSecond": 156
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.265,
-              "atSecond": 40
-            },
-            {
-              "label": "Singing",
-              "max": 0.229,
-              "atSecond": 161
-            },
-            {
-              "label": "Car",
-              "max": 0.229,
-              "atSecond": 268
-            },
-            {
-              "label": "Ship",
-              "max": 0.201,
-              "atSecond": 40
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.201,
-              "atSecond": 51
-            },
-            {
-              "label": "Female singing",
-              "max": 0.162,
-              "atSecond": 156
-            },
-            {
-              "label": "Helicopter",
-              "max": 0.152,
-              "atSecond": 51
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Clip-clop",
-                "Horse",
-                "Neigh, whinny"
-              ],
-              "fraction": 0.048
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 481917,
-        "name": "R26-18-Foley Horse Hooves Walking.wav",
-        "url": "https://freesound.org/people/craigsmith/sounds/481917/",
-        "author": "craigsmith",
-        "durationSec": 177.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Clip-clop / Horse / Neigh, whinny",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 177,
-          "cleanSeconds": 157,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.9383
-            },
-            {
-              "label": "Thunk",
-              "max": 0.9175
-            },
-            {
-              "label": "Typing",
-              "max": 0.6656
-            },
-            {
-              "label": "Typewriter",
-              "max": 0.6409
-            },
-            {
-              "label": "Bird",
-              "max": 0.5945
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.938,
-              "atSecond": 169
-            },
-            {
-              "label": "Music",
-              "max": 0.419,
-              "atSecond": 22
-            },
-            {
-              "label": "Narration, monologue",
-              "max": 0.183,
-              "atSecond": 136
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Clip-clop",
-                "Horse",
-                "Neigh, whinny"
-              ],
-              "fraction": 0.028
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 274898,
-        "name": "Maxheadroom's Galloping Horse (39 sec. loop)",
-        "url": "https://freesound.org/people/Podsburgh/sounds/274898/",
-        "author": "Podsburgh",
-        "durationSec": 39.4,
-        "verdict": "reject",
-        "reason": "clip has 39 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 39,
-          "cleanSeconds": 31,
-          "topClasses": [
-            {
-              "label": "Clip-clop",
-              "max": 0.991
-            },
-            {
-              "label": "Animal",
-              "max": 0.9167
-            },
-            {
-              "label": "Horse",
-              "max": 0.8655
-            },
-            {
-              "label": "Neigh, whinny",
-              "max": 0.5543
-            },
-            {
-              "label": "Livestock, farm animals, working animals",
-              "max": 0.3634
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.243,
-              "atSecond": 7
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Clip-clop",
-                "Horse",
-                "Neigh, whinny"
-              ],
-              "fraction": 1
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 619067,
-        "name": "Horse Galloping.mp3",
-        "url": "https://freesound.org/people/mrrap4food/sounds/619067/",
-        "author": "mrrap4food",
-        "durationSec": 31.9,
-        "verdict": "reject",
-        "reason": "clip has 31 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 31,
-          "cleanSeconds": 28,
-          "topClasses": [
-            {
-              "label": "Clip-clop",
-              "max": 0.9032
-            },
-            {
-              "label": "Animal",
-              "max": 0.8948
-            },
-            {
-              "label": "Horse",
-              "max": 0.7734
-            },
-            {
-              "label": "Domestic animals, pets",
-              "max": 0.336
-            },
-            {
-              "label": "Walk, footsteps",
-              "max": 0.2941
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.188,
-              "atSecond": 15
-            },
-            {
-              "label": "Speech",
-              "max": 0.162,
-              "atSecond": 14
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Clip-clop",
-                "Horse",
-                "Neigh, whinny"
-              ],
-              "fraction": 0.742
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 843303,
-        "name": "Coconut Horse Walking Sound Effects (Slow Gallop, Faster Gallop)",
-        "url": "https://freesound.org/people/BorzSounds/sounds/843303/",
-        "author": "BorzSounds",
-        "durationSec": 44.8,
-        "verdict": "reject",
-        "reason": "clip has 44 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 44,
-          "cleanSeconds": 14,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.9008
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.7963
-            },
-            {
-              "label": "Wood block",
-              "max": 0.7838
-            },
-            {
-              "label": "Plop",
-              "max": 0.6671
-            },
-            {
-              "label": "Percussion",
-              "max": 0.4855
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.901,
-              "atSecond": 33
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.796,
-              "atSecond": 26
-            },
-            {
-              "label": "Drum",
-              "max": 0.433,
-              "atSecond": 26
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Clip-clop",
-                "Horse",
-                "Neigh, whinny"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 479742,
-        "name": "R14-05-Horses Gallop By.wav",
-        "url": "https://freesound.org/people/craigsmith/sounds/479742/",
-        "author": "craigsmith",
-        "durationSec": 41.2,
-        "verdict": "reject",
-        "reason": "clip has 41 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 41,
-          "cleanSeconds": 32,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.793
-            },
-            {
-              "label": "Clip-clop",
-              "max": 0.6825
-            },
-            {
-              "label": "Fireworks",
-              "max": 0.6574
-            },
-            {
-              "label": "Dog",
-              "max": 0.6443
-            },
-            {
-              "label": "Animal",
-              "max": 0.6383
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.793,
-              "atSecond": 1
-            },
-            {
-              "label": "Fireworks",
-              "max": 0.657,
-              "atSecond": 20
-            },
-            {
-              "label": "Telephone dialing, DTMF",
-              "max": 0.619,
-              "atSecond": 4
-            },
-            {
-              "label": "Firecracker",
-              "max": 0.333,
-              "atSecond": 29
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.274,
-              "atSecond": 0
-            },
-            {
-              "label": "Music",
-              "max": 0.264,
-              "atSecond": 0
-            },
-            {
-              "label": "Telephone",
-              "max": 0.196,
-              "atSecond": 4
-            },
-            {
-              "label": "Radio",
-              "max": 0.178,
-              "atSecond": 1
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Clip-clop",
-                "Horse",
-                "Neigh, whinny"
-              ],
-              "fraction": 0.146
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

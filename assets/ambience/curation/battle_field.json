@@ -1,11 +1,13 @@
 {
   "category": "battle_field",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "battle ambience distant",
-    "medieval battle sounds"
+    "medieval battle sounds",
+    "battle ambience loop",
+    "war battlefield ambience"
   ],
-  "poolSize": 4,
+  "poolSize": 8,
   "candidates": [
     {
       "rank": 1,
@@ -19,18 +21,103 @@
       "channels": 2,
       "avgRating": 4.64,
       "numRatings": 129,
-      "numDownloads": 11050,
+      "numDownloads": 11054,
       "previewUrl": "https://cdn.freesound.org/previews/568/568790_6371307-hq.mp3",
       "score": 8.19,
       "reasons": [
         "+2.69 rating 4.64 from 129 ratings",
-        "+2 11050 downloads",
+        "+2 11054 downloads",
         "+1.5 at least 63 s",
         "+2 tags battle, medieval"
       ]
     },
     {
       "rank": 2,
+      "freesoundId": 534554,
+      "name": "Dropship Ambience",
+      "url": "https://freesound.org/people/waxsocks/sounds/534554/",
+      "author": "waxsocks",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 196.14,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 10,
+      "numDownloads": 381,
+      "previewUrl": "https://cdn.freesound.org/previews/534/534554_1766049-hq.mp3",
+      "score": 7.92,
+      "reasons": [
+        "+2.63 rating 5 from 10 ratings",
+        "+1.29 381 downloads",
+        "+2 at least 90 s",
+        "+2 tags battle, war"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 479569,
+      "name": "R22-08-Big Battle Ambience.wav",
+      "url": "https://freesound.org/people/craigsmith/sounds/479569/",
+      "author": "craigsmith",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 183.28,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 90,
+      "previewUrl": "https://cdn.freesound.org/previews/479/479569_2524442-hq.mp3",
+      "score": 6.04,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.98 90 downloads",
+        "+2 at least 90 s",
+        "+1 name matches battle"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 385895,
+      "name": "BattleField Ambience (Loop)",
+      "url": "https://freesound.org/people/banan_/sounds/385895/",
+      "author": "banan_",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 59.15,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.21,
+      "numRatings": 14,
+      "numDownloads": 1503,
+      "previewUrl": "https://cdn.freesound.org/previews/385/385895_7219680-hq.mp3",
+      "score": 5.86,
+      "reasons": [
+        "+2.27 rating 4.21 from 14 ratings",
+        "+1.59 1503 downloads",
+        "+2 tags battle, war"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 846338,
+      "name": "Loud Painful Robotic Malfunctioning Dark Ambience (Loop)",
+      "url": "https://freesound.org/people/Kierham/sounds/846338/",
+      "author": "Kierham",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 47.2,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.44,
+      "numRatings": 9,
+      "numDownloads": 304,
+      "previewUrl": "https://cdn.freesound.org/previews/846/846338_11617040-hq.mp3",
+      "score": 3.57,
+      "reasons": [
+        "+2.33 rating 4.44 from 9 ratings",
+        "+1.24 304 downloads"
+      ]
+    },
+    {
+      "rank": 6,
       "freesoundId": 694371,
       "name": "Fireworks/ Warzone 3",
       "url": "https://freesound.org/people/NearTheAtmoshphere/sounds/694371/",
@@ -52,7 +139,7 @@
       ]
     },
     {
-      "rank": 3,
+      "rank": 7,
       "freesoundId": 694373,
       "name": "Fireworks/ Warzone 5",
       "url": "https://freesound.org/people/NearTheAtmoshphere/sounds/694373/",
@@ -74,7 +161,7 @@
       ]
     },
     {
-      "rank": 4,
+      "rank": 8,
       "freesoundId": 675137,
       "name": "S19-18 Distant pistol gun battle.wav",
       "url": "https://freesound.org/people/craigsmith/sounds/675137/",
@@ -95,421 +182,5 @@
         "+1 name matches battle"
       ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "music",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [
-        "brass",
-        "percussion"
-      ],
-      "required": [
-        [
-          "Shout",
-          "Yell",
-          "Bellow",
-          "Clang",
-          "Clatter",
-          "Crowd"
-        ]
-      ],
-      "clapPrompt": "a distant medieval battle with shouts, clashing metal and horns"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Shout / Yell / Bellow / Clang / Clatter / Crowd; clip has 43 s; a window needs 64 s",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 568790,
-        "name": "sword against sword.wav",
-        "url": "https://freesound.org/people/Fenodyrie/sounds/568790/",
-        "author": "Fenodyrie",
-        "durationSec": 78.7,
-        "verdict": "reject",
-        "reason": "required sound absent: Shout / Yell / Bellow / Clang / Clatter / Crowd",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 78,
-          "cleanSeconds": 65,
-          "topClasses": [
-            {
-              "label": "Clang",
-              "max": 0.7915
-            },
-            {
-              "label": "Glass",
-              "max": 0.6309
-            },
-            {
-              "label": "Breaking",
-              "max": 0.5262
-            },
-            {
-              "label": "Music",
-              "max": 0.522
-            },
-            {
-              "label": "Ding",
-              "max": 0.4394
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.522,
-              "atSecond": 11
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Shout",
-                "Yell",
-                "Bellow",
-                "Clang",
-                "Clatter",
-                "Crowd"
-              ],
-              "fraction": 0.372
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 694371,
-        "name": "Fireworks/ Warzone 3",
-        "url": "https://freesound.org/people/NearTheAtmoshphere/sounds/694371/",
-        "author": "NearTheAtmoshphere",
-        "durationSec": 43.5,
-        "verdict": "reject",
-        "reason": "clip has 43 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 43,
-          "cleanSeconds": 5,
-          "topClasses": [
-            {
-              "label": "Fireworks",
-              "max": 0.9211
-            },
-            {
-              "label": "Music",
-              "max": 0.7116
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.6308
-            },
-            {
-              "label": "Firecracker",
-              "max": 0.5715
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.4348
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Fireworks",
-              "max": 0.921,
-              "atSecond": 5
-            },
-            {
-              "label": "Music",
-              "max": 0.712,
-              "atSecond": 4
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.631,
-              "atSecond": 19
-            },
-            {
-              "label": "Firecracker",
-              "max": 0.572,
-              "atSecond": 4
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.435,
-              "atSecond": 12
-            },
-            {
-              "label": "Gunshot, gunfire",
-              "max": 0.412,
-              "atSecond": 19
-            },
-            {
-              "label": "Train",
-              "max": 0.354,
-              "atSecond": 12
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.295,
-              "atSecond": 12
-            },
-            {
-              "label": "Siren",
-              "max": 0.269,
-              "atSecond": 1
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.265,
-              "atSecond": 12
-            },
-            {
-              "label": "Emergency vehicle",
-              "max": 0.163,
-              "atSecond": 27
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.118,
-              "atSecond": 27
-            },
-            {
-              "label": "Fire engine, fire truck (siren)",
-              "max": 0.067,
-              "atSecond": 27
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Shout",
-                "Yell",
-                "Bellow",
-                "Clang",
-                "Clatter",
-                "Crowd"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 694373,
-        "name": "Fireworks/ Warzone 5",
-        "url": "https://freesound.org/people/NearTheAtmoshphere/sounds/694373/",
-        "author": "NearTheAtmoshphere",
-        "durationSec": 38.2,
-        "verdict": "reject",
-        "reason": "clip has 38 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 38,
-          "cleanSeconds": 7,
-          "topClasses": [
-            {
-              "label": "Fireworks",
-              "max": 0.8938
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.686
-            },
-            {
-              "label": "Firecracker",
-              "max": 0.5557
-            },
-            {
-              "label": "Music",
-              "max": 0.4839
-            },
-            {
-              "label": "Gunshot, gunfire",
-              "max": 0.4429
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Fireworks",
-              "max": 0.894,
-              "atSecond": 20
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.686,
-              "atSecond": 28
-            },
-            {
-              "label": "Firecracker",
-              "max": 0.556,
-              "atSecond": 24
-            },
-            {
-              "label": "Music",
-              "max": 0.484,
-              "atSecond": 23
-            },
-            {
-              "label": "Gunshot, gunfire",
-              "max": 0.443,
-              "atSecond": 28
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.311,
-              "atSecond": 30
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.31,
-              "atSecond": 12
-            },
-            {
-              "label": "Thunder",
-              "max": 0.232,
-              "atSecond": 5
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.232,
-              "atSecond": 0
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.184,
-              "atSecond": 5
-            },
-            {
-              "label": "Explosion",
-              "max": 0.176,
-              "atSecond": 1
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Shout",
-                "Yell",
-                "Bellow",
-                "Clang",
-                "Clatter",
-                "Crowd"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 675137,
-        "name": "S19-18 Distant pistol gun battle.wav",
-        "url": "https://freesound.org/people/craigsmith/sounds/675137/",
-        "author": "craigsmith",
-        "durationSec": 32.7,
-        "verdict": "reject",
-        "reason": "clip has 32 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 32,
-          "cleanSeconds": 2,
-          "topClasses": [
-            {
-              "label": "Fireworks",
-              "max": 0.6898
-            },
-            {
-              "label": "Firecracker",
-              "max": 0.4173
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.3732
-            },
-            {
-              "label": "Gunshot, gunfire",
-              "max": 0.2931
-            },
-            {
-              "label": "Explosion",
-              "max": 0.224
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Fireworks",
-              "max": 0.69,
-              "atSecond": 14
-            },
-            {
-              "label": "Firecracker",
-              "max": 0.417,
-              "atSecond": 23
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.373,
-              "atSecond": 10
-            },
-            {
-              "label": "Gunshot, gunfire",
-              "max": 0.293,
-              "atSecond": 7
-            },
-            {
-              "label": "Explosion",
-              "max": 0.224,
-              "atSecond": 31
-            },
-            {
-              "label": "Music",
-              "max": 0.168,
-              "atSecond": 18
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.158,
-              "atSecond": 3
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Shout",
-                "Yell",
-                "Bellow",
-                "Clang",
-                "Clatter",
-                "Crowd"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

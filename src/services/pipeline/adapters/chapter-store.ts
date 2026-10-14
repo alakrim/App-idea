@@ -164,8 +164,8 @@ export function createChapterStore(deps: ChapterStoreDeps): ChapterStore {
       };
     },
 
-    async applyEntityResolution(seriesId, resolution: EntityResolution) {
-      memoryRepo.saveEntityResolution(db, seriesId, resolution);
+    async applyEntityResolution(seriesId, chapterId, resolution: EntityResolution) {
+      memoryRepo.saveEntityResolution(db, seriesId, chapterId, resolution);
     },
 
     async listAudioSegments(chapterId) {

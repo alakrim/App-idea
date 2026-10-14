@@ -145,6 +145,16 @@ export function PipelineLifecycle() {
 
   useEffect(() => {
     if (!runtime) return undefined;
+    return runtime.subscribeSaveFailures(() => {
+      toast.show({
+        message: "Lectio couldn't save your chapter queue. It will try again with the next change.",
+        tone: 'danger',
+      });
+    });
+  }, [runtime, toast]);
+
+  useEffect(() => {
+    if (!runtime) return undefined;
     return runtime.subscribeEvents((event) => {
       if (event.type === 'done' && AppState.currentState === 'active') {
         const title = chapterRepo.get(db, event.chapterId)?.title;

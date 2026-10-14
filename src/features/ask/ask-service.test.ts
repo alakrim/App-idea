@@ -108,7 +108,7 @@ function seedBook(db: Db): void {
     chapterOrder: order,
     fact: text,
   });
-  memoryRepo.saveEntityResolution(db, SERIES, {
+  memoryRepo.saveEntityResolution(db, SERIES, id(1), {
     upserts: [lin, wen],
     newFacts: [
       fact(1, 1, 1, 'Trained under Master Wen'),

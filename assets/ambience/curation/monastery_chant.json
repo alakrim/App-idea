@@ -5,7 +5,9 @@
     "monastery chant ambience",
     "gregorian chant church",
     "choir monastery ambience",
-    "monks chanting"
+    "monks chanting",
+    "monks chanting loop",
+    "gregorian chant loop"
   ],
   "poolSize": 28,
   "candidates": [
@@ -44,12 +46,12 @@
       "channels": 2,
       "avgRating": 4.82,
       "numRatings": 17,
-      "numDownloads": 554,
+      "numDownloads": 555,
       "previewUrl": "https://cdn.freesound.org/previews/545/545056_2282212-hq.mp3",
       "score": 9.01,
       "reasons": [
         "+2.64 rating 4.82 from 17 ratings",
-        "+1.37 554 downloads",
+        "+1.37 555 downloads",
         "+2 at least 90 s",
         "+2 tags chant, church",
         "+1 name matches chant"
@@ -90,12 +92,12 @@
       "channels": 2,
       "avgRating": 4.42,
       "numRatings": 12,
-      "numDownloads": 458,
+      "numDownloads": 459,
       "previewUrl": "https://cdn.freesound.org/previews/545/545055_2282212-hq.mp3",
       "score": 8.69,
       "reasons": [
         "+2.36 rating 4.42 from 12 ratings",
-        "+1.33 458 downloads",
+        "+1.33 459 downloads",
         "+2 at least 90 s",
         "+2 tags chant, church",
         "+1 name matches chant"
@@ -158,12 +160,12 @@
       "channels": 2,
       "avgRating": 4.9,
       "numRatings": 48,
-      "numDownloads": 2519,
+      "numDownloads": 2520,
       "previewUrl": "https://cdn.freesound.org/previews/345/345028_571436-hq.mp3",
       "score": 7.52,
       "reasons": [
         "+2.82 rating 4.9 from 48 ratings",
-        "+1.7 2519 downloads",
+        "+1.7 2520 downloads",
         "+2 at least 90 s",
         "+1 tags chant"
       ]
@@ -189,934 +191,378 @@
         "+2 at least 90 s",
         "+2 tags monastery, chant"
       ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 98845,
+      "name": "ganze gompa monks དཀར་མཛེས",
+      "url": "https://freesound.org/people/djgriffin/sounds/98845/",
+      "author": "djgriffin",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 331.89,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.61,
+      "numRatings": 33,
+      "numDownloads": 2697,
+      "previewUrl": "https://cdn.freesound.org/previews/98/98845_45941-hq.mp3",
+      "score": 7.31,
+      "reasons": [
+        "+2.6 rating 4.61 from 33 ratings",
+        "+1.72 2697 downloads",
+        "+2 at least 90 s",
+        "+1 tags monastery"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 325903,
+      "name": "Mountain Monastery Lantau Island.wav",
+      "url": "https://freesound.org/people/__O/sounds/325903/",
+      "author": "__O",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 323.5,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 248,
+      "previewUrl": "https://cdn.freesound.org/previews/325/325903_5623566-hq.mp3",
+      "score": 7.26,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1.2 248 downloads",
+        "+2 at least 90 s",
+        "+1 tags monastery",
+        "+1 name matches monastery"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 390290,
+      "name": "052016 maruyama shrine.mp3",
+      "url": "https://freesound.org/people/pflanigan/sounds/390290/",
+      "author": "pflanigan",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 200.14,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 84,
+      "previewUrl": "https://cdn.freesound.org/previews/390/390290_6132202-hq.mp3",
+      "score": 7.03,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.96 84 downloads",
+        "+2 at least 90 s",
+        "+2 tags monastery, chant"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 707056,
+      "name": "Demon Chant",
+      "url": "https://freesound.org/people/TheLastOneOnEarth/sounds/707056/",
+      "author": "TheLastOneOnEarth",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 82.13,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.4,
+      "numRatings": 5,
+      "numDownloads": 137,
+      "previewUrl": "https://cdn.freesound.org/previews/707/707056_13237592-hq.mp3",
+      "score": 6.78,
+      "reasons": [
+        "+2.21 rating 4.4 from 5 ratings",
+        "+1.07 137 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags chant",
+        "+1 name matches chant"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 458983,
+      "name": "Monks chanting in Chi Lin nunnery, Hong Kong November 2018",
+      "url": "https://freesound.org/people/Oplurus/sounds/458983/",
+      "author": "Oplurus",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 90.88,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 345,
+      "previewUrl": "https://cdn.freesound.org/previews/458/458983_8629731-hq.mp3",
+      "score": 6.71,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.27 345 downloads",
+        "+2 at least 90 s",
+        "+1 tags chant"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 344683,
+      "name": "Tibetan monks.wav",
+      "url": "https://freesound.org/people/nemaavla/sounds/344683/",
+      "author": "nemaavla",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 78.04,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 24,
+      "numDownloads": 1170,
+      "previewUrl": "https://cdn.freesound.org/previews/344/344683_2007100-hq.mp3",
+      "score": 6.63,
+      "reasons": [
+        "+2.6 rating 4.67 from 24 ratings",
+        "+1.53 1170 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags chant"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 186677,
+      "name": "Monks Chanting in Jade Buddha Temple, Shanghai",
+      "url": "https://freesound.org/people/timsc/sounds/186677/",
+      "author": "timsc",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 292,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.14,
+      "numRatings": 7,
+      "numDownloads": 363,
+      "previewUrl": "https://cdn.freesound.org/previews/186/186677_266678-hq.mp3",
+      "score": 6.44,
+      "reasons": [
+        "+2.16 rating 4.14 from 7 ratings",
+        "+1.28 363 downloads",
+        "+2 at least 90 s",
+        "+1 tags chant"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 345027,
+      "name": "Temple exterior.wav",
+      "url": "https://freesound.org/people/3bagbrew/sounds/345027/",
+      "author": "3bagbrew",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 196,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 10,
+      "numDownloads": 771,
+      "previewUrl": "https://cdn.freesound.org/previews/345/345027_571436-hq.mp3",
+      "score": 6.07,
+      "reasons": [
+        "+2.63 rating 5 from 10 ratings",
+        "+1.44 771 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 274835,
+      "name": "Thai_Buddhist_Monk_Chant.wav",
+      "url": "https://freesound.org/people/Alex_hears_things/sounds/274835/",
+      "author": "Alex_hears_things",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 45.7,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.83,
+      "numRatings": 12,
+      "numDownloads": 855,
+      "previewUrl": "https://cdn.freesound.org/previews/274/274835_2309965-hq.mp3",
+      "score": 6.05,
+      "reasons": [
+        "+2.58 rating 4.83 from 12 ratings",
+        "+1.47 855 downloads",
+        "+1 tags chant",
+        "+1 name matches chant"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 770374,
+      "name": "Tibetan Temple Sounds",
+      "url": "https://freesound.org/people/cgrebeld/sounds/770374/",
+      "author": "cgrebeld",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 175.92,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.33,
+      "numRatings": 3,
+      "numDownloads": 53,
+      "previewUrl": "https://cdn.freesound.org/previews/770/770374_499453-hq.mp3",
+      "score": 5.98,
+      "reasons": [
+        "+2.11 rating 4.33 from 3 ratings",
+        "+0.87 53 downloads",
+        "+2 at least 90 s",
+        "+1 tags monastery"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 177634,
+      "name": "Thailand chanting Thai Buddhist monks in small temple, prerecorded on PA but very convincing +some live monks chanting along periodically.flac",
+      "url": "https://freesound.org/people/kyles/sounds/177634/",
+      "author": "kyles",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 242.73,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 12,
+      "numDownloads": 758,
+      "previewUrl": "https://cdn.freesound.org/previews/177/177634_612689-hq.mp3",
+      "score": 5.93,
+      "reasons": [
+        "+2.49 rating 4.67 from 12 ratings",
+        "+1.44 758 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 473789,
+      "name": "Temple Chanting and Coin Donations Tossed into Urns",
+      "url": "https://freesound.org/people/timothyd4y/sounds/473789/",
+      "author": "timothyd4y",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.93,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 135,
+      "previewUrl": "https://cdn.freesound.org/previews/473/473789_288104-hq.mp3",
+      "score": 5.44,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+1.07 135 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags chant"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 670521,
+      "name": "Chant Japanese Temple 20200112_103519.m4a",
+      "url": "https://freesound.org/people/gaijinbuzz/sounds/670521/",
+      "author": "gaijinbuzz",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 59.73,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 131,
+      "previewUrl": "https://cdn.freesound.org/previews/670/670521_12855464-hq.mp3",
+      "score": 5.35,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+1.06 131 downloads",
+        "+1 tags chant",
+        "+1 name matches chant"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 350492,
+      "name": "Temple monks chanting01寺庙和尚诵经.WAV",
+      "url": "https://freesound.org/people/zheng142326/sounds/350492/",
+      "author": "zheng142326",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 190.21,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 161,
+      "previewUrl": "https://cdn.freesound.org/previews/350/350492_3200012-hq.mp3",
+      "score": 5.3,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.1 161 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 350491,
+      "name": "Temple monks chanting02寺庙和尚诵经.WAV",
+      "url": "https://freesound.org/people/zheng142326/sounds/350491/",
+      "author": "zheng142326",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 312.51,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 3,
+      "numRatings": 1,
+      "numDownloads": 138,
+      "previewUrl": "https://cdn.freesound.org/previews/350/350491_3200012-hq.mp3",
+      "score": 4.88,
+      "reasons": [
+        "+1.81 rating 3 from 1 ratings",
+        "+1.07 138 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 825858,
+      "name": "Monastery atmosphere - Monk chant + chimes",
+      "url": "https://freesound.org/people/Vrymaa/sounds/825858/",
+      "author": "Vrymaa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 82.91,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 20,
+      "numDownloads": 296,
+      "previewUrl": "https://cdn.freesound.org/previews/825/825858_13973196-hq.mp3",
+      "score": 4.36,
+      "reasons": [
+        "+2.63 rating 4.75 from 20 ratings",
+        "+1.24 296 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags monastery, church",
+        "+1 name matches monastery, chant",
+        "-4 sfx hit or beep (chime)"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 473790,
+      "name": "Monk Chanting",
+      "url": "https://freesound.org/people/timothyd4y/sounds/473790/",
+      "author": "timothyd4y",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 58.29,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 6,
+      "numDownloads": 818,
+      "previewUrl": "https://cdn.freesound.org/previews/473/473790_288104-hq.mp3",
+      "score": 3.81,
+      "reasons": [
+        "+2.35 rating 4.67 from 6 ratings",
+        "+1.46 818 downloads"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Chant",
-          "Singing",
-          "Choir",
-          "Male singing",
-          "Female singing"
-        ]
-      ],
-      "clapPrompt": "monks chanting in a stone hall with long reverberant tones"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "no 64 s window is free of denied sounds: Music reaches 0.81 (at 88 s); required sound absent: Chant / Singing / Choir / Male singing / Female singing",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 383167,
-        "name": "Buddhist Monk Chant / prayer, China",
-        "url": "https://freesound.org/people/mycompasstv/sounds/383167/",
-        "author": "mycompasstv",
-        "durationSec": 173.7,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Music reaches 0.81 (at 88 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 173,
-          "cleanSeconds": 4,
-          "topClasses": [
-            {
-              "label": "Mantra",
-              "max": 0.825
-            },
-            {
-              "label": "Music",
-              "max": 0.8096
-            },
-            {
-              "label": "Chant",
-              "max": 0.5495
-            },
-            {
-              "label": "Cattle, bovinae",
-              "max": 0.4595
-            },
-            {
-              "label": "Moo",
-              "max": 0.437
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.81,
-              "atSecond": 88
-            },
-            {
-              "label": "Marimba, xylophone",
-              "max": 0.292,
-              "atSecond": 155
-            },
-            {
-              "label": "Vocal music",
-              "max": 0.246,
-              "atSecond": 42
-            },
-            {
-              "label": "Carnatic music",
-              "max": 0.242,
-              "atSecond": 45
-            },
-            {
-              "label": "Tambourine",
-              "max": 0.21,
-              "atSecond": 89
-            },
-            {
-              "label": "Bell",
-              "max": 0.198,
-              "atSecond": 9
-            },
-            {
-              "label": "Jingle bell",
-              "max": 0.18,
-              "atSecond": 87
-            },
-            {
-              "label": "Tubular bells",
-              "max": 0.175,
-              "atSecond": 155
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chant",
-                "Singing",
-                "Choir",
-                "Male singing",
-                "Female singing"
-              ],
-              "fraction": 0.676
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 545056,
-        "name": "Monk Chant Temple Fantasy",
-        "url": "https://freesound.org/people/szegvari/sounds/545056/",
-        "author": "szegvari",
-        "durationSec": 94,
-        "verdict": "reject",
-        "reason": "required sound absent: Chant / Singing / Choir / Male singing / Female singing",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 94,
-          "cleanSeconds": 0,
-          "topClasses": [
-            {
-              "label": "Gong",
-              "max": 0.8655
-            },
-            {
-              "label": "Music",
-              "max": 0.7162
-            },
-            {
-              "label": "Singing bowl",
-              "max": 0.4876
-            },
-            {
-              "label": "Ambient music",
-              "max": 0.4144
-            },
-            {
-              "label": "Sonar",
-              "max": 0.3626
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Gong",
-              "max": 0.865,
-              "atSecond": 76
-            },
-            {
-              "label": "Music",
-              "max": 0.716,
-              "atSecond": 53
-            },
-            {
-              "label": "Ambient music",
-              "max": 0.414,
-              "atSecond": 68
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.312,
-              "atSecond": 85
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chant",
-                "Singing",
-                "Choir",
-                "Male singing",
-                "Female singing"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 545057,
-        "name": "Monk Chant Fantasy",
-        "url": "https://freesound.org/people/szegvari/sounds/545057/",
-        "author": "szegvari",
-        "durationSec": 94,
-        "verdict": "reject",
-        "reason": "required sound absent: Chant / Singing / Choir / Male singing / Female singing",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 94,
-          "cleanSeconds": 0,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.9052
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.6056
-            },
-            {
-              "label": "Gong",
-              "max": 0.6043
-            },
-            {
-              "label": "Car",
-              "max": 0.3686
-            },
-            {
-              "label": "New-age music",
-              "max": 0.3304
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.905,
-              "atSecond": 32
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.606,
-              "atSecond": 21
-            },
-            {
-              "label": "Gong",
-              "max": 0.604,
-              "atSecond": 22
-            },
-            {
-              "label": "Car",
-              "max": 0.369,
-              "atSecond": 84
-            },
-            {
-              "label": "New-age music",
-              "max": 0.33,
-              "atSecond": 18
-            },
-            {
-              "label": "Scary music",
-              "max": 0.308,
-              "atSecond": 67
-            },
-            {
-              "label": "Ambient music",
-              "max": 0.296,
-              "atSecond": 6
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chant",
-                "Singing",
-                "Choir",
-                "Male singing",
-                "Female singing"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 545055,
-        "name": "Monk Chant Temple",
-        "url": "https://freesound.org/people/szegvari/sounds/545055/",
-        "author": "szegvari",
-        "durationSec": 94,
-        "verdict": "reject",
-        "reason": "required sound absent: Chant / Singing / Choir / Male singing / Female singing",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 94,
-          "cleanSeconds": 0,
-          "topClasses": [
-            {
-              "label": "Gong",
-              "max": 0.8467
-            },
-            {
-              "label": "Music",
-              "max": 0.7964
-            },
-            {
-              "label": "Ambient music",
-              "max": 0.453
-            },
-            {
-              "label": "Singing bowl",
-              "max": 0.4227
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.3892
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Gong",
-              "max": 0.847,
-              "atSecond": 76
-            },
-            {
-              "label": "Music",
-              "max": 0.796,
-              "atSecond": 17
-            },
-            {
-              "label": "Ambient music",
-              "max": 0.453,
-              "atSecond": 68
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.389,
-              "atSecond": 85
-            },
-            {
-              "label": "Organ",
-              "max": 0.258,
-              "atSecond": 5
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.215,
-              "atSecond": 5
-            },
-            {
-              "label": "Hammond organ",
-              "max": 0.178,
-              "atSecond": 5
-            },
-            {
-              "label": "Scary music",
-              "max": 0.154,
-              "atSecond": 17
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chant",
-                "Singing",
-                "Choir",
-                "Male singing",
-                "Female singing"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 177597,
-        "name": "Thailand Chiang Mai Buddhist temple Burmese monks enter, walla, chant pray.flac",
-        "url": "https://freesound.org/people/kyles/sounds/177597/",
-        "author": "kyles",
-        "durationSec": 369,
-        "verdict": "reject",
-        "reason": "required sound absent: Chant / Singing / Choir / Male singing / Female singing",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 369,
-          "cleanSeconds": 180,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.9164
-            },
-            {
-              "label": "Bird",
-              "max": 0.7198
-            },
-            {
-              "label": "Choir",
-              "max": 0.6879
-            },
-            {
-              "label": "Pigeon, dove",
-              "max": 0.6783
-            },
-            {
-              "label": "Chant",
-              "max": 0.6613
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.655,
-              "atSecond": 146
-            },
-            {
-              "label": "Train",
-              "max": 0.636,
-              "atSecond": 12
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.601,
-              "atSecond": 98
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.558,
-              "atSecond": 8
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.54,
-              "atSecond": 8
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.537,
-              "atSecond": 298
-            },
-            {
-              "label": "Wind chime",
-              "max": 0.476,
-              "atSecond": 10
-            },
-            {
-              "label": "Chime",
-              "max": 0.475,
-              "atSecond": 10
-            },
-            {
-              "label": "Train wheels squealing",
-              "max": 0.424,
-              "atSecond": 8
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.358,
-              "atSecond": 13
-            },
-            {
-              "label": "Subway, metro, underground",
-              "max": 0.301,
-              "atSecond": 12
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.258,
-              "atSecond": 13
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.215,
-              "atSecond": 298
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.173,
-              "atSecond": 289
-            },
-            {
-              "label": "Jet engine",
-              "max": 0.171,
-              "atSecond": 13
-            },
-            {
-              "label": "Bus",
-              "max": 0.17,
-              "atSecond": 283
-            },
-            {
-              "label": "Aircraft engine",
-              "max": 0.165,
-              "atSecond": 13
-            },
-            {
-              "label": "Truck",
-              "max": 0.162,
-              "atSecond": 283
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chant",
-                "Singing",
-                "Choir",
-                "Male singing",
-                "Female singing"
-              ],
-              "fraction": 0.309
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 677547,
-        "name": "Chanting Drone Bells1.wav",
-        "url": "https://freesound.org/people/Jim-Bretherick/sounds/677547/",
-        "author": "Jim-Bretherick",
-        "durationSec": 149,
-        "verdict": "reject",
-        "reason": "required sound absent: Chant / Singing / Choir / Male singing / Female singing",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 149,
-          "cleanSeconds": 2,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.92
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.7813
-            },
-            {
-              "label": "Train",
-              "max": 0.743
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.6627
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.6228
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.92,
-              "atSecond": 114
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.781,
-              "atSecond": 3
-            },
-            {
-              "label": "Train",
-              "max": 0.743,
-              "atSecond": 53
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.663,
-              "atSecond": 53
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.623,
-              "atSecond": 53
-            },
-            {
-              "label": "Blender",
-              "max": 0.495,
-              "atSecond": 94
-            },
-            {
-              "label": "Car",
-              "max": 0.49,
-              "atSecond": 5
-            },
-            {
-              "label": "Emergency vehicle",
-              "max": 0.427,
-              "atSecond": 74
-            },
-            {
-              "label": "Race car, auto racing",
-              "max": 0.423,
-              "atSecond": 3
-            },
-            {
-              "label": "Train horn",
-              "max": 0.37,
-              "atSecond": 53
-            },
-            {
-              "label": "Subway, metro, underground",
-              "max": 0.305,
-              "atSecond": 21
-            },
-            {
-              "label": "Vacuum cleaner",
-              "max": 0.278,
-              "atSecond": 134
-            },
-            {
-              "label": "Train wheels squealing",
-              "max": 0.275,
-              "atSecond": 83
-            },
-            {
-              "label": "Ambulance (siren)",
-              "max": 0.263,
-              "atSecond": 76
-            },
-            {
-              "label": "Fire engine, fire truck (siren)",
-              "max": 0.26,
-              "atSecond": 74
-            },
-            {
-              "label": "Siren",
-              "max": 0.255,
-              "atSecond": 74
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.252,
-              "atSecond": 59
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.213,
-              "atSecond": 110
-            },
-            {
-              "label": "Motorboat, speedboat",
-              "max": 0.201,
-              "atSecond": 75
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.17,
-              "atSecond": 75
-            },
-            {
-              "label": "Tire squeal",
-              "max": 0.17,
-              "atSecond": 5
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.147,
-              "atSecond": 74
-            },
-            {
-              "label": "Train whistle",
-              "max": 0.114,
-              "atSecond": 53
-            },
-            {
-              "label": "Steam whistle",
-              "max": 0.108,
-              "atSecond": 96
-            },
-            {
-              "label": "Civil defense siren",
-              "max": 0.052,
-              "atSecond": 96
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chant",
-                "Singing",
-                "Choir",
-                "Male singing",
-                "Female singing"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 345028,
-        "name": "Temple chanting interior",
-        "url": "https://freesound.org/people/3bagbrew/sounds/345028/",
-        "author": "3bagbrew",
-        "durationSec": 402,
-        "verdict": "reject",
-        "reason": "required sound absent: Chant / Singing / Choir / Male singing / Female singing",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 402,
-          "cleanSeconds": 114,
-          "topClasses": [
-            {
-              "label": "Mantra",
-              "max": 0.8795
-            },
-            {
-              "label": "Music",
-              "max": 0.8471
-            },
-            {
-              "label": "Speech",
-              "max": 0.7935
-            },
-            {
-              "label": "Brass instrument",
-              "max": 0.7758
-            },
-            {
-              "label": "Wood block",
-              "max": 0.601
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.847,
-              "atSecond": 67
-            },
-            {
-              "label": "Brass instrument",
-              "max": 0.776,
-              "atSecond": 52
-            },
-            {
-              "label": "Bell",
-              "max": 0.571,
-              "atSecond": 100
-            },
-            {
-              "label": "Ringtone",
-              "max": 0.435,
-              "atSecond": 359
-            },
-            {
-              "label": "Marimba, xylophone",
-              "max": 0.424,
-              "atSecond": 89
-            },
-            {
-              "label": "French horn",
-              "max": 0.361,
-              "atSecond": 52
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.351,
-              "atSecond": 236
-            },
-            {
-              "label": "Foghorn",
-              "max": 0.314,
-              "atSecond": 143
-            },
-            {
-              "label": "Jingle bell",
-              "max": 0.304,
-              "atSecond": 299
-            },
-            {
-              "label": "Trombone",
-              "max": 0.297,
-              "atSecond": 80
-            },
-            {
-              "label": "Drum",
-              "max": 0.272,
-              "atSecond": 41
-            },
-            {
-              "label": "Telephone",
-              "max": 0.27,
-              "atSecond": 359
-            },
-            {
-              "label": "New-age music",
-              "max": 0.269,
-              "atSecond": 170
-            },
-            {
-              "label": "Telephone bell ringing",
-              "max": 0.257,
-              "atSecond": 359
-            },
-            {
-              "label": "Ambient music",
-              "max": 0.203,
-              "atSecond": 42
-            },
-            {
-              "label": "Vocal music",
-              "max": 0.192,
-              "atSecond": 142
-            },
-            {
-              "label": "Carnatic music",
-              "max": 0.183,
-              "atSecond": 60
-            },
-            {
-              "label": "Bicycle bell",
-              "max": 0.175,
-              "atSecond": 283
-            },
-            {
-              "label": "Tubular bells",
-              "max": 0.15,
-              "atSecond": 91
-            },
-            {
-              "label": "Alarm clock",
-              "max": 0.103,
-              "atSecond": 163
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chant",
-                "Singing",
-                "Choir",
-                "Male singing",
-                "Female singing"
-              ],
-              "fraction": 0.224
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 468041,
-        "name": "Buddhist temple hum 02",
-        "url": "https://freesound.org/people/rucisko/sounds/468041/",
-        "author": "rucisko",
-        "durationSec": 147.5,
-        "verdict": "reject",
-        "reason": "required sound absent: Chant / Singing / Choir / Male singing / Female singing",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 147,
-          "cleanSeconds": 131,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8954
-            },
-            {
-              "label": "Clip-clop",
-              "max": 0.7317
-            },
-            {
-              "label": "Bird",
-              "max": 0.6669
-            },
-            {
-              "label": "Horse",
-              "max": 0.6228
-            },
-            {
-              "label": "Pigeon, dove",
-              "max": 0.6157
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.498,
-              "atSecond": 129
-            },
-            {
-              "label": "Tubular bells",
-              "max": 0.487,
-              "atSecond": 63
-            },
-            {
-              "label": "Marimba, xylophone",
-              "max": 0.232,
-              "atSecond": 63
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.167,
-              "atSecond": 101
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Chant",
-                "Singing",
-                "Choir",
-                "Male singing",
-                "Female singing"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

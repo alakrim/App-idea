@@ -93,7 +93,11 @@ export interface ChapterStore {
   /** Memories of the series' chapters strictly before `beforeOrder`. */
   getPriorMemories(seriesId: Id, beforeOrder: number): Promise<ChapterMemoryRecord[]>;
   getEntities(seriesId: Id): Promise<EntitySnapshot>;
-  applyEntityResolution(seriesId: Id, resolution: EntityResolution): Promise<void>;
+  /**
+   * Applies one chapter's entity resolution. The chapter's facts from an earlier analysis are
+   * replaced, not added to, so a re-analysis never keeps facts the new run no longer makes.
+   */
+  applyEntityResolution(seriesId: Id, chapterId: Id, resolution: EntityResolution): Promise<void>;
   /** Stored segments of a chapter, in segment order. */
   listAudioSegments(chapterId: Id): Promise<AudioSegment[]>;
   saveAudioSegment(segment: AudioSegment): Promise<void>;

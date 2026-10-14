@@ -34,6 +34,11 @@ export interface PipelineQueueOptions {
    * watchdog then keeps counting when the app leaves the foreground, because nothing is frozen.
    */
   readonly keepsAliveInBackground?: () => boolean;
+  /**
+   * Called once when saving the queue starts to fail. The queue stays in memory, and every later
+   * change saves it again, so the next success clears the failure.
+   */
+  readonly onSaveFailed?: () => void;
 }
 
 interface Item {
@@ -59,6 +64,7 @@ export class PipelineQueue {
   private persisting: Promise<void> = Promise.resolve();
   private readonly listeners = new Set<(snapshot: QueueSnapshot) => void>();
   private active: ActiveRun | null = null;
+  private saveFailing = false;
 
   constructor(
     private readonly ports: PipelinePorts,
@@ -278,14 +284,28 @@ export class PipelineQueue {
     }
   }
 
+  /**
+   * Saves the queue. It never rejects: a failed save is reported once through `onSaveFailed`, and the
+   * next change saves again. The queue itself is never lost from memory.
+   */
   private persist(): Promise<void> {
     const entries: PersistedQueueItem[] = this.items.map((item) => ({
       chapterId: item.chapterId,
       ...item.options,
     }));
-    const next = this.persisting.then(() => this.ports.jobs.saveQueue(entries));
-    // Each save reports its own failure, and a failed save does not block the ones after it.
-    this.persisting = next.catch(() => undefined);
+    const next = this.persisting
+      .then(() => this.ports.jobs.saveQueue(entries))
+      .then(
+        () => {
+          this.saveFailing = false;
+        },
+        () => {
+          if (this.saveFailing) return;
+          this.saveFailing = true;
+          this.options.onSaveFailed?.();
+        },
+      );
+    this.persisting = next;
     return next;
   }
 

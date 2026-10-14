@@ -388,6 +388,16 @@ export function createFakePipeline(options: FakePipelineOptions): PipelineFacade
     return STAGES.find((stage) => run.slots[stage].status === 'failed') ?? 'extract';
   }
 
+  function cancelRun(chapterId: string): void {
+    const run = runFor(chapterId);
+    clearTimer(run);
+    run.state = 'cancelled';
+    run.active = null;
+    jobRepo.cancelUnfinished(db, chapterId, clock());
+    setChapterStatus(run, 'draft');
+    emit(run);
+  }
+
   return {
     async previewUrl(url, signal) {
       await delay(previewMs, signal);
@@ -429,14 +439,12 @@ export function createFakePipeline(options: FakePipelineOptions): PipelineFacade
       start(run, 'extract');
     },
 
+    async stop(chapterIds) {
+      for (const chapterId of chapterIds) cancelRun(chapterId);
+    },
+
     cancel(chapterId) {
-      const run = runFor(chapterId);
-      clearTimer(run);
-      run.state = 'cancelled';
-      run.active = null;
-      jobRepo.cancelUnfinished(db, chapterId, clock());
-      setChapterStatus(run, 'draft');
-      emit(run);
+      cancelRun(chapterId);
     },
 
     retry(chapterId, from) {

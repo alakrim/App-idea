@@ -32,6 +32,7 @@ import {
   REQUIRED_FRACTION,
   REQUIRED_FRAME_PROBABILITY,
   screenCandidate,
+  SHORT_WINDOW_FRAMES,
   WINDOW_FRAMES,
 } from './screen-policy.mjs';
 import {
@@ -227,8 +228,10 @@ async function prefetchPreviews(entries) {
 
 /** Downloads and levels every candidate of one target. Screening itself runs after tagging. */
 async function prepareTarget(curation) {
+  const entries = curation.candidates.slice(0, SCREEN_CANDIDATES);
+  await prefetchPreviews(entries);
   const candidates = [];
-  for (const entry of curation.candidates.slice(0, SCREEN_CANDIDATES)) {
+  for (const entry of entries) {
     const base = {
       rank: entry.rank,
       freesoundId: entry.freesoundId,
@@ -263,9 +266,34 @@ async function screenTarget(target, candidates, names) {
   return { target, policy, candidates: out };
 }
 
-function screeningRecord({ target, policy, candidates, clapModel, screenedOn }) {
+/** The candidate to use among the passing ones: highest CLAP score, else the earliest in curation order. */
+function chosenOf(candidates) {
   const chosen = chooseCandidate(candidates);
-  const verdict = chosen ? 'filled' : 'unfilled';
+  if (!chosen) return null;
+  return {
+    freesoundId: chosen.freesoundId,
+    windowStartSeconds: chosen.window.startSeconds,
+    windowSeconds: chosen.window.lengthSeconds,
+    loopSeconds: chosen.window.loopSeconds,
+    steadinessDb: chosen.window.steadinessDb,
+    clapScore: chosen.clapScore ?? null,
+  };
+}
+
+/**
+ * Deletes the previews and tags of the candidates that did not pass, once their verdict is recorded
+ * (the evidence stays in the curation file). Passing previews stay: the build and CLAP need them.
+ */
+async function pruneRejects(candidates) {
+  for (const c of candidates) {
+    if (c.verdict === 'pass') continue;
+    await rm(join(PREVIEW_CACHE_DIR, `${c.freesoundId}.mp3`), { force: true });
+    await rm(join(SCREEN_WORK_DIR, 'tags', `${c.freesoundId}.json`), { force: true });
+  }
+}
+
+function screeningRecord({ target, policy, candidates, clapModel, screenedOn }) {
+  const chosen = chosenOf(candidates);
   let unfilledReason = null;
   if (!chosen) {
     unfilledReason =
@@ -282,7 +310,8 @@ function screeningRecord({ target, policy, candidates, clapModel, screenedOn }) 
       alarmFrameProbability: ALARM_FRAME_PROBABILITY,
       requiredFrameProbability: REQUIRED_FRAME_PROBABILITY,
       requiredFraction: REQUIRED_FRACTION,
-      windowSeconds: WINDOW_FRAMES,
+      longWindowSeconds: WINDOW_FRAMES,
+      shortWindowSeconds: SHORT_WINDOW_FRAMES,
     },
     policy: {
       families: familiesFor(target),
@@ -290,17 +319,9 @@ function screeningRecord({ target, policy, candidates, clapModel, screenedOn }) 
       required: policy.required,
       clapPrompt: policy.clap,
     },
-    verdict,
+    verdict: chosen ? 'filled' : 'unfilled',
     unfilledReason,
-    chosen: chosen
-      ? {
-          freesoundId: chosen.freesoundId,
-          windowStartSeconds: chosen.window.startSeconds,
-          windowSeconds: chosen.window.lengthSeconds,
-          steadinessDb: chosen.window.steadinessDb,
-          clapScore: chosen.clapScore,
-        }
-      : null,
+    chosen,
     candidates: candidates.map((c) => ({
       rank: c.rank,
       freesoundId: c.freesoundId,
@@ -311,10 +332,75 @@ function screeningRecord({ target, policy, candidates, clapModel, screenedOn }) 
       verdict: c.verdict,
       reason: c.reason ?? null,
       window: c.window ?? null,
-      clapScore: c.clapScore,
+      clapScore: c.clapScore ?? null,
       evidence: c.evidence ?? null,
     })),
   };
+}
+
+/**
+ * CLAP re-rank, one batch for every passing candidate of every category. Previews that were pruned are
+ * downloaded again. Each curation record gets its scores and the chosen candidate is recomputed.
+ */
+async function clapPhase(targets, screenedOn) {
+  const files = [];
+  for (const target of targets) {
+    const path = join(CURATION_DIR, `${target.id}.json`);
+    const record = await readJson(path);
+    if (record.screening?.verdict === undefined) continue;
+    files.push({ target, path, record });
+  }
+  const requests = [];
+  for (const { target, record } of files) {
+    for (const c of record.screening.candidates.filter((x) => x.verdict === 'pass')) {
+      const preview = await ensurePreview({ freesoundId: c.freesoundId, previewUrl: c.previewUrl ?? previewUrlOf(record, c.freesoundId) });
+      requests.push({
+        id: `${target.id}:${c.freesoundId}`,
+        audio: preview,
+        startSeconds: c.window.startSeconds,
+        lengthSeconds: c.window.lengthSeconds,
+        prompt: target.screen.clap,
+      });
+    }
+  }
+  const scores = {};
+  if (requests.length > 0) {
+    const requestsPath = join(SCREEN_WORK_DIR, 'clap-requests.json');
+    const outPath = join(SCREEN_WORK_DIR, 'clap-scores.json');
+    await writeFile(requestsPath, JSON.stringify(requests));
+    await runPython([SCREEN_CLAP_SCRIPT, requestsPath, outPath]);
+    Object.assign(scores, z.object({ scores: z.record(z.string(), z.number()) }).parse(await readJson(outPath)).scores);
+  }
+  for (const { target, path, record } of files) {
+    const candidates = record.screening.candidates.map((c) => ({
+      ...c,
+      clapScore: c.verdict === 'pass' ? (scores[`${target.id}:${c.freesoundId}`] ?? null) : null,
+    }));
+    const chosen = chosenOf(candidates);
+    await writeFile(
+      path,
+      `${JSON.stringify({
+        ...record,
+        screening: {
+          ...record.screening,
+          screenedOn,
+          reranker: CLAP_MODEL,
+          candidates,
+          chosen,
+          verdict: chosen ? 'filled' : 'unfilled',
+          unfilledReason: chosen ? null : record.screening.unfilledReason,
+        },
+      }, null, 2)}\n`,
+    );
+    console.log(`${target.id.padEnd(18)} ${chosen ? `${chosen.freesoundId} at ${chosen.windowStartSeconds} s (CLAP ${chosen.clapScore ?? 'n/a'})` : 'UNFILLED'}`);
+  }
+}
+
+/** The Freesound preview URL of a candidate, from its curation entry in the same record. */
+function previewUrlOf(record, freesoundId) {
+  const entry = record.candidates.find((c) => c.freesoundId === freesoundId);
+  if (!entry) throw new Error(`no curation entry for ${freesoundId}`);
+  return entry.previewUrl;
 }
 
 function onlyFilter(args) {
@@ -323,6 +409,10 @@ function onlyFilter(args) {
   return new Set(flag.slice('--only='.length).split(',').filter((id) => id.length > 0));
 }
 
+/**
+ * Streams the categories: each one is fetched, tagged, screened and pruned before the next starts, so the
+ * disk holds the passing previews only. Then one CLAP batch re-ranks the passers (unless --no-clap).
+ */
 async function main() {
   const args = process.argv.slice(2);
   const useClap = !args.includes('--no-clap');
@@ -333,75 +423,30 @@ async function main() {
   const screenedOn = new Date().toISOString().slice(0, 10);
   await mkdir(SCREEN_WORK_DIR, { recursive: true });
 
-  const curations = [];
   for (const target of targets) {
-    curations.push({
-      target,
-      curation: curationSchema.parse(await readJson(join(CURATION_DIR, `${target.id}.json`))),
-    });
-  }
-  console.log(`fetching previews for ${curations.length} categories`);
-  await prefetchPreviews(
-    curations.flatMap(({ curation }) => curation.candidates.slice(0, SCREEN_CANDIDATES)),
-  );
-
-  const prepared = [];
-  for (const { target, curation } of curations) {
-    console.log(`preparing ${target.id} (${Math.min(curation.candidates.length, SCREEN_CANDIDATES)} candidates)`);
-    prepared.push({ target, candidates: await prepareTarget(curation) });
-  }
-
-  const clips = [...new Map(prepared.flatMap((p) => p.candidates).filter((c) => c.preview).map((c) => [c.freesoundId, c])).values()];
-  await tagClips(clips, unionLabels);
-
-  const screened = [];
-  for (const { target, candidates } of prepared) {
-    screened.push(await screenTarget(target, candidates, names));
-  }
-
-  const clapScores = {};
-  if (useClap) {
-    const requests = screened.flatMap(({ target, candidates }) =>
-      candidates
-        .filter((c) => c.verdict === 'pass')
-        .map((c) => ({
-          id: `${target.id}:${c.freesoundId}`,
-          audio: c.preview,
-          startSeconds: c.window.startSeconds,
-          lengthSeconds: c.window.lengthSeconds,
-          prompt: target.screen.clap,
-        })),
-    );
-    if (requests.length > 0) {
-      const requestsPath = join(SCREEN_WORK_DIR, 'clap-requests.json');
-      const outPath = join(SCREEN_WORK_DIR, 'clap-scores.json');
-      await writeFile(requestsPath, JSON.stringify(requests));
-      await runPython([SCREEN_CLAP_SCRIPT, requestsPath, outPath]);
-      Object.assign(clapScores, z.object({ scores: z.record(z.string(), z.number()) }).parse(await readJson(outPath)).scores);
-    }
-  }
-
-  for (const { target, policy, candidates } of screened) {
-    for (const c of candidates) {
-      c.clapScore = clapScores[`${target.id}:${c.freesoundId}`] ?? null;
-    }
+    const path = join(CURATION_DIR, `${target.id}.json`);
+    const curation = curationSchema.parse(await readJson(path));
+    console.log(`screening ${target.id} (${Math.min(curation.candidates.length, SCREEN_CANDIDATES)} candidates)`);
+    const prepared = await prepareTarget(curation);
+    const clips = [...new Map(prepared.filter((c) => c.preview).map((c) => [c.freesoundId, c])).values()];
+    await tagClips(clips, unionLabels);
+    const screened = await screenTarget(target, prepared, names);
+    await pruneRejects(screened.candidates);
     const record = screeningRecord({
       target,
-      policy,
-      candidates,
-      clapModel: useClap ? CLAP_MODEL : null,
+      policy: screened.policy,
+      candidates: screened.candidates,
+      clapModel: null,
       screenedOn,
     });
-    const path = join(CURATION_DIR, `${target.id}.json`);
-    const curation = await readJson(path);
-    await writeFile(path, `${JSON.stringify({ ...curation, screening: record }, null, 2)}\n`);
-    const chosen = record.chosen
-      ? `${record.chosen.freesoundId} at ${record.chosen.windowStartSeconds} s (CLAP ${record.chosen.clapScore ?? 'n/a'})`
-      : `UNFILLED: ${record.unfilledReason}`;
-    console.log(`${target.id.padEnd(18)} ${chosen}`);
+    const current = await readJson(path);
+    await writeFile(path, `${JSON.stringify({ ...current, screening: record }, null, 2)}\n`);
+    const passed = screened.candidates.filter((c) => c.verdict === 'pass').length;
+    console.log(`  ${target.id}: ${passed} passed of ${screened.candidates.length}; ${record.verdict === 'filled' ? `chosen ${record.chosen.freesoundId}` : `UNFILLED: ${record.unfilledReason}`}`);
   }
-  const filled = screened.filter(({ target }) => targets.includes(target)).length;
-  console.log(`screened ${filled} categories; screening written to ${CURATION_DIR}`);
+
+  if (useClap) await clapPhase(targets, screenedOn);
+  console.log(`screened ${targets.length} categories; screening written to ${CURATION_DIR}`);
 }
 
 main().catch((err) => {

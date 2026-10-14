@@ -1,11 +1,13 @@
 {
   "category": "clock_ticking",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "clock ticking ambience",
-    "pendulum clock ticking room"
+    "pendulum clock ticking room",
+    "ticking clock loop",
+    "clock ambience loop"
   ],
-  "poolSize": 33,
+  "poolSize": 49,
   "candidates": [
     {
       "rank": 1,
@@ -19,12 +21,12 @@
       "channels": 2,
       "avgRating": 4.64,
       "numRatings": 14,
-      "numDownloads": 261,
+      "numDownloads": 263,
       "previewUrl": "https://cdn.freesound.org/previews/726/726603_10983022-hq.mp3",
       "score": 9.72,
       "reasons": [
         "+2.51 rating 4.64 from 14 ratings",
-        "+1.21 261 downloads",
+        "+1.21 263 downloads",
         "+2 at least 90 s",
         "+3 tags clock, tick, ticking",
         "+1 name matches clock"
@@ -101,6 +103,29 @@
     },
     {
       "rank": 5,
+      "freesoundId": 797574,
+      "name": "Tick-Tock - Pendulum Family Clock",
+      "url": "https://freesound.org/people/Vrymaa/sounds/797574/",
+      "author": "Vrymaa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 81.12,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.85,
+      "numRatings": 13,
+      "numDownloads": 228,
+      "previewUrl": "https://cdn.freesound.org/previews/797/797574_13973196-hq.mp3",
+      "score": 9.28,
+      "reasons": [
+        "+2.6 rating 4.85 from 13 ratings",
+        "+1.18 228 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags clock, tick, ticking, pendulum",
+        "+1 name matches clock, tick"
+      ]
+    },
+    {
+      "rank": 6,
       "freesoundId": 659391,
       "name": "Digital Clock World1.wav",
       "url": "https://freesound.org/people/Jim-Bretherick/sounds/659391/",
@@ -123,7 +148,7 @@
       ]
     },
     {
-      "rank": 6,
+      "rank": 7,
       "freesoundId": 676288,
       "name": "Ticking wall clock in kitchen",
       "url": "https://freesound.org/people/Fauxtogramme/sounds/676288/",
@@ -146,7 +171,7 @@
       ]
     },
     {
-      "rank": 7,
+      "rank": 8,
       "freesoundId": 520467,
       "name": "BGSaSc Room Tone Workshop Birds Hum Clock Ticking",
       "url": "https://freesound.org/people/Profispiesser/sounds/520467/",
@@ -169,7 +194,7 @@
       ]
     },
     {
-      "rank": 8,
+      "rank": 9,
       "freesoundId": 341375,
       "name": "muted clock[Foolishfool].MP3",
       "url": "https://freesound.org/people/foolishfool/sounds/341375/",
@@ -190,574 +215,363 @@
         "+3 tags clock, tick, ticking",
         "+1 name matches clock"
       ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 530171,
+      "name": "kitchen clock clockwork sound effect",
+      "url": "https://freesound.org/people/Garuda1982/sounds/530171/",
+      "author": "Garuda1982",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 67.04,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.6,
+      "numRatings": 5,
+      "numDownloads": 231,
+      "previewUrl": "https://cdn.freesound.org/previews/530/530171_2061858-hq.mp3",
+      "score": 8.97,
+      "reasons": [
+        "+2.29 rating 4.6 from 5 ratings",
+        "+1.18 231 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags clock, tick, ticking",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 255717,
+      "name": "Ticking clock (very clear)",
+      "url": "https://freesound.org/people/Paul368/sounds/255717/",
+      "author": "Paul368",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 111.62,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 401,
+      "previewUrl": "https://cdn.freesound.org/previews/255/255717_2971294-hq.mp3",
+      "score": 8.59,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+1.3 401 downloads",
+        "+2 at least 90 s",
+        "+2 tags clock, ticking",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 517102,
+      "name": "clock_ticking.wav",
+      "url": "https://freesound.org/people/tackerproductions/sounds/517102/",
+      "author": "tackerproductions",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 136.87,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 4,
+      "numDownloads": 305,
+      "previewUrl": "https://cdn.freesound.org/previews/517/517102_6301677-hq.mp3",
+      "score": 8.53,
+      "reasons": [
+        "+2.29 rating 4.75 from 4 ratings",
+        "+1.24 305 downloads",
+        "+2 at least 90 s",
+        "+2 tags clock, ticking",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 288933,
+      "name": "kitchen-roomtone-clock-birds.wav",
+      "url": "https://freesound.org/people/toefur/sounds/288933/",
+      "author": "toefur",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 93.64,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 362,
+      "previewUrl": "https://cdn.freesound.org/previews/288/288933_34567-hq.mp3",
+      "score": 8.48,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+1.28 362 downloads",
+        "+2 at least 90 s",
+        "+2 tags clock, ticking",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 495889,
+      "name": "wristwatch,mechanical,clock,ticking,contact mic,loop,denoised.wav",
+      "url": "https://freesound.org/people/celesti-whispers/sounds/495889/",
+      "author": "celesti-whispers",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 129,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.4,
+      "numRatings": 5,
+      "numDownloads": 220,
+      "previewUrl": "https://cdn.freesound.org/previews/495/495889_9161216-hq.mp3",
+      "score": 8.38,
+      "reasons": [
+        "+2.21 rating 4.4 from 5 ratings",
+        "+1.17 220 downloads",
+        "+2 at least 90 s",
+        "+2 tags clock, ticking",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 707013,
+      "name": "Living room AMB.wav",
+      "url": "https://freesound.org/people/MioMeg/sounds/707013/",
+      "author": "MioMeg",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 151.97,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 68,
+      "previewUrl": "https://cdn.freesound.org/previews/707/707013_14780649-hq.mp3",
+      "score": 8.22,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+0.92 68 downloads",
+        "+2 at least 90 s",
+        "+3 tags clock, ticking, pendulum"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 381175,
+      "name": "Clock ticking.mp3",
+      "url": "https://freesound.org/people/csnmedia/sounds/381175/",
+      "author": "csnmedia",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 55.71,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 18,
+      "numDownloads": 614,
+      "previewUrl": "https://cdn.freesound.org/previews/381/381175_926978-hq.mp3",
+      "score": 8.05,
+      "reasons": [
+        "+2.66 rating 4.83 from 18 ratings",
+        "+1.39 614 downloads",
+        "+3 tags clock, ticking, pendulum",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 316684,
+      "name": "plastic clock tick_near_nm.wav",
+      "url": "https://freesound.org/people/Alex_hears_things/sounds/316684/",
+      "author": "Alex_hears_things",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 47.55,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.86,
+      "numRatings": 7,
+      "numDownloads": 415,
+      "previewUrl": "https://cdn.freesound.org/previews/316/316684_2309965-hq.mp3",
+      "score": 7.78,
+      "reasons": [
+        "+2.47 rating 4.86 from 7 ratings",
+        "+1.31 415 downloads",
+        "+3 tags clock, tick, ticking, pendulum",
+        "+1 name matches clock, tick"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 811637,
+      "name": "clock ticking",
+      "url": "https://freesound.org/people/AlexMilsom/sounds/811637/",
+      "author": "AlexMilsom",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 164,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 3.33,
+      "numRatings": 3,
+      "numDownloads": 73,
+      "previewUrl": "https://cdn.freesound.org/previews/811/811637_2179561-hq.mp3",
+      "score": 7.76,
+      "reasons": [
+        "+1.83 rating 3.33 from 3 ratings",
+        "+0.93 73 downloads",
+        "+2 at least 90 s",
+        "+2 tags clock, tick",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 628045,
+      "name": "clock ticking.wav",
+      "url": "https://freesound.org/people/finneganmilla/sounds/628045/",
+      "author": "finneganmilla",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 58.82,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 225,
+      "previewUrl": "https://cdn.freesound.org/previews/628/628045_771660-hq.mp3",
+      "score": 7.61,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.18 225 downloads",
+        "+3 tags clock, tick, ticking",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 657259,
+      "name": "Old Clock Tic Tock Pendulum",
+      "url": "https://freesound.org/people/Tom_Kaszuba/sounds/657259/",
+      "author": "Tom_Kaszuba",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 57.63,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.6,
+      "numRatings": 5,
+      "numDownloads": 290,
+      "previewUrl": "https://cdn.freesound.org/previews/657/657259_11673893-hq.mp3",
+      "score": 7.52,
+      "reasons": [
+        "+2.29 rating 4.6 from 5 ratings",
+        "+1.23 290 downloads",
+        "+3 tags clock, tick, ticking, pendulum",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 490323,
+      "name": "Clock_02.wav",
+      "url": "https://freesound.org/people/knufds/sounds/490323/",
+      "author": "knufds",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 45.69,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.88,
+      "numRatings": 42,
+      "numDownloads": 1950,
+      "previewUrl": "https://cdn.freesound.org/previews/490/490323_191884-hq.mp3",
+      "score": 7.45,
+      "reasons": [
+        "+2.8 rating 4.88 from 42 ratings",
+        "+1.65 1950 downloads",
+        "+2 tags clock, ticking",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 490322,
+      "name": "Clock_01.wav",
+      "url": "https://freesound.org/people/knufds/sounds/490322/",
+      "author": "knufds",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 46.08,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.53,
+      "numRatings": 59,
+      "numDownloads": 3920,
+      "previewUrl": "https://cdn.freesound.org/previews/490/490322_191884-hq.mp3",
+      "score": 7.38,
+      "reasons": [
+        "+2.58 rating 4.53 from 59 ratings",
+        "+1.8 3920 downloads",
+        "+2 tags clock, ticking",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 264437,
+      "name": "Daydream.wav",
+      "url": "https://freesound.org/people/DynamicAlgorhythm/sounds/264437/",
+      "author": "DynamicAlgorhythm",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 48.5,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.9,
+      "numRatings": 29,
+      "numDownloads": 1487,
+      "previewUrl": "https://cdn.freesound.org/previews/264/264437_1913984-hq.mp3",
+      "score": 7.35,
+      "reasons": [
+        "+2.77 rating 4.9 from 29 ratings",
+        "+1.59 1487 downloads",
+        "+3 tags clock, tick, ticking, pendulum"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 490325,
+      "name": "Clock_03",
+      "url": "https://freesound.org/people/knufds/sounds/490325/",
+      "author": "knufds",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 45.18,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.94,
+      "numRatings": 18,
+      "numDownloads": 1383,
+      "previewUrl": "https://cdn.freesound.org/previews/490/490325_191884-hq.mp3",
+      "score": 7.29,
+      "reasons": [
+        "+2.72 rating 4.94 from 18 ratings",
+        "+1.57 1383 downloads",
+        "+2 tags clock, ticking",
+        "+1 name matches clock"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 580946,
+      "name": "S_Amb_RoomtoneWallClockTickingOpenWindow_Mono_01.wav",
+      "url": "https://freesound.org/people/yake01/sounds/580946/",
+      "author": "yake01",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 114.91,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 3.6,
+      "numRatings": 5,
+      "numDownloads": 372,
+      "previewUrl": "https://cdn.freesound.org/previews/580/580946_12600596-hq.mp3",
+      "score": 7.2,
+      "reasons": [
+        "+1.91 rating 3.6 from 5 ratings",
+        "+1.29 372 downloads",
+        "+2 at least 90 s",
+        "+2 tags clock, ticking"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Clock",
-          "Tick",
-          "Tick-tock"
-        ]
-      ],
-      "clapPrompt": "a slow pendulum clock ticking in a quiet room"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Clock / Tick / Tick-tock; clip has 60 s; a window needs 64 s",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 726603,
-        "name": "Ticking clock rhythm percussion 1",
-        "url": "https://freesound.org/people/Jim-Bretherick/sounds/726603/",
-        "author": "Jim-Bretherick",
-        "durationSec": 144,
-        "verdict": "reject",
-        "reason": "required sound absent: Clock / Tick / Tick-tock",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 144,
-          "cleanSeconds": 50,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.8693
-            },
-            {
-              "label": "Wood block",
-              "max": 0.4472
-            },
-            {
-              "label": "Percussion",
-              "max": 0.3879
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.3281
-            },
-            {
-              "label": "Fireworks",
-              "max": 0.3057
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.869,
-              "atSecond": 102
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.328,
-              "atSecond": 13
-            },
-            {
-              "label": "Fireworks",
-              "max": 0.306,
-              "atSecond": 99
-            },
-            {
-              "label": "Drum",
-              "max": 0.282,
-              "atSecond": 77
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.263,
-              "atSecond": 77
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.203,
-              "atSecond": 100
-            },
-            {
-              "label": "Electronic music",
-              "max": 0.189,
-              "atSecond": 102
-            },
-            {
-              "label": "Gunshot, gunfire",
-              "max": 0.176,
-              "atSecond": 100
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Clock",
-                "Tick",
-                "Tick-tock"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 380300,
-        "name": "Clock Ticking",
-        "url": "https://freesound.org/people/shazzakip/sounds/380300/",
-        "author": "shazzakip",
-        "durationSec": 91.7,
-        "verdict": "reject",
-        "reason": "required sound absent: Clock / Tick / Tick-tock",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 91,
-          "cleanSeconds": 88,
-          "topClasses": [
-            {
-              "label": "Thunder",
-              "max": 0.6362
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.5369
-            },
-            {
-              "label": "Rain",
-              "max": 0.5192
-            },
-            {
-              "label": "Tick-tock",
-              "max": 0.4934
-            },
-            {
-              "label": "Tick",
-              "max": 0.493
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.636,
-              "atSecond": 89
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.537,
-              "atSecond": 89
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.281,
-              "atSecond": 8
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Clock",
-                "Tick",
-                "Tick-tock"
-              ],
-              "fraction": 0.363
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 211192,
-        "name": "small clock in room",
-        "url": "https://freesound.org/people/Yuval/sounds/211192/",
-        "author": "Yuval",
-        "durationSec": 60,
-        "verdict": "reject",
-        "reason": "clip has 60 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 60,
-          "cleanSeconds": 60,
-          "topClasses": [
-            {
-              "label": "Tick-tock",
-              "max": 0.5694
-            },
-            {
-              "label": "Tick",
-              "max": 0.537
-            },
-            {
-              "label": "Clock",
-              "max": 0.3382
-            },
-            {
-              "label": "Scissors",
-              "max": 0.289
-            },
-            {
-              "label": "Writing",
-              "max": 0.1292
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Clock",
-                "Tick",
-                "Tick-tock"
-              ],
-              "fraction": 0.683
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 517682,
-        "name": "Clock ticking, natural room verb",
-        "url": "https://freesound.org/people/janbezouska/sounds/517682/",
-        "author": "janbezouska",
-        "durationSec": 199.6,
-        "verdict": "reject",
-        "reason": "required sound absent: Clock / Tick / Tick-tock",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 199,
-          "cleanSeconds": 199,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.1321
-            },
-            {
-              "label": "Speech",
-              "max": 0.0431
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.0229
-            },
-            {
-              "label": "Inside, small room",
-              "max": 0.0191
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.0144
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Clock",
-                "Tick",
-                "Tick-tock"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 659391,
-        "name": "Digital Clock World1.wav",
-        "url": "https://freesound.org/people/Jim-Bretherick/sounds/659391/",
-        "author": "Jim-Bretherick",
-        "durationSec": 140.4,
-        "verdict": "reject",
-        "reason": "required sound absent: Clock / Tick / Tick-tock",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 140,
-          "cleanSeconds": 1,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.9182
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.5693
-            },
-            {
-              "label": "Guitar",
-              "max": 0.5054
-            },
-            {
-              "label": "Plucked string instrument",
-              "max": 0.4523
-            },
-            {
-              "label": "Speech",
-              "max": 0.2608
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.918,
-              "atSecond": 123
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.569,
-              "atSecond": 89
-            },
-            {
-              "label": "Guitar",
-              "max": 0.505,
-              "atSecond": 89
-            },
-            {
-              "label": "Plucked string instrument",
-              "max": 0.452,
-              "atSecond": 89
-            },
-            {
-              "label": "Speech",
-              "max": 0.261,
-              "atSecond": 99
-            },
-            {
-              "label": "Electronic music",
-              "max": 0.25,
-              "atSecond": 95
-            },
-            {
-              "label": "Bell",
-              "max": 0.249,
-              "atSecond": 115
-            },
-            {
-              "label": "Electric guitar",
-              "max": 0.229,
-              "atSecond": 89
-            },
-            {
-              "label": "Church bell",
-              "max": 0.179,
-              "atSecond": 112
-            },
-            {
-              "label": "Drum",
-              "max": 0.173,
-              "atSecond": 53
-            },
-            {
-              "label": "Fire alarm",
-              "max": 0.072,
-              "atSecond": 10
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Clock",
-                "Tick",
-                "Tick-tock"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 676288,
-        "name": "Ticking wall clock in kitchen",
-        "url": "https://freesound.org/people/Fauxtogramme/sounds/676288/",
-        "author": "Fauxtogramme",
-        "durationSec": 140,
-        "verdict": "reject",
-        "reason": "required sound absent: Clock / Tick / Tick-tock",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 140,
-          "cleanSeconds": 139,
-          "topClasses": [
-            {
-              "label": "Tick-tock",
-              "max": 0.5961
-            },
-            {
-              "label": "Tick",
-              "max": 0.4118
-            },
-            {
-              "label": "Music",
-              "max": 0.3
-            },
-            {
-              "label": "Arrow",
-              "max": 0.222
-            },
-            {
-              "label": "Inside, small room",
-              "max": 0.1957
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.3,
-              "atSecond": 5
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Clock",
-                "Tick",
-                "Tick-tock"
-              ],
-              "fraction": 0.329
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 520467,
-        "name": "BGSaSc Room Tone Workshop Birds Hum Clock Ticking",
-        "url": "https://freesound.org/people/Profispiesser/sounds/520467/",
-        "author": "Profispiesser",
-        "durationSec": 146,
-        "verdict": "reject",
-        "reason": "required sound absent: Clock / Tick / Tick-tock",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 146,
-          "cleanSeconds": 146,
-          "topClasses": [
-            {
-              "label": "Tick-tock",
-              "max": 0.7477
-            },
-            {
-              "label": "Tick",
-              "max": 0.6089
-            },
-            {
-              "label": "Clock",
-              "max": 0.318
-            },
-            {
-              "label": "Music",
-              "max": 0.1006
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.0945
-            }
-          ],
-          "deniedMax": [],
-          "requiredFraction": [
-            {
-              "group": [
-                "Clock",
-                "Tick",
-                "Tick-tock"
-              ],
-              "fraction": 0.466
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 341375,
-        "name": "muted clock[Foolishfool].MP3",
-        "url": "https://freesound.org/people/foolishfool/sounds/341375/",
-        "author": "foolishfool",
-        "durationSec": 92.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Clock / Tick / Tick-tock",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 92,
-          "cleanSeconds": 76,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8906
-            },
-            {
-              "label": "Creak",
-              "max": 0.7133
-            },
-            {
-              "label": "Tick-tock",
-              "max": 0.5549
-            },
-            {
-              "label": "Printer",
-              "max": 0.4546
-            },
-            {
-              "label": "Rub",
-              "max": 0.4512
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.891,
-              "atSecond": 58
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.397,
-              "atSecond": 20
-            },
-            {
-              "label": "Car",
-              "max": 0.157,
-              "atSecond": 20
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Clock",
-                "Tick",
-                "Tick-tock"
-              ],
-              "fraction": 0.207
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

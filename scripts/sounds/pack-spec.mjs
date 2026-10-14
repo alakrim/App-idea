@@ -93,4 +93,4 @@ export const SCREEN_TAG_SCRIPT = join(SCREEN_DIR, 'tag.py');
 export const SCREEN_CLAP_SCRIPT = join(SCREEN_DIR, 'clap.py');
 export const CLAP_MODEL = 'laion/clap-htsat-unfused';
 /** Candidates screened per category: the top of the curation ranking. */
-export const SCREEN_CANDIDATES = 8;
+export const SCREEN_CANDIDATES = 25;

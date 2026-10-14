@@ -1,14 +1,39 @@
 {
   "category": "market_crowd",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "market crowd ambience",
-    "bazaar market people"
+    "bazaar market people",
+    "market ambience loop",
+    "street market people ambience"
   ],
-  "poolSize": 35,
+  "poolSize": 55,
   "candidates": [
     {
       "rank": 1,
+      "freesoundId": 457618,
+      "name": "Christmas Market Hamburg - People passing and talking",
+      "url": "https://freesound.org/people/Pfannkuchn/sounds/457618/",
+      "author": "Pfannkuchn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 153.53,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.72,
+      "numRatings": 18,
+      "numDownloads": 1071,
+      "previewUrl": "https://cdn.freesound.org/previews/457/457618_627541-hq.mp3",
+      "score": 9.11,
+      "reasons": [
+        "+2.59 rating 4.72 from 18 ratings",
+        "+1.52 1071 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    },
+    {
+      "rank": 2,
       "freesoundId": 412824,
       "name": "market bazaar.wav",
       "url": "https://freesound.org/people/blukotek/sounds/412824/",
@@ -31,7 +56,7 @@
       ]
     },
     {
-      "rank": 2,
+      "rank": 3,
       "freesoundId": 755969,
       "name": "Evening food market atmosphere at street side",
       "url": "https://freesound.org/people/lastraindrop/sounds/755969/",
@@ -42,19 +67,19 @@
       "channels": 2,
       "avgRating": 4.9,
       "numRatings": 10,
-      "numDownloads": 307,
+      "numDownloads": 308,
       "previewUrl": "https://cdn.freesound.org/previews/755/755969_12768873-hq.mp3",
       "score": 8.82,
       "reasons": [
         "+2.58 rating 4.9 from 10 ratings",
-        "+1.24 307 downloads",
+        "+1.24 308 downloads",
         "+2 at least 90 s",
         "+2 tags market, crowd",
         "+1 name matches market"
       ]
     },
     {
-      "rank": 3,
+      "rank": 4,
       "freesoundId": 700436,
       "name": "Le Cheylard outside summer market.wav",
       "url": "https://freesound.org/people/bruno.auzet/sounds/700436/",
@@ -77,7 +102,7 @@
       ]
     },
     {
-      "rank": 4,
+      "rank": 5,
       "freesoundId": 545756,
       "name": "CROWD",
       "url": "https://freesound.org/people/SamuelGremaud/sounds/545756/",
@@ -100,7 +125,7 @@
       ]
     },
     {
-      "rank": 5,
+      "rank": 6,
       "freesoundId": 782314,
       "name": "sophia open air vegetable market",
       "url": "https://freesound.org/people/bruno.auzet/sounds/782314/",
@@ -123,7 +148,7 @@
       ]
     },
     {
-      "rank": 6,
+      "rank": 7,
       "freesoundId": 752436,
       "name": "Walking through the bustling night market in the downtown area",
       "url": "https://freesound.org/people/lastraindrop/sounds/752436/",
@@ -146,7 +171,7 @@
       ]
     },
     {
-      "rank": 7,
+      "rank": 8,
       "freesoundId": 705302,
       "name": "Market fair ambience with crowd hubbub far and cars passing",
       "url": "https://freesound.org/people/felix.blume/sounds/705302/",
@@ -169,7 +194,7 @@
       ]
     },
     {
-      "rank": 8,
+      "rank": 9,
       "freesoundId": 659634,
       "name": "2022-11-12-binaural-london-market-ambience.wav",
       "url": "https://freesound.org/people/ilmari_freesound/sounds/659634/",
@@ -190,801 +215,373 @@
         "+2 tags market, crowd",
         "+1 name matches market"
       ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 363003,
+      "name": "Wegetable market Poznan R.Jezycki.wav",
+      "url": "https://freesound.org/people/PITFACTORY/sounds/363003/",
+      "author": "PITFACTORY",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 134.79,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 236,
+      "previewUrl": "https://cdn.freesound.org/previews/363/363003_4000697-hq.mp3",
+      "score": 8.38,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.19 236 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 559874,
+      "name": "ramallah_Market.wav",
+      "url": "https://freesound.org/people/nicotep/sounds/559874/",
+      "author": "nicotep",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 190,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 177,
+      "previewUrl": "https://cdn.freesound.org/previews/559/559874_7529214-hq.mp3",
+      "score": 8.32,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.13 177 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 494375,
+      "name": "Flea market ambience (Hungary)",
+      "url": "https://freesound.org/people/Frigus_XIII/sounds/494375/",
+      "author": "Frigus_XIII",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 410.7,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 2,
+      "numDownloads": 212,
+      "previewUrl": "https://cdn.freesound.org/previews/494/494375_1505134-hq.mp3",
+      "score": 8.25,
+      "reasons": [
+        "+2.09 rating 4.5 from 2 ratings",
+        "+1.16 212 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 212779,
+      "name": "Farmer's market front",
+      "url": "https://freesound.org/people/blaukreuz/sounds/212779/",
+      "author": "blaukreuz",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 66.72,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.75,
+      "numRatings": 8,
+      "numDownloads": 383,
+      "previewUrl": "https://cdn.freesound.org/previews/212/212779_623488-hq.mp3",
+      "score": 8.24,
+      "reasons": [
+        "+2.45 rating 4.75 from 8 ratings",
+        "+1.29 383 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 709282,
+      "name": "Fair seller speaking in loudspeaker in spanish with crowd hubbub",
+      "url": "https://freesound.org/people/felix.blume/sounds/709282/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 181.74,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 76,
+      "previewUrl": "https://cdn.freesound.org/previews/709/709282_1661766-hq.mp3",
+      "score": 8.15,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+0.94 76 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches crowd"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 730108,
+      "name": "Esperaza Market Binaural walkthough",
+      "url": "https://freesound.org/people/Sadiquecat/sounds/730108/",
+      "author": "Sadiquecat",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 191.09,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 79,
+      "previewUrl": "https://cdn.freesound.org/previews/730/730108_5287430-hq.mp3",
+      "score": 8.15,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.95 79 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 532945,
+      "name": "bazaar.mp3",
+      "url": "https://freesound.org/people/amir2mi/sounds/532945/",
+      "author": "amir2mi",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 73.72,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.6,
+      "numRatings": 5,
+      "numDownloads": 382,
+      "previewUrl": "https://cdn.freesound.org/previews/532/532945_8851025-hq.mp3",
+      "score": 8.08,
+      "reasons": [
+        "+2.29 rating 4.6 from 5 ratings",
+        "+1.29 382 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags market, bazaar",
+        "+1 name matches bazaar"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 709283,
+      "name": "Frame seller announcing aloud in a market fair with crowd hubbub",
+      "url": "https://freesound.org/people/felix.blume/sounds/709283/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 151.88,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 55,
+      "previewUrl": "https://cdn.freesound.org/previews/709/709283_1661766-hq.mp3",
+      "score": 8.07,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.87 55 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market, crowd"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 522989,
+      "name": "Semi Outdoor Montreal Market Ambiance.wav",
+      "url": "https://freesound.org/people/vero.marengere/sounds/522989/",
+      "author": "vero.marengere",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 118,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 89,
+      "previewUrl": "https://cdn.freesound.org/previews/522/522989_6605732-hq.mp3",
+      "score": 8.04,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.98 89 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 212778,
+      "name": "Farmer's market rear",
+      "url": "https://freesound.org/people/blaukreuz/sounds/212778/",
+      "author": "blaukreuz",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 66.72,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 337,
+      "previewUrl": "https://cdn.freesound.org/previews/212/212778_623488-hq.mp3",
+      "score": 7.96,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.26 337 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 553167,
+      "name": "Persian bazaar in Teheran, Iran",
+      "url": "https://freesound.org/people/nickcase/sounds/553167/",
+      "author": "nickcase",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 61.06,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 12,
+      "numDownloads": 540,
+      "previewUrl": "https://cdn.freesound.org/previews/553/553167_6613710-hq.mp3",
+      "score": 7.86,
+      "reasons": [
+        "+2.49 rating 4.67 from 12 ratings",
+        "+1.37 540 downloads",
+        "+1 at least 60 s",
+        "+2 tags market, bazaar",
+        "+1 name matches bazaar"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 649271,
+      "name": "2022-07-01-zoom-f3-okm-ii-BINAURAL-xichangst-flea-market.wav",
+      "url": "https://freesound.org/people/ilmari_freesound/sounds/649271/",
+      "author": "ilmari_freesound",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 292.67,
+      "samplerate": 192000,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 1,
+      "numDownloads": 45,
+      "previewUrl": "https://cdn.freesound.org/previews/649/649271_12458758-hq.mp3",
+      "score": 7.77,
+      "reasons": [
+        "+1.94 rating 4 from 1 ratings",
+        "+0.83 45 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 806522,
+      "name": "Market Ambience, Chinatown, Bangkok, Thailand (Feb 22, 2019)",
+      "url": "https://freesound.org/people/marc.om/sounds/806522/",
+      "author": "marc.om",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 105.21,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 50,
+      "previewUrl": "https://cdn.freesound.org/previews/806/806522_5417386-hq.mp3",
+      "score": 7.73,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.85 50 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 868864,
+      "name": "Cayenne Fish Market Interior Ambience - French Guiana",
+      "url": "https://freesound.org/people/felix.blume/sounds/868864/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 302.58,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 9,
+      "previewUrl": "https://cdn.freesound.org/previews/868/868864_1661766-hq.mp3",
+      "score": 7.7,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.5 9 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 720507,
+      "name": "Walking through the noisy food commercial street",
+      "url": "https://freesound.org/people/lastraindrop/sounds/720507/",
+      "author": "lastraindrop",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 526.46,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 424,
+      "previewUrl": "https://cdn.freesound.org/previews/720/720507_12768873-hq.mp3",
+      "score": 7.68,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+1.31 424 downloads",
+        "+2 at least 90 s",
+        "+2 tags market, crowd"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 784650,
+      "name": "Crowded market square in Valencia",
+      "url": "https://freesound.org/people/jdpietrzak/sounds/784650/",
+      "author": "jdpietrzak",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 75.08,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 82,
+      "previewUrl": "https://cdn.freesound.org/previews/784/784650_13161576-hq.mp3",
+      "score": 7.66,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.96 82 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags market, crowd",
+        "+1 name matches market"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Crowd",
-          "Hubbub, speech noise, speech babble",
-          "Chatter"
-        ]
-      ],
-      "clapPrompt": "an open-air market with vendors calling and many voices, no engines"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 412824,
-        "name": "market bazaar.wav",
-        "url": "https://freesound.org/people/blukotek/sounds/412824/",
-        "author": "blukotek",
-        "durationSec": 80.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 80,
-          "cleanSeconds": 61,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.9105
-            },
-            {
-              "label": "Music",
-              "max": 0.891
-            },
-            {
-              "label": "Animal",
-              "max": 0.4246
-            },
-            {
-              "label": "Bow-wow",
-              "max": 0.2764
-            },
-            {
-              "label": "Domestic animals, pets",
-              "max": 0.2761
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.891,
-              "atSecond": 9
-            },
-            {
-              "label": "Train",
-              "max": 0.201,
-              "atSecond": 10
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 755969,
-        "name": "Evening food market atmosphere at street side",
-        "url": "https://freesound.org/people/lastraindrop/sounds/755969/",
-        "author": "lastraindrop",
-        "durationSec": 340.3,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 340,
-          "cleanSeconds": 95,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.9424
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.9021
-            },
-            {
-              "label": "Car",
-              "max": 0.7366
-            },
-            {
-              "label": "Truck",
-              "max": 0.6003
-            },
-            {
-              "label": "Train",
-              "max": 0.5808
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.902,
-              "atSecond": 213
-            },
-            {
-              "label": "Car",
-              "max": 0.737,
-              "atSecond": 305
-            },
-            {
-              "label": "Truck",
-              "max": 0.6,
-              "atSecond": 213
-            },
-            {
-              "label": "Train",
-              "max": 0.581,
-              "atSecond": 123
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.48,
-              "atSecond": 123
-            },
-            {
-              "label": "Train wheels squealing",
-              "max": 0.435,
-              "atSecond": 123
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.43,
-              "atSecond": 123
-            },
-            {
-              "label": "Bus",
-              "max": 0.38,
-              "atSecond": 339
-            },
-            {
-              "label": "Music",
-              "max": 0.366,
-              "atSecond": 256
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.355,
-              "atSecond": 45
-            },
-            {
-              "label": "Engine",
-              "max": 0.34,
-              "atSecond": 212
-            },
-            {
-              "label": "Vehicle horn, car horn, honking",
-              "max": 0.313,
-              "atSecond": 102
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.279,
-              "atSecond": 136
-            },
-            {
-              "label": "Traffic noise, roadway noise",
-              "max": 0.261,
-              "atSecond": 249
-            },
-            {
-              "label": "Air horn, truck horn",
-              "max": 0.243,
-              "atSecond": 102
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.209,
-              "atSecond": 127
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.205,
-              "atSecond": 136
-            },
-            {
-              "label": "Sewing machine",
-              "max": 0.2,
-              "atSecond": 212
-            },
-            {
-              "label": "Motor vehicle (road)",
-              "max": 0.169,
-              "atSecond": 305
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.154,
-              "atSecond": 137
-            },
-            {
-              "label": "Subway, metro, underground",
-              "max": 0.151,
-              "atSecond": 123
-            },
-            {
-              "label": "Car alarm",
-              "max": 0.059,
-              "atSecond": 95
-            },
-            {
-              "label": "Fire engine, fire truck (siren)",
-              "max": 0.055,
-              "atSecond": 339
-            },
-            {
-              "label": "Fire alarm",
-              "max": 0.055,
-              "atSecond": 122
-            },
-            {
-              "label": "Alarm",
-              "max": 0.053,
-              "atSecond": 239
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter"
-              ],
-              "fraction": 0.012
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 700436,
-        "name": "Le Cheylard outside summer market.wav",
-        "url": "https://freesound.org/people/bruno.auzet/sounds/700436/",
-        "author": "bruno.auzet",
-        "durationSec": 132.5,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 132,
-          "cleanSeconds": 100,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.9009
-            },
-            {
-              "label": "Speech",
-              "max": 0.8879
-            },
-            {
-              "label": "Cat",
-              "max": 0.6565
-            },
-            {
-              "label": "Animal",
-              "max": 0.6068
-            },
-            {
-              "label": "Domestic animals, pets",
-              "max": 0.5923
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.901,
-              "atSecond": 48
-            },
-            {
-              "label": "Flute",
-              "max": 0.319,
-              "atSecond": 53
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.27,
-              "atSecond": 66
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.266,
-              "atSecond": 50
-            },
-            {
-              "label": "Whistle",
-              "max": 0.182,
-              "atSecond": 53
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter"
-              ],
-              "fraction": 0.129
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 545756,
-        "name": "CROWD",
-        "url": "https://freesound.org/people/SamuelGremaud/sounds/545756/",
-        "author": "SamuelGremaud",
-        "durationSec": 167.3,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 167,
-          "cleanSeconds": 116,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.9163
-            },
-            {
-              "label": "Bird",
-              "max": 0.8523
-            },
-            {
-              "label": "Pigeon, dove",
-              "max": 0.7781
-            },
-            {
-              "label": "Animal",
-              "max": 0.6805
-            },
-            {
-              "label": "Cat",
-              "max": 0.676
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.56,
-              "atSecond": 88
-            },
-            {
-              "label": "Music",
-              "max": 0.513,
-              "atSecond": 107
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.468,
-              "atSecond": 140
-            },
-            {
-              "label": "Rowboat, canoe, kayak",
-              "max": 0.243,
-              "atSecond": 84
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.212,
-              "atSecond": 88
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.201,
-              "atSecond": 88
-            },
-            {
-              "label": "Car",
-              "max": 0.186,
-              "atSecond": 54
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 782314,
-        "name": "sophia open air vegetable market",
-        "url": "https://freesound.org/people/bruno.auzet/sounds/782314/",
-        "author": "bruno.auzet",
-        "durationSec": 144.7,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 144,
-          "cleanSeconds": 136,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.9118
-            },
-            {
-              "label": "Chatter",
-              "max": 0.6397
-            },
-            {
-              "label": "Music",
-              "max": 0.5405
-            },
-            {
-              "label": "Stir",
-              "max": 0.4748
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.401
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.54,
-              "atSecond": 42
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.401,
-              "atSecond": 63
-            },
-            {
-              "label": "Train",
-              "max": 0.218,
-              "atSecond": 52
-            },
-            {
-              "label": "Vehicle horn, car horn, honking",
-              "max": 0.181,
-              "atSecond": 63
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter"
-              ],
-              "fraction": 0.201
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 752436,
-        "name": "Walking through the bustling night market in the downtown area",
-        "url": "https://freesound.org/people/lastraindrop/sounds/752436/",
-        "author": "lastraindrop",
-        "durationSec": 485.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 485,
-          "cleanSeconds": 270,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.9327
-            },
-            {
-              "label": "Speech",
-              "max": 0.913
-            },
-            {
-              "label": "Run",
-              "max": 0.8093
-            },
-            {
-              "label": "Insect",
-              "max": 0.7399
-            },
-            {
-              "label": "Bee, wasp, etc.",
-              "max": 0.5718
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.933,
-              "atSecond": 474
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.547,
-              "atSecond": 311
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.512,
-              "atSecond": 141
-            },
-            {
-              "label": "Train",
-              "max": 0.474,
-              "atSecond": 15
-            },
-            {
-              "label": "Guitar",
-              "max": 0.443,
-              "atSecond": 311
-            },
-            {
-              "label": "Honk",
-              "max": 0.441,
-              "atSecond": 35
-            },
-            {
-              "label": "Plucked string instrument",
-              "max": 0.44,
-              "atSecond": 311
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.362,
-              "atSecond": 15
-            },
-            {
-              "label": "Car",
-              "max": 0.347,
-              "atSecond": 141
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.302,
-              "atSecond": 319
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.296,
-              "atSecond": 15
-            },
-            {
-              "label": "Electronic music",
-              "max": 0.214,
-              "atSecond": 303
-            },
-            {
-              "label": "Race car, auto racing",
-              "max": 0.188,
-              "atSecond": 141
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter"
-              ],
-              "fraction": 0.058
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 705302,
-        "name": "Market fair ambience with crowd hubbub far and cars passing",
-        "url": "https://freesound.org/people/felix.blume/sounds/705302/",
-        "author": "felix.blume",
-        "durationSec": 99.9,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 99,
-          "cleanSeconds": 18,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8456
-            },
-            {
-              "label": "Music",
-              "max": 0.821
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.697
-            },
-            {
-              "label": "Run",
-              "max": 0.6705
-            },
-            {
-              "label": "Honk",
-              "max": 0.6211
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.821,
-              "atSecond": 15
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.697,
-              "atSecond": 88
-            },
-            {
-              "label": "Honk",
-              "max": 0.621,
-              "atSecond": 25
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.447,
-              "atSecond": 62
-            },
-            {
-              "label": "Car",
-              "max": 0.228,
-              "atSecond": 72
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.205,
-              "atSecond": 62
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.2,
-              "atSecond": 62
-            },
-            {
-              "label": "Traffic noise, roadway noise",
-              "max": 0.192,
-              "atSecond": 88
-            },
-            {
-              "label": "Motorboat, speedboat",
-              "max": 0.176,
-              "atSecond": 62
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.171,
-              "atSecond": 78
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.069,
-              "atSecond": 73
-            },
-            {
-              "label": "Car alarm",
-              "max": 0.056,
-              "atSecond": 73
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 659634,
-        "name": "2022-11-12-binaural-london-market-ambience.wav",
-        "url": "https://freesound.org/people/ilmari_freesound/sounds/659634/",
-        "author": "ilmari_freesound",
-        "durationSec": 144.6,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 144,
-          "cleanSeconds": 80,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8941
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.5299
-            },
-            {
-              "label": "Animal",
-              "max": 0.4893
-            },
-            {
-              "label": "Dog",
-              "max": 0.3858
-            },
-            {
-              "label": "Domestic animals, pets",
-              "max": 0.3326
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.53,
-              "atSecond": 88
-            },
-            {
-              "label": "Music",
-              "max": 0.284,
-              "atSecond": 121
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.156,
-              "atSecond": 88
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter"
-              ],
-              "fraction": 0.028
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

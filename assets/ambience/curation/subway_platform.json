@@ -1,11 +1,13 @@
 {
   "category": "subway_platform",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "subway station ambience",
-    "underground metro platform"
+    "underground metro platform",
+    "metro station ambience",
+    "subway train station loop"
   ],
-  "poolSize": 57,
+  "poolSize": 70,
   "candidates": [
     {
       "rank": 1,
@@ -190,845 +192,394 @@
         "+3 tags subway, metro, platform, station",
         "+1 name matches metro"
       ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 413384,
+      "name": "Astoria NYC - N Train Approach Broadway Station - Night/Exterior",
+      "url": "https://freesound.org/people/flood-mix/sounds/413384/",
+      "author": "flood-mix",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 130.04,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.9,
+      "numRatings": 10,
+      "numDownloads": 964,
+      "previewUrl": "https://cdn.freesound.org/previews/413/413384_7723777-hq.mp3",
+      "score": 9.07,
+      "reasons": [
+        "+2.58 rating 4.9 from 10 ratings",
+        "+1.49 964 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, platform, station"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 727842,
+      "name": "ambience, city, metro, preobrazhenskaya ploshad, subway, Moscow",
+      "url": "https://freesound.org/people/AlexanderChe/sounds/727842/",
+      "author": "AlexanderChe",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 173.01,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 3,
+      "numDownloads": 108,
+      "previewUrl": "https://cdn.freesound.org/previews/727/727842_6598647-hq.mp3",
+      "score": 9.03,
+      "reasons": [
+        "+2.02 rating 4 from 3 ratings",
+        "+1.02 108 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, station",
+        "+1 name matches subway, metro"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 556393,
+      "name": "Tube Train 1 - interior tube underground metro subway, district line enters Sloane Sq and victoria.mp3",
+      "url": "https://freesound.org/people/Anya_Media/sounds/556393/",
+      "author": "Anya_Media",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 313.21,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 77,
+      "previewUrl": "https://cdn.freesound.org/previews/556/556393_2010973-hq.mp3",
+      "score": 9.01,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.95 77 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, underground, platform, station",
+        "+1 name matches subway, metro"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 656611,
+      "name": "Old crowded metro - Paris - ambiance - 7 station - open windows - railway - metallic hiss.wav",
+      "url": "https://freesound.org/people/ValentinPetiteau/sounds/656611/",
+      "author": "ValentinPetiteau",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 515.08,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 3.5,
+      "numRatings": 2,
+      "numDownloads": 154,
+      "previewUrl": "https://cdn.freesound.org/previews/656/656611_10443988-hq.mp3",
+      "score": 8.97,
+      "reasons": [
+        "+1.88 rating 3.5 from 2 ratings",
+        "+1.1 154 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, underground, station",
+        "+1 name matches metro"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 656609,
+      "name": "Corridor - metro - Paris - ambiance.wav",
+      "url": "https://freesound.org/people/ValentinPetiteau/sounds/656609/",
+      "author": "ValentinPetiteau",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 265.49,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 53,
+      "previewUrl": "https://cdn.freesound.org/previews/656/656609_10443988-hq.mp3",
+      "score": 8.93,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.87 53 downloads",
+        "+2 at least 90 s",
+        "+3 tags metro, underground, station",
+        "+1 name matches metro"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 430984,
+      "name": "metro, Warszawa, 2017, Centrum station ambience, no trains, many people, kids, Poland.wav",
+      "url": "https://freesound.org/people/be_a_hero_not_a_patriot/sounds/430984/",
+      "author": "be_a_hero_not_a_patriot",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 130.01,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 9,
+      "numDownloads": 418,
+      "previewUrl": "https://cdn.freesound.org/previews/430/430984_5804919-hq.mp3",
+      "score": 8.91,
+      "reasons": [
+        "+2.6 rating 5 from 9 ratings",
+        "+1.31 418 downloads",
+        "+2 at least 90 s",
+        "+2 tags metro, station",
+        "+1 name matches metro"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 451721,
+      "name": "Underground Station in Germany",
+      "url": "https://freesound.org/people/florianreichelt/sounds/451721/",
+      "author": "florianreichelt",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 174.24,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.61,
+      "numRatings": 18,
+      "numDownloads": 525,
+      "previewUrl": "https://cdn.freesound.org/previews/451/451721_6253486-hq.mp3",
+      "score": 8.89,
+      "reasons": [
+        "+2.53 rating 4.61 from 18 ratings",
+        "+1.36 525 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, underground, platform, station"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 733663,
+      "name": "Ambient - Subway plattform Paris Ligne 7 quiet",
+      "url": "https://freesound.org/people/Salom%C3%A9_Lubczanski/sounds/733663/",
+      "author": "Salomé_Lubczanski",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 188.99,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 101,
+      "previewUrl": "https://cdn.freesound.org/previews/733/733663_7796757-hq.mp3",
+      "score": 8.88,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+1 101 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, underground, platform, station",
+        "+1 name matches subway"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 361864,
+      "name": "Japan_Kashiwa_Station_Platform_Train_Annoucements_Birds_Footsteps_24bit_96KHz.wav",
+      "url": "https://freesound.org/people/RutgerMuller/sounds/361864/",
+      "author": "RutgerMuller",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 75.93,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 221,
+      "previewUrl": "https://cdn.freesound.org/previews/361/361864_179538-hq.mp3",
+      "score": 8.87,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+1.17 221 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags subway, metro, station",
+        "+1 name matches platform"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 636068,
+      "name": "Subway trains 01.wav",
+      "url": "https://freesound.org/people/Lumamorph/sounds/636068/",
+      "author": "Lumamorph",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.78,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.4,
+      "numRatings": 5,
+      "numDownloads": 175,
+      "previewUrl": "https://cdn.freesound.org/previews/636/636068_10150854-hq.mp3",
+      "score": 8.84,
+      "reasons": [
+        "+2.21 rating 4.4 from 5 ratings",
+        "+1.12 175 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags subway, metro, underground, station",
+        "+1 name matches subway"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 863654,
+      "name": "subway metro station passing trains",
+      "url": "https://freesound.org/people/Artiom_Constantinov/sounds/863654/",
+      "author": "Artiom_Constantinov",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 122.22,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 16,
+      "previewUrl": "https://cdn.freesound.org/previews/863/863654_7254491-hq.mp3",
+      "score": 8.81,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.62 16 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, station",
+        "+1 name matches subway, metro"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 616371,
+      "name": "Metro train 09102021c.WAV",
+      "url": "https://freesound.org/people/deleted_user_9900733/sounds/616371/",
+      "author": "deleted_user_9900733",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 181.91,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 71,
+      "previewUrl": "https://cdn.freesound.org/previews/616/616371_9900733-hq.mp3",
+      "score": 8.8,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.93 71 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, underground, station",
+        "+1 name matches metro"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 317023,
+      "name": "London Underground_Boarding and Interior.wav",
+      "url": "https://freesound.org/people/KiddoFish86/sounds/317023/",
+      "author": "KiddoFish86",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 150.69,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 495,
+      "previewUrl": "https://cdn.freesound.org/previews/317/317023_3363151-hq.mp3",
+      "score": 8.79,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.35 495 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, underground, platform, station"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 672062,
+      "name": "2023-01-31-metro-station-ambience-helsinki.wav",
+      "url": "https://freesound.org/people/ilmari_freesound/sounds/672062/",
+      "author": "ilmari_freesound",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 142.25,
+      "samplerate": 192000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 64,
+      "previewUrl": "https://cdn.freesound.org/previews/672/672062_12458758-hq.mp3",
+      "score": 8.78,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.91 64 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, underground, platform, station",
+        "+1 name matches metro"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 625103,
+      "name": "subway station entrance",
+      "url": "https://freesound.org/people/gorkemcig/sounds/625103/",
+      "author": "gorkemcig",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 324.22,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 62,
+      "previewUrl": "https://cdn.freesound.org/previews/625/625103_12686432-hq.mp3",
+      "score": 8.77,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.9 62 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, underground, platform, station",
+        "+1 name matches subway"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 727838,
+      "name": "ambience, metro, Komsomolskaya, passage, subway, Moscow",
+      "url": "https://freesound.org/people/AlexanderChe/sounds/727838/",
+      "author": "AlexanderChe",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 84.8,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 2,
+      "numDownloads": 59,
+      "previewUrl": "https://cdn.freesound.org/previews/727/727838_6598647-hq.mp3",
+      "score": 8.59,
+      "reasons": [
+        "+2.2 rating 5 from 2 ratings",
+        "+0.89 59 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags subway, metro, underground, station",
+        "+1 name matches subway, metro"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 733664,
+      "name": "Ambient - Subway plattform- Announcements Paris Ligne 7",
+      "url": "https://freesound.org/people/Salom%C3%A9_Lubczanski/sounds/733664/",
+      "author": "Salomé_Lubczanski",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 275.64,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 2,
+      "numRatings": 2,
+      "numDownloads": 101,
+      "previewUrl": "https://cdn.freesound.org/previews/733/733664_7796757-hq.mp3",
+      "score": 8.56,
+      "reasons": [
+        "+1.55 rating 2 from 2 ratings",
+        "+1 101 downloads",
+        "+2 at least 90 s",
+        "+3 tags subway, metro, underground, platform, station",
+        "+1 name matches subway"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [
-        "vehicles",
-        "engines",
-        "Train whistle",
-        "Train horn"
-      ],
-      "required": [
-        [
-          "Train",
-          "Railroad car, train wagon",
-          "Rail transport"
-        ]
-      ],
-      "clapPrompt": "an underground subway platform with a train far off and an echoing hall"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Train / Railroad car, train wagon / Rail transport; no 64 s window is free of denied sounds: Speech reaches 0.748 (at 12 s)",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 516481,
-        "name": "Paris Covid19 METRO SUBWAY Station empty",
-        "url": "https://freesound.org/people/davidmenke/sounds/516481/",
-        "author": "davidmenke",
-        "durationSec": 370.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Train / Railroad car, train wagon / Rail transport",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 370,
-          "cleanSeconds": 298,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.9153
-            },
-            {
-              "label": "Speech",
-              "max": 0.8472
-            },
-            {
-              "label": "Train",
-              "max": 0.7027
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.6096
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.5698
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.915,
-              "atSecond": 65
-            },
-            {
-              "label": "Speech",
-              "max": 0.847,
-              "atSecond": 291
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.451,
-              "atSecond": 65
-            },
-            {
-              "label": "Guitar",
-              "max": 0.294,
-              "atSecond": 65
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.282,
-              "atSecond": 25
-            },
-            {
-              "label": "Reversing beeps",
-              "max": 0.279,
-              "atSecond": 325
-            },
-            {
-              "label": "Narration, monologue",
-              "max": 0.266,
-              "atSecond": 68
-            },
-            {
-              "label": "Male speech, man speaking",
-              "max": 0.263,
-              "atSecond": 87
-            },
-            {
-              "label": "Plucked string instrument",
-              "max": 0.233,
-              "atSecond": 65
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Train",
-                "Railroad car, train wagon",
-                "Rail transport"
-              ],
-              "fraction": 0.159
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 361913,
-        "name": "Japan_Train_Station_Kashiwa_Platform_Annoucements_24Bit_96Khz_MS-Stereo.wav",
-        "url": "https://freesound.org/people/RutgerMuller/sounds/361913/",
-        "author": "RutgerMuller",
-        "durationSec": 309.9,
-        "verdict": "reject",
-        "reason": "required sound absent: Train / Railroad car, train wagon / Rail transport",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 309,
-          "cleanSeconds": 125,
-          "topClasses": [
-            {
-              "label": "Train wheels squealing",
-              "max": 0.9182
-            },
-            {
-              "label": "Speech",
-              "max": 0.8959
-            },
-            {
-              "label": "Train",
-              "max": 0.8861
-            },
-            {
-              "label": "Music",
-              "max": 0.8709
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.8384
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.896,
-              "atSecond": 131
-            },
-            {
-              "label": "Music",
-              "max": 0.871,
-              "atSecond": 179
-            },
-            {
-              "label": "Male speech, man speaking",
-              "max": 0.547,
-              "atSecond": 125
-            },
-            {
-              "label": "Narration, monologue",
-              "max": 0.419,
-              "atSecond": 118
-            },
-            {
-              "label": "Female speech, woman speaking",
-              "max": 0.294,
-              "atSecond": 165
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.24,
-              "atSecond": 178
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.217,
-              "atSecond": 279
-            },
-            {
-              "label": "Bell",
-              "max": 0.152,
-              "atSecond": 42
-            },
-            {
-              "label": "Fire engine, fire truck (siren)",
-              "max": 0.12,
-              "atSecond": 86
-            },
-            {
-              "label": "Siren",
-              "max": 0.092,
-              "atSecond": 86
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Train",
-                "Railroad car, train wagon",
-                "Rail transport"
-              ],
-              "fraction": 0.337
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 835507,
-        "name": "Vienna U6 Metro – Onboard & Platform Ambience (Michelbeuern → Währingerstraße)",
-        "url": "https://freesound.org/people/Marschal/sounds/835507/",
-        "author": "Marschal",
-        "durationSec": 197.2,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Speech reaches 0.748 (at 12 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 197,
-          "cleanSeconds": 156,
-          "topClasses": [
-            {
-              "label": "Train",
-              "max": 0.8148
-            },
-            {
-              "label": "Speech",
-              "max": 0.748
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.6967
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.6647
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.6576
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.748,
-              "atSecond": 12
-            },
-            {
-              "label": "Music",
-              "max": 0.592,
-              "atSecond": 48
-            },
-            {
-              "label": "Microwave oven",
-              "max": 0.348,
-              "atSecond": 53
-            },
-            {
-              "label": "Beep, bleep",
-              "max": 0.222,
-              "atSecond": 142
-            },
-            {
-              "label": "Reversing beeps",
-              "max": 0.191,
-              "atSecond": 55
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.184,
-              "atSecond": 187
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.169,
-              "atSecond": 36
-            },
-            {
-              "label": "Thunder",
-              "max": 0.162,
-              "atSecond": 106
-            },
-            {
-              "label": "Smoke detector, smoke alarm",
-              "max": 0.145,
-              "atSecond": 142
-            },
-            {
-              "label": "Fire engine, fire truck (siren)",
-              "max": 0.051,
-              "atSecond": 182
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Train",
-                "Railroad car, train wagon",
-                "Rail transport"
-              ],
-              "fraction": 0.528
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 857105,
-        "name": "Moscow Metro's 1st (Sokolnicheskaya) line inside a train car, both ways",
-        "url": "https://freesound.org/people/Trautwein/sounds/857105/",
-        "author": "Trautwein",
-        "durationSec": 153.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Train / Railroad car, train wagon / Rail transport",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 153,
-          "cleanSeconds": 93,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8975
-            },
-            {
-              "label": "Train",
-              "max": 0.816
-            },
-            {
-              "label": "Music",
-              "max": 0.6894
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.6777
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.6232
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.897,
-              "atSecond": 125
-            },
-            {
-              "label": "Music",
-              "max": 0.689,
-              "atSecond": 51
-            },
-            {
-              "label": "Siren",
-              "max": 0.425,
-              "atSecond": 113
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.38,
-              "atSecond": 51
-            },
-            {
-              "label": "Brass instrument",
-              "max": 0.319,
-              "atSecond": 51
-            },
-            {
-              "label": "Civil defense siren",
-              "max": 0.304,
-              "atSecond": 113
-            },
-            {
-              "label": "Church bell",
-              "max": 0.299,
-              "atSecond": 53
-            },
-            {
-              "label": "Bell",
-              "max": 0.235,
-              "atSecond": 53
-            },
-            {
-              "label": "Trumpet",
-              "max": 0.215,
-              "atSecond": 51
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.203,
-              "atSecond": 1
-            },
-            {
-              "label": "Male speech, man speaking",
-              "max": 0.19,
-              "atSecond": 77
-            },
-            {
-              "label": "Television",
-              "max": 0.184,
-              "atSecond": 12
-            },
-            {
-              "label": "Narration, monologue",
-              "max": 0.18,
-              "atSecond": 124
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Train",
-                "Railroad car, train wagon",
-                "Rail transport"
-              ],
-              "fraction": 0.333
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 518735,
-        "name": "Metro Underground",
-        "url": "https://freesound.org/people/TeTeNoise/sounds/518735/",
-        "author": "TeTeNoise",
-        "durationSec": 416,
-        "verdict": "reject",
-        "reason": "required sound absent: Train / Railroad car, train wagon / Rail transport",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 416,
-          "cleanSeconds": 306,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8822
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.848
-            },
-            {
-              "label": "Train",
-              "max": 0.8017
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.714
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.6895
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.882,
-              "atSecond": 336
-            },
-            {
-              "label": "Civil defense siren",
-              "max": 0.577,
-              "atSecond": 243
-            },
-            {
-              "label": "Siren",
-              "max": 0.529,
-              "atSecond": 243
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.404,
-              "atSecond": 82
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.31,
-              "atSecond": 399
-            },
-            {
-              "label": "Thunder",
-              "max": 0.263,
-              "atSecond": 69
-            },
-            {
-              "label": "Gunshot, gunfire",
-              "max": 0.23,
-              "atSecond": 82
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.2,
-              "atSecond": 80
-            },
-            {
-              "label": "Fire engine, fire truck (siren)",
-              "max": 0.197,
-              "atSecond": 399
-            },
-            {
-              "label": "Bell",
-              "max": 0.187,
-              "atSecond": 259
-            },
-            {
-              "label": "Music",
-              "max": 0.167,
-              "atSecond": 339
-            },
-            {
-              "label": "Church bell",
-              "max": 0.156,
-              "atSecond": 259
-            },
-            {
-              "label": "Vehicle horn, car horn, honking",
-              "max": 0.094,
-              "atSecond": 244
-            },
-            {
-              "label": "Ambulance (siren)",
-              "max": 0.087,
-              "atSecond": 399
-            },
-            {
-              "label": "Steam whistle",
-              "max": 0.065,
-              "atSecond": 216
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Train",
-                "Railroad car, train wagon",
-                "Rail transport"
-              ],
-              "fraction": 0.332
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 727841,
-        "name": "ambience, city, metro, Komsomolskaya, subway, Moscow",
-        "url": "https://freesound.org/people/AlexanderChe/sounds/727841/",
-        "author": "AlexanderChe",
-        "durationSec": 130,
-        "verdict": "reject",
-        "reason": "required sound absent: Train / Railroad car, train wagon / Rail transport",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 130,
-          "cleanSeconds": 98,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8785
-            },
-            {
-              "label": "Train",
-              "max": 0.7364
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.5978
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.5881
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.5516
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.878,
-              "atSecond": 121
-            },
-            {
-              "label": "Music",
-              "max": 0.306,
-              "atSecond": 41
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.229,
-              "atSecond": 76
-            },
-            {
-              "label": "Thunder",
-              "max": 0.183,
-              "atSecond": 97
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Train",
-                "Railroad car, train wagon",
-                "Rail transport"
-              ],
-              "fraction": 0.323
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 663788,
-        "name": "[ MPooman ] Subway Sounds (SE468) (High Quality)",
-        "url": "https://freesound.org/people/MPooman/sounds/663788/",
-        "author": "MPooman",
-        "durationSec": 287.9,
-        "verdict": "reject",
-        "reason": "required sound absent: Train / Railroad car, train wagon / Rail transport",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 287,
-          "cleanSeconds": 238,
-          "topClasses": [
-            {
-              "label": "Music",
-              "max": 0.8311
-            },
-            {
-              "label": "Speech",
-              "max": 0.8009
-            },
-            {
-              "label": "Train",
-              "max": 0.7953
-            },
-            {
-              "label": "Bow-wow",
-              "max": 0.744
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.7158
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.831,
-              "atSecond": 248
-            },
-            {
-              "label": "Speech",
-              "max": 0.801,
-              "atSecond": 266
-            },
-            {
-              "label": "Fire engine, fire truck (siren)",
-              "max": 0.431,
-              "atSecond": 33
-            },
-            {
-              "label": "Siren",
-              "max": 0.333,
-              "atSecond": 32
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.242,
-              "atSecond": 249
-            },
-            {
-              "label": "Microwave oven",
-              "max": 0.202,
-              "atSecond": 67
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.199,
-              "atSecond": 31
-            },
-            {
-              "label": "Violin, fiddle",
-              "max": 0.196,
-              "atSecond": 249
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.164,
-              "atSecond": 218
-            },
-            {
-              "label": "Civil defense siren",
-              "max": 0.115,
-              "atSecond": 29
-            },
-            {
-              "label": "Ambulance (siren)",
-              "max": 0.083,
-              "atSecond": 31
-            },
-            {
-              "label": "Foghorn",
-              "max": 0.057,
-              "atSecond": 244
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Train",
-                "Railroad car, train wagon",
-                "Rail transport"
-              ],
-              "fraction": 0.094
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 547672,
-        "name": "Vishali Metro Station",
-        "url": "https://freesound.org/people/kalhan/sounds/547672/",
-        "author": "kalhan",
-        "durationSec": 63.1,
-        "verdict": "reject",
-        "reason": "clip has 63 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 63,
-          "cleanSeconds": 46,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8151
-            },
-            {
-              "label": "Train",
-              "max": 0.5608
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.5279
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.4914
-            },
-            {
-              "label": "Music",
-              "max": 0.4734
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.815,
-              "atSecond": 62
-            },
-            {
-              "label": "Music",
-              "max": 0.473,
-              "atSecond": 7
-            },
-            {
-              "label": "Siren",
-              "max": 0.4,
-              "atSecond": 6
-            },
-            {
-              "label": "Civil defense siren",
-              "max": 0.36,
-              "atSecond": 6
-            },
-            {
-              "label": "Air horn, truck horn",
-              "max": 0.172,
-              "atSecond": 19
-            },
-            {
-              "label": "Vehicle horn, car horn, honking",
-              "max": 0.171,
-              "atSecond": 19
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Train",
-                "Railroad car, train wagon",
-                "Rail transport"
-              ],
-              "fraction": 0.143
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

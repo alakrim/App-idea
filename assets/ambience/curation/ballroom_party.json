@@ -1,14 +1,219 @@
 {
   "category": "ballroom_party",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "ballroom party ambience",
-    "party crowd glasses"
+    "party crowd glasses",
+    "party crowd ambience",
+    "people talking party ambience"
   ],
-  "poolSize": 30,
+  "poolSize": 67,
   "candidates": [
     {
       "rank": 1,
+      "freesoundId": 457605,
+      "name": "Party-People indoor 02 - lively, louder (german)",
+      "url": "https://freesound.org/people/Pfannkuchn/sounds/457605/",
+      "author": "Pfannkuchn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 155.72,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.87,
+      "numRatings": 31,
+      "numDownloads": 3399,
+      "previewUrl": "https://cdn.freesound.org/previews/457/457605_627541-hq.mp3",
+      "score": 9.53,
+      "reasons": [
+        "+2.76 rating 4.87 from 31 ratings",
+        "+1.77 3399 downloads",
+        "+2 at least 90 s",
+        "+2 tags party, crowd",
+        "+1 name matches party"
+      ]
+    },
+    {
+      "rank": 2,
+      "freesoundId": 457606,
+      "name": "Party-People outdoor 01 (german)",
+      "url": "https://freesound.org/people/Pfannkuchn/sounds/457606/",
+      "author": "Pfannkuchn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 252.17,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 51,
+      "numDownloads": 4741,
+      "previewUrl": "https://cdn.freesound.org/previews/457/457606_627541-hq.mp3",
+      "score": 9.51,
+      "reasons": [
+        "+2.67 rating 4.67 from 51 ratings",
+        "+1.84 4741 downloads",
+        "+2 at least 90 s",
+        "+2 tags party, crowd",
+        "+1 name matches party"
+      ]
+    },
+    {
+      "rank": 3,
+      "freesoundId": 457604,
+      "name": "Party-People indoor 01 -  calm, relaxed (german)",
+      "url": "https://freesound.org/people/Pfannkuchn/sounds/457604/",
+      "author": "Pfannkuchn",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 232.06,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.56,
+      "numRatings": 34,
+      "numDownloads": 2456,
+      "previewUrl": "https://cdn.freesound.org/previews/457/457604_627541-hq.mp3",
+      "score": 9.26,
+      "reasons": [
+        "+2.57 rating 4.56 from 34 ratings",
+        "+1.7 2456 downloads",
+        "+2 at least 90 s",
+        "+2 tags party, crowd",
+        "+1 name matches party"
+      ]
+    },
+    {
+      "rank": 4,
+      "freesoundId": 207994,
+      "name": "People on a party",
+      "url": "https://freesound.org/people/unfa/sounds/207994/",
+      "author": "unfa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 68.85,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.73,
+      "numRatings": 63,
+      "numDownloads": 14134,
+      "previewUrl": "https://cdn.freesound.org/previews/207/207994_1038806-hq.mp3",
+      "score": 9.23,
+      "reasons": [
+        "+2.73 rating 4.73 from 63 ratings",
+        "+2 14134 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags party, crowd",
+        "+1 name matches party"
+      ]
+    },
+    {
+      "rank": 5,
+      "freesoundId": 402131,
+      "name": "guests-at-party.wav",
+      "url": "https://freesound.org/people/Mickael_Leroi/sounds/402131/",
+      "author": "Mickael_Leroi",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 235.69,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.81,
+      "numRatings": 21,
+      "numDownloads": 2480,
+      "previewUrl": "https://cdn.freesound.org/previews/402/402131_6623543-hq.mp3",
+      "score": 8.37,
+      "reasons": [
+        "+2.67 rating 4.81 from 21 ratings",
+        "+1.7 2480 downloads",
+        "+2 at least 90 s",
+        "+1 tags party",
+        "+1 name matches party"
+      ]
+    },
+    {
+      "rank": 6,
+      "freesoundId": 209313,
+      "name": "Crowd at a Banquet",
+      "url": "https://freesound.org/people/unfa/sounds/209313/",
+      "author": "unfa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 335.17,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.43,
+      "numRatings": 21,
+      "numDownloads": 2226,
+      "previewUrl": "https://cdn.freesound.org/previews/209/209313_1038806-hq.mp3",
+      "score": 8.11,
+      "reasons": [
+        "+2.44 rating 4.43 from 21 ratings",
+        "+1.67 2226 downloads",
+        "+2 at least 90 s",
+        "+2 tags party, crowd"
+      ]
+    },
+    {
+      "rank": 7,
+      "freesoundId": 232175,
+      "name": "talking people 2.MP3",
+      "url": "https://freesound.org/people/szalonegacie/sounds/232175/",
+      "author": "szalonegacie",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 81.23,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 117,
+      "numDownloads": 20251,
+      "previewUrl": "https://cdn.freesound.org/previews/232/232175_823913-hq.mp3",
+      "score": 8.09,
+      "reasons": [
+        "+2.59 rating 4.5 from 117 ratings",
+        "+2 20251 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags party, crowd"
+      ]
+    },
+    {
+      "rank": 8,
+      "freesoundId": 232174,
+      "name": "talking people.MP3",
+      "url": "https://freesound.org/people/szalonegacie/sounds/232174/",
+      "author": "szalonegacie",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 68.79,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.21,
+      "numRatings": 61,
+      "numDownloads": 10235,
+      "previewUrl": "https://cdn.freesound.org/previews/232/232174_823913-hq.mp3",
+      "score": 7.87,
+      "reasons": [
+        "+2.37 rating 4.21 from 61 ratings",
+        "+2 10235 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags party, crowd"
+      ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 663372,
+      "name": "Crowd_Honk_Cars.wav",
+      "url": "https://freesound.org/people/uniuniversal/sounds/663372/",
+      "author": "uniuniversal",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 285.77,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 6,
+      "numDownloads": 484,
+      "previewUrl": "https://cdn.freesound.org/previews/663/663372_13601611-hq.mp3",
+      "score": 7.7,
+      "reasons": [
+        "+2.35 rating 4.67 from 6 ratings",
+        "+1.34 484 downloads",
+        "+2 at least 90 s",
+        "+2 tags party, crowd"
+      ]
+    },
+    {
+      "rank": 10,
       "freesoundId": 102157,
       "name": "Party Crowd Walla_Fiona Thraille(2).mp3",
       "url": "https://freesound.org/people/UltraRob/sounds/102157/",
@@ -31,7 +236,162 @@
       ]
     },
     {
-      "rank": 2,
+      "rank": 11,
+      "freesoundId": 741283,
+      "name": "Crowd walla (french english) EXT",
+      "url": "https://freesound.org/people/xkeril/sounds/741283/",
+      "author": "xkeril",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 70.81,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.95,
+      "numRatings": 19,
+      "numDownloads": 672,
+      "previewUrl": "https://cdn.freesound.org/previews/741/741283_13504080-hq.mp3",
+      "score": 7.65,
+      "reasons": [
+        "+2.73 rating 4.95 from 19 ratings",
+        "+1.41 672 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags party, crowd"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 161139,
+      "name": "birthday party ambience",
+      "url": "https://freesound.org/people/maga2811/sounds/161139/",
+      "author": "maga2811",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 140.2,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4,
+      "numRatings": 6,
+      "numDownloads": 1142,
+      "previewUrl": "https://cdn.freesound.org/previews/161/161139_1761542-hq.mp3",
+      "score": 7.61,
+      "reasons": [
+        "+2.08 rating 4 from 6 ratings",
+        "+1.53 1142 downloads",
+        "+2 at least 90 s",
+        "+1 tags crowd",
+        "+1 name matches party"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 660454,
+      "name": "WL EXT BG BURBU ZDELI.wav",
+      "url": "https://freesound.org/people/Castleguard/sounds/660454/",
+      "author": "Castleguard",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 184.71,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.56,
+      "numRatings": 9,
+      "numDownloads": 242,
+      "previewUrl": "https://cdn.freesound.org/previews/660/660454_5570855-hq.mp3",
+      "score": 7.58,
+      "reasons": [
+        "+2.38 rating 4.56 from 9 ratings",
+        "+1.19 242 downloads",
+        "+2 at least 90 s",
+        "+2 tags party, crowd"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 243373,
+      "name": "Small Crowd pre-concert talking party bar walla talking",
+      "url": "https://freesound.org/people/JohnsonBrandEditing/sounds/243373/",
+      "author": "JohnsonBrandEditing",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 53.02,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.41,
+      "numRatings": 140,
+      "numDownloads": 33083,
+      "previewUrl": "https://cdn.freesound.org/previews/243/243373_3229685-hq.mp3",
+      "score": 7.53,
+      "reasons": [
+        "+2.53 rating 4.41 from 140 ratings",
+        "+2 33083 downloads",
+        "+2 tags party, crowd",
+        "+1 name matches party"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 260145,
+      "name": "Fryers Forest New Years Eve 2015",
+      "url": "https://freesound.org/people/kangaroovindaloo/sounds/260145/",
+      "author": "kangaroovindaloo",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 459.69,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.38,
+      "numRatings": 8,
+      "numDownloads": 311,
+      "previewUrl": "https://cdn.freesound.org/previews/260/260145_1728127-hq.mp3",
+      "score": 7.53,
+      "reasons": [
+        "+2.28 rating 4.38 from 8 ratings",
+        "+1.25 311 downloads",
+        "+2 at least 90 s",
+        "+2 tags party, crowd"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 240310,
+      "name": "People talking loud in the distance at late night - Outside Ambience",
+      "url": "https://freesound.org/people/clawbase/sounds/240310/",
+      "author": "clawbase",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 119.48,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.41,
+      "numRatings": 22,
+      "numDownloads": 4179,
+      "previewUrl": "https://cdn.freesound.org/previews/240/240310_3873275-hq.mp3",
+      "score": 7.24,
+      "reasons": [
+        "+2.43 rating 4.41 from 22 ratings",
+        "+1.81 4179 downloads",
+        "+2 at least 90 s",
+        "+1 tags party"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 660455,
+      "name": "WL EXT BG BURBU AUGUSTA LIGHT.wav",
+      "url": "https://freesound.org/people/Castleguard/sounds/660455/",
+      "author": "Castleguard",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 223.52,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 190,
+      "previewUrl": "https://cdn.freesound.org/previews/660/660455_5570855-hq.mp3",
+      "score": 7.2,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1.14 190 downloads",
+        "+2 at least 90 s",
+        "+2 tags party, crowd"
+      ]
+    },
+    {
+      "rank": 18,
       "freesoundId": 102163,
       "name": "russ party walla.mp3",
       "url": "https://freesound.org/people/UltraRob/sounds/102163/",
@@ -54,7 +414,95 @@
       ]
     },
     {
-      "rank": 3,
+      "rank": 19,
+      "freesoundId": 325558,
+      "name": "Dinner Atmo.wav",
+      "url": "https://freesound.org/people/burkay/sounds/325558/",
+      "author": "burkay",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 72.63,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.78,
+      "numRatings": 32,
+      "numDownloads": 4137,
+      "previewUrl": "https://cdn.freesound.org/previews/325/325558_760102-hq.mp3",
+      "score": 7.01,
+      "reasons": [
+        "+2.71 rating 4.78 from 32 ratings",
+        "+1.81 4137 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags crowd"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 278863,
+      "name": "Rumor.WAV",
+      "url": "https://freesound.org/people/Sandermotions/sounds/278863/",
+      "author": "Sandermotions",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 60.82,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.43,
+      "numRatings": 14,
+      "numDownloads": 1677,
+      "previewUrl": "https://cdn.freesound.org/previews/278/278863_1402315-hq.mp3",
+      "score": 7,
+      "reasons": [
+        "+2.39 rating 4.43 from 14 ratings",
+        "+1.61 1677 downloads",
+        "+1 at least 60 s",
+        "+2 tags party, crowd"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 562779,
+      "name": "clandestine lively atmosphere",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/562779/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 266.12,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.62,
+      "numRatings": 13,
+      "numDownloads": 722,
+      "previewUrl": "https://cdn.freesound.org/previews/562/562779_11519060-hq.mp3",
+      "score": 6.91,
+      "reasons": [
+        "+2.48 rating 4.62 from 13 ratings",
+        "+1.43 722 downloads",
+        "+2 at least 90 s",
+        "+1 tags party"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 394329,
+      "name": "How a french street sounds like V1",
+      "url": "https://freesound.org/people/FreeToUseSounds/sounds/394329/",
+      "author": "FreeToUseSounds",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 378.86,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 4.56,
+      "numRatings": 9,
+      "numDownloads": 619,
+      "previewUrl": "https://cdn.freesound.org/previews/394/394329_7266967-hq.mp3",
+      "score": 6.78,
+      "reasons": [
+        "+2.38 rating 4.56 from 9 ratings",
+        "+1.4 619 downloads",
+        "+2 at least 90 s",
+        "+1 tags party"
+      ]
+    },
+    {
+      "rank": 23,
       "freesoundId": 102155,
       "name": "Danar walla.mp3",
       "url": "https://freesound.org/people/UltraRob/sounds/102155/",
@@ -76,7 +524,7 @@
       ]
     },
     {
-      "rank": 4,
+      "rank": 24,
       "freesoundId": 180938,
       "name": "Wedding Cutting the Cake Utensils on Glasses",
       "url": "https://freesound.org/people/toonothing/sounds/180938/",
@@ -98,7 +546,7 @@
       ]
     },
     {
-      "rank": 5,
+      "rank": 25,
       "freesoundId": 102161,
       "name": "kim_walla.mp3",
       "url": "https://freesound.org/people/UltraRob/sounds/102161/",
@@ -118,605 +566,6 @@
         "+2 at least 90 s",
         "+1 tags party"
       ]
-    },
-    {
-      "rank": 6,
-      "freesoundId": 102160,
-      "name": "gene T_walla.mp3",
-      "url": "https://freesound.org/people/UltraRob/sounds/102160/",
-      "author": "UltraRob",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 268.68,
-      "samplerate": 44100,
-      "channels": 1,
-      "avgRating": 4.75,
-      "numRatings": 4,
-      "numDownloads": 182,
-      "previewUrl": "https://cdn.freesound.org/previews/102/102160_154214-hq.mp3",
-      "score": 6.42,
-      "reasons": [
-        "+2.29 rating 4.75 from 4 ratings",
-        "+1.13 182 downloads",
-        "+2 at least 90 s",
-        "+1 tags party"
-      ]
-    },
-    {
-      "rank": 7,
-      "freesoundId": 102158,
-      "name": "Walla_JZ.mp3",
-      "url": "https://freesound.org/people/UltraRob/sounds/102158/",
-      "author": "UltraRob",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 120.15,
-      "samplerate": 44100,
-      "channels": 1,
-      "avgRating": 5,
-      "numRatings": 3,
-      "numDownloads": 117,
-      "previewUrl": "https://cdn.freesound.org/previews/102/102158_154214-hq.mp3",
-      "score": 6.33,
-      "reasons": [
-        "+2.3 rating 5 from 3 ratings",
-        "+1.04 117 downloads",
-        "+2 at least 90 s",
-        "+1 tags party"
-      ]
-    },
-    {
-      "rank": 8,
-      "freesoundId": 102162,
-      "name": "reynaud walla.mp3",
-      "url": "https://freesound.org/people/UltraRob/sounds/102162/",
-      "author": "UltraRob",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
-      "durationSec": 176.71,
-      "samplerate": 44100,
-      "channels": 1,
-      "avgRating": 5,
-      "numRatings": 2,
-      "numDownloads": 143,
-      "previewUrl": "https://cdn.freesound.org/previews/102/102162_154214-hq.mp3",
-      "score": 6.28,
-      "reasons": [
-        "+2.2 rating 5 from 2 ratings",
-        "+1.08 143 downloads",
-        "+2 at least 90 s",
-        "+1 tags party"
-      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Crowd",
-          "Hubbub, speech noise, speech babble",
-          "Chatter",
-          "Conversation",
-          "Glass"
-        ]
-      ],
-      "clapPrompt": "a ballroom murmur with glasses and distant chatter, no music"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 102157,
-        "name": "Party Crowd Walla_Fiona Thraille(2).mp3",
-        "url": "https://freesound.org/people/UltraRob/sounds/102157/",
-        "author": "UltraRob",
-        "durationSec": 170.5,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 170,
-          "cleanSeconds": 166,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8951
-            },
-            {
-              "label": "Clicking",
-              "max": 0.5119
-            },
-            {
-              "label": "Narration, monologue",
-              "max": 0.3799
-            },
-            {
-              "label": "Female speech, woman speaking",
-              "max": 0.327
-            },
-            {
-              "label": "Whispering",
-              "max": 0.2733
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech synthesizer",
-              "max": 0.201,
-              "atSecond": 21
-            },
-            {
-              "label": "Music",
-              "max": 0.15,
-              "atSecond": 142
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation",
-                "Glass"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 102163,
-        "name": "russ party walla.mp3",
-        "url": "https://freesound.org/people/UltraRob/sounds/102163/",
-        "author": "UltraRob",
-        "durationSec": 91.2,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 91,
-          "cleanSeconds": 86,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8927
-            },
-            {
-              "label": "Speech synthesizer",
-              "max": 0.3801
-            },
-            {
-              "label": "Narration, monologue",
-              "max": 0.3367
-            },
-            {
-              "label": "Animal",
-              "max": 0.2564
-            },
-            {
-              "label": "Male speech, man speaking",
-              "max": 0.2542
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech synthesizer",
-              "max": 0.38,
-              "atSecond": 51
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation",
-                "Glass"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 102155,
-        "name": "Danar walla.mp3",
-        "url": "https://freesound.org/people/UltraRob/sounds/102155/",
-        "author": "UltraRob",
-        "durationSec": 301.6,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 301,
-          "cleanSeconds": 252,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8983
-            },
-            {
-              "label": "Whispering",
-              "max": 0.5973
-            },
-            {
-              "label": "Speech synthesizer",
-              "max": 0.5259
-            },
-            {
-              "label": "Throat clearing",
-              "max": 0.5143
-            },
-            {
-              "label": "Sigh",
-              "max": 0.4722
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech synthesizer",
-              "max": 0.526,
-              "atSecond": 175
-            },
-            {
-              "label": "Music",
-              "max": 0.164,
-              "atSecond": 105
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation",
-                "Glass"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 180938,
-        "name": "Wedding Cutting the Cake Utensils on Glasses",
-        "url": "https://freesound.org/people/toonothing/sounds/180938/",
-        "author": "toonothing",
-        "durationSec": 90.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 90,
-          "cleanSeconds": 76,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8903
-            },
-            {
-              "label": "Children playing",
-              "max": 0.8679
-            },
-            {
-              "label": "Chatter",
-              "max": 0.639
-            },
-            {
-              "label": "Applause",
-              "max": 0.6358
-            },
-            {
-              "label": "Music",
-              "max": 0.5872
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.587,
-              "atSecond": 28
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.358,
-              "atSecond": 35
-            },
-            {
-              "label": "Wind chime",
-              "max": 0.164,
-              "atSecond": 74
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation",
-                "Glass"
-              ],
-              "fraction": 0.122
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 102161,
-        "name": "kim_walla.mp3",
-        "url": "https://freesound.org/people/UltraRob/sounds/102161/",
-        "author": "UltraRob",
-        "durationSec": 155.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 155,
-          "cleanSeconds": 144,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8742
-            },
-            {
-              "label": "Gasp",
-              "max": 0.5221
-            },
-            {
-              "label": "Clicking",
-              "max": 0.3284
-            },
-            {
-              "label": "Sine wave",
-              "max": 0.3237
-            },
-            {
-              "label": "Speech synthesizer",
-              "max": 0.3169
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech synthesizer",
-              "max": 0.317,
-              "atSecond": 93
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation",
-                "Glass"
-              ],
-              "fraction": 0.006
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 102160,
-        "name": "gene T_walla.mp3",
-        "url": "https://freesound.org/people/UltraRob/sounds/102160/",
-        "author": "UltraRob",
-        "durationSec": 268.7,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 268,
-          "cleanSeconds": 204,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.9262
-            },
-            {
-              "label": "Whispering",
-              "max": 0.8558
-            },
-            {
-              "label": "Sigh",
-              "max": 0.7463
-            },
-            {
-              "label": "Cough",
-              "max": 0.6962
-            },
-            {
-              "label": "Honk",
-              "max": 0.6166
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Honk",
-              "max": 0.617,
-              "atSecond": 170
-            },
-            {
-              "label": "Music",
-              "max": 0.523,
-              "atSecond": 7
-            },
-            {
-              "label": "Speech synthesizer",
-              "max": 0.487,
-              "atSecond": 21
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.166,
-              "atSecond": 7
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation",
-                "Glass"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 102158,
-        "name": "Walla_JZ.mp3",
-        "url": "https://freesound.org/people/UltraRob/sounds/102158/",
-        "author": "UltraRob",
-        "durationSec": 120.2,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 120,
-          "cleanSeconds": 95,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8621
-            },
-            {
-              "label": "Rub",
-              "max": 0.5774
-            },
-            {
-              "label": "Sanding",
-              "max": 0.4831
-            },
-            {
-              "label": "Throat clearing",
-              "max": 0.4041
-            },
-            {
-              "label": "Speech synthesizer",
-              "max": 0.3564
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech synthesizer",
-              "max": 0.356,
-              "atSecond": 11
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation",
-                "Glass"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 102162,
-        "name": "reynaud walla.mp3",
-        "url": "https://freesound.org/people/UltraRob/sounds/102162/",
-        "author": "UltraRob",
-        "durationSec": 176.7,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation / Glass",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 176,
-          "cleanSeconds": 159,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.9045
-            },
-            {
-              "label": "Clicking",
-              "max": 0.7106
-            },
-            {
-              "label": "Whispering",
-              "max": 0.6448
-            },
-            {
-              "label": "Cattle, bovinae",
-              "max": 0.559
-            },
-            {
-              "label": "Livestock, farm animals, working animals",
-              "max": 0.5382
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech synthesizer",
-              "max": 0.496,
-              "atSecond": 19
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation",
-                "Glass"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

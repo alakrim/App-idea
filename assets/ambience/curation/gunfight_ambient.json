@@ -5,9 +5,11 @@
     "distant gunfire ambience",
     "gunfire echo battle",
     "gunfire ambience",
-    "distant gunfire loop"
+    "distant gunfire loop",
+    "gunfire loop ambience",
+    "distant gunshots ambience"
   ],
-  "poolSize": 3,
+  "poolSize": 4,
   "candidates": [
     {
       "rank": 1,
@@ -33,6 +35,27 @@
     },
     {
       "rank": 2,
+      "freesoundId": 384708,
+      "name": "Woodland Ambience.mp3",
+      "url": "https://freesound.org/people/ajaxschuren/sounds/384708/",
+      "author": "ajaxschuren",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 552.31,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.81,
+      "numRatings": 21,
+      "numDownloads": 1253,
+      "previewUrl": "https://cdn.freesound.org/previews/384/384708_3387149-hq.mp3",
+      "score": 6.22,
+      "reasons": [
+        "+2.67 rating 4.81 from 21 ratings",
+        "+1.55 1253 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 3,
       "freesoundId": 653902,
       "name": "Howland Island Wildlife Management Area 101522.aiff",
       "url": "https://freesound.org/people/JohnLaVine333/sounds/653902/",
@@ -54,7 +77,7 @@
       ]
     },
     {
-      "rank": 3,
+      "rank": 4,
       "freesoundId": 533033,
       "name": "Gulls and Bullets",
       "url": "https://freesound.org/people/Johnsy/sounds/533033/",
@@ -73,356 +96,5 @@
         "+0.95 79 downloads"
       ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder"
-      ],
-      "exempt": [
-        "gunfire"
-      ],
-      "required": [
-        [
-          "Gunshot, gunfire",
-          "Machine gun",
-          "Artillery fire"
-        ]
-      ],
-      "clapPrompt": "distant gunfire with echoes and shouting"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Gunshot, gunfire / Machine gun / Artillery fire; clip has 52 s; a window needs 64 s",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 125932,
-        "name": "reenactment2.aif",
-        "url": "https://freesound.org/people/alienistcog/sounds/125932/",
-        "author": "alienistcog",
-        "durationSec": 345.9,
-        "verdict": "reject",
-        "reason": "required sound absent: Gunshot, gunfire / Machine gun / Artillery fire",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 345,
-          "cleanSeconds": 281,
-          "topClasses": [
-            {
-              "label": "Artillery fire",
-              "max": 0.9552
-            },
-            {
-              "label": "Speech",
-              "max": 0.919
-            },
-            {
-              "label": "Whip",
-              "max": 0.8034
-            },
-            {
-              "label": "Animal",
-              "max": 0.8019
-            },
-            {
-              "label": "Fireworks",
-              "max": 0.7977
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.764,
-              "atSecond": 312
-            },
-            {
-              "label": "Honk",
-              "max": 0.692,
-              "atSecond": 115
-            },
-            {
-              "label": "Drum",
-              "max": 0.638,
-              "atSecond": 197
-            },
-            {
-              "label": "Drum kit",
-              "max": 0.417,
-              "atSecond": 197
-            },
-            {
-              "label": "Bass drum",
-              "max": 0.413,
-              "atSecond": 197
-            },
-            {
-              "label": "Musical instrument",
-              "max": 0.4,
-              "atSecond": 197
-            },
-            {
-              "label": "Snare drum",
-              "max": 0.386,
-              "atSecond": 197
-            },
-            {
-              "label": "Drum roll",
-              "max": 0.348,
-              "atSecond": 197
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.256,
-              "atSecond": 336
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.166,
-              "atSecond": 154
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Gunshot, gunfire",
-                "Machine gun",
-                "Artillery fire"
-              ],
-              "fraction": 0.194
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 653902,
-        "name": "Howland Island Wildlife Management Area 101522.aiff",
-        "url": "https://freesound.org/people/JohnLaVine333/sounds/653902/",
-        "author": "JohnLaVine333",
-        "durationSec": 120.3,
-        "verdict": "reject",
-        "reason": "required sound absent: Gunshot, gunfire / Machine gun / Artillery fire",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 120,
-          "cleanSeconds": 72,
-          "topClasses": [
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.6954
-            },
-            {
-              "label": "Thunder",
-              "max": 0.6229
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.6065
-            },
-            {
-              "label": "Turkey",
-              "max": 0.5803
-            },
-            {
-              "label": "Gobble",
-              "max": 0.5519
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.695,
-              "atSecond": 2
-            },
-            {
-              "label": "Thunder",
-              "max": 0.623,
-              "atSecond": 90
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.607,
-              "atSecond": 117
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.397,
-              "atSecond": 90
-            },
-            {
-              "label": "Rowboat, canoe, kayak",
-              "max": 0.311,
-              "atSecond": 2
-            },
-            {
-              "label": "Car",
-              "max": 0.305,
-              "atSecond": 117
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.205,
-              "atSecond": 94
-            },
-            {
-              "label": "Sailboat, sailing ship",
-              "max": 0.187,
-              "atSecond": 2
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.171,
-              "atSecond": 94
-            },
-            {
-              "label": "Music",
-              "max": 0.16,
-              "atSecond": 0
-            },
-            {
-              "label": "Honk",
-              "max": 0.051,
-              "atSecond": 115
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Gunshot, gunfire",
-                "Machine gun",
-                "Artillery fire"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 533033,
-        "name": "Gulls and Bullets",
-        "url": "https://freesound.org/people/Johnsy/sounds/533033/",
-        "author": "Johnsy",
-        "durationSec": 52,
-        "verdict": "reject",
-        "reason": "clip has 52 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 52,
-          "cleanSeconds": 18,
-          "topClasses": [
-            {
-              "label": "Cat",
-              "max": 0.8382
-            },
-            {
-              "label": "Animal",
-              "max": 0.7831
-            },
-            {
-              "label": "Thunder",
-              "max": 0.7711
-            },
-            {
-              "label": "Domestic animals, pets",
-              "max": 0.7148
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.6061
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.771,
-              "atSecond": 45
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.606,
-              "atSecond": 45
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.48,
-              "atSecond": 4
-            },
-            {
-              "label": "Honk",
-              "max": 0.437,
-              "atSecond": 43
-            },
-            {
-              "label": "Train",
-              "max": 0.34,
-              "atSecond": 13
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.272,
-              "atSecond": 8
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.242,
-              "atSecond": 13
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.213,
-              "atSecond": 2
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.205,
-              "atSecond": 13
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.16,
-              "atSecond": 4
-            },
-            {
-              "label": "Vehicle horn, car horn, honking",
-              "max": 0.125,
-              "atSecond": 6
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Gunshot, gunfire",
-                "Machine gun",
-                "Artillery fire"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

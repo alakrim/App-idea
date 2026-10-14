@@ -13,7 +13,7 @@ export const FREESOUND_TARGETS = [
   // timeless: nature
   {
     id: 'forest_day_birds',
-    queries: ['forest birds ambience', 'birdsong woodland daytime'],
+    queries: ['forest birds ambience', 'birdsong woodland daytime', 'songbirds forest morning', 'woodland birds dawn chorus'],
     tags: ['birds', 'forest', 'birdsong', 'woodland'],
     names: ['birds', 'forest', 'birdsong'],
     allowsVoices: false,
@@ -25,7 +25,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'forest_night',
-    queries: ['forest night crickets', 'night forest ambience'],
+    queries: ['forest night crickets', 'night forest ambience', 'night forest crickets ambience', 'owl night forest'],
     tags: ['night', 'crickets', 'forest'],
     names: ['night', 'crickets', 'forest'],
     allowsVoices: false,
@@ -37,7 +37,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'open_field_wind',
-    queries: ['wind grass field', 'field wind ambience'],
+    queries: ['wind grass field', 'field wind ambience', 'wind grass meadow', 'open field wind loop'],
     tags: ['wind', 'field', 'grass', 'meadow'],
     names: ['wind', 'field', 'grass', 'meadow'],
     allowsVoices: false,
@@ -49,7 +49,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'mountain_wind',
-    queries: ['mountain wind ambience', 'wind mountain ridge'],
+    queries: ['mountain wind ambience', 'wind mountain ridge', 'mountain wind gusts', 'wind ridge alpine'],
     tags: ['mountain', 'wind', 'alpine'],
     names: ['mountain', 'wind', 'ridge'],
     allowsVoices: false,
@@ -61,7 +61,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'ocean_waves',
-    queries: ['ocean waves beach', 'sea waves shore'],
+    queries: ['ocean waves beach', 'sea waves shore', 'ocean waves shore loop', 'sea surf beach ambience'],
     tags: ['ocean', 'waves', 'sea', 'beach', 'shore'],
     names: ['ocean', 'waves', 'sea', 'beach', 'surf'],
     allowsVoices: false,
@@ -73,7 +73,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'river_stream',
-    queries: ['river stream water', 'flowing stream water'],
+    queries: ['river stream water', 'flowing stream water', 'river flowing water ambience', 'creek stream nature'],
     tags: ['river', 'stream', 'water', 'creek'],
     names: ['river', 'stream', 'creek'],
     allowsVoices: false,
@@ -85,7 +85,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'jungle_insects',
-    queries: ['jungle insects ambience', 'tropical rainforest insects night'],
+    queries: ['jungle insects ambience', 'tropical rainforest insects night', 'rainforest ambience night', 'tropical insects forest'],
     tags: ['jungle', 'insects', 'tropical', 'rainforest'],
     names: ['jungle', 'insects', 'rainforest'],
     allowsVoices: false,
@@ -97,7 +97,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'waterfall',
-    queries: ['waterfall ambience', 'waterfall nature recording'],
+    queries: ['waterfall ambience', 'waterfall nature recording', 'waterfall loop', 'cascade water forest'],
     tags: ['waterfall', 'water', 'cascade'],
     names: ['waterfall', 'cascade'],
     allowsVoices: false,
@@ -109,7 +109,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'lake_shore',
-    queries: ['lake shore water ambience', 'lake waves reeds'],
+    queries: ['lake shore water ambience', 'lake waves reeds', 'lake water lapping', 'pond shore ambience'],
     tags: ['lake', 'shore', 'water', 'reeds'],
     names: ['lake', 'shore'],
     allowsVoices: false,
@@ -121,7 +121,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'desert_wind',
-    queries: ['desert wind ambience', 'wind desert sand'],
+    queries: ['desert wind ambience', 'wind desert sand', 'desert wind sand', 'sandstorm wind ambience'],
     tags: ['desert', 'sand', 'wind'],
     names: ['desert', 'sand'],
     allowsVoices: false,
@@ -133,7 +133,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'wind_in_trees',
-    queries: ['wind in trees ambience', 'forest wind leaves'],
+    queries: ['wind in trees ambience', 'forest wind leaves', 'wind through trees leaves', 'forest wind branches'],
     tags: ['trees', 'wind', 'forest', 'leaves'],
     names: ['trees', 'wind', 'forest'],
     allowsVoices: false,
@@ -145,7 +145,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'cave_drip',
-    queries: ['cave ambience drips', 'cave water drip echo'],
+    queries: ['cave ambience drips', 'cave water drip echo', 'cave drip water echo', 'dripping cave ambience'],
     tags: ['cave', 'drip', 'drips', 'cavern'],
     names: ['cave', 'drip', 'cavern'],
     allowsVoices: false,
@@ -157,7 +157,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'meadow_insects',
-    queries: ['summer meadow crickets', 'grasshoppers field ambience'],
+    queries: ['summer meadow crickets', 'grasshoppers field ambience', 'crickets summer field', 'grasshoppers meadow'],
     tags: ['crickets', 'grasshopper', 'meadow', 'insects'],
     names: ['crickets', 'meadow', 'grasshopper'],
     allowsVoices: false,
@@ -169,7 +169,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'seabird_cliffs',
-    queries: ['seabirds cliffs ambience', 'seagulls sea cliff', 'seagull ambience', 'sea birds ambience'],
+    queries: ['seabirds cliffs ambience', 'seagulls sea cliff', 'seagull ambience', 'sea birds ambience', 'seagulls cliffs ambience', 'gulls coast ambience'],
     tags: ['seagull', 'seabird', 'gulls', 'cliff', 'cliffs'],
     names: ['seagull', 'gulls', 'cliff', 'cliffs', 'seabird'],
     allowsVoices: false,
@@ -181,7 +181,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'sea_storm',
-    queries: ['storm at sea waves wind', 'rough sea storm ambience', 'storm waves ocean wind', 'stormy sea ambience loop'],
+    queries: ['storm at sea waves wind', 'rough sea storm ambience', 'storm waves ocean wind', 'stormy sea ambience loop', 'storm sea waves loop', 'rough sea wind ambience'],
     tags: ['sea', 'storm', 'waves', 'wind'],
     names: ['sea', 'storm', 'waves'],
     allowsVoices: false,
@@ -193,7 +193,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'campfire_night',
-    queries: ['campfire night ambience', 'campfire crackling outdoors', 'campfire ambience', 'fire crackle outdoors night'],
+    queries: ['campfire night ambience', 'campfire crackling outdoors', 'campfire ambience', 'fire crackle outdoors night', 'campfire crackle ambience', 'fire outdoors night wood'],
     tags: ['campfire', 'fire', 'crackling'],
     names: ['campfire', 'fire'],
     allowsVoices: false,
@@ -206,7 +206,7 @@ export const FREESOUND_TARGETS = [
   // timeless: weather
   {
     id: 'light_rain',
-    queries: ['light rain ambience', 'gentle rain on leaves'],
+    queries: ['light rain ambience', 'gentle rain on leaves', 'light rain loop', 'drizzle rain ambience'],
     tags: ['rain', 'light', 'drizzle'],
     names: ['rain', 'drizzle'],
     allowsVoices: false,
@@ -218,7 +218,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'heavy_rain',
-    queries: ['heavy rain downpour', 'heavy rain ambience'],
+    queries: ['heavy rain downpour', 'heavy rain ambience', 'heavy rain loop', 'rain storm downpour ambience'],
     tags: ['rain', 'heavy', 'downpour'],
     names: ['rain', 'downpour'],
     allowsVoices: false,
@@ -230,7 +230,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'rain_on_roof',
-    queries: ['rain on roof ambience', 'rain on tin roof', 'rain roof ambience', 'rain on metal roof loop'],
+    queries: ['rain on roof ambience', 'rain on tin roof', 'rain roof ambience', 'rain on metal roof loop', 'rain roof loop', 'rain on tin roof ambience'],
     tags: ['roof', 'rain', 'tin'],
     names: ['roof', 'rain'],
     allowsVoices: false,
@@ -242,7 +242,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'rain_on_window',
-    queries: ['rain on window glass', 'rain against window'],
+    queries: ['rain on window glass', 'rain against window', 'rain window loop', 'rain on glass ambience'],
     tags: ['window', 'glass', 'rain'],
     names: ['window', 'glass', 'rain'],
     allowsVoices: false,
@@ -254,7 +254,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'thunderstorm',
-    queries: ['thunderstorm rain ambience', 'distant thunder rain'],
+    queries: ['thunderstorm rain ambience', 'distant thunder rain', 'thunder rain loop', 'storm thunder ambience'],
     tags: ['thunder', 'thunderstorm', 'rain'],
     names: ['thunder', 'thunderstorm', 'storm'],
     allowsVoices: false,
@@ -266,7 +266,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'storm_wind',
-    queries: ['storm wind gusts ambience', 'windstorm trees ambience'],
+    queries: ['storm wind gusts ambience', 'windstorm trees ambience', 'wind storm gusts loop', 'strong wind storm ambience'],
     tags: ['storm', 'wind', 'gust', 'gusts', 'windstorm'],
     names: ['storm', 'wind', 'gust'],
     allowsVoices: false,
@@ -278,7 +278,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'snowfall_quiet',
-    queries: ['falling snow ambience', 'snowfall quiet winter'],
+    queries: ['falling snow ambience', 'snowfall quiet winter', 'snow falling ambience', 'winter quiet snow'],
     tags: ['snow', 'snowfall', 'winter'],
     names: ['snow', 'snowfall'],
     allowsVoices: false,
@@ -290,7 +290,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'blizzard_wind',
-    queries: ['blizzard wind ambience', 'snow storm wind'],
+    queries: ['blizzard wind ambience', 'snow storm wind', 'blizzard loop', 'snow wind storm loop'],
     tags: ['blizzard', 'snow', 'wind'],
     names: ['blizzard', 'snow', 'wind'],
     allowsVoices: false,
@@ -303,7 +303,7 @@ export const FREESOUND_TARGETS = [
   // timeless: interiors, mystical and mood
   {
     id: 'fireplace_crackle',
-    queries: ['fireplace crackle ambience', 'crackling fire loop'],
+    queries: ['fireplace crackle ambience', 'crackling fire loop', 'fire crackling loop', 'wood fire fireplace ambience'],
     tags: ['fireplace', 'fire', 'crackle'],
     names: ['fire', 'fireplace', 'crackle'],
     allowsVoices: false,
@@ -315,7 +315,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'library_quiet',
-    queries: ['library room tone', 'quiet library ambience'],
+    queries: ['library room tone', 'quiet library ambience', 'library ambience quiet', 'room tone quiet ambience'],
     tags: ['library', 'room', 'tone', 'quiet'],
     names: ['library', 'room', 'tone'],
     allowsVoices: false,
@@ -327,7 +327,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'qi_hum',
-    queries: ['low hum ambience loop', 'resonant hum drone'],
+    queries: ['low hum ambience loop', 'resonant hum drone', 'drone hum loop', 'humming ambience loop'],
     tags: ['hum', 'drone', 'resonant'],
     names: ['hum', 'drone'],
     allowsVoices: false,
@@ -339,7 +339,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'spirit_whispers',
-    queries: ['ghost whispers ambience', 'eerie whispers air'],
+    queries: ['ghost whispers ambience', 'eerie whispers air', 'eerie ambience loop', 'ghostly wind ambience'],
     tags: ['ghost', 'whispers', 'eerie'],
     names: ['ghost', 'whisper'],
     allowsVoices: false,
@@ -351,7 +351,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'tense_heartbeat',
-    queries: ['heartbeat ambience', 'heartbeat loop'],
+    queries: ['heartbeat ambience', 'heartbeat loop', 'heartbeat loop', 'heart beat ambience'],
     tags: ['heartbeat', 'heart'],
     names: ['heartbeat'],
     allowsVoices: false,
@@ -363,7 +363,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'ominous_drone',
-    queries: ['dark drone ambience', 'low drone horror'],
+    queries: ['dark drone ambience', 'low drone horror', 'drone ambience loop', 'horror drone ambience'],
     tags: ['drone', 'dark', 'horror'],
     names: ['drone'],
     allowsVoices: false,
@@ -376,7 +376,7 @@ export const FREESOUND_TARGETS = [
   // historic: human scenes without machines
   {
     id: 'village_square',
-    queries: ['village square ambience', 'village people ambience'],
+    queries: ['village square ambience', 'village people ambience', 'village ambience people', 'market square ambience'],
     tags: ['village', 'square', 'town', 'people'],
     names: ['village', 'square', 'town'],
     allowsVoices: true,
@@ -388,7 +388,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'crowd_murmur',
-    queries: ['crowd murmur ambience', 'crowd chatter room'],
+    queries: ['crowd murmur ambience', 'crowd chatter room', 'crowd ambience loop', 'people murmur ambience'],
     tags: ['crowd', 'murmur', 'chatter'],
     names: ['crowd', 'murmur', 'chatter'],
     allowsVoices: true,
@@ -400,7 +400,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'tavern_crowd',
-    queries: ['tavern ambience', 'pub crowd ambience'],
+    queries: ['tavern ambience', 'pub crowd ambience', 'pub ambience people', 'bar ambience loop'],
     tags: ['tavern', 'pub', 'bar', 'crowd'],
     names: ['tavern', 'pub', 'bar'],
     allowsVoices: true,
@@ -412,7 +412,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'market_crowd',
-    queries: ['market crowd ambience', 'bazaar market people'],
+    queries: ['market crowd ambience', 'bazaar market people', 'market ambience loop', 'street market people ambience'],
     tags: ['market', 'crowd', 'bazaar'],
     names: ['market', 'crowd', 'bazaar'],
     allowsVoices: true,
@@ -424,7 +424,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'castle_hall',
-    queries: ['castle hall ambience', 'stone hall echo room', 'stone room echo ambience', 'large hall reverb ambience', 'church interior ambience'],
+    queries: ['castle hall ambience', 'stone hall echo room', 'stone room echo ambience', 'large hall reverb ambience', 'church interior ambience', 'hall reverb ambience', 'church interior ambience loop'],
     tags: ['castle', 'hall', 'stone', 'echo'],
     names: ['castle', 'hall', 'stone'],
     allowsVoices: false,
@@ -436,7 +436,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'kitchen_busy',
-    queries: ['kitchen ambience cooking', 'kitchen sizzling pots'],
+    queries: ['kitchen ambience cooking', 'kitchen sizzling pots', 'kitchen ambience loop', 'cooking kitchen sounds'],
     tags: ['kitchen', 'cooking', 'sizzle', 'pots'],
     names: ['kitchen', 'cooking'],
     allowsVoices: true,
@@ -448,7 +448,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'horse_trot',
-    queries: ['horse hooves walking', 'horse trot dirt road'],
+    queries: ['horse hooves walking', 'horse trot dirt road', 'horse walking loop', 'horse hooves ambience'],
     tags: ['horse', 'hooves', 'trot', 'hoof'],
     names: ['horse', 'hooves', 'hoof', 'trot'],
     allowsVoices: false,
@@ -460,7 +460,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'horse_gallop',
-    queries: ['horse gallop hooves', 'horses running hooves'],
+    queries: ['horse gallop hooves', 'horses running hooves', 'horse running loop', 'horses hooves gallop'],
     tags: ['horse', 'gallop', 'hooves'],
     names: ['horse', 'gallop', 'hooves'],
     allowsVoices: false,
@@ -472,7 +472,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'carriage_wheels',
-    queries: ['horse carriage wheels', 'wooden cart wheels road'],
+    queries: ['horse carriage wheels', 'wooden cart wheels road', 'cart wheels loop', 'wagon wheels ambience'],
     tags: ['carriage', 'cart', 'wagon', 'wheels', 'horse'],
     names: ['carriage', 'cart', 'wagon', 'wheels'],
     allowsVoices: false,
@@ -484,7 +484,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'ship_deck',
-    queries: ['sailing ship deck ambience', 'wooden ship creaking sails', 'wooden boat creaking ambience', 'sailing ship ambience'],
+    queries: ['sailing ship deck ambience', 'wooden ship creaking sails', 'wooden boat creaking ambience', 'sailing ship ambience', 'ship ambience loop', 'boat sailing ambience'],
     tags: ['ship', 'sailing', 'boat', 'deck', 'rigging'],
     names: ['ship', 'sailing', 'deck', 'boat'],
     allowsVoices: false,
@@ -508,7 +508,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'battle_field',
-    queries: ['battle ambience distant', 'medieval battle sounds'],
+    queries: ['battle ambience distant', 'medieval battle sounds', 'battle ambience loop', 'war battlefield ambience'],
     tags: ['battle', 'war', 'medieval', 'shouts'],
     names: ['battle', 'war', 'medieval'],
     allowsVoices: true,
@@ -520,7 +520,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'war_drums',
-    queries: ['war drums', 'battle drums ambience'],
+    queries: ['war drums', 'battle drums ambience', 'drum loop ambience', 'tribal drums ambience'],
     tags: ['drums', 'war', 'battle', 'tribal'],
     names: ['drums', 'war', 'battle'],
     allowsVoices: false,
@@ -532,7 +532,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'ritual_chant',
-    queries: ['chanting ritual ambience', 'monks chant reverb', 'gregorian chant', 'monks singing ambience'],
+    queries: ['chanting ritual ambience', 'monks chant reverb', 'gregorian chant', 'monks singing ambience', 'chanting loop', 'choir chant ambience'],
     tags: ['chant', 'chanting', 'ritual', 'monks'],
     names: ['chant', 'ritual'],
     allowsVoices: true,
@@ -544,7 +544,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'temple_incense',
-    queries: ['temple ambience bells', 'buddhist temple ambience'],
+    queries: ['temple ambience bells', 'buddhist temple ambience', 'temple bell ambience', 'buddhist bells loop'],
     tags: ['temple', 'bells', 'buddhist', 'incense'],
     names: ['temple', 'bell', 'bells'],
     allowsVoices: true,
@@ -556,7 +556,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'monastery_chant',
-    queries: ['monastery chant ambience', 'gregorian chant church', 'choir monastery ambience', 'monks chanting'],
+    queries: ['monastery chant ambience', 'gregorian chant church', 'choir monastery ambience', 'monks chanting', 'monks chanting loop', 'gregorian chant loop'],
     tags: ['monastery', 'chant', 'church', 'gregorian'],
     names: ['monastery', 'chant', 'church'],
     allowsVoices: true,
@@ -568,7 +568,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'ballroom_party',
-    queries: ['ballroom party ambience', 'party crowd glasses'],
+    queries: ['ballroom party ambience', 'party crowd glasses', 'party crowd ambience', 'people talking party ambience'],
     tags: ['party', 'ballroom', 'glasses', 'crowd'],
     names: ['party', 'ballroom'],
     allowsVoices: true,
@@ -580,7 +580,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'prison_cell',
-    queries: ['prison cell ambience', 'dungeon dripping water ambience', 'dungeon ambience', 'cell ambience water drip'],
+    queries: ['prison cell ambience', 'dungeon dripping water ambience', 'dungeon ambience', 'cell ambience water drip', 'prison ambience loop', 'dungeon ambience loop'],
     tags: ['prison', 'dungeon', 'cell', 'drip'],
     names: ['prison', 'dungeon', 'cell'],
     allowsVoices: false,
@@ -592,7 +592,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'clock_ticking',
-    queries: ['clock ticking ambience', 'pendulum clock ticking room'],
+    queries: ['clock ticking ambience', 'pendulum clock ticking room', 'ticking clock loop', 'clock ambience loop'],
     tags: ['clock', 'tick', 'ticking', 'pendulum'],
     names: ['clock', 'tick'],
     allowsVoices: false,
@@ -604,7 +604,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'forge_anvil',
-    queries: ['blacksmith forge ambience', 'anvil hammer forge', 'blacksmith hammer anvil', 'hammering metal workshop'],
+    queries: ['blacksmith forge ambience', 'anvil hammer forge', 'blacksmith hammer anvil', 'hammering metal workshop', 'blacksmith ambience loop', 'metal workshop ambience'],
     tags: ['blacksmith', 'forge', 'anvil', 'hammer'],
     names: ['blacksmith', 'forge', 'anvil', 'hammer'],
     allowsVoices: false,
@@ -617,7 +617,7 @@ export const FREESOUND_TARGETS = [
   // modern
   {
     id: 'city_street_day',
-    queries: ['city street ambience', 'busy street traffic'],
+    queries: ['city street ambience', 'busy street traffic', 'city street ambience loop', 'urban street ambience'],
     tags: ['city', 'street', 'traffic', 'urban'],
     names: ['city', 'street', 'traffic'],
     allowsVoices: true,
@@ -629,7 +629,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'city_night',
-    queries: ['city night ambience', 'night city atmosphere'],
+    queries: ['city night ambience', 'night city atmosphere', 'city night ambience loop', 'urban night ambience'],
     tags: ['city', 'night', 'urban'],
     names: ['city', 'night'],
     allowsVoices: false,
@@ -641,7 +641,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'office_hum',
-    queries: ['office ambience hum', 'open plan office background'],
+    queries: ['office ambience hum', 'open plan office background', 'office ambience loop', 'office room tone'],
     tags: ['office', 'hvac', 'keyboard', 'typing'],
     names: ['office'],
     allowsVoices: false,
@@ -653,7 +653,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'hospital_ward',
-    queries: ['hospital ward ambience', 'hospital background monitors', 'hospital ambience', 'hospital corridor ambience'],
+    queries: ['hospital ward ambience', 'hospital background monitors', 'hospital ambience', 'hospital corridor ambience', 'hospital ambience loop', 'hospital room ambience'],
     tags: ['hospital', 'ward', 'monitor'],
     names: ['hospital', 'ward'],
     allowsVoices: false,
@@ -665,7 +665,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'cafe_soft',
-    queries: ['cafe ambience', 'coffee shop ambience'],
+    queries: ['cafe ambience', 'coffee shop ambience', 'cafe ambience loop', 'coffee shop people ambience'],
     tags: ['cafe', 'coffee', 'restaurant'],
     names: ['cafe', 'coffee'],
     allowsVoices: true,
@@ -677,7 +677,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'lecture_hall',
-    queries: ['lecture hall ambience', 'classroom room tone'],
+    queries: ['lecture hall ambience', 'classroom room tone', 'classroom ambience loop', 'lecture room ambience'],
     tags: ['lecture', 'classroom', 'hall', 'audience'],
     names: ['lecture', 'classroom', 'hall'],
     allowsVoices: false,
@@ -689,7 +689,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'train_interior',
-    queries: ['train interior ambience', 'train carriage rail'],
+    queries: ['train interior ambience', 'train carriage rail', 'train ambience loop', 'train cabin ambience'],
     tags: ['train', 'interior', 'rail'],
     names: ['train', 'carriage', 'rail'],
     allowsVoices: false,
@@ -701,7 +701,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'airplane_cabin',
-    queries: ['airplane cabin ambience', 'aircraft cabin engine hum'],
+    queries: ['airplane cabin ambience', 'aircraft cabin engine hum', 'plane cabin ambience loop', 'airplane ambience loop'],
     tags: ['airplane', 'aircraft', 'cabin', 'plane'],
     names: ['airplane', 'aircraft', 'cabin', 'plane'],
     allowsVoices: false,
@@ -713,7 +713,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'subway_platform',
-    queries: ['subway station ambience', 'underground metro platform'],
+    queries: ['subway station ambience', 'underground metro platform', 'metro station ambience', 'subway train station loop'],
     tags: ['subway', 'metro', 'underground', 'platform', 'station'],
     names: ['subway', 'metro', 'platform'],
     allowsVoices: false,
@@ -725,7 +725,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'gunfight_ambient',
-    queries: ['distant gunfire ambience', 'gunfire echo battle', 'gunfire ambience', 'distant gunfire loop'],
+    queries: ['distant gunfire ambience', 'gunfire echo battle', 'gunfire ambience', 'distant gunfire loop', 'gunfire loop ambience', 'distant gunshots ambience'],
     tags: ['gunfire', 'gun', 'shooting'],
     names: ['gunfire', 'shots'],
     allowsVoices: true,
@@ -737,7 +737,7 @@ export const FREESOUND_TARGETS = [
   },
   {
     id: 'arena_crowd',
-    queries: ['stadium crowd ambience', 'arena crowd cheering'],
+    queries: ['stadium crowd ambience', 'arena crowd cheering', 'stadium ambience loop', 'crowd cheering loop'],
     tags: ['stadium', 'arena', 'crowd', 'cheering'],
     names: ['stadium', 'arena', 'crowd'],
     allowsVoices: true,

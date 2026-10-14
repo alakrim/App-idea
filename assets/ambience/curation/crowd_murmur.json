@@ -1,11 +1,13 @@
 {
   "category": "crowd_murmur",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "crowd murmur ambience",
-    "crowd chatter room"
+    "crowd chatter room",
+    "crowd ambience loop",
+    "people murmur ambience"
   ],
-  "poolSize": 57,
+  "poolSize": 72,
   "candidates": [
     {
       "rank": 1,
@@ -19,12 +21,12 @@
       "channels": 2,
       "avgRating": 4.81,
       "numRatings": 36,
-      "numDownloads": 6277,
+      "numDownloads": 6278,
       "previewUrl": "https://cdn.freesound.org/previews/138/138118_1572282-hq.mp3",
       "score": 9.63,
       "reasons": [
         "+2.73 rating 4.81 from 36 ratings",
-        "+1.9 6277 downloads",
+        "+1.9 6278 downloads",
         "+2 at least 90 s",
         "+2 tags crowd, chatter",
         "+1 name matches crowd, chatter"
@@ -187,565 +189,381 @@
         "+2 tags crowd, chatter",
         "+1 name matches crowd, murmur"
       ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 344952,
+      "name": "murmur_on_ferry_3.WAV",
+      "url": "https://freesound.org/people/ivolipa/sounds/344952/",
+      "author": "ivolipa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 107.38,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.92,
+      "numRatings": 13,
+      "numDownloads": 606,
+      "previewUrl": "https://cdn.freesound.org/previews/344/344952_3474310-hq.mp3",
+      "score": 8.04,
+      "reasons": [
+        "+2.65 rating 4.92 from 13 ratings",
+        "+1.39 606 downloads",
+        "+2 at least 90 s",
+        "+1 tags murmur",
+        "+1 name matches murmur"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 455908,
+      "name": "People talking in small room",
+      "url": "https://freesound.org/people/quadraslayer/sounds/455908/",
+      "author": "quadraslayer",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 68.92,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 28,
+      "numDownloads": 3932,
+      "previewUrl": "https://cdn.freesound.org/previews/455/455908_5411212-hq.mp3",
+      "score": 7.95,
+      "reasons": [
+        "+2.65 rating 4.71 from 28 ratings",
+        "+1.8 3932 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags crowd, chatter"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 393688,
+      "name": "walla nike headquarters large hall busy dutch english.wav",
+      "url": "https://freesound.org/people/hz37/sounds/393688/",
+      "author": "hz37",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 67.5,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 230,
+      "previewUrl": "https://cdn.freesound.org/previews/393/393688_123355-hq.mp3",
+      "score": 7.88,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+1.18 230 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags crowd, murmur, chatter"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 393689,
+      "name": "walla nike headquarters large hall dutch english.wav",
+      "url": "https://freesound.org/people/hz37/sounds/393689/",
+      "author": "hz37",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 70.39,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.67,
+      "numRatings": 3,
+      "numDownloads": 225,
+      "previewUrl": "https://cdn.freesound.org/previews/393/393689_123355-hq.mp3",
+      "score": 7.88,
+      "reasons": [
+        "+2.2 rating 4.67 from 3 ratings",
+        "+1.18 225 downloads",
+        "+1.5 at least 63 s",
+        "+3 tags crowd, murmur, chatter"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 453074,
+      "name": "370973__waweee__coffee-shop-ambience_remastered.mp3",
+      "url": "https://freesound.org/people/C_Rogers/sounds/453074/",
+      "author": "C_Rogers",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 296,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 4.73,
+      "numRatings": 44,
+      "numDownloads": 4083,
+      "previewUrl": "https://cdn.freesound.org/previews/453/453074_3569783-hq.mp3",
+      "score": 7.51,
+      "reasons": [
+        "+2.7 rating 4.73 from 44 ratings",
+        "+1.81 4083 downloads",
+        "+2 at least 90 s",
+        "+1 tags crowd"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 625308,
+      "name": "murmur.wav",
+      "url": "https://freesound.org/people/michaelbesaw/sounds/625308/",
+      "author": "michaelbesaw",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 387.04,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 4,
+      "numDownloads": 232,
+      "previewUrl": "https://cdn.freesound.org/previews/625/625308_2609716-hq.mp3",
+      "score": 7.39,
+      "reasons": [
+        "+2.21 rating 4.5 from 4 ratings",
+        "+1.18 232 downloads",
+        "+2 at least 90 s",
+        "+1 tags crowd",
+        "+1 name matches murmur"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 850562,
+      "name": "Walla Teatro",
+      "url": "https://freesound.org/people/Mariayolanda511/sounds/850562/",
+      "author": "Mariayolanda511",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 60.52,
+      "samplerate": 48000,
+      "channels": 1,
+      "avgRating": 5,
+      "numRatings": 3,
+      "numDownloads": 118,
+      "previewUrl": "https://cdn.freesound.org/previews/850/850562_18454513-hq.mp3",
+      "score": 7.33,
+      "reasons": [
+        "+2.3 rating 5 from 3 ratings",
+        "+1.04 118 downloads",
+        "+1 at least 60 s",
+        "+3 tags crowd, murmur, chatter"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 475709,
+      "name": "Gymnasium, Class Reunion in Distance",
+      "url": "https://freesound.org/people/ecfike/sounds/475709/",
+      "author": "ecfike",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 208.06,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 319,
+      "previewUrl": "https://cdn.freesound.org/previews/475/475709_2337290-hq.mp3",
+      "score": 7.32,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+1.25 319 downloads",
+        "+2 at least 90 s",
+        "+2 tags crowd, chatter"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 266961,
+      "name": "StructureLarge internal ambience - children in distance.flac",
+      "url": "https://freesound.org/people/muel2002/sounds/266961/",
+      "author": "muel2002",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 65.87,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.83,
+      "numRatings": 6,
+      "numDownloads": 289,
+      "previewUrl": "https://cdn.freesound.org/previews/266/266961_1657381-hq.mp3",
+      "score": 7.15,
+      "reasons": [
+        "+2.42 rating 4.83 from 6 ratings",
+        "+1.23 289 downloads",
+        "+1.5 at least 63 s",
+        "+2 tags crowd, murmur"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 475706,
+      "name": "Atrium, Class Reunion on Balcony",
+      "url": "https://freesound.org/people/ecfike/sounds/475706/",
+      "author": "ecfike",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 148.29,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 252,
+      "previewUrl": "https://cdn.freesound.org/previews/475/475706_2337290-hq.mp3",
+      "score": 7.08,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+1.2 252 downloads",
+        "+2 at least 90 s",
+        "+2 tags crowd, chatter"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 794343,
+      "name": "Kids exiting theatre room",
+      "url": "https://freesound.org/people/Sadiquecat/sounds/794343/",
+      "author": "Sadiquecat",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 204.24,
+      "samplerate": 96000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 68,
+      "previewUrl": "https://cdn.freesound.org/previews/794/794343_5287430-hq.mp3",
+      "score": 6.98,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.92 68 downloads",
+        "+2 at least 90 s",
+        "+2 tags crowd, chatter"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 713922,
+      "name": "Grand Central 3",
+      "url": "https://freesound.org/people/joliusnyren/sounds/713922/",
+      "author": "joliusnyren",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 122.67,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 59,
+      "previewUrl": "https://cdn.freesound.org/previews/713/713922_15490398-hq.mp3",
+      "score": 6.95,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.89 59 downloads",
+        "+2 at least 90 s",
+        "+2 tags crowd, chatter"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 852102,
+      "name": "Dutch museum walla indoor 4 Singer Laren april 2026",
+      "url": "https://freesound.org/people/hz37/sounds/852102/",
+      "author": "hz37",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 94.63,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 1,
+      "numDownloads": 16,
+      "previewUrl": "https://cdn.freesound.org/previews/852/852102_123355-hq.mp3",
+      "score": 6.68,
+      "reasons": [
+        "+2.06 rating 5 from 1 ratings",
+        "+0.62 16 downloads",
+        "+2 at least 90 s",
+        "+2 tags crowd, chatter"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 541117,
+      "name": "Office ambience.wav",
+      "url": "https://freesound.org/people/Chelly01/sounds/541117/",
+      "author": "Chelly01",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 142,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.88,
+      "numRatings": 57,
+      "numDownloads": 4444,
+      "previewUrl": "https://cdn.freesound.org/previews/541/541117_10965611-hq.mp3",
+      "score": 6.65,
+      "reasons": [
+        "+2.82 rating 4.88 from 57 ratings",
+        "+1.82 4444 downloads",
+        "+2 at least 90 s"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 872737,
+      "name": "Walla_Wetherspoons_The_Counting_House_Dundee_Scotland_01",
+      "url": "https://freesound.org/people/SignatureSoundsOrg/sounds/872737/",
+      "author": "SignatureSoundsOrg",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 114.18,
+      "samplerate": 44100,
+      "channels": 1,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 35,
+      "previewUrl": "https://cdn.freesound.org/previews/872/872737_19205925-hq.mp3",
+      "score": 6.65,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.78 35 downloads",
+        "+2 at least 90 s",
+        "+2 tags crowd, chatter"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 869656,
+      "name": "Classroom Ambience Environment in Nepal - School Environment",
+      "url": "https://freesound.org/people/hawa9874/sounds/869656/",
+      "author": "hawa9874",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 203.33,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 26,
+      "previewUrl": "https://cdn.freesound.org/previews/869/869656_12600441-hq.mp3",
+      "score": 6.59,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.72 26 downloads",
+        "+2 at least 90 s",
+        "+2 tags crowd, chatter"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 872738,
+      "name": "Walla_Wetherspoons_The_Justice_Mill_Aberdeen_Scotland_01",
+      "url": "https://freesound.org/people/SignatureSoundsOrg/sounds/872738/",
+      "author": "SignatureSoundsOrg",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 294,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 0,
+      "numRatings": 0,
+      "numDownloads": 21,
+      "previewUrl": "https://cdn.freesound.org/previews/872/872738_19205925-hq.mp3",
+      "score": 6.55,
+      "reasons": [
+        "+1.88 rating 0 from 0 ratings",
+        "+0.67 21 downloads",
+        "+2 at least 90 s",
+        "+2 tags crowd, chatter"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Crowd",
-          "Hubbub, speech noise, speech babble",
-          "Chatter",
-          "Conversation"
-        ]
-      ],
-      "clapPrompt": "a large crowd murmuring with no distinct words"
-    },
-    "verdict": "filled",
-    "unfilledReason": null,
-    "chosen": {
-      "freesoundId": 445228,
-      "windowStartSeconds": 5,
-      "windowSeconds": 64,
-      "steadinessDb": 2.104,
-      "clapScore": 0.3981
-    },
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 138118,
-        "name": "Small Crowd Chatter",
-        "url": "https://freesound.org/people/snakebarney/sounds/138118/",
-        "author": "snakebarney",
-        "durationSec": 92.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 92,
-          "cleanSeconds": 91,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8869
-            },
-            {
-              "label": "Chatter",
-              "max": 0.7061
-            },
-            {
-              "label": "Finger snapping",
-              "max": 0.4698
-            },
-            {
-              "label": "Female speech, woman speaking",
-              "max": 0.4384
-            },
-            {
-              "label": "Chuckle, chortle",
-              "max": 0.326
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.161,
-              "atSecond": 65
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation"
-              ],
-              "fraction": 0.12
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 640254,
-        "name": "geroezemoes.wav",
-        "url": "https://freesound.org/people/gecop/sounds/640254/",
-        "author": "gecop",
-        "durationSec": 120.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 120,
-          "cleanSeconds": 119,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8772
-            },
-            {
-              "label": "Chatter",
-              "max": 0.3796
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.1834
-            },
-            {
-              "label": "Animal",
-              "max": 0.1834
-            },
-            {
-              "label": "Male speech, man speaking",
-              "max": 0.1631
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.183,
-              "atSecond": 34
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation"
-              ],
-              "fraction": 0.05
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 608996,
-        "name": "5 min of crowd chatter.  40 people.wav",
-        "url": "https://freesound.org/people/Psykophobia/sounds/608996/",
-        "author": "Psykophobia",
-        "durationSec": 311.9,
-        "verdict": "reject",
-        "reason": "no 64 s window is free of denied sounds: Music reaches 0.801 (at 105 s)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 311,
-          "cleanSeconds": 227,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.9202
-            },
-            {
-              "label": "Music",
-              "max": 0.8013
-            },
-            {
-              "label": "Chatter",
-              "max": 0.7835
-            },
-            {
-              "label": "Rub",
-              "max": 0.7144
-            },
-            {
-              "label": "Sanding",
-              "max": 0.6763
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.801,
-              "atSecond": 105
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation"
-              ],
-              "fraction": 0.508
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 204911,
-        "name": "Voices",
-        "url": "https://freesound.org/people/unfa/sounds/204911/",
-        "author": "unfa",
-        "durationSec": 300.9,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 300,
-          "cleanSeconds": 116,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8971
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.5683
-            },
-            {
-              "label": "Music",
-              "max": 0.4834
-            },
-            {
-              "label": "Chatter",
-              "max": 0.3407
-            },
-            {
-              "label": "Male speech, man speaking",
-              "max": 0.3223
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.568,
-              "atSecond": 169
-            },
-            {
-              "label": "Music",
-              "max": 0.483,
-              "atSecond": 165
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.298,
-              "atSecond": 169
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.167,
-              "atSecond": 169
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation"
-              ],
-              "fraction": 0.013
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 69308,
-        "name": "crowd  sm conf rm  jumbled conversations.wav",
-        "url": "https://freesound.org/people/cognito%20perceptu/sounds/69308/",
-        "author": "cognito perceptu",
-        "durationSec": 76.3,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 76,
-          "cleanSeconds": 75,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.905
-            },
-            {
-              "label": "Chatter",
-              "max": 0.6538
-            },
-            {
-              "label": "Male speech, man speaking",
-              "max": 0.3846
-            },
-            {
-              "label": "Female speech, woman speaking",
-              "max": 0.2977
-            },
-            {
-              "label": "Narration, monologue",
-              "max": 0.2867
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.217,
-              "atSecond": 11
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation"
-              ],
-              "fraction": 0.263
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 848088,
-        "name": "London tube train at rush hour",
-        "url": "https://freesound.org/people/andrewfordham/sounds/848088/",
-        "author": "andrewfordham",
-        "durationSec": 177.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Crowd / Hubbub, speech noise, speech babble / Chatter / Conversation",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 177,
-          "cleanSeconds": 116,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.9336
-            },
-            {
-              "label": "Music",
-              "max": 0.7373
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.5923
-            },
-            {
-              "label": "Train",
-              "max": 0.3903
-            },
-            {
-              "label": "Chatter",
-              "max": 0.388
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.737,
-              "atSecond": 16
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.592,
-              "atSecond": 80
-            },
-            {
-              "label": "Train",
-              "max": 0.39,
-              "atSecond": 153
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.273,
-              "atSecond": 153
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.209,
-              "atSecond": 153
-            },
-            {
-              "label": "Subway, metro, underground",
-              "max": 0.207,
-              "atSecond": 153
-            },
-            {
-              "label": "Car",
-              "max": 0.178,
-              "atSecond": 107
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation"
-              ],
-              "fraction": 0.051
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 445228,
-        "name": "Crowd Noise.m4a",
-        "url": "https://freesound.org/people/keus92/sounds/445228/",
-        "author": "keus92",
-        "durationSec": 100.5,
-        "verdict": "pass",
-        "reason": null,
-        "window": {
-          "startSeconds": 5,
-          "lengthSeconds": 64,
-          "steadinessDb": 2.104
-        },
-        "clapScore": 0.3981,
-        "evidence": {
-          "frames": 100,
-          "cleanSeconds": 99,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.9029
-            },
-            {
-              "label": "Chatter",
-              "max": 0.8183
-            },
-            {
-              "label": "Male speech, man speaking",
-              "max": 0.1932
-            },
-            {
-              "label": "Outside, urban or manmade",
-              "max": 0.1864
-            },
-            {
-              "label": "Inside, large room or hall",
-              "max": 0.1758
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Music",
-              "max": 0.153,
-              "atSecond": 4
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation"
-              ],
-              "fraction": 0.65
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 546676,
-        "name": "Crowd talking / murmur",
-        "url": "https://freesound.org/people/trezz77/sounds/546676/",
-        "author": "trezz77",
-        "durationSec": 62.9,
-        "verdict": "reject",
-        "reason": "clip has 62 s; a window needs 64 s",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 62,
-          "cleanSeconds": 48,
-          "topClasses": [
-            {
-              "label": "Speech",
-              "max": 0.8895
-            },
-            {
-              "label": "Chatter",
-              "max": 0.3524
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.3144
-            },
-            {
-              "label": "Music",
-              "max": 0.2461
-            },
-            {
-              "label": "Male speech, man speaking",
-              "max": 0.2387
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.314,
-              "atSecond": 33
-            },
-            {
-              "label": "Music",
-              "max": 0.246,
-              "atSecond": 55
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.204,
-              "atSecond": 56
-            },
-            {
-              "label": "Train",
-              "max": 0.158,
-              "atSecond": 28
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Crowd",
-                "Hubbub, speech noise, speech babble",
-                "Chatter",
-                "Conversation"
-              ],
-              "fraction": 0.097
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

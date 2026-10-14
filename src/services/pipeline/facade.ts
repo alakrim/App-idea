@@ -55,6 +55,8 @@ export interface PipelineService {
   readonly queue: PipelineQueue;
   /** Every runner event, in order, for the app's lifecycle (toasts, keep-awake). */
   subscribeEvents(listener: (event: PipelineEvent) => void): () => void;
+  /** Called when the queue first fails to save, so the app can say so. */
+  subscribeSaveFailures(listener: () => void): () => void;
 }
 
 const COST_STAGE_OF: Readonly<Record<CostStage, Stage>> = {
@@ -114,11 +116,15 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
   const tracked = new Map<string, TrackedChapter>();
   const progressListeners = new Map<string, Set<(progress: ChapterProgress) => void>>();
   const eventListeners = new Set<(event: PipelineEvent) => void>();
+  const saveFailureListeners = new Set<() => void>();
   const runsStarted = new Set<string>();
 
   const queue = createPipelineQueue(ports, {
     onEvent: (event) => handleEvent(event),
     keepsAliveInBackground,
+    onSaveFailed: () => {
+      for (const listener of saveFailureListeners) listener();
+    },
   });
 
   function jobStatusOf(chapterId: Id, stage: Stage): JobStatus | null {
@@ -343,6 +349,11 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
       queueChapter(chapterId, {});
     },
 
+    async stop(chapterIds) {
+      for (const chapterId of chapterIds) queue.cancel(chapterId).catch(() => undefined);
+      await untilSettled(queue.idle(), STOP_TIMEOUT_MS);
+    },
+
     cancel(chapterId) {
       const wasRunning = queue.snapshot().running === chapterId;
       queue.cancel(chapterId).catch(() => undefined);
@@ -386,7 +397,25 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
         eventListeners.delete(listener);
       };
     },
+    subscribeSaveFailures(listener) {
+      saveFailureListeners.add(listener);
+      return () => {
+        saveFailureListeners.delete(listener);
+      };
+    },
   };
+}
+
+/** How long a delete waits for a run to stop. A run that does not stop in time is left to finish its write. */
+const STOP_TIMEOUT_MS = 10_000;
+
+/** Resolves when `settled` does, or after `ms`, whichever comes first. */
+function untilSettled(settled: Promise<void>, ms: number): Promise<void> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<void>((resolve) => {
+    timer = setTimeout(resolve, ms);
+  });
+  return Promise.race([settled, timeout]).finally(() => clearTimeout(timer));
 }
 
 function decodeOrEmpty(bytes: Uint8Array, charset: string): string | null {

@@ -1,9 +1,11 @@
 {
   "category": "desert_wind",
-  "curatedOn": "2026-10-13",
+  "curatedOn": "2026-10-14",
   "queries": [
     "desert wind ambience",
-    "wind desert sand"
+    "wind desert sand",
+    "desert wind sand",
+    "sandstorm wind ambience"
   ],
   "poolSize": 30,
   "candidates": [
@@ -19,12 +21,12 @@
       "channels": 1,
       "avgRating": 4.58,
       "numRatings": 43,
-      "numDownloads": 1458,
+      "numDownloads": 1464,
       "previewUrl": "https://cdn.freesound.org/previews/825/825860_13973196-hq.mp3",
       "score": 10.18,
       "reasons": [
         "+2.6 rating 4.58 from 43 ratings",
-        "+1.58 1458 downloads",
+        "+1.58 1464 downloads",
         "+2 at least 90 s",
         "+3 tags desert, sand, wind",
         "+1 name matches desert, sand"
@@ -42,12 +44,12 @@
       "channels": 2,
       "avgRating": 4.86,
       "numRatings": 69,
-      "numDownloads": 3517,
+      "numDownloads": 3520,
       "previewUrl": "https://cdn.freesound.org/previews/574/574397_97550-hq.mp3",
       "score": 9.6,
       "reasons": [
         "+2.82 rating 4.86 from 69 ratings",
-        "+1.77 3517 downloads",
+        "+1.77 3520 downloads",
         "+2 at least 90 s",
         "+2 tags desert, wind",
         "+1 name matches desert"
@@ -111,12 +113,12 @@
       "channels": 2,
       "avgRating": 4.93,
       "numRatings": 27,
-      "numDownloads": 1200,
+      "numDownloads": 1201,
       "previewUrl": "https://cdn.freesound.org/previews/557/557552_2282212-hq.mp3",
       "score": 8.82,
       "reasons": [
         "+2.78 rating 4.93 from 27 ratings",
-        "+1.54 1200 downloads",
+        "+1.54 1201 downloads",
         "+1.5 at least 63 s",
         "+3 tags desert, sand, wind"
       ]
@@ -189,718 +191,385 @@
         "+2 tags sand, wind",
         "+1 name matches desert, sand"
       ]
+    },
+    {
+      "rank": 9,
+      "freesoundId": 23143,
+      "name": "DMP-009007-SILENCE DESERT.wav",
+      "url": "https://freesound.org/people/martypinso/sounds/23143/",
+      "author": "martypinso",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 131.78,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.43,
+      "numRatings": 241,
+      "numDownloads": 12698,
+      "previewUrl": "https://cdn.freesound.org/previews/23/23143_85523-hq.mp3",
+      "score": 8.56,
+      "reasons": [
+        "+2.56 rating 4.43 from 241 ratings",
+        "+2 12698 downloads",
+        "+2 at least 90 s",
+        "+1 tags desert",
+        "+1 name matches desert"
+      ]
+    },
+    {
+      "rank": 10,
+      "freesoundId": 266656,
+      "name": "Pink Lakes Wind Atmos #2",
+      "url": "https://freesound.org/people/kangaroovindaloo/sounds/266656/",
+      "author": "kangaroovindaloo",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 407.39,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.9,
+      "numRatings": 58,
+      "numDownloads": 2350,
+      "previewUrl": "https://cdn.freesound.org/previews/266/266656_1728127-hq.mp3",
+      "score": 8.52,
+      "reasons": [
+        "+2.84 rating 4.9 from 58 ratings",
+        "+1.69 2350 downloads",
+        "+2 at least 90 s",
+        "+2 tags desert, wind"
+      ]
+    },
+    {
+      "rank": 11,
+      "freesoundId": 682822,
+      "name": "Into Desert Glow.wav",
+      "url": "https://freesound.org/people/younoise/sounds/682822/",
+      "author": "younoise",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 178.24,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 126,
+      "previewUrl": "https://cdn.freesound.org/previews/682/682822_2346185-hq.mp3",
+      "score": 8.49,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.05 126 downloads",
+        "+2 at least 90 s",
+        "+2 tags desert, wind",
+        "+1 name matches desert"
+      ]
+    },
+    {
+      "rank": 12,
+      "freesoundId": 104319,
+      "name": "Desert Monolith.wav",
+      "url": "https://freesound.org/people/Proxima4/sounds/104319/",
+      "author": "Proxima4",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 85.09,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.76,
+      "numRatings": 136,
+      "numDownloads": 13103,
+      "previewUrl": "https://cdn.freesound.org/previews/104/104319_382855-hq.mp3",
+      "score": 8.28,
+      "reasons": [
+        "+2.78 rating 4.76 from 136 ratings",
+        "+2 13103 downloads",
+        "+1.5 at least 63 s",
+        "+1 tags desert",
+        "+1 name matches desert"
+      ]
+    },
+    {
+      "rank": 13,
+      "freesoundId": 740051,
+      "name": "Sand - Flowing, sand sea digital",
+      "url": "https://freesound.org/people/Vrymaa/sounds/740051/",
+      "author": "Vrymaa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 47.91,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 4.71,
+      "numRatings": 21,
+      "numDownloads": 789,
+      "previewUrl": "https://cdn.freesound.org/previews/740/740051_13973196-hq.mp3",
+      "score": 8.06,
+      "reasons": [
+        "+2.61 rating 4.71 from 21 ratings",
+        "+1.45 789 downloads",
+        "+3 tags desert, sand, wind",
+        "+1 name matches sand"
+      ]
+    },
+    {
+      "rank": 14,
+      "freesoundId": 705742,
+      "name": "Footsteps wearing sneakers and jeans walking on sand dirt pathway in the desert",
+      "url": "https://freesound.org/people/felix.blume/sounds/705742/",
+      "author": "felix.blume",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 238.33,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 3.5,
+      "numRatings": 2,
+      "numDownloads": 100,
+      "previewUrl": "https://cdn.freesound.org/previews/705/705742_1661766-hq.mp3",
+      "score": 7.88,
+      "reasons": [
+        "+1.88 rating 3.5 from 2 ratings",
+        "+1 100 downloads",
+        "+2 at least 90 s",
+        "+2 tags desert, wind",
+        "+1 name matches desert, sand"
+      ]
+    },
+    {
+      "rank": 15,
+      "freesoundId": 825842,
+      "name": "Hourglass - Enormous Sandfall",
+      "url": "https://freesound.org/people/Vrymaa/sounds/825842/",
+      "author": "Vrymaa",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 144.6,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.64,
+      "numRatings": 14,
+      "numDownloads": 204,
+      "previewUrl": "https://cdn.freesound.org/previews/825/825842_13973196-hq.mp3",
+      "score": 7.66,
+      "reasons": [
+        "+2.51 rating 4.64 from 14 ratings",
+        "+1.16 204 downloads",
+        "+2 at least 90 s",
+        "+2 tags desert, sand"
+      ]
+    },
+    {
+      "rank": 16,
+      "freesoundId": 579250,
+      "name": "Wind in Cottonwood Trees Utah MP3.mp3",
+      "url": "https://freesound.org/people/Danjocross/sounds/579250/",
+      "author": "Danjocross",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 155.36,
+      "samplerate": 44100,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 5,
+      "numDownloads": 203,
+      "previewUrl": "https://cdn.freesound.org/previews/579/579250_2977885-hq.mp3",
+      "score": 7.59,
+      "reasons": [
+        "+2.44 rating 5 from 5 ratings",
+        "+1.15 203 downloads",
+        "+2 at least 90 s",
+        "+2 tags desert, wind"
+      ]
+    },
+    {
+      "rank": 17,
+      "freesoundId": 607145,
+      "name": "Creature in Desert.wav",
+      "url": "https://freesound.org/people/dangerbabe/sounds/607145/",
+      "author": "dangerbabe",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 92.66,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.6,
+      "numRatings": 5,
+      "numDownloads": 124,
+      "previewUrl": "https://cdn.freesound.org/previews/607/607145_7813-hq.mp3",
+      "score": 7.34,
+      "reasons": [
+        "+2.29 rating 4.6 from 5 ratings",
+        "+1.05 124 downloads",
+        "+2 at least 90 s",
+        "+1 tags wind",
+        "+1 name matches desert"
+      ]
+    },
+    {
+      "rank": 18,
+      "freesoundId": 266635,
+      "name": "Pink Lakes Wind Atmos #1",
+      "url": "https://freesound.org/people/kangaroovindaloo/sounds/266635/",
+      "author": "kangaroovindaloo",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 276.89,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.82,
+      "numRatings": 22,
+      "numDownloads": 1055,
+      "previewUrl": "https://cdn.freesound.org/previews/266/266635_1728127-hq.mp3",
+      "score": 7.19,
+      "reasons": [
+        "+2.68 rating 4.82 from 22 ratings",
+        "+1.51 1055 downloads",
+        "+2 at least 90 s",
+        "+1 tags desert"
+      ]
+    },
+    {
+      "rank": 19,
+      "freesoundId": 579249,
+      "name": "Wind in Cottonwood Trees Utah WAV.mp3.wav",
+      "url": "https://freesound.org/people/Danjocross/sounds/579249/",
+      "author": "Danjocross",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 155.32,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.5,
+      "numRatings": 2,
+      "numDownloads": 150,
+      "previewUrl": "https://cdn.freesound.org/previews/579/579249_2977885-hq.mp3",
+      "score": 7.18,
+      "reasons": [
+        "+2.09 rating 4.5 from 2 ratings",
+        "+1.09 150 downloads",
+        "+2 at least 90 s",
+        "+2 tags desert, wind"
+      ]
+    },
+    {
+      "rank": 20,
+      "freesoundId": 433863,
+      "name": "amb, ext, amb, high desert nieghborhood, birds, wind gusts, walkers, bformat-fuma.wav",
+      "url": "https://freesound.org/people/drewhalasz/sounds/433863/",
+      "author": "drewhalasz",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 285.31,
+      "samplerate": 48000,
+      "channels": 4,
+      "avgRating": 4.71,
+      "numRatings": 14,
+      "numDownloads": 697,
+      "previewUrl": "https://cdn.freesound.org/previews/433/433863_138-hq.mp3",
+      "score": 6.97,
+      "reasons": [
+        "+2.55 rating 4.71 from 14 ratings",
+        "+1.42 697 downloads",
+        "+2 at least 90 s",
+        "+1 name matches desert"
+      ]
+    },
+    {
+      "rank": 21,
+      "freesoundId": 325511,
+      "name": "King's Hut at Night",
+      "url": "https://freesound.org/people/kangaroovindaloo/sounds/325511/",
+      "author": "kangaroovindaloo",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 238.03,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.85,
+      "numRatings": 13,
+      "numDownloads": 521,
+      "previewUrl": "https://cdn.freesound.org/previews/325/325511_1728127-hq.mp3",
+      "score": 6.96,
+      "reasons": [
+        "+2.6 rating 4.85 from 13 ratings",
+        "+1.36 521 downloads",
+        "+2 at least 90 s",
+        "+1 tags wind"
+      ]
+    },
+    {
+      "rank": 22,
+      "freesoundId": 433687,
+      "name": "amb, ext, high-desert neighborhood, morning, birds, bug-bys, bformat-fuma.wav",
+      "url": "https://freesound.org/people/drewhalasz/sounds/433687/",
+      "author": "drewhalasz",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 160.15,
+      "samplerate": 48000,
+      "channels": 4,
+      "avgRating": 4.57,
+      "numRatings": 14,
+      "numDownloads": 507,
+      "previewUrl": "https://cdn.freesound.org/previews/433/433687_138-hq.mp3",
+      "score": 6.82,
+      "reasons": [
+        "+2.47 rating 4.57 from 14 ratings",
+        "+1.35 507 downloads",
+        "+2 at least 90 s",
+        "+1 name matches desert"
+      ]
+    },
+    {
+      "rank": 23,
+      "freesoundId": 104320,
+      "name": "Desert Simple.wav",
+      "url": "https://freesound.org/people/Proxima4/sounds/104320/",
+      "author": "Proxima4",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 48,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.61,
+      "numRatings": 268,
+      "numDownloads": 23782,
+      "previewUrl": "https://cdn.freesound.org/previews/104/104320_382855-hq.mp3",
+      "score": 6.7,
+      "reasons": [
+        "+2.7 rating 4.61 from 268 ratings",
+        "+2 23782 downloads",
+        "+1 tags desert",
+        "+1 name matches desert"
+      ]
+    },
+    {
+      "rank": 24,
+      "freesoundId": 713953,
+      "name": "Wind and rain at St Brieuc",
+      "url": "https://freesound.org/people/bruno.auzet/sounds/713953/",
+      "author": "bruno.auzet",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 308.66,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 5,
+      "numRatings": 6,
+      "numDownloads": 133,
+      "previewUrl": "https://cdn.freesound.org/previews/713/713953_11519060-hq.mp3",
+      "score": 6.55,
+      "reasons": [
+        "+2.49 rating 5 from 6 ratings",
+        "+1.06 133 downloads",
+        "+2 at least 90 s",
+        "+1 tags wind"
+      ]
+    },
+    {
+      "rank": 25,
+      "freesoundId": 796202,
+      "name": "Interior wooden house in the countryside, wind and crickets",
+      "url": "https://freesound.org/people/fran_marenco/sounds/796202/",
+      "author": "fran_marenco",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "durationSec": 246,
+      "samplerate": 48000,
+      "channels": 2,
+      "avgRating": 4.8,
+      "numRatings": 5,
+      "numDownloads": 167,
+      "previewUrl": "https://cdn.freesound.org/previews/796/796202_3557494-hq.mp3",
+      "score": 6.48,
+      "reasons": [
+        "+2.36 rating 4.8 from 5 ratings",
+        "+1.11 167 downloads",
+        "+2 at least 90 s",
+        "+1 tags wind"
+      ]
     }
-  ],
-  "screening": {
-    "screenedOn": "2026-10-14",
-    "tagger": "PANNs CNN14 (Cnn14_mAP=0.431), AudioSet 527 classes, 1 s frames",
-    "reranker": "laion/clap-htsat-unfused",
-    "thresholds": {
-      "denyFrameProbability": 0.15,
-      "alarmFrameProbability": 0.05,
-      "requiredFrameProbability": 0.2,
-      "requiredFraction": 0.5,
-      "windowSeconds": 64
-    },
-    "policy": {
-      "families": [
-        "alarms",
-        "percussion",
-        "brass",
-        "music",
-        "voices",
-        "vehicles",
-        "engines",
-        "tools",
-        "phones_media",
-        "thunder",
-        "gunfire"
-      ],
-      "exempt": [],
-      "required": [
-        [
-          "Wind",
-          "Wind noise (microphone)"
-        ]
-      ],
-      "clapPrompt": "wind hissing over an empty desert of sand, no people"
-    },
-    "verdict": "unfilled",
-    "unfilledReason": "required sound absent: Wind / Wind noise (microphone)",
-    "chosen": null,
-    "candidates": [
-      {
-        "rank": 1,
-        "freesoundId": 825860,
-        "name": "Desert sand - Dune atmosphere",
-        "url": "https://freesound.org/people/Vrymaa/sounds/825860/",
-        "author": "Vrymaa",
-        "durationSec": 128.2,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Wind noise (microphone)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 128,
-          "cleanSeconds": 97,
-          "topClasses": [
-            {
-              "label": "Vehicle",
-              "max": 0.6367
-            },
-            {
-              "label": "Pink noise",
-              "max": 0.5612
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.5362
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.4851
-            },
-            {
-              "label": "Aircraft engine",
-              "max": 0.3959
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.637,
-              "atSecond": 121
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.536,
-              "atSecond": 121
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.485,
-              "atSecond": 121
-            },
-            {
-              "label": "Aircraft engine",
-              "max": 0.396,
-              "atSecond": 121
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 2,
-        "freesoundId": 574397,
-        "name": "Semi desert insects ravens birds quiet with bad mic noise BADLANDS AB 190818.flac",
-        "url": "https://freesound.org/people/TRP/sounds/574397/",
-        "author": "TRP",
-        "durationSec": 125.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Wind noise (microphone)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 125,
-          "cleanSeconds": 118,
-          "topClasses": [
-            {
-              "label": "Cricket",
-              "max": 0.7161
-            },
-            {
-              "label": "Insect",
-              "max": 0.6162
-            },
-            {
-              "label": "Purr",
-              "max": 0.5919
-            },
-            {
-              "label": "Crow",
-              "max": 0.5243
-            },
-            {
-              "label": "Animal",
-              "max": 0.4658
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Speech",
-              "max": 0.215,
-              "atSecond": 2
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.182,
-              "atSecond": 14
-            },
-            {
-              "label": "Honk",
-              "max": 0.123,
-              "atSecond": 106
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 3,
-        "freesoundId": 796194,
-        "name": "Wind in the desert countryside 2",
-        "url": "https://freesound.org/people/fran_marenco/sounds/796194/",
-        "author": "fran_marenco",
-        "durationSec": 165.3,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Wind noise (microphone)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 165,
-          "cleanSeconds": 114,
-          "topClasses": [
-            {
-              "label": "Thunder",
-              "max": 0.6824
-            },
-            {
-              "label": "Insect",
-              "max": 0.599
-            },
-            {
-              "label": "Fly, housefly",
-              "max": 0.5049
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.4691
-            },
-            {
-              "label": "Rain",
-              "max": 0.4581
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.682,
-              "atSecond": 128
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.469,
-              "atSecond": 128
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.295,
-              "atSecond": 148
-            },
-            {
-              "label": "Music",
-              "max": 0.283,
-              "atSecond": 3
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 4,
-        "freesoundId": 796193,
-        "name": "Wind in the desert countryside 1",
-        "url": "https://freesound.org/people/fran_marenco/sounds/796193/",
-        "author": "fran_marenco",
-        "durationSec": 446,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Wind noise (microphone)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 446,
-          "cleanSeconds": 212,
-          "topClasses": [
-            {
-              "label": "Bee, wasp, etc.",
-              "max": 0.9396
-            },
-            {
-              "label": "Insect",
-              "max": 0.9159
-            },
-            {
-              "label": "Fly, housefly",
-              "max": 0.76
-            },
-            {
-              "label": "Waves, surf",
-              "max": 0.6338
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.5806
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.581,
-              "atSecond": 51
-            },
-            {
-              "label": "Speech",
-              "max": 0.453,
-              "atSecond": 97
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.304,
-              "atSecond": 435
-            },
-            {
-              "label": "Boat, Water vehicle",
-              "max": 0.253,
-              "atSecond": 240
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.213,
-              "atSecond": 51
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.197,
-              "atSecond": 51
-            },
-            {
-              "label": "Ship",
-              "max": 0.193,
-              "atSecond": 47
-            },
-            {
-              "label": "Music",
-              "max": 0.159,
-              "atSecond": 317
-            },
-            {
-              "label": "Honk",
-              "max": 0.115,
-              "atSecond": 72
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0.063
-            }
-          ]
-        }
-      },
-      {
-        "rank": 5,
-        "freesoundId": 557552,
-        "name": "Dark Sahara Egypt",
-        "url": "https://freesound.org/people/szegvari/sounds/557552/",
-        "author": "szegvari",
-        "durationSec": 78.9,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Wind noise (microphone)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 78,
-          "cleanSeconds": 15,
-          "topClasses": [
-            {
-              "label": "Vehicle",
-              "max": 0.7511
-            },
-            {
-              "label": "Gong",
-              "max": 0.5319
-            },
-            {
-              "label": "Music",
-              "max": 0.475
-            },
-            {
-              "label": "Civil defense siren",
-              "max": 0.4163
-            },
-            {
-              "label": "Train",
-              "max": 0.315
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Vehicle",
-              "max": 0.751,
-              "atSecond": 58
-            },
-            {
-              "label": "Gong",
-              "max": 0.532,
-              "atSecond": 22
-            },
-            {
-              "label": "Music",
-              "max": 0.475,
-              "atSecond": 33
-            },
-            {
-              "label": "Civil defense siren",
-              "max": 0.416,
-              "atSecond": 49
-            },
-            {
-              "label": "Train",
-              "max": 0.315,
-              "atSecond": 11
-            },
-            {
-              "label": "Siren",
-              "max": 0.292,
-              "atSecond": 49
-            },
-            {
-              "label": "Car",
-              "max": 0.278,
-              "atSecond": 58
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.233,
-              "atSecond": 32
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.199,
-              "atSecond": 32
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.179,
-              "atSecond": 58
-            },
-            {
-              "label": "Microwave oven",
-              "max": 0.178,
-              "atSecond": 54
-            },
-            {
-              "label": "Train whistle",
-              "max": 0.155,
-              "atSecond": 11
-            },
-            {
-              "label": "Train horn",
-              "max": 0.144,
-              "atSecond": 32
-            },
-            {
-              "label": "Steam whistle",
-              "max": 0.101,
-              "atSecond": 11
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 6,
-        "freesoundId": 701185,
-        "name": "Slight wind whistle, city hum and plane passing near the desert in 29Palms outskirts",
-        "url": "https://freesound.org/people/felix.blume/sounds/701185/",
-        "author": "felix.blume",
-        "durationSec": 298.7,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Wind noise (microphone)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 298,
-          "cleanSeconds": 63,
-          "topClasses": [
-            {
-              "label": "Thunder",
-              "max": 0.7029
-            },
-            {
-              "label": "Train",
-              "max": 0.6905
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.5329
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.5227
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.484
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Thunder",
-              "max": 0.703,
-              "atSecond": 103
-            },
-            {
-              "label": "Train",
-              "max": 0.691,
-              "atSecond": 139
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.533,
-              "atSecond": 249
-            },
-            {
-              "label": "Rail transport",
-              "max": 0.523,
-              "atSecond": 139
-            },
-            {
-              "label": "Railroad car, train wagon",
-              "max": 0.484,
-              "atSecond": 139
-            },
-            {
-              "label": "Thunderstorm",
-              "max": 0.479,
-              "atSecond": 103
-            },
-            {
-              "label": "Emergency vehicle",
-              "max": 0.348,
-              "atSecond": 231
-            },
-            {
-              "label": "Siren",
-              "max": 0.335,
-              "atSecond": 140
-            },
-            {
-              "label": "Police car (siren)",
-              "max": 0.222,
-              "atSecond": 231
-            },
-            {
-              "label": "Aircraft",
-              "max": 0.206,
-              "atSecond": 89
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.192,
-              "atSecond": 235
-            },
-            {
-              "label": "Fixed-wing aircraft, airplane",
-              "max": 0.166,
-              "atSecond": 89
-            },
-            {
-              "label": "Fire engine, fire truck (siren)",
-              "max": 0.164,
-              "atSecond": 231
-            },
-            {
-              "label": "Civil defense siren",
-              "max": 0.151,
-              "atSecond": 140
-            },
-            {
-              "label": "Ambulance (siren)",
-              "max": 0.106,
-              "atSecond": 120
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 7,
-        "freesoundId": 705515,
-        "name": "Footsteps on dirt, gravel and sand, with slight wind and city hum",
-        "url": "https://freesound.org/people/felix.blume/sounds/705515/",
-        "author": "felix.blume",
-        "durationSec": 179.8,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Wind noise (microphone)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 179,
-          "cleanSeconds": 171,
-          "topClasses": [
-            {
-              "label": "Walk, footsteps",
-              "max": 0.8115
-            },
-            {
-              "label": "Whip",
-              "max": 0.7614
-            },
-            {
-              "label": "Eruption",
-              "max": 0.2726
-            },
-            {
-              "label": "Run",
-              "max": 0.24
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.2333
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Artillery fire",
-              "max": 0.233,
-              "atSecond": 105
-            },
-            {
-              "label": "Vehicle",
-              "max": 0.161,
-              "atSecond": 119
-            },
-            {
-              "label": "Wind noise (microphone)",
-              "max": 0.159,
-              "atSecond": 43
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      },
-      {
-        "rank": 8,
-        "freesoundId": 705747,
-        "name": "Footsteps wearing sneakers walking on sand gravel in the desert with road hum",
-        "url": "https://freesound.org/people/felix.blume/sounds/705747/",
-        "author": "felix.blume",
-        "durationSec": 90.1,
-        "verdict": "reject",
-        "reason": "required sound absent: Wind / Wind noise (microphone)",
-        "window": null,
-        "clapScore": null,
-        "evidence": {
-          "frames": 90,
-          "cleanSeconds": 86,
-          "topClasses": [
-            {
-              "label": "Walk, footsteps",
-              "max": 0.8113
-            },
-            {
-              "label": "Fireworks",
-              "max": 0.5094
-            },
-            {
-              "label": "Firecracker",
-              "max": 0.4949
-            },
-            {
-              "label": "Whip",
-              "max": 0.4551
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.2107
-            }
-          ],
-          "deniedMax": [
-            {
-              "label": "Fireworks",
-              "max": 0.509,
-              "atSecond": 82
-            },
-            {
-              "label": "Firecracker",
-              "max": 0.495,
-              "atSecond": 82
-            },
-            {
-              "label": "Artillery fire",
-              "max": 0.211,
-              "atSecond": 56
-            },
-            {
-              "label": "Gunshot, gunfire",
-              "max": 0.198,
-              "atSecond": 56
-            }
-          ],
-          "requiredFraction": [
-            {
-              "group": [
-                "Wind",
-                "Wind noise (microphone)"
-              ],
-              "fraction": 0
-            }
-          ]
-        }
-      }
-    ]
-  }
+  ]
 }

@@ -92,17 +92,29 @@ export function updateSeries(
   }
 }
 
-/** Deletes the series, its chapters (by cascade) and every file they own. */
-export function deleteSeries(deps: SeriesServiceDeps, seriesId: string): void {
+/**
+ * Deleting removes rows and files that a running chapter may still write. So the runs come first:
+ * `stopRuns` cancels them and resolves once they have stopped (or the wait has timed out).
+ */
+export interface RemovalDeps extends SeriesServiceDeps {
+  stopRuns: (chapterIds: readonly string[]) => Promise<void>;
+}
+
+/** Deletes the series, its chapters (by cascade) and every file they own, once their runs have stopped. */
+export async function deleteSeries(deps: RemovalDeps, seriesId: string): Promise<void> {
   const existing = seriesRepo.get(deps.db, seriesId);
-  for (const chapter of chapterRepo.listBySeries(deps.db, seriesId)) {
+  const chapters = chapterRepo.listBySeries(deps.db, seriesId);
+  await deps.stopRuns(chapters.map((chapter) => chapter.id));
+  for (const chapter of chapters) {
     deps.files.deleteChapterFiles(chapter.id);
   }
   seriesRepo.delete(deps.db, seriesId);
   if (existing?.coverUri) deps.files.deleteFile(existing.coverUri);
 }
 
-export function deleteChapter(deps: SeriesServiceDeps, chapterId: string): void {
+/** Deletes a chapter and its files, once its run has stopped. */
+export async function deleteChapter(deps: RemovalDeps, chapterId: string): Promise<void> {
+  await deps.stopRuns([chapterId]);
   chapterRepo.delete(deps.db, chapterId);
   deps.files.deleteChapterFiles(chapterId);
 }

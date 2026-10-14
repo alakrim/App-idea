@@ -22,6 +22,7 @@ export function createLlmPort({ openrouter }: LlmPortDeps): LlmPort {
           ...(request.jsonSchema === undefined ? {} : { jsonSchema: request.jsonSchema }),
           ...(request.signal === undefined ? {} : { signal: request.signal }),
           ...(request.cacheSystem === undefined ? {} : { cacheSystem: request.cacheSystem }),
+          ...(request.maxOutputTokens === undefined ? {} : { maxTokens: request.maxOutputTokens }),
         });
         return {
           text: reply.text,

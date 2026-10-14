@@ -60,6 +60,8 @@ export interface PipelineRuntime {
   idle(): Promise<void>;
   subscribeQueue(listener: (snapshot: QueueSnapshot) => void): () => void;
   subscribeEvents(listener: (event: PipelineEvent) => void): () => void;
+  /** Called when the chapter queue first fails to save. Saving is retried on the next change. */
+  subscribeSaveFailures(listener: () => void): () => void;
 }
 
 export function createPipelinePorts(options: PipelineRuntimeOptions): PipelinePorts {
@@ -115,5 +117,6 @@ export function createPipelineRuntime(options: PipelineRuntimeOptions): Pipeline
     idle: () => queue.idle(),
     subscribeQueue: (listener) => queue.subscribe(listener),
     subscribeEvents: (listener) => service.subscribeEvents(listener),
+    subscribeSaveFailures: (listener) => service.subscribeSaveFailures(listener),
   };
 }
