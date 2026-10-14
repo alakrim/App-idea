@@ -67,24 +67,18 @@ const BASE_BED_ASSETS: Record<BasePackId, number> = {
  * `npm run sounds:verify` both check that the two lists agree.
  */
 const REAL_BED_ASSETS = {
-  light_rain: require('../../assets/ambience/real/light_rain.m4a'),
-  heavy_rain: require('../../assets/ambience/real/heavy_rain.m4a'),
-  rain_on_window: require('../../assets/ambience/real/rain_on_window.m4a'),
-  storm_wind: require('../../assets/ambience/real/storm_wind.m4a'),
   forest_day_birds: require('../../assets/ambience/real/forest_day_birds.m4a'),
   forest_night: require('../../assets/ambience/real/forest_night.m4a'),
-  ocean_waves: require('../../assets/ambience/real/ocean_waves.m4a'),
   river_stream: require('../../assets/ambience/real/river_stream.m4a'),
-  open_field_wind: require('../../assets/ambience/real/open_field_wind.m4a'),
+  waterfall: require('../../assets/ambience/real/waterfall.m4a'),
+  cave_drip: require('../../assets/ambience/real/cave_drip.m4a'),
+  meadow_insects: require('../../assets/ambience/real/meadow_insects.m4a'),
+  snowfall_quiet: require('../../assets/ambience/real/snowfall_quiet.m4a'),
+  library_quiet: require('../../assets/ambience/real/library_quiet.m4a'),
+  crowd_murmur: require('../../assets/ambience/real/crowd_murmur.m4a'),
   city_street_day: require('../../assets/ambience/real/city_street_day.m4a'),
   city_night: require('../../assets/ambience/real/city_night.m4a'),
-  market_crowd: require('../../assets/ambience/real/market_crowd.m4a'),
-  cafe_soft: require('../../assets/ambience/real/cafe_soft.m4a'),
   train_interior: require('../../assets/ambience/real/train_interior.m4a'),
-  mountain_wind: require('../../assets/ambience/real/mountain_wind.m4a'),
-  tavern_crowd: require('../../assets/ambience/real/tavern_crowd.m4a'),
-  war_drums: require('../../assets/ambience/real/war_drums.m4a'),
-  horse_trot: require('../../assets/ambience/real/horse_trot.m4a'),
 };
 
 const ASSET_BY_ID: ReadonlyMap<string, number> = new Map<string, number>([

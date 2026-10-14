@@ -35,7 +35,7 @@ describe('installed beds', () => {
   });
 
   it('keeps the real beds on the Freesound source with their credit and page', () => {
-    expect(realManifest).toHaveLength(18);
+    expect(realManifest).toHaveLength(12);
     for (const row of realManifest) {
       const bed = INSTALLED_BEDS.get(row.id);
       expect(bed?.meta).toMatchObject({
@@ -73,16 +73,16 @@ describe('installed beds', () => {
 
 describe('resolveInstalledBed', () => {
   it('plays the real bed for the exact category', () => {
-    expect(resolveInstalledBed('light_rain')?.id).toBe('light_rain');
-    expect(resolveInstalledBed('heavy_rain')?.id).toBe('heavy_rain');
-    expect(resolveInstalledBed('horse_trot')?.id).toBe('horse_trot');
+    expect(resolveInstalledBed('forest_night')?.id).toBe('forest_night');
+    expect(resolveInstalledBed('waterfall')?.id).toBe('waterfall');
+    expect(resolveInstalledBed('train_interior')?.id).toBe('train_interior');
   });
 
   it('falls back to a real bed on the chain before the base pack', () => {
     // jungle_insects has no real bed: forest_day_birds (real) comes before base_* on its chain.
     expect(resolveInstalledBed('jungle_insects')?.id).toBe('forest_day_birds');
-    // ship_deck is an AI-generated category: its chain reaches the real ocean_waves bed.
-    expect(resolveInstalledBed('ship_deck')?.id).toBe('ocean_waves');
+    // ship_deck has no real bed and its chain ends at base_ocean (ocean_waves is unfilled, A4).
+    expect(resolveInstalledBed('ship_deck')?.id).toBe('base_ocean');
   });
 
   it('keeps the base pack for categories with no real bed on their chain', () => {
@@ -97,5 +97,22 @@ describe('resolveInstalledBed', () => {
 
   it('skips an unknown category without throwing', () => {
     expect(resolveInstalledBed('dragon_roar')).toBeNull();
+  });
+
+  describe('with a chapter era (A4)', () => {
+    it('never plays a modern bed in a medieval (historic) chapter: a town gets the historic crowd, not the street', () => {
+      expect(resolveInstalledBed('city_street_day', 'historic')?.id).not.toBe('city_street_day');
+      expect(resolveInstalledBed('city_night', 'historic')?.id).not.toBe('city_night');
+    });
+
+    it('keeps a storm in a medieval chapter timeless: thunderstorm is unfilled, so the chain gives timeless rain', () => {
+      const bed = resolveInstalledBed('thunderstorm', 'historic');
+      expect(bed).not.toBeNull();
+      expect(getCategory(bed?.id ?? '')?.era ?? 'timeless').toBe('timeless');
+    });
+
+    it('plays a modern bed in a modern chapter', () => {
+      expect(resolveInstalledBed('train_interior', 'modern')?.id).toBe('train_interior');
+    });
   });
 });
