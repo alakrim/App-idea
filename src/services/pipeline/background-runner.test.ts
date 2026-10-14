@@ -238,6 +238,24 @@ describe('createBackgroundRunner', () => {
     expect(ended).toBe(true);
   });
 
+  it('keeps the task pending when the queue reports idle for a moment while work remains', async () => {
+    const h = harness();
+    createBackgroundRunner(h.deps);
+    h.setQueue({ running: null, pending: [A] });
+    const task = h.taskPending();
+    let ended = false;
+    void task?.then(() => {
+      ended = true;
+    });
+
+    // The drain loop has not started yet, so the queue's idle promise settles at once.
+    h.idleResolve();
+    await Promise.resolve();
+    await Promise.resolve();
+
+    expect(ended).toBe(false);
+  });
+
   it('does not start when work arrives while the app is in the background', async () => {
     const h = harness({ active: false });
     createBackgroundRunner(h.deps);

@@ -1,8 +1,10 @@
 /*
  * Keeps the app's chapter preparation alive while the app is in the background. When the queue has
  * work and the app is in the foreground, it starts a platform foreground service. The service's task
- * awaits the queue's idle promise: the pipeline keeps running in the same JS runtime, and the task
- * only keeps the process and its timers alive. The service stops when the queue is idle or paused.
+ * stays pending until this runner stops it: the pipeline keeps running in the same JS runtime, and
+ * the task only keeps the process and its timers alive. The service stops when the queue is idle or
+ * paused. The task never ends on its own, because the library stops the service when its task
+ * settles without telling us, and a momentary idle queue would then leave work unprotected.
  *
  * The notification shows the running chapter's title and its step, and it is updated at most once
  * every NOTIFICATION_INTERVAL_MS. A start that the platform refuses is reported in the status (the
@@ -77,6 +79,8 @@ export function createBackgroundRunner(deps: BackgroundRunnerDeps): BackgroundRu
   let latest: ChapterProgress | null = null;
   /** Bumped by every stop, so a start that completes after a stop is undone. */
   let generation = 0;
+  /** Settles the running service's task. Only `stop` calls it. */
+  let releaseTask: () => void = () => undefined;
 
   const notification = (): ForegroundNotification => {
     const chapterId = snapshot.running ?? snapshot.pending[0] ?? null;
@@ -115,6 +119,8 @@ export function createBackgroundRunner(deps: BackgroundRunnerDeps): BackgroundRu
   const stop = (): void => {
     generation += 1;
     throttle.cancel();
+    releaseTask();
+    releaseTask = () => undefined;
     const current = status.get();
     if (current.state === 'running') {
       status.set({ state: 'stopped', lastStartedAt: current.lastStartedAt, failure: null });
@@ -130,27 +136,29 @@ export function createBackgroundRunner(deps: BackgroundRunnerDeps): BackgroundRu
     const startedAt = now();
     const attempt = ++generation;
     status.set({ state: 'starting', lastStartedAt: current.lastStartedAt, failure: null });
-    service
-      .start(() => queue.idle(), notification())
-      .then(
-        () => {
-          if (attempt !== generation) {
-            service.stop().catch(() => undefined);
-            return;
-          }
-          status.set({ state: 'running', lastStartedAt: startedAt, failure: null });
-          // Progress that moved while the start was in flight is shown now, not at the next event.
-          throttle.request();
-        },
-        (error: unknown) => {
-          if (attempt !== generation) return;
-          status.set({
-            state: 'failed',
-            lastStartedAt: status.get().lastStartedAt,
-            failure: failureTextOf(error),
-          });
-        },
-      );
+    const task = (): Promise<void> =>
+      new Promise<void>((resolve) => {
+        releaseTask = resolve;
+      });
+    service.start(task, notification()).then(
+      () => {
+        if (attempt !== generation) {
+          service.stop().catch(() => undefined);
+          return;
+        }
+        status.set({ state: 'running', lastStartedAt: startedAt, failure: null });
+        // Progress that moved while the start was in flight is shown now, not at the next event.
+        throttle.request();
+      },
+      (error: unknown) => {
+        if (attempt !== generation) return;
+        status.set({
+          state: 'failed',
+          lastStartedAt: status.get().lastStartedAt,
+          failure: failureTextOf(error),
+        });
+      },
+    );
   };
 
   /** Starts the service when work waits and the app is in the foreground, unless one is up. */

@@ -20,7 +20,6 @@ _Last updated: 2026-10-11 (night) by architect_
 
 ## Work in flight
 - **A4** clean ambience v2: 50+ single-purpose, era-aware beds with AudioSet/CLAP screening (`docs/briefs/A4-clean-ambience-v2.md`). A worker is on it. It replaces A3's contaminated picks (storm with sirens, etc.). **A3 must not ship as is.**
-- **N4** background chapter preparation via a foreground service (dataSync) plus a headless JS task (`react-native-background-actions@4.1.0`, installed). **User-approved 2026-10-13.** Brief `docs/briefs/N4-background-preparation.md`; it starts after N3 lands.
 - **Q1 AAA QA audit: done.** Four reports in `docs/qa/2026-10-13-QA-{A,B,C,D}-*.md`, each spot-verified by the architect. Fix waves:
   - **F1** player/audio: ✅ **accepted**. All 6 P1s fixed, plus P2-1–4, P2-8–12, P2-14, P2-17–18 and the P3s.
   - **F2** UI/a11y, **F3** data integrity (alias spoiler leak, playability, stale translations, ledger, storage, keep paid passages, PDF cap) and **F4** performance (catalogue snapshot writes, DOM re-parsing, N+1 queries, lazy extraction stack): queued after N3 lands, because they overlap its files.
@@ -268,3 +267,46 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
 - **Architect change: freeze detection by heartbeat.** The app beats every 1 s, and a request is retired only if the beats stopped for more than 10 s (a real freeze). A short trip away (the notification shade), or a background stretch while N4's foreground service keeps JS alive, no longer retires live, possibly already-billed requests. A gap the heartbeat sees itself retires at once, even in the background. Tests added; mutation (always retire) → 3 failures; restored 14/14.
 - **Evidence (architect)**: typecheck green; full jest 2,012/2,013. The 1 failure is `estimate.test.ts`, whose expected cost moved with A4's prompt and taxonomy change; A4 must update it. Lint failures remain only in A4 in-progress files.
 - **For N4**: while the foreground service runs, the watchdog must keep running in the background (today it is suspended in the background).
+
+## N4 + L1 accepted (2026-10-14)
+### N4: background preparation
+- **Built:**
+  - Plugin `plugins/with-background-processing.js`: `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_DATA_SYNC` and `POST_NOTIFICATIONS`; dataSync type on the library service; a monochrome `ic_stat_lectio` icon. The scratch prebuild shows the lines.
+  - Runner `src/services/pipeline/background-runner.ts`: starts in the foreground when the queue has work and stops when it is idle or paused. The notification shows the chapter title and step, with a progress bar, throttled to every 2 s; a tap opens `lectio://`.
+  - A start failure degrades to keep-awake plus the notice.
+  - The watchdog keeps counting in the background while the service is alive.
+  - A one-time permission sheet.
+  - Diagnostics probe `background-service`.
+- **Architect fix:** the service task is now released only by the runner's stop. Before, it awaited `queue.idle()`, which can settle at once when the drain hasn't started; the library then stops the service on task end without telling JS, so the runner believed it was running. New test; mutation (the old task) → 1 failure; restored 18/18.
+- **Open:**
+  - Settings copy for turning notifications on (in the settings area).
+  - One source for the stage verbs (`chapter-status.ts` vs the notification copy; a parity test guards it for now).
+  - A designer icon.
+  - Android 15 `onTimeout` stops the service silently (the heartbeat covers the later freeze).
+- **Device checks:**
+  - The notification appears and updates.
+  - 10 min with the screen off.
+  - Permission denied.
+  - A tap on the notification opens the library.
+  - The merged APK manifest.
+
+### L1: listening model
+- **Built:**
+  - Migration `0004`: `chapter_positions`, `bookmarks` (one per sentence), `series.playback_rate`. The backfill computes media time from the segments.
+  - Per-chapter resume. A finished chapter restarts, and is marked unfinished after 5 s.
+  - Row progress bar, "12 min left", "Finished", and a "Now" pill.
+  - Bookmarks: transport button, sentence action, sheets on the player and series screens, notes, swipe or accessibility-action delete.
+  - Speed per series, plus Settings → Playback default speed.
+  - The furthest point (the spoiler cutoff) still only moves forward.
+- **Evidence:**
+  - Worker: full jest 2,162 green; starred mutations caught.
+  - Architect: typecheck and lint green, 69 suites and 514 tests in scope, and the migration SQL reviewed. Mutation: resume returning 0 → 3 failures; restored 47/47.
+- **Open:**
+  - Device checks: swipe, sheet scroll, slider.
+  - A light-theme contrast pass.
+
+### Tree status (architect, after N4 + L1)
+- typecheck and lint green
+- jest 229 suites, 2,163 tests green
+- boot:check OK
+- Only `sounds:verify` fails, in A4's in-progress work.
