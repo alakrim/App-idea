@@ -1,9 +1,9 @@
-import { type AmbienceEra, bedFitsEra, getCategory, isEnabledKind } from './ambience-taxonomy';
+import { bedFitsEra, getCategory, isEnabledKind } from './ambience-taxonomy';
 import { CUE_LIMITS } from './limits';
 import { ambienceCategoryIdSchema, rawCueSchema } from './schemas';
 import { estimateSpeechSeconds } from '../text/speech-rate';
 
-import type { AmbienceCategoryId } from './ambience-taxonomy';
+import type { AmbienceCategoryId, AmbienceEra } from './ambience-taxonomy';
 import type { IntensityLevel, SentenceInput, ValidatedCue } from './types';
 
 export type CueDropReason =

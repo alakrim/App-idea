@@ -1,17 +1,17 @@
 import { runAnalysisCall } from './analysis-call';
+import { chapterEraOf } from './chapter-era';
 import { MAX_CHUNK_TOKENS, MEMORY_LIMITS } from './limits';
 import { mergeMemoryDrafts } from './merge-memory';
 import { buildAnalysisPrompt, buildSummaryReducePrompt } from './prompts';
 import { truncateWords } from './schemas';
-import { chapterEraOf } from './chapter-era';
 import { validateCues } from './validate-cues';
 import { runOrdered } from '../async/ordered-pool';
 import { addUsage, throwIfCancelled, ZERO_USAGE } from '../llm/transport';
 import { planLlmChunks } from '../text/chunk';
 import { normalizeWhitespace } from '../text/normalize';
 
-import type { AnalysisCallResult } from './analysis-call';
 import type { AmbienceEra } from './ambience-taxonomy';
+import type { AnalysisCallResult } from './analysis-call';
 import type { Lang, MemoryFields, SentenceInput, ValidatedCue } from './types';
 import type { DroppedCue } from './validate-cues';
 import type { LlmTransport, LlmUsage } from '../llm/transport';

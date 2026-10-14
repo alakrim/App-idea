@@ -19,7 +19,6 @@ import {
 const LABELS = ['Rain', 'Siren', 'Civil defense siren', 'Speech'];
 const RAIN = 0;
 const SIREN = 1;
-const CIVIL = 2;
 
 /** Tag rows for `frames` seconds: rain everywhere unless a row overrides a column. */
 function tagsWith(frames, overrides = {}) {

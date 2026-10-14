@@ -10,6 +10,7 @@
 // Run: npm run sounds:screen
 // Optional: -- --only=light_rain,heavy_rain   -- --no-clap (rank by curation order only)
 
+import { Buffer } from 'node:buffer';
 import { execFile } from 'node:child_process';
 import { mkdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
