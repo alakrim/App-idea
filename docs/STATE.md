@@ -367,3 +367,26 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
   - The FTS trigram proposal (needs a migration and a search-quality check).
   - `previewUrl` parses twice.
   - Profile Readability and Defuddle on a device (~11 s per 3 MB on this box).
+
+## A4 status (2026-10-14): partial, phase 2 running
+- **Built:**
+  - Taxonomy v2: 65 beds, each with `era`, `contains` and `mustNotContain`; the `analysis-v3` prompt outputs a chapter `era`; validate-cues drops cues that conflict with the era; resolve-bed is era-safe.
+  - AudioSet (PANNs) + CLAP screening with per-clip persistence.
+  - Real beds at 48 kbps, 60 s loops.
+  - Mutation: the A3 siren storm (515886) is rejected; with no rules it passes.
+- **Result: only 12 real beds pass** (4.5 MB):
+  - timeless: forest by day and night, river, waterfall, cave, meadow, snowfall, library
+  - historic: crowd murmur
+  - modern: city by day and night, train
+
+  The other 49 fail on supply: the required sound is absent, or a sound is denied, or the clip is shorter than 64 s, and the rain beds miss −28 ±1 LUFS by 0.1 dB at the true-peak ceiling. Sci-fi stays procedural.
+- **Architect decisions for phase 2:**
+  - A limiter before the final loudnorm, real beds only; the base pack stays byte-identical.
+  - 45 s loops allowed for clips of 46–63 s.
+  - 25 candidates per category plus alternate queries, and BigSoundBank/OpenGameArt CC0 as second sources.
+  - The thresholds are unchanged.
+- **Open:**
+  - **Era persistence**: `era` is not yet stored on the chapter or passed to `resolveInstalledBed`. It needs the analyze stage and the player store; it is a follow-up brief after F3.
+  - An ADR-0005 amendment: 24 MB, 48 kbps, 45/60 s loops, screening thresholds, era rules.
+  - `cave_drip` peak at exactly −3 dBTP.
+- **AI-generated beds** (castle hall, forge, battlefield…) would need ElevenLabs on a paid plan: the user's decision.
