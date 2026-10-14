@@ -347,3 +347,23 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
   - Mini-player nested button (QA-C P1-6) still to verify.
   - Device checks: TalkBack, FlatList look, 48 dp, light theme.
   - A stray empty `/tok_edit.py` outside the repo (a safety check blocked its removal; harmless).
+
+## F4 accepted (2026-10-14)
+- **Catalogue:** the snapshot is written only after a network fetch; in-flight de-duplication (3 concurrent calls → 1 request); lazy hydrate.
+- **Estimate:** debounced 300 ms; `.catch` with an error state and Retry (`retryEstimate()`).
+- **Extraction:** one full-page parse instead of 4, with Defuddle on a clone. The 3 MB page median went from 90.8 s to 11.4 s on a loaded box; relative only.
+- **Defuddle:** the browser build with `parseAsync()`, so the site extractors are kept. Parity goldens: SHA-256 of the full result on 6 fixtures × 2 entry points.
+- **Boot:** the extraction stack loads lazily (`core/extract/load.ts`). Boot went from 2,612 to 2,316 modules and from 4.98 MB to 4.01 MB evaluated (−19.6 %).
+- **Bundle:** JS −651 KB (−10.3 %), Hermes −811 KB (−9.1 %).
+- **DB:** the ledger total uses `WHERE chapter_id`, the segment count uses `COUNT(*)`, and `setTranslations` is a chunked `UPDATE … CASE`.
+- **Dead code removed:** `bootstrap.ts`, `services/extraction/index.ts`, `openrouter/cost.ts`, `cueRepo.insert`, `narrationProfileRepo.get`, and others.
+- **CI:** `.github/workflows/verify.yml` runs `npm ci` and `npm run verify` on pull requests and on pushes to main and this branch; ffmpeg is installed if missing. **It will be red until A4's `sounds:verify` passes.**
+- **Evidence (architect):**
+  - typecheck and lint green (after fixing one import-order line in `app/(tabs)/settings.tsx`)
+  - **full jest 247 suites, 2,342 tests green**
+  - bundle:check and boot:check OK
+  - mutation: a snapshot write on a cache hit → 1 failure; restored 15/15
+- **Open:**
+  - The FTS trigram proposal (needs a migration and a search-quality check).
+  - `previewUrl` parses twice.
+  - Profile Readability and Defuddle on a device (~11 s per 3 MB on this box).

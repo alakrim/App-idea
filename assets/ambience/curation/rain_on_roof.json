@@ -227,15 +227,9 @@
       ],
       "clapPrompt": "rain drumming on a roof heard from inside a building, no thunder"
     },
-    "verdict": "filled",
-    "unfilledReason": null,
-    "chosen": {
-      "freesoundId": 521773,
-      "windowStartSeconds": 27,
-      "windowSeconds": 64,
-      "steadinessDb": 1.26,
-      "clapScore": 0.567
-    },
+    "verdict": "unfilled",
+    "unfilledReason": "build checks: no screened candidate passed the build checks (521773: rain_on_roof: integrated loudness -26.9 LUFS is outside the target; 398581: rain_on_roof: integrated loudness -26.8 LUFS is outside the target)",
+    "chosen": null,
     "candidates": [
       {
         "rank": 1,

@@ -120,28 +120,28 @@ const today = () => new Date().toISOString().slice(0, 10);
 const round = (value, places) => Math.round(value * 10 ** places) / 10 ** places;
 
 /**
- * The Freesound id and the window start to build for a category. The screen's choice is used unless
- * the override names another candidate, which must have passed the screen too.
+ * The candidates to try for a category, in order. An override names one candidate, which must have
+ * passed the screen. Otherwise the screen's choice comes first, then the other passing candidates in
+ * CLAP order. A candidate that fails the loudness, peak or seam check is skipped for the next one.
  */
-function chooseSoundId(target, curation, overrides) {
+function attemptsFor(target, curation, overrides) {
   const screening = curation.screening;
   if (!screening) throw new Error(`${target.id}: not screened; run npm run sounds:screen first`);
+  const passers = screening.candidates.filter((c) => c.verdict === 'pass' && c.window !== null);
   const override = overrides[target.id];
+  const toAttempt = (c) => ({ freesoundId: c.freesoundId, windowStartSeconds: c.window.startSeconds });
   if (override) {
-    const candidate = screening.candidates.find((c) => c.freesoundId === override.freesoundId);
-    if (!candidate || candidate.verdict !== 'pass' || candidate.window === null) {
-      throw new Error(`${target.id}: override ${override.freesoundId} did not pass the screen`);
-    }
-    return {
-      freesoundId: override.freesoundId,
-      windowStartSeconds: candidate.window.startSeconds,
-      how: `override: ${override.reason}`,
-    };
+    const candidate = passers.find((c) => c.freesoundId === override.freesoundId);
+    if (!candidate) throw new Error(`${target.id}: override ${override.freesoundId} did not pass the screen`);
+    return { attempts: [toAttempt(candidate)], how: `override: ${override.reason}` };
   }
   if (screening.verdict !== 'filled' || screening.chosen === null) return null;
+  const rest = passers
+    .filter((c) => c.freesoundId !== screening.chosen.freesoundId)
+    .sort((a, b) => (b.clapScore ?? Number.NEGATIVE_INFINITY) - (a.clapScore ?? Number.NEGATIVE_INFINITY));
+  const first = passers.find((c) => c.freesoundId === screening.chosen.freesoundId);
   return {
-    freesoundId: screening.chosen.freesoundId,
-    windowStartSeconds: screening.chosen.windowStartSeconds,
+    attempts: [first, ...rest].filter((c) => c !== undefined).map(toAttempt),
     how: 'screened (AudioSet clean window, CLAP re-rank)',
   };
 }
@@ -268,6 +268,51 @@ async function updateLedger(entries) {
   await writeFile(LEDGER_PATH, `${JSON.stringify([...kept, ...freesound], null, 2)}\n`);
 }
 
+/**
+ * Writes a build-time failure into the curation record, so verify sees the category as unfilled with the
+ * reason. A later screen (npm run sounds:screen) replaces the record and the category can be tried again.
+ */
+async function recordBuildFailure(id, reason) {
+  const path = join(CURATION_DIR, `${id}.json`);
+  const record = JSON.parse(await readFile(path, 'utf8'));
+  record.screening = {
+    ...record.screening,
+    verdict: 'unfilled',
+    unfilledReason: `build checks: ${reason}`,
+    chosen: null,
+  };
+  await writeFile(path, `${JSON.stringify(record, null, 2)}\n`);
+}
+
+/**
+ * Builds the first candidate of a category that passes every check. A candidate that fails is logged
+ * and skipped. The override, when there is one, is the only candidate tried.
+ */
+async function buildFirstPassing({ client, choice, workDir }) {
+  const failures = [];
+  for (const attempt of choice.attempts) {
+    try {
+      const sound = await client.sound(attempt.freesoundId);
+      if (sound.license !== CC0_LICENSE_URL) {
+        throw new Error(`Freesound ${sound.id} is "${sound.license}", not CC0`);
+      }
+      const built = await buildBed({
+        client,
+        target: choice.target,
+        sound,
+        windowStartSeconds: attempt.windowStartSeconds,
+        how: choice.how,
+        workDir,
+      });
+      return { ...built, freesoundId: sound.id };
+    } catch (err) {
+      failures.push(`${attempt.freesoundId}: ${err.message.split('\n')[0]}`);
+      console.log(`  skipped ${choice.id} candidate ${attempt.freesoundId}: ${err.message.split('\n')[0]}`);
+    }
+  }
+  return { error: `no screened candidate passed the build checks (${failures.join('; ')})` };
+}
+
 function onlyFilter(args) {
   const flag = args.find((arg) => arg.startsWith('--only='));
   if (!flag) return null;
@@ -304,11 +349,10 @@ async function main() {
     const curation = curationSchema.parse(
       JSON.parse(await readFile(join(CURATION_DIR, `${target.id}.json`), 'utf8')),
     );
-    const choice = chooseSoundId(target, curation, overrides);
+    const choice = attemptsFor(target, curation, overrides);
     if (choice === null) unfilled.push(target.id);
     else choices.push({ id: target.id, ...choice, target });
   }
-  assertNoDuplicateSounds(choices);
 
   await mkdir(REAL_DIR, { recursive: true });
   const existing = await readJsonIfExists(REAL_MANIFEST_PATH, manifestSchema, []);
@@ -317,25 +361,18 @@ async function main() {
   const workDir = await mkdtemp(join(tmpdir(), 'lectio-freesound-'));
   try {
     for (const choice of choices) {
-      const sound = await client.sound(choice.freesoundId);
-      if (sound.license !== CC0_LICENSE_URL) {
-        throw new Error(
-          `${choice.id}: Freesound ${sound.id} is "${sound.license}", not CC0; rejected`,
-        );
+      const built = await buildFirstPassing({ client, choice, workDir });
+      if (built.error) {
+        console.log(`UNFILLED ${choice.id}: ${built.error}`);
+        unfilled.push(choice.id);
+        await recordBuildFailure(choice.id, built.error);
+        continue;
       }
-      console.log(`building ${choice.id} from Freesound ${sound.id} (${choice.how})`);
-      const { entry, seam } = await buildBed({
-        client,
-        target: choice.target,
-        sound,
-        windowStartSeconds: choice.windowStartSeconds,
-        how: choice.how,
-        workDir,
-      });
+      const { entry, seam, freesoundId, how } = built;
       rows.set(choice.id, entry);
       console.log(
-        `  ${entry.file}: ${entry.durationMs} ms, ${entry.lufs} LUFS, seam dRMS ` +
-          `${round(seam.rmsDiffDb, 2)} dB (limit ${round(seam.limitDb, 2)}), jump ` +
+        `  ${entry.file} from Freesound ${freesoundId} (${how}): ${entry.durationMs} ms, ${entry.lufs} LUFS, ` +
+          `seam dRMS ${round(seam.rmsDiffDb, 2)} dB (limit ${round(seam.limitDb, 2)}), jump ` +
           `${round(seam.jumpRatio, 2)}x (limit ${round(seam.jumpLimit, 2)}), ${entry.bytes} bytes`,
       );
     }
@@ -346,6 +383,7 @@ async function main() {
   const manifest = FREESOUND_TARGETS.map((target) => rows.get(target.id)).filter(
     (entry) => entry !== undefined,
   );
+  assertNoDuplicateSounds(manifest);
   if (only === null) await removeStaleFiles(manifest);
   await writeFile(REAL_MANIFEST_PATH, `${JSON.stringify(manifest, null, 2)}\n`);
   await updateLedger(manifest);
