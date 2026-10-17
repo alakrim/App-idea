@@ -13,7 +13,7 @@ _Last updated: 2026-10-17 by the architect. Keep this file under about 500 words
 - Every OpenRouter speech model, newest first (Fish Drama 3). Reliable ambience: analysis prompt v4, a cue cache, a fallback and a cue report. 34 category ambience beds plus 6 base beds.
 
 ## Work in flight
-- **Cleanup (user instruction):** keep only this branch and one APK. Delete `claude/charming-fermat-srbk25` and `claude/vigilant-brahmagupta-mbgfm3` once their useful docs are archived or merged. `claude/test-100-credit-64yv57` is GitHub's default branch: the user must change the default to this branch, then it can be deleted.
+- **Cleanup (user instruction):** done here. `apk-builds` holds only `ced9221`, and the local worktrees are removed. **Remote branches `claude/charming-fermat-srbk25`, `claude/vigilant-brahmagupta-mbgfm3` and `claude/test-100-credit-64yv57` could not be deleted from this session** (the proxy refuses ref deletion), so the user deletes them on GitHub after setting the default branch to this one. All three are fully contained here: charming-fermat up to `54b3d2e` is merged, and its later WIP docs are in `docs/archive/`.
 - **Debug sweep, phase 1:** the audits in `docs/briefs/Q2-debug-audit.md` (QA-E audio/player/background, QA-F pipeline/data/cost, QA-G UX/a11y/perf), at most 2 workers at once. Then fix waves, P1 first, each with mutation-checked tests. Then one APK and a device checklist.
 
 ## Session rules (user)
