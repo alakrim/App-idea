@@ -102,8 +102,8 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
 
   function loadSlot(slot: Slot, segmentIdx: number | null, seekMs: number | null): void {
     if (segmentIdx === null || segments[segmentIdx] === undefined) {
+      // Not the lock screen: the active player keeps it, and a released chapter clears it in releaseSlots.
       slot.player.pause();
-      slot.player.clearLockScreenControls();
       slot.holds = null;
       slot.pendingSeekMs = null;
       return;
@@ -139,12 +139,12 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
     return active === 0 ? 1 : 0;
   }
 
+  /**
+   * Hands the lock screen to the incoming player. expo-audio moves the session to it in one step.
+   * Clearing the outgoing player first would release the MediaSession and drop the foreground
+   * notification at every segment boundary (QA-E E-01), so the outgoing player is left alone.
+   */
   function activate(slot: Slot): void {
-    const [a, b] = slots ?? [];
-    if (!a || !b) return;
-    for (const other of [a, b]) {
-      if (other !== slot) other.player.clearLockScreenControls();
-    }
     slot.player.setActiveForLockScreen(true, lockScreenMetadata(), LOCK_SCREEN_OPTIONS);
   }
 

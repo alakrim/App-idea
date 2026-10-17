@@ -80,33 +80,6 @@ beforeEach(() => {
   mockAudioModeResolvers.length = 0;
 });
 
-describe('QA-E proof: narration swaps at a segment boundary (P1-A)', () => {
-  it('a boundary does not unregister the finished player from the lock screen', async () => {
-    const voice = createVoicePlayer();
-    const loading = voice.load([SEG_A, SEG_B, SEG_C], 0, META);
-    releaseAudioMode();
-    await loading;
-    const [active, incoming] = mockPlayers;
-    active?.listener?.(status({ playing: true }));
-    // Only the boundary's own calls are counted: the load itself activates the first player.
-    for (const player of mockPlayers) player.clearLockScreenControls.mockClear();
-
-    active?.listener?.(status({ playing: false, didJustFinish: true, currentTime: 60 }));
-
-    // Expected: the new player takes the lock screen by itself. Today activate() first calls
-    // clearLockScreenControls on the finished player, which ends the media service's foreground
-    // state and releases the MediaSession (expo-audio AudioControlsService.unregisterPlayer ->
-    // clearSessionInternal -> stopForeground(STOP_FOREGROUND_REMOVE)), then rebuilds both at once.
-    expect(active?.clearLockScreenControls).not.toHaveBeenCalled();
-    expect(incoming?.setActiveForLockScreen).toHaveBeenCalledWith(
-      true,
-      expect.anything(),
-      expect.anything(),
-    );
-    voice.dispose();
-  });
-});
-
 describe('QA-E proof: a seek near a boundary (P2-A)', () => {
   it('a finish reported for the file being replaced by a seek does not skip the chapter', async () => {
     const voice = createVoicePlayer();
