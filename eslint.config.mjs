@@ -11,7 +11,7 @@ const iconImportRestriction = {
 };
 
 export default defineConfig([
-  globalIgnores(['dist/', '.expo/', 'node_modules/', 'android/', 'ios/', 'web-build/']),
+  globalIgnores(['dist/', '.expo/', '.claude/', 'node_modules/', 'android/', 'ios/', 'web-build/']),
   expo,
   {
     files: ['**/*.{ts,tsx}'],
