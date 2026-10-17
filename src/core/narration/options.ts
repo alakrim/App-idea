@@ -4,6 +4,7 @@
  * request carries and the limits to tell the user about. Prices are not here: they come from the
  * live catalogue every time. Pure, so it runs in Node tests and on the device.
  */
+import { isFishModel } from './capabilities';
 import { defaultVoiceFor, KOKORO_LANGUAGES, primaryLanguage } from './voices';
 import { DEFAULT_TTS_MAX_CHARS } from '../text/chunk';
 
@@ -20,8 +21,6 @@ export interface NarratorOption {
   readonly supportsStyle: boolean;
   /** The languages the narrator speaks, or `multi` when it speaks all of them. */
   readonly languages: readonly Lang[] | 'multi';
-  /** Longest text, in characters, sent in one speech request. Fewer requests mean fewer rate-limit hits. */
-  readonly segmentMaxChars: number;
   /** A short, honest note about limits or trade-offs, shown on the card. */
   readonly notes: string;
   /**
@@ -35,8 +34,8 @@ export const KOKORO_MODEL_ID = 'hexgrad/kokoro-82m';
 export const GEMINI_NARRATOR_MODEL_ID = 'google/gemini-3.8-flash-lite-tts';
 export const FREE_NARRATOR_MODEL_ID = 'fish-audio/s2.1-pro-free:free';
 
-/** Fish sends at most this much text per request. It is well under the 4,000-character guard. */
-const FREE_SEGMENT_MAX_CHARS = 1_800;
+/** Fish models take longer passages per request: 1,800 characters, well under the 4,000-character guard. */
+const FISH_SEGMENT_MAX_CHARS = 1_800;
 
 const GEMINI_DEFAULT_VOICE = 'Kore';
 
@@ -70,7 +69,6 @@ export const NARRATOR_OPTIONS: readonly NarratorOption[] = [
     tagline: 'Our default. Warm, steerable narration in every language.',
     supportsStyle: true,
     languages: 'multi',
-    segmentMaxChars: DEFAULT_TTS_MAX_CHARS,
     notes: 'Follows your style notes, so you can steer how it reads.',
     defaultVoice: (_lang, voices) => pickVoice([GEMINI_DEFAULT_VOICE], voices),
   },
@@ -81,7 +79,6 @@ export const NARRATOR_OPTIONS: readonly NarratorOption[] = [
     tagline: 'Clear, natural voices at a fraction of the price.',
     supportsStyle: false,
     languages: KOKORO_LANGUAGES,
-    segmentMaxChars: DEFAULT_TTS_MAX_CHARS,
     notes: 'Speaks only the languages listed. Choose it for those.',
     defaultVoice: (lang, voices) =>
       voices.length === 0
@@ -95,7 +92,6 @@ export const NARRATOR_OPTIONS: readonly NarratorOption[] = [
     tagline: 'No cost. Multilingual narration with daily limits.',
     supportsStyle: false,
     languages: 'multi',
-    segmentMaxChars: FREE_SEGMENT_MAX_CHARS,
     notes:
       'OpenRouter limits free models per minute and per day. When the day runs out, narration resumes after it resets, and finished audio is kept.',
     defaultVoice: (_lang, voices) => pickVoice([], voices),
@@ -114,7 +110,10 @@ export function isLanguageSupported(option: NarratorOption, lang: Lang): boolean
   return option.languages.some((spoken) => primaryLanguage(spoken) === family);
 }
 
-/** The segment size for a speech model. Models outside the three narrators use the default. */
+/**
+ * The longest text, in characters, sent in one speech request. Fish models take more per request,
+ * and fewer requests mean fewer rate-limit hits. Every other speech model uses the default.
+ */
 export function segmentMaxCharsFor(modelId: string): number {
-  return optionFor(modelId)?.segmentMaxChars ?? DEFAULT_TTS_MAX_CHARS;
+  return isFishModel(modelId) ? FISH_SEGMENT_MAX_CHARS : DEFAULT_TTS_MAX_CHARS;
 }

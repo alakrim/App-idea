@@ -57,6 +57,7 @@ const GEMINI: OpenRouterModel = {
   outputModalities: ['speech'],
   supportedParameters: ['instructions'],
   supportedVoices: ['Zephyr', 'Puck', 'Kore'],
+  createdAt: null,
 };
 const KOKORO: OpenRouterModel = {
   id: KOKORO_MODEL_ID,
@@ -67,6 +68,7 @@ const KOKORO: OpenRouterModel = {
   outputModalities: ['speech'],
   supportedParameters: [],
   supportedVoices: ['af_heart', 'if_sara', 'pf_dora'],
+  createdAt: null,
 };
 const FREE: OpenRouterModel = {
   id: FREE_NARRATOR_MODEL_ID,
@@ -77,6 +79,7 @@ const FREE: OpenRouterModel = {
   outputModalities: ['speech'],
   supportedParameters: [],
   supportedVoices: [],
+  createdAt: null,
 };
 
 function settingsWith(narration: NarrationSettings, targetLang: string | null = 'it') {

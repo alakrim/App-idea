@@ -12,7 +12,7 @@ import { settingsRepo } from '@/db/repos/settings-repo';
 import { createMemoryLibraryFiles } from '../__fixtures__/memory-library-files';
 import { narrationProfileFor, narrationProfileId } from '../narration-id';
 import { createAudioFiles, removeSegmentFilesFrom } from './audio-files';
-import { createCatalog, supportsStyle } from './catalog';
+import { createCatalog } from './catalog';
 import { createChapterStore } from './chapter-store';
 import { createJobStore, QUEUE_SETTING_KEY } from './job-store';
 import { fileNameOf } from './pdf-text-source';
@@ -35,17 +35,6 @@ describe('narrationProfileId', () => {
     const profile = narrationProfileFor(NARRATION);
     expect(profile.name).toBe(`Kore (${DEFAULT_NARRATION.model})`);
     expect(profile.id).toBe(narrationProfileId(NARRATION));
-  });
-});
-
-describe('supportsStyle', () => {
-  it('is true for Gemini TTS models and for models that list the instructions parameter', () => {
-    expect(supportsStyle({ id: 'google/gemini-3.8-flash-lite-tts', supportedParameters: [] })).toBe(
-      true,
-    );
-    expect(supportsStyle({ id: 'vendor/voice', supportedParameters: ['instructions'] })).toBe(true);
-    expect(supportsStyle({ id: 'hexgrad/kokoro-82m', supportedParameters: [] })).toBe(false);
-    expect(supportsStyle({ id: 'google/gemini-flash', supportedParameters: [] })).toBe(false);
   });
 });
 

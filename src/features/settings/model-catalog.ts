@@ -26,6 +26,8 @@ const storedModelSchema = z.object({
   outputModalities: z.array(z.string()),
   supportedParameters: z.array(z.string()),
   supportedVoices: z.array(z.string()),
+  // Snapshots written before the catalogue date was kept read as no date.
+  createdAt: z.number().nullable().default(null),
 });
 
 const snapshotSchema = z.object({
@@ -72,18 +74,29 @@ export function catalogFailureMessage(error: unknown): string {
   return 'The model list could not be loaded. Check your connection and try again.';
 }
 
-/** Loads the catalog for one modality, falling back to the saved snapshot when the request fails. */
+/** True once a catalog is on hand, live or from the saved snapshot. */
+export function isLoaded(state: CatalogState): boolean {
+  return state.status === 'live' || state.status === 'cached';
+}
+
+interface SettledCatalog {
+  attempt: number;
+  modality: OutputModality;
+  state: CatalogState;
+}
+
+/**
+ * Loads the catalog for one modality, falling back to the saved snapshot when the request fails.
+ * Every mount asks OpenRouter at once. A reload keeps the models on screen and reports
+ * `refreshing` until the reply lands, so a pull-to-refresh does not blank the list.
+ */
 export function useModelCatalog(
   client: OpenRouterClient,
   outputModality: OutputModality,
   readCache: (modality: OutputModality) => CachedCatalog | null = readCachedCatalog,
-): { state: CatalogState; reload: () => void } {
+): { state: CatalogState; refreshing: boolean; reload: () => void } {
   const [attempt, setAttempt] = useState(0);
-  const [settled, setSettled] = useState<{
-    attempt: number;
-    modality: OutputModality;
-    state: CatalogState;
-  } | null>(null);
+  const [settled, setSettled] = useState<SettledCatalog | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -93,7 +106,7 @@ export function useModelCatalog(
     };
 
     client.models
-      .list({ outputModality, signal: controller.signal })
+      .list({ outputModality, fresh: true, signal: controller.signal })
       .then((models) => finish({ status: 'live', models }))
       .catch((error: unknown) => {
         const cached = readCache(outputModality);
@@ -110,12 +123,15 @@ export function useModelCatalog(
     };
   }, [client, outputModality, readCache, attempt]);
 
-  // A result only counts for the request that produced it. Anything else is still loading.
-  const current =
-    settled !== null && settled.attempt === attempt && settled.modality === outputModality
-      ? settled.state
-      : LOADING;
-  return { state: current, reload: () => setAttempt((value) => value + 1) };
+  const latest = settled !== null && settled.modality === outputModality ? settled : null;
+  // The last loaded list stays on screen while a reload is in flight. Anything else is loading.
+  const previous = latest !== null && isLoaded(latest.state) ? latest.state : null;
+  const answered = latest !== null && latest.attempt === attempt;
+  return {
+    state: latest !== null && answered ? latest.state : (previous ?? LOADING),
+    refreshing: !answered && previous !== null,
+    reload: () => setAttempt((value) => value + 1),
+  };
 }
 
 const LOADING: CatalogState = { status: 'loading' };

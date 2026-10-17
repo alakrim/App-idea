@@ -8,6 +8,8 @@ export type OutputModality = 'text' | 'speech' | 'embeddings';
 
 export interface ListModelsOptions {
   outputModality?: OutputModality;
+  /** Asks OpenRouter now, even when a copy is cached. The cache is still refreshed with the reply. */
+  fresh?: boolean;
   signal?: AbortSignal;
 }
 
@@ -26,6 +28,8 @@ export interface OpenRouterModel {
   outputModalities: string[];
   supportedParameters: string[];
   supportedVoices: string[];
+  /** When OpenRouter added the model, in epoch milliseconds. Null when the catalogue has no date. */
+  createdAt: number | null;
 }
 
 export interface ModelCatalog {
@@ -36,9 +40,19 @@ export interface ModelCatalog {
   hydrate(payload: string): boolean;
 }
 
+/**
+ * How long a cached list is served without asking again. Speech lists move faster (new voice
+ * models appear every few days), so they expire after 10 minutes; text lists after an hour.
+ */
+export const CATALOG_TTL_MS: Readonly<Record<OutputModality, number>> = {
+  text: 60 * 60 * 1000,
+  speech: 10 * 60 * 1000,
+  embeddings: 60 * 60 * 1000,
+};
+
 interface ModelCatalogDeps {
   transport: Transport;
-  ttlMs: number;
+  ttlMs: Readonly<Record<OutputModality, number>>;
   now: () => number;
 }
 
@@ -47,12 +61,18 @@ const priceSchema = z
   .regex(/^\d+(\.\d+)?(e-?\d+)?$/i)
   .transform((value) => Number(value));
 
+/** OpenRouter sends `created` in unix seconds. A missing or non-numeric value reads as no date. */
+function createdAtFromSeconds(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) ? value * 1000 : null;
+}
+
 /** Wire shape, trimmed to the fields we use. Unknown fields are stripped. */
 const apiModelSchema = z
   .object({
     id: z.string().min(1),
     name: z.string(),
     context_length: z.number().nullish(),
+    created: z.unknown().optional(),
     pricing: z.object({ prompt: priceSchema.optional(), completion: priceSchema.optional() }),
     architecture: z.object({
       input_modalities: z.array(z.string()),
@@ -70,9 +90,11 @@ const apiModelSchema = z
     outputModalities: model.architecture.output_modalities,
     supportedParameters: model.supported_parameters ?? [],
     supportedVoices: model.supported_voices ?? [],
+    createdAt: createdAtFromSeconds(model.created),
   }));
 
-/** Camel-case shape used in memory and in persisted snapshots. */
+/** Camel-case shape used in memory and in persisted snapshots. Snapshots from before `createdAt`
+ * existed read it as no date, so they stay usable. */
 const storedModelSchema: z.ZodType<OpenRouterModel> = z.object({
   id: z.string(),
   name: z.string(),
@@ -82,6 +104,7 @@ const storedModelSchema: z.ZodType<OpenRouterModel> = z.object({
   outputModalities: z.array(z.string()),
   supportedParameters: z.array(z.string()),
   supportedVoices: z.array(z.string()),
+  createdAt: z.number().nullable().default(null),
 });
 
 const listResponseSchema = z.object({ data: z.array(z.unknown()) });
@@ -109,7 +132,9 @@ export function createModelCatalog(deps: ModelCatalogDeps): ModelCatalog {
     async list(options = {}) {
       const modality = options.outputModality ?? 'text';
       const cached = entries.get(modality);
-      if (cached && deps.now() - cached.fetchedAt < deps.ttlMs) return cached.models;
+      const withinTtl =
+        cached !== undefined && deps.now() - cached.fetchedAt < deps.ttlMs[modality];
+      if (cached && withinTtl && options.fresh !== true) return cached.models;
 
       const response = await deps.transport.request(
         {
@@ -156,7 +181,7 @@ export function createModelCatalog(deps: ModelCatalogDeps): ModelCatalog {
 }
 
 /** Keeps the models that pass validation. One malformed entry must not hide the rest. */
-function parseModelItems(items: unknown[]): OpenRouterModel[] {
+export function parseModelItems(items: unknown[]): OpenRouterModel[] {
   const models: OpenRouterModel[] = [];
   for (const item of items) {
     const parsed = apiModelSchema.safeParse(item);

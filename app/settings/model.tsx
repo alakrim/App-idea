@@ -1,8 +1,9 @@
 import { router, useLocalSearchParams } from 'expo-router';
+import { useState } from 'react';
 import { View } from 'react-native';
 
 import { useOpenRouter } from '@/app-shell/openrouter-provider';
-import { isModelMissing, useModelCatalog } from '@/features/settings/model-catalog';
+import { isLoaded, isModelMissing, useModelCatalog } from '@/features/settings/model-catalog';
 import { modelKindConfig, parseModelKind, type ModelKind } from '@/features/settings/model-kinds';
 import { ModelNotice } from '@/features/settings/model-notice';
 import { ModelPicker } from '@/features/settings/model-picker';
@@ -36,9 +37,12 @@ function Picker({ kind }: { kind: ModelKind }) {
   const { settings, patch } = useSettings();
   const config = modelKindConfig(kind, settings);
   const catalog = useModelCatalog(client, config.modality);
+  // The clock is read once per visit, so "New" badges do not change while the picker is open.
+  const [openedAt] = useState(() => Date.now());
 
-  const loaded = catalog.state.status === 'live' || catalog.state.status === 'cached';
-  const models = 'models' in catalog.state ? catalog.state.models.filter(config.accept) : [];
+  const loaded = isLoaded(catalog.state);
+  const models =
+    'models' in catalog.state ? config.arrange(catalog.state.models.filter(config.accept)) : [];
   const isMissing = isModelMissing(catalog.state, config.selectedId);
 
   return (
@@ -66,6 +70,9 @@ function Picker({ kind }: { kind: ModelKind }) {
           recommendedId={config.recommendedId}
           describe={config.describe}
           searchLabel={config.searchLabel}
+          isNew={(model) => config.isNew(model, openedAt)}
+          refreshing={catalog.refreshing}
+          onRefresh={catalog.reload}
           onSelect={(model) => {
             patch(config.patchFor(model));
             router.back();

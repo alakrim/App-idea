@@ -32,6 +32,7 @@ _Last updated: 2026-10-11 by architect_
   - F2 player UX: after F1
   - Gemini cost options: answered in chat; the cost levers are pending the paid test
 _None. Waiting on the user's device test of `lectio-0.1.0-c3eac7a-arm64.apk` (apk-builds branch). It fixes the Library crash (cover monogram at font size 0). The user asked for bug fixes only until they have tested properly._
+- **N2** (worker, branch `worktree-agent-aa832b725fb210ea0`, awaiting review): every OpenRouter speech model is listed, newest first after the three narrators, with a "New" badge (30 days) and "Default voice" for voice-less models. Fish Audio Drama 3 is included, Seed Audio is excluded, the speech catalogue is fetched live on open with a 10-minute cache, and the picker can be pulled to refresh.
 
 - **AM1** (reliable ambience, ADR-0005 amendment 2026-10-17): implemented on branch `worktree-agent-abfdfc00ef800c3f4` (deterministic analysis, prompt v3, cue cache, single-bed fallback, cue report). Awaiting architect review and the device listening test.
 

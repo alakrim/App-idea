@@ -50,12 +50,9 @@ describe('NARRATOR_OPTIONS catalogue', () => {
     expect(new Set(NARRATOR_OPTIONS.map((entry) => entry.modelId)).size).toBe(3);
   });
 
-  it('sizes every segment under the 4,000-character speech guard', () => {
-    expect(option('best').segmentMaxChars).toBe(600);
-    expect(option('budget').segmentMaxChars).toBe(600);
-    expect(option('free').segmentMaxChars).toBe(1_800);
+  it('sizes every curated segment under the 4,000-character speech guard', () => {
     for (const entry of NARRATOR_OPTIONS) {
-      expect(entry.segmentMaxChars).toBeLessThan(4_000);
+      expect(segmentMaxCharsFor(entry.modelId)).toBeLessThan(4_000);
     }
   });
 
@@ -135,9 +132,22 @@ describe('defaultVoice', () => {
 });
 
 describe('segmentMaxCharsFor', () => {
-  it('uses each narrator size, and the default for any other speech model', () => {
+  it('gives every Fish Audio model 1,800 characters, Free and paid alike', () => {
     expect(segmentMaxCharsFor(FREE_NARRATOR_MODEL_ID)).toBe(1_800);
+    expect(segmentMaxCharsFor('fish-audio/drama-3')).toBe(1_800);
+    expect(segmentMaxCharsFor('fish-audio/s2.1-pro')).toBe(1_800);
+  });
+
+  it('gives every other speech model the 600-character default', () => {
     expect(segmentMaxCharsFor(GEMINI_NARRATOR_MODEL_ID)).toBe(600);
+    expect(segmentMaxCharsFor(KOKORO_MODEL_ID)).toBe(600);
     expect(segmentMaxCharsFor('elevenlabs/eleven-v3')).toBe(600);
+  });
+});
+
+describe('narrators for models outside the three', () => {
+  it('has no narrator option for a model that is not curated, so the language guard never applies', () => {
+    expect(optionFor('fish-audio/drama-3')).toBeNull();
+    expect(optionFor('bytedance-seed/seed-audio-1-0')).toBeNull();
   });
 });
