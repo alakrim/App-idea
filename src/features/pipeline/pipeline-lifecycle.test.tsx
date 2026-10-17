@@ -8,11 +8,7 @@ import type { PipelineEvent } from '@/core/pipeline/context';
 import type { QueueSnapshot } from '@/core/pipeline/queue';
 import { createTestDb } from '@/db/__fixtures__/test-db';
 import { DbContext } from '@/db/hooks';
-<<<<<<< HEAD
 import * as processingService from '@/services/background';
-=======
-import { settingsStore } from '@/features/settings/settings-store';
->>>>>>> 54b3d2e
 import type { PipelineRuntime } from '@/services/pipeline';
 import { createForegroundStatus } from '@/services/pipeline/foreground-status';
 import { ThemeProvider } from '@/ui/theme';
@@ -52,7 +48,6 @@ const apiKey: { status: 'unknown' | 'missing' | 'present' } = { status: 'present
 jest.mock('@/services/secrets', () => ({
   useApiKeyStatus: () => apiKey.status,
 }));
-<<<<<<< HEAD
 // The native service is replaced: Jest cannot run a foreground service.
 jest.mock('@/services/background', () => ({
   startProcessing: jest.fn(() => Promise.resolve(true)),
@@ -66,35 +61,6 @@ jest.mock('@/services/background', () => ({
 // The explainer has its own tests. Here the user has already answered it.
 jest.mock('@/features/settings/settings-store', () => ({
   useSettings: () => ({ settings: { notificationsExplained: true }, patch: jest.fn() }),
-=======
-jest.mock('@gorhom/bottom-sheet', () =>
-  require('../../__tests__/helpers/feature-mocks').bottomSheetStub(),
-);
-
-// The native adapters are stand-ins: the foreground service and the permission are set per test.
-const mockForegroundService = {
-  supported: false,
-  start: jest.fn((_task: () => Promise<void>, _notification: unknown) => Promise.resolve()),
-  update: jest.fn((_notification: unknown) => Promise.resolve()),
-  stop: jest.fn(() => Promise.resolve()),
-};
-jest.mock('@/services/background/foreground-service', () => ({
-  createForegroundService: () => mockForegroundService,
-}));
-const mockPermission = {
-  isGranted: jest.fn((): Promise<boolean> => Promise.resolve(true)),
-  request: jest.fn((): Promise<boolean> => Promise.resolve(true)),
-};
-jest.mock('@/services/background/notification-permission', () => ({
-  createNotificationPermission: () => mockPermission,
-}));
-const mockAppForeground = {
-  isActive: () => true,
-  subscribe: () => () => undefined,
-};
-jest.mock('@/services/background/app-foreground', () => ({
-  createAppForeground: () => mockAppForeground,
->>>>>>> 54b3d2e
 }));
 
 const CHAPTER = '01J00000000000000000000CHP';
@@ -104,20 +70,12 @@ const RUNNING: QueueSnapshot = { running: CHAPTER, pending: [], waiting: [] };
 /** A runtime whose queue and events the test drives by hand. */
 function fakeRuntime() {
   const snapshotListeners = new Set<(snapshot: QueueSnapshot) => void>();
-<<<<<<< HEAD
   const eventListeners = new Set<(event: PipelineEvent) => void>();
-=======
-  let eventListener: ((event: PipelineEvent) => void) | null = null;
->>>>>>> 54b3d2e
   let paused = false;
   const facade = { subscribe: jest.fn(() => () => undefined), cancel: jest.fn() };
   const runtime = {
-<<<<<<< HEAD
     facade,
-=======
-    facade: { subscribe: () => () => undefined },
     foreground: createForegroundStatus(false),
->>>>>>> 54b3d2e
     restore: jest.fn(() => Promise.resolve()),
     resume: jest.fn(() => {
       paused = false;

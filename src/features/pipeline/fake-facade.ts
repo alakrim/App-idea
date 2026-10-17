@@ -100,11 +100,8 @@ function idleSnapshot(chapterId: string): ChapterProgress {
     estimatedTotalMs: null,
     costUsdSoFar: 0,
     error: null,
-<<<<<<< HEAD
     retryAt: null,
-=======
     reconnecting: false,
->>>>>>> 54b3d2e
   };
 }
 
@@ -181,11 +178,8 @@ export function createFakePipeline(options: FakePipelineOptions): PipelineFacade
         0,
       ),
       error: run.error,
-<<<<<<< HEAD
       retryAt: null,
-=======
       reconnecting: false,
->>>>>>> 54b3d2e
     };
   }
 

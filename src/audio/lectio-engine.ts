@@ -367,6 +367,12 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
       if (!mix.enabled) stopBeds();
     },
 
+    setCues(next: readonly AmbienceCue[]) {
+      if (disposed || !chapter) return;
+      cues = next.filter((cue) => cue.enabled);
+      if (sentenceIdx >= 0) planAt(sentenceIdx);
+    },
+
     previewBed(category: string, previewLevelDb: number, durationMs: number) {
       if (disposed) return;
       if (!isInRange(previewLevelDb, BED_LEVEL_RANGE_DB)) {

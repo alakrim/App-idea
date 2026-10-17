@@ -182,3 +182,221 @@ Ran our real `services/openrouter` client and the core analysis/translate engine
    - Known open item: the narrate concurrency orphan file when one segment of a pair fails (harmless, as the file is overwritten on retry).
    - **APK delivered**: `lectio-0.1.0-63a0b8c-arm64.apk` on branch `apk-builds` (bc2ca55), 45,770,786 bytes, SHA-256 `182ba146…60fa`, the same debug signing key (`fac61745…3b9c`), 10 permissions, Hermes bundle checked for the new strings, and the GitHub blob `a7d2bc35` matches the local file.
 3. ⛔ **A3: Freesound real ambience is BLOCKED by network policy**: `freesound.org` returns 403 at the proxy. The user must allow `freesound.org` and `cdn.freesound.org` in the environment's network settings (then start a new session). The key is stored outside the repo at `~/.config/lectio/freesound.key` (mode 600); this container is ephemeral, so the next session may need it re-supplied as an env secret (`FREESOUND_API_KEY`). The brief is ready: `docs/briefs/A3-freesound-ambience.md`.
+
+## Merged from charming-fermat (54b3d2e)
+
+Sections below are charming-fermat's unique history (incidents 3 and later, N2 to F4), appended by brief I3. The architect rewrites this file afterwards.
+
+## Incident 3: narration stops and starts like a scratched CD (2026-10-11 night), fixed in 254fbad
+- **Symptom (user):** playing a chapter, the AI voice keeps stopping and starting, chopped up.
+- **Root cause (architect, from the native sources of both libraries):** the app had **two audio-focus clients**. `native-engine.ts` subscribed to interruptions through react-native-audio-api's `AudioManager.observeAudioInterruptions(true)`, which on Android *requests* `AUDIOFOCUS_GAIN` (`AudioAPIModule.kt` → `AudioFocusListener.requestAudioFocus`). expo-audio requests `AUDIOFOCUS_GAIN_TRANSIENT` on every `play()` and abandons focus whenever no player is playing (`AudioModule.kt`, `onPlaybackStateChange`). The loop: voice plays → audio-api loses focus → interruption `began` → the engine pauses the voice → expo-audio abandons focus → audio-api regains it → `ended` with `shouldResume: true` (transient loss) → the engine plays → and again. It also started on any momentary stop (segment swap, seek, buffering).
+- **Fix:** expo-audio is the only focus client. It already pauses on focus loss and resumes after a transient one, and the engine follows through the voice snapshots. The native engine no longer listens through react-native-audio-api.
+- **Regression test:** `src/audio/native-engine.test.ts` fails if anything asks react-native-audio-api for focus (mutation-checked: it fails on the old code, `Expected number of calls: 0, Received: 1`). A second test checks the engine follows a native pause and resume without re-issuing play or pause.
+- **Evidence:** `npm run verify` exit 0 (183 suites, 1,740 tests, lint 0, typecheck, worklet:check OK, bundle OK). `npm run boot:check` OK.
+- **Device check wanted (S1):** a 10-minute listen across several segment boundaries; a phone call mid-chapter (the voice pauses and resumes); another music app started mid-chapter (the voice pauses).
+- **Noticed, not changed (backlog, user-visible):** ambience beds keep playing while the voice is paused, and 7 dB louder because ducking releases. They also keep playing through a phone call. Proposed: beds follow the transport (fade out on pause, error or end; fade back in on play; keep them through buffering), with a ~350 ms grace so segment swaps don't flicker them.
+- **Noticed (S1):** expo-audio 57 asks for `AUDIOFOCUS_GAIN_TRANSIENT`, not long-term `GAIN`, and drops focus at every momentary stop. With another music app paused in the background, that app may resume for a moment at each segment swap. If S1 shows it, the fix is a single-player playlist or a patch to expo-audio's focus type.
+
+### Freesound, 2026-10-11 night
+- The user reports full internet access now and supplied the key again. It is stored outside the repo at `~/.config/lectio/freesound.key` (mode 600) and is never written to the repo.
+- Every `freesound.org`, `cdn.freesound.org` and `labs.freesound.org` URL still returns **403**. This is **Freesound refusing this cloud IP, not our network policy**: the proxy passes the tunnel through, the TLS certificate is Freesound's own (Let's Encrypt, not the proxy's interception CA), and the 403 has an empty body and no server header. Other hosts (example.com, Openverse) work.
+- Reachable alternative: **Openverse** (`api.openverse.org`) indexes Freesound's CC0 catalogue (240 CC0 results for "rain", with author, licence and landing URL). But its audio URLs point at `cdn.freesound.org`, so the files still can't be downloaded from here.
+- Options for the user: (a) run the A3 download step on their own computer (a residential IP), then push the files; (b) use other CC0 sources reachable from here (Wikimedia Commons public-domain/CC0 field recordings; quality varies); (c) keep the procedural pack for now.
+
+### 2026-10-12: user report and requests
+- **Bug:** a Chinese chapter ("Ascending Jade Palace", ch. 1) failed at **narrate** with "OpenRouter is having trouble right now" (a 5xx after 3 retries). **Diagnosis:** TTS segments are cut at 600 chars for every script, and 600 Han chars is ~240 s of audio in one request, which runs into upstream gateway timeouts. Our 60 s client timeout is also too short for that. → N2.
+- **Slowness:** "even flash models take long". The pipeline is serial: analysis chunks one at a time, translation at concurrency 1, narration at 2, and first audio waits for full analysis and translation. → N2 (parallelism + stage timings in Diagnostics). Streaming and stage reordering is Phase 2 and needs an ADR.
+- **Requests:** keep researching and building real ambience from many sources (→ R5, then an implementation brief). Explore character voices and intonation independent of the TTS model (→ R6, feasibility first).
+
+### N2 accepted (2026-10-12)
+- **What it changed:**
+  - TTS segments are sized by **speech seconds** (Best/Budget 40 s, Free 120 s; first segment 12 s). Chars stay as an upper bound.
+  - Timeouts: speech 180 s, chat 120 s (per-request override in the transport).
+  - **Split-and-join fallback**: a stubborn passage of 2+ sentences that fails with a retryable error is spoken as two halves, then joined (`joinWav`/`joinMp3`).
+  - Narrate failures now name the passage: "didn't answer for passage N of M… Tap Retry".
+  - Concurrency 3 for analysis chunks, translation and narration (Free narrator: 1), through an **ordered pool** that still saves and streams segments in order.
+  - Diagnostics gets a **"Recent chapters"** block: stage durations, segment count, audio seconds.
+- **Plans** (from the fixture passages):
+  - 600-char Mandarin passage: 3 segments of 52–83 s before, 8 segments of ≤ 36 s after (first 6.8 s).
+  - 600-char English passage: 2 segments (47.6 s + 4.8 s) before, 3 segments (8.4 s + 39.2 s + 4.8 s) after.
+- **Evidence:**
+  - Worker: 24/24 mutation checks caught.
+  - Architect re-ran typecheck, lint (excluding A3's in-progress scripts), worklet:check and jest (190 suites, 1,825 tests), all green.
+  - Architect's own mutation check: the seconds budget removed gives 11 failures; restored, 66/66 pass.
+- **Accepted trade-off:** with translation concurrency 3, a chunk whose previous chunk is still in flight sees that chunk's source text but not its translation. The glossary keeps names consistent. Check quality on a real chapter.
+- **Phase 2 (needs an ADR):** stream translation into narration, or reorder stages, so first audio doesn't wait for full analysis and translation. Keep segments finished after a failure.
+- **Backlog:** after a translate failure, in-flight chunk calls may still record usage. `src/core/async/` is a new core folder; add it to CONVENTIONS.
+- **R5 done** (`docs/research/R5-ambience-sources.md`):
+  - In-app redistribution is clear for Freesound CC0, BigSoundBank (only files labelled CC0) and OpenGameArt (only files labelled CC0).
+  - ElevenLabs SFX is the only AI option that loops (paid plan).
+  - OpenRouter has no SFX model.
+- **R6 done** (`docs/research/R6-character-voices.md`):
+  - Feasible. Phases: P1 delivery directions → P2 narrator + 2–4 voices (Gemini 2-speaker) → P3 full cast.
+  - Prerequisites: hash-keyed resume, and a planner change for dialogue paragraphs (needs a listening test).
+  - Live risk: the app sends `speed` to every model. Probe it.
+
+### A3 built (2026-10-12), pending the user's ears
+- **18 real CC0 Freesound beds**:
+  - weather: light/heavy rain, rain on window, storm
+  - nature: forest by day and night, ocean, river, open field, mountain wind
+  - urban: city by day and night, market
+  - interiors: cafe, tavern
+  - transport: train, horse trot
+  - combat: war drums
+
+  Each is a 60 s seamless loop at −28 LUFS, AAC 64 kbps mono, about 495 KB. The real pack is 8.94 MB (budget 15 MB); with the base pack, about 11.9 MB of ambience is bundled.
+- **Tooling**: `npm run sounds:curate` / `sounds:build-real` / `sounds:test`. `verify` now also runs `sounds:test` and `sounds:verify`. Licence gate: exactly CC0, re-checked at build. Every file has a row in `LICENSES.json`. To replace a bed, set `assets/ambience/curation/overrides.json` and run `npm run sounds:build-real -- --only=<id>`. The key is read from the env and sent as a header only; a grep finds it in 0 repo files.
+- **App**: `ambience-pack.ts` requires the 18 real beds. `resolve-bed` prefers the exact real bed before the fallback chain (tests added).
+- **Evidence**: architect re-ran `npm run verify`, exit 0 (191 suites, 1,839 tests, `verify-pack: all checks passed`, sounds:test 39/39). Worker mutation: removing a require fails 4 tests.
+- **Risky beds to listen to first**:
+  - horse_trot: hoof rhythm at the seam
+  - war_drums: may be music
+  - storm_wind: has sirens
+  - heavy_rain: thunder
+  - market_crowd: only 3 ratings
+  - tavern and cafe: voices by design
+- **Backlog**:
+  - The A1 seam rule is lenient for rhythmic beds (a per-bed p99 limit).
+  - Diagnostics' audio probe now decodes 24 beds (measure the time).
+  - The 6 AI-generated beds from R5 (fireplace, castle hall, battlefield, gallop, ship deck, temple) need an ElevenLabs paid plan: the user's decision.
+
+### F1 accepted (2026-10-13)
+- **Fixed:**
+  - Auto-advance no longer bounces back, and it **autoplays** the next chapter (architect confirmed: audiobook norm).
+  - Beds follow the transport: a 350 ms debounce then a 600 ms fade, ducking only while the voice plays, the context suspended ~2 s after silence, and the sleep fade covers the beds.
+  - Settings drive ambience: one range, `core/playback/ranges.ts` (level −40…0, ducking 0…24, default 7).
+  - The playback error state with resume.
+  - `final` only on ready/failed, with a "Narration paused" end state.
+  - One sample output, which pauses and resumes the narration.
+  - Load sequence and dispose guards; seek before the segment is ready is kept.
+  - Decoded-bed cache sized by bytes (48 MB).
+  - 4 Hz render isolation.
+  - Follow fallback in the synced text.
+  - Predictive repeat.
+  - Copy per error cause.
+  - Screen-reader actions.
+  - Sleep ticker and "Sleep fading out".
+  - Preview cache capped at 20.
+  - Dead interruption path deleted.
+  - ADR-0002 amendment: `doNotMix` kept.
+- **Evidence:**
+  - Worker: mutation checks on P1-1/2/3/5 and P2-1/3/4.
+  - Architect: typecheck green; F1 scope lint clean; 45 suites, 398 tests green; reverting `app/player.tsx` fails `player-route` (1 failed), restoring it gives 2/2.
+- **Open:**
+  - `estimate.test.ts` fails (N3's area; it predates F1).
+  - P2-10 needs a profiler on a device.
+  - `.cache/` added to the eslint ignores (the A4 venv).
+
+### N3 accepted (2026-10-13)
+- **Built:**
+  - **Connection epochs** (`src/services/network/`): returning to the app retires requests whose socket died while frozen. They retry at once and don't count against retries.
+  - **Stall watchdog** (`core/pipeline/stall-watchdog.ts`): 90 s plus the request's timeout. After 3 stalls the chapter fails with resumable copy, and saved passages are kept.
+  - "Narrating · passage N of M", elapsed time after 30 s, "Reconnecting…".
+  - A one-time background notice.
+  - Diagnostics: last activity, stalls, stale aborts.
+  - Migration `0003` (`stage_activity`, cascades with its chapter).
+- **Time from the user's return to the retry**: up to ~110 s before (a stuck passage could hold a chapter for ~21 min), 0 ms after.
+- **Architect change: freeze detection by heartbeat.** The app beats every 1 s, and a request is retired only if the beats stopped for more than 10 s (a real freeze). A short trip away (the notification shade), or a background stretch while N4's foreground service keeps JS alive, no longer retires live, possibly already-billed requests. A gap the heartbeat sees itself retires at once, even in the background. Tests added; mutation (always retire) → 3 failures; restored 14/14.
+- **Evidence (architect)**: typecheck green; full jest 2,012/2,013. The 1 failure is `estimate.test.ts`, whose expected cost moved with A4's prompt and taxonomy change; A4 must update it. Lint failures remain only in A4 in-progress files.
+- **For N4**: while the foreground service runs, the watchdog must keep running in the background (today it is suspended in the background).
+
+### N4 + L1 accepted (2026-10-14)
+### N4: background preparation
+- **Built:**
+  - Plugin `plugins/with-background-processing.js`: `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_DATA_SYNC` and `POST_NOTIFICATIONS`; dataSync type on the library service; a monochrome `ic_stat_lectio` icon. The scratch prebuild shows the lines.
+  - Runner `src/services/pipeline/background-runner.ts`: starts in the foreground when the queue has work and stops when it is idle or paused. The notification shows the chapter title and step, with a progress bar, throttled to every 2 s; a tap opens `lectio://`.
+  - A start failure degrades to keep-awake plus the notice.
+  - The watchdog keeps counting in the background while the service is alive.
+  - A one-time permission sheet.
+  - Diagnostics probe `background-service`.
+- **Architect fix:** the service task is now released only by the runner's stop. Before, it awaited `queue.idle()`, which can settle at once when the drain hasn't started; the library then stops the service on task end without telling JS, so the runner believed it was running. New test; mutation (the old task) → 1 failure; restored 18/18.
+- **Open:**
+  - Settings copy for turning notifications on (in the settings area).
+  - One source for the stage verbs (`chapter-status.ts` vs the notification copy; a parity test guards it for now).
+  - A designer icon.
+  - Android 15 `onTimeout` stops the service silently (the heartbeat covers the later freeze).
+- **Device checks:**
+  - The notification appears and updates.
+  - 10 min with the screen off.
+  - Permission denied.
+  - A tap on the notification opens the library.
+  - The merged APK manifest.
+
+### L1: listening model
+- **Built:**
+  - Migration `0004`: `chapter_positions`, `bookmarks` (one per sentence), `series.playback_rate`. The backfill computes media time from the segments.
+  - Per-chapter resume. A finished chapter restarts, and is marked unfinished after 5 s.
+  - Row progress bar, "12 min left", "Finished", and a "Now" pill.
+  - Bookmarks: transport button, sentence action, sheets on the player and series screens, notes, swipe or accessibility-action delete.
+  - Speed per series, plus Settings → Playback default speed.
+  - The furthest point (the spoiler cutoff) still only moves forward.
+- **Evidence:**
+  - Worker: full jest 2,162 green; starred mutations caught.
+  - Architect: typecheck and lint green, 69 suites and 514 tests in scope, and the migration SQL reviewed. Mutation: resume returning 0 → 3 failures; restored 47/47.
+- **Open:**
+  - Device checks: swipe, sheet scroll, slider.
+  - A light-theme contrast pass.
+
+#### Tree status (architect, after N4 + L1)
+- typecheck and lint green
+- jest 229 suites, 2,163 tests green
+- boot:check OK
+- Only `sounds:verify` fails, in A4's in-progress work.
+
+### F2 accepted (2026-10-14)
+- **Tokens and contrast:**
+  - New text values: `textFaint` dark `#8E8980`, light `#6F695F`.
+  - New tokens `decorativeFaint`, `boundary`, `accentOnSoft`.
+  - Light success and warning darkened.
+  - Contrast tests: every text token ≥ 4.5 and the boundary ≥ 3.
+- **Sheets:** Android back closes them; modal semantics with focus on the title; `SheetList`; the sentence sheet scrolls.
+- **Chapters:**
+  - **Stop** a running chapter (with a confirm), from the processing card and the chapter menu.
+  - Re-generate audio is priced and confirmed.
+  - **Try again** on every failure, with a next step for non-retryable errors.
+  - "Prepare this chapter" for drafts.
+  - A visible reason when Play is blocked.
+- **Menus:** a visible ⋯ on chapter rows and series cards. One availability list drives both the menu and the accessibility actions.
+- **Copy:**
+  - The Vocab instructions.
+  - "Already in Vocab".
+  - "Chapter ready: «title»".
+  - No "OCR" or sentence numbers.
+  - The Create gate says why it's disabled.
+  - The unknown estimate shows "Create anyway".
+  - Action toasts stay 8 s.
+- **Sizes:** 48 dp touch targets.
+- **Onboarding:** value, notice, key, narrator; Back; Skip; reduce motion.
+- **Lists:** the series list is a FlatList, Vocab a SectionList.
+- **Settings:** async storage size; a Notifications row.
+- **The key screen** uses ConfirmSheet.
+- **Evidence:**
+  - Worker: 127 suites, 899 tests targeted; mutations caught.
+  - Architect: typecheck and lint green; 90 suites, 616 tests in scope. Mutation: the back handler returning false → 1 failure; restored 8/8.
+- **Open:**
+  - Estimate `.catch` and Retry: handed to F4.
+  - **Decision (architect):** the content notice must be accepted before the first import, even after Skip. Add Chapter gates on it (to be done in F3).
+  - Mini-player nested button (QA-C P1-6) still to verify.
+  - Device checks: TalkBack, FlatList look, 48 dp, light theme.
+  - A stray empty `/tok_edit.py` outside the repo (a safety check blocked its removal; harmless).
+
+### F4 accepted (2026-10-14)
+- **Catalogue:** the snapshot is written only after a network fetch; in-flight de-duplication (3 concurrent calls → 1 request); lazy hydrate.
+- **Estimate:** debounced 300 ms; `.catch` with an error state and Retry (`retryEstimate()`).
+- **Extraction:** one full-page parse instead of 4, with Defuddle on a clone. The 3 MB page median went from 90.8 s to 11.4 s on a loaded box; relative only.
+- **Defuddle:** the browser build with `parseAsync()`, so the site extractors are kept. Parity goldens: SHA-256 of the full result on 6 fixtures × 2 entry points.
+- **Boot:** the extraction stack loads lazily (`core/extract/load.ts`). Boot went from 2,612 to 2,316 modules and from 4.98 MB to 4.01 MB evaluated (−19.6 %).
+- **Bundle:** JS −651 KB (−10.3 %), Hermes −811 KB (−9.1 %).
+- **DB:** the ledger total uses `WHERE chapter_id`, the segment count uses `COUNT(*)`, and `setTranslations` is a chunked `UPDATE … CASE`.
+- **Dead code removed:** `bootstrap.ts`, `services/extraction/index.ts`, `openrouter/cost.ts`, `cueRepo.insert`, `narrationProfileRepo.get`, and others.
+- **CI:** `.github/workflows/verify.yml` runs `npm ci` and `npm run verify` on pull requests and on pushes to main and this branch; ffmpeg is installed if missing. **It will be red until A4's `sounds:verify` passes.**
+- **Evidence (architect):**
+  - typecheck and lint green (after fixing one import-order line in `app/(tabs)/settings.tsx`)
+  - **full jest 247 suites, 2,342 tests green**
+  - bundle:check and boot:check OK
+  - mutation: a snapshot write on a cache hit → 1 failure; restored 15/15
+- **Open:**
+  - The FTS trigram proposal (needs a migration and a search-quality check).
+  - `previewUrl` parses twice.
+  - Profile Readability and Defuddle on a device (~11 s per 3 MB on this box).
+

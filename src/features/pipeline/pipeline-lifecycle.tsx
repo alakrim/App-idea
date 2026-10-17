@@ -9,7 +9,6 @@
  */
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 import { useRouter } from 'expo-router';
-<<<<<<< HEAD
 import { useEffect, useRef, useState } from 'react';
 import { AppState } from 'react-native';
 
@@ -17,41 +16,18 @@ import { TIMER_SCHEDULER } from '@/core/pipeline/retry-policy';
 import { useDb } from '@/db/hooks';
 import { chapterRepo } from '@/db/repos/chapter-repo';
 import * as processingService from '@/services/background';
-=======
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { AppState } from 'react-native';
-
-import { useDb } from '@/db/hooks';
-import { chapterRepo } from '@/db/repos/chapter-repo';
-import { settingsStore } from '@/features/settings/settings-store';
-import { createAppForeground } from '@/services/background/app-foreground';
-import { createForegroundService } from '@/services/background/foreground-service';
-import { createNotificationPermission } from '@/services/background/notification-permission';
-import { createBackgroundRunner } from '@/services/pipeline/background-runner';
->>>>>>> 54b3d2e
 import { WebViewHost } from '@/services/pipeline/webview-host';
 import { useApiKeyStatus } from '@/services/secrets';
 import { useToast } from '@/ui/toast';
 
-<<<<<<< HEAD
 import { BackgroundWork, isQueueBusy } from './background-work';
 import { NotificationPrompt } from './notification-prompt';
-=======
-import { createNotificationPrimer } from './notification-primer';
-import { NotificationPrimerSheet } from './notification-primer-sheet';
->>>>>>> 54b3d2e
 import { usePipelineRuntime } from './pipeline-provider';
 
 export const KEEP_AWAKE_TAG = 'lectio-pipeline';
 export const CONNECT_ROUTE = '/settings/api-key';
-<<<<<<< HEAD
 /** Shown in the notification when a chapter has no title yet. */
 const APP_NAME = 'Lectio';
-=======
-/** Shown once, the first time the user leaves the app while the work pauses (no service). */
-export const BACKGROUND_NOTICE =
-  "Lectio pauses chapter preparation while it's in the background. Keep it open to finish faster.";
->>>>>>> 54b3d2e
 
 export function PipelineLifecycle() {
   const runtime = usePipelineRuntime();
@@ -61,14 +37,7 @@ export function PipelineLifecycle() {
   const keyStatus = useApiKeyStatus();
   const db = useDb();
   const restored = useRef(false);
-<<<<<<< HEAD
   const [busy, setBusy] = useState(false);
-=======
-  const [primerOpen, setPrimerOpen] = useState(false);
-  const foregroundService = useMemo(() => createForegroundService(), []);
-  const appForeground = useMemo(() => createAppForeground(), []);
-  const permission = useMemo(() => createNotificationPermission(), []);
->>>>>>> 54b3d2e
 
   useEffect(() => {
     if (!runtime || restored.current) return;
@@ -195,7 +164,6 @@ export function PipelineLifecycle() {
     if (runtime && keyStatus === 'present' && runtime.isPaused()) runtime.resume();
   }, [runtime, keyStatus]);
 
-<<<<<<< HEAD
   useEffect(() => {
     if (!runtime) return undefined;
     return runtime.subscribeQueue((snapshot) => {
@@ -232,20 +200,6 @@ export function PipelineLifecycle() {
     <>
       <WebViewHost />
       <NotificationPrompt busy={busy} />
-=======
-  if (!runtime) return null;
-  return (
-    <>
-      <NotificationPrimerSheet
-        visible={primerOpen}
-        onAllow={() => {
-          setPrimerOpen(false);
-          void permission.request().catch(() => undefined);
-        }}
-        onNotNow={() => setPrimerOpen(false)}
-      />
-      <WebViewHost />
->>>>>>> 54b3d2e
     </>
   );
 }

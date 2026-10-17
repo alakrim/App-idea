@@ -1,15 +1,9 @@
-<<<<<<< HEAD
-import type { Chapter, PipelineError } from '@/core/domain';
-import type { ChapterProgress } from '@/features/pipeline/facade';
-import { STAGE_VERBS } from '@/features/pipeline/stage-verbs';
-import { formatDuration } from '@/features/shared/format';
-=======
 import type { Chapter, PipelineError, Stage } from '@/core/domain';
 import type { ChapterProgress, StageProgress } from '@/features/pipeline/facade';
+import { STAGE_VERBS } from '@/features/pipeline/stage-verbs';
 import { formatDuration, formatElapsed } from '@/features/shared/format';
 
 import { failureCopy } from './failure-copy';
->>>>>>> 54b3d2e
 
 export type ChapterRowState = 'draft' | 'processing' | 'ready' | 'failed';
 
@@ -48,17 +42,8 @@ export function statusLine(
       return chapter.durationMs === null
         ? 'Ready to listen'
         : `Ready · ${formatDuration(chapter.durationMs)}`;
-<<<<<<< HEAD
-    case 'processing': {
-      if (progress?.state === 'waiting') return 'Waiting for connection…';
-      const active = progress?.stages.find((stage) => stage.status === 'running');
-      const verb = active ? STAGE_VERBS[active.stage] : 'Queued';
-      return active ? `${verb} · ${Math.round(active.progress * 100)}%` : `${verb}…`;
-    }
-=======
     case 'processing':
       return processingLine(progress, now);
->>>>>>> 54b3d2e
     case 'failed':
       return failureCopy(failure);
     case 'draft':
@@ -68,6 +53,7 @@ export function statusLine(
 
 /** "Narrating · passage 5 of 18 · 42 s", or "Reconnecting…" after the app came back. */
 function processingLine(progress: ChapterProgress | null, now: number): string {
+  if (progress?.state === 'waiting') return 'Waiting for connection…';
   if (progress?.reconnecting) return 'Reconnecting…';
   const active = progress?.stages.find((stage) => stage.status === 'running');
   if (!active) return 'Queued…';

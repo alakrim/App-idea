@@ -31,11 +31,8 @@ function progress(
     estimatedTotalMs: null,
     costUsdSoFar: 0,
     error: null,
-<<<<<<< HEAD
     retryAt: null,
-=======
     reconnecting,
->>>>>>> 54b3d2e
   };
 }
 

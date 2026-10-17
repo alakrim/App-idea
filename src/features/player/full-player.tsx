@@ -45,6 +45,7 @@ import { SleepChip, SleepSheet } from './sleep-timer';
 import { SpeedSheet } from './speed-sheet';
 import { SyncedTextPane, displayText, type SentenceAction } from './synced-text-pane';
 import { Transport } from './transport';
+import { useNarratingAhead } from './use-narrating-ahead';
 
 type OpenSheet = 'speed' | 'sleep' | 'ambience' | 'bookmarks' | null;
 
@@ -206,8 +207,9 @@ function ReadyPlayer() {
   const bookmarks = usePlaybackContent((content) => content.bookmarks);
 
   const availableCount = timeline?.sentenceCount ?? 0;
-  const busy = playState === 'loading' || playState === 'buffering';
-  const playing = playState === 'playing';
+  const narratingAhead = useNarratingAhead();
+  const busy = (playState === 'loading' || playState === 'buffering') && !narratingAhead;
+  const playing = playState === 'playing' || narratingAhead;
   /** Out of audio while processing is stopped: calm copy, not a spinner (P1-5). */
   const showPaused = narrationPaused && playState === 'buffering';
 
@@ -374,6 +376,7 @@ function ReadyPlayer() {
           <Transport
             playing={playing}
             busy={busy}
+            narratingAhead={narratingAhead}
             bookmarked={bookmarked}
             onTogglePlay={() => controller.player.togglePlay()}
             onSkip={(deltaMs) => controller.seekBy(deltaMs)}

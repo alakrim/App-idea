@@ -1,10 +1,5 @@
 import { runAnalysisCall } from './analysis-call';
-<<<<<<< HEAD
 import { ANALYSIS_SAMPLING, MAX_CHUNK_TOKENS, MEMORY_LIMITS } from './limits';
-=======
-import { chapterEraOf } from './chapter-era';
-import { MAX_CHUNK_TOKENS, MEMORY_LIMITS } from './limits';
->>>>>>> 54b3d2e
 import { mergeMemoryDrafts } from './merge-memory';
 import { buildAnalysisPrompt, buildSummaryReducePrompt } from './prompts';
 import { truncateWords } from './schemas';
@@ -70,24 +65,14 @@ export interface ChapterAnalysis {
   readonly chunkCount: number;
   /** Usage of every model call made for this chapter, repairs, the summary reduce and the fallback included. */
   readonly usage: LlmUsage;
-<<<<<<< HEAD
   /** True when the single-bed fallback made its call. */
   readonly fallbackRan: boolean;
-=======
-  /** The chapter's era: the majority of its passages' eras, or null when none names one (A4). */
-  readonly era: AmbienceEra | null;
->>>>>>> 54b3d2e
 }
 
 /**
  * Runs the single analysis call per chunk, then merges the memories, runs the optional summary
-<<<<<<< HEAD
  * reduce and validates the combined cues against the whole chapter. A chapter with no valid cue
  * gets the single-bed fallback. Chunks run one after another.
-=======
- * reduce and validates the combined cues against the whole chapter. Chunks run a few at a time, and
- * their replies are kept in chunk order, because the memory merge depends on that order.
->>>>>>> 54b3d2e
  */
 export async function analyzeChapter(input: AnalyzeChapterInput): Promise<ChapterAnalysis> {
   if (input.sentences.some((s, i) => s.idx !== i)) {
@@ -137,7 +122,6 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
     if (reduced.summary) memory = { ...merged, summary: reduced.summary };
   }
 
-<<<<<<< HEAD
   if (input.cachedCues !== undefined) {
     return {
       memory,
@@ -181,20 +165,6 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
   }
 
   return { memory, cues, dropped, chunkCount: chunks.length, usage, fallbackRan };
-=======
-  const era = chapterEraOf(responses.map((r) => r.era));
-  const { cues, dropped } = validateCues(
-    responses.flatMap((r) => r.cues),
-    {
-      sentenceCount: input.sentences.length,
-      wordCount: input.wordCount,
-      sentences: input.sentences,
-      chapterEra: era,
-    },
-  );
-
-  return { memory, cues, dropped, chunkCount: chunks.length, usage, era };
->>>>>>> 54b3d2e
 }
 
 /** One plain-text call. A null summary means the reply was empty, so the joined summary is kept. */

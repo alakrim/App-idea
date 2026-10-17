@@ -21,13 +21,9 @@ import { gutter, hairline, space } from '@/ui/tokens';
 
 import { AmbienceList } from './ambience-list';
 import { isTranslated, type ReadingParagraph } from './chapter-data';
-<<<<<<< HEAD
 import { rowStateOf, statusLine } from './chapter-status';
-import { listenNowOf } from './listen-now';
-=======
-import { playBlockedCopy, rowStateOf, statusLine } from './chapter-status';
 import { failureCopy } from './failure-copy';
->>>>>>> 54b3d2e
+import { listenNowOf } from './listen-now';
 import { READING_MODES, ReadingText, type ReadingMode } from './reading-text';
 import { StageStepper } from './stage-stepper';
 import { stepStates } from './stage-steps';
@@ -67,15 +63,12 @@ export interface ChapterViewProps {
   onBack: () => void;
   onPlay: (chapterId: string) => void;
   onRetry: (chapterId: string) => void;
-<<<<<<< HEAD
   /** Runs every chapter that waits for a connection now. */
   onRetryNow: () => void;
-=======
   /** Starts preparing a chapter that has never been processed. */
   onPrepare: (chapterId: string) => void;
   /** Stops a chapter that is queued or running. Finished audio is kept. */
   onStop: (chapterId: string) => void;
->>>>>>> 54b3d2e
   onToggleCue: (cueId: string, enabled: boolean) => void;
   /** A sentence to scroll to and highlight, from a deep link. Null for none. */
   focusSentence?: number | null;
@@ -94,12 +87,9 @@ export function ChapterView({
   onBack,
   onPlay,
   onRetry,
-<<<<<<< HEAD
   onRetryNow,
-=======
   onPrepare,
   onStop,
->>>>>>> 54b3d2e
   onToggleCue,
   focusSentence = null,
 }: ChapterViewProps) {
@@ -114,17 +104,12 @@ export function ChapterView({
   const scroll = useSentenceScroll({ focusSentence, paragraphs, reduced, scrollTo: scrollToY });
   const highlight = useSentenceFocus(focusSentence, reduced);
   const state = rowStateOf(chapter, progress);
-<<<<<<< HEAD
+  const now = useNow(LIVE_TICK_MS, state === 'processing');
   const listen = listenNowOf(state, progress);
   const badge =
     progress?.state === 'waiting'
       ? { label: 'Waiting', tone: 'neutral' as const }
       : STATE_BADGE[state];
-=======
-  const now = useNow(LIVE_TICK_MS, state === 'processing');
-  const badge = STATE_BADGE[state];
-  const playBlocked = playBlockedCopy(state);
->>>>>>> 54b3d2e
   const translated = isTranslated(paragraphs);
   const effectiveMode: ReadingMode = translated ? mode : 'original';
   const spent = jobs.reduce((sum, job) => sum + job.costUsd, 0);
@@ -167,7 +152,6 @@ export function ChapterView({
           </View>
         </View>
 
-<<<<<<< HEAD
         <View style={styles.listen}>
           <Button
             label={listen.label}
@@ -184,23 +168,6 @@ export function ChapterView({
             </Text>
           ) : null}
         </View>
-=======
-        <View style={styles.play}>
-          <Button
-            label="Play chapter"
-            icon={Play}
-            size="lg"
-            fullWidth
-            disabled={state !== 'ready'}
-            accessibilityHint={playBlocked ?? undefined}
-            onPress={() => onPlay(chapter.id)}
-          />
-          {playBlocked !== null ? (
-            <Text variant="caption" tone="muted" align="center">
-              {playBlocked}
-            </Text>
-          ) : null}
-        </View>
 
         {state === 'draft' ? (
           <Button
@@ -210,7 +177,6 @@ export function ChapterView({
             onPress={() => onPrepare(chapter.id)}
           />
         ) : null}
->>>>>>> 54b3d2e
 
         {state === 'failed' ? (
           <ErrorState
@@ -302,16 +268,16 @@ export function ChapterView({
           </Section>
         ) : null}
 
-<<<<<<< HEAD
-        <Section title="Ambience" trailing={cues.length > 0 ? String(cues.length) : undefined}>
-          <AmbienceList cues={cues} analysed={analysed} onToggle={onToggleCue} />
-=======
         <Section
           title="Ambience"
           trailing={cues.length > 0 ? cueCountLabel(cues.length) : undefined}
         >
-          <AmbienceList cues={cues} sentenceCount={sentenceCount} onToggle={onToggleCue} />
->>>>>>> 54b3d2e
+          <AmbienceList
+            cues={cues}
+            analysed={analysed}
+            sentenceCount={sentenceCount}
+            onToggle={onToggleCue}
+          />
         </Section>
       </ScrollView>
 
@@ -392,11 +358,7 @@ const styles = StyleSheet.create({
   header: {
     gap: space.sm,
   },
-<<<<<<< HEAD
   listen: {
-=======
-  play: {
->>>>>>> 54b3d2e
     gap: space.sm,
   },
   meta: {

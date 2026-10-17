@@ -10,11 +10,14 @@ import { iconStrokeWidth, opacity, radius, space, transparent } from '@/ui/token
 import { usePressScale } from '@/ui/use-press-scale';
 
 import { PLAYER } from './layout';
+import { NarratingAhead } from './narrating-ahead';
 
 export interface TransportProps {
   playing: boolean;
   /** Loading or buffering. The play button shows it as busy. */
   busy: boolean;
+  /** Playback is waiting for narration that is still being made. Shown beneath the controls. */
+  narratingAhead?: boolean;
   /** True when the sentence in view is bookmarked. */
   bookmarked: boolean;
   onTogglePlay: () => void;
@@ -28,11 +31,13 @@ const FORWARD_MS = 30_000;
 
 /**
  * Back 15 s, play or pause, and forward 30 s, with the bookmark at the right end. Holding a skip
- * moves by sentence instead. A spacer of the bookmark's width at the left keeps play centred.
+ * moves by sentence instead. A spacer of the bookmark's width at the left keeps play centred. The
+ * line beneath keeps its height, so the controls never move when "Narrating ahead" comes and goes.
  */
 export function Transport({
   playing,
   busy,
+  narratingAhead = false,
   bookmarked,
   onTogglePlay,
   onSkip,
@@ -40,6 +45,7 @@ export function Transport({
   onBookmark,
 }: TransportProps) {
   return (
+    <View style={styles.stack}>
     <View style={styles.row}>
       <View style={styles.bookmarkSpacer} />
       <SkipButton
@@ -50,7 +56,12 @@ export function Transport({
         onPress={() => onSkip(-BACK_MS)}
         onLongPress={() => onSentence('previous')}
       />
-      <PlayButton playing={playing} busy={busy} onPress={onTogglePlay} onSentence={onSentence} />
+      <PlayButton
+        playing={playing}
+        busy={busy && !narratingAhead}
+        onPress={onTogglePlay}
+        onSentence={onSentence}
+      />
       <SkipButton
         label="Forward 30 seconds"
         hint="Hold to go to the next sentence"
@@ -60,6 +71,8 @@ export function Transport({
         onLongPress={() => onSentence('next')}
       />
       <BookmarkButton bookmarked={bookmarked} onPress={onBookmark} />
+    </View>
+      <View style={styles.ahead}>{narratingAhead ? <NarratingAhead /> : null}</View>
     </View>
   );
 }
@@ -198,6 +211,13 @@ function PlayButton({ playing, busy, onPress, onSentence }: PlayButtonProps) {
 }
 
 const styles = StyleSheet.create({
+  stack: {
+    gap: space.md,
+  },
+  ahead: {
+    height: space.lg,
+    justifyContent: 'center',
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -48,19 +48,13 @@ export function ChapterScreen({ chapterId, focusSentence = null }: ChapterScreen
       jobs={data.jobs}
       paragraphs={data.paragraphs}
       cues={data.cues}
-<<<<<<< HEAD
       analysed={data.cueReport !== null}
-      onBack={() => (router.canGoBack() ? router.back() : router.replace('/'))}
-      onPlay={(id) => router.push({ pathname: '/player', params: { chapterId: id } })}
-      onRetry={(id) => pipeline.retry(id)}
-      onRetryNow={() => pipeline.retryNow()}
-=======
       onBack={goBackOrHome}
       onPlay={(id) => router.push({ pathname: '/player', params: { chapterId: id } })}
       onRetry={(id) => pipeline.retry(id)}
+      onRetryNow={() => pipeline.retryNow()}
       onPrepare={(id) => pipeline.enqueue(id)}
       onStop={(id) => pipeline.cancel(id)}
->>>>>>> 54b3d2e
       onToggleCue={(cueId, enabled) => cueRepo.setEnabled(db, cueId, enabled)}
       focusSentence={focusSentence}
     />

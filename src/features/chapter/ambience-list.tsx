@@ -14,22 +14,15 @@ import { cueRangeLabel } from './ambience-range';
 
 export interface AmbienceListProps {
   cues: readonly AmbienceCue[];
-<<<<<<< HEAD
   /** True once the chapter has been analysed. Decides the copy of the empty state. */
   analysed: boolean;
-=======
   /** Sentences in the whole chapter, to say where each cue sits. */
   sentenceCount: number;
->>>>>>> 54b3d2e
   onToggle: (cueId: string, enabled: boolean) => void;
 }
 
 /** The ambience cues of a chapter. Each switch persists straight away. */
-<<<<<<< HEAD
-export function AmbienceList({ cues, analysed, onToggle }: AmbienceListProps) {
-=======
-export function AmbienceList({ cues, sentenceCount, onToggle }: AmbienceListProps) {
->>>>>>> 54b3d2e
+export function AmbienceList({ cues, analysed, sentenceCount, onToggle }: AmbienceListProps) {
   if (cues.length === 0) {
     return (
       <Text variant="caption" tone="muted">

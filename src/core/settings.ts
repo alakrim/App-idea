@@ -51,10 +51,8 @@ export const SettingsSchema = z.object({
   reading: ReadingSettingsSchema,
   onboardingDone: z.boolean(),
   contentNoticeAccepted: z.boolean(),
-<<<<<<< HEAD
   /** The user has answered the background-notification explainer (Allow or Not now). */
   notificationsExplained: z.boolean(),
-=======
   /** Set once the app has told the user that chapter preparation pauses in the background. */
   backgroundNoticeShown: z.boolean(),
   /**
@@ -62,7 +60,6 @@ export const SettingsSchema = z.object({
    * asked for twice. The settings screen is where the user can turn notifications on later.
    */
   notificationPromptShown: z.boolean(),
->>>>>>> 54b3d2e
 });
 export type Settings = z.infer<typeof SettingsSchema>;
 

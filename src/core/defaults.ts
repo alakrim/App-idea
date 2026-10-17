@@ -42,10 +42,7 @@ export const DEFAULT_SETTINGS: Settings = {
   reading: { fontScale: 1, showOriginal: false },
   onboardingDone: false,
   contentNoticeAccepted: false,
-<<<<<<< HEAD
   notificationsExplained: false,
-=======
   backgroundNoticeShown: false,
   notificationPromptShown: false,
->>>>>>> 54b3d2e
 };

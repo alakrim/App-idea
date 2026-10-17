@@ -61,6 +61,8 @@ export interface PlaybackContent {
   coverTint: string | null;
   /** False while narration is still being generated. Only a finished or failed narration is final. */
   final: boolean;
+  /** The estimated length of the whole narration while it is being generated, else null. */
+  estimatedTotalMs: number | null;
   /** True when processing has stopped before the chapter was finished, so its audio ends here for now. */
   narrationPaused: boolean;
   /** Set with `status: 'error'`: which failure to explain. */
@@ -104,6 +106,7 @@ const INITIAL_CONTENT: PlaybackContent = {
   seriesId: null,
   coverTint: null,
   final: true,
+  estimatedTotalMs: null,
   narrationPaused: false,
   failure: null,
   paragraphs: [],
@@ -185,6 +188,13 @@ function isNarrationComplete(state: ChapterStatus | ChapterProgress['state']): b
 /** Processing that has stopped on its own, and that the listener may want to restart. */
 function isProcessingStopped(state: ChapterProgress['state']): boolean {
   return state === 'idle' || state === 'cancelled';
+}
+
+/** The analysis is settled once its stage is done or skipped: its cues are in the database by then. */
+function isAnalysisSettled(progress: ChapterProgress): boolean {
+  return progress.stages.some(
+    (stage) => stage.stage === 'analyze' && (stage.status === 'done' || stage.status === 'skipped'),
+  );
 }
 
 function toLoadedSegment(segment: AudioSegment): LoadedSegment {
@@ -358,17 +368,23 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
   function watchProgress(chapterId: string): void {
     stopWatchingProgress();
     let active = true;
+    let cuesReloaded = false;
     let unsubscribe: (() => void) | null = null;
     const stop = () => {
       active = false;
       unsubscribe?.();
       if (stopWatching === stop) stopWatching = null;
+      writeContent({ estimatedTotalMs: null });
     };
     stopWatching = stop;
 
     unsubscribe = pipeline.subscribe(chapterId, (progress) => {
       if (!active) return;
       const complete = isNarrationComplete(progress.state);
+      if (!cuesReloaded && isAnalysisSettled(progress)) {
+        cuesReloaded = true;
+        reloadCues(chapterId);
+      }
       if (readContent().status === 'unavailable') {
         // Nothing was playable when the chapter opened: start it once narration produces audio.
         if (data.segmentsFrom(chapterId, 0).length > 0) {
@@ -382,11 +398,23 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
       if (progress.readySegments > segments.length || complete) {
         appendFromData(chapterId, complete);
       }
-      writeContent({ narrationPaused: !complete && isProcessingStopped(progress.state) });
+      writeContent({
+        narrationPaused: !complete && isProcessingStopped(progress.state),
+        estimatedTotalMs: complete ? null : progress.estimatedTotalMs,
+      });
       if (complete) stop();
     });
     // The subscribe call emits the current snapshot at once, which may have stopped the watch already.
     if (!active) unsubscribe();
+  }
+
+  /** Analysis finished after the audio started: the cues are read again and reach the engine live. */
+  function reloadCues(chapterId: string): void {
+    if (readContent().chapterId !== chapterId) return;
+    const chapter = data.loadChapter(chapterId);
+    if (chapter === null) return;
+    writeContent({ cues: chapter.cues });
+    engine.setCues(chapter.cues);
   }
 
   function appendFromData(chapterId: string, final: boolean): void {

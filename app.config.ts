@@ -55,8 +55,6 @@ const config: ExpoConfig = {
     './plugins/with-android-release-size',
     // Crash reports survive a native or JavaScript crash and show on the next launch (brief X2).
     './plugins/with-crash-reporter',
-    // Chapters keep preparing in the background: the foreground service's permissions and type (N4).
-    './plugins/with-background-processing',
     // Ambience beds (ADR-0002). Voice owns the media session via expo-audio.
     ['react-native-audio-api', { iosBackgroundMode: true, androidForegroundService: false }],
   ],
