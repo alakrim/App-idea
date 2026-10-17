@@ -148,11 +148,7 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
       (job) => job?.status === 'failed',
     );
     const ready = chapter.status === 'ready';
-<<<<<<< HEAD
     const rows = audioSegmentRepo.listByChapter(db, chapterId);
-=======
-    const segments = audioSegmentRepo.countByChapter(db, chapterId);
->>>>>>> 54b3d2e
     return {
       state: ready ? 'ready' : chapter.status === 'failed' ? 'failed' : 'idle',
       stages,

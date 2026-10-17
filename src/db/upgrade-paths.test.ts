@@ -115,7 +115,7 @@ describe('upgrading from the migration states that shipped', () => {
     sqlite.close();
   });
 
-  it('keeps the rows of a bookmark and chapter position that existed before the upgrade', () => {
+  it('creates chapter_positions when the 0004 state is upgraded', () => {
     const sqlite = upgrade(THEIRS_0004_STATE);
     expect(tablesIn(sqlite)).toContain('chapter_positions');
     sqlite.close();

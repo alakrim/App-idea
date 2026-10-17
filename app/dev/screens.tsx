@@ -139,12 +139,9 @@ function ChapterGallery(): ReactNode {
       onBack={() => undefined}
       onPlay={() => undefined}
       onRetry={() => undefined}
-<<<<<<< HEAD
       onRetryNow={() => undefined}
-=======
       onPrepare={() => undefined}
       onStop={() => undefined}
->>>>>>> 54b3d2e
       onToggleCue={() => undefined}
     />
   );

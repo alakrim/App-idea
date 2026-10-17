@@ -28,7 +28,6 @@ export const GLOSSARY_TOKENS = 800;
 /** Chunks in flight at once. Their results are still saved in reading order. */
 export const TRANSLATE_CONCURRENCY = 2;
 
-<<<<<<< HEAD
 /** The languages a chapter is translated between, or null when it is read in its own language. */
 export function translationPair(
   record: ChapterRecord,
@@ -63,15 +62,6 @@ function storedTranslations(sentences: readonly StoredSentence[]): Map<number, s
 }
 
 export const translateStage: StageDefinition<FlowContext> = {
-=======
-/**
- * Translation requests in flight at once. Each chunk still sees the translations of the chunks
- * before it when they are done, and reads "(translation pending)" for the rest.
- */
-export const TRANSLATE_CONCURRENCY = 3;
-
-export const translateStage: StageDefinition = {
->>>>>>> 54b3d2e
   stage: 'translate',
   async prepare(ctx) {
     const { chapters, jobs } = ctx.ports;
@@ -123,31 +113,12 @@ export const translateStage: StageDefinition = {
       skip: false,
       settled: existing?.status === 'done' && sameInput ? storedSpokenTexts(sentences) : undefined,
       async execute() {
-<<<<<<< HEAD
         await runTranslation(ctx, {
           sentences,
           pair,
           model,
           priorGlossary,
           prefill,
-=======
-        const transport = ctx.meter.transport(model, ctx.ports.llm.transportFor(model));
-        const result = await translateChapter({
-          sentences: sentences.map((s) => ({ idx: s.idx, text: s.text })),
-          sourceLang,
-          targetLang,
-          glossary,
-          llm: transport,
-          concurrency: TRANSLATE_CONCURRENCY,
-          signal: ctx.signal,
-          onProgress: ({ translated, total }) =>
-            ctx.emit({
-              type: 'progress',
-              chapterId: ctx.chapterId,
-              stage: 'translate',
-              progress: total === 0 ? 1 : translated / total,
-            }),
->>>>>>> 54b3d2e
         });
       },
     };
