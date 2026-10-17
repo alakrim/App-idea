@@ -4,6 +4,7 @@ import migration0002 from './migrations/0002_curly_redwing.sql';
 import migration0003 from './migrations/0003_foamy_nuke.sql';
 import migration0004 from './migrations/0004_uneven_zuras.sql';
 import migration0005 from './migrations/0005_merged_schema_repair.sql';
+import migration0006 from './migrations/0006_fx_f_money_and_data.sql';
 import journal from './migrations/meta/_journal.json';
 
 /**
@@ -19,5 +20,6 @@ export const bundledMigrations = {
     m0003: migration0003,
     m0004: migration0004,
     m0005: migration0005,
+    m0006: migration0006,
   },
 };

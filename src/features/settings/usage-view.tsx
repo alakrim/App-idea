@@ -8,6 +8,7 @@ import { useTheme } from '@/ui/theme';
 import { hairline, radius, space } from '@/ui/tokens';
 
 import { formatUsdPrecise } from './format';
+import { unknownCostNote } from './usage';
 
 import type { UsageShare, UsageSummary, UsageWindow } from './usage';
 
@@ -110,10 +111,18 @@ function BreakdownSection({
 function BreakdownRow({ row }: { row: UsageShare }) {
   const { colors } = useTheme();
   const percent = Math.round(row.share * 100);
+  const unknown = unknownCostNote(row.unknownCalls);
+  // A row whose every call is unknown has no known spend to show, so it says "unknown" alone.
+  const costText =
+    unknown === null
+      ? formatUsdPrecise(row.costUsd)
+      : row.unknownCalls === row.calls
+        ? 'unknown'
+        : `${formatUsdPrecise(row.costUsd)} + unknown`;
   return (
     <View
       accessible
-      accessibilityLabel={`${row.label}: ${formatUsdPrecise(row.costUsd)}, ${callsLabel(row.calls)}, ${percent} percent of spend`}
+      accessibilityLabel={`${row.label}: ${costText}${unknown === null ? '' : `, ${unknown}`}, ${callsLabel(row.calls)}, ${percent} percent of spend`}
       style={styles.row}
     >
       <View style={styles.rowLine}>
@@ -121,7 +130,7 @@ function BreakdownRow({ row }: { row: UsageShare }) {
           {row.label}
         </Text>
         <Text variant="caption" tone="muted">
-          {formatUsdPrecise(row.costUsd)}
+          {costText}
         </Text>
       </View>
       <View

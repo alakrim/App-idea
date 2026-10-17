@@ -31,6 +31,7 @@ function entity(canonicalName: string, firstChapterOrder: number, aliases: strin
     kind: 'character',
     canonicalName,
     aliases,
+    aliasReveals: aliases.map((alias) => ({ alias, firstChapterOrder })),
     firstChapterOrder,
   };
 }

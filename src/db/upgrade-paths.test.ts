@@ -35,7 +35,11 @@ const journal = JSON.parse(
 function applied(tag: string): AppliedMigration {
   const entry = journal.entries.find((candidate) => candidate.tag === tag);
   if (entry === undefined) throw new Error(`No journal entry ${tag}`);
-  return { tag, when: entry.when, sql: readFileSync(path.join(MIGRATIONS_DIR, `${tag}.sql`), 'utf8') };
+  return {
+    tag,
+    when: entry.when,
+    sql: readFileSync(path.join(MIGRATIONS_DIR, `${tag}.sql`), 'utf8'),
+  };
 }
 
 /** The ambience-only 0003 that the serene-hypatia build shipped (bfbcc4f, 6842a51). */
@@ -50,7 +54,9 @@ function seed(sqlite: Database.Database, migrations: readonly AppliedMigration[]
   sqlite.exec(
     'CREATE TABLE IF NOT EXISTS "__drizzle_migrations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "hash" text NOT NULL, "created_at" numeric)',
   );
-  const record = sqlite.prepare('INSERT INTO "__drizzle_migrations" ("hash", "created_at") VALUES (?, ?)');
+  const record = sqlite.prepare(
+    'INSERT INTO "__drizzle_migrations" ("hash", "created_at") VALUES (?, ?)',
+  );
   for (const migration of migrations) {
     for (const statement of migration.sql.split(STATEMENT_BREAKPOINT)) sqlite.exec(statement);
     record.run(migration.tag, migration.when);
@@ -65,7 +71,9 @@ function upgrade(starting: readonly AppliedMigration[]): Database.Database {
   migrate(drizzle(sqlite, { schema }), { migrationsFolder: MIGRATIONS_DIR });
   repairSchema({
     columnNames: (table) =>
-      (sqlite.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[]).map((row) => row.name),
+      (sqlite.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[]).map(
+        (row) => row.name,
+      ),
     exec: (statement) => {
       sqlite.exec(statement);
     },
@@ -75,7 +83,9 @@ function upgrade(starting: readonly AppliedMigration[]): Database.Database {
 
 function tablesIn(sqlite: Database.Database): string[] {
   return (
-    sqlite.prepare("SELECT name FROM sqlite_master WHERE type = 'table'").all() as { name: string }[]
+    sqlite.prepare("SELECT name FROM sqlite_master WHERE type = 'table'").all() as {
+      name: string;
+    }[]
   ).map((row) => row.name);
 }
 
@@ -122,6 +132,69 @@ describe('upgrading from the migration states that shipped', () => {
   });
 });
 
+describe('upgrading to migration 0006 (FX-F)', () => {
+  const BEFORE_0006 = [...THEIRS_0004_STATE, applied('0005_merged_schema_repair')];
+
+  /** A 0005 database holding one series of two chapters, an entity with a legacy alias, and a paid row. */
+  function seededBefore0006(): Database.Database {
+    const sqlite = new Database(':memory:');
+    sqlite.pragma('foreign_keys = ON');
+    seed(sqlite, BEFORE_0006);
+    sqlite.exec(`
+      INSERT INTO series (id, title, created_at, updated_at) VALUES ('s1', 'Series', 1, 1);
+      INSERT INTO chapters (id, series_id, "order", title, source, status, created_at, updated_at)
+        VALUES ('c1', 's1', 1, 'One', '{}', 'ready', 1, 1), ('c2', 's1', 2, 'Two', '{}', 'ready', 1, 1);
+      INSERT INTO entities (id, series_id, kind, canonical_name, aliases, first_chapter_order)
+        VALUES ('e1', 's1', 'character', 'Jon', '["The Prince"]', 1);
+      INSERT INTO usage_ledger (id, at, chapter_id, stage, model, prompt_tokens, completion_tokens, cost_usd, generation_id)
+        VALUES ('u1', 1, 'c1', 'analyze', 'm', 1, 1, 0.25, 'gen-1');
+    `);
+    return sqlite;
+  }
+
+  it('keeps every ledger row, makes cost_usd nullable and stamps legacy aliases with the latest chapter', () => {
+    const sqlite = seededBefore0006();
+    migrate(drizzle(sqlite, { schema }), { migrationsFolder: MIGRATIONS_DIR });
+
+    expect(
+      sqlite
+        .prepare(
+          "SELECT alias, first_chapter_order AS order_ FROM entity_aliases WHERE entity_id = 'e1'",
+        )
+        .all(),
+    ).toEqual([{ alias: 'The Prince', order_: 2 }]);
+    expect(
+      sqlite
+        .prepare("SELECT cost_usd AS cost, generation_id AS gen FROM usage_ledger WHERE id = 'u1'")
+        .get(),
+    ).toEqual({ cost: 0.25, gen: 'gen-1' });
+    expect(() =>
+      sqlite.exec(
+        "INSERT INTO usage_ledger (id, at, chapter_id, stage, model, prompt_tokens, completion_tokens, cost_usd) VALUES ('u2', 2, 'c1', 'ask', 'm', 1, 1, NULL)",
+      ),
+    ).not.toThrow();
+    expect(tablesIn(sqlite)).toEqual(
+      expect.arrayContaining([
+        'analysis_chunk_checkpoints',
+        'chapter_translations',
+        'entity_aliases',
+      ]),
+    );
+    sqlite.close();
+  });
+
+  it('can run its statements again over the upgraded database without losing or duplicating rows', () => {
+    const sqlite = seededBefore0006();
+    migrate(drizzle(sqlite, { schema }), { migrationsFolder: MIGRATIONS_DIR });
+    const migration = applied('0006_fx_f_money_and_data');
+    for (const statement of migration.sql.split(STATEMENT_BREAKPOINT)) sqlite.exec(statement);
+
+    expect(sqlite.prepare('SELECT COUNT(*) AS n FROM usage_ledger').get()).toEqual({ n: 1 });
+    expect(sqlite.prepare('SELECT COUNT(*) AS n FROM entity_aliases').get()).toEqual({ n: 1 });
+    sqlite.close();
+  });
+});
+
 describe('repairSchema', () => {
   it('adds playback_rate when the column is missing', () => {
     const calls: string[] = [];
@@ -144,5 +217,7 @@ describe('repairSchema', () => {
 });
 
 function repairColumns(sqlite: Database.Database): string[] {
-  return (sqlite.prepare('PRAGMA table_info(series)').all() as { name: string }[]).map((row) => row.name);
+  return (sqlite.prepare('PRAGMA table_info(series)').all() as { name: string }[]).map(
+    (row) => row.name,
+  );
 }

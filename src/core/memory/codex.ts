@@ -1,4 +1,4 @@
-import { normalizeName } from './entities';
+import { aliasesRevealedBefore, normalizeName } from './entities';
 
 import type { ChapterMemoryRecord, Entity, EntityFact, EntityKind } from '../analysis/types';
 
@@ -58,8 +58,9 @@ function entityBlock(
   entity: Entity,
   facts: readonly EntityFact[],
   cite: (order: number) => string,
+  visibleAliases: readonly string[],
 ): Block {
-  const aliases = entity.aliases.length > 0 ? ` (also: ${entity.aliases.join(', ')})` : '';
+  const aliases = visibleAliases.length > 0 ? ` (also: ${visibleAliases.join(', ')})` : '';
   const body = facts.map((f) => `${f.fact}${cite(f.chapterOrder)}`).join('; ');
   const latest = facts.reduce((max, f) => Math.max(max, f.chapterOrder), entity.firstChapterOrder);
   return {
@@ -109,7 +110,9 @@ export function buildPriorContext(
 
   const blocks: Block[] = [
     ...memories.filter((r) => r.chapterOrder < cutoffOrder).map(chapterBlock),
-    ...visibleEntities.map((e) => entityBlock(e, factsByEntity.get(e.id) ?? [], cite)),
+    ...visibleEntities.map((e) =>
+      entityBlock(e, factsByEntity.get(e.id) ?? [], cite, aliasesRevealedBefore(e, cutoffOrder)),
+    ),
   ];
 
   const ranked = [...blocks].sort(

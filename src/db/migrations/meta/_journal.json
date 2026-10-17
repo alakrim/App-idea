@@ -43,6 +43,13 @@
       "when": 1792238842145,
       "tag": "0005_merged_schema_repair",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1792243805227,
+      "tag": "0006_fx_f_money_and_data",
+      "breakpoints": true
     }
   ]
 }

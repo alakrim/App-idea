@@ -8,6 +8,7 @@ import type {
   SentenceRef,
 } from '@/core/domain';
 import { buildPriorContext } from '@/core/memory/codex';
+import { aliasesRevealedBefore } from '@/core/memory/entities';
 import { buildQaPrompt } from '@/core/memory/qa';
 import type { QaFtsHit } from '@/core/memory/qa';
 import { chapterRepo } from '@/db/repos/chapter-repo';
@@ -86,7 +87,10 @@ function gatherContext(
     QA_CODEX_BUDGET_TOKENS,
   );
 
-  const names = entities.flatMap((entity) => [entity.canonicalName, ...entity.aliases]);
+  const names = entities.flatMap((entity) => [
+    entity.canonicalName,
+    ...aliasesRevealedBefore(entity, cutoff.chapterOrder),
+  ]);
   const keywords = extractKeywords(question, names);
   const hits = searchPassages(db, seriesId, cutoff, keywords, numberByOrder);
 
@@ -219,7 +223,7 @@ export async function askQuestion(deps: AskDeps, request: AskRequest): Promise<A
       promptTokens: reply.usage.promptTokens,
       completionTokens: reply.usage.completionTokens,
       audioSeconds: null,
-      costUsd: reply.usage.costUsd ?? 0,
+      costUsd: reply.usage.costUsd,
       generationId: reply.generationId,
     });
   });

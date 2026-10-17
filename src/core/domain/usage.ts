@@ -17,7 +17,8 @@ export const UsageEntrySchema = z.object({
   promptTokens: z.number().int().nonnegative(),
   completionTokens: z.number().int().nonnegative(),
   audioSeconds: z.number().nonnegative().nullable(),
-  costUsd: z.number().nonnegative(),
+  /** Null when the cost is unknown. Shown as "unknown", never as $0. */
+  costUsd: z.number().nonnegative().nullable(),
   generationId: z.string().nullable(),
 });
 export type UsageEntry = z.infer<typeof UsageEntrySchema>;

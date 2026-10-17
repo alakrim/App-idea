@@ -409,7 +409,8 @@ describe('runChapter: usage and cost accounting', () => {
       expect(entry.costUsd).toBeGreaterThan(0);
     }
 
-    const ledgerTotal = fake.state.ledger.reduce((sum, e) => sum + e.costUsd, 0);
+    // Every call in this run has a known cost (checked above), so the null fallback never applies.
+    const ledgerTotal = fake.state.ledger.reduce((sum, e) => sum + (e.costUsd ?? 0), 0);
     const lastCost = events.filter((e) => e.type === 'cost').at(-1);
     expect(lastCost?.type === 'cost' ? lastCost.totalUsd : NaN).toBeCloseTo(ledgerTotal, 12);
     expect(fake.job('analyze')?.costUsd).toBeCloseTo(0.001, 12);

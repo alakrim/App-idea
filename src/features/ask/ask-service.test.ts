@@ -91,6 +91,7 @@ function seedBook(db: Db): void {
     kind: 'character',
     canonicalName: 'Lin Mo',
     aliases: [],
+    aliasReveals: [],
     firstChapterOrder: 1,
   };
   const wen: Entity = {
@@ -99,6 +100,7 @@ function seedBook(db: Db): void {
     kind: 'character',
     canonicalName: 'Master Wen',
     aliases: ['Wen'],
+    aliasReveals: [{ alias: 'Wen', firstChapterOrder: 1 }],
     firstChapterOrder: 1,
   };
   const fact = (n: number, chapterN: number, order: number, text: string): EntityFact => ({
@@ -271,6 +273,7 @@ describe('askQuestion persistence', () => {
         promptTokens: 120,
         completionTokens: 30,
         costUsd: 0.002,
+        unknownCalls: 0,
       },
     ]);
   });

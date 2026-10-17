@@ -3,6 +3,7 @@
  * inspect what the pipeline wrote and count what it called. No test touches a database, the
  * network or a file system.
  */
+import type { AnalysisCallResult } from '@/core/analysis/analysis-call';
 import type { CueReport } from '@/core/analysis/cue-report';
 import type { ChapterMemoryRecord, ValidatedCue } from '@/core/analysis/types';
 import { DEFAULT_SETTINGS } from '@/core/defaults';
@@ -141,6 +142,7 @@ export interface FakeState {
   readonly memories: Map<Id, ChapterMemory>;
   readonly cues: Map<Id, readonly ValidatedCue[]>;
   readonly cueCache: Map<string, readonly ValidatedCue[]>;
+  readonly analysisCheckpoints: Map<string, AnalysisCallResult>;
   readonly cueReports: Map<Id, CueReport>;
   readonly entities: Entity[];
   readonly facts: EntityFact[];
@@ -276,6 +278,7 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     memories: new Map(),
     cues: new Map(),
     cueCache: new Map(),
+    analysisCheckpoints: new Map(),
     cueReports: new Map(),
     entities: [],
     facts: [],
@@ -366,6 +369,17 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     },
     async saveCueCache(key, cues) {
       state.cueCache.set(key, [...cues]);
+    },
+    async loadAnalysisCheckpoint(chapterId, chunkKey) {
+      return state.analysisCheckpoints.get(`${chapterId}:${chunkKey}`) ?? null;
+    },
+    async saveAnalysisCheckpoint(chapterId, chunkKey, result) {
+      state.analysisCheckpoints.set(`${chapterId}:${chunkKey}`, result);
+    },
+    async clearAnalysisCheckpoints(chapterId) {
+      for (const key of [...state.analysisCheckpoints.keys()]) {
+        if (key.startsWith(`${chapterId}:`)) state.analysisCheckpoints.delete(key);
+      }
     },
     async saveCueReport(chapterId, report) {
       state.cueReports.set(chapterId, report);
@@ -512,7 +526,10 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
       },
       async prune(chapterId, keep) {
         const files = state.audioFiles.get(chapterId) ?? [];
-        state.audioFiles.set(chapterId, files.filter((f) => keep.has(f.name)));
+        state.audioFiles.set(
+          chapterId,
+          files.filter((f) => keep.has(f.name)),
+        );
       },
       async remove(chapterId) {
         state.removedAudio.push(chapterId);

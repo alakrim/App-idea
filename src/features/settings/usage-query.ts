@@ -6,7 +6,13 @@ import { DAY_MS, buildUsageSummary, stageLabel, utcDayStart } from './usage';
 import type { UsageCount, UsageSummary } from './usage';
 
 function toCount(row: UsageTotal, label: (key: string | null) => string): UsageCount {
-  return { key: row.key ?? '', label: label(row.key), calls: row.calls, costUsd: row.costUsd };
+  return {
+    key: row.key ?? '',
+    label: label(row.key),
+    calls: row.calls,
+    costUsd: row.costUsd,
+    unknownCalls: row.unknownCalls,
+  };
 }
 
 /** Reads the three windows and the 30-day breakdowns from the usage ledger. */

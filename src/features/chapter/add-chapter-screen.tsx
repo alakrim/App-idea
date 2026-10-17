@@ -38,6 +38,7 @@ import {
 
 import { createBlockedCopy } from './create-gate-copy';
 import { EstimateCard, type EstimateStatus } from './estimate-card';
+import { pdfSizeProblem } from './pdf-limit';
 import { SourcePreviewCard } from './source-preview-card';
 import { isWebUrl } from './source-state';
 import {
@@ -250,6 +251,11 @@ export function AddChapterForm({ seriesId, sourceLang, targetLang }: AddChapterF
       });
       const asset = result.canceled ? undefined : result.assets[0];
       if (asset) {
+        const problem = pdfSizeProblem(asset.size);
+        if (problem !== null) {
+          setCreateError(problem);
+          return;
+        }
         setFile({ uri: asset.uri, name: asset.name, size: asset.size ?? 0 });
         if (!titleEdited) setTitle(titleFromFileName(asset.name));
       }

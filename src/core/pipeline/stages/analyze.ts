@@ -78,6 +78,12 @@ export const analyzeStage: StageDefinition = {
           callLlm: transport,
           signal: ctx.signal,
           ...(cachedCues === null ? {} : { cachedCues }),
+          // A retry reuses the chunks this chapter already paid for (QA-F F-02).
+          checkpoints: {
+            scope: `${model}|${PROMPT_VERSION}`,
+            load: (key) => chapters.loadAnalysisCheckpoint(ctx.chapterId, key),
+            save: (key, result) => chapters.saveAnalysisCheckpoint(ctx.chapterId, key, result),
+          },
         });
         const memory: ChapterMemory = {
           ...analysis.memory,
@@ -101,6 +107,7 @@ export const analyzeStage: StageDefinition = {
           }),
         );
         await chapters.saveMemory(memory);
+        await chapters.clearAnalysisCheckpoints(ctx.chapterId);
 
         const current = await chapters.getEntities(series.id);
         const resolution = resolveEntities(current.entities, memory, chapter.order, {
