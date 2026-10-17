@@ -134,7 +134,7 @@ describe('isCongestion', () => {
 });
 
 describe('SlidingWindow: order', () => {
-  it('saves in submission order even when requests finish out of order', async () => {
+  it('saves each finished item at once, in completion order', async () => {
     const provider = controlledProvider<string>();
     const saved: number[] = [];
     const pool = new SlidingWindow<number, string>({
@@ -151,44 +151,42 @@ describe('SlidingWindow: order', () => {
     provider.requests[2]?.resolve('two');
     provider.requests[1]?.resolve('one');
     await settle();
-    expect(saved).toEqual([]);
+    expect(saved).toEqual([2, 1]);
 
     provider.requests[0]?.resolve('zero');
-    await settle();
-    expect(saved).toEqual([0, 1, 2]);
     await pool.finish();
+    expect(saved).toEqual([2, 1, 0]);
   });
 
-  it('holds a finished segment in memory until its predecessor is saved', async () => {
+  it('never runs two saves at once', async () => {
     const provider = controlledProvider<string>();
-    const saved: number[] = [];
-    let releaseSave: () => void = () => undefined;
+    const log: string[] = [];
+    let releaseFirst: () => void = () => undefined;
     const pool = new SlidingWindow<number, string>({
       window: new AdaptiveWindow(),
       signal: new AbortController().signal,
       now: () => 0,
       work: provider.work,
-      save: (item) =>
-        new Promise<void>((resolve) => {
-          releaseSave = () => {
-            saved.push(item);
-            resolve();
-          };
-        }),
+      save: async (item) => {
+        log.push(`start ${item}`);
+        if (item === 0) {
+          await new Promise<void>((resolve) => {
+            releaseFirst = resolve;
+          });
+        }
+        log.push(`end ${item}`);
+      },
     });
     await pool.submit(0);
     await pool.submit(1);
+    provider.requests[0]?.resolve('zero');
     provider.requests[1]?.resolve('one');
     await settle();
-    expect(saved).toEqual([]);
-    provider.requests[0]?.resolve('zero');
-    await settle();
-    releaseSave();
-    await settle();
-    expect(saved).toEqual([0]);
-    releaseSave();
+    expect(log).toEqual(['start 0']);
+
+    releaseFirst();
     await pool.finish();
-    expect(saved).toEqual([0, 1]);
+    expect(log).toEqual(['start 0', 'end 0', 'start 1', 'end 1']);
   });
 
   it('keeps three requests in flight and waits for a save before starting a fourth', async () => {
@@ -308,7 +306,7 @@ describe('SlidingWindow: adaptive congestion', () => {
 });
 
 describe('SlidingWindow: failure and cancellation', () => {
-  it('never saves a segment behind a failure, so no orphan audio is written', async () => {
+  it('still saves a finished segment behind a failure, so paid audio is never dropped', async () => {
     const provider = controlledProvider<string>();
     const saved: number[] = [];
     const pool = new SlidingWindow<number, string>({
@@ -329,7 +327,7 @@ describe('SlidingWindow: failure and cancellation', () => {
     await settle();
 
     await expect(pool.finish()).rejects.toMatchObject({ error: { code: 'NETWORK' } });
-    expect(saved).toEqual([0]);
+    expect(saved).toEqual([0, 2]);
   });
 
   it('aborts the requests in flight beside a failure and reports the first error', async () => {
@@ -387,7 +385,7 @@ describe('SlidingWindow: failure and cancellation', () => {
     expect(saved).toEqual([]);
   });
 
-  it('fails when a save fails, and stops saving after it', async () => {
+  it('fails the run when a save fails, and still saves the other finished items', async () => {
     const provider = controlledProvider<string>();
     const saved: number[] = [];
     const pool = new SlidingWindow<number, string>({
@@ -405,7 +403,7 @@ describe('SlidingWindow: failure and cancellation', () => {
     provider.requests[0]?.resolve('zero');
     provider.requests[1]?.resolve('one');
     await expect(pool.finish()).rejects.toThrow('disk full');
-    expect(saved).toEqual([]);
+    expect(saved).toEqual([1]);
   });
 });
 

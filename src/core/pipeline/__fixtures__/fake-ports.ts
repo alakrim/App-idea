@@ -155,6 +155,7 @@ export interface FakeState {
   readonly llmCalls: { model: string; request: LlmRequest }[];
   readonly written: string[];
   readonly removedAudio: Id[];
+  readonly audioFiles: Map<Id, { name: string; uri: string }[]>;
 }
 
 export interface FakePorts {
@@ -288,6 +289,7 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     ttsCalls: [],
     llmCalls: [],
     written: [],
+    audioFiles: new Map(),
     removedAudio: [],
   };
   if (options.sourceText) state.sourceText.set(CHAPTER_ID, options.sourceText);
@@ -498,13 +500,23 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
       },
     },
     audio: {
-      async write(chapterId, segmentIdx, bytes, ext) {
-        const uri = `file:///fake/${chapterId}/${segmentIdx}.${ext}`;
+      async write(chapterId, fileName, bytes) {
+        const uri = `file:///fake/${chapterId}/${fileName}`;
         state.written.push(`${uri}:${bytes.length}`);
+        const files = (state.audioFiles.get(chapterId) ?? []).filter((f) => f.name !== fileName);
+        state.audioFiles.set(chapterId, [...files, { name: fileName, uri }]);
         return uri;
+      },
+      async list(chapterId) {
+        return state.audioFiles.get(chapterId) ?? [];
+      },
+      async prune(chapterId, keep) {
+        const files = state.audioFiles.get(chapterId) ?? [];
+        state.audioFiles.set(chapterId, files.filter((f) => keep.has(f.name)));
       },
       async remove(chapterId) {
         state.removedAudio.push(chapterId);
+        state.audioFiles.delete(chapterId);
       },
     },
     llm,

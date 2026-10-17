@@ -99,9 +99,15 @@ function cancelledFailure(): PipelineFailure {
 }
 
 /**
- * An attempt retired because the connection went stale. It is a retryable NETWORK failure, tagged
- * `stale`, so the retry loop can tell it from a server or network failure: it is retried at once,
- * without backoff, and it does not count against maxRetries.
+ * How many times a retired attempt is re-sent at once. A retirement is free only while no reply has
+ * arrived; the cap stops a connection that keeps going stale from looping forever.
+ */
+const MAX_STALE_RETRIES = 2;
+
+/**
+ * An attempt retired because the connection went stale, before any reply arrived. It is a retryable
+ * NETWORK failure, tagged `stale`, so the retry loop can tell it from a server or network failure: it
+ * is retried at once, without backoff, and it does not count against maxRetries.
  */
 function staleFailure(): PipelineFailure {
   return pipelineFailure('NETWORK', 'The connection was interrupted. Retrying…', {
@@ -138,13 +144,17 @@ async function withRetries<T>(
   readBody: BodyReader<T>,
 ): Promise<T> {
   let retries = 0;
+  let staleRetries = 0;
   for (;;) {
     try {
       return await attemptOnce(config, req, apiKey, readBody);
     } catch (error) {
       const failure = asFailure(error);
       // A retired attempt is retried at once: it is not a server failure, so it spends no retry.
-      if (failure.stale) continue;
+      if (failure.stale && staleRetries < MAX_STALE_RETRIES) {
+        staleRetries += 1;
+        continue;
+      }
       if (!failure.error.retryable || retries >= config.maxRetries) throw failure;
       const delay = backoffDelayMs(retries, config.random, failure.retryAfterMs);
       await waitBeforeRetry(config, delay, req.signal);
@@ -189,6 +199,9 @@ async function attemptOnce<T>(
       }),
       controller.signal,
     );
+    // Headers are in: the reply is paid for and is being read. Leaving the connection's in-flight
+    // set now means a retirement can never abort that read and re-send the request (QA-F F-01).
+    unregister();
     if (!res.ok) {
       const bodyText = await untilAborted(
         res.text().catch(() => ''),

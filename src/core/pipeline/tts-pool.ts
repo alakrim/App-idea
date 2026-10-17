@@ -3,15 +3,14 @@
  * lock-step pairs, so one slow request no longer holds back the others.
  *
  * Two parts:
- * - `AdaptiveWindow` decides how many segments may be outstanding. It starts at 3, adds one after 4
+ * - `AdaptiveWindow` decides how many segments may be in flight. It starts at 3, adds one after 4
  *   straight successes up to a ceiling (6 by default, or the narrator's own concurrency), and halves
  *   on congestion (a rate limit or an overload). The free narrator is held to one at a time.
- * - `SlidingWindow` runs the requests. Results can finish in any order, but `save` is called strictly
- *   in submission order, so the saved segments are always a contiguous prefix. A finished segment waits
- *   in memory until its predecessors are saved. A segment that failed, or that waits behind a failure,
- *   is never saved, which is why a failure cannot leave an orphan audio file.
+ * - `SlidingWindow` runs the requests. `save` is called for every item that succeeds, as soon as it
+ *   succeeds, even when an earlier item failed or is still running, so paid audio is never dropped
+ *   (QA-F F-05). The caller decides which saved items form the contiguous prefix the player may use.
  *
- * The window bounds outstanding work (submitted but not yet saved), so memory stays bounded too.
+ * The window bounds the work in flight, so memory stays bounded too.
  */
 
 import { delay } from './abort';
@@ -84,26 +83,19 @@ export interface SegmentTiming {
 
 export interface SlidingWindowOptions<T, R> {
   readonly window: AdaptiveWindow;
-  /** The run's signal. Aborting it cancels every request. */
+  /** The run's signal. Aborting it cancels every request that has not finished. */
   readonly signal: AbortSignal;
   readonly now: () => number;
   /** Waits before a congestion retry. Defaults to an abortable timer. */
   readonly wait?: (ms: number, signal: AbortSignal) => Promise<void>;
   readonly work: (item: T, signal: AbortSignal) => Promise<R>;
-  /** Called once per item, strictly in submission order. */
+  /** Called once per successful item, as it finishes. Calls never overlap; order is completion order. */
   readonly save: (item: T, result: R, timing: SegmentTiming) => Promise<void>;
-}
-
-interface Finished<T, R> {
-  readonly item: T;
-  readonly result: R;
-  readonly timing: SegmentTiming;
 }
 
 export class SlidingWindow<T, R> {
   private submitted = 0;
-  private saved = 0;
-  private readonly finished = new Map<number, Finished<T, R>>();
+  private settled = 0;
   private readonly tasks = new Set<Promise<void>>();
   private readonly abort = new AbortController();
   private readonly wait: (ms: number, signal: AbortSignal) => Promise<void>;
@@ -119,17 +111,18 @@ export class SlidingWindow<T, R> {
 
   /** Starts `item` once the window has a free slot. Rejects with the first failure of the pool. */
   async submit(item: T): Promise<void> {
-    while (this.submitted - this.saved >= this.options.window.limit) {
+    while (this.submitted - this.settled >= this.options.window.limit) {
       this.throwIfFailed();
       await this.nextChange();
     }
     this.throwIfFailed();
     throwIfCancelled(this.options.signal);
-    const index = this.submitted;
     const slots = this.options.window.limit;
     this.submitted += 1;
-    const task: Promise<void> = this.run(index, item, slots).finally(() => {
+    const task: Promise<void> = this.run(item, slots).finally(() => {
       this.tasks.delete(task);
+      this.settled += 1;
+      this.notify();
     });
     this.tasks.add(task);
   }
@@ -140,7 +133,7 @@ export class SlidingWindow<T, R> {
     this.throwIfFailed();
   }
 
-  private async run(index: number, item: T, slots: number): Promise<void> {
+  private async run(item: T, slots: number): Promise<void> {
     let attempt = 0;
     for (;;) {
       const started = this.options.now();
@@ -164,9 +157,8 @@ export class SlidingWindow<T, R> {
       }
       this.options.window.onSuccess();
       const timing: SegmentTiming = { synthMs: this.options.now() - started, slots };
-      this.finished.set(index, { item, result, timing });
       try {
-        await this.flush();
+        await this.serialSave(item, result, timing);
       } catch (thrown) {
         this.fail(thrown);
       }
@@ -183,22 +175,12 @@ export class SlidingWindow<T, R> {
     );
   }
 
-  /** Saves finished items in order. Serialized, so two saves never overlap. */
-  private flush(): Promise<void> {
-    this.saving = this.saving.catch(() => undefined).then(() => this.drain());
+  /** Runs `save` after any save already in progress, so two saves never overlap. */
+  private serialSave(item: T, result: R, timing: SegmentTiming): Promise<void> {
+    this.saving = this.saving
+      .catch(() => undefined)
+      .then(() => this.options.save(item, result, timing));
     return this.saving;
-  }
-
-  private async drain(): Promise<void> {
-    for (;;) {
-      if (this.failure !== null) return;
-      const next = this.finished.get(this.saved);
-      if (!next) return;
-      this.finished.delete(this.saved);
-      await this.options.save(next.item, next.result, next.timing);
-      this.saved += 1;
-      this.notify();
-    }
   }
 
   private fail(error: unknown): void {

@@ -190,9 +190,19 @@ export interface Tts {
   }): Promise<TtsResult>;
 }
 
+export interface AudioFileEntry {
+  readonly name: string;
+  readonly uri: string;
+}
+
+/** The chapter's audio folder. Clip files are named by content, so a name always holds the same audio. */
 export interface AudioFiles {
-  /** Writes one segment and returns its URI. A rewrite of the same segment replaces the file. */
-  write(chapterId: Id, segmentIdx: number, bytes: Uint8Array, ext: string): Promise<string>;
+  /** Writes one clip under `fileName` and returns its URI. Writing the same name again replaces it. */
+  write(chapterId: Id, fileName: string, bytes: Uint8Array): Promise<string>;
+  /** The files in the chapter's audio folder. */
+  list(chapterId: Id): Promise<AudioFileEntry[]>;
+  /** Deletes every file of the chapter's audio folder whose name is not in `keep`. */
+  prune(chapterId: Id, keep: ReadonlySet<string>): Promise<void>;
   remove(chapterId: Id): Promise<void>;
 }
 

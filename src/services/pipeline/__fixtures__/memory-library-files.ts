@@ -38,6 +38,12 @@ export function createMemoryLibraryFiles(): LibraryFiles & {
         .map((path) => path.slice(prefix.length))
         .filter((name) => !name.includes('/'));
     },
+    async listEntries(relativeDir) {
+      const prefix = under(relativeDir);
+      return [...entries.keys()]
+        .filter((path) => path.startsWith(prefix) && !path.slice(prefix.length).includes('/'))
+        .map((path) => ({ name: path.slice(prefix.length), uri: uriOf(path) }));
+    },
     async removeFile(relativePath) {
       entries.delete(relativePath);
     },

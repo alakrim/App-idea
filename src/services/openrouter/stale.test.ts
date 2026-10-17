@@ -123,6 +123,22 @@ describe('a request retired by a return to the foreground', () => {
     expect(sleeps).toEqual([]);
   });
 
+  it('stops re-sending after two stale retries, so a connection that keeps going stale ends', async () => {
+    const { client, connection, calls } = setup(hangUntilAborted);
+    const pending = client.chatText({ model: 'm', user: 'hi' }).then(
+      () => null,
+      (error: unknown) => error,
+    );
+    for (let retirement = 1; retirement <= 3; retirement += 1) {
+      await untilCalls(calls, retirement);
+      connection.retireInFlight();
+    }
+
+    const failure = (await pending) as PipelineFailure;
+    expect(failure.error.code).toBe('NETWORK');
+    expect(calls).toHaveLength(3);
+  });
+
   it('still spends the retry budget on a real server failure after a retirement', async () => {
     let attempts = 0;
     const { client, connection, calls } = setup((call) => {
