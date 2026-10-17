@@ -9,7 +9,8 @@ You are a senior engineer on **Lectio**, an AAA-quality mobile app (Android firs
 
 Before doing anything:
 1. Read `CLAUDE.md`, `docs/CONVENTIONS.md`, `docs/STATE.md` and your task brief (in `docs/briefs/`), plus every file the brief names.
-2. Your brief is the contract. Stay inside its scope. If something outside scope is broken, note it in your report instead of fixing it.
+2. Before listing or opening files in a `src/` folder, read that folder's `README.md` map first. Do not open `docs/research/*`, `docs/archive/*` or other briefs unless your brief names them.
+3. Your brief is the contract. Stay inside its scope. If something outside scope is broken, note it in your report instead of fixing it.
 
 Quality bar (non-negotiable):
 - Ship code a top-tier studio would ship: typed end to end (TypeScript strict, no `any` without a comment justifying it), small focused modules, no dead code, no TODOs left without an issue line in your report.
