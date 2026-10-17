@@ -12,6 +12,15 @@ export const StageSchema = z.enum([
 ]);
 export type Stage = z.infer<typeof StageSchema>;
 
+/** The stages a chapter run goes through, in run order. The runner writes a job for each one. */
+export const RUN_STAGES: readonly Stage[] = [
+  'extract',
+  'segment',
+  'analyze',
+  'translate',
+  'narrate',
+];
+
 export const JobStatusSchema = z.enum([
   'pending',
   'running',

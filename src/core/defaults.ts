@@ -1,3 +1,6 @@
+import { DEFAULT_BED_LEVEL_DB } from './playback/ambience-scheduler';
+import { DUCKING_DEFAULTS } from './playback/ducking';
+
 import type { Settings } from './settings';
 
 /**
@@ -30,9 +33,19 @@ export const DEFAULT_SETTINGS: Settings = {
   analysisModel: DEFAULT_MODELS.analysis,
   cleanupModel: DEFAULT_MODELS.cleanup,
   narration: { ...DEFAULT_NARRATION },
-  ambience: { enabled: true, levelDb: -22, duckingDb: 8 },
+  ambience: {
+    enabled: true,
+    levelDb: DEFAULT_BED_LEVEL_DB,
+    duckingDb: DUCKING_DEFAULTS.duckingDb,
+  },
+  playback: { defaultRate: 1 },
   reading: { fontScale: 1, showOriginal: false },
   onboardingDone: false,
   contentNoticeAccepted: false,
+<<<<<<< HEAD
   notificationsExplained: false,
+=======
+  backgroundNoticeShown: false,
+  notificationPromptShown: false,
+>>>>>>> 54b3d2e
 };

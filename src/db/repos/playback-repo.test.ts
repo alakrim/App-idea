@@ -85,9 +85,7 @@ describe('playbackRepo.getChapterForPlayback', () => {
 
   it('returns only enabled cues, in start order', () => {
     const db = setup();
-    cueRepo.insert(db, cue(2, true));
-    cueRepo.insert(db, cue(0, false));
-    cueRepo.insert(db, cue(1, true));
+    cueRepo.replaceForChapter(db, id(1), [cue(2, true), cue(0, false), cue(1, true)]);
 
     expect(playbackRepo.getChapterForPlayback(db, id(1))?.cues.map((c) => c.id)).toEqual([
       id(301),

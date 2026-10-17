@@ -5,6 +5,8 @@ import Animated from 'react-native-reanimated';
 import type { SeriesSummary } from '@/db/repos/series-repo';
 import { formatSeriesSummary } from '@/features/shared/format';
 import { CoverImage } from '@/ui/cover-image';
+import { IconButton } from '@/ui/icon-button';
+import { Ellipsis } from '@/ui/icons';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { radius, space } from '@/ui/tokens';
@@ -39,7 +41,9 @@ export const SeriesCard = memo(function SeriesCard({
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={`${series.title}, ${summary}${listening}`}
-        accessibilityHint="Opens the series. Long press for more actions."
+        accessibilityHint="Opens the series. Series actions are in the menu."
+        accessibilityActions={[{ name: 'menu', label: 'Series actions' }]}
+        onAccessibilityAction={() => onMenu(series.id)}
         delayLongPress={350}
         onPress={() => onOpen(series.id)}
         onLongPress={() => onMenu(series.id)}
@@ -66,6 +70,14 @@ export const SeriesCard = memo(function SeriesCard({
           {summary}
         </Text>
       </Pressable>
+      <View style={styles.menu}>
+        <IconButton
+          label={`Series actions for ${series.title}`}
+          icon={Ellipsis}
+          variant="surface"
+          onPress={() => onMenu(series.id)}
+        />
+      </View>
     </Animated.View>
   );
 });
@@ -74,6 +86,11 @@ const styles = StyleSheet.create({
   cell: {
     flex: 1,
     gap: space.sm,
+  },
+  menu: {
+    position: 'absolute',
+    top: space.xs,
+    right: space.xs,
   },
   coverFrame: {
     width: '100%',

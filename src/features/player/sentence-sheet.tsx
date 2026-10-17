@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 
 import type { Sentence } from '@/core/domain';
 import { Button } from '@/ui/button';
-import { BookmarkPlus, Copy, Repeat1 } from '@/ui/icons';
+import { Bookmark, BookmarkPlus, Copy, Repeat1 } from '@/ui/icons';
 import { Sheet } from '@/ui/sheet';
 import { Text } from '@/ui/text';
 import { space } from '@/ui/tokens';
@@ -16,18 +16,29 @@ export interface SentenceSheetProps {
   onRepeat: (sentence: Sentence) => void;
   onCopy: (sentence: Sentence) => void;
   onSaveVocab: (sentence: Sentence) => void;
+  /** True when the sentence is bookmarked, so the action removes the bookmark. */
+  bookmarked: boolean;
+  onBookmark: (sentence: Sentence) => void;
 }
 
-/** What a learner can do with one sentence: repeat it, copy it, or save it to Vocab. */
+/** What a learner can do with one sentence: repeat it, copy it, bookmark it or save it to Vocab. */
 export function SentenceSheet({
   sentence,
   onClose,
   onRepeat,
   onCopy,
   onSaveVocab,
+  bookmarked,
+  onBookmark,
 }: SentenceSheetProps) {
   return (
-    <Sheet visible={sentence !== null} onClose={onClose} title="Sentence" snapPoints={['46%']}>
+    <Sheet
+      visible={sentence !== null}
+      onClose={onClose}
+      title="Sentence"
+      snapPoints={['52%']}
+      scrollable
+    >
       {sentence ? (
         <View style={styles.body}>
           <Text variant="reading" testID="sentence-sheet-text">
@@ -47,6 +58,13 @@ export function SentenceSheet({
             variant="secondary"
             fullWidth
             onPress={() => onCopy(sentence)}
+          />
+          <Button
+            label={bookmarked ? 'Remove bookmark' : 'Bookmark'}
+            icon={bookmarked ? Bookmark : BookmarkPlus}
+            variant="secondary"
+            fullWidth
+            onPress={() => onBookmark(sentence)}
           />
           <Button
             label="Save to Vocab"

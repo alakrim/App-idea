@@ -5,7 +5,7 @@
  */
 import { z } from 'zod';
 
-import { extractArticle, extractFromHtml } from '@/core/extract/pipeline';
+import { loadPipeline } from '@/core/extract/load';
 import {
   applySelection,
   buildSelectionPrompt,
@@ -37,6 +37,7 @@ export interface WebExtraction {
 }
 
 export async function extractWebPage(ctx: StageContext, url: string): Promise<WebExtraction> {
+  const { extractArticle, extractFromHtml } = await loadPipeline();
   const fetched = await ctx.ports.fetcher.fetch(url, ctx.signal, FETCH_LIMITS);
   let result = await extractArticle({
     bytes: fetched.bytes,

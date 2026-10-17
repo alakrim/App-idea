@@ -88,10 +88,10 @@ function PageCard({ index, morph }: { index: number; morph: { value: number } })
         style,
       ]}
     >
-      <View style={[styles.line, styles.lineShort, { backgroundColor: colors.textFaint }]} />
-      <View style={[styles.line, { backgroundColor: colors.textFaint }]} />
-      <View style={[styles.line, { backgroundColor: colors.textFaint }]} />
-      <View style={[styles.line, styles.lineShort, { backgroundColor: colors.textFaint }]} />
+      <View style={[styles.line, styles.lineShort, { backgroundColor: colors.decorativeFaint }]} />
+      <View style={[styles.line, { backgroundColor: colors.decorativeFaint }]} />
+      <View style={[styles.line, { backgroundColor: colors.decorativeFaint }]} />
+      <View style={[styles.line, styles.lineShort, { backgroundColor: colors.decorativeFaint }]} />
     </Animated.View>
   );
 }

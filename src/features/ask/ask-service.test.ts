@@ -117,7 +117,12 @@ function seedBook(db: Db): void {
     ],
   });
 
-  positionRepo.record(db, SERIES, { chapterId: CUTOFF_CHAPTER, sentenceIdx: CUTOFF_SENTENCE }, T0);
+  positionRepo.record(
+    db,
+    SERIES,
+    { chapterId: CUTOFF_CHAPTER, sentenceIdx: CUTOFF_SENTENCE, positionMs: 0 },
+    T0,
+  );
 }
 
 function fakeClient(answer: string | ((input: ChatTextInput) => string)) {

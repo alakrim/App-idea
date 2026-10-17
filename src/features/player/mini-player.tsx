@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import { useCallback, useMemo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
@@ -58,41 +59,51 @@ export function MiniPlayerView({ nowPlaying, onOpen, onTogglePlay }: MiniPlayerV
   const { colors } = useTheme();
   const progress = useGlide(clampProgress(nowPlaying?.progress ?? 0));
   const fillStyle = useAnimatedStyle(() => ({ width: `${progress.value * 100}%` }));
+  const open = useCallback(() => (onOpen ? onOpen() : router.push('/player')), [onOpen]);
+  // Built once per open handler, not on every render (P2-11): the gesture is the bar's only gesture.
+  const swipeUp = useMemo(
+    () =>
+      Gesture.Pan()
+        .runOnJS(true)
+        .activeOffsetY(-SWIPE_OPEN_DISTANCE / 2)
+        .onEnd((event) => {
+          if (event.translationY < -SWIPE_OPEN_DISTANCE || event.velocityY < SWIPE_OPEN_VELOCITY) {
+            open();
+          }
+        }),
+    [open],
+  );
 
   if (!nowPlaying) {
     return null;
   }
 
-  const open = () => (onOpen ? onOpen() : router.push('/player'));
-  const swipeUp = Gesture.Pan()
-    .runOnJS(true)
-    .activeOffsetY(-SWIPE_OPEN_DISTANCE / 2)
-    .onEnd((event) => {
-      if (event.translationY < -SWIPE_OPEN_DISTANCE || event.velocityY < SWIPE_OPEN_VELOCITY) {
-        open();
-      }
-    });
-
+  // The open control and the play control are siblings: a button inside a button is not
+  // reachable by a screen reader (P2-11, QA-C P1-6).
   return (
     <GestureDetector gesture={swipeUp}>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={`Now playing ${nowPlaying.title}, ${nowPlaying.subtitle}. Open player`}
-        accessibilityHint="Swipe up to open the full player"
-        onPress={open}
-        testID="mini-player"
+      <View
         style={[styles.bar, { backgroundColor: colors.surfaceRaised, borderColor: colors.border }]}
       >
         <View style={styles.row}>
-          <CoverImage uri={nowPlaying.coverUri} title={nowPlaying.title} style={styles.cover} />
-          <View style={styles.copy}>
-            <Text variant="bodyStrong" numberOfLines={1}>
-              {nowPlaying.title}
-            </Text>
-            <Text variant="caption" tone="muted" numberOfLines={1}>
-              {nowPlaying.subtitle}
-            </Text>
-          </View>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={`Now playing ${nowPlaying.title}, ${nowPlaying.subtitle}. Open player`}
+            accessibilityHint="Swipe up to open the full player"
+            onPress={open}
+            testID="mini-player"
+            style={styles.open}
+          >
+            <CoverImage uri={nowPlaying.coverUri} title={nowPlaying.title} style={styles.cover} />
+            <View style={styles.copy}>
+              <Text variant="bodyStrong" numberOfLines={1}>
+                {nowPlaying.title}
+              </Text>
+              <Text variant="caption" tone="muted" numberOfLines={1}>
+                {nowPlaying.subtitle}
+              </Text>
+            </View>
+          </Pressable>
           {onTogglePlay ? (
             <Pressable
               accessibilityRole="button"
@@ -112,7 +123,7 @@ export function MiniPlayerView({ nowPlaying, onOpen, onTogglePlay }: MiniPlayerV
         <View style={[styles.track, { backgroundColor: colors.border }]}>
           <Animated.View style={[styles.fill, { backgroundColor: colors.accent }, fillStyle]} />
         </View>
-      </Pressable>
+      </View>
     </GestureDetector>
   );
 }
@@ -163,6 +174,12 @@ const styles = StyleSheet.create({
     gap: space.sm,
   },
   row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.md,
+  },
+  open: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.md,

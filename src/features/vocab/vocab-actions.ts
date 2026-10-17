@@ -41,6 +41,8 @@ export interface SaveToVocabInput {
  */
 export interface VocabActions {
   saveToVocab(input: SaveToVocabInput): string;
+  /** True when this word or sentence is already saved, so a save would only find the old entry. */
+  hasSaved(input: SaveToVocabInput): boolean;
   retryExplanation(id: string): void;
   isPending(id: string): boolean;
   failureOf(id: string): string | null;
@@ -63,6 +65,19 @@ export function createVocabActions(deps: VocabActionsDeps): VocabActions {
   const failures = new Map<string, string>();
   const listeners = new Set<() => void>();
   let version = 0;
+
+  /** The entry already saved for this term in this sentence, if there is one. */
+  const findSaved = (input: SaveToVocabInput) => {
+    const term = termOf(input);
+    return vocabRepo
+      .list(db, { seriesId: input.seriesId })
+      .find(
+        (item) =>
+          item.chapterId === input.chapterId &&
+          item.sentenceIdx === input.sentenceIdx &&
+          item.term === term,
+      );
+  };
 
   const changed = (): void => {
     version += 1;
@@ -123,19 +138,15 @@ export function createVocabActions(deps: VocabActionsDeps): VocabActions {
   };
 
   return {
+    hasSaved(input) {
+      return findSaved(input) !== undefined;
+    },
+
     saveToVocab(input) {
-      const selected = input.selection?.trim() ?? '';
-      const term = [...(selected || input.text.trim())].slice(0, MAX_TERM_LENGTH).join('');
+      const term = termOf(input);
       if (term === '') throw new Error('Select a word or phrase to save.');
 
-      const duplicate = vocabRepo
-        .list(db, { seriesId: input.seriesId })
-        .find(
-          (item) =>
-            item.chapterId === input.chapterId &&
-            item.sentenceIdx === input.sentenceIdx &&
-            item.term === term,
-        );
+      const duplicate = findSaved(input);
       if (duplicate) return duplicate.id;
 
       const series = seriesRepo.get(db, input.seriesId);
@@ -176,6 +187,12 @@ export function createVocabActions(deps: VocabActionsDeps): VocabActions {
       };
     },
   };
+}
+
+/** The term a save would store: the selection, else the sentence, cut to the length limit. */
+function termOf(input: SaveToVocabInput): string {
+  const selected = input.selection?.trim() ?? '';
+  return [...(selected || input.text.trim())].slice(0, MAX_TERM_LENGTH).join('');
 }
 
 export const VocabActionsContext = createContext<VocabActions | null>(null);

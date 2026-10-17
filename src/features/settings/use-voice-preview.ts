@@ -1,7 +1,7 @@
-import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { storableAudio, speechFormatFor } from '@/core/narration/formats';
+import { usePlayback, usePlaybackSampling } from '@/features/player/player-provider';
 import { PipelineFailure } from '@/services/openrouter';
 import type { OpenRouterClient } from '@/services/openrouter';
 
@@ -31,11 +31,12 @@ const GENERIC_FAILURE = 'The preview could not be made. Check your connection an
 
 /**
  * Voice previews. A cached clip plays at no cost. A new paid clip needs the user's one-time consent
- * because it spends OpenRouter credits, and then it is synthesized, cached and played.
+ * because it spends OpenRouter credits, and then it is synthesized, cached and played. The clip
+ * plays through the playback layer, which holds the narration while it sounds (P1-6).
  */
 export function useVoicePreview(client: OpenRouterClient) {
-  const player = useAudioPlayer(null);
-  const playback = useAudioPlayerStatus(player);
+  const { playSample } = usePlayback();
+  const isPlaying = usePlaybackSampling();
   const [phase, setPhase] = useState<PreviewPhase>('idle');
   const [pending, setPending] = useState<PreviewRequest | null>(null);
   const [message, setMessage] = useState<string | null>(null);
@@ -48,11 +49,10 @@ export function useVoicePreview(client: OpenRouterClient) {
 
   const playUri = useCallback(
     (uri: string) => {
-      player.replace({ uri });
-      player.play();
+      playSample({ kind: 'clip', uri });
       setPhase('ready');
     },
-    [player],
+    [playSample],
   );
 
   const synthesize = useCallback(
@@ -124,7 +124,7 @@ export function useVoicePreview(client: OpenRouterClient) {
     phase,
     pending,
     message,
-    isPlaying: playback.playing,
+    isPlaying,
     preview,
     confirm,
     cancelConfirmation,

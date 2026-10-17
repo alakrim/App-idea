@@ -1,6 +1,8 @@
 import { decode, detectCharset } from './charset';
+import { parseDocument } from './dom';
 import { ExtractError } from './errors';
 import { extractWithDefuddle, extractWithReadability } from './extractors';
+import { mainLinkDensity } from './link-density';
 import { postfilter } from './postfilter';
 import { decisionForScore, scoreExtraction } from './quality';
 
@@ -24,7 +26,7 @@ function blocksToText(blocks: readonly Block[]): string {
 function buildCandidate(
   extractor: ExtractorName,
   article: ExtractedArticle,
-  rawHtml: string,
+  linkDensity: number | null,
 ): Candidate {
   const { blocks, removed } = postfilter(article.blocks, {
     title: article.title,
@@ -32,7 +34,7 @@ function buildCandidate(
   });
   const { score, signals } = scoreExtraction({
     blocks,
-    rawHtml,
+    linkDensity,
     lang: article.lang,
     preFilterBlocks: article.blocks,
   });
@@ -47,10 +49,24 @@ function buildCandidate(
   };
 }
 
+function webviewResult(charset: string | null, warnings: string[]): ExtractResult {
+  return {
+    decision: 'webview',
+    best: null,
+    alternatives: [],
+    score: 0,
+    signals: null,
+    charset,
+    warnings,
+  };
+}
+
 /**
  * Runs both extractors on decoded HTML, post-filters and scores each result, and keeps the better
- * one. Used by the WebView path, which already holds the rendered HTML. A throwing extractor is
- * recorded in `warnings`, and the other one still runs.
+ * one. Used by the WebView path, which already holds the rendered HTML. The page is parsed once. The
+ * link density is measured on that parse before either extractor runs. Readability and Defuddle each
+ * rewrite the tree they are given, so Defuddle gets a copy taken before Readability starts. A
+ * throwing extractor is recorded in `warnings`, and the other one still runs.
  */
 export async function extractFromHtml(
   html: string,
@@ -61,33 +77,35 @@ export async function extractFromHtml(
   const warnings: string[] = [];
   const candidates: Candidate[] = [];
 
+  let page: Document;
+  let linkDensity: number | null;
+  let forDefuddle: Document;
   try {
-    const article = extractWithReadability(html, url);
-    candidates.push(buildCandidate('readability', article, html));
+    page = parseDocument(html, url);
+    linkDensity = mainLinkDensity(page);
+    forDefuddle = page.cloneNode(true) as Document;
+  } catch (error) {
+    warnings.push(`parse_failed: ${errorMessage(error)}`);
+    return webviewResult(charset, warnings);
+  }
+
+  try {
+    const article = extractWithReadability(page);
+    candidates.push(buildCandidate('readability', article, linkDensity));
   } catch (error) {
     warnings.push(`readability_failed: ${errorMessage(error)}`);
   }
 
   try {
-    const article = await extractWithDefuddle(html, url);
-    candidates.push(buildCandidate('defuddle', article, html));
+    const article = await extractWithDefuddle(forDefuddle, url);
+    candidates.push(buildCandidate('defuddle', article, linkDensity));
   } catch (error) {
     warnings.push(`defuddle_failed: ${errorMessage(error)}`);
   }
 
   candidates.sort((a, b) => b.score - a.score || b.signals.units - a.signals.units);
   const [best, ...alternatives] = candidates;
-  if (!best) {
-    return {
-      decision: 'webview',
-      best: null,
-      alternatives: [],
-      score: 0,
-      signals: null,
-      charset,
-      warnings,
-    };
-  }
+  if (!best) return webviewResult(charset, warnings);
 
   return {
     decision: decisionForScore(best.score),

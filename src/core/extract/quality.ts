@@ -1,5 +1,3 @@
-import { parseHTML } from 'linkedom';
-
 import { matchRule } from './lexicon';
 import { endsSentence, measureUnits, shapeKey } from './text-metrics';
 
@@ -45,8 +43,8 @@ const WEIGHTS = {
 
 export interface ScoreInput {
   blocks: readonly Block[];
-  /** The page as fetched, used for raw-DOM link density. */
-  rawHtml: string;
+  /** The page's main-candidate link density from `mainLinkDensity`, or null when it has no text. */
+  linkDensity: number | null;
   lang: string | null;
   /** Chapters need more text than articles to pass the length check. Defaults to `article`. */
   expect?: keyof typeof LENGTH_FAIL_UNITS;
@@ -72,38 +70,12 @@ function round(value: number, places: number): number {
 }
 
 /**
- * Link density of the page's main candidate, read from the raw DOM. Readability removes anchors,
- * so this has to run on the source page. The candidate is `article`, else `main`, `[role=main]`,
- * or `body`. Returns null when the candidate has no text.
- */
-export function mainLinkDensity(rawHtml: string): number | null {
-  const { document } = parseHTML(rawHtml);
-  for (const node of Array.from(document.querySelectorAll('script, style, noscript, template'))) {
-    node.remove();
-  }
-  const candidate =
-    document.querySelector('article') ??
-    document.querySelector('main') ??
-    document.querySelector('[role="main"]') ??
-    document.body;
-
-  const totalChars = (candidate.textContent ?? '').replace(/\s+/g, '').length;
-  if (totalChars === 0) return null;
-
-  let linkChars = 0;
-  for (const anchor of Array.from(candidate.querySelectorAll('a'))) {
-    linkChars += (anchor.textContent ?? '').replace(/\s+/g, '').length;
-  }
-  return Math.min(1, linkChars / totalChars);
-}
-
-/**
  * Scores one extraction from 0 to 1 using the five R3 signals: effective length, sentence-likeness,
  * repeated blocks, lexicon hits (information only, on the pre-filter blocks), and raw-DOM link
  * density. Any R3 "poor" condition caps the score. The lexicon never caps it on its own.
  */
 export function scoreExtraction(input: ScoreInput): ScoreResult {
-  const { blocks, rawHtml, lang } = input;
+  const { blocks, linkDensity, lang } = input;
   const lexiconBlocks = input.preFilterBlocks ?? blocks;
   const failUnits = LENGTH_FAIL_UNITS[input.expect ?? 'article'];
 
@@ -129,8 +101,6 @@ export function scoreExtraction(input: ScoreInput): ScoreResult {
     (block, i) => matchRule(block.text, lexiconUnits[i] ?? 0) !== null,
   ).length;
   const lexiconHitRate = lexiconBlocks.length === 0 ? 0 : lexiconHits / lexiconBlocks.length;
-
-  const linkDensity = mainLinkDensity(rawHtml);
 
   const hardFails: string[] = [];
   if (blocks.length === 0) {

@@ -5,6 +5,8 @@
 import { getOpenRouter } from '@/app-shell/openrouter-provider';
 import { getDatabase } from '@/db/client';
 import type { Db } from '@/db/types';
+import { appForegroundStatus } from '@/services/background/foreground-state';
+import { getAppConnection } from '@/services/network/app-connection';
 
 import { createExpoLibraryFiles } from './expo-library-files';
 import { createPipelineRuntime } from './runtime';
@@ -20,5 +22,7 @@ export function createLectioPipelineRuntime(db: Db = getDatabase()): PipelineRun
     openrouter: getOpenRouter(),
     files: createExpoLibraryFiles(),
     webview: { render: (url, signal) => webViewRenderQueue.render(url, signal) },
+    connection: getAppConnection(),
+    foreground: appForegroundStatus,
   });
 }

@@ -1,18 +1,28 @@
 import { runAnalysisCall } from './analysis-call';
+<<<<<<< HEAD
 import { ANALYSIS_SAMPLING, MAX_CHUNK_TOKENS, MEMORY_LIMITS } from './limits';
+=======
+import { chapterEraOf } from './chapter-era';
+import { MAX_CHUNK_TOKENS, MEMORY_LIMITS } from './limits';
+>>>>>>> 54b3d2e
 import { mergeMemoryDrafts } from './merge-memory';
 import { buildAnalysisPrompt, buildSummaryReducePrompt } from './prompts';
 import { truncateWords } from './schemas';
 import { needsSettingFallback, runSettingFallback } from './setting-fallback';
 import { validateCues } from './validate-cues';
+import { runOrdered } from '../async/ordered-pool';
 import { addUsage, throwIfCancelled, ZERO_USAGE } from '../llm/transport';
 import { planLlmChunks } from '../text/chunk';
 import { normalizeWhitespace } from '../text/normalize';
 
+import type { AmbienceEra } from './ambience-taxonomy';
 import type { AnalysisCallResult } from './analysis-call';
 import type { Lang, MemoryFields, SentenceInput, ValidatedCue } from './types';
 import type { CueValidationContext, DroppedCue } from './validate-cues';
 import type { LlmTransport, LlmUsage } from '../llm/transport';
+
+/** Chunk calls in flight at once. Chunks are independent, so they run in parallel. */
+export const ANALYSIS_CONCURRENCY = 3;
 
 /** Splits a chapter into LLM chunks. The engine takes the planner as an argument, so tests can script it. */
 export type ChunkPlanner = (sentences: readonly SentenceInput[]) => SentenceInput[][];
@@ -39,6 +49,8 @@ export interface AnalyzeChapterInput {
   /** Aborts between chunks and is passed to every model call. */
   readonly signal?: AbortSignal;
   readonly planChunks?: ChunkPlanner;
+  /** Chunk calls in flight at once. Defaults to ANALYSIS_CONCURRENCY. */
+  readonly concurrency?: number;
   /**
    * For multi-chunk chapters, rewrite the summary with one extra call (default true). When false
    * the joined chunk summaries are kept, capped.
@@ -58,14 +70,24 @@ export interface ChapterAnalysis {
   readonly chunkCount: number;
   /** Usage of every model call made for this chapter, repairs, the summary reduce and the fallback included. */
   readonly usage: LlmUsage;
+<<<<<<< HEAD
   /** True when the single-bed fallback made its call. */
   readonly fallbackRan: boolean;
+=======
+  /** The chapter's era: the majority of its passages' eras, or null when none names one (A4). */
+  readonly era: AmbienceEra | null;
+>>>>>>> 54b3d2e
 }
 
 /**
  * Runs the single analysis call per chunk, then merges the memories, runs the optional summary
+<<<<<<< HEAD
  * reduce and validates the combined cues against the whole chapter. A chapter with no valid cue
  * gets the single-bed fallback. Chunks run one after another.
+=======
+ * reduce and validates the combined cues against the whole chapter. Chunks run a few at a time, and
+ * their replies are kept in chunk order, because the memory merge depends on that order.
+>>>>>>> 54b3d2e
  */
 export async function analyzeChapter(input: AnalyzeChapterInput): Promise<ChapterAnalysis> {
   if (input.sentences.some((s, i) => s.idx !== i)) {
@@ -77,10 +99,10 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
   const cuesDecided = input.cachedCues !== undefined;
 
   const responses: AnalysisCallResult[] = [];
-  for (const chunk of chunks) {
-    throwIfCancelled(input.signal);
-    responses.push(
-      await runAnalysisCall(
+  await runOrdered(
+    chunks,
+    (chunk, _index, signal) =>
+      runAnalysisCall(
         input.callLlm,
         buildAnalysisPrompt({
           sentences: chunk,
@@ -90,10 +112,16 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
           lang: input.lang,
           cuesDecided,
         }),
-        input.signal,
+        signal,
       ),
-    );
-  }
+    {
+      concurrency: input.concurrency ?? ANALYSIS_CONCURRENCY,
+      signal: input.signal,
+      onResult: (response) => {
+        responses.push(response);
+      },
+    },
+  );
 
   let usage = responses.reduce((sum, r) => addUsage(sum, r.usage), ZERO_USAGE);
   const merged = mergeMemoryDrafts(responses.map((r) => r.memory));
@@ -109,6 +137,7 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
     if (reduced.summary) memory = { ...merged, summary: reduced.summary };
   }
 
+<<<<<<< HEAD
   if (input.cachedCues !== undefined) {
     return {
       memory,
@@ -152,6 +181,20 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
   }
 
   return { memory, cues, dropped, chunkCount: chunks.length, usage, fallbackRan };
+=======
+  const era = chapterEraOf(responses.map((r) => r.era));
+  const { cues, dropped } = validateCues(
+    responses.flatMap((r) => r.cues),
+    {
+      sentenceCount: input.sentences.length,
+      wordCount: input.wordCount,
+      sentences: input.sentences,
+      chapterEra: era,
+    },
+  );
+
+  return { memory, cues, dropped, chunkCount: chunks.length, usage, era };
+>>>>>>> 54b3d2e
 }
 
 /** One plain-text call. A null summary means the reply was empty, so the joined summary is kept. */

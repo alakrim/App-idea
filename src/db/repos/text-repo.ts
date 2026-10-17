@@ -1,4 +1,4 @@
-import { and, asc, between, eq, sql } from 'drizzle-orm';
+import { and, asc, between, eq, inArray, sql } from 'drizzle-orm';
 
 import { chapters, paragraphs, sentences } from '../schema';
 
@@ -8,6 +8,8 @@ import type { SQL } from 'drizzle-orm';
 
 /** Rows are inserted in chunks to stay well under SQLite's bound-parameter limit. */
 const INSERT_CHUNK_SIZE = 100;
+/** Each translation chunk binds three values per sentence, so 200 sentences stay under 999. */
+const TRANSLATION_CHUNK_SIZE = 200;
 const DEFAULT_SEARCH_LIMIT = 20;
 const MAX_SEARCH_LIMIT = 100;
 /** The trigram index only matches terms of at least this many characters. */
@@ -152,13 +154,33 @@ export const textRepo = {
       .all();
   },
 
-  /** Writes translations for one chapter in a single transaction. */
+  /**
+   * Writes translations for one chapter in one transaction, one UPDATE per chunk of sentences rather
+   * than one per sentence. A repeated idx keeps its last translation. Each UPDATE fires the search
+   * triggers once per row, as before, but the statement overhead is paid per chunk.
+   */
   setTranslations(db: Db, chapterId: string, translations: Translation[]): void {
+    const latest = new Map(translations.map(({ idx, translated }) => [idx, translated] as const));
+    const entries = Array.from(latest);
+    if (entries.length === 0) return;
     db.transaction((tx) => {
-      for (const { idx, translated } of translations) {
+      for (let start = 0; start < entries.length; start += TRANSLATION_CHUNK_SIZE) {
+        const chunk = entries.slice(start, start + TRANSLATION_CHUNK_SIZE);
+        const branches = sql.join(
+          chunk.map(([idx, translated]) => sql`WHEN ${idx} THEN ${translated}`),
+          sql` `,
+        );
         tx.update(sentences)
-          .set({ translated })
-          .where(and(eq(sentences.chapterId, chapterId), eq(sentences.idx, idx)))
+          .set({ translated: sql`CASE ${sentences.idx} ${branches} END` })
+          .where(
+            and(
+              eq(sentences.chapterId, chapterId),
+              inArray(
+                sentences.idx,
+                chunk.map(([idx]) => idx),
+              ),
+            ),
+          )
           .run();
       }
     });

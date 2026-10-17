@@ -140,6 +140,12 @@ function describeEvent(event: PipelineEvent): string | null {
     case 'progress':
     case 'spokenChars':
       return null;
+    case 'stall':
+      return `stall ${event.stage} #${event.count}`;
+    case 'staleAbort':
+      return `staleAbort ${event.stage}`;
+    case 'reconnecting':
+      return 'reconnecting';
   }
 }
 

@@ -1,3 +1,5 @@
+import { minTouchTarget } from '@/ui/tokens';
+
 /**
  * Geometry of the player surfaces. Colours, spacing and type come from src/ui/tokens; these are the
  * few sizes that only exist on the player.
@@ -11,13 +13,15 @@ export const PLAYER = {
   skipButtonSize: 56,
   skipIconSize: 26,
   playIconSize: 30,
-  scrubHitHeight: 44,
+  scrubHitHeight: minTouchTarget,
   scrubTrackHeight: 4,
   scrubThumbSize: 16,
   scrubTickHeight: 6,
   scrubThumbRing: 2,
   /** Sentence ticks stay faint so they never compete with the thumb. */
   tickOpacity: 0.35,
+  /** The buffer band shows the audio made so far: subtle, behind the played part. */
+  bufferOpacity: 0.4,
   /** The buffer band shows the audio made so far: subtle, behind the played part. */
   bufferOpacity: 0.4,
   scrubBubbleWidth: 56,

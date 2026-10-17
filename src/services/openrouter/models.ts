@@ -125,8 +125,74 @@ interface CacheEntry {
   models: OpenRouterModel[];
 }
 
+/** One network request for a modality, shared by every caller that asks while it is in flight. */
+interface Flight {
+  readonly promise: Promise<OpenRouterModel[]>;
+  readonly controller: AbortController;
+  /** Callers still waiting. The request is aborted when the last one leaves. */
+  waiters: number;
+  settled: boolean;
+}
+
 export function createModelCatalog(deps: ModelCatalogDeps): ModelCatalog {
   const entries = new Map<OutputModality, CacheEntry>();
+  const flights = new Map<OutputModality, Flight>();
+
+  function startFlight(modality: OutputModality): Flight {
+    const controller = new AbortController();
+    const flight: Flight = {
+      promise: fetchModels(modality, controller.signal),
+      controller,
+      waiters: 0,
+      settled: false,
+    };
+    flights.set(modality, flight);
+    const settle = (): void => {
+      flight.settled = true;
+      if (flights.get(modality) === flight) flights.delete(modality);
+    };
+    flight.promise.then(settle, settle);
+    return flight;
+  }
+
+  async function fetchModels(
+    modality: OutputModality,
+    signal: AbortSignal,
+  ): Promise<OpenRouterModel[]> {
+    const response = await deps.transport.request(
+      {
+        method: 'GET',
+        path: '/models',
+        query: { output_modalities: modality },
+        accept: 'application/json',
+        signal,
+      },
+      jsonBody(listResponseSchema),
+    );
+    const models = parseModelItems(response.data);
+    entries.set(modality, { fetchedAt: deps.now(), models });
+    return models;
+  }
+
+  /**
+   * Joins the modality's request in flight, or starts one. A caller that aborts stops waiting at
+   * once. The request itself is aborted only when its last waiter has left.
+   */
+  function join(
+    modality: OutputModality,
+    signal: AbortSignal | undefined,
+  ): Promise<OpenRouterModel[]> {
+    if (signal?.aborted) return Promise.reject(cancelledFailure());
+    const flight = flights.get(modality) ?? startFlight(modality);
+    flight.waiters += 1;
+    const leave = (): void => {
+      flight.waiters -= 1;
+      if (flight.waiters > 0 || flight.settled) return;
+      if (flights.get(modality) === flight) flights.delete(modality);
+      flight.controller.abort();
+    };
+    return waitFor(flight.promise, signal).finally(leave);
+  }
 
   return {
     async list(options = {}) {
@@ -135,20 +201,7 @@ export function createModelCatalog(deps: ModelCatalogDeps): ModelCatalog {
       const withinTtl =
         cached !== undefined && deps.now() - cached.fetchedAt < deps.ttlMs[modality];
       if (cached && withinTtl && options.fresh !== true) return cached.models;
-
-      const response = await deps.transport.request(
-        {
-          method: 'GET',
-          path: '/models',
-          query: { output_modalities: modality },
-          accept: 'application/json',
-          signal: options.signal,
-        },
-        jsonBody(listResponseSchema),
-      );
-      const models = parseModelItems(response.data);
-      entries.set(modality, { fetchedAt: deps.now(), models });
-      return models;
+      return join(modality, options.signal);
     },
 
     serialize() {
@@ -178,6 +231,22 @@ export function createModelCatalog(deps: ModelCatalogDeps): ModelCatalog {
       return true;
     },
   };
+}
+
+function cancelledFailure(): PipelineFailure {
+  return pipelineFailure('CANCELLED', 'Cancelled.', { retryable: false });
+}
+
+/** Settles with `work`, or rejects as a cancelled request as soon as `signal` aborts. */
+function waitFor<T>(work: Promise<T>, signal: AbortSignal | undefined): Promise<T> {
+  if (!signal) return work;
+  return new Promise<T>((resolve, reject) => {
+    const onAbort = (): void => reject(cancelledFailure());
+    signal.addEventListener('abort', onAbort, { once: true });
+    work.then(resolve, reject).finally(() => {
+      signal.removeEventListener('abort', onAbort);
+    });
+  });
 }
 
 /** Keeps the models that pass validation. One malformed entry must not hide the rest. */

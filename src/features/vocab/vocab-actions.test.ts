@@ -188,6 +188,27 @@ describe('vocab save and explanation', () => {
     expect(vocabRepo.list(db)).toHaveLength(1);
   });
 
+  it('tells the caller a word is already saved before a second save would find the old entry', () => {
+    const db = seed();
+    const actions = harness(
+      db,
+      jest.fn(() => new Promise(() => undefined)),
+    );
+    const input = {
+      seriesId: id(1),
+      chapterId: id(1),
+      sentenceIdx: 0,
+      text: 'Il tramonto era bellissimo.',
+      selection: 'bellissimo',
+    };
+
+    expect(actions.hasSaved(input)).toBe(false);
+    actions.saveToVocab(input);
+
+    expect(actions.hasSaved(input)).toBe(true);
+    expect(actions.hasSaved({ ...input, sentenceIdx: 1 })).toBe(false);
+  });
+
   it('saves the whole sentence, clipped, when nothing is selected', () => {
     const db = seed();
     const actions = harness(

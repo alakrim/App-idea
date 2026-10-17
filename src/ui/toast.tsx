@@ -15,7 +15,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useMotion } from './motion';
 import { Text } from './text';
 import { useTheme } from './theme';
-import { durations, gutter, hairline, radius, space } from './tokens';
+import { toastDurationMs } from './toast-timing';
+import { durations, gutter, hairline, minTouchTarget, radius, space } from './tokens';
 
 export type ToastTone = 'neutral' | 'success' | 'danger';
 
@@ -34,8 +35,6 @@ export interface ToastInput {
 interface ToastApi {
   show: (input: ToastInput) => void;
 }
-
-const TOAST_DURATION_MS = 3500;
 
 const ToastContext = createContext<ToastApi | null>(null);
 
@@ -61,7 +60,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     }
     const timer = setTimeout(() => {
       setActive((current) => (current?.id === active.id ? null : current));
-    }, TOAST_DURATION_MS);
+    }, toastDurationMs(active));
     return () => clearTimeout(timer);
   }, [active]);
 
@@ -159,7 +158,7 @@ const styles = StyleSheet.create({
   },
   action: {
     alignSelf: 'flex-end',
-    minHeight: 44,
+    minHeight: minTouchTarget,
     justifyContent: 'center',
     marginTop: space.xs,
   },

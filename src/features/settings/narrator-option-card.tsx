@@ -87,7 +87,7 @@ export function NarratorOptionCard({
         <View style={styles.head}>
           <Text
             variant="micro"
-            tone={selected ? 'accent' : 'muted'}
+            tone={selected ? 'onAccentSoft' : 'muted'}
             numberOfLines={1}
             style={styles.headName}
           >

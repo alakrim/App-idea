@@ -73,3 +73,29 @@ export const ListeningPositionSchema = z.object({
   updatedAt: TimestampSchema,
 });
 export type ListeningPosition = z.infer<typeof ListeningPositionSchema>;
+
+/**
+ * Where the listener is in one chapter. `sentenceIdx` anchors resume and bookmarks, and `positionMs`
+ * is the media time used for progress. `completed` is set when the chapter reached its end, and it
+ * clears once the listener plays past the start again.
+ */
+export const ChapterPositionSchema = z.object({
+  chapterId: IdSchema,
+  sentenceIdx: z.number().int().nonnegative(),
+  positionMs: z.number().int().nonnegative(),
+  completed: z.boolean(),
+  updatedAt: TimestampSchema,
+});
+export type ChapterPosition = z.infer<typeof ChapterPositionSchema>;
+
+/** A saved moment in a chapter. The note is optional and may be edited later. */
+export const BookmarkSchema = z.object({
+  id: IdSchema,
+  seriesId: IdSchema,
+  chapterId: IdSchema,
+  sentenceIdx: z.number().int().nonnegative(),
+  positionMs: z.number().int().nonnegative(),
+  note: z.string().nullable(),
+  createdAt: TimestampSchema,
+});
+export type Bookmark = z.infer<typeof BookmarkSchema>;

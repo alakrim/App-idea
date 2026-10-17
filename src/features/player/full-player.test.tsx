@@ -8,7 +8,7 @@ import { VocabActionsProvider } from '@/features/vocab/vocab-provider';
 import { ThemeProvider } from '@/ui/theme';
 import { ToastProvider } from '@/ui/toast';
 
-import { fixtureChapter, id, setupController } from './__fixtures__/playback-fixtures';
+import { SEGMENT_ONE, fixtureChapter, id, setupController } from './__fixtures__/playback-fixtures';
 import { FullPlayer } from './full-player';
 import { PlaybackProvider } from './player-provider';
 
@@ -16,6 +16,9 @@ import type { ReactElement } from 'react';
 
 // Jest cannot load Reanimated's worklet runtime or gesture-handler's native detectors, and the
 // bottom sheet needs both. The stand-ins keep the behaviour the tests check.
+jest.mock('react-native-gesture-handler/ReanimatedSwipeable', () =>
+  require('../../__tests__/helpers/swipeable-stub'),
+);
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
 jest.mock('react-native-gesture-handler', () => require('./__fixtures__/gesture-stub'));
 jest.mock('@gorhom/bottom-sheet', () => require('./__fixtures__/bottom-sheet-stub'));
@@ -261,6 +264,7 @@ describe('FullPlayer learner actions', () => {
 function fakeVocabActions(overrides: Partial<VocabActions>): VocabActions {
   return {
     saveToVocab: jest.fn(() => 'vocab-1'),
+    hasSaved: () => false,
     retryExplanation: jest.fn(),
     isPending: () => false,
     failureOf: () => null,
@@ -269,3 +273,120 @@ function fakeVocabActions(overrides: Partial<VocabActions>): VocabActions {
     ...overrides,
   };
 }
+
+describe('FullPlayer failure copy (P1-4, P2-17)', () => {
+  it('names a playback failure as one, without blaming the connection, and offers a retry', async () => {
+    const { controller } = await renderPlayer();
+    await act(async () => {
+      controller.content.setState({ status: 'error', failure: 'playback' });
+    });
+
+    expect(screen.getByRole('header', { name: 'Playback stopped' })).toBeOnTheScreen();
+    expect(screen.queryByText(/connection/i)).toBeNull();
+    expect(screen.getByRole('button', { name: 'Try again' })).toBeOnTheScreen();
+  });
+
+  it('names a chapter that cannot be read from the phone as a load failure, without the connection', async () => {
+    const { controller } = await renderPlayer();
+    await act(async () => {
+      controller.content.setState({ status: 'error', failure: 'load' });
+    });
+
+    expect(screen.getByRole('header', { name: "Couldn't open this chapter" })).toBeOnTheScreen();
+    expect(screen.queryByText(/connection/i)).toBeNull();
+  });
+});
+
+describe('FullPlayer narration paused (P1-5)', () => {
+  it('says narration is paused when the audio runs out and processing has stopped', async () => {
+    const setup = setupController([fixtureChapter(4, 4, 'processing', [SEGMENT_ONE])]);
+    await act(async () => {
+      await setup.controller.playChapter(id(4));
+    });
+    await renderPhone(
+      <PlaybackProvider controller={setup.controller}>
+        <FullPlayer />
+      </PlaybackProvider>,
+    );
+    setup.pipe.emit(id(4), 'idle', 1);
+    await act(async () => {
+      setup.controller.player.play();
+      setup.engine.advance(10_000);
+    });
+    await flush();
+
+    expect(
+      screen.getByText('Narration paused. More audio will appear when processing continues.'),
+    ).toBeOnTheScreen();
+  });
+});
+
+describe('FullPlayer screen-reader actions (P2-18)', () => {
+  it('steps to the next sentence from the play button action', async () => {
+    const { controller } = await renderPlayer();
+
+    await fireEvent(screen.getByRole('button', { name: 'Play' }), 'accessibilityAction', {
+      nativeEvent: { actionName: 'next' },
+    });
+
+    expect(controller.player.getState().sentenceIdx).toBe(1);
+  });
+
+  it('repeats a sentence from the sentence action', async () => {
+    const { controller } = await renderPlayer();
+
+    // The pane is closed, so its text is hidden from the accessibility tree; the action is still there.
+    const sentence = screen.getByText(/Sentence 1 of chapter 1\./, { includeHiddenElements: true });
+    await fireEvent(sentence, 'accessibilityAction', {
+      nativeEvent: { actionName: 'repeat' },
+    });
+
+    expect(controller.content.getState().loopSentenceIdx).toBe(1);
+  });
+});
+
+describe('bookmarks in the player', () => {
+  it('bookmarks the sentence in view, and the toast offers a note that is then saved', async () => {
+    const { controller, fixture } = await renderPlayer();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Bookmark this sentence' }));
+    await flush();
+
+    expect(fixture.bookmarks).toHaveLength(1);
+    expect(screen.getByRole('button', { name: 'Remove bookmark' })).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Add note' }));
+    await flush();
+    await fireEvent.changeText(screen.getByLabelText('Note'), 'The harbour master');
+    await fireEvent.press(screen.getByRole('button', { name: 'Save note' }));
+    await flush();
+
+    expect(controller.content.getState().bookmarks[0]?.bookmarks[0]?.note).toBe(
+      'The harbour master',
+    );
+  });
+
+  it('removes the bookmark when the button is pressed on a bookmarked sentence', async () => {
+    const { fixture } = await renderPlayer();
+    await fireEvent.press(screen.getByRole('button', { name: 'Bookmark this sentence' }));
+    await flush();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Remove bookmark' }));
+    await flush();
+
+    expect(fixture.bookmarks).toEqual([]);
+    expect(screen.getByRole('button', { name: 'Bookmark this sentence' })).toBeOnTheScreen();
+  });
+
+  it('says so when the series has no bookmarks yet', async () => {
+    await renderPlayer();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Bookmarks' }));
+    await flush();
+
+    expect(screen.getByText('No bookmarks yet')).toBeOnTheScreen();
+    expect(
+      screen.getByText('Bookmark a moment while you listen to come back to it here.'),
+    ).toBeOnTheScreen();
+  });
+});

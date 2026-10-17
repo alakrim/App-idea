@@ -1,9 +1,9 @@
 import { File, Paths } from 'expo-file-system';
 
 /**
- * Best-effort persistence for the OpenRouter model catalog snapshot (`ModelCatalog.serialize()`).
- * The cache is a speed-up, not a source of truth: every read or write failure is swallowed and
- * the app fetches the catalog again.
+ * Best-effort persistence for the OpenRouter model catalog snapshot. The client reads it on the first
+ * model use and writes it after each successful catalog fetch. The cache is a speed-up, not a source
+ * of truth: every read or write failure is swallowed and the app fetches the catalog again.
  */
 
 const CACHE_FILE_NAME = 'openrouter-models.json';

@@ -32,7 +32,10 @@ export function PlayerBackdrop({ uri, title, tint }: PlayerBackdropProps) {
       <BlurView intensity={80} tint={scheme} style={StyleSheet.absoluteFill} />
       <LinearGradient
         colors={[
-          withAlpha(top, scheme === 'dark' ? PLAYER.backdropTintAlpha : PLAYER.backdropTintAlphaLight),
+          withAlpha(
+            top,
+            scheme === 'dark' ? PLAYER.backdropTintAlpha : PLAYER.backdropTintAlphaLight,
+          ),
           colors.bg,
         ]}
         locations={[0, 0.75]}

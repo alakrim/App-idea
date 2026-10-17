@@ -76,6 +76,19 @@ export const jobRepo = {
     return counts;
   },
 
+  /** The chapters whose jobs were touched most recently, newest first. Diagnostics reads their timings. */
+  recentChapterIds(db: Db, limit: number): string[] {
+    const lastActivity = sql`max(coalesce(${jobs.finishedAt}, ${jobs.startedAt}))`;
+    return db
+      .select({ chapterId: jobs.chapterId })
+      .from(jobs)
+      .groupBy(jobs.chapterId)
+      .orderBy(desc(lastActivity))
+      .limit(limit)
+      .all()
+      .map((row) => row.chapterId);
+  },
+
   /** The most recent failed jobs, newest first. Diagnostics shows them to help with bug reports. */
   recentFailures(db: Db, limit: number): Job[] {
     return db

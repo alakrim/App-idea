@@ -5,6 +5,8 @@ import { OpenRouterProvider } from '@/app-shell/openrouter-provider';
 import { DEFAULT_NARRATION } from '@/core/defaults';
 import { FREE_NARRATOR_MODEL_ID, KOKORO_MODEL_ID } from '@/core/narration/options';
 import type { NarrationSettings } from '@/core/settings';
+import { setupController } from '@/features/player/__fixtures__/playback-fixtures';
+import { PlaybackProvider } from '@/features/player/player-provider';
 import type { CatalogState } from '@/features/settings/model-catalog';
 import { NarrationPanel } from '@/features/settings/narration-settings';
 import { createOpenRouterClient, type OpenRouterModel } from '@/services/openrouter';
@@ -99,9 +101,13 @@ async function renderPanel() {
     appTitle: 'Lectio',
     fetchImpl: () => Promise.reject(new Error('no network in tests')),
   });
+  // The panel previews through the playback layer, so it renders under a playback controller.
+  const { controller } = setupController([]);
   await renderThemed(
     <OpenRouterProvider client={client}>
-      <NarrationPanel />
+      <PlaybackProvider controller={controller}>
+        <NarrationPanel />
+      </PlaybackProvider>
     </OpenRouterProvider>,
   );
 }

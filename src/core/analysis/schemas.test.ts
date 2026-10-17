@@ -229,6 +229,37 @@ describe('strict json_schema compatibility of LLM output schemas', () => {
     expect(strictViolations(ANALYSIS_JSON_SCHEMA.schema)).toEqual([]);
   });
 
+  it('asks the model for setting.era as a required, nullable enum (ADR-0006 §1)', () => {
+    const json = ANALYSIS_JSON_SCHEMA.schema as {
+      required: string[];
+      properties: { setting: { required: string[]; properties: { era: { anyOf?: unknown[]; enum?: unknown[] } } } };
+    };
+    expect(json.required).toContain('setting');
+    expect(json.properties.setting.required).toEqual(['era']);
+    expect(json.properties.setting.properties.era.enum ?? json.properties.setting.properties.era.anyOf)
+      .toBeDefined();
+  });
+
+  it('reads the passage era from the reply, and treats a missing setting as no era', () => {
+    const withEra = parseAnalysisReply(
+      JSON.stringify({ memory: { summary: 'x' }, cues: [], setting: { era: 'historic' } }),
+    );
+    expect(withEra.ok && withEra.value.era).toBe('historic');
+    const withNull = parseAnalysisReply(
+      JSON.stringify({ memory: { summary: 'x' }, cues: [], setting: { era: null } }),
+    );
+    expect(withNull.ok && withNull.value.era).toBeNull();
+    const missing = parseAnalysisReply(JSON.stringify({ memory: { summary: 'x' }, cues: [] }));
+    expect(missing.ok && missing.value.era).toBeNull();
+  });
+
+  it('rejects an era outside the four A4 eras, so the repair retry asks again', () => {
+    const outcome = parseAnalysisReply(
+      JSON.stringify({ memory: { summary: 'x' }, cues: [], setting: { era: 'medieval' } }),
+    );
+    expect(outcome.ok).toBe(false);
+  });
+
   it('keeps the parse schema lenient on cue items, so one bad cue cannot drop the memory', () => {
     const parsed = analysisResponseSchema.safeParse({
       memory: EMPTY_DRAFT,

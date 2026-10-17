@@ -4,7 +4,6 @@ import { PROBES, runDiagnostics, type DiagnosticsDeps } from './run-all';
 
 import type { ProbeOutcome, ProbeSpec } from './probe';
 
-
 /** Dependencies where every probe that touches the device is a stand-in. */
 function fakeDeps(overrides: Partial<DiagnosticsDeps> = {}): DiagnosticsDeps {
   const emptyDb = {
@@ -25,6 +24,10 @@ function fakeDeps(overrides: Partial<DiagnosticsDeps> = {}): DiagnosticsDeps {
       hasLockScreenSession: () => null,
     },
     storage: () => ({ databaseBytes: 1, freeBytes: 2 }),
+    background: {
+      status: () => ({ state: 'stopped', lastStartedAt: null, failure: null }),
+      notificationsGranted: async () => true,
+    },
     ...overrides,
   };
 }
@@ -114,7 +117,9 @@ describe('runDiagnostics', () => {
           TextDecoder: undefined,
         },
       }),
-      PROBES.filter((probe) => probe.spec.group === 'storage' && probe.spec.id === 'sqlite-version'),
+      PROBES.filter(
+        (probe) => probe.spec.group === 'storage' && probe.spec.id === 'sqlite-version',
+      ),
     );
 
     expect(results).toMatchObject([{ id: 'sqlite-version', status: 'pass' }]);

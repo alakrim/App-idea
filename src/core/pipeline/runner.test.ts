@@ -3,6 +3,7 @@ import type { LlmRequest } from '@/core/llm/transport';
 
 import { CHAPTER_ID, createFakePorts, MODELS, mp3Bytes } from './__fixtures__/fake-ports';
 import { articleHtml, extractFixture, longText } from './__fixtures__/pages';
+import { StageFailure } from './errors';
 import { runChapter } from './runner';
 
 import type { PipelineEvent } from './context';
@@ -368,10 +369,17 @@ describe('runChapter: cancellation and resume', () => {
     const ttsBefore = fake.state.ttsCalls.length;
     const resumed = await runChapter(CHAPTER_ID, fake.ports);
 
+<<<<<<< HEAD
     // The ramp plans this chapter in more segments than its characters alone suggest, so count them.
     const total = fake.state.segments.get(CHAPTER_ID)?.length ?? 0;
     expect(saved).toBeLessThan(total);
     expect(resumed.status).toBe('ready');
+=======
+    // The planned total is read from the finished chapter, since the first-segment budget decides it.
+    const total = fake.state.segments.get(CHAPTER_ID)?.length ?? 0;
+    expect(resumed.status).toBe('ready');
+    expect(total).toBeGreaterThan(saved);
+>>>>>>> 54b3d2e
     expect(fake.state.ttsCalls.length - ttsBefore).toBe(total - saved);
   });
 
@@ -420,5 +428,114 @@ describe('runChapter: usage and cost accounting', () => {
     const ready = events.flatMap((e) => (e.type === 'segmentReady' ? [e.segment.idx] : []));
     expect(ready).toEqual(fake.state.segments.get(CHAPTER_ID)?.map((s) => s.idx));
     expect(ready).toEqual([...ready].sort((a, b) => a - b));
+  });
+});
+
+describe('runChapter: job timing', () => {
+  it('stamps a running job with its start and no finish, and a finished job with both', async () => {
+    const fake = createFakePorts({ sourceText: longText(4, 300), targetLang: 'en' });
+    const seenRunning: { stage: string; startedAt: number | null; finishedAt: number | null }[] =
+      [];
+
+    await runChapter(CHAPTER_ID, fake.ports, {
+      onEvent: (event) => {
+        if (event.type === 'stage' && event.status === 'running') {
+          const job = fake.job(event.stage);
+          seenRunning.push({
+            stage: event.stage,
+            startedAt: job?.startedAt ?? null,
+            finishedAt: job?.finishedAt ?? null,
+          });
+        }
+      },
+    });
+
+    const narrating = seenRunning.find((entry) => entry.stage === 'narrate');
+    expect(narrating?.startedAt).not.toBeNull();
+    expect(narrating?.finishedAt).toBeNull();
+    // This chapter has no source language, so translation is skipped and never runs.
+    expect(fake.job('translate')?.status).toBe('skipped');
+    for (const stage of ['extract', 'segment', 'analyze', 'narrate'] as const) {
+      const job = fake.job(stage);
+      expect(job?.status).toBe('done');
+      expect(job?.startedAt).not.toBeNull();
+      expect(job?.finishedAt).not.toBeNull();
+      expect(job?.finishedAt ?? 0).toBeGreaterThanOrEqual(job?.startedAt ?? Infinity);
+    }
+  });
+
+  it('keeps the start and stamps the finish of a failed job', async () => {
+    const fake = createFakePorts({
+      sourceText: longText(2, 300),
+      targetLang: null,
+      tts: () => {
+        throw new StageFailure('NETWORK', 'No connection.', { retryable: true });
+      },
+    });
+
+    await runChapter(CHAPTER_ID, fake.ports);
+
+    const job = fake.job('narrate');
+    expect(job?.status).toBe('failed');
+    expect(job?.startedAt).not.toBeNull();
+    expect(job?.finishedAt).not.toBeNull();
+  });
+});
+
+describe('runChapter: a run its owner stops', () => {
+  it('fails the chapter with the owner’s error instead of reporting a cancellation', async () => {
+    const controller = new AbortController();
+    const stopError = {
+      code: 'NETWORK' as const,
+      message: 'Lectio lost its connection while preparing this chapter.',
+      retryable: true,
+    };
+    let stopped: typeof stopError | null = null;
+    const fake = createFakePorts({
+      sourceText: longText(12, 250),
+      targetLang: 'en',
+      // The owner gives up while the first passage is being narrated, and the call honours the abort.
+      tts: (_text, _profile, signal) => {
+        const aborted = new Promise<never>((_resolve, reject) => {
+          signal.addEventListener('abort', () =>
+            reject(Object.assign(new Error('aborted'), { name: 'AbortError' })),
+          );
+        });
+        stopped = stopError;
+        controller.abort();
+        return aborted;
+      },
+    });
+    const { events, onEvent } = recorder();
+
+    const outcome = await runChapter(CHAPTER_ID, fake.ports, {
+      signal: controller.signal,
+      stopped: () => stopped,
+      onEvent,
+    });
+
+    expect(outcome).toEqual({ status: 'failed', stage: 'narrate', error: stopError });
+    expect(fake.chapter().status).toBe('failed');
+    expect(fake.job('narrate')?.status).toBe('failed');
+    expect(events).toContainEqual({
+      type: 'error',
+      chapterId: CHAPTER_ID,
+      stage: 'narrate',
+      error: stopError,
+    });
+    expect(events.some((e) => e.type === 'error' && e.error.code === 'CANCELLED')).toBe(false);
+  });
+
+  it('still reports a plain cancellation as cancelled when the owner has no error to give', async () => {
+    const controller = new AbortController();
+    controller.abort();
+    const fake = createFakePorts({ sourceText: PASTED });
+
+    const outcome = await runChapter(CHAPTER_ID, fake.ports, {
+      signal: controller.signal,
+      stopped: () => null,
+    });
+
+    expect(outcome.status).toBe('cancelled');
   });
 });

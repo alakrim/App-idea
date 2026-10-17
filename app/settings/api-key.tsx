@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { useOpenRouter } from '@/app-shell/openrouter-provider';
 import { KeyForm, AccountDetails } from '@/features/settings/key-form';
@@ -8,6 +8,7 @@ import { SettingsPage } from '@/features/settings/settings-page';
 import { SettingsSection } from '@/features/settings/settings-section';
 import { useKeyConnection } from '@/features/settings/use-key-connection';
 import { useSavedKey, useSavedKeyAccount } from '@/features/settings/use-saved-key';
+import { ConfirmSheet } from '@/features/shared/confirm-sheet';
 import { clearApiKey } from '@/services/secrets';
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
@@ -25,6 +26,7 @@ export default function ApiKeyScreen() {
   const account = useSavedKeyAccount(client, hasKey);
   const { connection, connect, reset } = useKeyConnection();
   const [replacing, setReplacing] = useState(false);
+  const [confirmingRemove, setConfirmingRemove] = useState(false);
   const showForm = !hasKey || replacing;
 
   const submit = async (key: string): Promise<boolean> => {
@@ -37,28 +39,16 @@ export default function ApiKeyScreen() {
     return saving;
   };
 
-  const remove = () => {
-    Alert.alert(
-      'Remove your key?',
-      'Lectio cannot reach OpenRouter until you add a key again. Your library and notes stay on this device.',
-      [
-        { text: 'Keep key', style: 'cancel' },
-        {
-          text: 'Remove key',
-          style: 'destructive',
-          onPress: () => {
-            clearApiKey()
-              .then(() => {
-                reset();
-                toast.show({ message: 'Your key was removed from this device.' });
-              })
-              .catch(() => {
-                toast.show({ message: 'The key could not be removed. Try again.', tone: 'danger' });
-              });
-          },
-        },
-      ],
-    );
+  const removeKey = () => {
+    setConfirmingRemove(false);
+    clearApiKey()
+      .then(() => {
+        reset();
+        toast.show({ message: 'Your key was removed from this device.' });
+      })
+      .catch(() => {
+        toast.show({ message: 'The key could not be removed. Try again.', tone: 'danger' });
+      });
   };
 
   return (
@@ -103,7 +93,13 @@ export default function ApiKeyScreen() {
                 setReplacing(true);
               }}
             />
-            <Button label="Remove key" variant="danger" fullWidth size="lg" onPress={remove} />
+            <Button
+              label="Remove key"
+              variant="danger"
+              fullWidth
+              size="lg"
+              onPress={() => setConfirmingRemove(true)}
+            />
           </View>
         </SettingsSection>
       ) : null}
@@ -130,6 +126,15 @@ export default function ApiKeyScreen() {
           </Card>
         </SettingsSection>
       ) : null}
+      <ConfirmSheet
+        visible={confirmingRemove}
+        title="Remove your key?"
+        message="Lectio cannot reach OpenRouter until you add a key again. Your library and notes stay on this device."
+        confirmLabel="Remove"
+        destructive
+        onCancel={() => setConfirmingRemove(false)}
+        onConfirm={removeKey}
+      />
     </SettingsPage>
   );
 }

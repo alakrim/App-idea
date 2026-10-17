@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- jest.mock factories load the stub with require() */
 import { fireEvent, screen } from '@testing-library/react-native';
 
 import { renderThemed } from '@/__tests__/helpers/render-themed';
@@ -8,9 +9,12 @@ import { ChapterView, type ChapterViewProps } from './chapter-view';
 
 import type { ReadingParagraph } from './chapter-data';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
 jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
+// The stub renders a sheet's contents only while it is open, the way the real sheet does.
+jest.mock('@gorhom/bottom-sheet', () =>
+  require('@/__tests__/helpers/feature-mocks').bottomSheetStub(),
+);
 
 const PARAGRAPHS: ReadingParagraph[] = [
   {
@@ -54,7 +58,12 @@ function props(overrides: Partial<ChapterViewProps> = {}): ChapterViewProps {
     onBack: jest.fn(),
     onPlay: jest.fn(),
     onRetry: jest.fn(),
+<<<<<<< HEAD
     onRetryNow: jest.fn(),
+=======
+    onPrepare: jest.fn(),
+    onStop: jest.fn(),
+>>>>>>> 54b3d2e
     onToggleCue: jest.fn(),
     ...overrides,
   };
@@ -92,9 +101,14 @@ describe('ChapterView ambience cues', () => {
     await renderThemed(<ChapterView {...props({ onToggleCue })} />);
 
     expect(screen.getByText('Tavern')).toBeOnTheScreen();
-    expect(screen.getByText('Sentences 1–2')).toBeOnTheScreen();
+    expect(screen.getByText('Near the start')).toBeOnTheScreen();
+    expect(screen.getByText(CUE.reason)).toBeOnTheScreen();
 
-    await fireEvent(screen.getByRole('switch', { name: 'Ambience: Tavern' }), 'valueChange', false);
+    await fireEvent(
+      screen.getByRole('switch', { name: 'Ambience: Tavern, Near the start' }),
+      'valueChange',
+      false,
+    );
 
     expect(onToggleCue).toHaveBeenCalledWith(id(90), false);
   });
@@ -135,5 +149,97 @@ describe('ChapterView ambience cues', () => {
     expect(screen.getByText('12 m ready · about 3 m left')).toBeOnTheScreen();
     await fireEvent.press(button);
     expect(onPlay).toHaveBeenCalledWith(id(1));
+  });
+});
+
+describe('ChapterView preparing, stopping and failures', () => {
+  const processing = chapterRow(1, 1, 1, { status: 'processing' });
+
+  it('stops a chapter only after the listener confirms, and keeps the finished audio copy', async () => {
+    const onStop = jest.fn();
+    await renderThemed(<ChapterView {...props({ chapter: processing, onStop })} />);
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Stop preparing' }));
+    const confirm = screen.getByText('Stop preparing this chapter?');
+    expect(confirm).toBeOnTheScreen();
+    expect(
+      screen.getByText('Finished audio is kept, and you can continue later.'),
+    ).toBeOnTheScreen();
+    expect(onStop).not.toHaveBeenCalled();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Stop' }));
+    expect(onStop).toHaveBeenCalledWith(processing.id);
+  });
+
+  it('does not stop when the listener cancels the confirmation', async () => {
+    const onStop = jest.fn();
+    await renderThemed(<ChapterView {...props({ chapter: processing, onStop })} />);
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Stop preparing' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Cancel' }));
+
+    expect(onStop).not.toHaveBeenCalled();
+  });
+
+  it('offers no Stop while the chapter is not being prepared', async () => {
+    await renderThemed(<ChapterView {...props()} />);
+
+    expect(screen.queryByRole('button', { name: 'Stop preparing' })).toBeNull();
+  });
+
+  it('prepares a draft chapter from its own action', async () => {
+    const onPrepare = jest.fn();
+    const draft = chapterRow(1, 1, 1, { status: 'draft' });
+    await renderThemed(<ChapterView {...props({ chapter: draft, onPrepare })} />);
+
+    expect(screen.getByText('Prepare the chapter first, then play it.')).toBeOnTheScreen();
+    await fireEvent.press(screen.getByRole('button', { name: 'Prepare this chapter' }));
+
+    expect(onPrepare).toHaveBeenCalledWith(draft.id);
+  });
+
+  it('shows Try again for every failure, and says what to change when a retry will not fix it', async () => {
+    const onRetry = jest.fn();
+    const failedChapter = chapterRow(1, 1, 1, { status: 'failed' });
+    await renderThemed(
+      <ChapterView
+        {...props({
+          chapter: failedChapter,
+          onRetry,
+          failure: {
+            code: 'AUTH',
+            message: 'OpenRouter rejected the key.',
+            retryable: false,
+          },
+        })}
+      />,
+    );
+
+    expect(
+      screen.getByText(
+        'OpenRouter rejected the key. Check your OpenRouter key in Settings, then try again.',
+      ),
+    ).toBeOnTheScreen();
+    await fireEvent.press(screen.getByRole('button', { name: 'Try again' }));
+
+    expect(onRetry).toHaveBeenCalledWith(failedChapter.id);
+  });
+
+  it('shows Try again for an unknown failure that the pipeline marks as not retryable', async () => {
+    const failedChapter = chapterRow(1, 1, 1, { status: 'failed' });
+    await renderThemed(
+      <ChapterView
+        {...props({
+          chapter: failedChapter,
+          failure: {
+            code: 'UNKNOWN',
+            message: 'Something went wrong. Try again.',
+            retryable: false,
+          },
+        })}
+      />,
+    );
+
+    expect(screen.getByRole('button', { name: 'Try again' })).toBeOnTheScreen();
   });
 });

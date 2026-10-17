@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-require-imports -- mock factories require react and react-native lazily */
 import { act, fireEvent, screen } from '@testing-library/react-native';
 
-import { getApiKey, setApiKey, useApiKeyStatus } from '@/services/secrets';
+import { clearApiKey, getApiKey, setApiKey, useApiKeyStatus } from '@/services/secrets';
 
 import ApiKeyScreen from '../../../app/settings/api-key';
 import { renderThemed } from '../helpers/render-themed';
 
- 
 jest.mock('react-native-reanimated', () => require('../helpers/reanimated-stub'));
 jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 jest.mock('expo-router', () => ({
@@ -30,6 +29,7 @@ jest.mock('react-native-safe-area-context', () => {
     useSafeAreaInsets: () => ({ top: 0, bottom: 0, left: 0, right: 0 }),
   };
 });
+jest.mock('@gorhom/bottom-sheet', () => require('../helpers/feature-mocks').bottomSheetStub());
 jest.mock('@/services/secrets', () => ({
   isWellFormedApiKey: (key: string) => key.startsWith('sk-or-') && key.length >= 20,
   getApiKey: jest.fn(),
@@ -115,5 +115,26 @@ describe('API key screen', () => {
 
     expect(await screen.findByText(/did not accept this key/)).toBeOnTheScreen();
     expect(setApiKey).not.toHaveBeenCalled();
+  });
+
+  it('removes the saved key only after the listener confirms', async () => {
+    jest.mocked(clearApiKey).mockResolvedValue(undefined);
+    await renderThemed(<ApiKeyScreen />);
+
+    await fireEvent.press(await screen.findByRole('button', { name: 'Remove key' }));
+    expect(screen.getByText('Remove your key?')).toBeOnTheScreen();
+    expect(clearApiKey).not.toHaveBeenCalled();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Remove' }));
+    expect(clearApiKey).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps the key when the listener cancels the removal', async () => {
+    await renderThemed(<ApiKeyScreen />);
+
+    await fireEvent.press(await screen.findByRole('button', { name: 'Remove key' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Cancel' }));
+
+    expect(clearApiKey).not.toHaveBeenCalled();
   });
 });

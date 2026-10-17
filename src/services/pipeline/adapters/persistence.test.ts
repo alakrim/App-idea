@@ -1,3 +1,5 @@
+import { eq } from 'drizzle-orm';
+
 import { DEFAULT_NARRATION } from '@/core/defaults';
 import { StageFailure } from '@/core/pipeline/errors';
 import type { NarrationSettings } from '@/core/settings';
@@ -5,9 +7,9 @@ import { chapterRow, id, seriesRow, T0 } from '@/db/__fixtures__/factories';
 import { createTestDb } from '@/db/__fixtures__/test-db';
 import { audioSegmentRepo } from '@/db/repos/audio-segment-repo';
 import { chapterRepo } from '@/db/repos/chapter-repo';
-import { narrationProfileRepo } from '@/db/repos/narration-profile-repo';
 import { seriesRepo } from '@/db/repos/series-repo';
 import { settingsRepo } from '@/db/repos/settings-repo';
+import { narrationProfiles } from '@/db/schema';
 
 import { createMemoryLibraryFiles } from '../__fixtures__/memory-library-files';
 import { narrationProfileFor, narrationProfileId } from '../narration-id';
@@ -125,7 +127,13 @@ describe('createChapterStore', () => {
     const record = await store.load(id(1));
     expect(record?.chapter.id).toBe(id(1));
     expect(record?.narration.id).toBe(narrationProfileId(settingsRepo.getSettings(db).narration));
-    expect(narrationProfileRepo.get(db, record?.narration.id ?? '')).toEqual(record?.narration);
+    expect(
+      db
+        .select()
+        .from(narrationProfiles)
+        .where(eq(narrationProfiles.id, record?.narration.id ?? ''))
+        .get(),
+    ).toEqual(record?.narration);
     expect(await store.load(id(99))).toBeNull();
   });
 

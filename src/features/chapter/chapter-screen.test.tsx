@@ -13,6 +13,10 @@ import { createFakePipeline } from '@/features/pipeline/fake-facade';
 
 import { ChapterScreen } from './chapter-screen';
 
+// The stub renders a sheet's contents only while it is open, the way the real sheet does.
+jest.mock('@gorhom/bottom-sheet', () =>
+  require('@/__tests__/helpers/feature-mocks').bottomSheetStub(),
+);
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
 jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 jest.mock('expo-sqlite', () => require('../../__tests__/helpers/fake-expo-sqlite'));
@@ -40,19 +44,21 @@ function seed(): Db {
       },
     ],
   });
-  cueRepo.insert(db, {
-    id: id(91),
-    chapterId: id(1),
-    category: 'harbor_port',
-    startSentence: 0,
-    endSentence: 0,
-    intensity: 'low',
-    fadeInMs: 1000,
-    fadeOutMs: 1000,
-    confidence: 0.7,
-    reason: 'Water against a quay.',
-    enabled: true,
-  });
+  cueRepo.replaceForChapter(db, id(1), [
+    {
+      id: id(91),
+      chapterId: id(1),
+      category: 'harbor_port',
+      startSentence: 0,
+      endSentence: 0,
+      intensity: 'low',
+      fadeInMs: 1000,
+      fadeOutMs: 1000,
+      confidence: 0.7,
+      reason: 'Water against a quay.',
+      enabled: true,
+    },
+  ]);
   return db;
 }
 

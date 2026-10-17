@@ -50,6 +50,8 @@ export const series = sqliteTable(
     narrationProfileId: text('narration_profile_id').references(() => narrationProfiles.id, {
       onDelete: 'set null',
     }),
+    /** The speed last used in this series. Null until the listener changes it. */
+    playbackRate: real('playback_rate'),
     createdAt: integer('created_at').notNull(),
     updatedAt: integer('updated_at').notNull(),
   },
@@ -270,6 +272,42 @@ export const usageLedger = sqliteTable(
   ],
 );
 
+/**
+ * One row per chapter the listener has played: where they stopped, and whether they reached the
+ * end. Resume reads this row, so a chapter picks up its own place whichever chapter was last heard.
+ */
+export const chapterPositions = sqliteTable('chapter_positions', {
+  chapterId: text('chapter_id')
+    .primaryKey()
+    .references(() => chapters.id, { onDelete: 'cascade' }),
+  sentenceIdx: integer('sentence_idx').notNull(),
+  positionMs: integer('position_ms').notNull(),
+  completed: integer('completed', { mode: 'boolean' }).notNull().default(false),
+  updatedAt: integer('updated_at').notNull(),
+});
+
+/** A saved moment in a chapter. One bookmark per sentence, so a sentence is either marked or not. */
+export const bookmarks = sqliteTable(
+  'bookmarks',
+  {
+    id: text('id').primaryKey(),
+    seriesId: text('series_id')
+      .notNull()
+      .references(() => series.id, { onDelete: 'cascade' }),
+    chapterId: text('chapter_id')
+      .notNull()
+      .references(() => chapters.id, { onDelete: 'cascade' }),
+    sentenceIdx: integer('sentence_idx').notNull(),
+    positionMs: integer('position_ms').notNull(),
+    note: text('note'),
+    createdAt: integer('created_at').notNull(),
+  },
+  (t) => [
+    uniqueIndex('bookmarks_chapter_sentence_uq').on(t.chapterId, t.sentenceIdx),
+    index('bookmarks_series_idx').on(t.seriesId),
+  ],
+);
+
 /** One row per series: `current` is where the listener is, `furthest` is the spoiler cutoff. */
 export const listeningPositions = sqliteTable(
   'listening_positions',
@@ -340,6 +378,24 @@ export const vocab = sqliteTable(
   ],
 );
 
+/**
+ * Live activity of a chapter's stage, for Diagnostics: when it last moved, and how often it stalled
+ * or had a request retired as stale. A stage's counts start again when the stage starts running.
+ */
+export const stageActivity = sqliteTable(
+  'stage_activity',
+  {
+    chapterId: text('chapter_id')
+      .notNull()
+      .references(() => chapters.id, { onDelete: 'cascade' }),
+    stage: text('stage').$type<Stage>().notNull(),
+    lastActivityAt: integer('last_activity_at').notNull(),
+    stallCount: integer('stall_count').notNull().default(0),
+    staleAbortCount: integer('stale_abort_count').notNull().default(0),
+  },
+  (t) => [primaryKey({ columns: [t.chapterId, t.stage] })],
+);
+
 export const settings = sqliteTable('settings', {
   key: text('key').primaryKey(),
   /** JSON: any value. Validated by the caller that owns the key. */
@@ -361,8 +417,11 @@ export const schema = {
   entityFacts,
   audioSegments,
   jobs,
+  stageActivity,
   usageLedger,
   listeningPositions,
+  chapterPositions,
+  bookmarks,
   qaMessages,
   vocab,
   settings,
