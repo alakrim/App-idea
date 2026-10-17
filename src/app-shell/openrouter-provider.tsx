@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, type ReactNode } from 'react';
 
-import { readCatalogSnapshot, writeCatalogSnapshot } from '@/services/catalog-cache';
+import { CATALOG_FILE_STORE, persistCatalog } from '@/services/catalog-cache';
 import { getAppConnection } from '@/services/network/app-connection';
 import { createOpenRouterClient } from '@/services/openrouter';
 import type { OpenRouterClient, OpenRouterClientOptions } from '@/services/openrouter';
@@ -17,15 +17,14 @@ export const LECTIO_APP_TITLE = 'Lectio';
 export function createLectioOpenRouter(
   options: Pick<OpenRouterClientOptions, 'fetchImpl' | 'now'> = {},
 ): OpenRouterClient {
-  return createOpenRouterClient({
+  const client = createOpenRouterClient({
     getApiKey,
     appUrl: LECTIO_APP_URL,
     appTitle: LECTIO_APP_TITLE,
     connection: getAppConnection(),
-    loadModelSnapshot: readCatalogSnapshot,
-    onModelsFetched: writeCatalogSnapshot,
     ...options,
   });
+  return { ...client, models: persistCatalog(client.models, CATALOG_FILE_STORE) };
 }
 
 let singleton: OpenRouterClient | null = null;

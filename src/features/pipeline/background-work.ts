@@ -6,12 +6,17 @@
  *  - cancels a chapter from the notification's Cancel action
  *  - when Android ends the service's time budget, waits for the next foreground
  *  - retries waiting chapters when the app comes to the foreground, and every 30 s while it is open
+ *  - records the service's state, so the queue keeps counting stalls while the service runs
  *
  * Every platform touch goes through the ports, so the rules are unit-tested without a device.
  */
 import type { QueueSnapshot } from '@/core/pipeline/queue';
 import type { Scheduler } from '@/core/pipeline/retry-policy';
 import type { ProcessingNotice } from '@/services/background';
+import type {
+  ForegroundServiceState,
+  ForegroundStatusStore,
+} from '@/services/pipeline/foreground-status';
 
 import { createThrottle, NOTICE_INTERVAL_MS, noticeOf } from './processing-notice';
 
@@ -52,6 +57,8 @@ export interface BackgroundWorkDeps {
   };
   /** The chapter title the notification shows. */
   titleOf(chapterId: string): string;
+  /** Where the service's state is written, so the queue's watchdog knows it keeps running. */
+  readonly foreground: Pick<ForegroundStatusStore, 'get' | 'set'>;
   readonly scheduler: Scheduler;
   readonly now: () => number;
 }
@@ -116,6 +123,7 @@ export class BackgroundWork {
       this.probe = null;
       if (this.serviceRunning) void this.deps.service.stopProcessing();
       this.serviceRunning = false;
+      this.setState('stopped');
     };
   }
 
@@ -139,6 +147,13 @@ export class BackgroundWork {
     this.serviceRunning = false;
     this.timedOut = true;
     this.throttle.cancel();
+    this.setState('stopped');
+  }
+
+  /** Records the service's state for the pipeline. Nothing is recorded where there is no service. */
+  private setState(state: ForegroundServiceState): void {
+    if (this.deps.foreground.get() === 'unsupported') return;
+    this.deps.foreground.set(state);
   }
 
   private isForeground(): boolean {
@@ -162,6 +177,7 @@ export class BackgroundWork {
   private startService(): void {
     if (this.starting || this.timedOut || !this.isForeground()) return;
     this.starting = true;
+    this.setState('starting');
     void this.deps.service.startProcessing(this.currentNotice()).then(
       (started) => {
         this.starting = false;
@@ -170,10 +186,12 @@ export class BackgroundWork {
           return;
         }
         this.serviceRunning = started;
+        this.setState(started ? 'running' : 'stopped');
         if (started && !this.isBusy()) this.stopService();
       },
       () => {
         this.starting = false;
+        this.setState('stopped');
       },
     );
   }
@@ -181,6 +199,7 @@ export class BackgroundWork {
   private stopService(): void {
     this.serviceRunning = false;
     this.throttle.cancel();
+    this.setState('stopped');
     void this.deps.service.stopProcessing();
   }
 

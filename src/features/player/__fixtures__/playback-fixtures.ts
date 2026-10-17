@@ -259,17 +259,27 @@ export function fakePipeline() {
   };
   return {
     pipeline,
-    emit(chapterId: string, state: ChapterProgress['state'], readySegments: number) {
+    emit(
+      chapterId: string,
+      state: ChapterProgress['state'],
+      readySegments: number,
+      overrides: Partial<ChapterProgress> = {},
+    ) {
       const progress: ChapterProgress = {
         chapterId,
         state,
         stages: [],
         overall: 0,
+        playable: false,
+        etaMs: null,
         readySegments,
         totalSegments: null,
+        narratedMs: 0,
+        estimatedTotalMs: null,
         costUsdSoFar: 0,
         error: null,
         reconnecting: false,
+        ...overrides,
       };
       latest.set(chapterId, progress);
       for (const listener of [...(listeners.get(chapterId) ?? [])]) listener(progress);

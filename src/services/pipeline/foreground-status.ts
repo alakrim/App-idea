@@ -1,42 +1,32 @@
 /*
- * The state of the Android foreground service that keeps chapter preparation running in the
- * background. The runner reports into it, the queue reads `keepsAlive()` so its stall watchdog keeps
- * counting while the service runs, and Diagnostics shows it. Nothing here touches the platform.
+ * The state of the Android processing service (brief BG1, ADR-0007) as the pipeline sees it. The
+ * background controller writes it, and the queue reads `keepsAlive()` so its stall watchdog keeps
+ * counting while the service runs. Nothing here touches the platform.
  */
 
-export type ForegroundServiceState = 'unsupported' | 'stopped' | 'starting' | 'running' | 'failed';
-
-export interface ForegroundServiceStatus {
-  readonly state: ForegroundServiceState;
-  /** Epoch milliseconds of the last start that succeeded, or null when none has. */
-  readonly lastStartedAt: number | null;
-  /** Why the last start failed, while the state is 'failed'. Never includes user content. */
-  readonly failure: string | null;
-}
+/** 'unsupported' where there is no service. Otherwise the service is stopped, starting or running. */
+export type ForegroundServiceState = 'unsupported' | 'stopped' | 'starting' | 'running';
 
 export interface ForegroundStatusStore {
-  get(): ForegroundServiceStatus;
-  set(next: ForegroundServiceStatus): void;
+  get(): ForegroundServiceState;
+  set(next: ForegroundServiceState): void;
   /** True while the service is starting or running, so the JS runtime is kept alive. */
   keepsAlive(): boolean;
   /** Calls the listener after each change. Returns the unsubscribe function. */
-  subscribe(listener: (status: ForegroundServiceStatus) => void): () => void;
+  subscribe(listener: (state: ForegroundServiceState) => void): () => void;
 }
 
 export function createForegroundStatus(supported: boolean): ForegroundStatusStore {
-  let current: ForegroundServiceStatus = {
-    state: supported ? 'stopped' : 'unsupported',
-    lastStartedAt: null,
-    failure: null,
-  };
-  const listeners = new Set<(status: ForegroundServiceStatus) => void>();
+  let current: ForegroundServiceState = supported ? 'stopped' : 'unsupported';
+  const listeners = new Set<(state: ForegroundServiceState) => void>();
   return {
     get: () => current,
     set(next) {
+      if (next === current) return;
       current = next;
       for (const listener of listeners) listener(current);
     },
-    keepsAlive: () => current.state === 'starting' || current.state === 'running',
+    keepsAlive: () => current === 'starting' || current === 'running',
     subscribe(listener) {
       listeners.add(listener);
       return () => {

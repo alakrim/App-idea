@@ -40,6 +40,7 @@ interface NativeLectioBackground {
   startProcessing(notice: ProcessingNotice): Promise<boolean>;
   updateProcessing(notice: ProcessingNotice): Promise<void>;
   stopProcessing(): Promise<void>;
+  isProcessing(): Promise<boolean>;
   requestNotificationPermission(): Promise<'granted' | 'denied'>;
   notificationPermissionStatus(): Promise<NotificationPermission>;
 }
@@ -73,6 +74,12 @@ export async function updateProcessing(notice: ProcessingNotice): Promise<void> 
 export async function stopProcessing(): Promise<void> {
   if (!native) return;
   await native.stopProcessing().catch(() => undefined);
+}
+
+/** True while the service runs. Off Android there is no service, so it is never running. */
+export async function isProcessing(): Promise<boolean> {
+  if (!native) return false;
+  return native.isProcessing().catch(() => false);
 }
 
 /** Calls `listener` with the chapter id when the notification's Cancel action is tapped. */

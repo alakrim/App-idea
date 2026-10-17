@@ -1,4 +1,4 @@
-import type { Chapter, PipelineError, Stage } from '@/core/domain';
+import type { Chapter, PipelineError } from '@/core/domain';
 import type { ChapterProgress, StageProgress } from '@/features/pipeline/facade';
 import { STAGE_VERBS } from '@/features/pipeline/stage-verbs';
 import { formatDuration, formatElapsed } from '@/features/shared/format';
@@ -52,6 +52,20 @@ export function statusLine(
 }
 
 /** "Narrating · passage 5 of 18 · 42 s", or "Reconnecting…" after the app came back. */
+/** Why Play is off, in plain words, so a disabled button never leaves the listener guessing. */
+export function playBlockedCopy(state: ChapterRowState): string | null {
+  switch (state) {
+    case 'ready':
+      return null;
+    case 'processing':
+      return 'Play starts when preparing finishes.';
+    case 'draft':
+      return 'Prepare the chapter first, then play it.';
+    case 'failed':
+      return 'Try again to finish preparing it, then play it.';
+  }
+}
+
 function processingLine(progress: ChapterProgress | null, now: number): string {
   if (progress?.state === 'waiting') return 'Waiting for connection…';
   if (progress?.reconnecting) return 'Reconnecting…';
@@ -72,18 +86,4 @@ function elapsedSuffix(stage: StageProgress, now: number): string {
   if (stage.since === null) return '';
   const elapsed = now - stage.since;
   return elapsed < ELAPSED_SHOWN_AFTER_MS ? '' : ` · ${formatElapsed(elapsed)}`;
-}
-
-/** Why Play is off, in plain words, so a disabled button never leaves the listener guessing. */
-export function playBlockedCopy(state: ChapterRowState): string | null {
-  switch (state) {
-    case 'ready':
-      return null;
-    case 'processing':
-      return 'Play starts when preparing finishes.';
-    case 'draft':
-      return 'Prepare the chapter first, then play it.';
-    case 'failed':
-      return 'Try again to finish preparing it, then play it.';
-  }
 }

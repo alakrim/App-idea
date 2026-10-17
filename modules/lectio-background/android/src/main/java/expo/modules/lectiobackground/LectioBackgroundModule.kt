@@ -39,6 +39,10 @@ class LectioBackgroundModule : Module() {
       ProcessingService.stop(requireContext())
     }
 
+    AsyncFunction("isProcessing") {
+      ProcessingService.running
+    }
+
     AsyncFunction("requestNotificationPermission") { promise: Promise ->
       val permissions = appContext.permissions
       if (permissions == null) {

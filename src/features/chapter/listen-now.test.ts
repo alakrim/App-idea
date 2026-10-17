@@ -2,7 +2,6 @@ import type { ChapterProgress } from '@/features/pipeline/facade';
 
 import { listenNowOf, PREPARING_COPY, progressCopy } from './listen-now';
 
-
 const MIN = 60_000;
 
 function progress(overrides: Partial<ChapterProgress> = {}): ChapterProgress {
@@ -19,6 +18,7 @@ function progress(overrides: Partial<ChapterProgress> = {}): ChapterProgress {
     estimatedTotalMs: 40 * MIN,
     costUsdSoFar: 0,
     error: null,
+    reconnecting: false,
     ...overrides,
   };
 }

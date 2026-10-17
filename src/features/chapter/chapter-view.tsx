@@ -21,7 +21,7 @@ import { gutter, hairline, space } from '@/ui/tokens';
 
 import { AmbienceList } from './ambience-list';
 import { isTranslated, type ReadingParagraph } from './chapter-data';
-import { rowStateOf, statusLine } from './chapter-status';
+import { playBlockedCopy, rowStateOf, statusLine } from './chapter-status';
 import { failureCopy } from './failure-copy';
 import { listenNowOf } from './listen-now';
 import { READING_MODES, ReadingText, type ReadingMode } from './reading-text';
@@ -106,6 +106,8 @@ export function ChapterView({
   const state = rowStateOf(chapter, progress);
   const now = useNow(LIVE_TICK_MS, state === 'processing');
   const listen = listenNowOf(state, progress);
+  // A disabled Play always says why: the Listen now copy, else what has to happen first.
+  const listenCopy = listen.subtitle ?? playBlockedCopy(state);
   const badge =
     progress?.state === 'waiting'
       ? { label: 'Waiting', tone: 'neutral' as const }
@@ -159,12 +161,12 @@ export function ChapterView({
             size="lg"
             fullWidth
             disabled={!listen.enabled}
-            accessibilityHint={listen.subtitle ?? undefined}
+            accessibilityHint={listenCopy ?? undefined}
             onPress={() => onPlay(chapter.id)}
           />
-          {listen.subtitle ? (
+          {listenCopy ? (
             <Text variant="caption" tone="muted" align="center" testID="listen-now-subtitle">
-              {listen.subtitle}
+              {listenCopy}
             </Text>
           ) : null}
         </View>

@@ -123,7 +123,15 @@ describe('ChapterView ambience cues', () => {
     const progress = {
       chapterId: id(1),
       state: 'running' as const,
-      stages: [{ stage: 'narrate' as const, status: 'running' as const, progress: 0.2 }],
+      stages: [
+        {
+          stage: 'narrate' as const,
+          status: 'running' as const,
+          progress: 0.2,
+          since: null,
+          passages: null,
+        },
+      ],
       overall: 0.5,
       playable: true,
       etaMs: 3 * 60_000,
@@ -133,6 +141,7 @@ describe('ChapterView ambience cues', () => {
       estimatedTotalMs: 40 * 60_000,
       costUsdSoFar: 0,
       error: null,
+      reconnecting: false,
     };
     const onPlay = jest.fn();
     await renderThemed(

@@ -17,6 +17,7 @@ import { hairline, radius, space } from '@/ui/tokens';
 import { describeDuration, formatClock, formatRemaining } from './format';
 import { PLAYER } from './layout';
 import { glideTo } from './motion';
+import { usePlayback, usePlaybackContent, usePlayerState } from './player-provider';
 import {
   SCRUB_STEP_MS,
   clampToBuffer,
@@ -63,7 +64,11 @@ interface ScrubberTicksProps {
  * The sentence ticks. They depend only on the timeline, so they are drawn once per timeline and
  * are not redrawn as the position moves (P2-10).
  */
-const ScrubberTicks = memo(function ScrubberTicks({ tickMs, durationMs, color }: ScrubberTicksProps) {
+const ScrubberTicks = memo(function ScrubberTicks({
+  tickMs,
+  durationMs,
+  color,
+}: ScrubberTicksProps) {
   return (
     <>
       {tickMs.map((ms, index) => (

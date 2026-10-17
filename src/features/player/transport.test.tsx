@@ -14,6 +14,8 @@ const props: TransportProps = {
   onTogglePlay: () => undefined,
   onSkip: () => undefined,
   onSentence: () => undefined,
+  bookmarked: false,
+  onBookmark: () => undefined,
 };
 
 async function renderTransport(overrides: Partial<TransportProps> = {}) {

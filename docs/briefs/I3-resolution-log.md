@@ -153,3 +153,39 @@ Status: **partial**. 8 of the 10 files from checkpoint 2 are marker-free. `queue
 - `npx jest` on `chunk.test.ts`, `options.test.ts`, `tts-pool.test.ts`, `narrate-plan.test.ts`, `narrate-fallback.test.ts`, `narrate.test.ts`: all 6 suites are green after the fixes above (101 tests in the first run, 1 failure in narrate-plan before the cap fix, 36 of 36 in options and narrate-plan after it).
 - `npm run typecheck`: not green. It fails on the 2 marker files (`queue.ts`, `progress.ts`) and the errors that follow from them.
 - `npm run verify`, lint and the full test run: not run, because the tree still has markers.
+
+## Checkpoint 4B (part B: notifications, Diagnostics, catalogue cache, fixtures)
+
+Scope: N4 references, notifications, Diagnostics, `pipeline/index.ts`, `foreground-status.ts`, `catalog-cache.ts`, feature builders. Part A's files (`src/core/**`, `src/services/openrouter/**`, `src/services/pipeline/progress.ts` and the rest of `src/services/pipeline/**`) are untouched.
+
+### Decisions
+| Area | Decision |
+|---|---|
+| Notification explainer | Ours' `NotificationPrompt` (BG1) and `notification-rule` kept. Theirs' `notification-primer.ts`, `notification-primer-sheet.tsx` and their tests deleted. |
+| `notificationsExplained` | Kept. `notificationPromptShown` removed from `src/core/settings.ts` and `defaults.ts`. `settings-repo` reads a stored legacy `notificationPromptShown: true` as `notificationsExplained: true` (2 tests). |
+| `playBlockedCopy` | **Kept, not removed.** It is still used: the chapter view shows it under a disabled Play for draft and failed chapters (`listenNowOf` has no subtitle there). Removing it would leave those states without an explanation. The brief said remove "if unused"; it was used. |
+| `notifications-row` | Re-pointed at `notificationPermissionStatus()` and `requestNotificationPermission()`. "Not asked yet" requests the permission; every other state opens the system settings. |
+| Native module | `isProcessing()` added: Kotlin `AsyncFunction("isProcessing")` reads `ProcessingService.running`; the JS wrapper returns `false` where there is no service. Tests: `src/services/background/processing.test.ts`. |
+| Processing state for the queue | `BackgroundWork` now writes `starting`, `running` and `stopped` into the runtime's foreground store, so `keepsAlive()` is true while the service runs (N3 watchdog). The store is `createForegroundStatus(Platform.OS === 'android')` in `pipeline/index.ts`. Writes are skipped where the state is `unsupported`. |
+| `ForegroundServiceStatus` | Reduced to `ForegroundServiceState` (`unsupported`, `stopped`, `starting`, `running`). `lastStartedAt` and `failure` had no reader once Diagnostics moved to `isProcessing()`, and the native start returns only a boolean. |
+| Diagnostics | `checks-background` reads `{ processing, notifications }` through `read()`, which returns null where there is no service (skipped). `device-deps` uses `isProcessing()` and `notificationPermissionStatus()`. No check was deleted. Dropped: the "last started" and "start failure" values, which the module cannot report. |
+| Lifecycle | N4 `createBackgroundRunner` effect, the primer effect and their imports removed. Theirs' background notice kept as `BACKGROUND_NOTICE`. The lifecycle test drops the primer block and one duplicate foreground-start test. The test now uses the real settings store under the mock. |
+| Catalogue cache | `persistCatalog(models, store)` restores the snapshot on the first `list` (not at build), and writes it only when a `list` changed the serialised catalogue. A cache hit or a failed fetch writes nothing. `CATALOG_FILE_STORE` is the file store. `openrouter-provider.tsx` uses it. `catalog-cache.test.ts`: 6 tests. |
+| Builders | `ChapterProgress` and `StageProgress` builders gained `playable`, `etaMs`, `narratedMs`, `estimatedTotalMs`, `reconnecting`, `since`, `passages`. `fakePipeline().emit` takes an overrides argument. |
+| Feature merge fallout | `scrubber.tsx` imports the player hooks it used but did not import. `layout.ts` had a duplicate `bufferOpacity` key. `transport.test`, `ambience-list.test` and `chapter-view.test` builders gained the new props. |
+| `app/(tabs)/settings.tsx` | No change needed. It imports only `features/settings/notifications-row`, which now exists. |
+
+### Deleted (git rm)
+- `src/features/pipeline/notification-primer.ts`, `notification-primer.test.ts`
+- `src/features/pipeline/notification-primer-sheet.tsx`, `notification-primer-sheet.test.tsx`
+
+### Verification (part B)
+- Scope semantic check (TypeScript API, every file in `app/`, `src/features/`, `src/app-shell`, `src/__tests__/app-shell`, `modules/`, `src/services/{catalog-cache,background}`, `src/services/pipeline/{index,foreground-status}`, `src/core/{settings,defaults}`, `src/db/repos/settings-repo`): **0 errors**.
+- `npx tsc --noEmit`, filtered to my areas: **no errors**. Remaining errors are outside part B: `src/db/use-migrations.ts` (2, `$client` and an implicit `row`), `src/services/openrouter/index.ts` (`./cost` missing), `src/services/openrouter/models.ts` (`PipelineFailure` not imported).
+- `grep -rn "background-actions\|background-runner\|background-notification\|notification-primer" app src modules`: empty.
+- Prettier and ESLint on every file I touched: clean.
+
+### Open issues for the architect (checkpoint 4B)
+1. **`src/services/openrouter/cost.ts` is missing** from the branch. It exists at `c7e7bd7` and is imported by `src/services/openrouter/index.ts`. This breaks `src/__tests__/app-shell/openrouter-provider.test.tsx`, `src/features/settings/{narration-choices,model-kinds,model-catalog}.test.ts`. Part A (services/openrouter) must restore it.
+2. **`src/features/player/playback-controller-generating.test.ts`, "starts an ambience bed that covers the current sentence when the analysis lands late"**, fails. The fixture's `emit` used to ignore its overrides argument, so the late analysis reload never ran and the test failed at its first cue assertion. With the fixture fixed, the reload runs and `engine.soundingBedIds()` stays empty. The F2 re-plan of the current sentence on `setCues` is not reproduced by the fake audio engine (`src/audio/**`, not part B's scope). Not skipped.
+3. `src/db/use-migrations.ts` type errors (2) are outside part B.

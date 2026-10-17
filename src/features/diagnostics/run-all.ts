@@ -151,11 +151,7 @@ export const PROBES: readonly ProbeDef[] = [
       label: 'Background service and notifications',
       timeoutMs: SHORT,
     },
-    run: async (deps) =>
-      checkBackgroundService(
-        deps.background.status(),
-        await deps.background.notificationsGranted().catch(() => null),
-      ),
+    run: async (deps) => checkBackgroundService(await deps.background.read()),
   },
   {
     spec: {

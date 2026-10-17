@@ -63,7 +63,7 @@ describe('rowStateOf', () => {
 describe('statusLine for a waiting chapter', () => {
   it('says it waits for a connection, not that it is queued', () => {
     const chapter = chapterRow(1, 1, 1, { status: 'failed' });
-    expect(statusLine('processing', chapter, progress('waiting'), null)).toBe(
+    expect(statusLine('processing', chapter, progress('waiting'), null, NOW)).toBe(
       'Waiting for connection…',
     );
   });

@@ -25,8 +25,7 @@ function fakeDeps(overrides: Partial<DiagnosticsDeps> = {}): DiagnosticsDeps {
     },
     storage: () => ({ databaseBytes: 1, freeBytes: 2 }),
     background: {
-      status: () => ({ state: 'stopped', lastStartedAt: null, failure: null }),
-      notificationsGranted: async () => true,
+      read: async () => ({ processing: false, notifications: 'granted' }),
     },
     ...overrides,
   };

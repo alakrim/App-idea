@@ -22,8 +22,6 @@ export const PLAYER = {
   tickOpacity: 0.35,
   /** The buffer band shows the audio made so far: subtle, behind the played part. */
   bufferOpacity: 0.4,
-  /** The buffer band shows the audio made so far: subtle, behind the played part. */
-  bufferOpacity: 0.4,
   scrubBubbleWidth: 56,
   /** Height of the text pane when it is collapsed, before the bottom inset. */
   peekHeight: 112,

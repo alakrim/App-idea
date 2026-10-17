@@ -9,9 +9,16 @@ function progressOf(
 ): ChapterProgress {
   const { running, ...rest } = overrides;
   const stages: StageProgress[] = [
-    { stage: 'extract', status: 'done', progress: 1 },
-    { stage: 'analyze', status: 'done', progress: 1 },
-    { stage: 'narrate', status: running ? 'running' : 'pending', progress: 0, ...running },
+    { stage: 'extract', status: 'done', progress: 1, since: null, passages: null },
+    { stage: 'analyze', status: 'done', progress: 1, since: null, passages: null },
+    {
+      stage: 'narrate',
+      status: running ? 'running' : 'pending',
+      progress: 0,
+      since: null,
+      passages: null,
+      ...running,
+    },
   ];
   return {
     chapterId: ID,
@@ -27,6 +34,7 @@ function progressOf(
     etaMs: null,
     narratedMs: 0,
     estimatedTotalMs: null,
+    reconnecting: false,
     ...rest,
   };
 }

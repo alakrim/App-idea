@@ -44,5 +44,4 @@ export const DEFAULT_SETTINGS: Settings = {
   contentNoticeAccepted: false,
   notificationsExplained: false,
   backgroundNoticeShown: false,
-  notificationPromptShown: false,
 };

@@ -1,39 +1,38 @@
 import { createForegroundStatus } from './foreground-status';
 
 describe('createForegroundStatus', () => {
-  it('starts stopped on a platform with a foreground service, and unsupported without one', () => {
-    expect(createForegroundStatus(true).get()).toEqual({
-      state: 'stopped',
-      lastStartedAt: null,
-      failure: null,
-    });
-    expect(createForegroundStatus(false).get().state).toBe('unsupported');
+  it('starts stopped on a platform with a processing service, and unsupported without one', () => {
+    expect(createForegroundStatus(true).get()).toBe('stopped');
+    expect(createForegroundStatus(false).get()).toBe('unsupported');
   });
 
   it('keeps the JS runtime alive only while the service is starting or running', () => {
     const store = createForegroundStatus(true);
-    const set = (state: 'stopped' | 'starting' | 'running' | 'failed') =>
-      store.set({ state, lastStartedAt: null, failure: null });
 
-    set('starting');
+    store.set('starting');
     expect(store.keepsAlive()).toBe(true);
-    set('running');
+    store.set('running');
     expect(store.keepsAlive()).toBe(true);
-    set('failed');
+    store.set('stopped');
     expect(store.keepsAlive()).toBe(false);
-    set('stopped');
+  });
+
+  it('never keeps the runtime alive where there is no service', () => {
+    const store = createForegroundStatus(false);
     expect(store.keepsAlive()).toBe(false);
   });
 
   it('notifies subscribers of each change, and stops after unsubscribe', () => {
     const store = createForegroundStatus(true);
     const seen: string[] = [];
-    const unsubscribe = store.subscribe((status) => seen.push(status.state));
+    const unsubscribe = store.subscribe((state) => seen.push(state));
 
-    store.set({ state: 'starting', lastStartedAt: null, failure: null });
+    store.set('starting');
+    store.set('starting');
     unsubscribe();
-    store.set({ state: 'running', lastStartedAt: 1, failure: null });
+    store.set('running');
 
     expect(seen).toEqual(['starting']);
+    expect(store.get()).toBe('running');
   });
 });
