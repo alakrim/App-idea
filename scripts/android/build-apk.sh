@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 # Builds a sideloadable arm64 release APK, signed with the debug key (brief B8).
 #
-#   scripts/android/build-apk.sh
+#   scripts/android/build-apk.sh [--strict]
+#
+# Step 0 is the OpenRouter contract pre-flight (npm run contract:check, brief C1). It needs no key
+# and warns on a FAIL or an unreachable catalogue. --strict makes either one stop the build.
 #
 # Steps: SDK bootstrap (setup-sdk.sh, idempotent) -> expo prebuild (android/ is generated,
 # never hand-edited) -> ./gradlew-equivalent assembleRelease for arm64-v8a -> copy to
@@ -27,11 +30,41 @@ ABI="arm64-v8a"
 log() { printf '[build-apk] %s\n' "$*"; }
 die() { printf '[build-apk] ERROR: %s\n' "$*" >&2; exit 1; }
 toml_value() { sed -n "s/^$1 = \"\(.*\)\"/\1/p" "$VERSIONS_TOML" | head -n 1; }
+warn() { printf '[build-apk] WARNING: %s\n' "$*" >&2; }
+
+STRICT=0
+for arg in "$@"; do
+  case "$arg" in
+    --strict) STRICT=1 ;;
+    *) die "unknown argument: $arg (the only option is --strict)" ;;
+  esac
+done
 
 START_TS="$(date +%s)"
 mkdir -p "$ROOT/dist/apk" "$ROOT/dist/android-build"
 LOG="$ROOT/dist/android-build/build-$(date +%Y%m%d-%H%M%S).log"
 log "full log: $LOG"
+
+# 0. Pre-flight: the live OpenRouter contract (public, keyless, brief C1). A FAIL, or a catalogue
+#    that cannot be reached, warns loudly. With --strict, either one stops the build.
+set +e
+npm run --silent contract:check
+CONTRACT_RC=$?
+set -e
+case "$CONTRACT_RC" in
+  0) log "OpenRouter contract check passed" ;;
+  2) warn "could not reach OpenRouter, so the contract was NOT verified for this APK" ;;
+  *)
+    warn "=============================================================="
+    warn "OPENROUTER CONTRACT CHECK FAILED (exit $CONTRACT_RC)."
+    warn "A FAIL means the app sends a request that a live model rejects."
+    warn "Read the table above and fix it before you ship this APK."
+    warn "=============================================================="
+    ;;
+esac
+if [ "$CONTRACT_RC" -ne 0 ] && [ "$STRICT" -eq 1 ]; then
+  die "--strict: the contract check did not pass (exit $CONTRACT_RC)"
+fi
 
 # 1. SDK (idempotent; a warm run takes about 10 s).
 bash "$ROOT/scripts/android/setup-sdk.sh"

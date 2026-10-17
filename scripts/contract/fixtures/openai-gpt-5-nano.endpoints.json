@@ -1,0 +1,67 @@
+{
+  "id": "openai/gpt-5-nano",
+  "captured": "2026-10-17",
+  "note": "Trimmed copy of GET /models/<id>/endpoints (public, keyless), kept for offline unit tests.",
+  "endpoints": [
+    {
+      "tag": "openai/flex",
+      "supported_parameters": [
+        "reasoning",
+        "include_reasoning",
+        "structured_outputs",
+        "response_format",
+        "seed",
+        "max_tokens",
+        "tools",
+        "tool_choice",
+        "verbosity",
+        "reasoning_effort"
+      ]
+    },
+    {
+      "tag": "azure",
+      "supported_parameters": [
+        "reasoning",
+        "include_reasoning",
+        "max_completion_tokens",
+        "tools",
+        "tool_choice",
+        "seed",
+        "response_format",
+        "structured_outputs",
+        "verbosity",
+        "reasoning_effort"
+      ]
+    },
+    {
+      "tag": "openai",
+      "supported_parameters": [
+        "reasoning",
+        "include_reasoning",
+        "structured_outputs",
+        "response_format",
+        "seed",
+        "max_tokens",
+        "tools",
+        "tool_choice",
+        "verbosity",
+        "reasoning_effort"
+      ]
+    },
+    {
+      "tag": "azure/swedencentral",
+      "supported_parameters": [
+        "reasoning",
+        "include_reasoning",
+        "max_completion_tokens",
+        "tools",
+        "tool_choice",
+        "seed",
+        "response_format",
+        "structured_outputs",
+        "verbosity",
+        "reasoning_effort"
+      ]
+    }
+  ]
+}

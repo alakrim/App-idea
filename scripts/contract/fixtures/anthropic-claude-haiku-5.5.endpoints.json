@@ -1,0 +1,155 @@
+{
+  "id": "anthropic/claude-haiku-5.5",
+  "captured": "2026-10-17",
+  "note": "Trimmed copy of GET /models/<id>/endpoints (public, keyless), kept for offline unit tests.",
+  "endpoints": [
+    {
+      "tag": "google-vertex/global",
+      "supported_parameters": [
+        "reasoning",
+        "include_reasoning",
+        "max_tokens",
+        "response_format",
+        "tool_choice",
+        "tools",
+        "verbosity",
+        "structured_outputs",
+        "stop",
+        "reasoning_effort"
+      ]
+    },
+    {
+      "tag": "claude-on-aws",
+      "supported_parameters": [
+        "reasoning",
+        "include_reasoning",
+        "max_tokens",
+        "stop",
+        "tool_choice",
+        "tools",
+        "response_format",
+        "verbosity",
+        "reasoning_effort"
+      ]
+    },
+    {
+      "tag": "azure/global",
+      "supported_parameters": [
+        "reasoning",
+        "include_reasoning",
+        "structured_outputs",
+        "max_tokens",
+        "max_completion_tokens",
+        "tools",
+        "tool_choice",
+        "response_format",
+        "verbosity",
+        "stop",
+        "reasoning_effort"
+      ]
+    },
+    {
+      "tag": "anthropic",
+      "supported_parameters": [
+        "reasoning",
+        "include_reasoning",
+        "max_tokens",
+        "stop",
+        "tools",
+        "tool_choice",
+        "structured_outputs",
+        "response_format",
+        "verbosity",
+        "reasoning_effort"
+      ]
+    },
+    {
+      "tag": "amazon-bedrock",
+      "supported_parameters": [
+        "reasoning",
+        "include_reasoning",
+        "max_tokens",
+        "stop",
+        "tool_choice",
+        "tools",
+        "response_format",
+        "verbosity",
+        "reasoning_effort"
+      ]
+    },
+    {
+      "tag": "google-vertex/europe",
+      "supported_parameters": [
+        "reasoning",
+        "include_reasoning",
+        "max_tokens",
+        "response_format",
+        "tool_choice",
+        "tools",
+        "verbosity",
+        "structured_outputs",
+        "stop",
+        "reasoning_effort"
+      ]
+    },
+    {
+      "tag": "google-vertex/us",
+      "supported_parameters": [
+        "reasoning",
+        "include_reasoning",
+        "max_tokens",
+        "response_format",
+        "tool_choice",
+        "tools",
+        "verbosity",
+        "structured_outputs",
+        "stop",
+        "reasoning_effort"
+      ]
+    },
+    {
+      "tag": "azure/us",
+      "supported_parameters": [
+        "reasoning",
+        "include_reasoning",
+        "structured_outputs",
+        "max_tokens",
+        "max_completion_tokens",
+        "tools",
+        "tool_choice",
+        "response_format",
+        "verbosity",
+        "stop",
+        "reasoning_effort"
+      ]
+    },
+    {
+      "tag": "amazon-bedrock/us-east-1",
+      "supported_parameters": [
+        "reasoning",
+        "include_reasoning",
+        "max_tokens",
+        "stop",
+        "tool_choice",
+        "tools",
+        "response_format",
+        "verbosity",
+        "reasoning_effort"
+      ]
+    },
+    {
+      "tag": "amazon-bedrock/eu-west-1",
+      "supported_parameters": [
+        "reasoning",
+        "include_reasoning",
+        "max_tokens",
+        "stop",
+        "tool_choice",
+        "tools",
+        "response_format",
+        "verbosity",
+        "reasoning_effort"
+      ]
+    }
+  ]
+}

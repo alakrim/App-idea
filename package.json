@@ -18,7 +18,8 @@
     "sounds:build": "node scripts/sounds/build-base-pack.mjs",
     "sounds:curate": "node scripts/sounds/curate-open.mjs",
     "sounds:build-open": "node scripts/sounds/build-open-pack.mjs",
-    "sounds:test": "node --test scripts/sounds/*.test.mjs",
+    "sounds:test": "node --test scripts/sounds/*.test.mjs scripts/contract/*.test.mjs",
+    "contract:check": "node scripts/contract/check.mjs",
     "sounds:verify": "node scripts/sounds/verify-pack.mjs",
     "verify": "npm run typecheck && npm run lint && npm run worklet:check && npm run sounds:test && npm run test && npm run bundle:check",
     "worklet:check": "node scripts/smoke/worklet-audit.cjs"
