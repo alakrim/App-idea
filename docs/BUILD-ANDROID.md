@@ -20,6 +20,16 @@ bash scripts/android/build-apk.sh   # prebuild --clean, assembleRelease arm64-v8
 
 `build-apk.sh` runs `setup-sdk.sh` itself, so the second command alone is enough once the SDK exists.
 
+### OpenRouter contract pre-flight
+
+`build-apk.sh` starts with `npm run contract:check` (`scripts/contract/check.mjs`). It reads OpenRouter's public, keyless catalogue, builds the requests the app would send, and checks each one against what the live models accept. It catches the bugs unit tests cannot see, such as incident 4 (sampling hints sent with `require_parameters`) and the PCM-only Gemini TTS. It uses no API key and makes no paid call.
+
+- Exit 0: every check passed. Exit 1: at least one FAIL, printed as a table with the reason. Exit 2: OpenRouter could not be reached, so the contract was not verified. Exit 3: the check itself could not run.
+- Without flags, a FAIL or exit 2 prints a loud warning and the build continues.
+- `bash scripts/android/build-apk.sh --strict` stops the build on a FAIL or on exit 2.
+- Run it alone with `npm run contract:check`, or `npm run contract:check -- --json` for machine output. It is not part of `npm run verify`, which stays offline. Its unit tests run in `npm run sounds:test`.
+- The request inventory (every OpenRouter call the app makes, and its body fields) is in `scripts/contract/inventory.md`.
+
 Output:
 
 - `dist/apk/lectio-<version>-<gitsha>-arm64.apk`, plus a `.sha256` sidecar file.
