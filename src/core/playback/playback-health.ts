@@ -19,7 +19,10 @@ export interface GapStats {
 export interface PlaybackHealthSummary {
   /** How long the log has been observing, capped at the window. */
   observedMs: number;
-  /** Gaps at segment boundaries: from the boundary start to the incoming segment playing. */
+  /**
+   * Gaps at segment boundaries: from the outgoing segment's end to the incoming segment playing.
+   * With a pre-roll the end is the predicted one, so a negative gap is an overlap of speech.
+   */
   boundaries: GapStats;
   /** Times the voice went into buffering. */
   bufferingStarts: number;
@@ -32,8 +35,11 @@ export interface PlaybackHealthSummary {
 }
 
 export interface PlaybackHealthLog {
-  /** A boundary opens: the outgoing segment ended, or its pre-roll started the incoming one. */
-  boundaryStarted(): void;
+  /**
+   * A boundary opens. `endsInMs` is how long the outgoing segment still has to play: 0 when it has
+   * just finished, or the predicted remainder when a pre-roll starts the incoming segment early.
+   */
+  boundaryStarted(endsInMs: number): void;
   /** The audible segment is playing with its position advancing. Closes the open boundary, if any. */
   boundaryPlaying(): void;
   bufferingStarted(): void;
@@ -90,14 +96,14 @@ export function createPlaybackHealthLog(options: PlaybackHealthOptions): Playbac
   const focusLossPauses: Timed[] = [];
 
   return {
-    boundaryStarted() {
-      // The first start wins: a pre-roll trigger is earlier than the end it anticipates.
-      openBoundaryAt ??= now();
+    boundaryStarted(endsInMs) {
+      // The first start wins: an earlier pre-roll predicts the same end, and a re-arm must not move it.
+      openBoundaryAt ??= now() + Math.max(0, endsInMs);
     },
     boundaryPlaying() {
       if (openBoundaryAt === null) return;
       const at = now();
-      pushCapped(gaps, { at, value: Math.max(0, at - openBoundaryAt) });
+      pushCapped(gaps, { at, value: at - openBoundaryAt });
       openBoundaryAt = null;
     },
     bufferingStarted() {

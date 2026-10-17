@@ -21,18 +21,30 @@ export interface PlaybackHealthStore extends PlaybackHealthLog {
 export function createPlaybackHealthStore(now: () => number): PlaybackHealthStore {
   const log = createPlaybackHealthLog({ now });
   const store = createStore<PlaybackHealthState>(() => ({ summary: log.summary() }));
-  const record = (apply: () => void) => () => {
-    apply();
-    store.setState({ summary: log.summary() });
-  };
+  const refresh = () => store.setState({ summary: log.summary() });
   return {
     store,
-    refresh: () => store.setState({ summary: log.summary() }),
-    boundaryStarted: record(() => log.boundaryStarted()),
-    boundaryPlaying: record(() => log.boundaryPlaying()),
-    bufferingStarted: record(() => log.bufferingStarted()),
-    ranDry: record(() => log.ranDry()),
-    focusLossPaused: record(() => log.focusLossPaused()),
+    refresh,
+    boundaryStarted(endsInMs) {
+      log.boundaryStarted(endsInMs);
+      refresh();
+    },
+    boundaryPlaying() {
+      log.boundaryPlaying();
+      refresh();
+    },
+    bufferingStarted() {
+      log.bufferingStarted();
+      refresh();
+    },
+    ranDry() {
+      log.ranDry();
+      refresh();
+    },
+    focusLossPaused() {
+      log.focusLossPaused();
+      refresh();
+    },
     summary: () => log.summary(),
   };
 }

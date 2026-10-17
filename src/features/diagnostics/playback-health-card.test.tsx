@@ -26,7 +26,7 @@ describe('PlaybackHealthCard', () => {
     await renderThemed(<PlaybackHealthCard />);
 
     await act(async () => {
-      playbackHealth.boundaryStarted();
+      playbackHealth.boundaryStarted(0);
       playbackHealth.boundaryPlaying();
       playbackHealth.bufferingStarted();
       playbackHealth.focusLossPaused();

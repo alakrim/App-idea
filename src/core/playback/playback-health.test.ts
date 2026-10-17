@@ -14,7 +14,7 @@ describe('playback health log', () => {
   it('reports a gap from the boundary start to the incoming segment playing', () => {
     const time = clock();
     const log = createPlaybackHealthLog({ now: time.now });
-    log.boundaryStarted();
+    log.boundaryStarted(0);
     time.advance(120);
     log.boundaryPlaying();
 
@@ -24,13 +24,24 @@ describe('playback health log', () => {
   it('keeps the earliest start when a boundary is armed twice before it plays', () => {
     const time = clock();
     const log = createPlaybackHealthLog({ now: time.now });
-    log.boundaryStarted();
+    log.boundaryStarted(0);
     time.advance(80);
-    log.boundaryStarted();
+    log.boundaryStarted(0);
     time.advance(40);
     log.boundaryPlaying();
 
     expect(log.summary().boundaries.maxMs).toBe(120);
+  });
+
+  it('measures a pre-roll from the predicted end of the outgoing segment, so early play is an overlap', () => {
+    const time = clock();
+    const log = createPlaybackHealthLog({ now: time.now });
+    // The outgoing segment has 80 ms left; the incoming one starts now and plays 30 ms later.
+    log.boundaryStarted(80);
+    time.advance(30);
+    log.boundaryPlaying();
+
+    expect(log.summary().boundaries.maxMs).toBe(-50);
   });
 
   it('ignores a playing report when no boundary is open', () => {
@@ -44,7 +55,7 @@ describe('playback health log', () => {
     const time = clock();
     const log = createPlaybackHealthLog({ now: time.now });
     for (let ms = 10; ms <= 200; ms += 10) {
-      log.boundaryStarted();
+      log.boundaryStarted(0);
       time.advance(ms);
       log.boundaryPlaying();
       time.advance(1000);
