@@ -4,12 +4,14 @@
  * window, and the segments are saved and announced strictly in order, so the player always has a
  * contiguous prefix.
  *
- * A rerun reuses every saved segment whose sentences, text and voice still match, so it makes no
- * speech call for them. The stage's job hash is the hash of the final plan, written when the stage
+ * Audio is content-addressed: a passage's clip is named by its input hash (its text and voice), so
+ * a rerun reuses any stored clip with the same hash, at whatever index it was made. A passage that
+ * finishes ahead of an earlier one is saved at once and announced when its turn comes (QA-F F-05).
+ * Only clips no longer in the plan are deleted, after the new plan is stored (QA-F F-06). The stage's job hash is the hash of the final plan, written when the stage
  * completes. A passage that still fails after the transport's own retries is split in two and joined
  * (narrate-fallback), and a failure that survives that is reported with its passage number.
  */
-import type { AudioSegment, NarrationProfile } from '@/core/domain';
+import type { AudioSegment, Id, NarrationProfile } from '@/core/domain';
 import { throwIfCancelled } from '@/core/llm/transport';
 import { wavDurationMs } from '@/core/narration/formats';
 import {
@@ -31,6 +33,7 @@ import { joinSpoken, planFinalSegments } from './narrate-plan';
 import { translationPair } from './translate';
 
 import type { FlowContext, StageDefinition, StageExecution } from '../context';
+import type { AudioFiles } from '../ports';
 import type { SpokenTextGate } from '../spoken-text';
 import type { SegmentTiming } from '../tts-pool';
 import type { SpokenClip } from './narrate-fallback';
@@ -98,6 +101,62 @@ function spokenLanguageOf(ctx: FlowContext): string | null {
   return ctx.record.chapter.sourceLang ?? ctx.record.series.sourceLang ?? null;
 }
 
+/** A clip already stored for some passage, found by its input hash. */
+interface StoredClip {
+  readonly uri: string;
+  readonly durationMs: number;
+}
+
+/** What the pool produced for one passage: a stored clip reused as it is, or one freshly bought. */
+type Made =
+  | { readonly reused: true; readonly clip: StoredClip }
+  | { readonly reused: false; readonly clip: SpokenClip };
+
+/** A passage whose audio is on disk, waiting to be announced in order. */
+interface Ready {
+  readonly segment: PlannedSegment;
+  readonly uri: string;
+  readonly durationMs: number;
+  /** Null for a clip reused from disk, which made no speech call. */
+  readonly timing: SegmentTiming | null;
+}
+
+/** A clip file is named `<input hash>-<duration ms>.<ext>`, so the name says what the clip holds. */
+const CLIP_FILE = /^(.+)-(\d+)\.[a-z0-9]+$/u;
+
+function clipFileName(segment: PlannedSegment, durationMs: number, ext: string): string {
+  return `${segment.hash}-${durationMs}.${ext}`;
+}
+
+function fileNameOf(uri: string): string {
+  return uri.slice(uri.lastIndexOf('/') + 1);
+}
+
+/**
+ * Every stored clip of the chapter by input hash: the rows already in the plan, then the clip files,
+ * whatever index they were made at. A replan that moves a passage therefore reuses its audio.
+ */
+async function storedClips(
+  audio: AudioFiles,
+  chapterId: Id,
+  rows: readonly AudioSegment[],
+): Promise<Map<string, StoredClip>> {
+  const clips = new Map<string, StoredClip>();
+  for (const row of rows) {
+    if (!clips.has(row.inputHash)) {
+      clips.set(row.inputHash, { uri: row.fileUri, durationMs: row.durationMs });
+    }
+  }
+  for (const file of await audio.list(chapterId)) {
+    const match = CLIP_FILE.exec(file.name);
+    if (match === null) continue;
+    const [, hash, durationMs] = match;
+    if (hash === undefined || durationMs === undefined || clips.has(hash)) continue;
+    clips.set(hash, { uri: file.uri, durationMs: Number(durationMs) });
+  }
+  return clips;
+}
+
 async function execute(ctx: FlowContext, profile: NarrationProfile): Promise<StageExecution> {
   const { chapters, audio } = ctx.ports;
   const lang = spokenLanguageOf(ctx);
@@ -107,23 +166,25 @@ async function execute(ctx: FlowContext, profile: NarrationProfile): Promise<Sta
     lang,
     voiceKey: [profile.provider, profile.model, profile.voice, profile.style, profile.speed],
   };
-  const existing = await chapters.listAudioSegments(ctx.chapterId);
+  const rows = await chapters.listAudioSegments(ctx.chapterId);
+  const stored = await storedClips(audio, ctx.chapterId, rows);
+  const rowsByIdx = new Map(rows.map((row) => [row.idx, row] as const));
+  const ready = new Map<number, Ready>();
+  let nextIdx = 0;
+  let rowsTrimmed = false;
   let savedChars = 0;
+  let synthesized = 0;
 
-  /**
-   * Announces a segment that is saved or reused, in order. The first segment also makes the chapter
-   * playable, and progress advances with the characters that are saved.
-   */
   /** The passage count, once the chapter's text is complete. Null while it can still grow. */
   const passageTotal = (): number | null =>
     ctx.spoken.complete ? planFinalSegments(ctx.spoken.prefix(), plan, true).length : null;
 
-  const announce = (
-    segment: PlannedSegment,
-    uri: string,
-    durationMs: number,
-    synthesis: SegmentTiming | null,
-  ): void => {
+  /**
+   * Announces a passage that is saved, in order. The first passage also makes the chapter playable,
+   * and progress advances with the characters that are saved.
+   */
+  const announce = (entry: Ready): void => {
+    const { segment } = entry;
     savedChars += segment.chars;
     ctx.emit({
       type: 'segmentReady',
@@ -132,10 +193,11 @@ async function execute(ctx: FlowContext, profile: NarrationProfile): Promise<Sta
         idx: segment.idx,
         sentenceStart: segment.sentenceStart,
         sentenceEnd: segment.sentenceEnd,
-        durationMs,
-        uri,
+        durationMs: entry.durationMs,
+        uri: entry.uri,
         chars: segment.chars,
-        synthesis: synthesis === null ? null : { ms: synthesis.synthMs, slots: synthesis.slots },
+        synthesis:
+          entry.timing === null ? null : { ms: entry.timing.synthMs, slots: entry.timing.slots },
       },
     });
     if (segment.idx === 0) ctx.emit({ type: 'playable', chapterId: ctx.chapterId });
@@ -151,22 +213,63 @@ async function execute(ctx: FlowContext, profile: NarrationProfile): Promise<Sta
     });
   };
 
-  const pool = new SlidingWindow<PlannedSegment, SpokenClip>({
+  /**
+   * Stores the row of a passage. A row that already matches is kept. The first row that does not
+   * match, and every row after it, is replaced. Only rows go: the clip files stay until the end.
+   */
+  const storeRow = async (entry: Ready): Promise<void> => {
+    const row = rowsByIdx.get(entry.segment.idx);
+    if (!rowsTrimmed && row !== undefined && matches(row, entry.segment)) return;
+    if (!rowsTrimmed) {
+      rowsTrimmed = true;
+      await chapters.deleteAudioFrom(ctx.chapterId, entry.segment.idx);
+    }
+    await chapters.saveAudioSegment(
+      toRow(ctx, entry.segment, entry.uri, entry.durationMs, profile),
+    );
+  };
+
+  /** Announces every passage that is next in order. A passage behind an unfinished one waits. */
+  const announceInOrder = async (): Promise<void> => {
+    for (let entry = ready.get(nextIdx); entry !== undefined; entry = ready.get(nextIdx)) {
+      ready.delete(nextIdx);
+      nextIdx += 1;
+      await storeRow(entry);
+      announce(entry);
+    }
+  };
+
+  /** Saves a finished passage's clip at once, unless it is reused, then announces what is in order. */
+  const save = async (
+    segment: PlannedSegment,
+    made: Made,
+    timing: SegmentTiming,
+  ): Promise<void> => {
+    let entry: Ready;
+    if (made.reused) {
+      entry = { segment, uri: made.clip.uri, durationMs: made.clip.durationMs, timing: null };
+    } else {
+      const { clip } = made;
+      const ext = extensionFor(clip.mime);
+      const fileName = clipFileName(segment, clip.durationMs, ext);
+      const uri = await audio.write(ctx.chapterId, fileName, clip.bytes);
+      stored.set(segment.hash, { uri, durationMs: clip.durationMs });
+      synthesized += 1;
+      entry = { segment, uri, durationMs: clip.durationMs, timing };
+    }
+    ready.set(segment.idx, entry);
+    await announceInOrder();
+  };
+
+  const pool = new SlidingWindow<PlannedSegment, Made>({
     window: new AdaptiveWindow({ ceiling: narrateConcurrencyFor(profile.model) }),
     signal: ctx.signal,
     now: () => ctx.ports.clock.now(),
-    work: (segment, signal) => narrateSegment(ctx, profile, segment, signal, passageTotal),
-    save: async (segment, clip, timing) => {
-      const ext = extensionFor(clip.mime);
-      const uri = await audio.write(ctx.chapterId, segment.idx, clip.bytes, ext);
-      await chapters.saveAudioSegment(toRow(ctx, segment, uri, clip.durationMs, profile));
-      announce(segment, uri, clip.durationMs, timing);
-    },
+    work: (segment, signal) => makePassage(ctx, profile, segment, signal, stored, passageTotal),
+    save,
   });
 
   const finals: PlannedSegment[] = [];
-  let reusing = true;
-  let synthesized = 0;
   let lastEstimate = -1;
   for (let k = 0; ; k += 1) {
     const segment = await nextFinalSegment(ctx.spoken, ctx.signal, k, plan, (chars) => {
@@ -176,31 +279,34 @@ async function execute(ctx: FlowContext, profile: NarrationProfile): Promise<Sta
     });
     if (segment === null) break;
     finals.push(segment);
-
-    const stored = existing[k];
-    if (reusing && stored !== undefined && matches(stored, segment)) {
-      announce(segment, stored.fileUri, stored.durationMs, null);
-      continue;
-    }
-    if (reusing) {
-      reusing = false;
-      if (existing.length > k) await chapters.deleteAudioFrom(ctx.chapterId, k);
-    }
-    synthesized += 1;
     await pool.submit(segment);
   }
   await pool.finish();
-  if (existing.length > finals.length) {
-    await chapters.deleteAudioFrom(ctx.chapterId, finals.length);
-  }
+  if (rows.length > finals.length) await chapters.deleteAudioFrom(ctx.chapterId, finals.length);
 
+  // Only once the new plan is stored are the clip files it no longer uses deleted (QA-F F-06).
   const saved = await chapters.listAudioSegments(ctx.chapterId);
+  await audio.prune(ctx.chapterId, new Set(saved.map((row) => fileNameOf(row.fileUri))));
   const durationMs = saved.reduce((sum, s) => sum + s.durationMs, 0);
   await chapters.setMeta(ctx.chapterId, { durationMs });
   return {
     inputHash: stableHash(['narrate', finals.map((s) => s.hash)]),
     status: synthesized === 0 ? 'skipped' : 'done',
   };
+}
+
+/** A passage's clip: the stored one when its hash is known, else one bought from the narrator. */
+async function makePassage(
+  ctx: FlowContext,
+  profile: NarrationProfile,
+  segment: PlannedSegment,
+  signal: AbortSignal,
+  stored: ReadonlyMap<string, StoredClip>,
+  passageTotal: () => number | null,
+): Promise<Made> {
+  const clip = stored.get(segment.hash);
+  if (clip !== undefined) return { reused: true, clip };
+  return { reused: false, clip: await narrateSegment(ctx, profile, segment, signal, passageTotal) };
 }
 
 /**

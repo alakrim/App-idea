@@ -255,13 +255,13 @@ describe('pipeline end to end (URL to playable chapter)', () => {
     const spokenMs = segments.reduce((sum, s) => sum + s.durationMs, 0);
     expect(chapterRepo.get(db, chapterId)?.durationMs).toBe(spokenMs);
 
-    // Files written: the extracted text and one file per segment. The narration model is Gemini
-    // TTS, which returns PCM, so the segments are stored as WAV.
+    // Files written: the extracted text and one clip per passage, named by its content hash and
+    // length. The narration model is Gemini TTS, which returns PCM, so the clips are stored as WAV.
     const written = [...files.entries.keys()];
     expect(written).toContain(`sources/${chapterId}/text.txt`);
-    for (const segment of segments) {
-      expect(written).toContain(`audio/${chapterId}/${segment.idx}.wav`);
-    }
+    const clipFiles = written.filter((path) => path.startsWith(`audio/${chapterId}/`));
+    expect(clipFiles).toHaveLength(segments.length);
+    for (const path of clipFiles) expect(path).toMatch(/-\d+\.wav$/u);
 
     // Usage rows: one per model call, with the real cost OpenRouter reported.
     const usage = db.select().from(usageLedger).where(eq(usageLedger.chapterId, chapterId)).all();

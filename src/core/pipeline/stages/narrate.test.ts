@@ -483,3 +483,53 @@ describe('narrate stage: passage counts for the progress line', () => {
     expect(counts[0]).toBe(saved);
   });
 });
+
+describe('narrate stage: clips are reused by content, not by position (QA-F F-06)', () => {
+  const tts = () => ({ bytes: wavOf(3), mime: 'audio/wav', costUsd: null });
+
+  it('makes no speech call when the plan moves every passage, as long as the clips are stored', async () => {
+    const fake = createFakePorts({ sourceText: EN_PASSAGE_600, targetLang: null, tts });
+    expect((await runChapter(CHAPTER_ID, fake.ports)).status).toBe('ready');
+    const firstSegments = fake.state.segments.get(CHAPTER_ID)?.length ?? 0;
+    expect(firstSegments).toBeGreaterThan(1);
+    const callsBefore = fake.state.ttsCalls.length;
+
+    // A new plan (an app update, a different ramp) leaves no rows behind; the clips are still stored.
+    fake.state.segments.delete(CHAPTER_ID);
+    // A clip the new plan does not name is left over from an older plan; it must be pruned.
+    const stale = { name: 'stale00-100.wav', uri: `file:///fake/${CHAPTER_ID}/stale00-100.wav` };
+    fake.state.audioFiles.set(CHAPTER_ID, [...(fake.state.audioFiles.get(CHAPTER_ID) ?? []), stale]);
+    expect((await runChapter(CHAPTER_ID, fake.ports)).status).toBe('ready');
+
+    expect(fake.state.ttsCalls.length).toBe(callsBefore);
+    expect(fake.state.segments.get(CHAPTER_ID)?.length).toBe(firstSegments);
+    expect((fake.state.audioFiles.get(CHAPTER_ID) ?? []).map((f) => f.name)).not.toContain(
+      stale.name,
+    );
+  });
+
+  it('re-synthesizes only the passage whose clip is missing', async () => {
+    const fake = createFakePorts({ sourceText: EN_PASSAGE_600, targetLang: null, tts });
+    expect((await runChapter(CHAPTER_ID, fake.ports)).status).toBe('ready');
+    const rows = fake.state.segments.get(CHAPTER_ID) ?? [];
+    const missing = rows[1];
+    expect(missing).toBeDefined();
+    const callsBefore = fake.state.ttsCalls.length;
+
+    // Passage 1 has no row and no clip; every other passage keeps both.
+    fake.state.segments.set(
+      CHAPTER_ID,
+      rows.filter((row) => row.idx !== 1),
+    );
+    fake.state.audioFiles.set(
+      CHAPTER_ID,
+      (fake.state.audioFiles.get(CHAPTER_ID) ?? []).filter(
+        (file) => !file.name.startsWith(`${missing?.inputHash ?? ''}-`),
+      ),
+    );
+
+    expect((await runChapter(CHAPTER_ID, fake.ports)).status).toBe('ready');
+    expect(fake.state.ttsCalls.length - callsBefore).toBe(1);
+    expect(fake.state.segments.get(CHAPTER_ID)?.length).toBe(rows.length);
+  });
+});

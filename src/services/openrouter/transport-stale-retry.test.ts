@@ -1,15 +1,13 @@
 /*
- * QA-F proof (P1, money). A paid request whose response has already arrived is retired when the
- * connection calls retireInFlight (a stall, or a heartbeat gap that means JS was frozen) while its
- * body is still being read. The transport treats the retirement as a stale connection and sends the
- * same request again, so OpenRouter bills the completion twice. Expected after the fix: one request.
- * This test fails until a response that has arrived is never re-sent.
+ * A paid request whose response has arrived is not retired. A retirement (a stall, or a heartbeat gap
+ * that means JS was frozen) must not abort the body read and re-send the request, which would bill
+ * the completion twice (QA-F F-01).
  */
 import { createTransport } from './transport';
 import { createConnection } from '../network/connection';
 
 
-describe('QA-F audit: retired attempt with a response in hand', () => {
+describe('a retirement after the response has arrived', () => {
   it('does not send a paid request again after its response has arrived', async () => {
     const connection = createConnection({ now: () => 0 });
     let sent = 0;
@@ -35,23 +33,27 @@ describe('QA-F audit: retired attempt with a response in hand', () => {
     });
 
     let reads = 0;
+    let finishBody: () => void = () => undefined;
+    const bodyDone = new Promise<void>((resolve) => {
+      finishBody = resolve;
+    });
     const request = transport.request(
       { method: 'POST', path: '/chat/completions', body: {}, accept: 'application/json' },
       async () => {
         reads += 1;
-        if (reads === 1) {
-          // The first response is in hand and its body is still being read when the retirement lands.
-          markBodyStarted();
-          await new Promise<never>(() => undefined);
-        }
+        // The first response is in hand and its body is still being read when the retirement lands.
+        markBodyStarted();
+        await bodyDone;
         return 'ok';
       },
     );
 
     await bodyStarted;
-    connection.retireInFlight();
+    expect(connection.retireInFlight()).toBe(0);
+    finishBody();
 
     await expect(request).resolves.toBe('ok');
+    expect(reads).toBe(1);
     expect(sent).toBe(1);
   });
 });

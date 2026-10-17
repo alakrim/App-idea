@@ -3,6 +3,12 @@
  * holds `sources/`, `audio/` and the other library directories (see services/storage.ts). The app
  * implements this with expo-file-system; tests use an in-memory store.
  */
+/** A file or folder in the library, by its name and URI. */
+export interface LibraryEntry {
+  readonly name: string;
+  readonly uri: string;
+}
+
 export interface LibraryFiles {
   /** Writes text or bytes, replacing any file at the path. Returns the file's URI. */
   write(relativePath: string, content: string | Uint8Array): Promise<string>;
@@ -14,6 +20,8 @@ export interface LibraryFiles {
   importFile(sourceUri: string, relativePath: string): Promise<string>;
   /** The names of the entries in a directory. Empty when the directory does not exist. */
   listNames(relativeDir: string): Promise<string[]>;
+  /** The entries of a directory with their URIs. Empty when the directory does not exist. */
+  listEntries(relativeDir: string): Promise<LibraryEntry[]>;
   /** Removes one file. A missing file is not an error. */
   removeFile(relativePath: string): Promise<void>;
   /** Removes a directory and everything in it. A missing directory is not an error. */

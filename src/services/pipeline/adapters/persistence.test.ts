@@ -13,7 +13,7 @@ import { narrationProfiles } from '@/db/schema';
 
 import { createMemoryLibraryFiles } from '../__fixtures__/memory-library-files';
 import { narrationProfileFor, narrationProfileId } from '../narration-id';
-import { createAudioFiles, removeSegmentFilesFrom } from './audio-files';
+import { createAudioFiles } from './audio-files';
 import { createCatalog } from './catalog';
 import { createChapterStore } from './chapter-store';
 import { createJobStore, QUEUE_SETTING_KEY } from './job-store';
@@ -41,22 +41,22 @@ describe('narrationProfileId', () => {
 });
 
 describe('removeSegmentFilesFrom', () => {
-  it('removes the segment files from an index on, and leaves earlier segments and other files', async () => {
+  it('lists the clip files, and prunes every file a kept clip does not name', async () => {
     const files = createMemoryLibraryFiles();
     const chapterId = id(9);
     const audio = createAudioFiles(files);
-    for (const idx of [0, 1, 2, 3]) await audio.write(chapterId, idx, new Uint8Array([idx]), 'mp3');
-    await files.write(`audio/${chapterId}/notes.txt`, 'keep me');
+    for (const name of ['aaa-100.mp3', 'bbb-200.mp3', 'ccc-300.mp3']) {
+      await audio.write(chapterId, name, new Uint8Array([1]));
+    }
+    expect((await audio.list(chapterId)).map((entry) => entry.name).sort()).toEqual([
+      'aaa-100.mp3',
+      'bbb-200.mp3',
+      'ccc-300.mp3',
+    ]);
 
-    await removeSegmentFilesFrom(files, chapterId, 2);
+    await audio.prune(chapterId, new Set(['bbb-200.mp3']));
 
-    expect([...files.entries.keys()].sort()).toEqual(
-      [
-        `audio/${chapterId}/0.mp3`,
-        `audio/${chapterId}/1.mp3`,
-        `audio/${chapterId}/notes.txt`,
-      ].sort(),
-    );
+    expect([...files.entries.keys()]).toEqual([`audio/${chapterId}/bbb-200.mp3`]);
   });
 });
 
@@ -157,7 +157,7 @@ describe('createChapterStore', () => {
     await store.load(id(1));
     const audio = createAudioFiles(files);
     for (const idx of [0, 1, 2]) {
-      await audio.write(id(1), idx, new Uint8Array([idx]), 'mp3');
+      await audio.write(id(1), `${idx}.mp3`, new Uint8Array([idx]));
       await store.saveAudioSegment({
         id: id(700 + idx),
         chapterId: id(1),
@@ -173,7 +173,10 @@ describe('createChapterStore', () => {
     }
     await store.deleteAudioFrom(id(1), 1);
     expect(audioSegmentRepo.listByChapter(db, id(1)).map((s) => s.idx)).toEqual([0]);
-    expect([...files.entries.keys()]).toEqual([`audio/${id(1)}/0.mp3`]);
+    // Deleting rows keeps the clip files: they are reused by hash, and pruned once the plan is stored.
+    expect([...files.entries.keys()].sort()).toEqual(
+      [0, 1, 2].map((idx) => `audio/${id(1)}/${idx}.mp3`).sort(),
+    );
   });
 
   it('sets the chapter metadata and only the fields it is given', async () => {

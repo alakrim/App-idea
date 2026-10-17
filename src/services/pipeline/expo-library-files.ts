@@ -53,6 +53,13 @@ export function createExpoLibraryFiles(): LibraryFiles {
       return directory.exists ? directory.list().map((entry) => entry.name) : [];
     },
 
+    async listEntries(relativeDir) {
+      const directory = directoryAt(relativeDir);
+      return directory.exists
+        ? directory.list().map((entry) => ({ name: entry.name, uri: entry.uri }))
+        : [];
+    },
+
     async removeFile(relativePath) {
       const file = fileAt(relativePath);
       if (file.exists) file.delete();

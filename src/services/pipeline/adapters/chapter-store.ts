@@ -29,7 +29,6 @@ import type { Translation } from '@/db/repos/text-repo';
 import type { Db } from '@/db/types';
 
 import { narrationProfileFor } from '../narration-id';
-import { removeSegmentFilesFrom } from './audio-files';
 
 import type { LibraryFiles } from '../library-files';
 
@@ -185,7 +184,6 @@ export function createChapterStore(deps: ChapterStoreDeps): ChapterStore {
 
     async deleteAudioFrom(chapterId, segmentIdx) {
       audioSegmentRepo.deleteFrom(db, chapterId, segmentIdx);
-      await removeSegmentFilesFrom(files, chapterId, segmentIdx);
     },
   };
 }
