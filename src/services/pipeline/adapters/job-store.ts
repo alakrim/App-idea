@@ -18,6 +18,8 @@ const QueueEntrySchema = z.object({
   from: z.enum(['extract', 'clean', 'segment', 'analyze', 'translate', 'narrate']).optional(),
   force: z.boolean().optional(),
   pdfEngine: z.enum(['cloudflare-ai', 'mistral-ocr']).optional(),
+  transientFailures: z.number().int().nonnegative().optional(),
+  retryAt: z.number().int().nonnegative().optional(),
 });
 
 const QueueSchema = z.array(z.unknown());

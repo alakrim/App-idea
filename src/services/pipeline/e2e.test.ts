@@ -129,6 +129,8 @@ function describeEvent(event: PipelineEvent): string | null {
       return `segmentReady #${event.segment.idx} sentences ${event.segment.sentenceStart}-${event.segment.sentenceEnd} ${event.segment.durationMs}ms`;
     case 'error':
       return `error ${event.stage}: ${event.error.code} ${event.error.message}`;
+    case 'retrying':
+      return `retrying after failure ${event.attempt}`;
     case 'done':
       return 'done';
     case 'progress':

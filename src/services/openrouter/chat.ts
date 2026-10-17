@@ -4,7 +4,7 @@ import { parseTolerantJson } from '@/core/llm/json';
 
 import { PipelineFailure, pipelineFailure } from './errors';
 import { supportsStructuredOutput } from './models';
-import { jsonBody } from './transport';
+import { CALL_TIMEOUTS_MS, jsonBody } from './transport';
 
 import type { ModelCatalog } from './models';
 import type { Transport } from './transport';
@@ -101,7 +101,14 @@ export async function sendChatCompletion(
   signal?: AbortSignal,
 ): Promise<ChatCompletion> {
   return deps.transport.request(
-    { method: 'POST', path: '/chat/completions', body, accept: 'application/json', signal },
+    {
+      method: 'POST',
+      path: '/chat/completions',
+      body,
+      accept: 'application/json',
+      signal,
+      timeoutMs: CALL_TIMEOUTS_MS.chat,
+    },
     async (res) => {
       const parsed = await jsonBody(completionSchema)(res);
       const choice = parsed.choices[0];

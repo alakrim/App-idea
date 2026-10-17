@@ -30,6 +30,7 @@ const previewPipeline: PipelineFacade = {
   enqueue: () => undefined,
   cancel: () => undefined,
   retry: () => undefined,
+  retryNow: () => undefined,
   retryWithOcr: () => undefined,
   subscribe: () => () => undefined,
 };
@@ -134,6 +135,7 @@ function ChapterGallery(): ReactNode {
       onBack={() => undefined}
       onPlay={() => undefined}
       onRetry={() => undefined}
+      onRetryNow={() => undefined}
       onToggleCue={() => undefined}
     />
   );

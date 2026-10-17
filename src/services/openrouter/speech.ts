@@ -2,6 +2,7 @@ import type { SpeechFormat } from '@/core/narration/formats';
 import { FREE_NARRATOR_DAILY_LIMIT_MESSAGE } from '@/core/narration/options';
 
 import { PipelineFailure, pipelineFailure } from './errors';
+import { CALL_TIMEOUTS_MS } from './transport';
 
 import type { Transport } from './transport';
 
@@ -94,6 +95,7 @@ export async function synthesizeSpeech(
         },
         accept: 'audio/*',
         signal: input.signal,
+        timeoutMs: CALL_TIMEOUTS_MS.speech,
         dailyLimitMessage: FREE_NARRATOR_DAILY_LIMIT_MESSAGE,
       },
       async (res) => {

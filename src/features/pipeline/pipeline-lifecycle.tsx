@@ -6,24 +6,34 @@
  */
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 import { useRouter } from 'expo-router';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AppState } from 'react-native';
 
+import { TIMER_SCHEDULER } from '@/core/pipeline/retry-policy';
+import { useDb } from '@/db/hooks';
+import { chapterRepo } from '@/db/repos/chapter-repo';
+import * as processingService from '@/services/background';
 import { WebViewHost } from '@/services/pipeline/webview-host';
 import { useApiKeyStatus } from '@/services/secrets';
 import { useToast } from '@/ui/toast';
 
+import { BackgroundWork, isQueueBusy } from './background-work';
+import { NotificationPrompt } from './notification-prompt';
 import { usePipelineRuntime } from './pipeline-provider';
 
 export const KEEP_AWAKE_TAG = 'lectio-pipeline';
 export const CONNECT_ROUTE = '/settings/api-key';
+/** Shown in the notification when a chapter has no title yet. */
+const APP_NAME = 'Lectio';
 
 export function PipelineLifecycle() {
   const runtime = usePipelineRuntime();
   const toast = useToast();
   const router = useRouter();
   const keyStatus = useApiKeyStatus();
+  const db = useDb();
   const restored = useRef(false);
+  const [busy, setBusy] = useState(false);
 
   useEffect(() => {
     if (!runtime || restored.current) return;
@@ -74,5 +84,42 @@ export function PipelineLifecycle() {
     if (runtime && keyStatus === 'present' && runtime.isPaused()) runtime.resume();
   }, [runtime, keyStatus]);
 
-  return runtime ? <WebViewHost /> : null;
+  useEffect(() => {
+    if (!runtime) return undefined;
+    return runtime.subscribeQueue((snapshot) => {
+      setBusy(isQueueBusy(snapshot, runtime.isPaused()));
+    });
+  }, [runtime]);
+
+  // The processing service keeps the app alive in the background while chapters process (ADR-0007).
+  useEffect(() => {
+    if (!runtime) return undefined;
+    return new BackgroundWork({
+      service: processingService,
+      queue: {
+        subscribe: runtime.subscribeQueue,
+        isPaused: runtime.isPaused,
+        retryNow: runtime.retryNow,
+      },
+      facade: runtime.facade,
+      appState: {
+        current: () => AppState.currentState,
+        subscribe: (listener) => {
+          const subscription = AppState.addEventListener('change', listener);
+          return () => subscription.remove();
+        },
+      },
+      titleOf: (chapterId) => chapterRepo.get(db, chapterId)?.title ?? APP_NAME,
+      scheduler: TIMER_SCHEDULER,
+      now: () => Date.now(),
+    }).start();
+  }, [runtime, db]);
+
+  if (!runtime) return null;
+  return (
+    <>
+      <WebViewHost />
+      <NotificationPrompt busy={busy} />
+    </>
+  );
 }

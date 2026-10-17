@@ -50,6 +50,7 @@ export function ChapterScreen({ chapterId, focusSentence = null }: ChapterScreen
       onBack={() => (router.canGoBack() ? router.back() : router.replace('/'))}
       onPlay={(id) => router.push({ pathname: '/player', params: { chapterId: id } })}
       onRetry={(id) => pipeline.retry(id)}
+      onRetryNow={() => pipeline.retryNow()}
       onToggleCue={(cueId, enabled) => cueRepo.setEnabled(db, cueId, enabled)}
       focusSentence={focusSentence}
     />

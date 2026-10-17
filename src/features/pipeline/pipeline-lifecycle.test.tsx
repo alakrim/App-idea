@@ -8,6 +8,7 @@ import type { PipelineEvent } from '@/core/pipeline/context';
 import type { QueueSnapshot } from '@/core/pipeline/queue';
 import { createTestDb } from '@/db/__fixtures__/test-db';
 import { DbContext } from '@/db/hooks';
+import * as processingService from '@/services/background';
 import type { PipelineRuntime } from '@/services/pipeline';
 import { ThemeProvider } from '@/ui/theme';
 import { ToastProvider } from '@/ui/toast';
@@ -21,6 +22,9 @@ import type { ReactElement } from 'react';
 jest.mock('@/services/pipeline', () => ({ createLectioPipelineRuntime: jest.fn() }));
 jest.mock('@/services/pipeline/webview-host', () => ({ WebViewHost: () => null }));
 jest.mock('react-native-reanimated', () => require('../../__tests__/helpers/reanimated-stub'));
+jest.mock('@gorhom/bottom-sheet', () =>
+  require('../../__tests__/helpers/feature-mocks').bottomSheetStub(),
+);
 jest.mock('react-native-safe-area-context', () => {
   const { createElement } = require('react');
   const { View } = require('react-native');
@@ -43,50 +47,67 @@ const apiKey: { status: 'unknown' | 'missing' | 'present' } = { status: 'present
 jest.mock('@/services/secrets', () => ({
   useApiKeyStatus: () => apiKey.status,
 }));
+// The native service is replaced: Jest cannot run a foreground service.
+jest.mock('@/services/background', () => ({
+  startProcessing: jest.fn(() => Promise.resolve(true)),
+  updateProcessing: jest.fn(() => Promise.resolve()),
+  stopProcessing: jest.fn(() => Promise.resolve()),
+  addCancelListener: jest.fn(() => ({ remove: jest.fn() })),
+  addTimeoutListener: jest.fn(() => ({ remove: jest.fn() })),
+  notificationPermissionStatus: jest.fn(() => Promise.resolve('granted')),
+  requestNotificationPermission: jest.fn(() => Promise.resolve('granted')),
+}));
+// The explainer has its own tests. Here the user has already answered it.
+jest.mock('@/features/settings/settings-store', () => ({
+  useSettings: () => ({ settings: { notificationsExplained: true }, patch: jest.fn() }),
+}));
 
 const CHAPTER = '01J00000000000000000000CHP';
-const IDLE: QueueSnapshot = { running: null, pending: [] };
-const RUNNING: QueueSnapshot = { running: CHAPTER, pending: [] };
+const IDLE: QueueSnapshot = { running: null, pending: [], waiting: [] };
+const RUNNING: QueueSnapshot = { running: CHAPTER, pending: [], waiting: [] };
 
 /** A runtime whose queue and events the test drives by hand. */
 function fakeRuntime() {
-  let snapshotListener: ((snapshot: QueueSnapshot) => void) | null = null;
-  let eventListener: ((event: PipelineEvent) => void) | null = null;
+  const snapshotListeners = new Set<(snapshot: QueueSnapshot) => void>();
+  const eventListeners = new Set<(event: PipelineEvent) => void>();
   let paused = false;
+  const facade = { subscribe: jest.fn(() => () => undefined), cancel: jest.fn() };
   const runtime = {
-    facade: {},
+    facade,
     restore: jest.fn(() => Promise.resolve()),
     resume: jest.fn(() => {
       paused = false;
     }),
+    retryNow: jest.fn(),
     isPaused: () => paused,
     idle: () => Promise.resolve(),
     subscribeQueue: (listener: (snapshot: QueueSnapshot) => void) => {
-      snapshotListener = listener;
+      snapshotListeners.add(listener);
       return () => {
-        snapshotListener = null;
+        snapshotListeners.delete(listener);
       };
     },
     subscribeEvents: (listener: (event: PipelineEvent) => void) => {
-      eventListener = listener;
+      eventListeners.add(listener);
       return () => {
-        eventListener = null;
+        eventListeners.delete(listener);
       };
     },
   };
   return {
     runtime: runtime as unknown as PipelineRuntime,
+    facade,
     pause: () => {
       paused = true;
     },
     queue: async (snapshot: QueueSnapshot) => {
       await act(async () => {
-        snapshotListener?.(snapshot);
+        for (const listener of snapshotListeners) listener(snapshot);
       });
     },
     event: async (event: PipelineEvent) => {
       await act(async () => {
-        eventListener?.(event);
+        for (const listener of eventListeners) listener(event);
       });
     },
   };
@@ -139,8 +160,29 @@ describe('PipelineLifecycle', () => {
     apiKey.status = 'missing';
     fake.pause();
     await mount(fake.runtime);
-    await fake.queue({ running: null, pending: [CHAPTER] });
+    await fake.queue({ running: null, pending: [CHAPTER], waiting: [] });
     expect(activateKeepAwakeAsync).not.toHaveBeenCalled();
+  });
+
+  it('runs the foreground service while a chapter is queued, and stops it when the queue is idle', async () => {
+    const fake = fakeRuntime();
+    await mount(fake.runtime);
+    await fake.queue(RUNNING);
+    expect(processingService.startProcessing).toHaveBeenCalledWith(
+      expect.objectContaining({ chapterId: CHAPTER }),
+    );
+    await fake.queue(IDLE);
+    expect(processingService.stopProcessing).toHaveBeenCalledTimes(1);
+  });
+
+  it('cancels the chapter when its notification is cancelled', async () => {
+    const fake = fakeRuntime();
+    await mount(fake.runtime);
+    const onCancel = jest.mocked(processingService.addCancelListener).mock.calls[0]?.[0];
+    await act(async () => {
+      onCancel?.(CHAPTER);
+    });
+    expect(fake.facade.cancel).toHaveBeenCalledWith(CHAPTER);
   });
 
   it('toasts a finished chapter when the app is in the foreground', async () => {

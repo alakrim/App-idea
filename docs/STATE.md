@@ -20,6 +20,7 @@ _Last updated: 2026-10-11 by architect_
 
 ## Work in flight
 _None. Waiting on the user's device test of `lectio-0.1.0-c3eac7a-arm64.apk` (apk-builds branch). It fixes the Library crash (cover monogram at font size 0). The user asked for bug fixes only until they have tested properly._
+- **BG1** (ADR-0007, background processing): Android foreground service (`modules/lectio-background`), transient failures wait with backoff instead of ending the run, and per-call timeouts. On `worktree-agent-a9c378343d59a8317`, awaiting review and the device test checklist in its report.
 
 ## Next up
 - **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.

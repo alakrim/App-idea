@@ -1,0 +1,7 @@
+{
+  "name": "lectio-background",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Foreground service that keeps chapter processing alive while the app is in the background (ADR-0007).",
+  "main": "index.ts"
+}

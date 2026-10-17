@@ -41,6 +41,7 @@ function props(overrides: Partial<ChapterViewProps> = {}): ChapterViewProps {
     onBack: jest.fn(),
     onPlay: jest.fn(),
     onRetry: jest.fn(),
+    onRetryNow: jest.fn(),
     onToggleCue: jest.fn(),
     ...overrides,
   };

@@ -35,6 +35,13 @@ export type PipelineEvent =
       readonly totalUsd: number;
     }
   | { readonly type: 'done'; readonly chapterId: Id }
+  /** A chapter failed transiently and waits to run again at `retryAt` (epoch milliseconds). */
+  | {
+      readonly type: 'retrying';
+      readonly chapterId: Id;
+      readonly attempt: number;
+      readonly retryAt: number;
+    }
   | {
       readonly type: 'error';
       readonly chapterId: Id;

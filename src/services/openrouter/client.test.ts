@@ -187,10 +187,9 @@ describe('retries and backoff', () => {
 describe('timeouts and cancellation', () => {
   it('times out with a retryable NETWORK error', async () => {
     const { client, calls } = makeClient(hangUntilAborted, { timeoutMs: 5, maxRetries: 0 });
-    const failure = await captureFailure(client.chatText({ model: 'm', user: 'hi' }));
-    expect(failure.error.code).toBe('NETWORK');
-    expect(failure.error.retryable).toBe(true);
-    expect(failure.error.message).toMatch(/too long/);
+    const check = await client.validateKey();
+    expect(check).toMatchObject({ valid: false, error: { code: 'NETWORK', retryable: true } });
+    expect(check.valid ? '' : check.error.message).toMatch(/too long/);
     expect(calls).toHaveLength(1);
   });
 
@@ -234,5 +233,46 @@ describe('timeouts and cancellation', () => {
     const failure = await pending;
     expect(failure.error.code).toBe('CANCELLED');
     expect(calls).toHaveLength(1);
+  });
+});
+
+describe('per-call timeouts', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('gives a chat call 120 s before it times out', async () => {
+    const { client, calls } = makeClient(hangUntilAborted, { maxRetries: 0 });
+    const pending = captureFailure(client.chatText({ model: 'm', user: 'hi' }));
+    await jest.advanceTimersByTimeAsync(119_999);
+    expect(calls).toHaveLength(1);
+    await jest.advanceTimersByTimeAsync(1);
+    expect((await pending).error).toMatchObject({ code: 'NETWORK', retryable: true });
+  });
+
+  it('gives a speech call 180 s before it times out', async () => {
+    const { client, calls } = makeClient(hangUntilAborted, { maxRetries: 0 });
+    const pending = captureFailure(
+      client.synthesizeSpeech({ model: 'm', voice: 'v', input: 'Hello there.', format: 'mp3' }),
+    );
+    await jest.advanceTimersByTimeAsync(179_999);
+    expect(calls).toHaveLength(1);
+    await jest.advanceTimersByTimeAsync(1);
+    expect((await pending).error).toMatchObject({ code: 'NETWORK', retryable: true });
+  });
+
+  it('keeps the 60 s default for the short calls', async () => {
+    const { client } = makeClient(hangUntilAborted, { maxRetries: 0 });
+    const pending = client.validateKey();
+    let settled = false;
+    void pending.then(() => (settled = true));
+    await jest.advanceTimersByTimeAsync(59_999);
+    expect(settled).toBe(false);
+    await jest.advanceTimersByTimeAsync(1);
+    expect(await pending).toMatchObject({ valid: false, error: { code: 'NETWORK' } });
   });
 });

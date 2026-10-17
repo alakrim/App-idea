@@ -25,6 +25,7 @@ import { StageStepper } from './stage-stepper';
 import { stepStates } from './stage-steps';
 import { useSentenceFocus } from './use-sentence-focus';
 import { useSentenceScroll } from './use-sentence-scroll';
+import { WaitingCard } from './waiting-card';
 
 const STATE_BADGE: Record<ReturnType<typeof rowStateOf>, { label: string; tone: BadgeTone }> = {
   draft: { label: 'Not processed', tone: 'neutral' },
@@ -53,6 +54,8 @@ export interface ChapterViewProps {
   onBack: () => void;
   onPlay: (chapterId: string) => void;
   onRetry: (chapterId: string) => void;
+  /** Runs every chapter that waits for a connection now. */
+  onRetryNow: () => void;
   onToggleCue: (cueId: string, enabled: boolean) => void;
   /** A sentence to scroll to and highlight, from a deep link. Null for none. */
   focusSentence?: number | null;
@@ -70,6 +73,7 @@ export function ChapterView({
   onBack,
   onPlay,
   onRetry,
+  onRetryNow,
   onToggleCue,
   focusSentence = null,
 }: ChapterViewProps) {
@@ -83,7 +87,10 @@ export function ChapterView({
   const scroll = useSentenceScroll({ focusSentence, paragraphs, reduced, scrollTo: scrollToY });
   const highlight = useSentenceFocus(focusSentence, reduced);
   const state = rowStateOf(chapter, progress);
-  const badge = STATE_BADGE[state];
+  const badge =
+    progress?.state === 'waiting'
+      ? { label: 'Waiting', tone: 'neutral' as const }
+      : STATE_BADGE[state];
   const translated = isTranslated(paragraphs);
   const effectiveMode: ReadingMode = translated ? mode : 'original';
   const spent = jobs.reduce((sum, job) => sum + job.costUsd, 0);
@@ -145,6 +152,9 @@ export function ChapterView({
 
         {state === 'processing' || jobs.length > 0 ? (
           <Section title="Processing" trailing={`${formatUsd(spent)} spent`}>
+            {typeof progress?.retryAt === 'number' && progress.state === 'waiting' ? (
+              <WaitingCard retryAt={progress.retryAt} onRetryNow={onRetryNow} />
+            ) : null}
             <Card>
               <StageStepper steps={steps} />
             </Card>
@@ -192,7 +202,9 @@ export function ChapterView({
             ) : null}
             <View
               testID="chapter-reading-text"
-              onLayout={(event: LayoutChangeEvent) => scroll.onReadingLayout(event.nativeEvent.layout.y)}
+              onLayout={(event: LayoutChangeEvent) =>
+                scroll.onReadingLayout(event.nativeEvent.layout.y)
+              }
             >
               <ReadingText
                 paragraphs={paragraphs}

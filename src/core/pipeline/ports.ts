@@ -103,6 +103,10 @@ export interface PersistedQueueItem {
   readonly from?: Stage;
   readonly force?: boolean;
   readonly pdfEngine?: PdfEngine;
+  /** Transient failures so far. Absent for a chapter that has not failed transiently. */
+  readonly transientFailures?: number;
+  /** When a waiting chapter may run again, in epoch milliseconds. Absent when it is not waiting. */
+  readonly retryAt?: number;
 }
 
 export interface JobStore {
