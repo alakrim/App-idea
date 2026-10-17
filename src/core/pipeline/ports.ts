@@ -3,6 +3,7 @@
  * the network, the file system or a WebView directly. The app layer (P2) implements these with
  * SQLite, OpenRouter, expo-file-system and a hidden WebView, and tests use in-memory fakes.
  */
+import type { AnalysisCallResult } from '../analysis/analysis-call';
 import type { CueReport } from '../analysis/cue-report';
 import type { ChapterMemoryRecord, ValidatedCue } from '../analysis/types';
 import type {
@@ -86,6 +87,15 @@ export interface ChapterStore {
   /** The cues cached under a text key (see cueCacheKey). Null when nothing is cached under it. */
   getCueCache(key: string): Promise<ValidatedCue[] | null>;
   saveCueCache(key: string, cues: readonly ValidatedCue[]): Promise<void>;
+  /** A finished analysis chunk of the chapter, kept so a retry reuses it (QA-F F-02). Null when none. */
+  loadAnalysisCheckpoint(chapterId: Id, chunkKey: string): Promise<AnalysisCallResult | null>;
+  saveAnalysisCheckpoint(
+    chapterId: Id,
+    chunkKey: string,
+    result: AnalysisCallResult,
+  ): Promise<void>;
+  /** Drops the chapter's analysis checkpoints, once its analysis is saved. */
+  clearAnalysisCheckpoints(chapterId: Id): Promise<void>;
   /** Stores the chapter's cue report from its latest analysis, replacing the previous one. */
   saveCueReport(chapterId: Id, report: CueReport): Promise<void>;
   /** Stores (replaces) the chapter's memory card. */

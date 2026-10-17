@@ -3,6 +3,7 @@
  * the extracted text and the audio files go through LibraryFiles. The narration profile is upserted
  * from the settings every time a chapter is loaded, so a run always records the profile it used.
  */
+import type { AnalysisCallResult } from '@/core/analysis/analysis-call';
 import type { ChapterMemoryRecord, MemoryFields, ValidatedCue } from '@/core/analysis/types';
 import type { ChapterMemory, Id, IdGenerator } from '@/core/domain';
 import type { EntityResolution } from '@/core/memory/entities';
@@ -16,6 +17,7 @@ import type {
 } from '@/core/pipeline/ports';
 import type { ChapterText } from '@/core/text/build';
 import { ambienceReportRepo } from '@/db/repos/ambience-report-repo';
+import { analysisCheckpointRepo } from '@/db/repos/analysis-checkpoint-repo';
 import { audioSegmentRepo } from '@/db/repos/audio-segment-repo';
 import { chapterRepo } from '@/db/repos/chapter-repo';
 import { cueCacheRepo } from '@/db/repos/cue-cache-repo';
@@ -138,6 +140,18 @@ export function createChapterStore(deps: ChapterStoreDeps): ChapterStore {
 
     async saveCueCache(key, cues) {
       cueCacheRepo.put(db, key, cues, clock.now());
+    },
+
+    async loadAnalysisCheckpoint(chapterId, chunkKey) {
+      return analysisCheckpointRepo.get(db, chapterId, chunkKey);
+    },
+
+    async saveAnalysisCheckpoint(chapterId, chunkKey, result: AnalysisCallResult) {
+      analysisCheckpointRepo.put(db, chapterId, chunkKey, result, clock.now());
+    },
+
+    async clearAnalysisCheckpoints(chapterId) {
+      analysisCheckpointRepo.clear(db, chapterId);
     },
 
     async saveCueReport(chapterId, report) {

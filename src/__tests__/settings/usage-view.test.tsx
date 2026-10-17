@@ -10,20 +10,46 @@ jest.mock('react-native-reanimated', () => require('../helpers/reanimated-stub')
 jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 
 const summary = buildUsageSummary({
-  today: [{ key: 'gemini', label: 'Gemini 3.8 Flash Lite TTS', calls: 1, costUsd: 0.0005 }],
+  today: [
+    {
+      key: 'gemini',
+      label: 'Gemini 3.8 Flash Lite TTS',
+      calls: 1,
+      costUsd: 0.0005,
+      unknownCalls: 0,
+    },
+  ],
   week: [
-    { key: 'gemini', label: 'Gemini 3.8 Flash Lite TTS', calls: 3, costUsd: 0.0015 },
-    { key: 'haiku', label: 'Claude Haiku 5.5', calls: 2, costUsd: 0.5 },
+    {
+      key: 'gemini',
+      label: 'Gemini 3.8 Flash Lite TTS',
+      calls: 3,
+      costUsd: 0.0015,
+      unknownCalls: 0,
+    },
+    { key: 'haiku', label: 'Claude Haiku 5.5', calls: 2, costUsd: 0.5, unknownCalls: 0 },
   ],
   month: [
-    { key: 'gemini', label: 'Gemini 3.8 Flash Lite TTS', calls: 3, costUsd: 0.0015 },
-    { key: 'haiku', label: 'Claude Haiku 5.5', calls: 2, costUsd: 0.5 },
+    {
+      key: 'gemini',
+      label: 'Gemini 3.8 Flash Lite TTS',
+      calls: 3,
+      costUsd: 0.0015,
+      unknownCalls: 0,
+    },
+    { key: 'haiku', label: 'Claude Haiku 5.5', calls: 2, costUsd: 0.5, unknownCalls: 0 },
   ],
   byModel: [
-    { key: 'gemini', label: 'Gemini 3.8 Flash Lite TTS', calls: 3, costUsd: 0.0015 },
-    { key: 'haiku', label: 'Claude Haiku 5.5', calls: 2, costUsd: 0.5 },
+    {
+      key: 'gemini',
+      label: 'Gemini 3.8 Flash Lite TTS',
+      calls: 3,
+      costUsd: 0.0015,
+      unknownCalls: 0,
+    },
+    { key: 'haiku', label: 'Claude Haiku 5.5', calls: 2, costUsd: 0.5, unknownCalls: 0 },
   ],
-  byStage: [{ key: 'translate', label: 'Translate', calls: 2, costUsd: 0.5 }],
+  byStage: [{ key: 'translate', label: 'Translate', calls: 2, costUsd: 0.5, unknownCalls: 0 }],
 });
 
 describe('UsageView', () => {

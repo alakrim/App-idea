@@ -58,8 +58,8 @@ describe('usageRepo', () => {
     usageRepo.insert(db, entry(3, { at: T0 + DAY, chapterId: id(1), costUsd: 0.125 }));
 
     expect(usageRepo.totalsBy(db, 'day')).toEqual([
-      { key: '2023-11-14', calls: 2, promptTokens: 200, completionTokens: 40, costUsd: 0.75 },
-      { key: '2023-11-15', calls: 1, promptTokens: 100, completionTokens: 20, costUsd: 0.125 },
+      { key: '2023-11-14', calls: 2, promptTokens: 200, completionTokens: 40, costUsd: 0.75, unknownCalls: 0 },
+      { key: '2023-11-15', calls: 1, promptTokens: 100, completionTokens: 20, costUsd: 0.125, unknownCalls: 0 },
     ]);
     expect(usageRepo.totalsBy(db, 'model').map((t) => [t.key, t.calls])).toEqual([
       ['openai/gpt-x', 2],

@@ -13,7 +13,9 @@ export interface UsageTotal {
   calls: number;
   promptTokens: number;
   completionTokens: number;
+  /** Known spend only. Calls whose cost is unknown are counted in `unknownCalls`, never as $0. */
   costUsd: number;
+  unknownCalls: number;
 }
 
 /** Day keys are UTC, so they are stable on every device. */
@@ -50,6 +52,7 @@ export const usageRepo = {
         promptTokens: sql<number>`coalesce(${sum(usageLedger.promptTokens)}, 0)`,
         completionTokens: sql<number>`coalesce(${sum(usageLedger.completionTokens)}, 0)`,
         costUsd: sql<number>`coalesce(${sum(usageLedger.costUsd)}, 0)`,
+        unknownCalls: sql<number>`coalesce(sum(case when ${usageLedger.costUsd} is null then 1 else 0 end), 0)`,
       })
       .from(usageLedger)
       .where(options.sinceMs === undefined ? undefined : gte(usageLedger.at, options.sinceMs))

@@ -20,6 +20,16 @@ export function normalizeName(input: string): string {
     .trim();
 }
 
+/** The aliases an entity's reveals put strictly before `order`. A reader at a cutoff may see only these (QA-F F-03). */
+export function aliasesRevealedBefore(entity: Entity, order: number): string[] {
+  return entity.aliasReveals.filter((r) => r.firstChapterOrder < order).map((r) => r.alias);
+}
+
+/** The aliases an entity's reveals put at or before `order`. Used where the current chapter itself is visible. */
+export function aliasesRevealedBy(entity: Entity, order: number): string[] {
+  return entity.aliasReveals.filter((r) => r.firstChapterOrder <= order).map((r) => r.alias);
+}
+
 /** Distinct normalized keys for a name and its aliases. Empty strings are dropped. */
 export function nameKeys(name: string, aliases: readonly string[] = []): string[] {
   const keys = new Set<string>();
@@ -88,7 +98,10 @@ export function resolveEntities(
 ): EntityResolution {
   const nextId = options.newId ?? newId;
   const byId = new Map<string, MutableEntity>(
-    existing.map((e) => [e.id, { ...e, aliases: [...e.aliases] }]),
+    existing.map((e) => [
+      e.id,
+      { ...e, aliases: [...e.aliases], aliasReveals: [...e.aliasReveals] },
+    ]),
   );
   const touched = new Set<string>();
   const seenFacts = new Set<string>(
@@ -112,6 +125,7 @@ export function resolveEntities(
         kind: mention.kind,
         canonicalName: mention.name.trim(),
         aliases: [],
+        aliasReveals: [],
         firstChapterOrder: chapterOrder,
       };
       byId.set(entity.id, entity);
@@ -122,6 +136,7 @@ export function resolveEntities(
       const key = normalizeName(spelling);
       if (key && !known.has(key)) {
         entity.aliases.push(spelling.trim());
+        entity.aliasReveals.push({ alias: spelling.trim(), firstChapterOrder: chapterOrder });
         known.add(key);
       }
     }

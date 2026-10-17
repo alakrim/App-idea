@@ -9,7 +9,18 @@ export interface UsageCount {
   key: string;
   label: string;
   calls: number;
+  /** Known spend. Calls in `unknownCalls` are not in it. */
   costUsd: number;
+  /** Calls whose cost the provider and catalog did not give. Shown as "unknown", not as $0. */
+  unknownCalls: number;
+}
+
+/** The note shown beside a row with unknown costs, or null when every call has a known cost. */
+export function unknownCostNote(unknownCalls: number): string | null {
+  if (unknownCalls === 0) return null;
+  return unknownCalls === 1
+    ? '1 call with unknown cost'
+    : `${unknownCalls} calls with unknown cost`;
 }
 
 export interface UsageWindow {

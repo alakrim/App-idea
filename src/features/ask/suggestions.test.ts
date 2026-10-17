@@ -11,6 +11,7 @@ function entity(n: number, kind: Entity['kind'], name: string, firstOrder: numbe
     kind,
     canonicalName: name,
     aliases: [],
+    aliasReveals: [],
     firstChapterOrder: firstOrder,
   };
 }

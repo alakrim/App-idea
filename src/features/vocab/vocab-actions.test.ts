@@ -112,7 +112,7 @@ describe('vocab save and explanation', () => {
     expect(actions.isPending(savedId)).toBe(false);
     expect(actions.failureOf(savedId)).toBeNull();
     expect(usageRepo.totalsBy(db, 'model')).toEqual([
-      { key: 'anthropic/test', calls: 1, promptTokens: 80, completionTokens: 20, costUsd: 0.001 },
+      { key: 'anthropic/test', calls: 1, promptTokens: 80, completionTokens: 20, costUsd: 0.001, unknownCalls: 0 },
     ]);
   });
 

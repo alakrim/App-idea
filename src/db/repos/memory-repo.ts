@@ -1,9 +1,14 @@
 import { and, asc, desc, eq, inArray, lt } from 'drizzle-orm';
 import { z } from 'zod';
 
-import { ChapterMemorySchema, EntityFactSchema, EntitySchema } from '../../core/domain';
+import {
+  AliasRevealSchema,
+  ChapterMemorySchema,
+  EntityFactSchema,
+  EntitySchema,
+} from '../../core/domain';
 import { parseJsonColumn } from '../json-column';
-import { chapterMemory, chapters, entities, entityFacts, series } from '../schema';
+import { chapterMemory, chapters, entities, entityAliases, entityFacts, series } from '../schema';
 
 import type { ChapterMemoryRecord, MemoryFields } from '../../core/analysis/types';
 import type { ChapterMemory, Entity, EntityFact, Series } from '../../core/domain';
@@ -126,6 +131,24 @@ export const memoryRepo = {
 
   /** Every entity of the series, with its aliases. */
   listEntities(db: Db, seriesId: string): Entity[] {
+    const reveals = new Map<string, { alias: string; firstChapterOrder: number }[]>();
+    for (const row of db
+      .select({
+        entityId: entityAliases.entityId,
+        alias: entityAliases.alias,
+        firstChapterOrder: entityAliases.firstChapterOrder,
+      })
+      .from(entityAliases)
+      .innerJoin(entities, eq(entities.id, entityAliases.entityId))
+      .where(eq(entities.seriesId, seriesId))
+      .orderBy(asc(entityAliases.firstChapterOrder), asc(entityAliases.alias))
+      .all()) {
+      const list = reveals.get(row.entityId) ?? [];
+      list.push(
+        AliasRevealSchema.parse({ alias: row.alias, firstChapterOrder: row.firstChapterOrder }),
+      );
+      reveals.set(row.entityId, list);
+    }
     return db
       .select()
       .from(entities)
@@ -140,6 +163,7 @@ export const memoryRepo = {
             column: 'aliases',
             id: row.id,
           }),
+          aliasReveals: reveals.get(row.id) ?? [],
         }),
       );
   },
@@ -186,8 +210,16 @@ export const memoryRepo = {
         if (entity.seriesId !== seriesId) {
           throw new Error(`Entity ${entity.id} belongs to series ${entity.seriesId}`);
         }
-        const row = { ...entity, aliases: JSON.stringify(entity.aliases) };
+        const { aliasReveals, ...fields } = entity;
+        const row = { ...fields, aliases: JSON.stringify(entity.aliases) };
         tx.insert(entities).values(row).onConflictDoUpdate({ target: entities.id, set: row }).run();
+        // The first reveal of an alias wins: a later chapter never moves an alias earlier or later.
+        for (const reveal of aliasReveals) {
+          tx.insert(entityAliases)
+            .values({ entityId: entity.id, ...reveal })
+            .onConflictDoNothing({ target: [entityAliases.entityId, entityAliases.alias] })
+            .run();
+        }
       }
       for (const fact of resolution.newFacts) {
         tx.insert(entityFacts).values(fact).onConflictDoNothing({ target: entityFacts.id }).run();

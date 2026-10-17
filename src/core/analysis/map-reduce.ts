@@ -7,10 +7,11 @@ import { needsSettingFallback, runSettingFallback } from './setting-fallback';
 import { validateCues } from './validate-cues';
 import { runOrdered } from '../async/ordered-pool';
 import { addUsage, throwIfCancelled, ZERO_USAGE } from '../llm/transport';
+import { stableHash } from '../pipeline/hash';
 import { planLlmChunks } from '../text/chunk';
 import { normalizeWhitespace } from '../text/normalize';
 
-import type { AnalysisCallResult } from './analysis-call';
+import type { AnalysisCallResult, AnalysisRequest } from './analysis-call';
 import type { Lang, MemoryFields, SentenceInput, ValidatedCue } from './types';
 import type { CueValidationContext, DroppedCue } from './validate-cues';
 import type { LlmTransport, LlmUsage } from '../llm/transport';
@@ -29,6 +30,17 @@ export const defaultChunkPlanner: ChunkPlanner = (sentences) =>
   planLlmChunks(sentences, { maxTokens: MAX_CHUNK_TOKENS, overlapSentences: 0 }).map((chunk) =>
     sentences.filter((s) => s.idx >= chunk.start && s.idx <= chunk.end),
   );
+
+/**
+ * Finished chunk replies, kept across a failed analysis so the retry reuses them (QA-F F-02). A chunk
+ * is keyed by its full prompt, so a changed chapter, prior context or prompt version never matches.
+ */
+export interface AnalysisCheckpoints {
+  /** What a reply depends on besides its prompt, such as the model and prompt version. Other scopes are never read. */
+  readonly scope: string;
+  readonly load: (chunkKey: string) => Promise<AnalysisCallResult | null>;
+  readonly save: (chunkKey: string, result: AnalysisCallResult) => Promise<void>;
+}
 
 export interface AnalyzeChapterInput {
   readonly seriesTitle: string;
@@ -55,6 +67,8 @@ export interface AnalyzeChapterInput {
    * memory only, these cues are used as they are, and the fallback does not run.
    */
   readonly cachedCues?: readonly ValidatedCue[];
+  /** Saves each finished chunk and reuses the saved ones. Omitted, every chunk is called. */
+  readonly checkpoints?: AnalysisCheckpoints;
 }
 
 export interface ChapterAnalysis {
@@ -86,8 +100,8 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
   await runOrdered(
     chunks,
     (chunk, _index, signal) =>
-      runAnalysisCall(
-        input.callLlm,
+      runChunk(
+        input,
         buildAnalysisPrompt({
           sentences: chunk,
           seriesTitle: input.seriesTitle,
@@ -164,6 +178,25 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
   }
 
   return { memory, cues, dropped, chunkCount: chunks.length, usage, fallbackRan };
+}
+
+/**
+ * One chunk's call. With checkpoints, a saved reply of the same prompt is reused and makes no call,
+ * so its usage is zero for this run. A new reply is saved before the run relies on it.
+ */
+async function runChunk(
+  input: AnalyzeChapterInput,
+  prompt: AnalysisRequest,
+  signal: AbortSignal | undefined,
+): Promise<AnalysisCallResult> {
+  const checkpoints = input.checkpoints;
+  if (checkpoints === undefined) return runAnalysisCall(input.callLlm, prompt, signal);
+  const key = stableHash([checkpoints.scope, prompt.system, prompt.user]);
+  const saved = await checkpoints.load(key);
+  if (saved !== null) return { ...saved, usage: ZERO_USAGE };
+  const result = await runAnalysisCall(input.callLlm, prompt, signal);
+  await checkpoints.save(key, result);
+  return result;
 }
 
 /** One plain-text call. A null summary means the reply was empty, so the joined summary is kept. */

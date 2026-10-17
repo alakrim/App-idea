@@ -36,13 +36,17 @@ export function emptyMemory(overrides: Partial<ChapterMemory> = {}): ChapterMemo
   };
 }
 
+/** An entity whose aliases are all revealed by its first chapter, unless the test gives reveals. */
 export function entity(overrides: Partial<Entity> & Pick<Entity, 'id' | 'canonicalName'>): Entity {
+  const firstChapterOrder = overrides.firstChapterOrder ?? 1;
+  const aliases = overrides.aliases ?? [];
   return {
     seriesId: SERIES_ID,
     kind: 'character',
-    aliases: [],
-    firstChapterOrder: 1,
+    firstChapterOrder,
     ...overrides,
+    aliases,
+    aliasReveals: overrides.aliasReveals ?? aliases.map((alias) => ({ alias, firstChapterOrder })),
   };
 }
 

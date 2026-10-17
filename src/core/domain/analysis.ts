@@ -73,12 +73,21 @@ export const ChapterMemorySchema = z.object({
 });
 export type ChapterMemory = z.infer<typeof ChapterMemorySchema>;
 
+/** An alias and the chapter order whose analysis first revealed it. Every alias has exactly one reveal. */
+export const AliasRevealSchema = z.object({
+  alias: z.string().min(1),
+  firstChapterOrder: z.number().finite(),
+});
+export type AliasReveal = z.infer<typeof AliasRevealSchema>;
+
 export const EntitySchema = z.object({
   id: IdSchema,
   seriesId: IdSchema,
   kind: EntityKindSchema,
   canonicalName: z.string().min(1),
+  /** Every spelling known so far, for matching. A reader sees only the ones in `aliasReveals`. */
   aliases: z.array(z.string()),
+  aliasReveals: z.array(AliasRevealSchema),
   firstChapterOrder: z.number().finite(),
 });
 export type Entity = z.infer<typeof EntitySchema>;

@@ -262,7 +262,8 @@ export const usageLedger = sqliteTable(
     promptTokens: integer('prompt_tokens').notNull(),
     completionTokens: integer('completion_tokens').notNull(),
     audioSeconds: real('audio_seconds'),
-    costUsd: real('cost_usd').notNull(),
+    /** Null when the provider sent no cost and no catalog price applies. Shown as "unknown", never as $0. */
+    costUsd: real('cost_usd'),
     generationId: text('generation_id'),
   },
   (t) => [
@@ -396,6 +397,49 @@ export const stageActivity = sqliteTable(
   (t) => [primaryKey({ columns: [t.chapterId, t.stage] })],
 );
 
+/**
+ * Each alias of an entity, stamped with the chapter order that first revealed it. A reader at a
+ * cutoff sees only the aliases revealed before it (ADR-0007 spoiler rule).
+ */
+export const entityAliases = sqliteTable(
+  'entity_aliases',
+  {
+    entityId: text('entity_id')
+      .notNull()
+      .references(() => entities.id, { onDelete: 'cascade' }),
+    alias: text('alias').notNull(),
+    firstChapterOrder: real('first_chapter_order').notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.entityId, t.alias] })],
+);
+
+/**
+ * A finished analysis chunk reply, kept so a retried analysis does not buy it again (QA-F F-02).
+ * Keyed by the chunk's full prompt and model. Cleared once the chapter's analysis is saved.
+ */
+export const analysisChunkCheckpoints = sqliteTable(
+  'analysis_chunk_checkpoints',
+  {
+    chapterId: text('chapter_id')
+      .notNull()
+      .references(() => chapters.id, { onDelete: 'cascade' }),
+    chunkKey: text('chunk_key').notNull(),
+    /** JSON: AnalysisCallResult. */
+    response: text('response').notNull(),
+    createdAt: integer('created_at').notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.chapterId, t.chunkKey] })],
+);
+
+/** The target language each chapter's stored translation was made for. A different series language makes it stale. */
+export const chapterTranslations = sqliteTable('chapter_translations', {
+  chapterId: text('chapter_id')
+    .primaryKey()
+    .references(() => chapters.id, { onDelete: 'cascade' }),
+  targetLang: text('target_lang').notNull(),
+  updatedAt: integer('updated_at').notNull(),
+});
+
 export const settings = sqliteTable('settings', {
   key: text('key').primaryKey(),
   /** JSON: any value. Validated by the caller that owns the key. */
@@ -415,6 +459,9 @@ export const schema = {
   chapterMemory,
   entities,
   entityFacts,
+  entityAliases,
+  analysisChunkCheckpoints,
+  chapterTranslations,
   audioSegments,
   jobs,
   stageActivity,

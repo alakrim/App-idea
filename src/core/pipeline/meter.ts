@@ -15,7 +15,8 @@ export interface MeterDeps {
 /**
  * Records every model and speech call of one stage run to the usage ledger. The cost is the
  * provider-reported one when present, and otherwise the catalog price times the reported tokens.
- * A model that is not in the catalog records 0, and the estimate for it is shown as unknown.
+ * A cost that neither the provider nor the catalog gives is recorded as unknown (null). It is never
+ * recorded as $0, so usage shows it as unknown (QA-F F-04).
  */
 export class CostMeter {
   private spent = 0;
@@ -41,7 +42,7 @@ export class CostMeter {
     const model = await this.lookup(modelId);
     const costUsd =
       usage.costUsd ??
-      (model ? estimateChatCost(model, usage.promptTokens, usage.completionTokens) : 0);
+      (model ? estimateChatCost(model, usage.promptTokens, usage.completionTokens) : null);
     await this.write({
       model: modelId,
       promptTokens: usage.promptTokens,
@@ -58,7 +59,7 @@ export class CostMeter {
   ): Promise<void> {
     const model = await this.lookup(modelId);
     const costUsd =
-      spec.costUsd ?? (model ? estimateSpeechCost(model, spec.chars, spec.audioSeconds) : 0);
+      spec.costUsd ?? (model ? estimateSpeechCost(model, spec.chars, spec.audioSeconds) : null);
     await this.write({
       model: modelId,
       promptTokens: spec.chars,
@@ -90,6 +91,8 @@ export class CostMeter {
       generationId: null,
       ...entry,
     });
+    // Unknown spend is not added to the total, and it is not reported to onSpend as zero.
+    if (entry.costUsd === null) return;
     this.spent += entry.costUsd;
     onSpend(entry.costUsd);
   }

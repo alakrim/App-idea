@@ -51,6 +51,7 @@ const LIN_MO: Entity = {
   kind: 'character',
   canonicalName: 'Lin Mo',
   aliases: ['Mo'],
+  aliasReveals: [{ alias: 'Mo', firstChapterOrder: 1 }],
   firstChapterOrder: 1,
 };
 

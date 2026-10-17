@@ -124,7 +124,7 @@ export function createVocabActions(deps: VocabActionsDeps): VocabActions {
           promptTokens: usage.promptTokens,
           completionTokens: usage.completionTokens,
           audioSeconds: null,
-          costUsd: usage.costUsd ?? 0,
+          costUsd: usage.costUsd,
           generationId,
         });
       })
