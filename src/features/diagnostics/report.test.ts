@@ -1,3 +1,5 @@
+import type { PlaybackHealthSummary } from '@/core/playback/playback-health';
+
 import { buildReport, reportToJson, REPORT_SCHEMA, REPORT_VERSION, summarize } from './report';
 
 import type { EnvironmentInfo } from './environment';
@@ -27,8 +29,22 @@ function result(id: string, status: ProbeResult['status']): ProbeResult {
   };
 }
 
+const PLAYBACK: PlaybackHealthSummary = {
+  observedMs: 120_000,
+  boundaries: { count: 2, p50Ms: 90, p95Ms: 140, maxMs: 140 },
+  bufferingStarts: 1,
+  bufferingPerMinute: 0.5,
+  runDry: 0,
+  focusLossPauses: 1,
+};
+
 describe('diagnostics report', () => {
-  const results = [result('a', 'pass'), result('b', 'fail'), result('c', 'timeout'), result('d', 'pass')];
+  const results = [
+    result('a', 'pass'),
+    result('b', 'fail'),
+    result('c', 'timeout'),
+    result('d', 'pass'),
+  ];
 
   it('counts every status and the total', () => {
     expect(summarize(results)).toEqual({
@@ -41,8 +57,13 @@ describe('diagnostics report', () => {
     });
   });
 
-  it('builds a report with its schema, version, time, environment, summary and probes', () => {
-    const report = buildReport(results, ENVIRONMENT, new Date('2026-10-11T12:00:00.000Z'));
+  it('builds a report with its schema, version, time, environment, summary, playback and probes', () => {
+    const report = buildReport(
+      results,
+      ENVIRONMENT,
+      new Date('2026-10-11T12:00:00.000Z'),
+      PLAYBACK,
+    );
 
     expect(report).toEqual({
       schema: REPORT_SCHEMA,
@@ -50,12 +71,18 @@ describe('diagnostics report', () => {
       generatedAt: '2026-10-11T12:00:00.000Z',
       environment: ENVIRONMENT,
       summary: { pass: 2, fail: 1, skipped: 0, timeout: 1, error: 0, total: 4 },
+      playback: PLAYBACK,
       probes: results,
     });
   });
 
   it('serialises to pretty JSON that parses back to the same report', () => {
-    const report = buildReport(results, ENVIRONMENT, new Date('2026-10-11T12:00:00.000Z'));
+    const report = buildReport(
+      results,
+      ENVIRONMENT,
+      new Date('2026-10-11T12:00:00.000Z'),
+      PLAYBACK,
+    );
     const text = reportToJson(report);
 
     expect(text).toContain('\n  "schema": "lectio.diagnostics"');

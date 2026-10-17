@@ -2,6 +2,7 @@ import * as Clipboard from 'expo-clipboard';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { playbackHealth } from '@/audio/playback-health';
 import { useDb } from '@/db/hooks';
 import { SettingsPage } from '@/features/settings/settings-page';
 import { SettingsSection } from '@/features/settings/settings-section';
@@ -18,6 +19,7 @@ import { readEnvironment, type EnvironmentInfo } from './environment';
 import { resultHeadline, valueLines } from './format';
 import { LastAnalysisCard } from './last-analysis-card';
 import { LastCrashCard } from './last-crash-card';
+import { PlaybackHealthCard } from './playback-health-card';
 import { RECENT_CHAPTERS_PROBE_ID } from './recent-chapters';
 import { RecentChaptersSection } from './recent-chapters-section';
 import { buildReport, reportToJson, summarize } from './report';
@@ -72,7 +74,7 @@ export function DiagnosticsScreen() {
   const summary = useMemo(() => summarize(results), [results]);
 
   const copy = () => {
-    const report = buildReport(results, environment, new Date());
+    const report = buildReport(results, environment, new Date(), playbackHealth.summary());
     void Clipboard.setStringAsync(reportToJson(report)).then(() =>
       toast.show({ message: 'Report copied', tone: 'success' }),
     );
@@ -97,6 +99,10 @@ export function DiagnosticsScreen() {
 
       <SettingsSection title="Last analysis">
         <LastAnalysisCard />
+      </SettingsSection>
+
+      <SettingsSection title="Playback health">
+        <PlaybackHealthCard />
       </SettingsSection>
 
       <View style={styles.actions}>

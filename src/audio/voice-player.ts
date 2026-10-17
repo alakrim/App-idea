@@ -5,12 +5,36 @@ import {
   createAudioPlayer,
   setAudioModeAsync,
 } from 'expo-audio';
+import { Platform } from 'react-native';
+
+import { createPlaybackHealthLog, type PlaybackHealthLog } from '@/core/playback/playback-health';
+import { systemTimers, type TimerPort } from '@/core/playback/timers';
 
 import type { Unsubscribe } from './engine';
 import type { VoiceMetadata, VoicePort, VoiceSegment, VoiceSnapshot } from './voice-port';
 
 const UPDATE_INTERVAL_MS = 250;
 const LOCK_SCREEN_OPTIONS = { showSeekForward: false, showSeekBackward: false } as const;
+/**
+ * The incoming segment starts this long before the outgoing one ends. Starting it on the outgoing
+ * `didJustFinish` costs a JS round trip and a native start; starting it early hides that latency.
+ * TTS segments end in silence, so the overlap of at most this long is not heard.
+ */
+export const PRE_ROLL_MS = 80;
+/**
+ * After the voice runs dry, narration resumes only with this much audio past the point it ran out
+ * (or once the chapter is final). Shorter resumes stop and start the narration every few seconds.
+ */
+export const RESUME_LEAD_MS = 10_000;
+/** How far past its start a freshly loaded file may report and still count as the new file. */
+const FILE_START_SLACK_MS = 1_000;
+
+export interface VoicePlayerOptions {
+  /** Where boundary gaps, buffering and system pauses are recorded. Defaults to a private log. */
+  health?: PlaybackHealthLog;
+  /** Schedules the pre-roll. Tests drive it with a virtual clock. */
+  timers?: TimerPort;
+}
 
 /**
  * One of two players. The active slot plays segment `index` and owns the lock screen. The other
@@ -25,6 +49,15 @@ interface Slot {
   pendingSeekMs: number | null;
   /** True once the platform reports the held segment as loaded. */
   loaded: boolean;
+  /** The playback rate this platform player was last given. */
+  appliedRate: number;
+  /**
+   * False from each load or seek until the new file's first fresh status (its generation). Statuses
+   * before that belong to the file the slot replaced, and are ignored.
+   */
+  reported: boolean;
+  /** Play the held segment as soon as it reports loaded, because it was promoted before it was ready. */
+  startWhenLoaded: boolean;
   unsubscribe: Unsubscribe;
 }
 
@@ -33,16 +66,24 @@ interface Slot {
  *
  * Why two players and not `AudioPlaylist`: the 57.0.5 typings expose lock-screen control only on
  * `AudioPlayer` (`setActiveForLockScreen`). `AudioPlaylist` has no lock-screen method, and it does
- * not expose a pitch-correction switch. The swap leaves a gap of one status-event latency, so S1
- * must measure it against a playlist before the choice is final.
+ * not expose a pitch-correction switch.
+ *
+ * The boundary is a pre-roll. When the active segment has about PRE_ROLL_MS left and the incoming
+ * one is loaded, the incoming player starts. When it reports playing, the outgoing one is stopped
+ * and the two swap roles. The active player is always playing across the boundary, so expo-audio
+ * never releases audio focus there.
  */
-export function createVoicePlayer(): VoicePort {
+export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
+  const health = options.health ?? createPlaybackHealthLog({ now: Date.now });
+  const timers = options.timers ?? systemTimers;
   let segments: VoiceSegment[] = [];
   let starts: number[] = [];
   let slots: [Slot, Slot] | null = null;
   let active: 0 | 1 = 0;
   let index = 0;
   let ended = false;
+  /** Media time at which the voice ran dry. The resume lead is measured from here. */
+  let dryAtMs = 0;
   let wantPlaying = false;
   let rate = 1;
   let volume = 1;
@@ -50,6 +91,12 @@ export function createVoicePlayer(): VoicePort {
   /** Bumped by every load and by dispose. A load that finds it moved on creates nothing. */
   let loadToken = 0;
   let disposed = false;
+  /** Whether the active player reported buffering or playing on its last status. For the health log. */
+  let buffering = false;
+  let playing = false;
+  /** True from the pre-roll start until the incoming segment is promoted. */
+  let started = false;
+  let preRollTimer: unknown = null;
   /** The position the next load starts at. A seek made before the players exist moves it. */
   let requestedStartMs = 0;
   const listeners = new Set<(snapshot: VoiceSnapshot) => void>();
@@ -90,31 +137,41 @@ export function createVoicePlayer(): VoicePort {
   }
 
   function loadSlot(slot: Slot, segmentIdx: number | null, seekMs: number | null): void {
+    // An empty slot does not touch the lock screen: the active player keeps it, and a released
+    // chapter clears it in releaseSlots.
     if (segmentIdx === null || segments[segmentIdx] === undefined) {
       slot.player.pause();
-      slot.player.clearLockScreenControls();
       slot.holds = null;
       slot.pendingSeekMs = null;
+      slot.startWhenLoaded = false;
       return;
     }
     const segment = segments[segmentIdx];
     if (!segment) return;
     slot.player.pause();
     slot.player.replace({ uri: segment.uri });
-    slot.player.setPlaybackRate(rate, 'high');
-    slot.player.volume = volume;
+    applyRate(slot);
+    // The volume is not set here. expo-audio lowers it during a platform duck, and a boundary must not
+    // undo that duck. setVolume and makeSlot are the only places that set it.
     slot.holds = segmentIdx;
     slot.loaded = false;
+    slot.reported = false;
+    slot.startWhenLoaded = false;
     slot.pendingSeekMs = seekMs;
   }
 
   function makeSlot(slotIdx: 0 | 1): Slot {
     const player = createAudioPlayer(null, { updateInterval: UPDATE_INTERVAL_MS });
+    player.volume = volume;
     const slot: Slot = {
       player,
       holds: null,
       pendingSeekMs: null,
       loaded: false,
+      reported: false,
+      startWhenLoaded: false,
+      // A new platform player plays at the default rate, 1.
+      appliedRate: 1,
       unsubscribe: () => undefined,
     };
     const subscription = player.addListener('playbackStatusUpdate', (status) => {
@@ -128,24 +185,104 @@ export function createVoicePlayer(): VoicePort {
     return active === 0 ? 1 : 0;
   }
 
+  /**
+   * Hands the lock screen to the incoming player. expo-audio moves the session to it in one step.
+   * Clearing the outgoing player first would release the MediaSession and drop the foreground
+   * notification at every segment boundary (QA-E E-01), so the outgoing player is left alone.
+   */
   function activate(slot: Slot): void {
-    const [a, b] = slots ?? [];
-    if (!a || !b) return;
-    for (const other of [a, b]) {
-      if (other !== slot) other.player.clearLockScreenControls();
-    }
     slot.player.setActiveForLockScreen(true, lockScreenMetadata(), LOCK_SCREEN_OPTIONS);
   }
 
-  /** Makes the preloaded slot active and preloads the one after it. */
-  function advance(): void {
-    const next = index + 1;
-    const finished = slots?.[active];
-    if (!slots || !finished) return;
+  function cancelPreRoll(): void {
+    if (preRollTimer !== null) timers.clearTimeout(preRollTimer);
+    preRollTimer = null;
+  }
+
+  /**
+   * Sets the playback rate on a player only when it differs from the rate that player already has.
+   * The rate lives on the platform player and survives a replace, so a boundary sends nothing.
+   */
+  function applyRate(slot: Slot): void {
+    if (slot.appliedRate === rate) return;
+    slot.player.setPlaybackRate(rate, 'high');
+    slot.appliedRate = rate;
+  }
+
+  /** Plays a slot now if it is loaded, or as soon as it loads. */
+  function startPlayer(slot: Slot): void {
+    if (slot.loaded) slot.player.play();
+    else slot.startWhenLoaded = true;
+  }
+
+  /**
+   * Starts the incoming segment ahead of the boundary. `endsInMs` is how long the outgoing segment
+   * still has to play, for the boundary gap. Only the first call starts it.
+   */
+  function startIncoming(endsInMs: number): void {
+    if (!slots || started || ended || !wantPlaying) return;
     const incoming = slots[otherSlotIndex()];
+    if (!incoming.loaded) return;
+    started = true;
+    health.boundaryStarted(endsInMs);
+    incoming.player.play();
+  }
+
+  /**
+   * Arms the pre-roll from the active player's last status. The timer runs for the remaining audio
+   * minus PRE_ROLL_MS. Status arrives about every 250 ms, so each status re-arms it.
+   */
+  function armPreRoll(current: AudioStatus): void {
+    cancelPreRoll();
+    if (!slots || started || ended || !wantPlaying) return;
+    const next = index + 1;
+    const incoming = slots[otherSlotIndex()];
+    if (next >= segments.length || incoming.holds !== next || !incoming.loaded) return;
+    const remainingMs = (segments[index]?.durationMs ?? 0) - current.currentTime * 1000;
+    if (remainingMs <= PRE_ROLL_MS) {
+      startIncoming(Math.max(0, remainingMs));
+      return;
+    }
+    preRollTimer = timers.setTimeout(() => {
+      preRollTimer = null;
+      startIncoming(PRE_ROLL_MS);
+    }, remainingMs - PRE_ROLL_MS);
+  }
+
+  /**
+   * Makes the preloaded slot active, stops the outgoing one and preloads the segment after. The
+   * incoming player plays already if the pre-roll started it.
+   */
+  function promote(): void {
+    if (!slots) return;
+    cancelPreRoll();
+    const outgoing = slots[active];
+    const incoming = slots[otherSlotIndex()];
+    const next = index + 1;
+    const alreadyPlaying = started;
+    started = false;
+    active = otherSlotIndex();
+    index = next;
+    buffering = false;
+    playing = false;
+    incoming.pendingSeekMs = null;
+    activate(incoming);
+    outgoing.player.pause();
+    loadSlot(outgoing, next + 1 < segments.length ? next + 1 : null, null);
+    if (!alreadyPlaying && wantPlaying) startPlayer(incoming);
+  }
+
+  /**
+   * The active segment finished, or the queue has grown after a run dry. Moves on to the next
+   * segment. A finish that the pre-roll already covered only completes the swap.
+   */
+  function advance(resuming: boolean): void {
+    if (!slots) return;
+    const next = index + 1;
     if (next >= segments.length) {
+      // The lock screen stays with the finished player: the chapter is paused, not released.
       ended = true;
-      finished.player.clearLockScreenControls();
+      dryAtMs = totalMs();
       emit({
         positionMs: totalMs(),
         playing: false,
@@ -156,34 +293,65 @@ export function createVoicePlayer(): VoicePort {
       });
       return;
     }
+    const incoming = slots[otherSlotIndex()];
+    if (!started && !resuming) health.boundaryStarted(0);
     if (incoming.holds !== next) loadSlot(incoming, next, null);
-    active = otherSlotIndex();
-    index = next;
-    incoming.pendingSeekMs = null;
-    loadSlot(finished, next + 1 < segments.length ? next + 1 : null, null);
-    activate(incoming);
-    if (wantPlaying) incoming.player.play();
+    promote();
+  }
+
+  /**
+   * A status that can only come from the file a slot was just given: loaded, not finished, and at or
+   * before the position it starts from. A load or a seek replaces the file, and the platform may still
+   * deliver the finish or the loaded flag of the file it replaced (QA-E E-04).
+   */
+  function isFreshStatus(slot: Slot, status: AudioStatus): boolean {
+    if (!status.isLoaded || status.didJustFinish) return false;
+    return status.currentTime * 1000 <= (slot.pendingSeekMs ?? 0) + FILE_START_SLACK_MS;
   }
 
   function onStatus(slot: Slot, slotIdx: 0 | 1, status: AudioStatus): void {
     if (!slots || slot.holds === null) return;
-    if (slotIdx !== active) return;
+    // The first status of the new file opens its generation. Until then, every status is ignored.
+    if (!slot.reported) {
+      if (!isFreshStatus(slot, status)) return;
+      slot.reported = true;
+    }
 
     slot.loaded = status.isLoaded;
+    if (status.isLoaded && slot.startWhenLoaded) {
+      slot.startWhenLoaded = false;
+      if (wantPlaying) slot.player.play();
+    }
+    if (slotIdx !== active) {
+      // The pre-rolled segment reports audible playback: the swap completes and the outgoing stops.
+      if (started && slotIdx === otherSlotIndex() && status.playing && status.currentTime > 0) {
+        health.boundaryPlaying();
+        promote();
+      }
+      return;
+    }
+
     if (status.isLoaded && slot.pendingSeekMs !== null) {
       const seekMs = slot.pendingSeekMs;
       slot.pendingSeekMs = null;
       if (seekMs > 0) void slot.player.seekTo(seekMs / 1000);
       if (wantPlaying) slot.player.play();
     }
+    recordHealth(status);
     if (status.didJustFinish) {
-      advance();
+      advance(false);
       return;
     }
+    // expo-audio clears its own pause only on focus gain, so a call that ended while the listener had
+    // paused would start the narration again. The listener's pause holds until they press play.
+    const playingNow = status.playing && wantPlaying;
+    if (status.playing && !wantPlaying) slot.player.pause();
+    if (playingNow) armPreRoll(status);
+    else cancelPreRoll();
     ended = false;
     emit({
       positionMs: (starts[index] ?? 0) + status.currentTime * 1000,
-      playing: status.playing,
+      playing: playingNow,
       buffering: status.isBuffering,
       ended: false,
       loaded: status.isLoaded,
@@ -191,7 +359,22 @@ export function createVoicePlayer(): VoicePort {
     });
   }
 
+  /** Feeds the health log from the active player's raw status. */
+  function recordHealth(status: AudioStatus): void {
+    if (status.isBuffering && !buffering) health.bufferingStarted();
+    buffering = status.isBuffering;
+    // Closes a boundary that was opened by a finish: the segment that now plays is audible.
+    if (status.playing && status.currentTime > 0) health.boundaryPlaying();
+    // A pause the system made: the player stopped while the listener still wants it playing.
+    const systemPaused =
+      playing && !status.playing && wantPlaying && status.isLoaded && !status.isBuffering;
+    if (systemPaused) health.focusLossPaused();
+    playing = status.playing;
+  }
+
   function releaseSlots(): void {
+    cancelPreRoll();
+    started = false;
     for (const slot of slots ?? []) {
       slot.unsubscribe();
       slot.player.clearLockScreenControls();
@@ -217,7 +400,13 @@ export function createVoicePlayer(): VoicePort {
       await setAudioModeAsync({
         playsInSilentMode: true,
         shouldPlayInBackground: true,
-        interruptionMode: 'doNotMix',
+        // Android: duckOthers, not doNotMix. On a transient duck request (a navigation prompt, a
+        // notification sound) expo-audio lowers the narration instead of pausing it (ADR-0002
+        // amendment). A real interruption (a call, a permanent loss) still pauses. Side effect: focus
+        // is requested as MAY_DUCK, so another app's music ducks under narration instead of pausing.
+        // The beds are not ducked: they use their own AudioContext, which expo-audio does not see.
+        // iOS: doNotMix, which expo-audio requires for lock-screen controls there.
+        interruptionMode: Platform.OS === 'ios' ? 'doNotMix' : 'duckOthers',
         allowsRecording: false,
         shouldRouteThroughEarpiece: false,
       });
@@ -234,7 +423,7 @@ export function createVoicePlayer(): VoicePort {
       activate(created[0]);
     },
 
-    append(more) {
+    append(more, final = false) {
       if (more.length === 0) return;
       segments = [...segments, ...more];
       recomputeStarts();
@@ -243,9 +432,11 @@ export function createVoicePlayer(): VoicePort {
       if (incoming.holds === null && index + 1 < segments.length) {
         loadSlot(incoming, index + 1, null);
       }
-      if (ended) {
+      // After a run dry, a short segment is not enough to resume on: the voice would run dry again
+      // within seconds. It waits for RESUME_LEAD_MS of audio past the point it ran out, or for the end.
+      if (ended && (final || totalMs() - dryAtMs >= RESUME_LEAD_MS)) {
         ended = false;
-        advance();
+        advance(true);
       }
     },
 
@@ -257,7 +448,13 @@ export function createVoicePlayer(): VoicePort {
 
     pause() {
       wantPlaying = false;
-      slots?.[active].player.pause();
+      cancelPreRoll();
+      if (!slots) return;
+      if (started) {
+        started = false;
+        slots[otherSlotIndex()].player.pause();
+      }
+      slots[active].player.pause();
     },
 
     async seekTo(ms) {
@@ -265,6 +462,11 @@ export function createVoicePlayer(): VoicePort {
         // Before the players exist, the seek becomes the position the load starts from.
         requestedStartMs = ms;
         return;
+      }
+      cancelPreRoll();
+      if (started) {
+        started = false;
+        slots[otherSlotIndex()].player.pause();
       }
       const located = locate(ms);
       ended = false;
@@ -286,7 +488,7 @@ export function createVoicePlayer(): VoicePort {
 
     setRate(nextRate) {
       rate = nextRate;
-      for (const slot of slots ?? []) slot.player.setPlaybackRate(rate, 'high');
+      for (const slot of slots ?? []) applyRate(slot);
     },
 
     setVolume(nextVolume) {
