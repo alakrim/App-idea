@@ -94,6 +94,26 @@ export const analysisResponseSchema = z.object({
   cues: z.array(z.unknown()).default([]),
 });
 
+/**
+ * The single-bed fallback's reply (ADR-0005 amendment 2026-10-17). The span is not requested: the
+ * bed covers the whole chapter, so the caller sets it. Every key is required, and nulls mean absent.
+ */
+export const settingFallbackOutputSchema = z.object({
+  cue: z
+    .object({
+      category: z.string().trim().min(1),
+      intensity: z.enum(INTENSITY_LEVELS).nullable(),
+      confidence: z.number(),
+      reason: z.string().nullable(),
+    })
+    .nullable(),
+});
+
+export const SETTING_FALLBACK_JSON_SCHEMA: JsonSchemaSpec = {
+  name: 'setting_fallback',
+  schema: z.toJSONSchema(settingFallbackOutputSchema, { io: 'output', reused: 'inline' }),
+};
+
 /** The reply's memory as the model sent it, with nulls. */
 export type MemoryDraft = z.infer<typeof memoryDraftSchema>;
 /** The same memory after `stripNulls`: empty optional values are absent. */

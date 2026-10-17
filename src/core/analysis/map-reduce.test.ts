@@ -30,11 +30,15 @@ const BASE_INPUT = {
   wordCount: 10_000,
 };
 
+/** Under the 200-word floor, so the single-bed fallback never runs in tests that only count chunk calls. */
+const UNDER_FALLBACK_WORDS = 100;
+
 describe('default chunk planner (planLlmChunks adapter)', () => {
   it('keeps a short chapter in one chunk and one call', async () => {
     const { transport, calls } = scriptedTransport(() => memoryJson('Short.'));
     const result = await analyzeChapter({
       ...BASE_INPUT,
+      wordCount: UNDER_FALLBACK_WORDS,
       sentences: sentences(5, 100),
       callLlm: transport,
     });
@@ -48,6 +52,7 @@ describe('default chunk planner (planLlmChunks adapter)', () => {
     const { transport, calls } = scriptedTransport(() => memoryJson('Part.'));
     const result = await analyzeChapter({
       ...BASE_INPUT,
+      wordCount: UNDER_FALLBACK_WORDS,
       sentences: long,
       callLlm: transport,
       reduceSummary: false,
@@ -170,6 +175,7 @@ describe('analyzeChapter', () => {
     );
     const result = await analyzeChapter({
       ...BASE_INPUT,
+      wordCount: UNDER_FALLBACK_WORDS,
       sentences: sentences(6, 80),
       callLlm: transport,
       planChunks: (s) => [s.slice(0, 3), s.slice(3)],
@@ -185,6 +191,7 @@ describe('analyzeChapter', () => {
     );
     const result = await analyzeChapter({
       ...BASE_INPUT,
+      wordCount: UNDER_FALLBACK_WORDS,
       sentences: sentences(4, 80),
       callLlm: transport,
     });
@@ -234,7 +241,12 @@ describe('analysis calls and the prompt cache', () => {
       n += 1;
       return replyWith(n === 1 ? 'not json' : memoryJson('Short.'));
     };
-    await analyzeChapter({ ...BASE_INPUT, sentences: sentences(5, 100), callLlm: transport });
+    await analyzeChapter({
+      ...BASE_INPUT,
+      wordCount: UNDER_FALLBACK_WORDS,
+      sentences: sentences(5, 100),
+      callLlm: transport,
+    });
     expect(seen).toEqual([true, true]);
   });
 });

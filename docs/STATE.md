@@ -18,8 +18,23 @@ _Last updated: 2026-10-11 by architect_
 | M7 | Ask (spoiler-safe Q&A), Vocab | ✅ done (U4) |
 | M8 | Polish, accessibility, performance, EAS build, device spike S1 + probes P1/P2, Maestro E2E | not started |
 
+## Session rules (user, 2026-10-17)
+- At most **2 worker agents at once**. A worker whose context passes ~220k tokens writes `docs/briefs/<id>-handoff.md`, commits a WIP snapshot and stops, and a fresh worker continues from the handoff.
+- **Paid live test: not approved yet** (it would compare Fish Drama 3 with Gemini and measure a brisker style). Ask again later.
+
 ## Work in flight
+- 2026-10-17 wave. The user's 5 requests mapped to briefs:
+  - BG1 background processing (ADR-0007): running
+  - N2 speech catalogue (the Fish Drama 3 fix): running
+  - AM1 reliable ambience: paused (handoff)
+  - SND1 30 beds: paused (handoff)
+  - F1 progressive narration (ADR-0008): paused (handoff)
+  - F2 player UX: after F1
+  - Gemini cost options: answered in chat; the cost levers are pending the paid test
 _None. Waiting on the user's device test of `lectio-0.1.0-c3eac7a-arm64.apk` (apk-builds branch). It fixes the Library crash (cover monogram at font size 0). The user asked for bug fixes only until they have tested properly._
+- **N2** (worker, branch `worktree-agent-aa832b725fb210ea0`, awaiting review): every OpenRouter speech model is listed, newest first after the three narrators, with a "New" badge (30 days) and "Default voice" for voice-less models. Fish Audio Drama 3 is included, Seed Audio is excluded, the speech catalogue is fetched live on open with a 10-minute cache, and the picker can be pulled to refresh.
+
+- **AM1** (reliable ambience, ADR-0005 amendment 2026-10-17): implemented on branch `worktree-agent-abfdfc00ef800c3f4` (deterministic analysis, prompt v3, cue cache, single-bed fallback, cue report). Awaiting architect review and the device listening test.
 
 ## Next up
 - **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.

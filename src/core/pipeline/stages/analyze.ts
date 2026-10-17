@@ -2,6 +2,8 @@
  * The analyze stage: one map-reduce analysis of the chapter (memory card and ambience cues), then
  * entity resolution across the series. Earlier chapters only, so the analysis cannot see the future.
  */
+import { cueCacheKey } from '@/core/analysis/cue-cache';
+import { buildCueReport } from '@/core/analysis/cue-report';
 import { analyzeChapter } from '@/core/analysis/map-reduce';
 import { PROMPT_VERSION } from '@/core/analysis/prompts';
 import type { ChapterMemory } from '@/core/domain';
@@ -59,15 +61,23 @@ export const analyzeStage: StageDefinition = {
       skip: sentences.length === 0,
       async execute() {
         const transport = ctx.meter.transport(model, ctx.ports.llm.transportFor(model));
+        const speech = sentences.map((s) => ({ idx: s.idx, text: s.text }));
+        // Identical text, model and prompt give the same cues: a cache hit makes no cue call.
+        const cacheKey = cueCacheKey(
+          model,
+          speech.map((s) => s.text),
+        );
+        const cachedCues = await chapters.getCueCache(cacheKey);
         const analysis = await analyzeChapter({
           seriesTitle: series.title,
           chapterTitle: chapter.title,
           lang,
           priorContext,
-          sentences: sentences.map((s) => ({ idx: s.idx, text: s.text })),
+          sentences: speech,
           wordCount: chapter.wordCount ?? estimateWordCount(sentences.map((s) => s.text).join(' ')),
           callLlm: transport,
           signal: ctx.signal,
+          ...(cachedCues === null ? {} : { cachedCues }),
         });
         const memory: ChapterMemory = {
           ...analysis.memory,
@@ -76,6 +86,20 @@ export const analyzeStage: StageDefinition = {
           model,
         };
         await chapters.saveCues(ctx.chapterId, analysis.cues);
+        if (cachedCues === null) await chapters.saveCueCache(cacheKey, analysis.cues);
+        await chapters.saveCueReport(
+          ctx.chapterId,
+          buildCueReport({
+            model,
+            promptVersion: PROMPT_VERSION,
+            createdAt: ctx.ports.clock.now(),
+            cues: analysis.cues,
+            dropped: analysis.dropped,
+            sentences: speech,
+            fallbackRan: analysis.fallbackRan,
+            fromCache: cachedCues !== null,
+          }),
+        );
         await chapters.saveMemory(memory);
 
         const current = await chapters.getEntities(series.id);

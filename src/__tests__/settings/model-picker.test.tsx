@@ -20,6 +20,7 @@ function model(id: string, name: string): OpenRouterModel {
     outputModalities: ['text'],
     supportedParameters: ['structured_outputs'],
     supportedVoices: [],
+    createdAt: null,
   };
 }
 

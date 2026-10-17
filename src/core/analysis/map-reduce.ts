@@ -1,8 +1,9 @@
 import { runAnalysisCall } from './analysis-call';
-import { MAX_CHUNK_TOKENS, MEMORY_LIMITS } from './limits';
+import { ANALYSIS_SAMPLING, MAX_CHUNK_TOKENS, MEMORY_LIMITS } from './limits';
 import { mergeMemoryDrafts } from './merge-memory';
 import { buildAnalysisPrompt, buildSummaryReducePrompt } from './prompts';
 import { truncateWords } from './schemas';
+import { needsSettingFallback, runSettingFallback } from './setting-fallback';
 import { validateCues } from './validate-cues';
 import { addUsage, throwIfCancelled, ZERO_USAGE } from '../llm/transport';
 import { planLlmChunks } from '../text/chunk';
@@ -10,7 +11,7 @@ import { normalizeWhitespace } from '../text/normalize';
 
 import type { AnalysisCallResult } from './analysis-call';
 import type { Lang, MemoryFields, SentenceInput, ValidatedCue } from './types';
-import type { DroppedCue } from './validate-cues';
+import type { CueValidationContext, DroppedCue } from './validate-cues';
 import type { LlmTransport, LlmUsage } from '../llm/transport';
 
 /** Splits a chapter into LLM chunks. The engine takes the planner as an argument, so tests can script it. */
@@ -43,6 +44,11 @@ export interface AnalyzeChapterInput {
    * the joined chunk summaries are kept, capped.
    */
   readonly reduceSummary?: boolean;
+  /**
+   * The validated cues of this exact text, from the cue cache. When given, the model is asked for
+   * memory only, these cues are used as they are, and the fallback does not run.
+   */
+  readonly cachedCues?: readonly ValidatedCue[];
 }
 
 export interface ChapterAnalysis {
@@ -50,13 +56,16 @@ export interface ChapterAnalysis {
   readonly cues: ValidatedCue[];
   readonly dropped: DroppedCue[];
   readonly chunkCount: number;
-  /** Usage of every model call made for this chapter, repairs and the summary reduce included. */
+  /** Usage of every model call made for this chapter, repairs, the summary reduce and the fallback included. */
   readonly usage: LlmUsage;
+  /** True when the single-bed fallback made its call. */
+  readonly fallbackRan: boolean;
 }
 
 /**
  * Runs the single analysis call per chunk, then merges the memories, runs the optional summary
- * reduce and validates the combined cues against the whole chapter. Chunks run one after another.
+ * reduce and validates the combined cues against the whole chapter. A chapter with no valid cue
+ * gets the single-bed fallback. Chunks run one after another.
  */
 export async function analyzeChapter(input: AnalyzeChapterInput): Promise<ChapterAnalysis> {
   if (input.sentences.some((s, i) => s.idx !== i)) {
@@ -65,6 +74,7 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
 
   const plan = input.planChunks ?? defaultChunkPlanner;
   const chunks = plan(input.sentences);
+  const cuesDecided = input.cachedCues !== undefined;
 
   const responses: AnalysisCallResult[] = [];
   for (const chunk of chunks) {
@@ -78,6 +88,7 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
           chapterTitle: input.chapterTitle,
           priorContext: input.priorContext,
           lang: input.lang,
+          cuesDecided,
         }),
         input.signal,
       ),
@@ -98,16 +109,49 @@ export async function analyzeChapter(input: AnalyzeChapterInput): Promise<Chapte
     if (reduced.summary) memory = { ...merged, summary: reduced.summary };
   }
 
-  const { cues, dropped } = validateCues(
-    responses.flatMap((r) => r.cues),
-    {
-      sentenceCount: input.sentences.length,
-      wordCount: input.wordCount,
-      sentences: input.sentences,
-    },
-  );
+  if (input.cachedCues !== undefined) {
+    return {
+      memory,
+      cues: [...input.cachedCues],
+      dropped: [],
+      chunkCount: chunks.length,
+      usage,
+      fallbackRan: false,
+    };
+  }
 
-  return { memory, cues, dropped, chunkCount: chunks.length, usage };
+  const context: CueValidationContext = {
+    sentenceCount: input.sentences.length,
+    wordCount: input.wordCount,
+    sentences: input.sentences,
+  };
+  let { cues, dropped } = validateCues(
+    responses.flatMap((r) => r.cues),
+    context,
+  );
+  let fallbackRan = false;
+
+  if (needsSettingFallback(cues.length, input.wordCount, input.sentences.length)) {
+    throwIfCancelled(input.signal);
+    const fallback = await runSettingFallback(
+      input.callLlm,
+      {
+        chapterTitle: input.chapterTitle,
+        memory,
+        sentenceCount: input.sentences.length,
+      },
+      input.signal,
+    );
+    usage = addUsage(usage, fallback.usage);
+    fallbackRan = true;
+    if (fallback.rawCue !== null) {
+      const extra = validateCues([fallback.rawCue], context);
+      cues = [...cues, ...extra.cues];
+      dropped = [...dropped, ...extra.dropped];
+    }
+  }
+
+  return { memory, cues, dropped, chunkCount: chunks.length, usage, fallbackRan };
 }
 
 /** One plain-text call. A null summary means the reply was empty, so the joined summary is kept. */
@@ -118,7 +162,12 @@ async function reduceSummary(
 ): Promise<{ summary: string | null; usage: LlmUsage }> {
   if (input.summaries.length === 0) return { summary: null, usage: ZERO_USAGE };
   const prompt = buildSummaryReducePrompt(input);
-  const reply = await callLlm({ system: prompt.system, user: prompt.user, signal });
+  const reply = await callLlm({
+    system: prompt.system,
+    user: prompt.user,
+    signal,
+    ...ANALYSIS_SAMPLING,
+  });
   const text = truncateWords(normalizeWhitespace(reply.text), MEMORY_LIMITS.summaryWords);
   return { summary: text || null, usage: reply.usage };
 }

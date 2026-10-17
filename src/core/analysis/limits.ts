@@ -5,8 +5,8 @@
  */
 
 export const CUE_LIMITS = {
-  /** Cues below this confidence are dropped (ADR-0005). */
-  confidenceFloor: 0.55,
+  /** Cues below this confidence are dropped (ADR-0005 amendment 2026-10-17: was 0.55). */
+  confidenceFloor: 0.45,
   /** A cue spans at least this many sentences ... */
   minSentences: 3,
   /**
@@ -15,8 +15,11 @@ export const CUE_LIMITS = {
    * (ADR-0005 amendment, from the live test).
    */
   minSeconds: 12,
-  /** Density cap: cues allowed per 1,000 words of chapter text (at least one once a chapter qualifies). */
-  maxPer1kWords: 2,
+  /**
+   * Density cap: cues allowed per 1,000 words of chapter text (at least one once a chapter
+   * qualifies). ADR-0005 amendment 2026-10-17: was 2.
+   */
+  maxPer1kWords: 3,
   /** Chapters under this many words get no cues at all. */
   minWordsForCues: 200,
   /** At most this many beds may sound at the same sentence. */
@@ -26,6 +29,18 @@ export const CUE_LIMITS = {
   /** Maximum length of the stored `reason`. */
   reasonChars: 80,
 } as const;
+
+/**
+ * Share of the narration that cues should cover when a passage has identifiable settings. This is a
+ * target the prompt states. The validators do not enforce it, and the cue report shows the result.
+ */
+export const COVERAGE_GOAL_PERCENT = { min: 40, max: 80 } as const;
+
+/**
+ * Sampling for every analysis call (memory, cues, summary and fallback). Temperature 0 with a fixed
+ * seed makes the same text give the same reply, which ADR-0005 needs for reproducible cues.
+ */
+export const ANALYSIS_SAMPLING = { temperature: 0, seed: 1017 } as const;
 
 export const MEMORY_LIMITS = {
   summaryWords: 120,

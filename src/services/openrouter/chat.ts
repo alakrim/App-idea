@@ -90,6 +90,7 @@ interface ChatRequestBody {
   provider?: { require_parameters: true };
   plugins?: { id: 'file-parser'; pdf: { engine: string } }[];
   temperature?: number;
+  seed?: number;
   max_tokens?: number;
   usage: { include: true };
 }
@@ -254,6 +255,10 @@ export interface ChatRawInput {
    * (anthropic/*, google/gemini*, qwen/*). Other models cache automatically, and the flag does nothing.
    */
   cacheSystem?: boolean;
+  /** Sampling temperature. Sent only when given. */
+  temperature?: number;
+  /** Sampling seed. Sent only when given. */
+  seed?: number;
 }
 
 export interface ChatRawResult {
@@ -317,7 +322,7 @@ function needsExplicitCache(modelId: string): boolean {
 }
 
 function requestBody(
-  input: { model: string; temperature?: number; maxTokens?: number },
+  input: { model: string; temperature?: number; seed?: number; maxTokens?: number },
   messages: ChatMessage[],
   responseFormat: ResponseFormat | undefined,
 ): ChatRequestBody {
@@ -328,6 +333,7 @@ function requestBody(
       ? { response_format: responseFormat, provider: { require_parameters: true as const } }
       : {}),
     ...(input.temperature !== undefined ? { temperature: input.temperature } : {}),
+    ...(input.seed !== undefined ? { seed: input.seed } : {}),
     ...(input.maxTokens !== undefined ? { max_tokens: input.maxTokens } : {}),
     usage: { include: true },
   };
