@@ -6,6 +6,7 @@
  * sets. The "before" numbers come from the algorithm this replaced, computed from the same chapter:
  * analysis ran first, and narration sent lock-step pairs of 600-character segments with no ramp.
  */
+import { GEMINI_NARRATOR_MODEL_ID } from '@/core/narration/options';
 import { planTtsSegments } from '@/core/text/chunk';
 
 import { CHAPTER_ID, createFakePorts, mp3Bytes } from './__fixtures__/fake-ports';
@@ -49,6 +50,8 @@ describe('progressive narration benchmark: a 40-minute chapter', () => {
     const fake = createFakePorts({
       sourceText: text,
       targetLang: null,
+      // The Best narrator: its window grows to six requests in flight, as in production.
+      narration: { model: GEMINI_NARRATOR_MODEL_ID },
       llm: async (request) => {
         if (request.jsonSchema?.name === 'chapter_analysis')
           await sleepUntil(T0 + ANALYSIS_DONE_MS);
@@ -104,7 +107,9 @@ describe('progressive narration benchmark: a 40-minute chapter', () => {
     expect(chars).toBeGreaterThan(20_000);
     expect(after.firstAudioMs).toBeLessThanOrEqual(20_000);
     expect(after.firstAudioMs).toBeLessThan(before.firstAudioMs / 4);
-    expect(after.totalMs).toBeLessThan(before.totalMs / 2);
+    // The window starts at three and grows slowly (ADR-0008 amendment), so the chapter takes about
+    // 0.5 of the lock-step time; the bound leaves room for the slower start.
+    expect(after.totalMs).toBeLessThan(before.totalMs * 0.6);
     expect(segments).toBeGreaterThan(0);
   });
 });

@@ -25,6 +25,7 @@ import {
   translateStage,
 } from './stages';
 import { storedSpokenTexts } from './stages/translate';
+import { MAX_STALLS, STALLED_ERROR, StallWatchdog } from './stall-watchdog';
 
 import type {
   FlowContext,
@@ -34,10 +35,17 @@ import type {
   StageDefinition,
 } from './context';
 import type { JobState } from './job-records';
-import type { PdfEngine, PipelinePorts } from './ports';
+import type { Clock, NetworkEvent, PdfEngine, PipelinePorts } from './ports';
 import type { SpokenSource } from './spoken-text';
 
 export interface RunOptions {
+  /** The clock the stall watchdog reads. Defaults to the ports' clock. */
+  readonly clock?: Clock;
+  /**
+   * True while a platform foreground service keeps the JS runtime alive in the background. The
+   * watchdog then keeps counting when the app leaves the foreground, because nothing is frozen.
+   */
+  readonly keepsAliveInBackground?: () => boolean;
   readonly signal?: AbortSignal;
   readonly onEvent?: (event: PipelineEvent) => void;
   /** Starts at this stage. Earlier stages are left as they are. */
@@ -71,6 +79,7 @@ export async function runChapter(
   await ports.chapters.setStatus(chapterId, 'processing');
 
   const run = new ChapterRun(chapterId, ports, options);
+  run.startWatch();
   const started = (stage: Stage): boolean => STAGE_ORDER.indexOf(stage) >= first;
 
   for (const definition of [extractStage, segmentStage]) {
@@ -139,6 +148,17 @@ class ChapterRun {
   private readonly pdfEngine: PdfEngine;
   private readonly force: boolean;
   private failed: { readonly stage: Stage; readonly error: PipelineError } | null = null;
+  /** The stages running now. Analysis, translation and narration run side by side. */
+  private readonly running = new Set<Stage>();
+  /** The last stage an event named. It names the stage when none is running. */
+  private lastStage: Stage;
+  /** Set when the watchdog fails the run: the chapter fails with it, not as cancelled. */
+  private stallError: PipelineError | null = null;
+  /** The stage the watchdog failed the run in. */
+  private stalledIn: Stage | null = null;
+  private readonly watchdog: StallWatchdog;
+  private readonly keepsAlive: () => boolean;
+  private readonly unsubscribeNetwork: () => void;
   private cancelledAt: Stage | null = null;
   private runTotal = 0;
 
@@ -151,6 +171,13 @@ class ChapterRun {
     this.pdfEngine = options.pdfEngine ?? 'cloudflare-ai';
     this.force = options.force === true;
     this.external = options.signal;
+    this.lastStage = options.from ?? 'extract';
+    this.keepsAlive = options.keepsAliveInBackground ?? (() => false);
+    this.watchdog = new StallWatchdog({
+      now: () => (options.clock ?? ports.clock).now(),
+      onStall: (stalls) => this.onStall(stalls),
+    });
+    this.unsubscribeNetwork = ports.network.subscribe((event) => this.onNetwork(event));
     if (this.external?.aborted === true) this.controller.abort();
     else this.external?.addEventListener('abort', () => this.controller.abort(), { once: true });
   }
@@ -162,11 +189,75 @@ class ChapterRun {
 
   /** True once a stage has failed or been cancelled. The stages still running are then stopped. */
   get stopped(): boolean {
-    return this.failed !== null || this.cancelledAt !== null;
+    return this.failed !== null || this.cancelledAt !== null || this.stallError !== null;
   }
 
+  /** Starts the stall watchdog. It stops when the run finishes. */
+  startWatch(): void {
+    this.watchdog.start();
+  }
+
+  /** Every event passes here. It counts as activity, and it tracks the stage the run is in. */
   emit(event: PipelineEvent): void {
+    if (event.chapterId === this.chapterId) {
+      this.watchdog.touch();
+      if ('stage' in event) this.lastStage = event.stage;
+      if (event.type === 'stage') {
+        if (event.status === 'running') this.running.add(event.stage);
+        else this.running.delete(event.stage);
+      }
+    }
     this.onEvent(event);
+  }
+
+  /**
+   * The stage a stall or a stale retry is attributed to: the furthest stage running, since the
+   * stages that are still in flight are the ones that can be waiting on the network.
+   */
+  private activeStage(): Stage {
+    const furthest = [...this.running].sort(
+      (a, b) => STAGE_ORDER.indexOf(b) - STAGE_ORDER.indexOf(a),
+    );
+    return furthest[0] ?? this.lastStage;
+  }
+
+  /**
+   * The first stalls retire the requests in flight, so each is retried at once. A stall beyond
+   * MAX_STALLS fails the chapter; its finished passages stay saved.
+   */
+  private onStall(stalls: number): void {
+    const stage = this.activeStage();
+    this.onEvent({ type: 'stall', chapterId: this.chapterId, stage, count: stalls });
+    if (stalls >= MAX_STALLS) {
+      this.stallError = STALLED_ERROR;
+      this.stalledIn = stage;
+      this.watchdog.stop();
+      this.controller.abort();
+      return;
+    }
+    this.ports.network.retireInFlight();
+  }
+
+  private onNetwork(event: NetworkEvent): void {
+    switch (event.type) {
+      case 'attempt':
+        this.watchdog.touch(event.timeoutMs);
+        return;
+      case 'staleAbort':
+        this.onEvent({
+          type: 'staleAbort',
+          chapterId: this.chapterId,
+          stage: this.activeStage(),
+        });
+        return;
+      case 'backgrounded':
+        if (!this.keepsAlive()) this.watchdog.suspend();
+        return;
+      case 'resumed':
+        this.watchdog.resume();
+        this.onEvent({ type: 'reconnecting', chapterId: this.chapterId });
+        return;
+    }
   }
 
   /**
@@ -246,8 +337,18 @@ class ChapterRun {
 
   /** The run's outcome. A chapter is marked ready here, once every stage has settled. */
   async finish(): Promise<RunOutcome> {
+    this.watchdog.stop();
+    this.unsubscribeNetwork();
     if (this.failed !== null) {
       return { status: 'failed', stage: this.failed.stage, error: this.failed.error };
+    }
+    if (this.stallError !== null && this.stalledIn !== null) {
+      const { chapterId } = this;
+      const stage = this.stalledIn;
+      await this.ports.chapters.setStatus(chapterId, 'failed');
+      this.emit({ type: 'stage', chapterId, stage, status: 'failed' });
+      this.emit({ type: 'error', chapterId, stage, error: this.stallError });
+      return { status: 'failed', stage, error: this.stallError };
     }
     if (this.cancelledAt !== null) return { status: 'cancelled', stage: this.cancelledAt };
     await this.ports.chapters.setStatus(this.chapterId, 'ready');

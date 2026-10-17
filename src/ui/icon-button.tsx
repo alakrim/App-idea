@@ -19,7 +19,7 @@ export interface IconButtonProps {
   testID?: string;
 }
 
-/** Square icon button with a 44pt touch target. */
+/** Square icon button with the design system's minimum touch target. */
 export function IconButton({
   label,
   icon: Icon,

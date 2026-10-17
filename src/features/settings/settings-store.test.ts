@@ -51,4 +51,18 @@ describe('settings store', () => {
     expect(() => store.patch({ theme: 'sepia' as never })).toThrow();
     expect(store.getSettings()).toEqual(DEFAULT_SETTINGS);
   });
+
+  it('tells subscribers when the published settings change, and stops when unsubscribed', () => {
+    const { db } = createTestDb();
+    const store = createSettingsStore(() => T0);
+    store.hydrate(db);
+    const seen: number[] = [];
+    const unsubscribe = store.subscribe((settings) => seen.push(settings.ambience.levelDb));
+
+    store.patch({ ambience: { ...DEFAULT_SETTINGS.ambience, levelDb: -30 } });
+    unsubscribe();
+    store.patch({ ambience: { ...DEFAULT_SETTINGS.ambience, levelDb: -10 } });
+
+    expect(seen).toEqual([-30]);
+  });
 });

@@ -1,58 +1,59 @@
 import { StyleSheet, View } from 'react-native';
 
-import { ArrowDown, ArrowUp, RotateCw, Trash2 } from '@/ui/icons';
+import { ArrowDown, ArrowUp, CircleStop, RotateCw, Trash2, type LucideIcon } from '@/ui/icons';
 import { ListItem } from '@/ui/list-item';
 import { Sheet } from '@/ui/sheet';
 import { space } from '@/ui/tokens';
 
+import {
+  CHAPTER_ACTION_LABELS,
+  chapterActionsFor,
+  type ChapterAction,
+  type ChapterAvailability,
+} from './chapter-actions';
+
 export interface ChapterActionsSheetProps {
   visible: boolean;
   chapterTitle: string;
-  canMoveUp: boolean;
-  canMoveDown: boolean;
-  /** Re-narration needs a processed chapter. */
-  canRenarrate: boolean;
-  onMove: (direction: 'up' | 'down') => void;
-  onRenarrate: () => void;
-  onDelete: () => void;
+  availability: ChapterAvailability;
+  onAction: (action: ChapterAction) => void;
   onClose: () => void;
 }
 
-/** Long-press menu for a chapter: reorder, re-generate the audio, or delete. */
+const ICONS: Readonly<Record<ChapterAction, LucideIcon>> = {
+  'move-up': ArrowUp,
+  'move-down': ArrowDown,
+  're-generate': RotateCw,
+  stop: CircleStop,
+  delete: Trash2,
+};
+
+const SUBTITLES: Partial<Record<ChapterAction, string>> = {
+  're-generate': 'Narrates the chapter again',
+  stop: 'Finished audio is kept',
+  delete: 'Removes its text and audio',
+};
+
+/** Long-press menu for a chapter. It lists the same actions the row's accessibility actions expose. */
 export function ChapterActionsSheet({
   visible,
   chapterTitle,
-  canMoveUp,
-  canMoveDown,
-  canRenarrate,
-  onMove,
-  onRenarrate,
-  onDelete,
+  availability,
+  onAction,
   onClose,
 }: ChapterActionsSheetProps) {
   return (
     <Sheet visible={visible} onClose={onClose} title={chapterTitle} snapPoints={['50%']}>
       <View style={styles.list}>
-        {canMoveUp ? (
-          <ListItem title="Move up" leading={ArrowUp} onPress={() => onMove('up')} />
-        ) : null}
-        {canMoveDown ? (
-          <ListItem title="Move down" leading={ArrowDown} onPress={() => onMove('down')} />
-        ) : null}
-        {canRenarrate ? (
+        {chapterActionsFor(availability).map((action) => (
           <ListItem
-            title="Re-generate audio"
-            subtitle="Narrates the chapter again"
-            leading={RotateCw}
-            onPress={onRenarrate}
+            key={action}
+            title={CHAPTER_ACTION_LABELS[action]}
+            subtitle={SUBTITLES[action]}
+            leading={ICONS[action]}
+            onPress={() => onAction(action)}
           />
-        ) : null}
-        <ListItem
-          title="Delete chapter"
-          subtitle="Removes its text and audio"
-          leading={Trash2}
-          onPress={onDelete}
-        />
+        ))}
       </View>
     </Sheet>
   );

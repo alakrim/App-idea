@@ -1,4 +1,3 @@
- 
 /**
  * Unit-test stand-in for @gorhom/bottom-sheet. A sheet renders its contents only while open, the
  * way the real one does, so closed sheets contribute nothing to the queries.
@@ -21,4 +20,11 @@ module.exports = {
   BottomSheetBackdrop: () => null,
   BottomSheetView: ({ children, style }: { children?: ReactNode; style?: unknown }) =>
     createElement(View, { style: style as never }, children),
+  BottomSheetScrollView: ({
+    children,
+    contentContainerStyle,
+  }: {
+    children?: ReactNode;
+    contentContainerStyle?: unknown;
+  }) => createElement(View, { style: contentContainerStyle as never }, children),
 };

@@ -1,24 +1,36 @@
 import { setStringAsync } from 'expo-clipboard';
 import { router } from 'expo-router';
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type { Sentence } from '@/core/domain';
+import { findBookmark, findBookmarkById } from '@/features/bookmarks/bookmark-data';
+import { BookmarkNoteSheet } from '@/features/bookmarks/bookmark-note-sheet';
+import { BookmarksSheet } from '@/features/bookmarks/bookmarks-sheet';
 import { ambienceIconOf } from '@/features/shared/ambience-display';
+import { goBackOrHome } from '@/features/shared/navigation';
 import { useVocabActions } from '@/features/vocab/vocab-actions';
 import { CoverImage } from '@/ui/cover-image';
 import { EmptyState } from '@/ui/empty-state';
 import { ErrorState } from '@/ui/error-state';
 import { IconButton } from '@/ui/icon-button';
-import { AudioLines, ChevronDown, CloudRain, Gauge, Headphones, Repeat1 } from '@/ui/icons';
+import {
+  AudioLines,
+  Bookmark,
+  ChevronDown,
+  CloudRain,
+  Gauge,
+  Headphones,
+  Repeat1,
+} from '@/ui/icons';
 import { useMotion } from '@/ui/motion';
 import { Skeleton } from '@/ui/skeleton';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { useToast } from '@/ui/toast';
-import { gutter, space } from '@/ui/tokens';
+import { gutter, minTouchTarget, space } from '@/ui/tokens';
 
 import { activeAmbience } from './ambience-names';
 import { AmbienceSheet } from './ambience-sheet';
@@ -27,15 +39,15 @@ import { Chip } from './chip';
 import { formatRate } from './format';
 import { PLAYER } from './layout';
 import { usePlayback, usePlaybackContent, usePlayerState } from './player-provider';
-import { Scrubber } from './scrubber';
+import { PlayerScrubber } from './scrubber';
 import { SentenceSheet } from './sentence-sheet';
 import { SleepChip, SleepSheet } from './sleep-timer';
 import { SpeedSheet } from './speed-sheet';
-import { SyncedTextPane, displayText } from './synced-text-pane';
+import { SyncedTextPane, displayText, type SentenceAction } from './synced-text-pane';
 import { Transport } from './transport';
 import { useNarratingAhead } from './use-narrating-ahead';
 
-type OpenSheet = 'speed' | 'sleep' | 'ambience' | null;
+type OpenSheet = 'speed' | 'sleep' | 'ambience' | 'bookmarks' | null;
 
 const COVER_MIN_HEIGHT = 120;
 const COVER_MAX_HEIGHT = PLAYER.coverMaxHeight;
@@ -62,15 +74,21 @@ export function FullPlayer() {
   return <ReadyPlayer />;
 }
 
+interface TopBarProps {
+  label?: string;
+  /** An action at the right end, such as Bookmarks. Empty states leave it out. */
+  trailing?: ReactNode;
+}
+
 /** Close button, with an optional label. The label is left out where it would contradict the state. */
-function TopBar({ label = 'Now playing' }: { label?: string }) {
+function TopBar({ label = 'Now playing', trailing }: TopBarProps) {
   return (
     <View style={styles.topBar}>
-      <IconButton label="Close player" icon={ChevronDown} onPress={() => router.back()} />
+      <IconButton label="Close player" icon={ChevronDown} onPress={goBackOrHome} />
       <Text variant="micro" tone="muted">
         {label}
       </Text>
-      <View style={styles.topBarSpacer} />
+      {trailing ?? <View style={styles.topBarSpacer} />}
     </View>
   );
 }
@@ -124,14 +142,28 @@ function UnavailablePlayer() {
   );
 }
 
+/** The copy names what failed. None of it blames the connection: playback reads files on this phone. */
+const FAILURE_COPY = {
+  load: {
+    title: "Couldn't open this chapter",
+    message: 'Its narration could not be read from this phone. Your place is saved.',
+  },
+  playback: {
+    title: 'Playback stopped',
+    message: 'The audio player hit a problem. Your place is saved.',
+  },
+} as const;
+
 function FailedPlayer() {
   const controller = usePlayback();
   const chapterId = usePlaybackContent((content) => content.chapterId);
+  const failure = usePlaybackContent((content) => content.failure);
+  const copy = FAILURE_COPY[failure ?? 'load'];
   return (
     <PlayerFrame>
       <ErrorState
-        title="Couldn't start this chapter"
-        message="Check your connection and try again. Your place is saved."
+        title={copy.title}
+        message={copy.message}
         retryLabel="Try again"
         onRetry={() => {
           if (chapterId) void controller.playChapter(chapterId);
@@ -151,14 +183,16 @@ function ReadyPlayer() {
   const toast = useToast();
   const [sheet, setSheet] = useState<OpenSheet>(null);
   const [actionSentence, setActionSentence] = useState<Sentence | null>(null);
+  const [noteFor, setNoteFor] = useState<string | null>(null);
   const [centerHeight, setCenterHeight] = useState(0);
 
+  // The full player does not subscribe to the position: the scrubber and the text pane that need
+  // it do, so the rest of the screen only re-renders when the sentence or the play state changes.
   const title = usePlayerState((state) => state.nowPlaying?.title ?? '');
   const seriesTitle = usePlayerState((state) => state.nowPlaying?.seriesTitle ?? '');
   const seriesId = usePlaybackContent((content) => content.seriesId);
   const coverUri = usePlayerState((state) => state.nowPlaying?.coverUri ?? null);
   const playState = usePlayerState((state) => state.state);
-  const positionMs = usePlayerState((state) => state.positionMs);
   const sentenceIdx = usePlayerState((state) => state.sentenceIdx);
   const rate = usePlayerState((state) => state.rate);
   const timeline = usePlaybackContent((content) => content.timeline);
@@ -168,27 +202,17 @@ function ReadyPlayer() {
   const coverTint = usePlaybackContent((content) => content.coverTint);
   const loopIdx = usePlaybackContent((content) => content.loopSentenceIdx);
   const ambience = usePlaybackContent((content) => content.ambience);
+  const narrationPaused = usePlaybackContent((content) => content.narrationPaused);
+  const chapterId = usePlaybackContent((content) => content.chapterId);
+  const bookmarks = usePlaybackContent((content) => content.bookmarks);
 
-  const durationMs = timeline?.totalDurationMs ?? 0;
-  const final = usePlaybackContent((content) => content.final);
-  const estimatedTotalMs = usePlaybackContent((content) => content.estimatedTotalMs);
-  // While narration is still being made, the track spans the estimated length and the band shows
-  // the audio made so far.
-  const trackMs = final ? durationMs : Math.max(durationMs, estimatedTotalMs ?? 0);
-  const narratingAhead = useNarratingAhead();
   const availableCount = timeline?.sentenceCount ?? 0;
+  const narratingAhead = useNarratingAhead();
   const busy = (playState === 'loading' || playState === 'buffering') && !narratingAhead;
   const playing = playState === 'playing' || narratingAhead;
+  /** Out of audio while processing is stopped: calm copy, not a spinner (P1-5). */
+  const showPaused = narrationPaused && playState === 'buffering';
 
-  const tickMs = useMemo(
-    () =>
-      timeline
-        ? Array.from({ length: timeline.sentenceCount }, (_, idx) =>
-            timeline.sentenceToPosition(idx),
-          )
-        : [],
-    [timeline],
-  );
   const activeCues = useMemo(() => activeAmbience(cues, sentenceIdx), [cues, sentenceIdx]);
   const activeNames = activeCues.map((entry) => entry.label);
 
@@ -213,32 +237,93 @@ function ReadyPlayer() {
       : 'Ambience';
 
   const closeSheet = () => setSheet(null);
-  const repeat = (sentence: Sentence) => {
-    controller.setLoopSentence(sentence.idx);
-    setActionSentence(null);
-  };
-  const copy = (sentence: Sentence) => {
-    void setStringAsync(displayText(sentence));
-    toast.show({ message: 'Sentence copied', tone: 'success' });
-    setActionSentence(null);
-  };
+  const repeat = useCallback(
+    (sentence: Sentence) => {
+      controller.setLoopSentence(sentence.idx);
+      setActionSentence(null);
+    },
+    [controller],
+  );
+  const copy = useCallback(
+    (sentence: Sentence) => {
+      setStringAsync(displayText(sentence))
+        .then(() => toast.show({ message: 'Sentence copied', tone: 'success' }))
+        .catch(() => toast.show({ message: 'Could not copy the sentence', tone: 'danger' }));
+      setActionSentence(null);
+    },
+    [toast],
+  );
   /** Saves the sentence. The toast confirms only a save that happened. */
-  const saveVocab = (sentence: Sentence) => {
-    if (seriesId === null) return;
-    try {
-      vocab.saveToVocab({
+  const saveVocab = useCallback(
+    (sentence: Sentence) => {
+      if (seriesId === null) return;
+      const input = {
         seriesId,
         chapterId: sentence.chapterId,
         sentenceIdx: sentence.idx,
         text: displayText(sentence),
+      };
+      try {
+        if (vocab.hasSaved(input)) {
+          toast.show({ message: 'Already in Vocab' });
+        } else {
+          vocab.saveToVocab(input);
+          toast.show({ message: 'Saved to Vocab' });
+        }
+      } catch {
+        toast.show({ message: 'Nothing to save in this sentence', tone: 'danger' });
+        return;
+      }
+      setActionSentence(null);
+    },
+    [seriesId, vocab, toast],
+  );
+
+  const bookmarked = findBookmark(bookmarks, chapterId, sentenceIdx) !== null;
+  const actionBookmarked =
+    actionSentence !== null && findBookmark(bookmarks, chapterId, actionSentence.idx) !== null;
+
+  /**
+   * Bookmarks or un-bookmarks a sentence. A new bookmark says so and offers a note, which is the
+   * moment a listener usually wants one; removing it just confirms.
+   */
+  const toggleBookmark = useCallback(
+    (idx: number) => {
+      const result = controller.toggleBookmark(idx);
+      if (result === null) return;
+      if (result.kind === 'removed') {
+        toast.show({ message: 'Bookmark removed' });
+        return;
+      }
+      const bookmarkId = result.bookmark.id;
+      toast.show({
+        message: 'Bookmarked',
+        tone: 'success',
+        action: { label: 'Add note', onPress: () => setNoteFor(bookmarkId) },
       });
-    } catch {
-      toast.show({ message: 'Nothing to save in this sentence', tone: 'danger' });
-      return;
-    }
-    toast.show({ message: 'Saved to Vocab' });
-    setActionSentence(null);
-  };
+    },
+    [controller, toast],
+  );
+
+  const seekSentence = useCallback((idx: number) => controller.seekToSentence(idx), [controller]);
+  const openSentenceActions = useCallback(
+    (idx: number) => {
+      const sentence = sentences[idx];
+      if (sentence) setActionSentence(sentence);
+    },
+    [sentences],
+  );
+  /** The same actions as the long press, for screen readers: repeat, copy and save to Vocab. */
+  const runSentenceAction = useCallback(
+    (idx: number, action: SentenceAction) => {
+      const sentence = sentences[idx];
+      if (!sentence) return;
+      if (action === 'repeat') controller.setLoopSentence(idx);
+      else if (action === 'copy') copy(sentence);
+      else saveVocab(sentence);
+    },
+    [controller, sentences, copy, saveVocab],
+  );
 
   const panelOpenHeight = windowHeight * PLAYER.paneHeightRatio;
   const peekHeight = PLAYER.peekHeight + insets.bottom;
@@ -247,7 +332,11 @@ function ReadyPlayer() {
     <View style={[styles.root, { backgroundColor: colors.bg }]}>
       <PlayerBackdrop uri={coverUri} title={title} tint={coverTint} />
       <View style={[styles.column, { paddingTop: insets.top, paddingBottom: peekHeight }]}>
-        <TopBar />
+        <TopBar
+          trailing={
+            <IconButton label="Bookmarks" icon={Bookmark} onPress={() => setSheet('bookmarks')} />
+          }
+        />
 
         <View
           style={styles.center}
@@ -273,7 +362,7 @@ function ReadyPlayer() {
               accessibilityLabel={`Ambience, ${ambienceLabel}`}
               hint="Opens the ambience settings"
               icon={activeCues[0] ? ambienceIconOf(activeCues[0].id) : CloudRain}
-              active={ambience.enabled && activeNames.length > 0}
+              value={ambience.enabled && activeNames.length > 0 ? 'On' : 'Off'}
               onPress={() => setSheet('ambience')}
               testID="ambience-chip"
             />
@@ -282,28 +371,32 @@ function ReadyPlayer() {
 
         <View style={styles.controls}>
           <View style={styles.inset}>
-            <Scrubber
-              positionMs={positionMs}
-              durationMs={trackMs}
-              bufferedMs={durationMs}
-              tickMs={tickMs}
-              onSeek={(ms) => controller.seekToMs(ms)}
-            />
+            <PlayerScrubber />
           </View>
           <Transport
             playing={playing}
             busy={busy}
             narratingAhead={narratingAhead}
+            bookmarked={bookmarked}
             onTogglePlay={() => controller.player.togglePlay()}
             onSkip={(deltaMs) => controller.seekBy(deltaMs)}
             onSentence={(direction) => controller.stepSentence(direction)}
+            onBookmark={() => toggleBookmark(sentenceIdx)}
           />
+          {showPaused ? (
+            <View style={styles.inset}>
+              <Text variant="caption" tone="muted" align="center" accessibilityLiveRegion="polite">
+                Narration paused. More audio will appear when processing continues.
+              </Text>
+            </View>
+          ) : null}
           <View style={[styles.inset, styles.chips]}>
             <Chip
               label={formatRate(rate)}
               accessibilityLabel={`Speed ${formatRate(rate)}`}
               hint="Opens speed settings"
               icon={Gauge}
+              value={formatRate(rate)}
               onPress={() => setSheet('speed')}
               testID="speed-chip"
             />
@@ -329,11 +422,9 @@ function ReadyPlayer() {
         loopIdx={loopIdx}
         openHeight={panelOpenHeight}
         peekHeight={peekHeight}
-        onSeekSentence={(idx) => controller.seekToSentence(idx)}
-        onLongPressSentence={(idx) => {
-          const sentence = sentences[idx];
-          if (sentence) setActionSentence(sentence);
-        }}
+        onSeekSentence={seekSentence}
+        onLongPressSentence={openSentenceActions}
+        onSentenceAction={runSentenceAction}
       />
 
       <SpeedSheet visible={sheet === 'speed'} onClose={closeSheet} />
@@ -343,12 +434,39 @@ function ReadyPlayer() {
         onClose={closeSheet}
         activeNames={activeNames}
       />
+      <BookmarksSheet
+        visible={sheet === 'bookmarks'}
+        groups={bookmarks}
+        onClose={closeSheet}
+        onOpen={(openChapterId, idx) => {
+          closeSheet();
+          controller.jumpToSentence(openChapterId, idx);
+        }}
+        onEditNote={(bookmark) => {
+          closeSheet();
+          setNoteFor(bookmark.id);
+        }}
+        onDelete={(bookmarkId) => controller.deleteBookmark(bookmarkId)}
+      />
+      <BookmarkNoteSheet
+        bookmark={noteFor === null ? null : findBookmarkById(bookmarks, noteFor)}
+        onClose={() => setNoteFor(null)}
+        onSave={(bookmarkId, note) => {
+          controller.saveBookmarkNote(bookmarkId, note);
+          setNoteFor(null);
+        }}
+      />
       <SentenceSheet
         sentence={actionSentence}
         onClose={() => setActionSentence(null)}
         onRepeat={repeat}
         onCopy={copy}
         onSaveVocab={saveVocab}
+        bookmarked={actionBookmarked}
+        onBookmark={(sentence) => {
+          toggleBookmark(sentence.idx);
+          setActionSentence(null);
+        }}
       />
     </View>
   );
@@ -368,8 +486,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: gutter,
   },
   topBarSpacer: {
-    width: 44,
-    height: 44,
+    width: minTouchTarget,
+    height: minTouchTarget,
   },
   center: {
     flex: 1,

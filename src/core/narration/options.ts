@@ -6,7 +6,7 @@
  */
 import { isFishModel } from './capabilities';
 import { defaultVoiceFor, KOKORO_LANGUAGES, primaryLanguage } from './voices';
-import { DEFAULT_TTS_MAX_CHARS } from '../text/chunk';
+import { DEFAULT_TTS_MAX_CHARS, DEFAULT_TTS_MAX_SECONDS } from '../text/chunk';
 
 import type { Lang } from '../domain';
 
@@ -21,6 +21,13 @@ export interface NarratorOption {
   readonly supportsStyle: boolean;
   /** The languages the narrator speaks, or `multi` when it speaks all of them. */
   readonly languages: readonly Lang[] | 'multi';
+  /**
+   * Longest text, in estimated speech seconds, sent in one request. Speech density differs by script,
+   * so a size in characters alone makes very uneven requests. Long requests also hit gateway timeouts.
+   */
+  readonly segmentMaxSeconds: number;
+  /** The most speech requests in flight at once (the window's ceiling). The free models run one at a time. */
+  readonly narrateConcurrency: number;
   /** A short, honest note about limits or trade-offs, shown on the card. */
   readonly notes: string;
   /**
@@ -36,6 +43,16 @@ export const FREE_NARRATOR_MODEL_ID = 'fish-audio/s2.1-pro-free:free';
 
 /** Fish models take longer passages per request: 1,800 characters, well under the 4,000-character guard. */
 const FISH_SEGMENT_MAX_CHARS = 1_800;
+/** Fish takes longer passages, so fewer requests hit its per-minute limit. */
+const FREE_SEGMENT_MAX_SECONDS = 120;
+
+/**
+ * The most speech requests in flight for a narrator that is not rate-limited per minute. The adaptive
+ * window starts at WINDOW_START (3) and grows to this ceiling while requests succeed.
+ */
+const PAID_NARRATE_CONCURRENCY = 6;
+/** Speech requests in flight when the model is not one of the three narrators. */
+export const DEFAULT_NARRATE_CONCURRENCY = 2;
 
 const GEMINI_DEFAULT_VOICE = 'Kore';
 
@@ -69,6 +86,8 @@ export const NARRATOR_OPTIONS: readonly NarratorOption[] = [
     tagline: 'Our default. Warm, steerable narration in every language.',
     supportsStyle: true,
     languages: 'multi',
+    segmentMaxSeconds: DEFAULT_TTS_MAX_SECONDS,
+    narrateConcurrency: PAID_NARRATE_CONCURRENCY,
     notes: 'Follows your style notes, so you can steer how it reads.',
     defaultVoice: (_lang, voices) => pickVoice([GEMINI_DEFAULT_VOICE], voices),
   },
@@ -79,6 +98,8 @@ export const NARRATOR_OPTIONS: readonly NarratorOption[] = [
     tagline: 'Clear, natural voices at a fraction of the price.',
     supportsStyle: false,
     languages: KOKORO_LANGUAGES,
+    segmentMaxSeconds: DEFAULT_TTS_MAX_SECONDS,
+    narrateConcurrency: PAID_NARRATE_CONCURRENCY,
     notes: 'Speaks only the languages listed. Choose it for those.',
     defaultVoice: (lang, voices) =>
       voices.length === 0
@@ -92,6 +113,8 @@ export const NARRATOR_OPTIONS: readonly NarratorOption[] = [
     tagline: 'No cost. Multilingual narration with daily limits.',
     supportsStyle: false,
     languages: 'multi',
+    segmentMaxSeconds: FREE_SEGMENT_MAX_SECONDS,
+    narrateConcurrency: 1,
     notes:
       'OpenRouter limits free models per minute and per day. When the day runs out, narration resumes after it resets, and finished audio is kept.',
     defaultVoice: (_lang, voices) => pickVoice([], voices),
@@ -110,10 +133,23 @@ export function isLanguageSupported(option: NarratorOption, lang: Lang): boolean
   return option.languages.some((spoken) => primaryLanguage(spoken) === family);
 }
 
-/**
- * The longest text, in characters, sent in one speech request. Fish models take more per request,
- * and fewer requests mean fewer rate-limit hits. Every other speech model uses the default.
- */
-export function segmentMaxCharsFor(modelId: string): number {
-  return isFishModel(modelId) ? FISH_SEGMENT_MAX_CHARS : DEFAULT_TTS_MAX_CHARS;
+/** How a speech model's text is split into requests. */
+export interface SegmentLimits {
+  /** Longest text in characters (code points). Fish models take more per request. */
+  readonly maxChars: number;
+  /** Longest text in estimated speech seconds. The opening segments are held shorter (ADR-0008). */
+  readonly maxSeconds: number;
+}
+
+/** The segment limits for a speech model. Models outside the three narrators use the defaults. */
+export function segmentLimitsFor(modelId: string): SegmentLimits {
+  return {
+    maxChars: isFishModel(modelId) ? FISH_SEGMENT_MAX_CHARS : DEFAULT_TTS_MAX_CHARS,
+    maxSeconds: optionFor(modelId)?.segmentMaxSeconds ?? DEFAULT_TTS_MAX_SECONDS,
+  };
+}
+
+/** Speech requests in flight for a speech model. Models outside the three narrators use the default. */
+export function narrateConcurrencyFor(modelId: string): number {
+  return optionFor(modelId)?.narrateConcurrency ?? DEFAULT_NARRATE_CONCURRENCY;
 }

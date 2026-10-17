@@ -3,10 +3,12 @@ import { Platform } from 'react-native';
 
 import type { MixerContext } from '@/audio/ambience-mixer';
 import { INSTALLED_BEDS, type InstalledBed } from '@/audio/ambience-pack';
+import { isProcessing, notificationPermissionStatus } from '@/services/background';
 import { webViewRenderQueue } from '@/services/pipeline/webview-bridge';
 
 import { globalLanguageEnv } from './checks-language';
 
+import type { BackgroundReadings } from './checks-background';
 import type { StorageSizes } from './checks-storage';
 import type { DiagnosticsDeps } from './run-all';
 
@@ -19,6 +21,16 @@ function createDeviceAudioContext(): MixerContext {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const audio = require('react-native-audio-api') as { AudioContext: new () => MixerContext };
   return new audio.AudioContext();
+}
+
+/** The processing service's readings. Null where the platform has no service (every platform but Android). */
+async function readBackground(): Promise<BackgroundReadings | null> {
+  if (Platform.OS !== 'android') return null;
+  const [processing, notifications] = await Promise.all([
+    isProcessing(),
+    notificationPermissionStatus(),
+  ]);
+  return { processing, notifications };
 }
 
 function readStorageSizes(): StorageSizes {
@@ -61,5 +73,6 @@ export function deviceDiagnosticsDeps(
       hasLockScreenSession: () => null,
     },
     storage: readStorageSizes,
+    background: { read: readBackground },
   };
 }

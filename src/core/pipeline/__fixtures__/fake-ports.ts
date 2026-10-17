@@ -30,6 +30,7 @@ import type {
   CatalogModel,
   ChapterRecord,
   ChapterStore,
+  NetworkEvent,
   PdfTextResult,
   PersistedQueueItem,
   PipelinePorts,
@@ -118,6 +119,16 @@ export interface FakeOptions {
   readonly catalog?: Record<string, CatalogModel>;
   /** Overrides fields of the chapter's narration profile. */
   readonly narration?: Partial<NarrationProfile>;
+  /** Runs each time the pipeline retires in-flight requests. */
+  readonly onRetire?: () => void;
+}
+
+/** The network the pipeline sees. The test sends events and reads what the pipeline asked for. */
+export interface FakeNetwork {
+  /** How many times the pipeline asked to retire in-flight requests. */
+  retireCalls: number;
+  /** Sends an event to the pipeline, as the app's connection would. */
+  emit(event: NetworkEvent): void;
 }
 
 export interface FakeState {
@@ -155,6 +166,7 @@ export interface FakePorts {
   job(stage: Stage, id?: Id): Job | undefined;
   /** Adds a pasted-text chapter to the same series. */
   addChapter(id: Id, order: number, text: string): void;
+  readonly network: FakeNetwork;
 }
 
 const T0 = 1_700_000_000_000;
@@ -220,6 +232,13 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
   const catalog = options.catalog ?? CATALOG;
   let tick = 0;
   let nextId = 100;
+  const networkListeners = new Set<(event: NetworkEvent) => void>();
+  const network: FakeNetwork = {
+    retireCalls: 0,
+    emit(event) {
+      for (const listener of networkListeners) listener(event);
+    },
+  };
 
   const chapter: Chapter = {
     id: CHAPTER_ID,
@@ -425,6 +444,19 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
   };
 
   const ports: PipelinePorts = {
+    network: {
+      subscribe(listener) {
+        networkListeners.add(listener);
+        return () => {
+          networkListeners.delete(listener);
+        };
+      },
+      retireInFlight() {
+        network.retireCalls += 1;
+        options.onRetire?.();
+        return 0;
+      },
+    },
     chapters,
     jobs,
     ledger: {
@@ -493,6 +525,7 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
   return {
     ports,
     state,
+    network,
     addChapter: (id, order, text) => {
       state.chapters.set(id, {
         ...chapter,

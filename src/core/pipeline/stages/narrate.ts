@@ -6,26 +6,34 @@
  *
  * A rerun reuses every saved segment whose sentences, text and voice still match, so it makes no
  * speech call for them. The stage's job hash is the hash of the final plan, written when the stage
- * completes.
+ * completes. A passage that still fails after the transport's own retries is split in two and joined
+ * (narrate-fallback), and a failure that survives that is reported with its passage number.
  */
 import type { AudioSegment, NarrationProfile } from '@/core/domain';
 import { throwIfCancelled } from '@/core/llm/transport';
 import { wavDurationMs } from '@/core/narration/formats';
-import { isLanguageSupported, optionFor, segmentMaxCharsFor } from '@/core/narration/options';
+import {
+  isLanguageSupported,
+  narrateConcurrencyFor,
+  optionFor,
+  segmentLimitsFor,
+} from '@/core/narration/options';
+import { countCodePoints } from '@/core/text/build';
 import { estimateSpeechSeconds } from '@/core/text/speech-rate';
 import { estimateSentenceOffsets } from '@/core/text/timing';
 
-import { StageFailure } from '../errors';
+import { StageFailure, toPipelineError } from '../errors';
 import { stableHash } from '../hash';
 import { mp3DurationMs } from '../mp3-duration';
 import { AdaptiveWindow, SlidingWindow } from '../tts-pool';
-import { planFinalSegments } from './narrate-plan';
+import { synthesizeWithFallback } from './narrate-fallback';
+import { joinSpoken, planFinalSegments } from './narrate-plan';
 import { translationPair } from './translate';
 
 import type { FlowContext, StageDefinition, StageExecution } from '../context';
-import type { TtsResult } from '../ports';
 import type { SpokenTextGate } from '../spoken-text';
 import type { SegmentTiming } from '../tts-pool';
+import type { SpokenClip } from './narrate-fallback';
 import type { PlanOptions, PlannedSegment } from './narrate-plan';
 
 /** English names for the messages below. Unlisted languages show their code. */
@@ -65,14 +73,6 @@ function assertNarratorSpeaks(profile: NarrationProfile, spokenLang: string | nu
   );
 }
 
-/**
- * The free narrator (`:free`) is rate-limited per model, so it gets one request at a time. Every
- * other narrator uses the adaptive window.
- */
-function isPinnedNarrator(modelId: string): boolean {
-  return modelId.endsWith(':free');
-}
-
 export const narrateStage: StageDefinition<FlowContext> = {
   stage: 'narrate',
   async prepare(ctx) {
@@ -99,11 +99,11 @@ function spokenLanguageOf(ctx: FlowContext): string | null {
 }
 
 async function execute(ctx: FlowContext, profile: NarrationProfile): Promise<StageExecution> {
-  const { chapters, audio, tts } = ctx.ports;
+  const { chapters, audio } = ctx.ports;
   const lang = spokenLanguageOf(ctx);
   assertNarratorSpeaks(profile, lang);
   const plan: PlanOptions = {
-    maxChars: segmentMaxCharsFor(profile.model),
+    ...segmentLimitsFor(profile.model),
     lang,
     voiceKey: [profile.provider, profile.model, profile.voice, profile.style, profile.speed],
   };
@@ -114,6 +114,10 @@ async function execute(ctx: FlowContext, profile: NarrationProfile): Promise<Sta
    * Announces a segment that is saved or reused, in order. The first segment also makes the chapter
    * playable, and progress advances with the characters that are saved.
    */
+  /** The passage count, once the chapter's text is complete. Null while it can still grow. */
+  const passageTotal = (): number | null =>
+    ctx.spoken.complete ? planFinalSegments(ctx.spoken.prefix(), plan, true).length : null;
+
   const announce = (
     segment: PlannedSegment,
     uri: string,
@@ -136,30 +140,27 @@ async function execute(ctx: FlowContext, profile: NarrationProfile): Promise<Sta
     });
     if (segment.idx === 0) ctx.emit({ type: 'playable', chapterId: ctx.chapterId });
     const estimate = Math.max(1, ctx.spoken.estimatedChars());
+    // The passage count is shown once the total is known. Before that the copy says "passage N".
+    const total = passageTotal();
     ctx.emit({
       type: 'progress',
       chapterId: ctx.chapterId,
       stage: 'narrate',
       progress: Math.min(1, savedChars / estimate),
+      ...(total === null ? {} : { passages: { done: segment.idx + 1, total } }),
     });
   };
 
-  const pool = new SlidingWindow<PlannedSegment, TtsResult>({
-    window: new AdaptiveWindow({ pinned: isPinnedNarrator(profile.model) }),
+  const pool = new SlidingWindow<PlannedSegment, SpokenClip>({
+    window: new AdaptiveWindow({ ceiling: narrateConcurrencyFor(profile.model) }),
     signal: ctx.signal,
     now: () => ctx.ports.clock.now(),
-    work: (segment, signal) => tts.synthesize({ text: segment.text, profile, signal }),
-    save: async (segment, result, timing) => {
-      const ext = extensionFor(result.mime);
-      const uri = await audio.write(ctx.chapterId, segment.idx, result.bytes, ext);
-      const durationMs = durationOf(ext, result.bytes, segment.text);
-      await ctx.meter.recordSpeech(profile.model, {
-        chars: segment.chars,
-        audioSeconds: durationMs / 1000,
-        costUsd: result.costUsd,
-      });
-      await chapters.saveAudioSegment(toRow(ctx, segment, uri, durationMs, profile));
-      announce(segment, uri, durationMs, timing);
+    work: (segment, signal) => narrateSegment(ctx, profile, segment, signal, passageTotal),
+    save: async (segment, clip, timing) => {
+      const ext = extensionFor(clip.mime);
+      const uri = await audio.write(ctx.chapterId, segment.idx, clip.bytes, ext);
+      await chapters.saveAudioSegment(toRow(ctx, segment, uri, clip.durationMs, profile));
+      announce(segment, uri, clip.durationMs, timing);
     },
   });
 
@@ -200,6 +201,59 @@ async function execute(ctx: FlowContext, profile: NarrationProfile): Promise<Sta
     inputHash: stableHash(['narrate', finals.map((s) => s.hash)]),
     status: synthesized === 0 ? 'skipped' : 'done',
   };
+}
+
+/**
+ * Synthesizes one passage. A retryable failure that survives the split-and-join fallback is reported
+ * with the passage number. The passages saved before it stay saved, so a retry resumes at this one.
+ */
+async function narrateSegment(
+  ctx: FlowContext,
+  profile: NarrationProfile,
+  segment: PlannedSegment,
+  signal: AbortSignal,
+  passageTotal: () => number | null,
+): Promise<SpokenClip> {
+  try {
+    return await synthesizeWithFallback(segment.sentenceTexts, (sentences) =>
+      speakPassage(ctx, profile, sentences, signal),
+    );
+  } catch (thrown) {
+    throw passageFailure(thrown, segment.idx + 1, passageTotal());
+  }
+}
+
+/** One call to the narrator for `sentences`. The call is recorded, and its length is measured. */
+async function speakPassage(
+  ctx: FlowContext,
+  profile: NarrationProfile,
+  sentences: readonly string[],
+  signal: AbortSignal,
+): Promise<SpokenClip> {
+  const text = joinSpoken(sentences);
+  const result = await ctx.ports.tts.synthesize({ text, profile, signal });
+  const durationMs = durationOf(extensionFor(result.mime), result.bytes, text);
+  await ctx.meter.recordSpeech(profile.model, {
+    chars: countCodePoints(text),
+    audioSeconds: durationMs / 1000,
+    costUsd: result.costUsd,
+  });
+  return { bytes: result.bytes, mime: result.mime, durationMs };
+}
+
+/**
+ * The failure to show for a passage that could not be made. Only a retryable failure is reworded,
+ * because a retry resumes at this passage. Anything else passes through unchanged.
+ */
+function passageFailure(thrown: unknown, passage: number, total: number | null): unknown {
+  const error = toPipelineError(thrown);
+  if (!error.retryable) return thrown;
+  const which = total === null ? `passage ${passage}` : `passage ${passage} of ${total}`;
+  return new StageFailure(
+    error.code,
+    `The narrator service didn't answer for ${which}. Your progress is saved. Tap Retry to continue.`,
+    { retryable: true, ...(error.detail === undefined ? {} : { detail: error.detail }) },
+  );
 }
 
 /**

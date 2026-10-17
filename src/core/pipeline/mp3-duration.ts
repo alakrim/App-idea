@@ -6,6 +6,8 @@
  * no such header the frames are walked one by one, which is exact for CBR and VBR alike.
  */
 
+import { id3v2Length } from '../narration/id3';
+
 /** Bitrates in kbit/s, indexed by the 4-bit bitrate field minus one. */
 const BITRATES = {
   mpeg1: {
@@ -90,7 +92,7 @@ export function parseFrameHeader(bytes: Uint8Array, offset: number): FrameHeader
  * tag is skipped, and a Xing/Info or VBRI frame count is used when present.
  */
 export function mp3DurationMs(bytes: Uint8Array): number | null {
-  const start = skipId3v2(bytes);
+  const start = id3v2Length(bytes);
   const first = findFirstFrame(bytes, start);
   if (!first) return null;
 
@@ -137,17 +139,6 @@ function readVbriFrameCount(bytes: Uint8Array, frame: LocatedFrame): number | nu
   if (readAscii(bytes, tagOffset, 4) !== 'VBRI') return null;
   // After the tag: version (2), delay (2), quality (2), total bytes (4), then the frame count.
   return readUint32(bytes, tagOffset + 14);
-}
-
-function skipId3v2(bytes: Uint8Array): number {
-  if (readAscii(bytes, 0, 3) !== 'ID3') return 0;
-  const size =
-    ((byteAt(bytes, 6) & 0x7f) << 21) |
-    ((byteAt(bytes, 7) & 0x7f) << 14) |
-    ((byteAt(bytes, 8) & 0x7f) << 7) |
-    (byteAt(bytes, 9) & 0x7f);
-  const footer = (byteAt(bytes, 5) & 0x10) !== 0 ? 10 : 0;
-  return 10 + size + footer;
 }
 
 function toMs(samples: number, header: FrameHeader): number {

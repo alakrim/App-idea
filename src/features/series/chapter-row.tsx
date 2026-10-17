@@ -2,19 +2,41 @@ import { memo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import type { Chapter, PipelineError } from '@/core/domain';
+import type { ListeningProgress } from '@/core/playback/listening-progress';
 import { isScannedPdfFailure, rowStateOf, statusLine } from '@/features/chapter/chapter-status';
 import { StageStepper } from '@/features/chapter/stage-stepper';
 import { stepStates } from '@/features/chapter/stage-steps';
 import type { ChapterProgress } from '@/features/pipeline/facade';
 import { formatUsd } from '@/features/shared/format';
+import { useNow } from '@/features/shared/use-now';
 import { Button } from '@/ui/button';
 import { IconButton } from '@/ui/icon-button';
-import { Play } from '@/ui/icons';
+import { Check, Ellipsis, Play } from '@/ui/icons';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
-import { hairline, minTouchTarget, space } from '@/ui/tokens';
+import {
+  hairline,
+  iconSize,
+  iconStrokeWidth,
+  minTouchTarget,
+  opacity,
+  radius,
+  space,
+} from '@/ui/tokens';
+
+import {
+  CHAPTER_ACTION_LABELS,
+  chapterActionFrom,
+  chapterActionsFor,
+  type ChapterAction,
+  type ChapterAvailability,
+} from './chapter-actions';
+import { ListeningBar } from './listening-bar';
+import { listeningShortLabel, listeningSpokenLabel } from './listening-copy';
 
 const NUMBER_WIDTH = space.xl;
+/** How often a processing row refreshes its elapsed time. */
+const LIVE_TICK_MS = 1000;
 
 export interface ChapterRowProps {
   /** 1-based position in the series. */
@@ -24,11 +46,20 @@ export interface ChapterRowProps {
   failure: PipelineError | null;
   /** Estimated cost of the OCR retry, for a scanned PDF. Null while it is being worked out. */
   ocrUsd: number | null;
+  /** How much of this chapter the listener has heard. */
+  listening: ListeningProgress;
+  /** True for the chapter the listener is on, which gets a "Now" marker. */
+  current: boolean;
   /** Hairline above the row, for every row but the first. */
   divided: boolean;
+  /** Which actions the chapter offers now. The same list backs the menu and the accessibility actions. */
+  availability: ChapterAvailability;
   onOpen: (chapterId: string) => void;
   onPlay: (chapterId: string) => void;
+  /** Opens the chapter's action menu: the visible ⋯ button and a long press both use it. */
   onMenu: (chapterId: string) => void;
+  /** Runs one action directly, for screen-reader users who pick it from the row's actions. */
+  onAction: (chapterId: string, action: ChapterAction) => void;
   onRetry: (chapterId: string) => void;
   onOcr: (chapterId: string) => void;
 }
@@ -43,18 +74,36 @@ export const ChapterRow = memo(function ChapterRow({
   progress,
   failure,
   ocrUsd,
+  listening,
+  current,
   divided,
+  availability,
   onOpen,
   onPlay,
   onMenu,
+  onAction,
   onRetry,
   onOcr,
 }: ChapterRowProps) {
   const { colors } = useTheme();
   const state = rowStateOf(chapter, progress);
-  const line = statusLine(state, chapter, progress, failure);
+  const now = useNow(LIVE_TICK_MS, state === 'processing');
+  const line = statusLine(state, chapter, progress, failure, now);
   const scanned = isScannedPdfFailure(chapter, failure);
   const showSteps = state === 'processing' || state === 'failed';
+  const isReady = state === 'ready';
+  const short = isReady ? listeningShortLabel(listening) : null;
+  const spoken = isReady ? listeningSpokenLabel(listening) : null;
+  const showBar = isReady && listening.kind === 'in-progress';
+  const showListening = isReady && (current || listening.kind !== 'unstarted');
+  const actions = chapterActionsFor(availability);
+  const accessibilityLabel = [
+    `Chapter ${number}, ${chapter.title}, ${line}`,
+    spoken,
+    current ? 'now playing' : null,
+  ]
+    .filter((part): part is string => part !== null)
+    .join(', ');
 
   return (
     <View
@@ -66,12 +115,20 @@ export const ChapterRow = memo(function ChapterRow({
       <View style={styles.head}>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={`Chapter ${number}, ${chapter.title}, ${line}`}
-          accessibilityHint="Opens the chapter. Long press for more actions."
+          accessibilityLabel={accessibilityLabel}
+          accessibilityHint="Opens the chapter. More actions are in the menu."
+          accessibilityActions={actions.map((action) => ({
+            name: action,
+            label: CHAPTER_ACTION_LABELS[action],
+          }))}
+          onAccessibilityAction={(event) => {
+            const action = chapterActionFrom(event.nativeEvent.actionName);
+            if (action !== null) onAction(chapter.id, action);
+          }}
           delayLongPress={350}
           onPress={() => onOpen(chapter.id)}
           onLongPress={() => onMenu(chapter.id)}
-          style={({ pressed }) => [styles.press, pressed ? { opacity: 0.85 } : null]}
+          style={({ pressed }) => [styles.press, pressed ? { opacity: opacity.pressed } : null]}
         >
           <Text variant="caption" tone="faint" style={styles.number} importantForAccessibility="no">
             {String(number).padStart(2, '0')}
@@ -87,6 +144,34 @@ export const ChapterRow = memo(function ChapterRow({
             >
               {line}
             </Text>
+            {showBar && listening.kind === 'in-progress' ? (
+              <ListeningBar fraction={listening.fraction} />
+            ) : null}
+            {showListening ? (
+              <View style={styles.listeningLine}>
+                {current ? (
+                  <View style={[styles.nowPill, { backgroundColor: colors.accentSoft }]}>
+                    <Text variant="micro">Now</Text>
+                  </View>
+                ) : null}
+                {listening.kind === 'finished' ? (
+                  <View style={styles.finished}>
+                    <Check
+                      size={iconSize.sm}
+                      strokeWidth={iconStrokeWidth}
+                      color={colors.success}
+                    />
+                    <Text variant="caption" tone="success">
+                      Finished
+                    </Text>
+                  </View>
+                ) : short !== null ? (
+                  <Text variant="caption" tone="muted">
+                    {short}
+                  </Text>
+                ) : null}
+              </View>
+            ) : null}
           </View>
         </Pressable>
         {state === 'ready' ? (
@@ -97,6 +182,12 @@ export const ChapterRow = memo(function ChapterRow({
             onPress={() => onPlay(chapter.id)}
           />
         ) : null}
+        <IconButton
+          label={`More actions for chapter ${number}`}
+          icon={Ellipsis}
+          variant="surface"
+          onPress={() => onMenu(chapter.id)}
+        />
       </View>
 
       {showSteps ? (
@@ -109,14 +200,17 @@ export const ChapterRow = memo(function ChapterRow({
         <View style={styles.actions}>
           {scanned ? (
             <Button
-              label={ocrUsd === null ? 'Use OCR' : `Use OCR (≈ ${formatUsd(ocrUsd)})`}
+              label={
+                ocrUsd === null
+                  ? 'Read scanned pages'
+                  : `Read scanned pages (≈ ${formatUsd(ocrUsd)})`
+              }
               variant="secondary"
               onPress={() => onOcr(chapter.id)}
-              accessibilityHint="Reads the scanned pages with OCR. Asks for confirmation first."
+              accessibilityHint="Reads the text in the scanned pages. Asks for confirmation first."
             />
-          ) : failure?.retryable !== false ? (
-            <Button label="Retry" variant="secondary" onPress={() => onRetry(chapter.id)} />
           ) : null}
+          <Button label="Try again" variant="secondary" onPress={() => onRetry(chapter.id)} />
         </View>
       ) : null}
     </View>
@@ -148,6 +242,22 @@ const styles = StyleSheet.create({
   },
   copy: {
     flex: 1,
+    gap: space.xxs,
+  },
+  listeningLine: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: space.sm,
+  },
+  nowPill: {
+    paddingHorizontal: space.sm,
+    paddingVertical: space.xxs,
+    borderRadius: radius.pill,
+  },
+  finished: {
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: space.xxs,
   },
   steps: {

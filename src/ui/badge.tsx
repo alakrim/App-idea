@@ -13,7 +13,7 @@ export interface BadgeProps {
 
 const TEXT_TONE: Record<BadgeTone, TextTone> = {
   neutral: 'muted',
-  accent: 'accent',
+  accent: 'onAccentSoft',
   success: 'success',
   warning: 'warning',
   danger: 'danger',

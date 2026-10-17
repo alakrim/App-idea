@@ -13,17 +13,23 @@ export interface ChipProps {
   icon?: LucideIcon;
   /** Highlights the chip, such as an active sleep timer or repeat. */
   active?: boolean;
+  /**
+   * The chip's current setting, such as 'On' or '1.25×', for a chip that opens a sheet. It is read as
+   * a value, not as a selection, so a chip that only opens something is never announced as selected.
+   */
+  value?: string;
   onPress?: () => void;
   testID?: string;
 }
 
-/** A pill-shaped control on the player: speed, sleep, ambience and repeat. Minimum 44 pt tall. */
+/** A pill-shaped control on the player: speed, sleep, ambience and repeat. Minimum touch target tall. */
 export function Chip({
   label,
   accessibilityLabel,
   hint,
   icon: Icon,
   active = false,
+  value,
   onPress,
   testID,
 }: ChipProps) {
@@ -39,7 +45,7 @@ export function Chip({
       ) : null}
       <Text
         variant="caption"
-        tone={active ? 'accent' : 'muted'}
+        tone={active ? 'onAccentSoft' : 'muted'}
         numberOfLines={1}
         style={styles.label}
         importantForAccessibility="no"
@@ -54,7 +60,8 @@ export function Chip({
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel ?? label}
       accessibilityHint={hint}
-      accessibilityState={{ selected: active }}
+      accessibilityState={value === undefined ? { selected: active } : undefined}
+      accessibilityValue={value === undefined ? undefined : { text: value }}
       onPress={onPress}
       disabled={!onPress}
       testID={testID}

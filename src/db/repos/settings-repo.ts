@@ -34,13 +34,24 @@ function assign<K extends SettingKey>(target: Settings, key: K, value: Settings[
 }
 
 /**
+ * The row of the retired notification primer. A stored `true` means the explainer was already
+ * answered, so it reads as `notificationsExplained`. The row itself is never written again.
+ */
+const LEGACY_PRIMER_KEY = 'notificationPromptShown';
+
+/**
  * Reads every setting. Missing keys take their defaults. A stored value that is not valid JSON or
  * fails its schema is reported through `onInvalid` and replaced by its default. Unknown keys are
- * ignored.
+ * ignored, except the legacy primer row, which counts as an answered explainer.
  */
 function getSettings(db: Db, onInvalid: InvalidSettingHandler = warnInvalidSetting): Settings {
   const result: Settings = { ...DEFAULT_SETTINGS };
+  let legacyPrimerAnswered = false;
   for (const row of db.select().from(settings).all()) {
+    if (row.key === LEGACY_PRIMER_KEY) {
+      legacyPrimerAnswered = row.value === 'true';
+      continue;
+    }
     const key = SettingKeySchema.safeParse(row.key);
     if (!key.success) continue;
     const parsed = parseStoredValue(key.data, row.value);
@@ -50,6 +61,7 @@ function getSettings(db: Db, onInvalid: InvalidSettingHandler = warnInvalidSetti
       onInvalid(key.data, parsed.reason);
     }
   }
+  if (legacyPrimerAnswered) result.notificationsExplained = true;
   return result;
 }
 

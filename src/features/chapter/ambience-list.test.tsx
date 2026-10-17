@@ -9,13 +9,17 @@ jest.mock('@/ui/icons', () => new Proxy({}, { get: () => () => null }));
 
 describe('AmbienceList empty state', () => {
   it('says no clear setting was found once the chapter has been analysed', async () => {
-    await renderThemed(<AmbienceList cues={[]} analysed onToggle={() => undefined} />);
+    await renderThemed(
+      <AmbienceList cues={[]} analysed sentenceCount={4} onToggle={() => undefined} />,
+    );
 
     expect(screen.getByText('No ambience: no clear setting found')).toBeOnTheScreen();
   });
 
   it('keeps the plain copy before the chapter has been analysed', async () => {
-    await renderThemed(<AmbienceList cues={[]} analysed={false} onToggle={() => undefined} />);
+    await renderThemed(
+      <AmbienceList cues={[]} analysed={false} sentenceCount={4} onToggle={() => undefined} />,
+    );
 
     expect(
       screen.getByText('No ambience in this chapter. Its voice plays on its own.'),

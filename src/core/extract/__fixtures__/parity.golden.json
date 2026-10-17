@@ -1,0 +1,122 @@
+{
+  "news-article.html#article": {
+    "sha256": "277485f6b63c0f4a23a973380db923f312ed986a57fa34cb8abfbb299389011d",
+    "decision": "accept",
+    "bestExtractor": "defuddle",
+    "score": 0.861,
+    "blocks": 6,
+    "textChars": 1602,
+    "alternatives": ["readability"],
+    "warnings": []
+  },
+  "news-article.html#html": {
+    "sha256": "277485f6b63c0f4a23a973380db923f312ed986a57fa34cb8abfbb299389011d",
+    "decision": "accept",
+    "bestExtractor": "defuddle",
+    "score": 0.861,
+    "blocks": 6,
+    "textChars": 1602,
+    "alternatives": ["readability"],
+    "warnings": []
+  },
+  "blog-cookie.html#article": {
+    "sha256": "a06dba2945b879276a3a7160fbf26e195a99566fd0ee44f589e542ba57103719",
+    "decision": "accept",
+    "bestExtractor": "readability",
+    "score": 0.818,
+    "blocks": 6,
+    "textChars": 1248,
+    "alternatives": ["defuddle"],
+    "warnings": []
+  },
+  "blog-cookie.html#html": {
+    "sha256": "a06dba2945b879276a3a7160fbf26e195a99566fd0ee44f589e542ba57103719",
+    "decision": "accept",
+    "bestExtractor": "readability",
+    "score": 0.818,
+    "blocks": 6,
+    "textChars": 1248,
+    "alternatives": ["defuddle"],
+    "warnings": []
+  },
+  "cn-novel-chapter.html#article": {
+    "sha256": "18f372348dc4ec6ad7d749ff57a5dd37ffa90dcd42a62c9fa525c7359b83d810",
+    "decision": "accept",
+    "bestExtractor": "readability",
+    "score": 0.809,
+    "blocks": 13,
+    "textChars": 546,
+    "alternatives": ["defuddle"],
+    "warnings": []
+  },
+  "cn-novel-chapter.html#html": {
+    "sha256": "18f372348dc4ec6ad7d749ff57a5dd37ffa90dcd42a62c9fa525c7359b83d810",
+    "decision": "accept",
+    "bestExtractor": "readability",
+    "score": 0.809,
+    "blocks": 13,
+    "textChars": 546,
+    "alternatives": ["defuddle"],
+    "warnings": []
+  },
+  "jp-novel.html#article": {
+    "sha256": "e5eeb5ba5abd2d38b6f11daa9cd38a0516b9ad610ffa355125176433f821af31",
+    "decision": "accept",
+    "bestExtractor": "readability",
+    "score": 0.816,
+    "blocks": 10,
+    "textChars": 543,
+    "alternatives": ["defuddle"],
+    "warnings": []
+  },
+  "jp-novel.html#html": {
+    "sha256": "e5eeb5ba5abd2d38b6f11daa9cd38a0516b9ad610ffa355125176433f821af31",
+    "decision": "accept",
+    "bestExtractor": "readability",
+    "score": 0.816,
+    "blocks": 10,
+    "textChars": 543,
+    "alternatives": ["defuddle"],
+    "warnings": []
+  },
+  "junk-links.html#article": {
+    "sha256": "876003bc6cc1f83c70671e1833b2e7e1a60675e8c360f647ccffa92457834a75",
+    "decision": "webview",
+    "bestExtractor": "defuddle",
+    "score": 0.218,
+    "blocks": 22,
+    "textChars": 299,
+    "alternatives": ["readability"],
+    "warnings": []
+  },
+  "junk-links.html#html": {
+    "sha256": "876003bc6cc1f83c70671e1833b2e7e1a60675e8c360f647ccffa92457834a75",
+    "decision": "webview",
+    "bestExtractor": "defuddle",
+    "score": 0.218,
+    "blocks": 22,
+    "textChars": 299,
+    "alternatives": ["readability"],
+    "warnings": []
+  },
+  "spa-shell.html#article": {
+    "sha256": "86a2b63c0ea045645788427a9034330559f7f247dec9c03129cc257190b80287",
+    "decision": "webview",
+    "bestExtractor": "readability",
+    "score": 0,
+    "blocks": 0,
+    "textChars": 0,
+    "alternatives": ["defuddle"],
+    "warnings": []
+  },
+  "spa-shell.html#html": {
+    "sha256": "86a2b63c0ea045645788427a9034330559f7f247dec9c03129cc257190b80287",
+    "decision": "webview",
+    "bestExtractor": "readability",
+    "score": 0,
+    "blocks": 0,
+    "textChars": 0,
+    "alternatives": ["defuddle"],
+    "warnings": []
+  }
+}

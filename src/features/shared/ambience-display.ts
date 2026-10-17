@@ -1,6 +1,7 @@
 import { getCategory, type AmbienceIconName } from '@/core/analysis/ambience-taxonomy';
 import {
   Anchor,
+  Anvil,
   Atom,
   Bell,
   Bird,
@@ -68,6 +69,7 @@ import type { LucideIcon } from '@/ui/icons';
  */
 export const AMBIENCE_ICONS: Readonly<Record<AmbienceIconName, LucideIcon>> = {
   Anchor,
+  Anvil,
   Atom,
   Bell,
   Bird,

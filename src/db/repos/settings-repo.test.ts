@@ -103,4 +103,18 @@ describe('settingsRepo', () => {
 
     expect(settingsRepo.getSettings(db)).toEqual(DEFAULT_SETTINGS);
   });
+
+  it('reads the answer stored by the retired primer as the explainer being answered', () => {
+    const { db } = createTestDb();
+    storeRaw(db, 'notificationPromptShown', 'true');
+
+    expect(settingsRepo.getSettings(db).notificationsExplained).toBe(true);
+  });
+
+  it('keeps the explainer unanswered when the legacy primer row says no', () => {
+    const { db } = createTestDb();
+    storeRaw(db, 'notificationPromptShown', 'false');
+
+    expect(settingsRepo.getSettings(db).notificationsExplained).toBe(false);
+  });
 });

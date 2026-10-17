@@ -13,11 +13,7 @@ module.exports = {
       displayName: 'core',
       testEnvironment: 'node',
       testMatch: ['<rootDir>/src/core/**/*.test.ts'],
-      moduleNameMapper: {
-        ...moduleNameMapper,
-        // defuddle/node has only an `import` export condition. Jest needs its CJS build.
-        '^defuddle/node$': '<rootDir>/node_modules/defuddle/dist/node.js',
-      },
+      moduleNameMapper,
       transform: {
         ...tsTransform,
         // linkedom's dependency tree (css-select 7, boolbase 2, entities 8, ...) is ESM-only.
@@ -40,14 +36,12 @@ module.exports = {
       displayName: 'node',
       testEnvironment: 'node',
       testMatch: [
+        '<rootDir>/src/services/network/**/*.test.ts',
         '<rootDir>/src/services/openrouter/**/*.test.ts',
         '<rootDir>/src/services/pipeline/**/*.test.ts',
         '<rootDir>/src/db/**/*.test.ts',
       ],
-      moduleNameMapper: {
-        ...moduleNameMapper,
-        '^defuddle/node$': '<rootDir>/node_modules/defuddle/dist/node.js',
-      },
+      moduleNameMapper,
       transform: {
         ...tsTransform,
         '^.+\\.js$': [
@@ -64,21 +58,25 @@ module.exports = {
       ],
     },
     {
+      // Config plugins are CommonJS, run by Node at prebuild, and need no transform.
+      displayName: 'plugins',
+      testEnvironment: 'node',
+      testMatch: ['<rootDir>/plugins/**/*.test.js'],
+      transform: {},
+    },
+    {
       displayName: 'app',
       preset: 'jest-expo',
       testMatch: ['<rootDir>/src/**/*.test.[jt]s?(x)'],
       testPathIgnorePatterns: [
         '/node_modules/',
         '<rootDir>/src/core/',
+        '<rootDir>/src/services/network/',
         '<rootDir>/src/services/openrouter/',
         '<rootDir>/src/services/pipeline/',
         '<rootDir>/src/db/',
       ],
-      moduleNameMapper: {
-        ...moduleNameMapper,
-        // The app's extract stack (services/pipeline) imports defuddle's Node build.
-        '^defuddle/node$': '<rootDir>/node_modules/defuddle/dist/node.js',
-      },
+      moduleNameMapper,
     },
   ],
 };

@@ -1,5 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, View } from 'react-native';
+import { useCallback } from 'react';
+import { StyleSheet, View, type ListRenderItemInfo, type ViewStyle } from 'react-native';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -10,6 +11,10 @@ import Animated, {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import type { PipelineError, Series } from '@/core/domain';
+import { listeningProgress } from '@/core/playback/listening-progress';
+import { countBookmarks, type BookmarkGroup } from '@/features/bookmarks/bookmark-data';
+import { bookmarkCountLabel } from '@/features/bookmarks/bookmark-format';
+import { rowStateOf } from '@/features/chapter/chapter-status';
 import type { ChapterProgress } from '@/features/pipeline/facade';
 import { withAlpha } from '@/features/shared/color';
 import { NEUTRAL_TINT } from '@/features/shared/cover-tint';
@@ -21,11 +26,13 @@ import { Card } from '@/ui/card';
 import { CoverImage } from '@/ui/cover-image';
 import { EmptyState } from '@/ui/empty-state';
 import { IconButton } from '@/ui/icon-button';
-import { BookOpen, ChevronLeft, Ellipsis, Play, Plus } from '@/ui/icons';
+import { Bookmark, BookOpen, ChevronLeft, Ellipsis, Play, Plus } from '@/ui/icons';
+import { ListItem } from '@/ui/list-item';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { gutter, hairline, radius, space } from '@/ui/tokens';
 
+import { chapterAvailability, type ChapterAction } from './chapter-actions';
 import { ChapterRow } from './chapter-row';
 import { COVER_PICKER_WIDTH } from './cover-picker';
 
@@ -48,19 +55,27 @@ export interface SeriesViewProps {
   /** Estimated OCR cost per scanned chapter, keyed by chapter id. */
   ocrPrices: Readonly<Record<string, number>>;
   playTarget: PlayTarget | null;
+  /** The chapter the listener is on, which gets the "Now" marker. */
+  currentChapterId: string | null;
+  bookmarks: readonly BookmarkGroup[];
   onBack: () => void;
   onMenu: () => void;
   onPlay: (chapterId: string) => void;
   onAddChapter: () => void;
   onOpenChapter: (chapterId: string) => void;
+  /** Opens a chapter's action menu. */
   onChapterMenu: (chapterId: string) => void;
+  /** Runs one chapter action, from a row's accessibility actions. */
+  onChapterAction: (chapterId: string, action: ChapterAction) => void;
   onRetry: (chapterId: string) => void;
   onOcr: (chapterId: string) => void;
+  onBookmarks: () => void;
 }
 
 /**
  * The series screen. The cover shrinks and the title moves into the top bar as the list scrolls.
- * Everything here is driven by props, so the same view serves the live screen and the dev gallery.
+ * The chapters are a FlatList, so a long series only builds the rows on screen. Everything here is
+ * driven by props, so the same view serves the live screen and the dev gallery.
  */
 export function SeriesView(props: SeriesViewProps) {
   const { series, chapters, playTarget, onBack, onMenu, onPlay, onAddChapter } = props;
@@ -91,6 +106,157 @@ export function SeriesView(props: SeriesViewProps) {
     chapters.reduce((sum, item) => sum + (item.record.chapter.durationMs ?? 0), 0),
   );
   const count = chapters.length;
+  const { ocrPrices, currentChapterId, bookmarks, onChapterMenu, onChapterAction, onRetry } = props;
+  const { onOcr, onOpenChapter, onBookmarks } = props;
+
+  const renderChapter = useCallback(
+    ({ item, index }: ListRenderItemInfo<SeriesChapterItem>) => {
+      const { record, progress } = item;
+      const availability = chapterAvailability({
+        index,
+        count,
+        status: record.chapter.status,
+        processing: rowStateOf(record.chapter, progress) === 'processing',
+      });
+      return (
+        <View style={styles.inset}>
+          <View
+            style={[
+              styles.rowCard,
+              { borderColor: colors.border, backgroundColor: colors.surface },
+              rowEdges(index, count),
+            ]}
+          >
+            <ChapterRow
+              number={index + 1}
+              chapter={record.chapter}
+              progress={progress}
+              failure={item.failure}
+              ocrUsd={ocrPrices[record.chapter.id] ?? null}
+              listening={listeningProgress(record.chapter.durationMs, record.listening)}
+              current={record.chapter.id === currentChapterId}
+              divided={index > 0}
+              availability={availability}
+              onOpen={onOpenChapter}
+              onPlay={onPlay}
+              onMenu={onChapterMenu}
+              onAction={onChapterAction}
+              onRetry={onRetry}
+              onOcr={onOcr}
+            />
+          </View>
+        </View>
+      );
+    },
+    [
+      count,
+      colors.border,
+      colors.surface,
+      ocrPrices,
+      currentChapterId,
+      onOpenChapter,
+      onPlay,
+      onChapterMenu,
+      onChapterAction,
+      onRetry,
+      onOcr,
+    ],
+  );
+
+  const header = (
+    <>
+      <View style={styles.hero}>
+        <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, washStyle]}>
+          <LinearGradient
+            colors={[withAlpha(tint, 0.55), withAlpha(tint, 0.18), colors.bg]}
+            locations={[0, 0.6, 1]}
+            start={{ x: 0.5, y: 0 }}
+            end={{ x: 0.5, y: 1 }}
+            style={StyleSheet.absoluteFill}
+          />
+        </Animated.View>
+        <Animated.View style={[styles.coverShadow, coverStyle]}>
+          <CoverImage uri={series.coverUri} title={series.title} style={styles.cover} />
+        </Animated.View>
+        <Text
+          variant="display"
+          align="center"
+          numberOfLines={2}
+          accessibilityRole="header"
+          style={styles.title}
+        >
+          {series.title}
+        </Text>
+        <View style={styles.meta}>
+          {pair ? <Badge label={pair} tone="accent" /> : null}
+          <Text variant="caption" tone="muted">
+            {summary}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.actions}>
+        <View style={styles.primary}>
+          <Button
+            label={playTarget?.resume ? 'Continue' : 'Play'}
+            icon={Play}
+            size="lg"
+            fullWidth
+            disabled={playTarget === null}
+            accessibilityHint={playTarget === null ? 'Process a chapter first' : undefined}
+            onPress={() => {
+              if (playTarget) onPlay(playTarget.chapterId);
+            }}
+          />
+          {playTarget === null && count > 0 ? (
+            <Text variant="caption" tone="muted" align="center">
+              Process a chapter to start listening.
+            </Text>
+          ) : null}
+        </View>
+        <Button
+          label="Add chapter"
+          icon={Plus}
+          variant="secondary"
+          size="lg"
+          onPress={onAddChapter}
+        />
+      </View>
+
+      {count === 0 ? (
+        <EmptyState
+          icon={BookOpen}
+          title="No chapters yet"
+          description="Add a link, a PDF or pasted text. You see the cost before anything is spent."
+          action={{ label: 'Add your first chapter', icon: Plus, onPress: onAddChapter }}
+        />
+      ) : (
+        <View style={styles.sectionRow}>
+          <Text variant="heading" accessibilityRole="header">
+            Chapters
+          </Text>
+          <Text variant="caption" tone="muted">
+            {count === 1 ? '1 chapter' : `${count} chapters`}
+          </Text>
+        </View>
+      )}
+    </>
+  );
+
+  const footer =
+    count === 0 ? null : (
+      <View style={styles.inset}>
+        <Card style={styles.flush}>
+          <ListItem
+            title="Bookmarks"
+            subtitle={bookmarkCountLabel(countBookmarks(bookmarks))}
+            leading={Bookmark}
+            onPress={onBookmarks}
+            accessibilityHint="Opens your bookmarks in this series"
+          />
+        </Card>
+      </View>
+    );
 
   return (
     <SafeAreaView edges={['top']} style={[styles.root, { backgroundColor: colors.bg }]}>
@@ -112,105 +278,31 @@ export function SeriesView(props: SeriesViewProps) {
         <IconButton label="Series actions" icon={Ellipsis} onPress={onMenu} />
       </View>
 
-      <Animated.ScrollView
+      <Animated.FlatList
+        data={chapters}
+        keyExtractor={(item) => item.record.chapter.id}
+        renderItem={renderChapter}
+        ListHeaderComponent={header}
+        ListFooterComponent={footer}
         onScroll={onScroll}
         scrollEventThrottle={16}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.hero}>
-          <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, washStyle]}>
-            <LinearGradient
-              colors={[withAlpha(tint, 0.55), withAlpha(tint, 0.18), colors.bg]}
-              locations={[0, 0.6, 1]}
-              start={{ x: 0.5, y: 0 }}
-              end={{ x: 0.5, y: 1 }}
-              style={StyleSheet.absoluteFill}
-            />
-          </Animated.View>
-          <Animated.View style={[styles.coverShadow, coverStyle]}>
-            <CoverImage uri={series.coverUri} title={series.title} style={styles.cover} />
-          </Animated.View>
-          <Text
-            variant="display"
-            align="center"
-            numberOfLines={2}
-            accessibilityRole="header"
-            style={styles.title}
-          >
-            {series.title}
-          </Text>
-          <View style={styles.meta}>
-            {pair ? <Badge label={pair} tone="accent" /> : null}
-            <Text variant="caption" tone="muted">
-              {summary}
-            </Text>
-          </View>
-        </View>
-
-        <View style={styles.actions}>
-          <View style={styles.primary}>
-            <Button
-              label={playTarget?.resume ? 'Continue' : 'Play'}
-              icon={Play}
-              size="lg"
-              fullWidth
-              disabled={playTarget === null}
-              accessibilityHint={playTarget === null ? 'Process a chapter first' : undefined}
-              onPress={() => {
-                if (playTarget) onPlay(playTarget.chapterId);
-              }}
-            />
-          </View>
-          <Button
-            label="Add chapter"
-            icon={Plus}
-            variant="secondary"
-            size="lg"
-            onPress={onAddChapter}
-          />
-        </View>
-
-        {count === 0 ? (
-          <EmptyState
-            icon={BookOpen}
-            title="No chapters yet"
-            description="Add a link, a PDF or pasted text. You see the cost before anything is spent."
-            action={{ label: 'Add your first chapter', icon: Plus, onPress: onAddChapter }}
-          />
-        ) : (
-          <View style={styles.list}>
-            <View style={styles.sectionRow}>
-              <Text variant="heading" accessibilityRole="header">
-                Chapters
-              </Text>
-              <Text variant="caption" tone="muted">
-                {String(count)}
-              </Text>
-            </View>
-            <Card style={styles.flush}>
-              {chapters.map((item, index) => (
-                <ChapterRow
-                  key={item.record.chapter.id}
-                  number={index + 1}
-                  chapter={item.record.chapter}
-                  progress={item.progress}
-                  failure={item.failure}
-                  ocrUsd={props.ocrPrices[item.record.chapter.id] ?? null}
-                  divided={index > 0}
-                  onOpen={props.onOpenChapter}
-                  onPlay={onPlay}
-                  onMenu={props.onChapterMenu}
-                  onRetry={props.onRetry}
-                  onOcr={props.onOcr}
-                />
-              ))}
-            </Card>
-          </View>
-        )}
-      </Animated.ScrollView>
+      />
     </SafeAreaView>
   );
+}
+
+/** Chapter rows read as one card: only the first row's top and the last row's bottom are rounded. */
+function rowEdges(index: number, count: number): ViewStyle {
+  const top = index === 0 ? radius.lg : 0;
+  const bottom = index === count - 1 ? radius.lg : 0;
+  return {
+    borderTopLeftRadius: top,
+    borderTopRightRadius: top,
+    borderBottomLeftRadius: bottom,
+    borderBottomRightRadius: bottom,
+  };
 }
 
 const styles = StyleSheet.create({
@@ -271,15 +363,20 @@ const styles = StyleSheet.create({
   primary: {
     flex: 1,
   },
-  list: {
-    paddingHorizontal: gutter,
-    paddingTop: space.xxl,
-    gap: space.md,
-  },
   sectionRow: {
     flexDirection: 'row',
     alignItems: 'baseline',
     justifyContent: 'space-between',
+    paddingHorizontal: gutter,
+    paddingTop: space.xxl,
+    paddingBottom: space.md,
+  },
+  inset: {
+    paddingHorizontal: gutter,
+  },
+  rowCard: {
+    overflow: 'hidden',
+    borderWidth: hairline,
   },
   flush: {
     padding: 0,

@@ -104,7 +104,7 @@ function ShelfGrid({
             Series
           </Text>
           <Text variant="caption" tone="muted">
-            {String(entries.length)}
+            {entries.length === 1 ? '1 series' : `${entries.length} series`}
           </Text>
         </View>
         <IconButton label="New series" icon={Plus} variant="surface" onPress={onCreateSeries} />

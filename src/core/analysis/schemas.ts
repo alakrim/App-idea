@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { AMBIENCE_CATEGORY_IDS } from './ambience-taxonomy';
+import { AMBIENCE_CATEGORY_IDS, AMBIENCE_ERAS } from './ambience-taxonomy';
 import { MEMORY_LIMITS } from './limits';
 import { normalizeName } from '../memory/entities';
 import { normalizeWhitespace } from '../text/normalize';
@@ -70,6 +70,15 @@ export const rawCueSchema = z.object({
 export const ambienceCategoryIdSchema = z.enum(AMBIENCE_CATEGORY_IDS);
 
 /**
+ * The setting of one passage: the era of the place where it happens, or null when the text does not
+ * say (A4). The chapter's era is the majority of its passages' eras (see chapterEraOf).
+ */
+export const chapterSettingSchema = z.object({
+  era: z.enum(AMBIENCE_ERAS).nullable(),
+});
+export type ChapterSetting = z.infer<typeof chapterSettingSchema>;
+
+/**
  * The reply shape sent to the model. Cue items are described in full, with nullable fields, so that
  * strict structured-output decoding constrains them (ADR-0006 §2). `validateCues` stays the
  * semantic gate.
@@ -77,6 +86,7 @@ export const ambienceCategoryIdSchema = z.enum(AMBIENCE_CATEGORY_IDS);
 export const analysisOutputSchema = z.object({
   memory: memoryDraftSchema,
   cues: z.array(rawCueSchema),
+  setting: chapterSettingSchema,
 });
 
 /** The json_schema the analysis call sends. Derived from the output schema, never hand-written. */
@@ -92,6 +102,11 @@ export const ANALYSIS_JSON_SCHEMA: JsonSchemaSpec = {
 export const analysisResponseSchema = z.object({
   memory: memoryDraftSchema,
   cues: z.array(z.unknown()).default([]),
+  /**
+   * Read leniently: a reply without a setting keeps the passage's era unknown (null) rather than
+   * failing the whole chunk. The strict output schema above still asks for it.
+   */
+  setting: chapterSettingSchema.nullable().default(null),
 });
 
 /**

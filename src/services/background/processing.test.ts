@@ -1,5 +1,6 @@
 import {
   addCancelListener,
+  isProcessing,
   notificationPermissionStatus,
   requestNotificationPermission,
   startProcessing,
@@ -16,6 +17,10 @@ describe('lectio-background without the Android service', () => {
     await expect(startProcessing(NOTICE)).resolves.toBe(false);
     await expect(updateProcessing(NOTICE)).resolves.toBeUndefined();
     await expect(stopProcessing()).resolves.toBeUndefined();
+  });
+
+  it('reports that nothing is processing where the service does not exist', async () => {
+    await expect(isProcessing()).resolves.toBe(false);
   });
 
   it('grants the notification permission where no notification is needed', async () => {

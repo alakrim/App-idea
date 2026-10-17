@@ -1,5 +1,6 @@
 import { StyleSheet, Switch, View } from 'react-native';
 
+import { BED_LEVEL_RANGE_DB } from '@/core/playback/ranges';
 import { Sheet } from '@/ui/sheet';
 import { Slider } from '@/ui/slider';
 import { Text } from '@/ui/text';
@@ -7,10 +8,6 @@ import { useTheme } from '@/ui/theme';
 import { space } from '@/ui/tokens';
 
 import { usePlayback, usePlaybackContent } from './player-provider';
-
-/** Bed level range the engine accepts, in dB relative to the narration. */
-export const BED_LEVEL_MIN_DB = -40;
-export const BED_LEVEL_MAX_DB = 0;
 
 export interface AmbienceSheetProps {
   visible: boolean;
@@ -38,15 +35,15 @@ export function AmbienceSheet({ visible, onClose, activeNames }: AmbienceSheetPr
           accessibilityLabel="Ambience on"
           value={ambience.enabled}
           onValueChange={(enabled) => controller.setAmbience({ enabled })}
-          trackColor={{ false: colors.border, true: colors.accent }}
+          trackColor={{ false: colors.boundary, true: colors.accent }}
           thumbColor={colors.text}
         />
       </View>
       <Slider
         label="Ambience level"
         value={ambience.levelDb}
-        min={BED_LEVEL_MIN_DB}
-        max={BED_LEVEL_MAX_DB}
+        min={BED_LEVEL_RANGE_DB.min}
+        max={BED_LEVEL_RANGE_DB.max}
         step={1}
         formatValue={(db) => `${db} dB`}
         minimumLabel="Subtle"

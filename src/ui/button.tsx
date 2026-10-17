@@ -108,7 +108,7 @@ function variantLook(variant: ButtonVariant, colors: ThemeColors): VariantLook {
     case 'primary':
       return { background: colors.accent, foreground: colors.onAccent };
     case 'secondary':
-      return { background: colors.surfaceRaised, foreground: colors.text, border: colors.border };
+      return { background: colors.surfaceRaised, foreground: colors.text, border: colors.boundary };
     case 'ghost':
       return { background: transparent, foreground: colors.accent };
     case 'danger':

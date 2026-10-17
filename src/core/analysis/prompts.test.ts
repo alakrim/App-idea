@@ -11,7 +11,7 @@ import {
 
 describe('analysis prompts', () => {
   it('carries a version string', () => {
-    expect(PROMPT_VERSION).toBe('analysis-v3');
+    expect(PROMPT_VERSION).toBe('analysis-v4');
   });
 
   it('states the setting-coverage policy with the taxonomy ids it names', () => {
@@ -114,7 +114,7 @@ describe('analysis prompts', () => {
 
   it('lists every enabled category id and no oneshot id in the system prompt', () => {
     for (const c of enabledCategories())
-      expect(ANALYSIS_SYSTEM_PROMPT).toContain(`${c.id}: ${c.description}`);
+      expect(ANALYSIS_SYSTEM_PROMPT).toContain(`${c.id}: ${c.contains}`);
     expect(ANALYSIS_SYSTEM_PROMPT).not.toContain('gunshot:');
     expect(ANALYSIS_SYSTEM_PROMPT).not.toContain('thunder_clap:');
   });

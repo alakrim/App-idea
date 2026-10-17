@@ -1,6 +1,6 @@
 import { FREE_NARRATOR_DAILY_LIMIT_MESSAGE } from '@/core/narration/options';
 
-import { createFakeFetch, errorResponse } from './__fixtures__/fake-fetch';
+import { createFakeFetch, errorResponse, hangUntilAborted } from './__fixtures__/fake-fetch';
 import { createOpenRouterClient } from './client';
 import { PipelineFailure } from './errors';
 import { formatSupportedBy } from './speech';
@@ -33,6 +33,34 @@ const speechInput = {
   format: 'mp3' as const,
   instructions: 'Calm audiobook narrator.',
 };
+
+describe('synthesizeSpeech timeout', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('waits 180 seconds for a passage, which is longer than the 120-second chat timeout', async () => {
+    const { client, calls } = makeClient(hangUntilAborted);
+    const outcome = client
+      .synthesizeSpeech({ ...speechInput, input: 'Chapter one.' })
+      .catch((caught: unknown) => caught);
+
+    await jest.advanceTimersByTimeAsync(0);
+    expect(calls).toHaveLength(1);
+    await jest.advanceTimersByTimeAsync(179_999);
+    expect(calls[0]?.signal?.aborted).toBe(false);
+    await jest.advanceTimersByTimeAsync(1);
+    expect(calls[0]?.signal?.aborted).toBe(true);
+    expect(await outcome).toBeInstanceOf(PipelineFailure);
+    expect(((await outcome) as PipelineFailure).error).toMatchObject({
+      code: 'NETWORK',
+      retryable: true,
+    });
+  });
+});
 
 describe('synthesizeSpeech', () => {
   it('posts the speech request and returns the audio bytes', async () => {

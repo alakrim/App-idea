@@ -1,8 +1,7 @@
 import { Readability } from '@mozilla/readability';
-import { Defuddle } from 'defuddle/node';
+import Defuddle from 'defuddle';
 
 import { htmlToBlocks } from './blocks';
-import { parseDocument } from './dom';
 
 import type { ExtractedArticle } from './types';
 
@@ -33,9 +32,12 @@ function toArticle(parts: {
   };
 }
 
-/** Runs Mozilla Readability over linkedom. An unreadable page yields an empty article, not an error. */
-export function extractWithReadability(html: string, url: string): ExtractedArticle {
-  const document = parseDocument(html, url);
+/**
+ * Runs Mozilla Readability on a parsed page. Readability rewrites the document it is given, so the
+ * caller passes a document that no other extractor still needs. An unreadable page yields an empty
+ * article, not an error.
+ */
+export function extractWithReadability(document: Document): ExtractedArticle {
   const article = new Readability(document, {}).parse();
   if (!article) return toArticle({});
   return toArticle({
@@ -49,12 +51,15 @@ export function extractWithReadability(html: string, url: string): ExtractedArti
 }
 
 /**
- * Runs Defuddle over linkedom. `defuddle/node` has only an `import` export condition, so the
- * Jest `core` project maps it to the CJS build (see jest.config.js).
+ * Runs Defuddle on a parsed page with its browser build, which has no Node-only dependencies. Defuddle
+ * rewrites the document it is given, so the caller passes its own copy. `parseAsync` is the entry
+ * the Node build used, so the async extractors (such as transcripts) keep working.
  */
-export async function extractWithDefuddle(html: string, url: string): Promise<ExtractedArticle> {
-  const document = parseDocument(html, url);
-  const result = await Defuddle(document, url);
+export async function extractWithDefuddle(
+  document: Document,
+  url: string,
+): Promise<ExtractedArticle> {
+  const result = await new Defuddle(document, { url }).parseAsync();
   return toArticle({
     title: result.title,
     byline: result.author,

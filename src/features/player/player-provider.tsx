@@ -5,17 +5,27 @@ import { useStore } from 'zustand';
 import type { AudioEngine } from '@/audio/engine';
 import { useDb } from '@/db/hooks';
 import { usePipeline } from '@/features/pipeline/facade';
+import { settingsStore } from '@/features/settings/settings-store';
 
 import {
   createPlaybackController,
+  type AmbiencePort,
   type PlaybackContent,
   type PlaybackController,
   type PlayChapterOptions,
 } from './playback-controller';
 import { createPlaybackData } from './playback-data';
-import { createDefaultEngine } from './player-engine';
+import { createDefaultEngine, createDefaultSamples } from './player-engine';
 
 import type { PlayerState } from './player-store';
+import type { SampleOutput } from './sample-output';
+
+/** The saved ambience settings, as the playback controller reads and writes them. */
+const settingsAmbience: AmbiencePort = {
+  read: () => settingsStore.getSettings().ambience,
+  write: (next) => settingsStore.patch({ ambience: next }),
+  subscribe: (listener) => settingsStore.subscribe((settings) => listener(settings.ambience)),
+};
 
 const PlaybackContext = createContext<PlaybackController | null>(null);
 
@@ -23,6 +33,8 @@ export interface PlayerEngineProviderProps {
   children: ReactNode;
   /** Overrides the default engine (native on device, fake on web). Tests and the dev screens pass one. */
   engine?: AudioEngine;
+  /** Overrides the sample output. Tests pass one; the app uses the native output. */
+  samples?: SampleOutput;
 }
 
 /**
@@ -30,7 +42,7 @@ export interface PlayerEngineProviderProps {
  * chapter content. Mount it under DbProvider and PipelineProvider. It also saves the position when
  * the app leaves the foreground.
  */
-export function PlayerEngineProvider({ children, engine }: PlayerEngineProviderProps) {
+export function PlayerEngineProvider({ children, engine, samples }: PlayerEngineProviderProps) {
   const db = useDb();
   const pipeline = usePipeline();
   const controller = useMemo(
@@ -39,8 +51,11 @@ export function PlayerEngineProvider({ children, engine }: PlayerEngineProviderP
         data: createPlaybackData(db),
         engine: engine ?? createDefaultEngine(),
         pipeline,
+        ambience: settingsAmbience,
+        samples: samples ?? createDefaultSamples(),
+        defaultRate: () => settingsStore.getSettings().playback.defaultRate,
       }),
-    [db, engine, pipeline],
+    [db, engine, pipeline, samples],
   );
 
   useEffect(() => () => controller.dispose(), [controller]);
@@ -80,6 +95,12 @@ export function usePlayerState<T>(selector: (state: PlayerState) => T): T {
   // Call zustand through `useStore`, never through a store held in a variable: the React Compiler
   // only treats `use*` names as hooks, and memoizing a hidden hook call breaks the hook order.
   return useStore(player.usePlayerState, selector);
+}
+
+/** Whether a sample (a narrator's clip or a device voice line) is playing. */
+export function usePlaybackSampling(): boolean {
+  const { sample } = usePlayback();
+  return useStore(sample, (state) => state.playing);
 }
 
 /** Selects from the content of the chapter in view. */

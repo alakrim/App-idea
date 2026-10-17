@@ -1,40 +1,9 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "e4de4a40-ab3d-4088-a22c-d855e472999c",
+  "id": "eab69584-3546-431d-a971-84944d7ffaa5",
   "prevId": "c9d9d3fa-8193-4f70-bf14-2bdcc0c74570",
   "tables": {
-    "ambience_cue_cache": {
-      "name": "ambience_cue_cache",
-      "columns": {
-        "key": {
-          "name": "key",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "cues": {
-          "name": "cues",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
     "ambience_cues": {
       "name": "ambience_cues",
       "columns": {
@@ -130,59 +99,6 @@
         "ambience_cues_chapter_id_chapters_id_fk": {
           "name": "ambience_cues_chapter_id_chapters_id_fk",
           "tableFrom": "ambience_cues",
-          "tableTo": "chapters",
-          "columnsFrom": [
-            "chapter_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "ambience_reports": {
-      "name": "ambience_reports",
-      "columns": {
-        "chapter_id": {
-          "name": "chapter_id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "report": {
-          "name": "report",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "ambience_reports_updated_idx": {
-          "name": "ambience_reports_updated_idx",
-          "columns": [
-            "updated_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "ambience_reports_chapter_id_chapters_id_fk": {
-          "name": "ambience_reports_chapter_id_chapters_id_fk",
-          "tableFrom": "ambience_reports",
           "tableTo": "chapters",
           "columnsFrom": [
             "chapter_id"
@@ -1320,6 +1236,75 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "stage_activity": {
+      "name": "stage_activity",
+      "columns": {
+        "chapter_id": {
+          "name": "chapter_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "stage": {
+          "name": "stage",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "last_activity_at": {
+          "name": "last_activity_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "stall_count": {
+          "name": "stall_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "stale_abort_count": {
+          "name": "stale_abort_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "stage_activity_chapter_id_chapters_id_fk": {
+          "name": "stage_activity_chapter_id_chapters_id_fk",
+          "tableFrom": "stage_activity",
+          "tableTo": "chapters",
+          "columnsFrom": [
+            "chapter_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "stage_activity_chapter_id_stage_pk": {
+          "columns": [
+            "chapter_id",
+            "stage"
+          ],
+          "name": "stage_activity_chapter_id_stage_pk"
+        }
+      },
       "uniqueConstraints": {},
       "checkConstraints": {}
     },

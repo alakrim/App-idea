@@ -7,25 +7,33 @@ import { usePressScale } from './use-press-scale';
 
 import type { ReactNode } from 'react';
 
-export interface CardProps {
+interface CardBaseProps {
   children: ReactNode;
   /** Raised cards sit one colour step up, for modals and the player sheet. */
   raised?: boolean;
-  onPress?: () => void;
-  /** Required when the card is pressable, so screen readers can name it. */
-  accessibilityLabel?: string;
   style?: StyleProp<ViewStyle>;
   testID?: string;
 }
 
-export function Card({
-  children,
-  raised = false,
-  onPress,
-  accessibilityLabel,
-  style,
-  testID,
-}: CardProps) {
+/** A pressable card must be named, so the type makes the label required. */
+interface PressableCardProps extends CardBaseProps {
+  onPress: () => void;
+  accessibilityLabel: string;
+  accessible?: boolean;
+}
+
+/** A static card only groups its content when a label is given, so it stays out of the way otherwise. */
+interface StaticCardProps extends CardBaseProps {
+  onPress?: undefined;
+  accessibilityLabel?: string;
+  accessible?: boolean;
+}
+
+export type CardProps = PressableCardProps | StaticCardProps;
+
+export function Card(props: CardProps) {
+  const { children, raised = false, style, testID, accessibilityLabel, accessible } = props;
+  const onPress = props.onPress;
   const { colors, scheme } = useTheme();
   const { animatedStyle, onPressIn, onPressOut } = usePressScale();
   // A white highlight is invisible on a light surface, so light raised cards use a hairline instead.
@@ -43,7 +51,12 @@ export function Card({
 
   if (!onPress) {
     return (
-      <View testID={testID} style={surface}>
+      <View
+        testID={testID}
+        accessible={accessible}
+        accessibilityLabel={accessibilityLabel}
+        style={surface}
+      >
         {children}
       </View>
     );

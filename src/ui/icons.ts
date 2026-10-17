@@ -8,6 +8,7 @@
 import type { LucideIcon } from 'lucide-react-native';
 
 export { default as Anchor } from 'lucide-react-native/icons/anchor';
+export { default as Anvil } from 'lucide-react-native/icons/anvil';
 export { default as ArrowDown } from 'lucide-react-native/icons/arrow-down';
 export { default as ArrowUp } from 'lucide-react-native/icons/arrow-up';
 export { default as Atom } from 'lucide-react-native/icons/atom';
@@ -16,6 +17,7 @@ export { default as Bell } from 'lucide-react-native/icons/bell';
 export { default as Bird } from 'lucide-react-native/icons/bird';
 export { default as Bomb } from 'lucide-react-native/icons/bomb';
 export { default as BookA } from 'lucide-react-native/icons/book-a';
+export { default as Bookmark } from 'lucide-react-native/icons/bookmark';
 export { default as BookmarkPlus } from 'lucide-react-native/icons/bookmark-plus';
 export { default as BookOpen } from 'lucide-react-native/icons/book-open';
 export { default as Briefcase } from 'lucide-react-native/icons/briefcase';
@@ -32,6 +34,7 @@ export { default as Church } from 'lucide-react-native/icons/church';
 export { default as CircleCheck } from 'lucide-react-native/icons/circle-check';
 export { default as CircleDollarSign } from 'lucide-react-native/icons/circle-dollar-sign';
 export { default as ClipboardPaste } from 'lucide-react-native/icons/clipboard-paste';
+export { default as CircleStop } from 'lucide-react-native/icons/circle-stop';
 export { default as Clock } from 'lucide-react-native/icons/clock';
 export { default as CloudDrizzle } from 'lucide-react-native/icons/cloud-drizzle';
 export { default as CloudLightning } from 'lucide-react-native/icons/cloud-lightning';

@@ -6,10 +6,13 @@ import {
   isLanguageSupported,
   KOKORO_MODEL_ID,
   NARRATOR_OPTIONS,
+  DEFAULT_NARRATE_CONCURRENCY,
+  narrateConcurrencyFor,
   optionFor,
-  segmentMaxCharsFor,
+  segmentLimitsFor,
   type NarratorId,
 } from './options';
+import { NARRATION_RAMP_SECONDS } from '../text/chunk';
 
 /** Voice lists in the shape the live catalogue returns them (ADR-0003, L1 brief). */
 const KOKORO_VOICES = [
@@ -52,8 +55,27 @@ describe('NARRATOR_OPTIONS catalogue', () => {
 
   it('sizes every curated segment under the 4,000-character speech guard', () => {
     for (const entry of NARRATOR_OPTIONS) {
-      expect(segmentMaxCharsFor(entry.modelId)).toBeLessThan(4_000);
+      expect(segmentLimitsFor(entry.modelId).maxChars).toBeLessThan(4_000);
     }
+  });
+
+  it('limits paid segments to 40 seconds of speech, and the free narrator to 120', () => {
+    expect(option('best').segmentMaxSeconds).toBe(40);
+    expect(option('budget').segmentMaxSeconds).toBe(40);
+    expect(option('free').segmentMaxSeconds).toBe(120);
+  });
+
+  it('starts every narrator with a 12-second first segment, so the first audio arrives quickly', () => {
+    expect(NARRATION_RAMP_SECONDS[0]).toBe(12);
+    for (const entry of NARRATOR_OPTIONS) {
+      expect(NARRATION_RAMP_SECONDS[0] ?? 0).toBeLessThanOrEqual(entry.segmentMaxSeconds);
+    }
+  });
+
+  it('runs three requests at once for the paid narrators, and one for the rate-limited free one', () => {
+    expect(option('best').narrateConcurrency).toBe(6);
+    expect(option('budget').narrateConcurrency).toBe(6);
+    expect(option('free').narrateConcurrency).toBe(1);
   });
 
   it('allows style notes for Gemini only', () => {
@@ -131,17 +153,34 @@ describe('defaultVoice', () => {
   });
 });
 
-describe('segmentMaxCharsFor', () => {
+describe('segmentLimitsFor', () => {
   it('gives every Fish Audio model 1,800 characters, Free and paid alike', () => {
-    expect(segmentMaxCharsFor(FREE_NARRATOR_MODEL_ID)).toBe(1_800);
-    expect(segmentMaxCharsFor('fish-audio/drama-3')).toBe(1_800);
-    expect(segmentMaxCharsFor('fish-audio/s2.1-pro')).toBe(1_800);
+    expect(segmentLimitsFor(FREE_NARRATOR_MODEL_ID).maxChars).toBe(1_800);
+    expect(segmentLimitsFor('fish-audio/drama-3').maxChars).toBe(1_800);
+    expect(segmentLimitsFor('fish-audio/s2.1-pro').maxChars).toBe(1_800);
   });
 
   it('gives every other speech model the 600-character default', () => {
-    expect(segmentMaxCharsFor(GEMINI_NARRATOR_MODEL_ID)).toBe(600);
-    expect(segmentMaxCharsFor(KOKORO_MODEL_ID)).toBe(600);
-    expect(segmentMaxCharsFor('elevenlabs/eleven-v3')).toBe(600);
+    expect(segmentLimitsFor(GEMINI_NARRATOR_MODEL_ID).maxChars).toBe(600);
+    expect(segmentLimitsFor(KOKORO_MODEL_ID).maxChars).toBe(600);
+    expect(segmentLimitsFor('elevenlabs/eleven-v3').maxChars).toBe(600);
+  });
+
+  it('uses each narrator speech-time limit, and the default for any other speech model', () => {
+    expect(segmentLimitsFor(FREE_NARRATOR_MODEL_ID).maxSeconds).toBe(120);
+    expect(segmentLimitsFor(GEMINI_NARRATOR_MODEL_ID).maxSeconds).toBe(40);
+    expect(segmentLimitsFor(KOKORO_MODEL_ID).maxSeconds).toBe(40);
+    expect(segmentLimitsFor('elevenlabs/eleven-v3').maxSeconds).toBe(40);
+  });
+});
+
+describe('narrateConcurrencyFor', () => {
+  it('uses each narrator concurrency, and the default for any other speech model', () => {
+    expect(narrateConcurrencyFor(GEMINI_NARRATOR_MODEL_ID)).toBe(6);
+    expect(narrateConcurrencyFor(KOKORO_MODEL_ID)).toBe(6);
+    expect(narrateConcurrencyFor(FREE_NARRATOR_MODEL_ID)).toBe(1);
+    expect(narrateConcurrencyFor('elevenlabs/eleven-v3')).toBe(DEFAULT_NARRATE_CONCURRENCY);
+    expect(DEFAULT_NARRATE_CONCURRENCY).toBe(2);
   });
 });
 

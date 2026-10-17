@@ -12,6 +12,8 @@ export interface ConfirmSheetProps {
   confirmLabel: string;
   /** Red confirm button, for deletes. */
   destructive?: boolean;
+  /** Holds the confirm until the action is ready, such as while its price is still being worked out. */
+  confirmDisabled?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 }
@@ -23,6 +25,7 @@ export function ConfirmSheet({
   message,
   confirmLabel,
   destructive = false,
+  confirmDisabled = false,
   onConfirm,
   onCancel,
 }: ConfirmSheetProps) {
@@ -37,6 +40,7 @@ export function ConfirmSheet({
           variant={destructive ? 'danger' : 'primary'}
           size="lg"
           fullWidth
+          disabled={confirmDisabled}
           onPress={onConfirm}
         />
         <Button label="Cancel" variant="ghost" size="lg" fullWidth onPress={onCancel} />

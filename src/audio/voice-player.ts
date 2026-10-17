@@ -23,6 +23,8 @@ interface Slot {
   holds: number | null;
   /** Position to seek to once the held segment is ready. Applied only while the slot is active. */
   pendingSeekMs: number | null;
+  /** True once the platform reports the held segment as loaded. */
+  loaded: boolean;
   unsubscribe: Unsubscribe;
 }
 
@@ -45,6 +47,11 @@ export function createVoicePlayer(): VoicePort {
   let rate = 1;
   let volume = 1;
   let metadata: VoiceMetadata = { title: '', seriesTitle: '', coverUri: null };
+  /** Bumped by every load and by dispose. A load that finds it moved on creates nothing. */
+  let loadToken = 0;
+  let disposed = false;
+  /** The position the next load starts at. A seek made before the players exist moves it. */
+  let requestedStartMs = 0;
   const listeners = new Set<(snapshot: VoiceSnapshot) => void>();
 
   const totalMs = () => (starts.at(-1) ?? 0) + (segments.at(-1)?.durationMs ?? 0);
@@ -97,12 +104,19 @@ export function createVoicePlayer(): VoicePort {
     slot.player.setPlaybackRate(rate, 'high');
     slot.player.volume = volume;
     slot.holds = segmentIdx;
+    slot.loaded = false;
     slot.pendingSeekMs = seekMs;
   }
 
   function makeSlot(slotIdx: 0 | 1): Slot {
     const player = createAudioPlayer(null, { updateInterval: UPDATE_INTERVAL_MS });
-    const slot: Slot = { player, holds: null, pendingSeekMs: null, unsubscribe: () => undefined };
+    const slot: Slot = {
+      player,
+      holds: null,
+      pendingSeekMs: null,
+      loaded: false,
+      unsubscribe: () => undefined,
+    };
     const subscription = player.addListener('playbackStatusUpdate', (status) => {
       onStatus(slot, slotIdx, status);
     });
@@ -155,6 +169,7 @@ export function createVoicePlayer(): VoicePort {
     if (!slots || slot.holds === null) return;
     if (slotIdx !== active) return;
 
+    slot.loaded = status.isLoaded;
     if (status.isLoaded && slot.pendingSeekMs !== null) {
       const seekMs = slot.pendingSeekMs;
       slot.pendingSeekMs = null;
@@ -191,6 +206,14 @@ export function createVoicePlayer(): VoicePort {
 
   return {
     async load(nextSegments, startMs, nextMetadata) {
+      if (disposed) return;
+      const token = ++loadToken;
+      releaseSlots();
+      segments = [...nextSegments];
+      recomputeStarts();
+      metadata = nextMetadata;
+      requestedStartMs = startMs;
+      active = 0;
       await setAudioModeAsync({
         playsInSilentMode: true,
         shouldPlayInBackground: true,
@@ -198,19 +221,17 @@ export function createVoicePlayer(): VoicePort {
         allowsRecording: false,
         shouldRouteThroughEarpiece: false,
       });
-      releaseSlots();
-      segments = [...nextSegments];
-      recomputeStarts();
-      metadata = nextMetadata;
-      slots = [makeSlot(0), makeSlot(1)];
+      // A newer load or a dispose came in while the audio mode was being set. Create nothing.
+      if (token !== loadToken || disposed) return;
+      const created: [Slot, Slot] = [makeSlot(0), makeSlot(1)];
+      slots = created;
       ended = false;
       wantPlaying = false;
-      active = 0;
-      const located = locate(startMs);
+      const located = locate(requestedStartMs);
       index = located.segmentIdx;
-      loadSlot(slots[0], index, located.offsetMs);
-      loadSlot(slots[1], index + 1 < segments.length ? index + 1 : null, null);
-      activate(slots[0]);
+      loadSlot(created[0], index, located.offsetMs);
+      loadSlot(created[1], index + 1 < segments.length ? index + 1 : null, null);
+      activate(created[0]);
     },
 
     append(more) {
@@ -240,12 +261,21 @@ export function createVoicePlayer(): VoicePort {
     },
 
     async seekTo(ms) {
-      if (!slots) return;
+      if (!slots) {
+        // Before the players exist, the seek becomes the position the load starts from.
+        requestedStartMs = ms;
+        return;
+      }
       const located = locate(ms);
       ended = false;
       const current = slots[active];
       if (located.segmentIdx === index && current.holds === index) {
-        await current.player.seekTo(located.offsetMs / 1000);
+        if (current.loaded) {
+          await current.player.seekTo(located.offsetMs / 1000);
+        } else {
+          // Not ready yet: the seek is applied as soon as the segment loads, not overwritten by it.
+          current.pendingSeekMs = located.offsetMs;
+        }
         return;
       }
       current.player.pause();
@@ -272,6 +302,8 @@ export function createVoicePlayer(): VoicePort {
     },
 
     dispose() {
+      disposed = true;
+      loadToken += 1;
       releaseSlots();
       listeners.clear();
     },

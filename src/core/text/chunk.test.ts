@@ -1,5 +1,6 @@
 import { buildChapterText } from './build';
 import { estimateTokens, NARRATION_RAMP_SECONDS, planLlmChunks, planTtsSegments } from './chunk';
+import { estimateSpeechSeconds } from './speech-rate';
 
 import type { TtsPlanInput } from './chunk';
 import type { ParagraphKind } from './paragraphs';
@@ -341,5 +342,96 @@ describe('planTtsSegments with the narration ramp', () => {
   it('rejects a ramp cap that is not a positive number', () => {
     expect(() => planTtsSegments(timed([1]), { rampSeconds: [0] })).toThrow(RangeError);
     expect(() => planTtsSegments(timed([1]), { rampSeconds: [Number.NaN] })).toThrow(RangeError);
+  });
+});
+
+/** Text sentences of one paragraph, each with its own speech time. */
+function timed(seconds: number[], kind: ParagraphKind = 'text'): TtsPlanInput[] {
+  return seconds.map((value, idx) => ({ idx, paragraphIdx: 0, kind, charCount: 10, speechSeconds: value }));
+}
+
+describe('planTtsSegments: speech-time budget', () => {
+  it('closes a segment before its speech time would pass maxSeconds', () => {
+    const sentences = timed([15, 15, 15, 15, 15]);
+    expect(planTtsSegments(sentences, { rampSeconds: [40], maxSeconds: 40 })).toEqual([
+      { sentenceStart: 0, sentenceEnd: 1 },
+      { sentenceStart: 2, sentenceEnd: 3 },
+      { sentenceStart: 4, sentenceEnd: 4 },
+    ]);
+  });
+
+  it('holds the first text segment to the 12 s ramp, and later segments to maxSeconds', () => {
+    const sentences = timed([5, 5, 5, 5, 5, 5]);
+    expect(planTtsSegments(sentences, { rampSeconds: [12], maxSeconds: 40 })).toEqual([
+      { sentenceStart: 0, sentenceEnd: 1 },
+      { sentenceStart: 2, sentenceEnd: 5 },
+    ]);
+  });
+
+  it('does not count headings as the first text segment', () => {
+    const sentences = [
+      { idx: 0, paragraphIdx: 0, kind: 'heading' as const, charCount: 6, speechSeconds: 0 },
+      ...timed([5, 5, 5]).map((s) => ({ ...s, idx: s.idx + 1 })),
+    ];
+    expect(planTtsSegments(sentences, { rampSeconds: [12], maxSeconds: 40 })).toEqual([
+      { sentenceStart: 0, sentenceEnd: 0 },
+      { sentenceStart: 1, sentenceEnd: 2 },
+      { sentenceStart: 3, sentenceEnd: 3 },
+    ]);
+  });
+
+  it('gives a single sentence over maxSeconds a segment of its own', () => {
+    expect(planTtsSegments(timed([5, 50, 5]), { rampSeconds: [12], maxSeconds: 40 })).toEqual([
+      { sentenceStart: 0, sentenceEnd: 0 },
+      { sentenceStart: 1, sentenceEnd: 1 },
+      { sentenceStart: 2, sentenceEnd: 2 },
+    ]);
+  });
+
+  it('gives a first sentence over the ramp cap its own segment, and keeps the rest', () => {
+    expect(planTtsSegments(timed([20, 5]), { rampSeconds: [12], maxSeconds: 40 })).toEqual([
+      { sentenceStart: 0, sentenceEnd: 0 },
+      { sentenceStart: 1, sentenceEnd: 1 },
+    ]);
+  });
+
+  it('ignores the speech budget when no maxSeconds is given', () => {
+    const sentences = plan([{ kind: 'text', sentences: [200, 200, 200] }]);
+    expect(planTtsSegments(sentences, { maxChars: 600, minChars: 0 })).toEqual([
+      { sentenceStart: 0, sentenceEnd: 2 },
+    ]);
+  });
+
+  it('rejects a non-positive speech budget', () => {
+    expect(() => planTtsSegments([], { maxSeconds: 0 })).toThrow(RangeError);
+    expect(() => planTtsSegments([], { rampSeconds: [-1] })).toThrow(RangeError);
+  });
+
+  it('packs Mandarin by speech time, so 20-character sentences make about 100 characters a segment', () => {
+    const han = '雨'.repeat(20);
+    const sentences: TtsPlanInput[] = Array.from({ length: 30 }, (_, idx) => ({
+      idx,
+      paragraphIdx: 0,
+      kind: 'text',
+      charCount: 20,
+      speechSeconds: estimateSpeechSeconds(han, 'zh'),
+    }));
+    const segments = planTtsSegments(sentences, { maxChars: 600, rampSeconds: [12], maxSeconds: 40 });
+    // One opening sentence (8 s is over the 12 s budget with a second one), then five per 40 s.
+    expect(segments.map((s) => s.sentenceEnd - s.sentenceStart + 1)).toEqual([1, 5, 5, 5, 5, 5, 4]);
+  });
+
+  it('packs Latin letters far more densely than Mandarin, for the same character count', () => {
+    const latin = 'a'.repeat(20);
+    const sentences: TtsPlanInput[] = Array.from({ length: 60 }, (_, idx) => ({
+      idx,
+      paragraphIdx: 0,
+      kind: 'text',
+      charCount: 20,
+      speechSeconds: estimateSpeechSeconds(latin, 'en'),
+    }));
+    const segments = planTtsSegments(sentences, { maxChars: 600, rampSeconds: [12], maxSeconds: 40 });
+    const longest = Math.max(...segments.map((s) => s.sentenceEnd - s.sentenceStart + 1));
+    expect(longest).toBeGreaterThanOrEqual(15);
   });
 });

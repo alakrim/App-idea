@@ -1,4 +1,3 @@
-import * as Speech from 'expo-speech';
 import { useEffect, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
@@ -6,6 +5,7 @@ import { useOpenRouter } from '@/app-shell/openrouter-provider';
 import { estimateSpeechCost } from '@/core/llm/cost';
 import { supportsStyleInstructions } from '@/core/narration/capabilities';
 import { voicesForLanguage } from '@/core/narration/voices';
+import { usePlayback } from '@/features/player/player-provider';
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
 import { ErrorState } from '@/ui/error-state';
@@ -80,6 +80,7 @@ export function NarrationPanel() {
   const sample = previewSampleFor(lang);
   const estimate = selectedModel ? estimateSpeechCost(selectedModel, sample.text.length) : 0;
   const preview = useVoicePreview(client);
+  const playback = usePlayback();
 
   // Drafts exist only while the user is typing or dragging. They are saved on blur or release.
   const [styleDraft, setStyleDraft] = useState<string | null>(null);
@@ -99,10 +100,12 @@ export function NarrationPanel() {
 
   const playSample = () => {
     if (isDevice) {
-      Speech.stop();
-      Speech.speak(sample.text, {
-        voice: narration.voice,
+      // The device voice speaks through the playback layer, which holds the narration while it does.
+      playback.playSample({
+        kind: 'speech',
+        text: sample.text,
         language: sample.lang,
+        voice: narration.voice,
         rate: narration.speed,
       });
       return;
@@ -208,7 +211,7 @@ export function NarrationPanel() {
                     },
                   ]}
                 >
-                  <Text variant="caption" tone={selected ? 'accent' : 'default'}>
+                  <Text variant="caption" tone={selected ? 'onAccentSoft' : 'default'}>
                     {voice.label}
                   </Text>
                 </Pressable>

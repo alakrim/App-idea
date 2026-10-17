@@ -3,7 +3,9 @@ import type { LlmRequest } from '@/core/llm/transport';
 
 import { CHAPTER_ID, createFakePorts, MODELS, mp3Bytes } from './__fixtures__/fake-ports';
 import { articleHtml, extractFixture, longText } from './__fixtures__/pages';
+import { StageFailure } from './errors';
 import { runChapter } from './runner';
+import { STALL_AFTER_MS, STALLED_ERROR } from './stall-watchdog';
 
 import type { PipelineEvent } from './context';
 
@@ -420,5 +422,106 @@ describe('runChapter: usage and cost accounting', () => {
     const ready = events.flatMap((e) => (e.type === 'segmentReady' ? [e.segment.idx] : []));
     expect(ready).toEqual(fake.state.segments.get(CHAPTER_ID)?.map((s) => s.idx));
     expect(ready).toEqual([...ready].sort((a, b) => a - b));
+  });
+});
+
+describe('runChapter: job timing', () => {
+  it('stamps a running job with its start and no finish, and a finished job with both', async () => {
+    const fake = createFakePorts({ sourceText: longText(4, 300), targetLang: 'en' });
+    const seenRunning: { stage: string; startedAt: number | null; finishedAt: number | null }[] =
+      [];
+
+    await runChapter(CHAPTER_ID, fake.ports, {
+      onEvent: (event) => {
+        if (event.type === 'stage' && event.status === 'running') {
+          const job = fake.job(event.stage);
+          seenRunning.push({
+            stage: event.stage,
+            startedAt: job?.startedAt ?? null,
+            finishedAt: job?.finishedAt ?? null,
+          });
+        }
+      },
+    });
+
+    const narrating = seenRunning.find((entry) => entry.stage === 'narrate');
+    expect(narrating?.startedAt).not.toBeNull();
+    expect(narrating?.finishedAt).toBeNull();
+    // This chapter has no source language, so translation is skipped and never runs.
+    expect(fake.job('translate')?.status).toBe('skipped');
+    for (const stage of ['extract', 'segment', 'analyze', 'narrate'] as const) {
+      const job = fake.job(stage);
+      expect(job?.status).toBe('done');
+      expect(job?.startedAt).not.toBeNull();
+      expect(job?.finishedAt).not.toBeNull();
+      expect(job?.finishedAt ?? 0).toBeGreaterThanOrEqual(job?.startedAt ?? Infinity);
+    }
+  });
+
+  it('keeps the start and stamps the finish of a failed job', async () => {
+    const fake = createFakePorts({
+      sourceText: longText(2, 300),
+      targetLang: null,
+      tts: () => {
+        throw new StageFailure('NETWORK', 'No connection.', { retryable: true });
+      },
+    });
+
+    await runChapter(CHAPTER_ID, fake.ports);
+
+    const job = fake.job('narrate');
+    expect(job?.status).toBe('failed');
+    expect(job?.startedAt).not.toBeNull();
+    expect(job?.finishedAt).not.toBeNull();
+  });
+});
+
+describe('runChapter: a run its watchdog stops', () => {
+  beforeEach(() => jest.useFakeTimers());
+  afterEach(() => jest.useRealTimers());
+
+  it('fails the chapter with the stall error instead of reporting a cancellation', async () => {
+    const fake = createFakePorts({
+      sourceText: longText(12, 250),
+      targetLang: 'en',
+      // The narration call never answers, and it honours the abort, so every try stalls.
+      tts: (_text, _profile, signal) =>
+        new Promise<never>((_resolve, reject) => {
+          signal.addEventListener('abort', () =>
+            reject(Object.assign(new Error('aborted'), { name: 'AbortError' })),
+          );
+        }),
+    });
+    const { events, onEvent } = recorder();
+
+    const outcome = runChapter(CHAPTER_ID, fake.ports, {
+      onEvent,
+      clock: { now: () => Date.now() },
+    });
+    await jest.advanceTimersByTimeAsync(3 * STALL_AFTER_MS + 1_000);
+
+    await expect(outcome).resolves.toEqual({
+      status: 'failed',
+      stage: 'narrate',
+      error: STALLED_ERROR,
+    });
+    expect(fake.chapter().status).toBe('failed');
+    expect(events).toContainEqual({
+      type: 'error',
+      chapterId: CHAPTER_ID,
+      stage: 'narrate',
+      error: STALLED_ERROR,
+    });
+    expect(events.some((e) => e.type === 'error' && e.error.code === 'CANCELLED')).toBe(false);
+  });
+
+  it('still reports a plain cancellation as cancelled when nothing stalls', async () => {
+    const controller = new AbortController();
+    controller.abort();
+    const fake = createFakePorts({ sourceText: PASTED });
+
+    const outcome = await runChapter(CHAPTER_ID, fake.ports, { signal: controller.signal });
+
+    expect(outcome.status).toBe('cancelled');
   });
 });

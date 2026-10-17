@@ -73,11 +73,14 @@ describe('a chapter still being narrated', () => {
     const { controller, pipe, fixture, engine } = setupController([processing]);
     await controller.playChapter(id(2));
     controller.seekToSentence(1);
+    controller.player.play();
     expect(engine.soundingBedIds()).toEqual([]);
 
     const lateCue = { ...CUE, id: id(901), chapterId: id(2) };
     fixture.chapters.set(id(2), { ...processing, cues: [lateCue] });
-    pipe.emit(id(2), 'running', 1, { stages: [{ stage: 'analyze', status: 'done', progress: 1 }] });
+    pipe.emit(id(2), 'running', 1, {
+      stages: [{ stage: 'analyze', status: 'done', progress: 1, since: null, passages: null }],
+    });
 
     expect(controller.content.getState().cues.map((cue) => cue.id)).toEqual([id(901)]);
     expect(engine.soundingBedIds()).toEqual([id(901)]);
@@ -88,7 +91,15 @@ describe('a chapter still being narrated', () => {
     const processing = fixtureChapter(2, 2, 'processing', [SEGMENT_ONE]);
     const { controller, pipe, fixture, engine } = setupController([processing]);
     await controller.playChapter(id(2));
-    const analysed = [{ stage: 'analyze' as const, status: 'done' as const, progress: 1 }];
+    const analysed = [
+      {
+        stage: 'analyze' as const,
+        status: 'done' as const,
+        progress: 1,
+        since: null,
+        passages: null,
+      },
+    ];
     const setCues = jest.spyOn(engine, 'setCues');
 
     fixture.chapters.set(id(2), {

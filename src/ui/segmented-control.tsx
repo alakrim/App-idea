@@ -30,7 +30,10 @@ export function SegmentedControl<T extends string>({
     <View
       accessibilityRole="radiogroup"
       accessibilityLabel={label}
-      style={[styles.track, { backgroundColor: colors.surfaceRaised, borderColor: colors.border }]}
+      style={[
+        styles.track,
+        { backgroundColor: colors.surfaceRaised, borderColor: colors.boundary },
+      ]}
     >
       {options.map((option) => {
         const selected = option.value === value;
@@ -48,7 +51,7 @@ export function SegmentedControl<T extends string>({
             }}
             style={[
               styles.segment,
-              selected ? { backgroundColor: colors.surface, borderColor: colors.border } : null,
+              selected ? { backgroundColor: colors.surface, borderColor: colors.boundary } : null,
             ]}
           >
             <Text variant="caption" tone={selected ? 'default' : 'muted'}>

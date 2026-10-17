@@ -1,5 +1,10 @@
+import { audioSegmentRepo } from '@/db/repos/audio-segment-repo';
+import { chapterRepo } from '@/db/repos/chapter-repo';
 import { jobRepo } from '@/db/repos/job-repo';
+import { stageActivityRepo } from '@/db/repos/stage-activity-repo';
 import type { Db } from '@/db/types';
+
+import { RECENT_CHAPTER_LIMIT, summarizeRecentChapter } from './recent-chapters';
 
 import type { JsonValue, ProbeOutcome } from './probe';
 
@@ -26,4 +31,21 @@ export function checkPipelineQueue(db: Db): ProbeOutcome {
       recentErrors,
     },
   };
+}
+
+/** The last chapters that ran, with the time each stage took and the audio each one has. */
+export function checkRecentChapters(db: Db): ProbeOutcome {
+  const chapters = jobRepo.recentChapterIds(db, RECENT_CHAPTER_LIMIT).flatMap((chapterId) => {
+    const chapter = chapterRepo.get(db, chapterId);
+    if (!chapter) return [];
+    return [
+      summarizeRecentChapter({
+        chapter,
+        jobs: jobRepo.listForChapter(db, chapterId),
+        segments: audioSegmentRepo.listByChapter(db, chapterId),
+        activity: stageActivityRepo.listForChapter(db, chapterId),
+      }),
+    ];
+  });
+  return { status: 'pass', values: { chapters } };
 }

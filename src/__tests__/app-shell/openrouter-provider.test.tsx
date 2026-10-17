@@ -9,13 +9,22 @@ import {
   useOpenRouter,
 } from '@/app-shell/openrouter-provider';
 import { readCatalogSnapshot, writeCatalogSnapshot } from '@/services/catalog-cache';
+import type * as CatalogCache from '@/services/catalog-cache';
 import type { OpenRouterClient } from '@/services/openrouter';
 import { createFakeFetch, jsonResponse } from '@/services/openrouter/__fixtures__/fake-fetch';
 
-jest.mock('@/services/catalog-cache', () => ({
-  readCatalogSnapshot: jest.fn(() => null),
-  writeCatalogSnapshot: jest.fn(),
-}));
+// The file store is replaced; the persistence policy itself is the real one.
+jest.mock('@/services/catalog-cache', () => {
+  const actual: typeof CatalogCache = jest.requireActual('@/services/catalog-cache');
+  const readCatalogSnapshot = jest.fn<string | null, []>(() => null);
+  const writeCatalogSnapshot = jest.fn<void, [string]>();
+  return {
+    persistCatalog: actual.persistCatalog,
+    CATALOG_FILE_STORE: { read: readCatalogSnapshot, write: writeCatalogSnapshot },
+    readCatalogSnapshot,
+    writeCatalogSnapshot,
+  };
+});
 jest.mock('@/services/secrets', () => ({
   getApiKey: jest.fn(async () => 'sk-or-v1-0123456789abcdef0123456789abcdef'),
 }));
@@ -95,6 +104,28 @@ describe('createLectioOpenRouter', () => {
     const written = String(writeMock.mock.calls[0]?.[0]);
     expect(written).toContain('anthropic/claude-haiku-5.5');
     expect(written).not.toContain('sk-or-');
+  });
+
+  it('does not rewrite the cache on a cache hit', async () => {
+    const fake = createFakeFetch(() => jsonResponse({ data: [apiModel] }));
+    const client = createLectioOpenRouter({ fetchImpl: fake.fetchImpl });
+
+    await client.models.list();
+    await client.models.list();
+    await client.models.list();
+
+    expect(fake.calls).toHaveLength(1);
+    expect(writeMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('reads the saved catalogue on first model use, not while the client is built', async () => {
+    const fake = createFakeFetch(() => jsonResponse({ data: [apiModel] }));
+    const client = createLectioOpenRouter({ fetchImpl: fake.fetchImpl });
+    expect(readMock).not.toHaveBeenCalled();
+
+    await client.models.list();
+
+    expect(readMock).toHaveBeenCalledTimes(1);
   });
 
   it('does not write the cache when the fetch fails', async () => {

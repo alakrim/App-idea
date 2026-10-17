@@ -10,15 +10,19 @@ import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
 import { hairline, iconSize, iconStrokeWidth, minTouchTarget, radius, space } from '@/ui/tokens';
 
+import { cueRangeLabel } from './ambience-range';
+
 export interface AmbienceListProps {
   cues: readonly AmbienceCue[];
   /** True once the chapter has been analysed. Decides the copy of the empty state. */
   analysed: boolean;
+  /** Sentences in the whole chapter, to say where each cue sits. */
+  sentenceCount: number;
   onToggle: (cueId: string, enabled: boolean) => void;
 }
 
 /** The ambience cues of a chapter. Each switch persists straight away. */
-export function AmbienceList({ cues, analysed, onToggle }: AmbienceListProps) {
+export function AmbienceList({ cues, analysed, sentenceCount, onToggle }: AmbienceListProps) {
   if (cues.length === 0) {
     return (
       <Text variant="caption" tone="muted">
@@ -31,7 +35,13 @@ export function AmbienceList({ cues, analysed, onToggle }: AmbienceListProps) {
   return (
     <Card style={styles.flush}>
       {cues.map((cue, index) => (
-        <CueRow key={cue.id} cue={cue} divided={index > 0} onToggle={onToggle} />
+        <CueRow
+          key={cue.id}
+          cue={cue}
+          sentenceCount={sentenceCount}
+          divided={index > 0}
+          onToggle={onToggle}
+        />
       ))}
     </Card>
   );
@@ -39,16 +49,17 @@ export function AmbienceList({ cues, analysed, onToggle }: AmbienceListProps) {
 
 interface CueRowProps {
   cue: AmbienceCue;
+  sentenceCount: number;
   divided: boolean;
   onToggle: (cueId: string, enabled: boolean) => void;
 }
 
-function CueRow({ cue, divided, onToggle }: CueRowProps) {
+function CueRow({ cue, sentenceCount, divided, onToggle }: CueRowProps) {
   const { colors } = useTheme();
   const category = getCategory(cue.category);
   const Icon = category ? AMBIENCE_ICONS[category.icon] : Sparkles;
   const label = ambienceLabel(cue.category);
-  const range = `Sentences ${cue.startSentence + 1}–${cue.endSentence + 1}`;
+  const range = cueRangeLabel(cue, sentenceCount);
 
   return (
     <View
@@ -56,7 +67,6 @@ function CueRow({ cue, divided, onToggle }: CueRowProps) {
         styles.row,
         divided ? { borderTopWidth: hairline, borderTopColor: colors.border } : null,
       ]}
-      accessibilityLabel={`${label}, ${range}. ${cue.reason}`}
     >
       <View style={[styles.icon, { backgroundColor: colors.accentSoft }]}>
         <Icon size={iconSize.sm} strokeWidth={iconStrokeWidth} color={colors.accent} />
@@ -73,11 +83,12 @@ function CueRow({ cue, divided, onToggle }: CueRowProps) {
         </Text>
       </View>
       <Switch
-        accessibilityLabel={`Ambience: ${label}`}
+        accessibilityLabel={`Ambience: ${label}, ${range}`}
+        accessibilityHint={cue.reason}
         accessibilityRole="switch"
         value={cue.enabled}
         onValueChange={(enabled) => onToggle(cue.id, enabled)}
-        trackColor={{ false: colors.border, true: colors.accent }}
+        trackColor={{ false: colors.boundary, true: colors.accent }}
         thumbColor={colors.text}
         ios_backgroundColor={colors.border}
       />

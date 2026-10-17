@@ -29,7 +29,7 @@ export function DeviceVoiceCard({ selected, onSelect }: DeviceVoiceCardProps) {
       ]}
     >
       <View style={styles.copy}>
-        <Text variant="micro" tone={selected ? 'accent' : 'faint'}>
+        <Text variant="micro" tone={selected ? 'onAccentSoft' : 'faint'}>
           Free
         </Text>
         <Text variant="heading">Device voice</Text>

@@ -7,6 +7,10 @@
  * The chapter waits with exponential backoff, moves behind the other chapters, and runs again when
  * its time comes or when `retryNow()` is called. A chapter that keeps failing is given up after
  * MAX_TRANSIENT_FAILURES tries, with its last error.
+ *
+ * Each run is watched by its own stall watchdog (see `runner.ts`). A stall retires the requests in
+ * flight, and a run that stalls too often fails with a retryable error, which this queue treats like
+ * any other transient failure.
  */
 import { toPipelineError } from './errors';
 import {
@@ -18,7 +22,7 @@ import {
 import { runChapter } from './runner';
 
 import type { PipelineEvent } from './context';
-import type { PersistedQueueItem, PipelinePorts } from './ports';
+import type { Clock, PersistedQueueItem, PipelinePorts } from './ports';
 import type { Scheduler } from './retry-policy';
 import type { RunOptions, RunOutcome } from './runner';
 
@@ -48,6 +52,13 @@ export interface PipelineQueueOptions {
   readonly scheduler?: Scheduler;
   /** Jitter source in [0, 1). Defaults to Math.random. */
   readonly random?: () => number;
+  /** The clock the stall watchdog of each run reads. Defaults to the ports' clock. */
+  readonly clock?: Clock;
+  /**
+   * True while a platform foreground service keeps the JS runtime alive in the background. The
+   * watchdog then keeps counting when the app leaves the foreground, because nothing is frozen.
+   */
+  readonly keepsAliveInBackground?: () => boolean;
 }
 
 interface Item {
@@ -265,6 +276,8 @@ export class PipelineQueue {
         ...item.options,
         signal,
         onEvent: this.options.onEvent,
+        clock: this.options.clock,
+        keepsAliveInBackground: this.options.keepsAliveInBackground,
       });
     } catch (thrown) {
       this.options.onEvent?.({

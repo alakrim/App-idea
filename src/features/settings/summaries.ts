@@ -1,4 +1,5 @@
 import type { Settings, ThemeMode } from '@/core/settings';
+import { formatRate } from '@/features/player/format';
 import { languageLabel } from '@/features/shared/languages';
 
 import { formatBytes, formatPercent, formatUsdPrecise, modelLabel } from './format';
@@ -46,6 +47,11 @@ export function analysisSummary(
 
 export function ambienceSummary(ambience: Settings['ambience']): string {
   return ambience.enabled ? `On · ${formatDb(ambience.levelDb)}` : 'Off';
+}
+
+/** The speed a new series starts at, such as "Default speed 1.25×". */
+export function playbackSummary(playback: Settings['playback']): string {
+  return `Default speed ${formatRate(playback.defaultRate)}`;
 }
 
 export function readingSummary(reading: Settings['reading']): string {

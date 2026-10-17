@@ -1,6 +1,7 @@
 import { createContext, useContext, useMemo, type ReactNode } from 'react';
 
-import { readCatalogSnapshot, writeCatalogSnapshot } from '@/services/catalog-cache';
+import { CATALOG_FILE_STORE, persistCatalog } from '@/services/catalog-cache';
+import { getAppConnection } from '@/services/network/app-connection';
 import { createOpenRouterClient } from '@/services/openrouter';
 import type { OpenRouterClient, OpenRouterClientOptions } from '@/services/openrouter';
 import { getApiKey } from '@/services/secrets';
@@ -9,9 +10,9 @@ export const LECTIO_APP_URL = 'https://lectio.app';
 export const LECTIO_APP_TITLE = 'Lectio';
 
 /**
- * Builds the app's OpenRouter client. The model catalog is rehydrated from the cache file here,
- * synchronously, so the first render that asks for models already has the last snapshot. Every
- * successful catalog fetch rewrites the cache.
+ * Builds the app's OpenRouter client. The model catalogue is restored from the cache file on its
+ * first use, not here, so building the client on the first render does no file I/O. Each
+ * successful catalogue fetch rewrites the cache.
  */
 export function createLectioOpenRouter(
   options: Pick<OpenRouterClientOptions, 'fetchImpl' | 'now'> = {},
@@ -20,26 +21,10 @@ export function createLectioOpenRouter(
     getApiKey,
     appUrl: LECTIO_APP_URL,
     appTitle: LECTIO_APP_TITLE,
+    connection: getAppConnection(),
     ...options,
   });
-
-  const snapshot = readCatalogSnapshot();
-  if (snapshot !== null) {
-    client.models.hydrate(snapshot);
-  }
-
-  const { models } = client;
-  return {
-    ...client,
-    models: {
-      ...models,
-      list: async (listOptions) => {
-        const result = await models.list(listOptions);
-        writeCatalogSnapshot(models.serialize());
-        return result;
-      },
-    },
-  };
+  return { ...client, models: persistCatalog(client.models, CATALOG_FILE_STORE) };
 }
 
 let singleton: OpenRouterClient | null = null;

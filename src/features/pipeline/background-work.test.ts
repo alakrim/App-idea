@@ -1,5 +1,6 @@
 import type { QueueSnapshot } from '@/core/pipeline/queue';
 import type { ProcessingNotice } from '@/services/background';
+import { createForegroundStatus } from '@/services/pipeline/foreground-status';
 
 import { BackgroundWork, PROBE_INTERVAL_MS } from './background-work';
 
@@ -22,7 +23,13 @@ function progressOf(
     chapterId,
     state,
     stages: [
-      { stage: 'analyze', status: state === 'running' ? 'running' : 'pending', progress: overall },
+      {
+        stage: 'analyze',
+        status: state === 'running' ? 'running' : 'pending',
+        progress: overall,
+        since: null,
+        passages: null,
+      },
     ],
     overall,
     readySegments: 0,
@@ -34,6 +41,7 @@ function progressOf(
     etaMs: null,
     narratedMs: 0,
     estimatedTotalMs: null,
+    reconnecting: false,
   };
   return progress;
 }
@@ -87,6 +95,7 @@ function harness() {
     cancel: jest.fn(),
   };
 
+  const foreground = createForegroundStatus(true);
   const deps: BackgroundWorkDeps = {
     service,
     queue,
@@ -109,6 +118,7 @@ function harness() {
       },
     },
     now: () => now,
+    foreground,
   };
 
   /** Runs due timers in order, moving the clock to each one. */
@@ -128,6 +138,7 @@ function harness() {
 
   return {
     deps,
+    foreground,
     service,
     queue,
     facade,
@@ -308,5 +319,31 @@ describe('BackgroundWork', () => {
 
     dispose();
     expect(h.service.stopProcessing).toHaveBeenCalledTimes(1);
+  });
+
+  it('records the service as starting, then running, and stopped once the queue is idle', async () => {
+    const h = harness();
+    const work = new BackgroundWork(h.deps);
+    work.start();
+    h.emitQueue(RUNNING_A);
+    expect(h.foreground.get()).toBe('starting');
+    await settle();
+    expect(h.foreground.get()).toBe('running');
+    expect(h.foreground.keepsAlive()).toBe(true);
+
+    h.emitQueue(IDLE);
+    expect(h.foreground.get()).toBe('stopped');
+    expect(h.foreground.keepsAlive()).toBe(false);
+  });
+
+  it('records a refused start as stopped, so nothing counts as running', async () => {
+    const h = harness();
+    h.service.startProcessing.mockResolvedValueOnce(false);
+    const work = new BackgroundWork(h.deps);
+    work.start();
+    h.emitQueue(RUNNING_A);
+    await settle();
+
+    expect(h.foreground.get()).toBe('stopped');
   });
 });

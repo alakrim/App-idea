@@ -9,7 +9,8 @@ import {
 import { useTheme } from './theme';
 import { maxFontScale, typography, type TextVariant, type ThemeColors } from './tokens';
 
-export type TextTone = 'default' | 'muted' | 'faint' | 'accent' | 'success' | 'warning' | 'danger';
+export type TextTone =
+  'default' | 'muted' | 'faint' | 'accent' | 'onAccentSoft' | 'success' | 'warning' | 'danger';
 
 export interface TextProps extends Omit<RNTextProps, 'style'> {
   variant?: TextVariant;
@@ -77,6 +78,8 @@ function toneColor(tone: TextTone, colors: ThemeColors): string {
       return colors.textFaint;
     case 'accent':
       return colors.accent;
+    case 'onAccentSoft':
+      return colors.accentOnSoft;
     case 'success':
       return colors.success;
     case 'warning':

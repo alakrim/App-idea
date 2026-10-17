@@ -5,6 +5,9 @@
  */
 import { StageFailure } from '@/core/pipeline/errors';
 import type { Fetcher, FetchLimits, FetchResult } from '@/core/pipeline/ports';
+import { untilAborted } from '@/services/network/abort';
+import { createConnection } from '@/services/network/connection';
+import type { Connection } from '@/services/network/connection';
 
 /** A current Chrome on Android. Some sites serve a cut-down page to unknown agents. */
 export const MOBILE_USER_AGENT =
@@ -23,46 +26,86 @@ function aborted(): Error {
   return Object.assign(new Error('Aborted'), { name: 'AbortError' });
 }
 
+/** A page request the connection retired. Internal: the fetch loop retries it at once. */
+class RetiredRequest extends Error {}
+
 export interface FetcherDeps {
   readonly fetchImpl?: typeof fetch;
+  /** Retires a page request when the connection goes stale, so it is fetched again at once. */
+  readonly connection?: Pick<Connection, 'register'>;
 }
 
-export function createFetcher({ fetchImpl = fetch }: FetcherDeps = {}): Fetcher {
+export function createFetcher({
+  fetchImpl = fetch,
+  connection = createConnection(),
+}: FetcherDeps = {}): Fetcher {
   return {
     async fetch(url, signal, limits: FetchLimits): Promise<FetchResult> {
-      if (signal.aborted) throw aborted();
-      const controller = new AbortController();
-      let timedOut = false;
-      const onCallerAbort = () => controller.abort();
-      signal.addEventListener('abort', onCallerAbort, { once: true });
-      const timer = setTimeout(() => {
-        timedOut = true;
-        controller.abort();
-      }, limits.timeoutMs);
-
-      try {
-        const response = await requestPage(fetchImpl, url, controller.signal, () => {
-          if (signal.aborted) throw aborted();
-          if (timedOut) throw timeoutFailure();
-          throw networkFailure();
-        });
-        assertUsableResponse(response);
-        const contentType = response.headers.get('content-type');
-        if (!isReadableContentType(contentType)) throw unreadableType(contentType);
-        const declared = Number(response.headers.get('content-length') ?? NaN);
-        if (Number.isFinite(declared) && declared > limits.maxBytes) throw tooLarge();
-        const bytes = await readBody(response, limits.maxBytes, controller.signal);
-        return { bytes, contentType, finalUrl: response.url || url };
-      } catch (thrown) {
-        if (signal.aborted) throw aborted();
-        if (timedOut && !(thrown instanceof StageFailure)) throw timeoutFailure();
-        throw thrown;
-      } finally {
-        clearTimeout(timer);
-        signal.removeEventListener('abort', onCallerAbort);
+      for (;;) {
+        try {
+          return await fetchOnce(fetchImpl, connection, url, signal, limits);
+        } catch (thrown) {
+          if (!(thrown instanceof RetiredRequest)) throw thrown;
+        }
       }
     },
   };
+}
+
+async function fetchOnce(
+  fetchImpl: typeof fetch,
+  connection: Pick<Connection, 'register'>,
+  url: string,
+  signal: AbortSignal,
+  limits: FetchLimits,
+): Promise<FetchResult> {
+  if (signal.aborted) throw aborted();
+  const controller = new AbortController();
+  let timedOut = false;
+  let retired = false;
+  const onCallerAbort = () => controller.abort();
+  signal.addEventListener('abort', onCallerAbort, { once: true });
+  const timer = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, limits.timeoutMs);
+  const unregister = connection.register({
+    timeoutMs: limits.timeoutMs,
+    retire: () => {
+      retired = true;
+      controller.abort();
+    },
+  });
+
+  try {
+    const response = await untilAborted(
+      requestPage(fetchImpl, url, controller.signal, () => {
+        if (signal.aborted) throw aborted();
+        if (timedOut) throw timeoutFailure();
+        throw networkFailure();
+      }),
+      controller.signal,
+    );
+    assertUsableResponse(response);
+    const contentType = response.headers.get('content-type');
+    if (!isReadableContentType(contentType)) throw unreadableType(contentType);
+    const declared = Number(response.headers.get('content-length') ?? NaN);
+    if (Number.isFinite(declared) && declared > limits.maxBytes) throw tooLarge();
+    const bytes = await untilAborted(
+      readBody(response, limits.maxBytes, controller.signal),
+      controller.signal,
+    );
+    return { bytes, contentType, finalUrl: response.url || url };
+  } catch (thrown) {
+    if (signal.aborted) throw aborted();
+    if (retired) throw new RetiredRequest();
+    if (timedOut && !(thrown instanceof StageFailure)) throw timeoutFailure();
+    throw thrown;
+  } finally {
+    clearTimeout(timer);
+    unregister();
+    signal.removeEventListener('abort', onCallerAbort);
+  }
 }
 
 async function requestPage(

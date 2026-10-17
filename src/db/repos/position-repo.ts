@@ -1,5 +1,6 @@
 import { eq } from 'drizzle-orm';
 
+import { chapterPositionRepo } from './chapter-position-repo';
 import { chapters, listeningPositions } from '../schema';
 
 import type { ListeningPosition, PlaybackPoint } from '../../core/domain';
@@ -8,6 +9,8 @@ import type { Db } from '../types';
 export interface PositionInput {
   chapterId: string;
   sentenceIdx: number;
+  /** Media time within the chapter, saved with the chapter's own resume point. */
+  positionMs: number;
 }
 
 type PositionRow = typeof listeningPositions.$inferSelect;
@@ -45,8 +48,9 @@ export const positionRepo = {
   },
 
   /**
-   * Records where the listener is now. `furthest` only moves forward, so it stays the spoiler
-   * cutoff even after a seek back. The chapter order is read here, never trusted from the caller.
+   * Records where the listener is now, in the series and in that chapter, in one transaction.
+   * `furthest` only moves forward, so it stays the spoiler cutoff even after a seek back or a visit
+   * to an earlier chapter. The chapter order is read here, never trusted from the caller.
    */
   record(db: Db, seriesId: string, point: PositionInput, updatedAt: number): ListeningPosition {
     return db.transaction((tx) => {
@@ -89,6 +93,12 @@ export const positionRepo = {
         .values(values)
         .onConflictDoUpdate({ target: listeningPositions.seriesId, set: values })
         .run();
+      chapterPositionRepo.save(
+        tx,
+        point.chapterId,
+        { sentenceIdx: point.sentenceIdx, positionMs: point.positionMs },
+        updatedAt,
+      );
 
       return toPosition({ ...values });
     });

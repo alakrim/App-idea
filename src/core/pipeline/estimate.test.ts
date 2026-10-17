@@ -27,20 +27,20 @@ describe('estimateChapterCost', () => {
     const usd = Object.fromEntries(estimate.perStage.map((s) => [s.stage, s.usd]));
     // Cleanup: 4,800 input tokens (60% of the text plus instructions), 200 output tokens.
     expect(usd.cleanup).toBeCloseTo(4_800 * 0.00000005 + 200 * 0.0000004, 12);
-    // Analysis: one chunk, 10,540 input tokens (text, prompt and priors), 900 output tokens.
-    // The prompt is analysis-v3 (ADR-0005 amendment), 67 tokens longer than v2's 10,473.
-    expect(usd.analysis).toBeCloseTo(0.01504, 12);
+    // Analysis: one chunk, 900 output tokens, and the input of the text, prompt and priors. The prompt
+    // lists each category's one-line `contains` (the A4 taxonomy), so its input is longer than before.
+    expect(usd.analysis).toBeCloseTo(0.01532, 12);
     // Translation: 14,615 input tokens over five chunks, and 12,000 output tokens (1.6 times the source).
     expect(usd.translation).toBeCloseTo(0.074615, 12);
     // Narration: 12,000 Italian tokens at four characters each, billed per character.
     expect(usd.narration).toBeCloseTo(48_000 * 0.00001, 12);
 
-    expect(estimate.totalUsd).toBeCloseTo(0.569975, 9);
+    expect(estimate.totalUsd).toBeCloseTo(0.570255, 9);
     expect(estimate.low).toBeLessThan(estimate.totalUsd);
     expect(estimate.high).toBeGreaterThan(estimate.totalUsd);
     // Analysis spread is 30 %: 0.01504 x 0.7 and x 1.3 move the bounds by the same amounts.
-    expect(estimate.low).toBeCloseTo(0.4949185, 6);
-    expect(estimate.high).toBeCloseTo(0.6450315, 6);
+    expect(estimate.low).toBeCloseTo(0.4951145, 6);
+    expect(estimate.high).toBeCloseTo(0.6453955, 6);
   });
 
   it('skips translation and bills narration on the source text when there is no target language', async () => {

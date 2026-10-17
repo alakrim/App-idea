@@ -39,6 +39,73 @@ const hits = (db: Db, cutoffChapter: number, cutoffIdx: number, query: string): 
     .map((s) => `${s.chapterOrder}:${s.idx}`)
     .sort();
 
+/** A one-chapter book whose sentences are numbered, so every row can be told apart. */
+function longChapter(count: number): ReturnType<typeof createTestDb> {
+  const testDb = createTestDb();
+  const { db } = testDb;
+  seriesRepo.insert(db, seriesRow(1));
+  chapterRepo.insert(db, chapterRow(1, 1, 1));
+  const texts = Array.from({ length: count }, (_, i) => `Sentence number ${i} stays.`);
+  textRepo.replaceChapterText(db, id(1), chapterText(1, texts));
+  return testDb;
+}
+
+const translatedAt = (db: Db, count: number): (string | null)[] =>
+  textRepo.getRange(db, id(1), 0, count - 1).map((s) => s.translated);
+
+describe('textRepo.setTranslations in chunks', () => {
+  it('writes every sentence across several chunks', () => {
+    const { db } = longChapter(450);
+    const translations = Array.from({ length: 450 }, (_, idx) => ({
+      idx,
+      translated: `T${idx}`,
+    }));
+
+    textRepo.setTranslations(db, id(1), translations);
+
+    expect(translatedAt(db, 450)).toEqual(translations.map((t) => t.translated));
+  });
+
+  it('writes sentences on both sides of each chunk boundary and leaves the rest untouched', () => {
+    const { db } = longChapter(450);
+
+    textRepo.setTranslations(db, id(1), [
+      { idx: 199, translated: 'end of first chunk' },
+      { idx: 200, translated: 'start of second chunk' },
+      { idx: 399, translated: 'end of second chunk' },
+      { idx: 400, translated: 'start of third chunk' },
+    ]);
+
+    const written = translatedAt(db, 450);
+    expect(written.filter((value) => value !== null)).toHaveLength(4);
+    expect(written[199]).toBe('end of first chunk');
+    expect(written[200]).toBe('start of second chunk');
+    expect(written[399]).toBe('end of second chunk');
+    expect(written[400]).toBe('start of third chunk');
+    expect(written[0]).toBeNull();
+  });
+
+  it('keeps the last translation when an idx is repeated', () => {
+    const { db } = longChapter(3);
+
+    textRepo.setTranslations(db, id(1), [
+      { idx: 1, translated: 'first' },
+      { idx: 1, translated: 'second' },
+    ]);
+
+    expect(translatedAt(db, 3)).toEqual([null, 'second', null]);
+  });
+
+  it('ignores an idx the chapter does not have, and accepts an empty list', () => {
+    const { db } = longChapter(2);
+
+    textRepo.setTranslations(db, id(1), [{ idx: 99, translated: 'nowhere' }]);
+    textRepo.setTranslations(db, id(1), []);
+
+    expect(translatedAt(db, 2)).toEqual([null, null]);
+  });
+});
+
 describe('textRepo bulk writes', () => {
   it('inserts paragraphs and sentences and reads an inclusive range in order', () => {
     const { db } = seedBook();

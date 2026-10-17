@@ -8,7 +8,8 @@ import type { SQLiteDatabase } from 'expo-sqlite';
 
 const DATABASE_NAME = 'lectio.db';
 
-export type LectioDatabase = ExpoSQLiteDatabase<typeof schema>;
+/** The drizzle handle, with the raw SQLite client that `drizzle()` returns alongside it. */
+export type LectioDatabase = ExpoSQLiteDatabase<typeof schema> & { $client: SQLiteDatabase };
 
 interface OpenDatabase {
   client: SQLiteDatabase;
