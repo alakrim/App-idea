@@ -13,8 +13,19 @@ _Last updated: 2026-10-17 by the architect. Keep this file under about 500 words
 - Every OpenRouter speech model, newest first (Fish Drama 3). Reliable ambience: analysis prompt v4, a cue cache, a fallback and a cue report. 34 category ambience beds plus 6 base beds.
 
 ## Work in flight
-- **Cleanup (user instruction):** done here. `apk-builds` holds only `ced9221`, and the local worktrees are removed. **Remote branches `claude/charming-fermat-srbk25`, `claude/vigilant-brahmagupta-mbgfm3` and `claude/test-100-credit-64yv57` could not be deleted from this session** (the proxy refuses ref deletion), so the user deletes them on GitHub after setting the default branch to this one. All three are fully contained here: charming-fermat up to `54b3d2e` is merged, and its later WIP docs are in `docs/archive/`.
-- **Debug sweep, phase 1:** the audits in `docs/briefs/Q2-debug-audit.md` (QA-E audio/player/background, QA-F pipeline/data/cost, QA-G UX/a11y/perf), at most 2 workers at once. Then fix waves, P1 first, each with mutation-checked tests. Then one APK and a device checklist.
+None. **APK `lectio-0.1.0-4136bd3-arm64.apk`** is the only build on `apk-builds` and is with the user for a device test. Everything is merged: QA-E fixes (FX-E, smooth narration and Playback health) and QA-F fixes F-01–F-06 and F-10 (FX-F). `verify` passes with 2,629 tests, and so do `boot:check` and `contract:check`.
+
+**User instruction:** no more non-essential work. Next is the user's device feedback only.
+
+**Known open, not started (QA-F):**
+- F-07 playability of cancelled chapters
+- F-08 stale translation language
+- F-09 storage full
+- F-11 retry budgets
+- F-12–F-19
+- F-04 `generation_id`
+
+The plans are in `docs/briefs/FX-F-handoff.md`. QA-G was not run. The remote branches `charming-fermat`, `vigilant-brahmagupta` and `test-100-credit` are still to be deleted by the user on GitHub.
 
 ## Session rules (user)
 - At most **2 worker agents at once**. A worker that passes about 220k tokens writes a handoff and stops.
