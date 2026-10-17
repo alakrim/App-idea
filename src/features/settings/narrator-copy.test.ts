@@ -27,6 +27,7 @@ function model(id: string, prompt: number, completion: number): OpenRouterModel 
     outputModalities: ['speech'],
     supportedParameters: [],
     supportedVoices: ['voice'],
+    createdAt: null,
   };
 }
 

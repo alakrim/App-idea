@@ -14,6 +14,7 @@ function text(id: string, parameters: string[]): OpenRouterModel {
     outputModalities: ['text'],
     supportedParameters: parameters,
     supportedVoices: [],
+    createdAt: null,
   };
 }
 
@@ -55,8 +56,51 @@ describe('model picker kinds', () => {
       ...text('google/gemini-3.8-flash-lite-tts', []),
       outputModalities: ['speech'],
       supportedVoices: ['Kore', 'Puck'],
+      createdAt: null,
     };
     expect(config.patchFor(model).narration?.voice).toBe('Kore');
+  });
+});
+
+describe('narration picker kind', () => {
+  const NOW = 1_800_000_000_000;
+  const DAY = 24 * 60 * 60 * 1000;
+
+  function speechModel(id: string, voices: string[], createdAt: number | null): OpenRouterModel {
+    return {
+      ...text(id, []),
+      outputModalities: ['speech'],
+      supportedVoices: voices,
+      createdAt,
+    };
+  }
+
+  it('describes a model with no preset voices as using its default voice', () => {
+    const config = modelKindConfig('narration', DEFAULT_SETTINGS);
+    const drama = speechModel('fish-audio/drama-3', [], NOW);
+    expect(config.describe(drama)).toMatch(/^Default voice · /);
+    expect(config.describe(speechModel('vendor/voices', ['A', 'B'], NOW))).toMatch(/^2 voices · /);
+  });
+
+  it('badges a model created in the last 30 days as new, at the clock it is given', () => {
+    const config = modelKindConfig('narration', DEFAULT_SETTINGS);
+    expect(config.isNew(speechModel('fish-audio/drama-3', [], NOW - 4 * DAY), NOW)).toBe(true);
+    expect(config.isNew(speechModel('vendor/old', [], NOW - 31 * DAY), NOW)).toBe(false);
+    expect(config.isNew(speechModel('vendor/undated', [], null), NOW)).toBe(false);
+  });
+
+  it('accepts every speech model but Seed Audio, including voice-less ones', () => {
+    const config = modelKindConfig('narration', DEFAULT_SETTINGS);
+    expect(config.accept(speechModel('fish-audio/drama-3', [], NOW))).toBe(true);
+    expect(config.accept(speechModel('bytedance-seed/seed-audio-1-0', [], NOW))).toBe(false);
+  });
+
+  it('keeps text pickers in catalogue order with no new badges', () => {
+    const second = { ...text('b/second', []), createdAt: NOW };
+    const models = [second, text('a/first', [])];
+    const config = modelKindConfig('analysis', DEFAULT_SETTINGS);
+    expect(config.arrange(models).map((model) => model.id)).toEqual(['b/second', 'a/first']);
+    expect(config.isNew(second, NOW)).toBe(false);
   });
 });
 
@@ -101,6 +145,7 @@ describe('offline catalog snapshot', () => {
     const cached = readCachedCatalog('text', () => snapshot);
     expect(cached?.savedAt).toBe(1234);
     expect(cached?.models.map((model) => model.id)).toEqual(['a/one']);
+    expect(cached?.models[0]?.createdAt).toBeNull();
     expect(readCachedCatalog('speech', () => snapshot)).toBeNull();
   });
 

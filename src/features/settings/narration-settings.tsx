@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { useOpenRouter } from '@/app-shell/openrouter-provider';
 import { estimateSpeechCost } from '@/core/llm/cost';
+import { supportsStyleInstructions } from '@/core/narration/capabilities';
 import { voicesForLanguage } from '@/core/narration/voices';
 import { Button } from '@/ui/button';
 import { Card } from '@/ui/card';
@@ -21,12 +22,7 @@ import { isModelMissing, useModelCatalog } from './model-catalog';
 import { ModelNotice } from './model-notice';
 import { ModelRow } from './model-row';
 import { displayName } from './model-search';
-import {
-  narratableModels,
-  narrationForDevice,
-  narrationWithVoice,
-  supportsStyleInstructions,
-} from './narration-choices';
+import { narratableModels, narrationForDevice, narrationWithVoice } from './narration-choices';
 import { shortLanguageName } from './narrator-copy';
 import { NarratorOptionList } from './narrator-option-list';
 import { previewSampleFor } from './preview-sample';
@@ -74,7 +70,12 @@ export function NarrationPanel() {
         (voice) => ({ id: voice, label: voice }),
       );
   const takesNoVoice = !isDevice && selectedModel?.supportedVoices.length === 0;
-  const styleSupported = !isDevice && supportsStyleInstructions(narration.model);
+  const styleSupported =
+    !isDevice &&
+    supportsStyleInstructions({
+      id: narration.model,
+      supportedParameters: selectedModel?.supportedParameters,
+    });
 
   const sample = previewSampleFor(lang);
   const estimate = selectedModel ? estimateSpeechCost(selectedModel, sample.text.length) : 0;

@@ -1,6 +1,6 @@
 import { chatReply, createFakeFetch, jsonResponse } from './__fixtures__/fake-fetch';
 import { chatRaw } from './chat';
-import { createModelCatalog } from './models';
+import { CATALOG_TTL_MS, createModelCatalog } from './models';
 import { createTransport } from './transport';
 
 import type { RecordedCall, Route } from './__fixtures__/fake-fetch';
@@ -38,7 +38,7 @@ function makeDeps(reply: (call: RecordedCall) => Response) {
     random: () => 0.5,
     now: () => 0,
   });
-  const models = createModelCatalog({ transport, ttlMs: 60_000, now: () => 0 });
+  const models = createModelCatalog({ transport, ttlMs: CATALOG_TTL_MS, now: () => 0 });
   const deps: ChatDeps = { transport, models };
   const completions = () => fake.calls.filter((call) => call.url.endsWith('/chat/completions'));
   return { deps, completions };
