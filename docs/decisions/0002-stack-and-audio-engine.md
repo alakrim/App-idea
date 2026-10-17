@@ -27,3 +27,6 @@ On a dev build, run two engines on one audio session for 45 minutes in the backg
 - **Beds follow the transport.** Beds sound only while the voice plays or buffers. They fade out 350 ms after the voice stops (so a segment swap does not flicker them) over 600 ms, and they fade back in on play. Ducking dips the beds only while the voice plays, and it holds until the beds have faded, so a pause never makes them louder. The audio clock is suspended 2 s after the beds go silent, and resumed by the next bed start.
 - **One level range.** Bed levels are −40…0 dB relative to the narration, ducking is 0…24 dB, and both the settings and the player sheet use these ranges from `src/core/playback/ranges.ts`. The default ducking stays 7 dB.
 - **Decoded beds are bounded by bytes** (48 MB by default), not by count.
+
+## Amendment 2026-10-17 (user decision): duck, don't pause, for short sounds from other apps
+When another app takes transient audio focus that allows ducking (navigation prompts, notification sounds; Android `AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK`), narration keeps playing at a lowered volume and restores afterwards. Phone calls and other non-duckable or permanent focus losses still pause. A narration the listener paused is never resumed by a focus change. expo-audio stays the only audio-focus client (incident 3).
