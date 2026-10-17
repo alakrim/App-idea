@@ -11,10 +11,19 @@
 
 import { EDGE_TRIM_SECONDS, LOOP_SAMPLES, SAMPLE_RATE, SYNTH_SECONDS } from './pack-spec.mjs';
 
-export const RECIPE_VERSION = 'bed-recipes-v2';
+export const RECIPE_VERSION = 'bed-recipes-v3';
 
 const LOOP_T = LOOP_SAMPLES / SAMPLE_RATE;
 const EDGE_SAMPLES = EDGE_TRIM_SECONDS * SAMPLE_RATE;
+/**
+ * The period of a pulse train that divides the loop into `count` equal pulses, so it wraps exactly. A loop
+ * is 60.0004 s, not 60 s, so a literal "1 s" period would leave a seam.
+ */
+const period = (count) => (LOOP_T / count).toFixed(12);
+const HEART_PERIOD = period(60);
+const CLOCK_PERIOD = period(30);
+const CLOCK_HALF_PERIOD = (LOOP_T / 60).toFixed(12);
+const CLACK_PERIOD = period(100);
 
 /** Whole cycles per loop for a design rate (at least one). */
 const cycles = (rateHz) => Math.max(1, Math.round(rateHz * LOOP_T));
@@ -299,18 +308,20 @@ export const PROCEDURAL_RECIPES = {
     noise: [`${noise('pink', 851)},lowpass=f=350,volume=0.06[out]`],
     // Lub and dub at 60 bpm: a 55 Hz thump, then a 50 Hz thump 0.3 s later, each with a fast decay.
     tonal: tonal(
-      '0.9*(lt(mod(t,1),0.16)*sin(2*PI*55*mod(t,1))*exp(-22*mod(t,1))' +
-        '+0.7*gt(mod(t,1),0.3)*lt(mod(t,1),0.44)*sin(2*PI*50*(mod(t,1)-0.3))*exp(-30*(mod(t,1)-0.3)))',
+      `0.9*(lt(mod(t,${HEART_PERIOD}),0.16)*sin(2*PI*55*mod(t,${HEART_PERIOD}))*exp(-22*mod(t,${HEART_PERIOD}))` +
+        `+0.7*gt(mod(t,${HEART_PERIOD}),0.3)*lt(mod(t,${HEART_PERIOD}),0.44)` +
+        `*sin(2*PI*50*(mod(t,${HEART_PERIOD})-0.3))*exp(-30*(mod(t,${HEART_PERIOD})-0.3)))`,
       1,
     ),
   },
   clock_ticking: {
     noise: [`${noise('pink', 861)},lowpass=f=800,volume=0.14[out]`],
     // Tick-tock every 2 s: a 3.2 kHz tick, then a lower 2.4 kHz tock, each a 12 ms click. The clicks are
-    // kept well under the room tone so the true peak stays under -3 dBTP after the loudness gain.
+    // kept well under the room tone so the true peak stays under -3 dBTP after the loudness gain (0.15 measured -2.6 dBTP).
     tonal: tonal(
-      '0.15*(lt(mod(t,2),0.012)*sin(2*PI*3200*mod(t,2))*exp(-350*mod(t,2))' +
-        '+0.6*gt(mod(t,2),1)*lt(mod(t,2),1.012)*sin(2*PI*2400*(mod(t,2)-1))*exp(-350*(mod(t,2)-1)))',
+      `0.1*(lt(mod(t,${CLOCK_PERIOD}),0.012)*sin(2*PI*3200*mod(t,${CLOCK_PERIOD}))*exp(-350*mod(t,${CLOCK_PERIOD}))` +
+        `+0.6*gt(mod(t,${CLOCK_PERIOD}),${CLOCK_HALF_PERIOD})*lt(mod(t,${CLOCK_PERIOD}),${CLOCK_HALF_PERIOD}+0.012)` +
+        `*sin(2*PI*2400*(mod(t,${CLOCK_PERIOD})-${CLOCK_HALF_PERIOD}))*exp(-350*(mod(t,${CLOCK_PERIOD})-${CLOCK_HALF_PERIOD})))`,
       1,
     ),
   },
@@ -338,7 +349,10 @@ export const PROCEDURAL_RECIPES = {
   train_interior: {
     noise: [`${noise('brown', 901)},highpass=f=40,lowpass=f=420,volume=0.6[out]`],
     // Rail joints: a clack every 0.6 s (100 per loop), a sharp 1.4 kHz transient with a fast decay.
-    tonal: tonal('0.7*lt(mod(t,0.6),0.02)*sin(2*PI*1400*mod(t,0.6))*exp(-150*mod(t,0.6))', 1),
+    tonal: tonal(
+      `0.7*lt(mod(t,${CLACK_PERIOD}),0.02)*sin(2*PI*1400*mod(t,${CLACK_PERIOD}))*exp(-150*mod(t,${CLACK_PERIOD}))`,
+      1,
+    ),
   },
 };
 

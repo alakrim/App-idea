@@ -52,3 +52,17 @@ export function classifyLicence({ name = null, url = null }) {
 function reject(reason) {
   return { allowed: false, kind: null, label: null, reason };
 }
+
+const CANONICAL_URLS = {
+  'CC0 1.0': 'https://creativecommons.org/publicdomain/zero/1.0/',
+  'Public Domain Mark 1.0': 'https://creativecommons.org/publicdomain/mark/1.0/',
+  'CC BY 3.0': 'https://creativecommons.org/licenses/by/3.0/',
+  'CC BY 4.0': 'https://creativecommons.org/licenses/by/4.0/',
+};
+
+/** The canonical deed URL for a licence label returned by classifyLicence (used when a page gives none). */
+export function canonicalLicenceUrl(label) {
+  const url = CANONICAL_URLS[label];
+  if (url === undefined) throw new Error(`no canonical URL for licence "${label}"`);
+  return url;
+}

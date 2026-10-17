@@ -66,20 +66,26 @@ export default function AboutScreen() {
 
       <SettingsSection title="Ambience sounds">
         {sounds.map((sound) => (
-          <LicenseRow key={sound.id} title={sound.title} detail={sound.license} />
+          <LicenseRow key={sound.id} title={sound.title} detail={sound.license} credit={sound.credit} />
         ))}
       </SettingsSection>
     </SettingsPage>
   );
 }
 
-function LicenseRow({ title, detail }: { title: string; detail: string }) {
+function LicenseRow({ title, detail, credit }: { title: string; detail: string; credit?: string | null }) {
+  const label = credit ? `${title}: ${detail}. ${credit}` : `${title}: ${detail}`;
   return (
-    <View style={styles.row} accessible accessibilityLabel={`${title}: ${detail}`}>
+    <View style={styles.row} accessible accessibilityLabel={label}>
       <Text variant="bodyStrong">{title}</Text>
       <Text variant="caption" tone="muted">
         {detail}
       </Text>
+      {credit ? (
+        <Text variant="caption" tone="muted">
+          {credit}
+        </Text>
+      ) : null}
     </View>
   );
 }

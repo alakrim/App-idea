@@ -1,0 +1,164 @@
+{
+  "category": "city_street_day",
+  "curatedOn": "2026-10-17",
+  "queries": [
+    "city street ambience daytime",
+    "traffic street field recording"
+  ],
+  "candidates": [
+    {
+      "source": "archive.org",
+      "title": "Bulevardul Alexandru Vlahuță 57, Brașov, Romania - Boulevard traffic and sonic memories",
+      "author": "dragosmm",
+      "pageUrl": "https://archive.org/details/aporee_51755_59118",
+      "downloadUrl": "https://archive.org/download/aporee_51755_59118/extBrasovVlahutanearschool16205748.WAV",
+      "format": "WAVE",
+      "durationS": 307.1,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 10,
+      "reasons": [
+        "keywords: street, city, traffic, town",
+        "307 s",
+        "describes an ambience or field recording"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Summernight with rogue fireworks, 50674 Köln, Deutschland - Fireworks - WLD 2020",
+      "author": "fotoralf",
+      "pageUrl": "https://archive.org/details/aporee_50444_57534",
+      "downloadUrl": "https://archive.org/download/aporee_50444_57534/200718AMX004Binaural20200719224851.mp3",
+      "format": "VBR MP3",
+      "durationS": 456.4,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 7,
+      "reasons": [
+        "keywords: street, city, traffic",
+        "456 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Brabanter Str. 3, 50674 Köln, Deutschland - Summer night with rogue fireworks - binaural",
+      "author": "fotoralf",
+      "pageUrl": "https://archive.org/details/aporee_50443_57533",
+      "downloadUrl": "https://archive.org/download/aporee_50443_57533/200718AMX004Binaural.mp3",
+      "format": "VBR MP3",
+      "durationS": 456.4,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 7,
+      "reasons": [
+        "keywords: street, city, traffic",
+        "456 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Songshan Dist., Taipei City - soundwalk",
+      "author": "Wu,Tsan-Cheng",
+      "pageUrl": "https://archive.org/details/aporee_20167_23477",
+      "downloadUrl": "https://archive.org/download/aporee_20167_23477/SoundMap201310242.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 175.1,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 6.58,
+      "reasons": [
+        "keywords: street, city, traffic",
+        "175 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Leba, city center, at the canal - local birds at the canal",
+      "author": "maciej janasik",
+      "pageUrl": "https://archive.org/details/aporee_18930_21957",
+      "downloadUrl": "https://archive.org/download/aporee_18930_21957/Leba.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 120,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 6.4,
+      "reasons": [
+        "keywords: street, city, traffic",
+        "120 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "22 Great Victoria St, Belfast BT2 7BA, UK - Great Victoria Street-Exit Strategies Summer 2021",
+      "author": "Georgios Varoutsos",
+      "pageUrl": "https://archive.org/details/aporee_54297_62104",
+      "downloadUrl": "https://archive.org/download/aporee_54297_62104/20210828GreatVictoriaStreetExitStrategiesSummer2021.wav",
+      "format": "WAVE",
+      "durationS": 120,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 6.4,
+      "reasons": [
+        "keywords: street, city, traffic",
+        "120 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Muhlenberg College Hillel, 2400 West Chew Street, Allentown, PA 18104, USA - Walking through snow on Chew Street",
+      "author": "brandan.skahill@yah...",
+      "pageUrl": "https://archive.org/details/aporee_26153_30236",
+      "downloadUrl": "https://archive.org/download/aporee_26153_30236/snowwalkchewstreet.WAV",
+      "format": "WAVE",
+      "durationS": 92,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 6.31,
+      "reasons": [
+        "keywords: street, traffic, town",
+        "92 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Chaussée de Ninove 3028 - Hall halt",
+      "author": "Tilla Martin",
+      "pageUrl": "https://archive.org/details/aporee_33931_39027",
+      "downloadUrl": "https://archive.org/download/aporee_33931_39027/STE039BrusselWestHall.wav",
+      "format": "WAVE",
+      "durationS": 82.2,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 6.27,
+      "reasons": [
+        "keywords: street, traffic, urban",
+        "82 s"
+      ]
+    }
+  ],
+  "rejected": {
+    "title or description suggests speech or music (\"music\")": 1,
+    "title or description suggests speech or music (\"Radio\")": 2,
+    "title or description suggests speech or music (\"voice\")": 1,
+    "title or description suggests speech or music (\"voices\")": 3,
+    "title or description suggests speech or music (\"radio\")": 1,
+    "title or description suggests speech or music (\"Music\")": 1,
+    "no target keyword in the title or description": 1
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "category": "battle_field",
+  "curatedOn": "2026-10-17",
+  "queries": [
+    "battlefield ambience",
+    "distant battle field recording"
+  ],
+  "candidates": [],
+  "rejected": {
+    "null s is shorter than 68 s": 1,
+    "licence is not allowed: https://creativecommons.org/licenses/by-nd/4.0/": 1
+  }
+}

@@ -1,27 +1,11 @@
 [
   {
-    "id": "base_rain",
-    "file": "base_rain.m4a",
+    "id": "airplane_cabin",
+    "file": "airplane_cabin.m4a",
     "license": "Proprietary (generated in-house)",
     "source": "scripts/sounds/build-base-pack.mjs",
     "author": "Lectio",
-    "date": "2026-10-11"
-  },
-  {
-    "id": "base_wind",
-    "file": "base_wind.m4a",
-    "license": "Proprietary (generated in-house)",
-    "source": "scripts/sounds/build-base-pack.mjs",
-    "author": "Lectio",
-    "date": "2026-10-11"
-  },
-  {
-    "id": "base_ocean",
-    "file": "base_ocean.m4a",
-    "license": "Proprietary (generated in-house)",
-    "source": "scripts/sounds/build-base-pack.mjs",
-    "author": "Lectio",
-    "date": "2026-10-11"
+    "date": "2026-10-17"
   },
   {
     "id": "base_crowd",
@@ -29,15 +13,7 @@
     "license": "Proprietary (generated in-house)",
     "source": "scripts/sounds/build-base-pack.mjs",
     "author": "Lectio",
-    "date": "2026-10-11"
-  },
-  {
-    "id": "base_space_hum",
-    "file": "base_space_hum.m4a",
-    "license": "Proprietary (generated in-house)",
-    "source": "scripts/sounds/build-base-pack.mjs",
-    "author": "Lectio",
-    "date": "2026-10-11"
+    "date": "2026-10-17"
   },
   {
     "id": "base_fire",
@@ -45,6 +21,190 @@
     "license": "Proprietary (generated in-house)",
     "source": "scripts/sounds/build-base-pack.mjs",
     "author": "Lectio",
-    "date": "2026-10-11"
+    "date": "2026-10-17"
+  },
+  {
+    "id": "base_ocean",
+    "file": "base_ocean.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "base_rain",
+    "file": "base_rain.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "base_space_hum",
+    "file": "base_space_hum.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "base_wind",
+    "file": "base_wind.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "blizzard_wind",
+    "file": "blizzard_wind.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "clock_ticking",
+    "file": "clock_ticking.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "forest_night",
+    "file": "forest_night.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "heavy_rain",
+    "file": "heavy_rain.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "library_quiet",
+    "file": "library_quiet.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "light_rain",
+    "file": "light_rain.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "mountain_wind",
+    "file": "mountain_wind.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "office_hum",
+    "file": "office_hum.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "ominous_drone",
+    "file": "ominous_drone.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "qi_hum",
+    "file": "qi_hum.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "rain_on_window",
+    "file": "rain_on_window.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "river_stream",
+    "file": "river_stream.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "snowfall_quiet",
+    "file": "snowfall_quiet.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "spaceship_engine",
+    "file": "spaceship_engine.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "spirit_whispers",
+    "file": "spirit_whispers.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "starship_bridge",
+    "file": "starship_bridge.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "storm_wind",
+    "file": "storm_wind.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "tense_heartbeat",
+    "file": "tense_heartbeat.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "train_interior",
+    "file": "train_interior.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
   }
 ]

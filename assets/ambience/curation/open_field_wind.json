@@ -1,0 +1,141 @@
+{
+  "category": "open_field_wind",
+  "curatedOn": "2026-10-17",
+  "queries": [
+    "wind grass field ambience",
+    "wind meadow field recording"
+  ],
+  "candidates": [
+    {
+      "source": "archive.org",
+      "title": "meadow poems, Piramida, Slovenia - red",
+      "author": "OR poiesis",
+      "pageUrl": "https://archive.org/details/aporee_18314_21276",
+      "downloadUrl": "https://archive.org/download/aporee_18314_21276/poemvTravi10junij20131545.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 258.7,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 6.86,
+      "reasons": [
+        "keywords: wind, grass, meadow",
+        "259 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Neuss, Deutschland - museums island hombroich, langen founation, sky event",
+      "author": "Frank Schulte",
+      "pageUrl": "https://archive.org/details/aporee_24381_28303",
+      "downloadUrl": "https://archive.org/download/aporee_24381_28303/MuseumsinselHombroichSkyEventHeliumbefullung.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 138.1,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 6.46,
+      "reasons": [
+        "keywords: wind, field, meadow",
+        "138 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Berlin, Deutschland - Grillen im Wind",
+      "author": "felixclassen",
+      "pageUrl": "https://archive.org/details/aporee_72203_84314",
+      "downloadUrl": "https://archive.org/download/aporee_72203_84314/fieldrecordinggrillwiesefelixclassen.wav",
+      "format": "WAVE",
+      "durationS": 425.8,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 6,
+      "reasons": [
+        "keywords: wind, meadow",
+        "426 s",
+        "describes an ambience or field recording"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "acacia tree, Piramida, Slovenia - listening to paper, moved by wind",
+      "author": "OR poiesis",
+      "pageUrl": "https://archive.org/details/aporee_18313_21275",
+      "downloadUrl": "https://archive.org/download/aporee_18313_21275/trakoviNaAkaciji8junij20131459.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 407.7,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 5,
+      "reasons": [
+        "keywords: wind, meadow",
+        "408 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Muránska Planina, Slovakia - Mountain meadow \"Studňa\" on Muránská Planina.",
+      "author": "Rastislav Gulasa",
+      "pageUrl": "https://archive.org/details/aporee_64575_74524",
+      "downloadUrl": "https://archive.org/download/aporee_64575_74524/202405181502PriprameniStudnanaMuranskejPlanineaporee.mp3",
+      "format": "VBR MP3",
+      "durationS": 557.9,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 5,
+      "reasons": [
+        "keywords: wind, meadow",
+        "558 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Rázcestie pod Bystrou, Unnamed Road, 032 42 Pribylina, Slovakia - West Tatras, Slovakia: Evening on a Mountain Meadow",
+      "author": "Rastislav Gulasa",
+      "pageUrl": "https://archive.org/details/aporee_48015_54615",
+      "downloadUrl": "https://archive.org/download/aporee_48015_54615/201909131725LukanadRazcestimpodBystrouAporee.mp3",
+      "format": "VBR MP3",
+      "durationS": 743.2,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 5,
+      "reasons": [
+        "keywords: wind, meadow",
+        "743 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Oak Island, Sauvie Island OR 97231, USA - Oregon White Oak Savanna, Sauvie Island",
+      "author": "Benjamin Bishop",
+      "pageUrl": "https://archive.org/details/aporee_40558_46301",
+      "downloadUrl": "https://archive.org/download/aporee_40558_46301/oakislandsauvieilandor20180518.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 128.4,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 4.43,
+      "reasons": [
+        "keywords: wind, meadow",
+        "128 s"
+      ]
+    }
+  ],
+  "rejected": {
+    "no target keyword in the title or description": 1,
+    "title or description suggests speech or music (\"voice\")": 1
+  }
+}

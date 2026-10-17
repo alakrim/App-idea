@@ -1,0 +1,111 @@
+{
+  "category": "city_night",
+  "curatedOn": "2026-10-17",
+  "queries": [
+    "city night ambience",
+    "night street ambience"
+  ],
+  "candidates": [
+    {
+      "source": "archive.org",
+      "title": "Ville Nouvelle, Tunis, Tunesien - tunis, hotel roof, city night ambience",
+      "author": "Frank Schulte",
+      "pageUrl": "https://archive.org/details/aporee_13544_15798",
+      "downloadUrl": "https://archive.org/download/aporee_13544_15798/TunisHotelRoofNightCityAmbience.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 240.8,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 9.8,
+      "reasons": [
+        "keywords: night, city, street, night ambience",
+        "241 s",
+        "describes an ambience or field recording"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Trinity County, Californie, États-Unis d'Amérique - 17_10_25_05_06 grillons nuit voitures PLUIE",
+      "author": "Virgile Loiseau",
+      "pageUrl": "https://archive.org/details/aporee_70994_82795",
+      "downloadUrl": "https://archive.org/download/aporee_70994_82795/1710250506grillonsnuitvoituresPLUIE.wav",
+      "format": "WAVE",
+      "durationS": 220.2,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 5.73,
+      "reasons": [
+        "keywords: night, night ambience",
+        "220 s",
+        "describes an ambience or field recording"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Noite No Curiachito",
+      "author": "Maria Clara Arbex",
+      "pageUrl": "https://archive.org/details/MSC02_NoiteNoCuriachito",
+      "downloadUrl": "https://archive.org/download/MSC02_NoiteNoCuriachito/MSC02_noite-no-curiachito.wav",
+      "format": "WAVE",
+      "durationS": 171.2,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 4.57,
+      "reasons": [
+        "keywords: night, city",
+        "171 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Sydney, New South Wales, Australia - Night time outdoor ambience on garden bench 24-06-2026 7-43pm",
+      "author": "anoobie",
+      "pageUrl": "https://archive.org/details/aporee_72556_84715",
+      "downloadUrl": "https://archive.org/download/aporee_72556_84715/Nighttimeambienceongardenbenchnexttostairs24062026743pm.mp3",
+      "format": "VBR MP3",
+      "durationS": 879.8,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 4,
+      "reasons": [
+        "keywords: night",
+        "880 s",
+        "describes an ambience or field recording"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "The Designer's Choice UCS Collection - AMBIENCES",
+      "author": "Nicholas A. Judy",
+      "pageUrl": "https://archive.org/details/Designers-Choice-Collection-Ambiences",
+      "downloadUrl": "https://archive.org/download/Designers-Choice-Collection-Ambiences/AMBIENCE%2FPUBLIC%20PLACE%2FAMBPubl-Samsung%20Galaxy%20Smartphone%2C%20CU_Grocery%20Store%2C%20Checkout%20Counter%2C%20Footsteps%2C%20Beeps%2C%20Groceries_Nicholas%20Judy_TDC.wav",
+      "format": "WAVE",
+      "durationS": 240,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseLabel": "CC0 1.0",
+      "licenseKind": "CC0",
+      "score": 3.8,
+      "reasons": [
+        "keywords: urban",
+        "240 s",
+        "describes an ambience or field recording"
+      ]
+    }
+  ],
+  "rejected": {
+    "title or description suggests speech or music (\"voices\")": 1,
+    "title or description suggests speech or music (\"music\")": 1,
+    "title or description suggests speech or music (\"Song\")": 1,
+    "no target keyword in the title or description": 1,
+    "title or description suggests speech or music (\"Radio\")": 1
+  }
+}

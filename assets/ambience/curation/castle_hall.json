@@ -1,0 +1,12 @@
+{
+  "category": "castle_hall",
+  "curatedOn": "2026-10-17",
+  "queries": [
+    "castle hall ambience",
+    "stone hall reverb room tone"
+  ],
+  "candidates": [],
+  "rejected": {
+    "no target keyword in the title or description": 1
+  }
+}

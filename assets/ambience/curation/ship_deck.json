@@ -1,0 +1,13 @@
+{
+  "category": "ship_deck",
+  "curatedOn": "2026-10-17",
+  "queries": [
+    "ship deck ambience",
+    "boat deck sea wind creaks"
+  ],
+  "candidates": [],
+  "rejected": {
+    "licence is not allowed: http://creativecommons.org/licenses/by-nc-nd/3.0/": 2,
+    "licence is not allowed: http://creativecommons.org/licenses/by-nc/3.0/nl/": 1
+  }
+}

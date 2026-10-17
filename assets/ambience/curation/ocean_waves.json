@@ -1,0 +1,166 @@
+{
+  "category": "ocean_waves",
+  "curatedOn": "2026-10-17",
+  "queries": [
+    "ocean waves beach ambience",
+    "sea waves shore"
+  ],
+  "candidates": [
+    {
+      "source": "archive.org",
+      "title": "Fao Fao Beach Fales, main south coast rd private bag Saleapaga, Lepa, Samoa - Pacific at night",
+      "author": "matthias.feuersenger",
+      "pageUrl": "https://archive.org/details/aporee_53906_61627",
+      "downloadUrl": "https://archive.org/download/aporee_53906_61627/SamoaFaoFaoBeachFales0807201221Uhr23.mp3",
+      "format": "VBR MP3",
+      "durationS": 550.3,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 14,
+      "reasons": [
+        "keywords: wave, waves, sea, beach, shore, surf",
+        "550 s",
+        "describes an ambience or field recording"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Rávnnji mearrasuodjalanguovlu / Straumsbukta, Sápmi / North Norway - Shoreline ambience 1",
+      "author": "anguscarlyle",
+      "pageUrl": "https://archive.org/details/aporee_65147_75242",
+      "downloadUrl": "https://archive.org/download/aporee_65147_75242/Straumsbukta2.WAV",
+      "format": "WAVE",
+      "durationS": 401.4,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 12,
+      "reasons": [
+        "keywords: wave, waves, sea, shore, surf",
+        "401 s",
+        "describes an ambience or field recording"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Playa El Valle, Samana, Dominican Republic - STE-019_730PM_ELVALLE_SAMANA_ORILLA_5MTS_ADENTRO_ROCA_GRANDE_OLAS_FUERTES_MAREA_FUERTE_SPLASH_OLA_MAREA_ALPICA_CHOCA_FUERTE_ARRECIFE",
+      "author": "bonnellypablo",
+      "pageUrl": "https://archive.org/details/aporee_72201_84310",
+      "downloadUrl": "https://archive.org/download/aporee_72201_84310/STE019730PMELVALLESAMANAORILLA5MTSADENTROROCAGRANDEOLASFUERTESMAREAFUERTESPLASHSALPICACHOCAFUERTEARRECIFE.mp3",
+      "format": "VBR MP3",
+      "durationS": 524.3,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 11,
+      "reasons": [
+        "keywords: wave, waves, sea, beach, shore",
+        "524 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Brighton Beach, East Sussex, UK - Strong sea waves",
+      "author": "RorySmith",
+      "pageUrl": "https://archive.org/details/aporee_27515_31722",
+      "downloadUrl": "https://archive.org/download/aporee_27515_31722/Strongseawaves.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 242.1,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 10.81,
+      "reasons": [
+        "keywords: wave, waves, sea, beach, shore",
+        "242 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Holkham Beach, Holkham, Norfolk, UK - Waves breaking on shore",
+      "author": "Darren Poynton",
+      "pageUrl": "https://archive.org/details/aporee_54391_62214",
+      "downloadUrl": "https://archive.org/download/aporee_54391_62214/HolkhamBeach210912164410.wav",
+      "format": "WAVE",
+      "durationS": 236.3,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 10.79,
+      "reasons": [
+        "keywords: wave, waves, sea, beach, shore",
+        "236 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Edgemere, Quens, New York, NY, USA - After bathing time",
+      "author": "Peter Stets",
+      "pageUrl": "https://archive.org/details/aporee_62753_72191",
+      "downloadUrl": "https://archive.org/download/aporee_62753_72191/230710181139NYCEdgemere.wav",
+      "format": "WAVE",
+      "durationS": 235,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 10.78,
+      "reasons": [
+        "keywords: wave, waves, sea, beach, shore",
+        "235 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Kopalino, beach - torrential rain",
+      "author": "maciej janasik",
+      "pageUrl": "https://archive.org/details/aporee_32466_37328",
+      "downloadUrl": "https://archive.org/download/aporee_32466_37328/hooddrops.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 180,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 10.6,
+      "reasons": [
+        "keywords: wave, waves, sea, beach, shore",
+        "180 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "250730_055349_PH_Ocean_waves_at_White_Beach",
+      "author": "kevp888",
+      "pageUrl": "https://archive.org/details/soundica-fs-829444-250730-055349-ph-ocean-waves-at-white-beach",
+      "downloadUrl": "https://archive.org/download/soundica-fs-829444-250730-055349-ph-ocean-waves-at-white-beach/829444.mp3",
+      "format": "VBR MP3",
+      "durationS": 477.5,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "licenseLabel": "CC BY 4.0",
+      "licenseKind": "CC BY",
+      "score": 10,
+      "reasons": [
+        "keywords: ocean, wave, waves, beach",
+        "478 s",
+        "describes an ambience or field recording"
+      ]
+    }
+  ],
+  "rejected": {
+    "title or description suggests speech or music (\"track\")": 1,
+    "title or description suggests speech or music (\"radio\")": 1,
+    "no target keyword in the title or description": 2,
+    "title or description suggests speech or music (\"music\")": 3,
+    "no allowed licence is visible on the source page (name \"\", url \"http://creativecommons.org/licenses/publicdomain/\")": 1,
+    "title or description suggests speech or music (\"band\")": 1,
+    "1621.11 s is longer than 1200 s": 1
+  }
+}

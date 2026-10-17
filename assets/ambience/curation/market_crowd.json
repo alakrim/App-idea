@@ -1,0 +1,164 @@
+{
+  "category": "market_crowd",
+  "curatedOn": "2026-10-17",
+  "queries": [
+    "market crowd ambience",
+    "street market field recording"
+  ],
+  "candidates": [
+    {
+      "source": "archive.org",
+      "title": "Vallekas, Madrid, Community of Madrid, Spain - The end of the street market",
+      "author": "Sono Mayrit",
+      "pageUrl": "https://archive.org/details/aporee_70665_82404",
+      "downloadUrl": "https://archive.org/download/aporee_70665_82404/251228151946MercadilloDesmontando.mp3",
+      "format": "VBR MP3",
+      "durationS": 163.5,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 6.55,
+      "reasons": [
+        "keywords: market, crowd, vendors",
+        "164 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Vallekas, Madrid, Community of Madrid, Spain - Mercadillo de Entrevías",
+      "author": "Sono Mayrit",
+      "pageUrl": "https://archive.org/details/aporee_70646_82384",
+      "downloadUrl": "https://archive.org/download/aporee_70646_82384/251228121458MercadoPlazaORTF.mp3",
+      "format": "VBR MP3",
+      "durationS": 225,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 5.75,
+      "reasons": [
+        "keywords: market, vendors",
+        "225 s",
+        "describes an ambience or field recording"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Sec. 3, Jiangning Rd., 板橋區, New Taipei City - Walking in the traditional market",
+      "author": "Wu,Tsan-Cheng",
+      "pageUrl": "https://archive.org/details/aporee_29097_33492",
+      "downloadUrl": "https://archive.org/download/aporee_29097_33492/SoundMap2015072921.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 320.1,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 5,
+      "reasons": [
+        "keywords: market, vendors",
+        "320 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Sec. 3, Jiangning Rd., Banqiao Dist., New Taipei City - Walking through the traditional market",
+      "author": "Wu,Tsan-Cheng",
+      "pageUrl": "https://archive.org/details/aporee_29060_33455",
+      "downloadUrl": "https://archive.org/download/aporee_29060_33455/SoundMap2015072922.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 318.5,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 5,
+      "reasons": [
+        "keywords: market, vendors",
+        "319 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Fenglian St., Xinfeng Township - In the alley",
+      "author": "Wu,Tsan-Cheng",
+      "pageUrl": "https://archive.org/details/aporee_37863_43329",
+      "downloadUrl": "https://archive.org/download/aporee_37863_43329/soundmap2017082611.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 347.6,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 5,
+      "reasons": [
+        "keywords: market, vendors",
+        "348 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Zhongzheng St., 羅東鎮仁和里 - Walking in the traditional market",
+      "author": "Wu,Tsan-Cheng",
+      "pageUrl": "https://archive.org/details/aporee_24169_44459",
+      "downloadUrl": "https://archive.org/download/aporee_24169_44459/soundmap201712094.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 282,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 4.94,
+      "reasons": [
+        "keywords: market, vendors",
+        "282 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Erling Rd., Xiaogang Dist. - Traditional Market",
+      "author": "Wu,Tsan-Cheng",
+      "pageUrl": "https://archive.org/details/aporee_23199_26961",
+      "downloadUrl": "https://archive.org/download/aporee_23199_26961/SoundMap2014051429.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 192.1,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 4.64,
+      "reasons": [
+        "keywords: market, vendors",
+        "192 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Via Sangallo, 41, 07026 Olbia SS, Italy - disassembling a street market",
+      "author": "maciej janasik",
+      "pageUrl": "https://archive.org/details/aporee_63511_73077",
+      "downloadUrl": "https://archive.org/download/aporee_63511_73077/raidodmn.mp3",
+      "format": "VBR MP3",
+      "durationS": 180,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 4.6,
+      "reasons": [
+        "keywords: market, vendors",
+        "180 s"
+      ]
+    }
+  ],
+  "rejected": {
+    "title or description suggests speech or music (\"Voices\")": 1,
+    "title or description suggests speech or music (\"voices\")": 4,
+    "title or description suggests speech or music (\"band\")": 1,
+    "title or description suggests speech or music (\"voice\")": 1,
+    "title or description suggests speech or music (\"Album\")": 1,
+    "no target keyword in the title or description": 2,
+    "title or description suggests speech or music (\"Interview\")": 1
+  }
+}

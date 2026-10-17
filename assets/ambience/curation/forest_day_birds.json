@@ -1,0 +1,166 @@
+{
+  "category": "forest_day_birds",
+  "curatedOn": "2026-10-17",
+  "queries": [
+    "forest birdsong",
+    "woodland birds dawn chorus"
+  ],
+  "candidates": [
+    {
+      "source": "archive.org",
+      "title": "Teufelsberg audio stream, Grunewald, Berlin, May 2025, Teufelsseechaussee, Grunewald, Charlottenburg-Wilmersdorf, Berlin, 14055, Germany - Midday atmosphere, the city roars in the distance, a great tit sings repetitively, 12noon bells chime",
+      "author": "Peter Cusack",
+      "pageUrl": "https://archive.org/details/aporee_67686_78348",
+      "downloadUrl": "https://archive.org/download/aporee_67686_78348/25050611411156contwindgrtitgrtspwdpkrcallsdist12noonbelldistblkcapedit.mp3",
+      "format": "VBR MP3",
+      "durationS": 373.3,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 8,
+      "reasons": [
+        "keywords: bird, birds, forest",
+        "373 s",
+        "describes an ambience or field recording"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "The Designer's Choice UCS Collection - AMBIENCES",
+      "author": "Nicholas A. Judy",
+      "pageUrl": "https://archive.org/details/Designers-Choice-Collection-Ambiences",
+      "downloadUrl": "https://archive.org/download/Designers-Choice-Collection-Ambiences/AMBIENCE%2FPUBLIC%20PLACE%2FAMBPubl-Samsung%20Galaxy%20Smartphone%2C%20CU_Grocery%20Store%2C%20Checkout%20Counter%2C%20Footsteps%2C%20Beeps%2C%20Groceries_Nicholas%20Judy_TDC.wav",
+      "format": "WAVE",
+      "durationS": 240,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseLabel": "CC0 1.0",
+      "licenseKind": "CC0",
+      "score": 7.8,
+      "reasons": [
+        "keywords: bird, birds, forest",
+        "240 s",
+        "describes an ambience or field recording"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "IJhorst, Overijssel, Nederland - Birdsong_Forest_Morning",
+      "author": "Jillis Molenaar",
+      "pageUrl": "https://archive.org/details/aporee_72184_84289",
+      "downloadUrl": "https://archive.org/download/aporee_72184_84289/IJhorstForestMorningBirdsongHighPressureCleanerDistantBinaural20260519111319.wav",
+      "format": "WAVE",
+      "durationS": 276.4,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 6.92,
+      "reasons": [
+        "keywords: bird, birds, forest",
+        "276 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Biblins, Forest of Dean, Ross-on-Wye, UK - Echoes on the River Wye",
+      "author": "RorySmith",
+      "pageUrl": "https://archive.org/details/aporee_31569_36264",
+      "downloadUrl": "https://archive.org/download/aporee_31569_36264/EchoesbytheRiverWye.wav",
+      "format": "WAVE",
+      "durationS": 245.5,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 6.82,
+      "reasons": [
+        "keywords: bird, birds, forest",
+        "246 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "金龍山, 鎚仔寮 Yuchi Township, Nantou County - Cicada chirping",
+      "author": "Wu,Tsan-Cheng",
+      "pageUrl": "https://archive.org/details/aporee_73386_85757",
+      "downloadUrl": "https://archive.org/download/aporee_73386_85757/soundmap202609075.mp3",
+      "format": "VBR MP3",
+      "durationS": 234.1,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 6.78,
+      "reasons": [
+        "keywords: bird, birds, forest",
+        "234 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "壯圍鄉永鎮村,Yilan County - Bamboo forest",
+      "author": "Wu,Tsan-Cheng",
+      "pageUrl": "https://archive.org/details/aporee_24138_28033",
+      "downloadUrl": "https://archive.org/download/aporee_24138_28033/SoundMap2014072616.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 128.1,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 6.43,
+      "reasons": [
+        "keywords: bird, birds, forest",
+        "128 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "Grgar Slatna",
+      "author": "Bojan Marusic",
+      "pageUrl": "https://archive.org/details/grgar-slatna",
+      "downloadUrl": "https://archive.org/download/grgar-slatna/Grgar%20Slatna%202.mp3",
+      "format": "VBR MP3",
+      "durationS": 683.5,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 5,
+      "reasons": [
+        "keywords: bird, birds",
+        "684 s"
+      ]
+    },
+    {
+      "source": "archive.org",
+      "title": "found crossbills",
+      "author": "unknown",
+      "pageUrl": "https://archive.org/details/FoundCrossbills",
+      "downloadUrl": "https://archive.org/download/FoundCrossbills/found_crossbills.ogg",
+      "format": "Ogg Vorbis",
+      "durationS": 214.5,
+      "licenseName": null,
+      "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+      "licenseLabel": "CC BY 3.0",
+      "licenseKind": "CC BY",
+      "score": 2.71,
+      "reasons": [
+        "keywords: forest",
+        "214 s"
+      ]
+    }
+  ],
+  "rejected": {
+    "no allowed licence is visible on the source page (name \"\", url \"http://creativecommons.org/licenses/publicdomain/\")": 2,
+    "title or description suggests speech or music (\"soundtrack\")": 1,
+    "title or description suggests speech or music (\"music\")": 3,
+    "title or description suggests speech or music (\"radio\")": 1,
+    "title or description suggests speech or music (\"Music\")": 1,
+    "title or description suggests speech or music (\"Remix\")": 1,
+    "title or description suggests speech or music (\"song\")": 2,
+    "66 s is shorter than 68 s": 1
+  }
+}
