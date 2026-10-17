@@ -10,7 +10,7 @@
     "sha256": "308e95a99f0e472d5caffc19525447d95ad07a031c552e544a79adb730d47101",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "base_crowd",
@@ -23,7 +23,7 @@
     "sha256": "b16d07e4fa2fb1efc30b6b6ca50880186e8c3c2f282ecec63b24f31d3ce2a7a0",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "base_fire",
@@ -36,7 +36,7 @@
     "sha256": "b3391a5f49a0748bb0c478b262caaf4b0c26bf3fe9fb38f4a29eff250253463f",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "base_ocean",
@@ -49,7 +49,7 @@
     "sha256": "033080f8bfee0c515446b05f6457d0a31cf0cf2146e6a754b1a09820382c52e0",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "base_rain",
@@ -62,7 +62,7 @@
     "sha256": "e20d85a2f64b86aeedbee472504a0825d97697cc22a27132e62f2a8c7f104465",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "base_space_hum",
@@ -75,7 +75,7 @@
     "sha256": "fc73b150d216b2c1351399bcdf348a754de79da1d2c3efc04f18ab5ca5ea4df1",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "base_wind",
@@ -88,7 +88,20 @@
     "sha256": "1bc7019d9d89710c338e48643f0164e6a53b74e4eea8dd75bda9ac67ec0b38cc",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
+  },
+  {
+    "id": "battle_field",
+    "file": "battle_field.m4a",
+    "durationMs": 60093,
+    "loopStartMs": 46.44,
+    "loopEndMs": 60046.803,
+    "lufs": -28.1,
+    "bytes": 493994,
+    "sha256": "980213b45a387c34f21c91c5e61ba74dc06b1c0198a5f2603b09bdacbf13f49b",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "blizzard_wind",
@@ -101,7 +114,59 @@
     "sha256": "789baf2c118ff3c30925980be42f183f20699a36e634ed08417dcc309791bc79",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
+  },
+  {
+    "id": "cafe_soft",
+    "file": "cafe_soft.m4a",
+    "durationMs": 60093,
+    "loopStartMs": 46.44,
+    "loopEndMs": 60046.803,
+    "lufs": -28,
+    "bytes": 493888,
+    "sha256": "86a45c571efa285fe0216f273cdf75666371422454782f4477fb4f08b6a2d5e4",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "bed-recipes-v4"
+  },
+  {
+    "id": "castle_hall",
+    "file": "castle_hall.m4a",
+    "durationMs": 60093,
+    "loopStartMs": 46.44,
+    "loopEndMs": 60046.803,
+    "lufs": -28,
+    "bytes": 494072,
+    "sha256": "10e10963b5cbf67c4ee6febaee7187e04041c60470af23023f3dceff3510aecc",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "bed-recipes-v4"
+  },
+  {
+    "id": "city_night",
+    "file": "city_night.m4a",
+    "durationMs": 60093,
+    "loopStartMs": 46.44,
+    "loopEndMs": 60046.803,
+    "lufs": -28.1,
+    "bytes": 494076,
+    "sha256": "d450df2e181afcc6adb65fddcbaac85b8040ac1296e133ac2ed410be92586a5d",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "bed-recipes-v4"
+  },
+  {
+    "id": "city_street_day",
+    "file": "city_street_day.m4a",
+    "durationMs": 60093,
+    "loopStartMs": 46.44,
+    "loopEndMs": 60046.803,
+    "lufs": -28.1,
+    "bytes": 494050,
+    "sha256": "d087fcbea51b1188e4692e3b2616bac25ed0b12c242b4713600208d716ac43eb",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "clock_ticking",
@@ -114,7 +179,53 @@
     "sha256": "a745290a15fd0c22f672b25d045ce85d58faad2342a2b6d27c60971dd4255f2a",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
+  },
+  {
+    "id": "crowd_murmur",
+    "file": "crowd_murmur.m4a",
+    "durationMs": 60093,
+    "loopStartMs": 46.44,
+    "loopEndMs": 60046.803,
+    "lufs": -28,
+    "bytes": 494034,
+    "sha256": "518e69217652711c77606c4460ad99883286d7227246552d59d162f60351398d",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "bed-recipes-v4"
+  },
+  {
+    "id": "fireplace_crackle",
+    "file": "fireplace_crackle.m4a",
+    "durationMs": 60093,
+    "loopStartMs": 46.44,
+    "loopEndMs": 60046.803,
+    "lufs": -28,
+    "bytes": 495196,
+    "sha256": "de08898b62683f5eb25f58b57ac795e84307834538d0f248ad899e134dc6302e",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "bed-recipes-v4"
+  },
+  {
+    "id": "forest_day_birds",
+    "file": "forest_day_birds.m4a",
+    "durationMs": 60093,
+    "loopStartMs": 46.44,
+    "loopEndMs": 60046.803,
+    "lufs": -27.8,
+    "bytes": 494676,
+    "sha256": "9dfd3b25aa4421d2b0ca216a313dda1607b72d36a51d4ff03c3598d0a32e2eaf",
+    "kind": "bed",
+    "recipeVersion": "open-pack-v1",
+    "source": "sampled",
+    "title": "IJhorst, Overijssel, Nederland - Birdsong_Forest_Morning",
+    "author": "Jillis Molenaar",
+    "sourceUrl": "https://archive.org/details/aporee_72184_84289",
+    "license": "Public Domain Mark 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "originalSha256": "8ca7b230f93b1b8b07237ed18a9ec70a272dafe4f248c226868d455bf1c2254b",
+    "downloadDate": "2026-10-17"
   },
   {
     "id": "forest_night",
@@ -123,11 +234,11 @@
     "loopStartMs": 46.44,
     "loopEndMs": 60046.803,
     "lufs": -28.2,
-    "bytes": 499767,
-    "sha256": "07d369ae2918215a80c3c020bf1cc3eef6a5d24a5307bf10ec9f613263f5b864",
+    "bytes": 497616,
+    "sha256": "94ba866821ae488f8523c64f21979f95d74628ac50f2265b4069e2898a04c2a8",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "heavy_rain",
@@ -140,7 +251,40 @@
     "sha256": "424ff63091d2e101b3535e9d9b5835e63a11db44092874934eccd35d0c2b0329",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
+  },
+  {
+    "id": "horse_trot",
+    "file": "horse_trot.m4a",
+    "durationMs": 60093,
+    "loopStartMs": 46.44,
+    "loopEndMs": 60046.803,
+    "lufs": -28,
+    "bytes": 497594,
+    "sha256": "39d7f6b26e43eed1d905599ce16021be64e3c14bc0ee8a406d5fe19005a3f60d",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "bed-recipes-v4"
+  },
+  {
+    "id": "jungle_insects",
+    "file": "jungle_insects.m4a",
+    "durationMs": 60093,
+    "loopStartMs": 46.44,
+    "loopEndMs": 60046.803,
+    "lufs": -28,
+    "bytes": 494444,
+    "sha256": "6c6e2428ea3262f76b512b28ec69dc523f8493038bfc947aed22737006b12137",
+    "kind": "bed",
+    "recipeVersion": "open-pack-v1",
+    "source": "sampled",
+    "title": "Coastal Forest, Atiu Cookinseln - Coastal Rain Forest at night, no rain.",
+    "author": "matthias.feuersenger",
+    "sourceUrl": "https://archive.org/details/aporee_54114_61850",
+    "license": "Public Domain Mark 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "originalSha256": "c311fdcf9b20c91969707d68158a4074bcbd3af12fe2d4c745e46d488d3bfd44",
+    "downloadDate": "2026-10-17"
   },
   {
     "id": "library_quiet",
@@ -153,7 +297,7 @@
     "sha256": "53ab7194565690be9a51e82df16442d29d5a3110faa8a856849662b97a2facc4",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "light_rain",
@@ -166,7 +310,20 @@
     "sha256": "d71e3c796417e0838ec25d961e7c4bae3d3ae38223e4b05c7cc6739ed5cb1e00",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
+  },
+  {
+    "id": "market_crowd",
+    "file": "market_crowd.m4a",
+    "durationMs": 60093,
+    "loopStartMs": 46.44,
+    "loopEndMs": 60046.803,
+    "lufs": -28,
+    "bytes": 494234,
+    "sha256": "fb2a6056e753c7a66df3410156e91125f9ccd5a9f48fb0342484f7476f1216f4",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "mountain_wind",
@@ -179,7 +336,27 @@
     "sha256": "42c7a3ce8799b5da8d343339d79c61ec9f2eafff1b3ca2244d012e4033d71faa",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
+  },
+  {
+    "id": "ocean_waves",
+    "file": "ocean_waves.m4a",
+    "durationMs": 60093,
+    "loopStartMs": 46.44,
+    "loopEndMs": 60046.803,
+    "lufs": -28,
+    "bytes": 494299,
+    "sha256": "3cad8ea932469a88c32c7fa1fb1f001c624019986599ba7f5fc709c51c917603",
+    "kind": "bed",
+    "recipeVersion": "open-pack-v1",
+    "source": "sampled",
+    "title": "Brighton Beach, East Sussex, UK - Strong sea waves",
+    "author": "RorySmith",
+    "sourceUrl": "https://archive.org/details/aporee_27515_31722",
+    "license": "Public Domain Mark 1.0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+    "originalSha256": "da930fe691f89d94c0776869bc2ab253884659cbc1ab2861f3377b6310d98ec2",
+    "downloadDate": "2026-10-17"
   },
   {
     "id": "office_hum",
@@ -192,7 +369,7 @@
     "sha256": "202dc8585c629d08f3eea35904c861304719ffa5831389bf4e254782bb3fbb1f",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "ominous_drone",
@@ -205,7 +382,7 @@
     "sha256": "bfbac2632249bab50592e508fefa9fb6c09cfe036d342bab001418932dec5082",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "qi_hum",
@@ -218,7 +395,7 @@
     "sha256": "dfdff8f67999695abd6bcd81926b27d5e3579cbf9a4d575655b41f5aca6bef6b",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "rain_on_window",
@@ -231,7 +408,7 @@
     "sha256": "0c2ec39ecfc54663ad16f891c8e8f8001a17ffcf7a470df05d2c8647b86ef8da",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "river_stream",
@@ -244,7 +421,20 @@
     "sha256": "db98a0aec33f3db19d680a1595a353a6c75d1017bd54b2521b546cd25e1dcc15",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
+  },
+  {
+    "id": "ship_deck",
+    "file": "ship_deck.m4a",
+    "durationMs": 60093,
+    "loopStartMs": 46.44,
+    "loopEndMs": 60046.803,
+    "lufs": -27.9,
+    "bytes": 493904,
+    "sha256": "3148991003985d33c4d71447d6bdf28857c169a17702e4b626635f05a325fed3",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "snowfall_quiet",
@@ -257,7 +447,7 @@
     "sha256": "9e08ef957dbc46f6a81f9b69c04300400ea89e3947e435fab38b2bcf324f5fe5",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "spaceship_engine",
@@ -270,7 +460,7 @@
     "sha256": "9e1ebc99eff3d17638d8e73c16531a5665b54f05d8e9fa9ca95c74a663d9f3ce",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "spirit_whispers",
@@ -283,7 +473,7 @@
     "sha256": "1f0fcf840bc432fad23d6bb81a8bc15970d265168da54fac8699043b180883da",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "starship_bridge",
@@ -296,7 +486,7 @@
     "sha256": "dbd9fe3d47d681e5d4616a0880f6ce191b3e878d0a21d54ff2005d9dc6466353",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "storm_wind",
@@ -309,7 +499,20 @@
     "sha256": "98dea6958708eb548afdee2b2c3b85d03e974c0961d92b7da5e9faf10cff27f5",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
+  },
+  {
+    "id": "tavern_crowd",
+    "file": "tavern_crowd.m4a",
+    "durationMs": 60093,
+    "loopStartMs": 46.44,
+    "loopEndMs": 60046.803,
+    "lufs": -28.1,
+    "bytes": 494074,
+    "sha256": "a568c24d9f79dee9585ce6ccfbe5e744756a08569c63203fc29c99b4c7da8b19",
+    "kind": "bed",
+    "source": "procedural",
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "tense_heartbeat",
@@ -317,12 +520,12 @@
     "durationMs": 60093,
     "loopStartMs": 46.44,
     "loopEndMs": 60046.803,
-    "lufs": -27.9,
-    "bytes": 508676,
-    "sha256": "9c47bb88b0e6fb164270d6fe96d93e4f0175ff2dff8ccde250f6f62dc9391ead",
+    "lufs": -28,
+    "bytes": 508089,
+    "sha256": "4b64f0dba7b3e1ba3d2f4cbce55a380d7232573be512c89a537aa44d38839200",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   },
   {
     "id": "train_interior",
@@ -335,6 +538,6 @@
     "sha256": "b90b6a6c758e4f05c2ce22571c4a95434951434efc96735e3a4fbe05fe043907",
     "kind": "bed",
     "source": "procedural",
-    "recipeVersion": "bed-recipes-v3"
+    "recipeVersion": "bed-recipes-v4"
   }
 ]

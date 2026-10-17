@@ -1,1 +1,35 @@
-[]
+[
+  {
+    "category": "ocean_waves",
+    "source": "archive.org",
+    "title": "Brighton Beach, East Sussex, UK - Strong sea waves",
+    "author": "RorySmith",
+    "pageUrl": "https://archive.org/details/aporee_27515_31722",
+    "downloadUrl": "https://archive.org/download/aporee_27515_31722/Strongseawaves.ogg",
+    "licenseName": null,
+    "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+    "reason": "Shoreline recording of strong surf, titled as sea waves, no speech or music in the title or description; the base_ocean procedural bed was a synthetic swell. Public Domain Mark 1.0 on the page."
+  },
+  {
+    "category": "forest_day_birds",
+    "source": "archive.org",
+    "title": "IJhorst, Overijssel, Nederland - Birdsong_Forest_Morning",
+    "author": "Jillis Molenaar",
+    "pageUrl": "https://archive.org/details/aporee_72184_84289",
+    "downloadUrl": "https://archive.org/download/aporee_72184_84289/IJhorstForestMorningBirdsongHighPressureCleanerDistantBinaural20260519111319.wav",
+    "licenseName": null,
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "reason": "Morning birdsong in a forest, titled as birdsong with no speech or music in the title or description; the closest candidate with no distant traffic in the title. Public Domain Mark 1.0 on the page."
+  },
+  {
+    "category": "jungle_insects",
+    "source": "archive.org",
+    "title": "Coastal Forest, Atiu Cookinseln - Coastal Rain Forest at night, no rain.",
+    "author": "matthias.feuersenger",
+    "pageUrl": "https://archive.org/details/aporee_54114_61850",
+    "downloadUrl": "https://archive.org/download/aporee_54114_61850/T695AtiuCoastalForestatnight310720122143.mp3",
+    "licenseName": null,
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "reason": "Night rainforest on Atiu with no rain, so it carries insects and frogs without a downpour; the only jungle candidate that passed the screen. Public Domain Mark 1.0 on the page."
+  }
+]

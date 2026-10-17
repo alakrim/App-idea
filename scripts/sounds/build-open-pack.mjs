@@ -7,6 +7,7 @@
 // crossfade is cut. bed-encoder.mjs then applies the same loop, roll, loudness and AAC recipe as the
 // procedural beds. Writes the sampled rows of the bed manifest and the licence ledger; procedural rows are kept.
 
+import { Buffer } from 'node:buffer';
 import { copyFile, mkdir, mkdtemp, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -86,7 +87,8 @@ async function buildSampledBed(pick, workDir) {
       id,
       file,
       license: licence.label,
-      source: pick.downloadUrl,
+      /** The page the sound came from. Its licence is visible there, and the credit line names it. */
+      source: pick.pageUrl,
       author: pick.author,
       date: DOWNLOAD_DATE,
       title: pick.title,

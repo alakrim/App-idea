@@ -11,7 +11,7 @@
 
 import { EDGE_TRIM_SECONDS, LOOP_SAMPLES, SAMPLE_RATE, SYNTH_SECONDS } from './pack-spec.mjs';
 
-export const RECIPE_VERSION = 'bed-recipes-v3';
+export const RECIPE_VERSION = 'bed-recipes-v4';
 
 const LOOP_T = LOOP_SAMPLES / SAMPLE_RATE;
 const EDGE_SAMPLES = EDGE_TRIM_SECONDS * SAMPLE_RATE;
@@ -24,6 +24,24 @@ const HEART_PERIOD = period(60);
 const CLOCK_PERIOD = period(30);
 const CLOCK_HALF_PERIOD = (LOOP_T / 60).toFixed(12);
 const CLACK_PERIOD = period(100);
+/**
+ * The loop seam is at synthesis time EDGE_TRIM_SECONDS, which is beat phase (EDGE mod beat) on the grid. The grid
+ * is shifted so that seam falls 0.7 s into each beat, after the dub and in silence. A seam on a thump is audible.
+ */
+const HEART_P = LOOP_T / 60;
+const HEART_SHIFT = (((0.7 - (EDGE_TRIM_SECONDS % HEART_P)) % HEART_P) + HEART_P) % HEART_P;
+const HEART_BEAT = `mod(t+${HEART_SHIFT.toFixed(12)},${HEART_PERIOD})`;
+
+/** A smooth pulse over `u` seconds: a half sine that is exactly zero at 0 and at `length`, and after it. */
+const pulse = (u, length) => `lt(${u},${length})*max(0,sin(PI*${u}/${length}))`;
+/** A tonal strike: a sine that decays from a smooth attack, repeated every period. */
+const strike = (u, freq, decay, length, amp) =>
+  `${amp}*${pulse(u, length)}*exp(-${decay}*${u})*sin(2*PI*${freq}*${u})`;
+/** Clang or clink: a short bell partial pair. */
+const clink = (k, amp) => {
+  const u = `mod(t,${period(k)})`;
+  return `${amp}*${pulse(u, 0.4)}*exp(-9*${u})*(sin(2*PI*2100*${u})+0.6*sin(2*PI*3150*${u}))`;
+};
 
 /** Whole cycles per loop for a design rate (at least one). */
 const cycles = (rateHz) => Math.max(1, Math.round(rateHz * LOOP_T));
@@ -106,6 +124,26 @@ const WHISPER_LAYERS = [
   { seed: 883, f: 2300, q: 5, rates: [0.51, 0.89], phase: 4.1, base: 0.25, depth0: 0.25, depth1: 0.15 },
 ];
 
+/** Gain motion of babble layers, in Hz: syllable-like rates. Each layer uses two of them. */
+const BABBLE_RATES = [2.6, 3.4, 4.1, 5.3, 2.9, 3.9, 4.7, 6.1];
+
+/**
+ * Babble layers for the crowd family: formant bands on pink noise with syllable-like gain motion and no
+ * speech. `depth` must stay below 0.31 so every gain stays between 0 and 1 (base 0.5, depth 0.6 * depth).
+ */
+function babbleLayers(seed, centres, depth) {
+  return centres.map((f, i) => ({
+    seed: seed + i,
+    f,
+    q: 2.5 + (i % 3) * 0.5,
+    rates: [BABBLE_RATES[i % BABBLE_RATES.length], BABBLE_RATES[(i + 3) % BABBLE_RATES.length]],
+    phase: i * 0.9,
+    base: 0.5,
+    depth0: depth,
+    depth1: depth * 0.6,
+  }));
+}
+
 /** Each recipe: `noise` (fragments ending in [out], crossfaded) and/or `tonal` (periodic stem). */
 export const PROCEDURAL_RECIPES = {
   base_rain: {
@@ -166,10 +204,11 @@ export const PROCEDURAL_RECIPES = {
       `${noise('pink', 702)},highpass=f=900,lowpass=f=2500,tremolo=f=${hz(0.19)}:d=0.4,volume=0.12[rustle]`,
       '[wind][rustle]amix=inputs=2:normalize=0[out]',
     ],
-    // Two crickets: gated 4.3 kHz and 4.7 kHz chirps on 1.25 s and 0.8 s periods, with a 9 Hz trill.
+    // Two crickets: gated 4.3 kHz and 4.7 kHz chirps on loop-divided periods (48 and 75 per loop), with a
+    // 9 Hz trill. The carriers are whole cycles per loop, so the stem wraps without a step.
     tonal: tonal(
-      `0.05*sin(2*PI*4300*t)*lt(mod(t,1.25),0.22)*(0.6+0.4*sin(2*PI*${hz(9)}*t))` +
-        `+0.035*sin(2*PI*4700*t)*lt(mod(t,0.8),0.14)*(0.6+0.4*sin(2*PI*${hz(11)}*t))`,
+      `0.05*sin(2*PI*${hz(4300)}*t)*${pulse(`mod(t,${period(48)})`, 0.22)}*(0.6+0.4*sin(2*PI*${hz(9)}*t))` +
+        `+0.035*sin(2*PI*${hz(4700)}*t)*${pulse(`mod(t,${period(75)})`, 0.14)}*(0.6+0.4*sin(2*PI*${hz(11)}*t))`,
       1,
     ),
   },
@@ -307,10 +346,11 @@ export const PROCEDURAL_RECIPES = {
   tense_heartbeat: {
     noise: [`${noise('pink', 851)},lowpass=f=350,volume=0.06[out]`],
     // Lub and dub at 60 bpm: a 55 Hz thump, then a 50 Hz thump 0.3 s later, each with a fast decay.
+    // The beat grid is shifted (HEART_BEAT) so the loop seam falls in the silence after the dub.
     tonal: tonal(
-      `0.9*(lt(mod(t,${HEART_PERIOD}),0.16)*sin(2*PI*55*mod(t,${HEART_PERIOD}))*exp(-22*mod(t,${HEART_PERIOD}))` +
-        `+0.7*gt(mod(t,${HEART_PERIOD}),0.3)*lt(mod(t,${HEART_PERIOD}),0.44)` +
-        `*sin(2*PI*50*(mod(t,${HEART_PERIOD})-0.3))*exp(-30*(mod(t,${HEART_PERIOD})-0.3)))`,
+      `0.9*(lt(${HEART_BEAT},0.16)*sin(2*PI*55*${HEART_BEAT})*exp(-22*${HEART_BEAT})` +
+        `+0.7*gt(${HEART_BEAT},0.3)*lt(${HEART_BEAT},0.44)` +
+        `*sin(2*PI*50*(${HEART_BEAT}-0.3))*exp(-30*(${HEART_BEAT}-0.3)))`,
       1,
     ),
   },
@@ -353,6 +393,117 @@ export const PROCEDURAL_RECIPES = {
       `0.7*lt(mod(t,${CLACK_PERIOD}),0.02)*sin(2*PI*1400*mod(t,${CLACK_PERIOD}))*exp(-150*mod(t,${CLACK_PERIOD}))`,
       1,
     ),
+  },
+
+  castle_hall: {
+    noise: [
+      `${noise('brown', 1001)},lowpass=f=200,volume=0.5[floor]`,
+      // A stone hall: a dark pink tail with three long echoes (420 to 1100 ms) and a slow swell.
+      `${noise('pink', 1002)},lowpass=f=900,aecho=0.6:0.5:420|760|1100:0.4|0.3|0.2,volume='0.55+0.15*${lfo(1 / 37)}':eval=frame[hall]`,
+      '[floor][hall]amix=inputs=2:normalize=0[out]',
+    ],
+  },
+  ship_deck: {
+    noise: [
+      // Waves against the hull on a 7.5 s swell, a steady wind through the rigging and wood creaks every 11 s.
+      `${noise('brown', 1101)},lowpass=f=600,volume='0.3+0.7*pow(0.5+0.5*${lfo(1 / 7.3)},2)':eval=frame[waves]`,
+      `${noise('pink', 1102)},bandpass=f=500:width_type=q:w=0.7,tremolo=f=${hz(0.17)}:d=0.5,volume=0.35[wind]`,
+      `${noise('pink', 1103)},bandpass=f=180:width_type=q:w=8,volume='0.9*pow(max(0,sin(2*PI*${hz(0.09)}*t)),12)':eval=frame[creak]`,
+      '[waves][wind][creak]amix=inputs=3:normalize=0:weights=1 0.6 0.5[out]',
+    ],
+  },
+  horse_trot: {
+    noise: [`${noise('brown', 1201)},lowpass=f=260,volume=0.25[out]`],
+    // Trot: a hoof strike every 0.4 s (150 per loop), each followed by a softer strike half a period later.
+    tonal: tonal(
+      `${strike(`mod(t,${period(150)})`, 150, 40, 0.07, 0.5)}` +
+        `+${strike(`mod(t+${(Number(period(150)) / 2).toFixed(12)},${period(150)})`, 150, 40, 0.07, 0.3)}`,
+      1,
+    ),
+  },
+  battle_field: {
+    noise: [
+      // Distant rumble on a slow swell, and a far-off crackle of gunfire in bursts.
+      `${noise('brown', 1301)},lowpass=f=160,volume='0.35+0.25*pow(0.5+0.5*${lfo(1 / 19, 0.3)},2)':eval=frame[rumble]`,
+      `${noise('pink', 1302)},bandpass=f=1200:width_type=q:w=1.2,volume='0.02+0.1*pow(max(0,sin(2*PI*${hz(0.23)}*t)),16)':eval=frame[distant]`,
+      '[rumble][distant]amix=inputs=2:normalize=0[out]',
+    ],
+    // Metal clangs on three loop-divided rhythms (7, 11 and 13 per loop), so they never repeat in step.
+    tonal: tonal(
+      `${clink(7, 0.12)}+${clink(11, 0.09)}+${clink(13, 0.07)}`,
+      1,
+    ),
+  },
+  city_street_day: {
+    noise: [
+      // Traffic on a 12 s swell, tyre hiss on the same swell and an idling engine underneath.
+      `${noise('brown', 1401)},lowpass=f=700,volume='0.35+0.3*pow(0.5+0.5*${lfo(1 / 11)},3)':eval=frame[traffic]`,
+      `${noise('pink', 1402)},highpass=f=900,lowpass=f=4500,volume='0.04+0.1*pow(0.5+0.5*${lfo(1 / 11, 0.5)},3)':eval=frame[tyres]`,
+      `${noise('brown', 1403)},bandpass=f=90:width_type=q:w=1,volume=0.4[idle]`,
+      '[traffic][tyres][idle]amix=inputs=3:normalize=0:weights=1 0.8 0.5[out]',
+    ],
+  },
+  city_night: {
+    noise: [
+      // Sparse traffic far off, with a thin hiss of the street lamps.
+      `${noise('brown', 1411)},lowpass=f=500,volume='0.15+0.15*pow(0.5+0.5*${lfo(1 / 23)},3)':eval=frame[traffic]`,
+      `${noise('pink', 1412)},highpass=f=2000,lowpass=f=6000,volume=0.02[hiss]`,
+      '[traffic][hiss]amix=inputs=2:normalize=0[out]',
+    ],
+    // Lamp hum at 100 Hz with a 200 Hz partial, and sparse city crickets in a 3.9 kHz chirp every 67 per loop.
+    tonal: tonal(
+      `0.04*sin(2*PI*${hz(100)}*t)+0.02*sin(2*PI*${hz(200)}*t+0.5)` +
+        `+0.03*sin(2*PI*${hz(3900)}*t)*${pulse(`mod(t,${period(67)})`, 0.12)}*(0.6+0.4*sin(2*PI*${hz(9)}*t))`,
+      1,
+    ),
+  },
+  fireplace_crackle: {
+    noise: [
+      `${noise('brown', 1901)},lowpass=f=260,volume=0.2[embers]`,
+      // Crackle: high-passed impulses at about 200 per second, bunched by a slow envelope, plus rarer snaps.
+      `${expr('gt(random(0),0.9955)*(2*random(1)-1)*(0.4+0.6*random(2))')},highpass=f=1200,lowpass=f=6500,volume='0.15+0.85*pow(0.5+0.5*${lfo(0.13, 0.6)},6)':eval=frame[pops]`,
+      `${expr('gt(random(0),0.9988)*(2*random(1)-1)')},bandpass=f=3400:width_type=q:w=2,volume=0.8[snaps]`,
+      '[embers][pops][snaps]amix=inputs=3:normalize=0:weights=1 0.9 0.5[out]',
+    ],
+  },
+  crowd_murmur: {
+    noise: [
+      // A soft room murmur: seven formant bands, low and distant, with a faint room tone.
+      ...formantLayers(babbleLayers(1501, [330, 480, 690, 980, 1320, 1800, 2400], 0.28), 'g'),
+      `${tagList('g', 7)}amix=inputs=7:normalize=0,highpass=f=150,lowpass=f=2600[murmur]`,
+      `${noise('brown', 1521)},lowpass=f=180,volume=0.3[room]`,
+      '[murmur][room]amix=inputs=2:normalize=0:weights=1 0.5[out]',
+    ],
+  },
+  market_crowd: {
+    noise: [
+      // A busier, closer crowd than crowd_murmur, over a low rumble of carts and footsteps.
+      ...formantLayers(babbleLayers(1641, [260, 410, 620, 850, 1200, 1650, 2300, 3100], 0.3), 'h'),
+      `${tagList('h', 8)}amix=inputs=8:normalize=0,highpass=f=160,lowpass=f=3600[murmur]`,
+      `${noise('brown', 1621)},lowpass=f=240,volume=0.5[rumble]`,
+      '[murmur][rumble]amix=inputs=2:normalize=0:weights=1 0.8[out]',
+    ],
+  },
+  tavern_crowd: {
+    noise: [
+      ...formantLayers(babbleLayers(1701, [400, 560, 780, 1050, 1400, 1900], 0.28), 'k'),
+      `${tagList('k', 6)}amix=inputs=6:normalize=0,highpass=f=140,lowpass=f=3000[murmur]`,
+      `${noise('brown', 1721)},lowpass=f=300,volume=0.35[room]`,
+      '[murmur][room]amix=inputs=2:normalize=0:weights=1 0.6[out]',
+    ],
+    // Glasses clinking every 2.6 s (23 per loop).
+    tonal: tonal(clink(23, 0.05), 1),
+  },
+  cafe_soft: {
+    noise: [
+      ...formantLayers(babbleLayers(1801, [380, 520, 740, 1000, 1500, 2000], 0.22), 'm'),
+      `${tagList('m', 6)}amix=inputs=6:normalize=0,highpass=f=170,lowpass=f=2400[murmur]`,
+      // Espresso machine hiss, swelling every 17 s.
+      `${noise('pink', 1821)},highpass=f=3000,lowpass=f=7000,volume='0.02+0.03*pow(0.5+0.5*${lfo(1 / 17)},3)':eval=frame[hiss]`,
+      '[murmur][hiss]amix=inputs=2:normalize=0:weights=1 0.7[out]',
+    ],
+    // Cups set down every 6.7 s (9 per loop), softer than the tavern.
+    tonal: tonal(clink(9, 0.035), 1),
   },
 };
 

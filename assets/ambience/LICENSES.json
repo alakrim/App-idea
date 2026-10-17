@@ -56,8 +56,48 @@
     "date": "2026-10-17"
   },
   {
+    "id": "battle_field",
+    "file": "battle_field.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
     "id": "blizzard_wind",
     "file": "blizzard_wind.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "cafe_soft",
+    "file": "cafe_soft.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "castle_hall",
+    "file": "castle_hall.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "city_night",
+    "file": "city_night.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "city_street_day",
+    "file": "city_street_day.m4a",
     "license": "Proprietary (generated in-house)",
     "source": "scripts/sounds/build-base-pack.mjs",
     "author": "Lectio",
@@ -70,6 +110,33 @@
     "source": "scripts/sounds/build-base-pack.mjs",
     "author": "Lectio",
     "date": "2026-10-17"
+  },
+  {
+    "id": "crowd_murmur",
+    "file": "crowd_murmur.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "fireplace_crackle",
+    "file": "fireplace_crackle.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "forest_day_birds",
+    "file": "forest_day_birds.m4a",
+    "license": "Public Domain Mark 1.0",
+    "source": "https://archive.org/details/aporee_72184_84289",
+    "author": "Jillis Molenaar",
+    "date": "2026-10-17",
+    "title": "IJhorst, Overijssel, Nederland - Birdsong_Forest_Morning",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "originalSha256": "8ca7b230f93b1b8b07237ed18a9ec70a272dafe4f248c226868d455bf1c2254b"
   },
   {
     "id": "forest_night",
@@ -88,6 +155,25 @@
     "date": "2026-10-17"
   },
   {
+    "id": "horse_trot",
+    "file": "horse_trot.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "jungle_insects",
+    "file": "jungle_insects.m4a",
+    "license": "Public Domain Mark 1.0",
+    "source": "https://archive.org/details/aporee_54114_61850",
+    "author": "matthias.feuersenger",
+    "date": "2026-10-17",
+    "title": "Coastal Forest, Atiu Cookinseln - Coastal Rain Forest at night, no rain.",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "originalSha256": "c311fdcf9b20c91969707d68158a4074bcbd3af12fe2d4c745e46d488d3bfd44"
+  },
+  {
     "id": "library_quiet",
     "file": "library_quiet.m4a",
     "license": "Proprietary (generated in-house)",
@@ -104,12 +190,31 @@
     "date": "2026-10-17"
   },
   {
+    "id": "market_crowd",
+    "file": "market_crowd.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
     "id": "mountain_wind",
     "file": "mountain_wind.m4a",
     "license": "Proprietary (generated in-house)",
     "source": "scripts/sounds/build-base-pack.mjs",
     "author": "Lectio",
     "date": "2026-10-17"
+  },
+  {
+    "id": "ocean_waves",
+    "file": "ocean_waves.m4a",
+    "license": "Public Domain Mark 1.0",
+    "source": "https://archive.org/details/aporee_27515_31722",
+    "author": "RorySmith",
+    "date": "2026-10-17",
+    "title": "Brighton Beach, East Sussex, UK - Strong sea waves",
+    "licenseUrl": "http://creativecommons.org/publicdomain/mark/1.0/",
+    "originalSha256": "da930fe691f89d94c0776869bc2ab253884659cbc1ab2861f3377b6310d98ec2"
   },
   {
     "id": "office_hum",
@@ -152,6 +257,14 @@
     "date": "2026-10-17"
   },
   {
+    "id": "ship_deck",
+    "file": "ship_deck.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
     "id": "snowfall_quiet",
     "file": "snowfall_quiet.m4a",
     "license": "Proprietary (generated in-house)",
@@ -186,6 +299,14 @@
   {
     "id": "storm_wind",
     "file": "storm_wind.m4a",
+    "license": "Proprietary (generated in-house)",
+    "source": "scripts/sounds/build-base-pack.mjs",
+    "author": "Lectio",
+    "date": "2026-10-17"
+  },
+  {
+    "id": "tavern_crowd",
+    "file": "tavern_crowd.m4a",
     "license": "Proprietary (generated in-house)",
     "source": "scripts/sounds/build-base-pack.mjs",
     "author": "Lectio",

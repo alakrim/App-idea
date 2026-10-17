@@ -1,39 +1,56 @@
-# SND1 handoff (WIP checkpoint, not verified)
+# SND1 handoff (final state of round 2)
 
 Worktree: `/home/user/App-idea/.claude/worktrees/agent-a79e53962e02c2cb4`, branch `worktree-agent-a79e53962e02c2cb4`.
-Merged `claude/serene-hypatia-73g7qo` (48b56e0) into the branch at b89e49f. Do not push.
+Not pushed.
 
-**Verified: nothing.** `npm run sounds:verify`, `npm run verify` and the test suites have not been run on the final state.
+## Status
+- **Verified**: `npm run sounds:verify` (45 of 45 checks: pack-wide plus 40 beds), `npm run sounds:test` (15 node
+  tests), `npm run typecheck`, `npm run lint`, `npm run worklet:check`, `npm test` and `npm run bundle:check` (see the
+  commit message and the round report for the output tails).
+- **Count**: 34 taxonomy category beds installed, each resolving to itself (target was 30). Plus 6 base-pack beds
+  (`base_*`, the fallbacks). 40 files in total, 19.85 MB (18.93 MiB), under the 20 MiB budget.
+- **Not auditioned by ear.** Everything was measured (loudness, true peak, seam, sample step), not listened to. The
+  audition page (`scratchpad/audition/index.html`, outside the repo) is for the user and the architect to listen.
 
-## Count
-- Category-id beds installed (the number that counts toward the 30 target): **20** (the 16 procedural beds, plus clock_ticking, train_interior, qi_hum, spirit_whispers).
-- Base-pack ids (base_rain, base_wind, base_ocean, base_crowd, base_space_hum, base_fire) are fallback targets, not category ids, so they do not count.
-- **About 10 more category ids are still needed.** The 15 sampled targets in `scripts/sounds/curation-targets.mjs` are the first source. Any that have no usable CC0 or CC BY source need a new procedural recipe. Candidates for procedural fallback: open_field_wind, fireplace_crackle, horse_trot, ship_deck, battle_field, city_street_day, jungle_insects, city_night.
+## Sources
+- **Sampled (3)**, all Public Domain Mark 1.0, pages on archive.org (Aporee field recordings):
+  - `ocean_waves`: "Brighton Beach, East Sussex, UK - Strong sea waves", RorySmith
+    (https://archive.org/details/aporee_27515_31722)
+  - `forest_day_birds`: "IJhorst, Overijssel, Nederland - Birdsong_Forest_Morning", Jillis Molenaar
+    (https://archive.org/details/aporee_72184_84289)
+  - `jungle_insects`: "Coastal Forest, Atiu Cookinseln - Coastal Rain Forest at night, no rain.", matthias.feuersenger
+    (https://archive.org/details/aporee_54114_61850)
+- **Procedural (31 category beds + 6 base)**: recipes in `scripts/sounds/bed-recipes.mjs`, `bed-recipes-v4`.
+  The 11 new recipes this round: castle_hall, ship_deck, horse_trot, battle_field, city_street_day, city_night,
+  fireplace_crackle, crowd_murmur, market_crowd, tavern_crowd, cafe_soft.
+- Rejected by hand: "The Designer's Choice UCS Collection - AMBIENCES" is listed as a candidate for `battle_field` and
+  `tavern_crowd`, but it is a grocery checkout. The title and screen do not show that, so a title-only screen is not
+  enough. Listen before picking any more sampled candidates.
 
-## What is on disk
-- `scripts/sounds/bed-recipes.mjs`: `bed-recipes-v3`. Pulse periods (heartbeat, clock, train) are derived from the loop length (LOOP_T/60, /30, /100), so they wrap without a seam. The clock tick level is 0.1 (0.15 measured -2.6 dBTP). Procedural recipe ids: the 26 keys of `PROCEDURAL_RECIPES`, including the 6 base ids.
-- `assets/ambience/beds/`: the procedural .m4a files. A full rebuild (`npm run sounds:build`) was in progress at checkpoint time, so re-run it and check that the manifest matches the files. The manifest is written only at the end of a build.
-- `scripts/sounds/verify-pack.mjs`: rewritten. Checks expected ids (recipes plus picks), taxonomy ids, the requires in `src/audio/ambience-pack.ts`, sampled-licence re-checks, loop 45 to 63 s on a frame boundary, loudness, true peak, seams and the 20 MiB budget. Last run passed 25 of 26 beds. The only failure, `tense_heartbeat`, was caused by the loop-length issue fixed in v3. Not re-run since.
-- Curation: `scripts/sounds/curation-targets.mjs`, `curation-sources.mjs` (archive.org with licence-filtered queries, `inspectArchiveItem` for durations, Commons), `curation-score.mjs` (screen, then score), `curate-open.mjs` (writes `assets/ambience/curation/<category>.json`). A full run was in progress at checkpoint time. The archive.org licence filters that work: `licenseurl:*publicdomain*` and quoted `licenseurl:"https://…/by/4.0/"` or `"http://…/by/3.0/"`. The wildcard form fails on slashes for CC BY.
-- `assets/ambience/curation/picks.json`: `[]`. Not yet written.
-- `scripts/sounds/build-open-pack.mjs`: written, not run. It needs `picks.json`, and it uses `package.json` scripts that do not exist yet.
-- `assets/ambience/LICENSES.json`: procedural and in-house rows only.
-- `src/features/settings/licenses.ts` and `app/settings/about.tsx`: CC BY credit line added. `src/features/settings/licenses.test.ts` still expects the old shape (`credit` is missing) and must be updated.
+## Fixes this round
+- `tense_heartbeat`: the beat grid is shifted (`HEART_SHIFT`) so the loop seam falls 0.7 s into each beat, in the silence
+  after the dub. Seam dRMS is now 2.64 dB (limit 42.7 dB, set by the stem's own window variation). The seam previously
+  fell on a thump.
+- `forest_night`: carriers and gates are whole cycles per loop, so the stem wraps without a step.
+- `market_crowd`: reseeded (1601 to 1641) because its wrap sample step was 6.33x the median against a 6.00x limit. A
+  single-sample outlier, not a seam. Same texture, different noise.
+- `horse_trot`: the noise fragment had to end in `[out]`, the build failed before this was fixed.
 
-## Next steps, in order
-1. Confirm the `build2` and `curate2` logs end in `BUILD_EXIT=0` and `CURATE_EXIT=0`. Then run `node scripts/sounds/verify-pack.mjs` (the procedural pack should pass).
-2. Review `assets/ambience/curation/*.json`. Pick one candidate per category for the sampled beds, and write `picks.json` (pickSchema: category, source, title, author, pageUrl, downloadUrl, licenseName, licenseUrl, reason). Remove the procedural recipe for any category that becomes sampled. `build-open-pack.mjs` throws if a category is in both.
-3. Add npm scripts: `sounds:curate`, `sounds:build-open`, `sounds:test` (`node --test scripts/sounds/*.test.mjs`).
-4. Run `npm run sounds:build-open`, then `npm run sounds:verify`.
-5. Procedural recipes for the categories that have no source. Reach at least 30 category-id beds.
-6. `src/audio/ambience-pack.ts`: switch requires to `assets/ambience/beds/`, add `INSTALLED_BED_IDS` with `Record<InstalledBedId, number>`, and remove the `isBasePackId` dependency. Add tests in `src/audio/ambience-pack.test.ts`: at least 30 categories resolve to themselves, and the rest resolve through fallbacks or skip.
-7. Update `licenses.test.ts` for the `credit` field. Add tests for `licence.mjs`, `steady-window.mjs` and the scorer, using `node:test` (no new dependencies).
-8. Run `npm run typecheck`, `npm run lint`, `npm test` and `npm run verify`.
-9. Audition page at `/tmp/claude-0/-home-user-App-idea/ef5ed08e-b854-5c2f-a06d-b531f619614d/scratchpad/audition/index.html`, with the .m4a files copied beside it.
-10. `docs/STATE.md`: add one "SND1" line under "Work in flight". Update `assets/ambience/README.md` (`base/` is now `beds/`, and ledger `source` is the page URL).
-11. Commit with the trailer the harness gives (Haiku 5.5) and the Claude-Session line. Report the branch and SHA.
+## Known limits
+- Seam dRMS for the periodic stems is large (horse_trot 12.9 dB, train_interior 10.3 dB, clock_ticking 5.4 dB) and passes
+  only because the rule's p99 limit is that wide. Each stem is periodic and the wrap sample step is within limits, so
+  the loop is continuous. The window-level metric just sees a strike on one side of the seam.
+- The wrap sample step is near its floor for several beds: city_night 6.36x, base_wind 5.19x. Each limit is raised by
+  that bed's own p99.9 ratio, so they pass. The ear audition is the real check.
 
 ## Decisions
-- Ledger `source` for sampled rows is the page URL (the licence is visible there). The README says download URL, so update it.
-- All beds use a 60 s loop (LOOP_SAMPLES) so the frame-aligned check stays simple. This is inside the 45 to 63 s range.
-- Trailer: the coordinator asked for the harness trailer (Haiku 5.5). Use that, not Opus 5.5.
+- Ledger `source` for sampled rows is the page URL. The licence is visible there. The credit line names it.
+- Licences: CC0, Public Domain Mark and CC BY 3.0/4.0 only. The Settings credit line is for CC BY only.
+- `verify` now runs `sounds:test`. `sounds:verify` stays separate because it decodes 40 files.
+- Commit trailer: the harness attribution (Claude Haiku 5.5) and the Claude-Session line.
+
+## Next steps (for the architect)
+1. Ear audition of all 40 beds on the page. Replace any bed that loops badly.
+2. Pick more sampled beds only after listening to candidates. Good candidates still missing: open_field_wind (the
+   Grillen im Wind CC BY item), city_night (Trinity County crickets and cars, PDM), and a voice-free cafe.
+3. Give `open_field_wind`, `forest_day_birds` and `jungle_insects` a second look if the ear test disagrees.

@@ -1,6 +1,7 @@
 // Polite HTTP for the sound scripts (brief SND1): one request per second, a descriptive User-Agent,
 // and retries with backoff on 429 and 5xx. Responses are untrusted; callers validate them with zod.
 
+import { Buffer } from 'node:buffer';
 import { createHash } from 'node:crypto';
 import { writeFile } from 'node:fs/promises';
 
