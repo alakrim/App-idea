@@ -111,6 +111,22 @@ describe('chatRaw', () => {
     expect(result.text).toBe('  plain text  ');
   });
 
+  it('sends temperature and seed in the body when they are given', async () => {
+    const { deps, completions } = makeDeps(() => chatReply('{}'));
+    await chatRaw(deps, { model: PLAIN, system: 's', user: 'u', temperature: 0, seed: 1017 });
+    const body = bodyOf(completions()[0]);
+    expect(body.temperature).toBe(0);
+    expect(body.seed).toBe(1017);
+  });
+
+  it('omits temperature and seed from the body when they are not given', async () => {
+    const { deps, completions } = makeDeps(() => chatReply('{}'));
+    await chatRaw(deps, { model: PLAIN, system: 's', user: 'u' });
+    const body = bodyOf(completions()[0]);
+    expect(body).not.toHaveProperty('temperature');
+    expect(body).not.toHaveProperty('seed');
+  });
+
   it('rejects with CANCELLED when the signal is aborted before the reply', async () => {
     const { deps } = makeDeps(() => chatReply('{}'));
     const controller = new AbortController();

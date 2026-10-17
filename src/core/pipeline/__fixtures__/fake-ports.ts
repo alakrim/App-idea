@@ -3,6 +3,7 @@
  * inspect what the pipeline wrote and count what it called. No test touches a database, the
  * network or a file system.
  */
+import type { CueReport } from '@/core/analysis/cue-report';
 import type { ChapterMemoryRecord, ValidatedCue } from '@/core/analysis/types';
 import { DEFAULT_SETTINGS } from '@/core/defaults';
 import type {
@@ -123,6 +124,8 @@ export interface FakeState {
   readonly sentences: Map<Id, StoredSentence[]>;
   readonly memories: Map<Id, ChapterMemory>;
   readonly cues: Map<Id, readonly ValidatedCue[]>;
+  readonly cueCache: Map<string, readonly ValidatedCue[]>;
+  readonly cueReports: Map<Id, CueReport>;
   readonly entities: Entity[];
   readonly facts: EntityFact[];
   readonly segments: Map<Id, AudioSegment[]>;
@@ -199,6 +202,7 @@ export function defaultReply(request: LlmRequest): LlmReply {
     }));
     return reply(JSON.stringify({ items }));
   }
+  if (name === 'setting_fallback') return reply(JSON.stringify({ cue: null }));
   if (name === 'index_selection') {
     const count = [...request.user.matchAll(/^\[(\d+)\] /gmu)].length;
     return reply(JSON.stringify({ keep: Array.from({ length: count }, (_, i) => i) }));
@@ -246,6 +250,8 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     sentences: new Map(),
     memories: new Map(),
     cues: new Map(),
+    cueCache: new Map(),
+    cueReports: new Map(),
     entities: [],
     facts: [],
     segments: new Map(),
@@ -325,6 +331,16 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     },
     async saveCues(chapterId, cues) {
       state.cues.set(chapterId, cues);
+    },
+    async getCueCache(key) {
+      const cached = state.cueCache.get(key);
+      return cached ? [...cached] : null;
+    },
+    async saveCueCache(key, cues) {
+      state.cueCache.set(key, [...cues]);
+    },
+    async saveCueReport(chapterId, report) {
+      state.cueReports.set(chapterId, report);
     },
     async saveMemory(memory) {
       state.memories.set(memory.chapterId, memory);

@@ -1,4 +1,6 @@
+import type { CueReport } from '@/core/analysis/cue-report';
 import type { AmbienceCue, Chapter, Job, ParagraphKind, Series } from '@/core/domain';
+import { ambienceReportRepo } from '@/db/repos/ambience-report-repo';
 import { chapterRepo } from '@/db/repos/chapter-repo';
 import { cueRepo } from '@/db/repos/cue-repo';
 import { jobRepo } from '@/db/repos/job-repo';
@@ -13,6 +15,7 @@ export const CHAPTER_SCREEN_TABLES = [
   'paragraphs',
   'sentences',
   'ambience_cues',
+  'ambience_reports',
 ];
 
 export interface ReadingSentence {
@@ -33,11 +36,15 @@ export interface ChapterScreenData {
   jobs: Job[];
   paragraphs: ReadingParagraph[];
   cues: AmbienceCue[];
+  /** The cue report of the latest analysis. Null until the chapter has been analysed. */
+  cueReport: CueReport | null;
 }
 
 export function readChapterScreen(db: Db, chapterId: string): ChapterScreenData {
   const chapter = chapterRepo.get(db, chapterId);
-  if (chapter === null) return { chapter: null, series: null, jobs: [], paragraphs: [], cues: [] };
+  if (chapter === null) {
+    return { chapter: null, series: null, jobs: [], paragraphs: [], cues: [], cueReport: null };
+  }
 
   const sentences = new Map(
     textRepo
@@ -59,6 +66,7 @@ export function readChapterScreen(db: Db, chapterId: string): ChapterScreenData 
     jobs: jobRepo.listForChapter(db, chapterId),
     paragraphs,
     cues: cueRepo.listForChapter(db, chapterId),
+    cueReport: ambienceReportRepo.get(db, chapterId),
   };
 }
 

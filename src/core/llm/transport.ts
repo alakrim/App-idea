@@ -20,6 +20,10 @@ export interface LlmRequest {
    * explicit cache breakpoint get one; the others cache automatically and ignore the flag.
    */
   readonly cacheSystem?: boolean;
+  /** Sampling temperature. Absent means the provider default, which is often 1. */
+  readonly temperature?: number;
+  /** Sampling seed, honoured by providers that support one. Absent means no seed. */
+  readonly seed?: number;
 }
 
 export interface LlmUsage {

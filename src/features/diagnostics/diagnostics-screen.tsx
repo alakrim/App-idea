@@ -16,14 +16,13 @@ import { useBridgeProbe } from './bridge-probe';
 import { deviceDiagnosticsDeps } from './device-deps';
 import { readEnvironment, type EnvironmentInfo } from './environment';
 import { resultHeadline, valueLines } from './format';
+import { LastAnalysisCard } from './last-analysis-card';
 import { LastCrashCard } from './last-crash-card';
 import { buildReport, reportToJson, summarize } from './report';
 import { PROBES, runDiagnostics } from './run-all';
+import { ValueRow } from './value-row';
 
 import type { ProbeResult, ProbeStatus } from './probe';
-
-/** Values longer than this wrap under their label instead of sitting beside it. */
-const STACKED_VALUE_LENGTH = 28;
 
 const STATUS_BADGE: Record<ProbeStatus, { label: string; tone: BadgeTone }> = {
   pass: { label: 'Pass', tone: 'success' },
@@ -81,17 +80,21 @@ export function DiagnosticsScreen() {
     <SettingsPage title="Diagnostics">
       <SettingsSection title="Device">
         <Card>
-          <Row label="App" value={`${environment.appVersion} (${environment.gitSha})`} />
-          <Row label="React Native" value={environment.reactNative} />
-          <Row label="Expo" value={environment.expo ?? 'unknown'} />
-          <Row label="Hermes" value={environment.hermes ? 'on' : 'off'} />
-          <Row label="Platform" value={`${environment.platform} ${environment.osVersion}`} />
-          <Row label="Model" value={environment.deviceModel ?? 'unknown'} />
+          <ValueRow label="App" value={`${environment.appVersion} (${environment.gitSha})`} />
+          <ValueRow label="React Native" value={environment.reactNative} />
+          <ValueRow label="Expo" value={environment.expo ?? 'unknown'} />
+          <ValueRow label="Hermes" value={environment.hermes ? 'on' : 'off'} />
+          <ValueRow label="Platform" value={`${environment.platform} ${environment.osVersion}`} />
+          <ValueRow label="Model" value={environment.deviceModel ?? 'unknown'} />
         </Card>
       </SettingsSection>
 
       <SettingsSection title="Last crash">
         <LastCrashCard />
+      </SettingsSection>
+
+      <SettingsSection title="Last analysis">
+        <LastAnalysisCard />
       </SettingsSection>
 
       <View style={styles.actions}>
@@ -146,31 +149,12 @@ function ProbeRow({ label, result }: { label: string; result: ProbeResult | null
         </Text>
       ) : null}
       {valueLines(result.values).map((line) => (
-        <Row key={line.key} label={line.key} value={line.text} />
+        <ValueRow key={line.key} label={line.key} value={line.text} />
       ))}
       <Text variant="caption" tone="faint">
         {`${result.durationMs} ms`}
       </Text>
     </Card>
-  );
-}
-
-/** A label and its value. Long values, such as JSON, take the full row width under the label. */
-function Row({ label, value }: { label: string; value: string }) {
-  const stacked = value.length > STACKED_VALUE_LENGTH;
-  return (
-    <View style={[styles.row, stacked ? styles.stacked : null]}>
-      <Text variant="caption" tone="muted" style={styles.rowLabel}>
-        {label}
-      </Text>
-      <Text
-        variant="caption"
-        style={[styles.rowValue, stacked ? styles.valueStacked : null]}
-        selectable
-      >
-        {value}
-      </Text>
-    </View>
   );
 }
 
@@ -186,26 +170,5 @@ const styles = StyleSheet.create({
   },
   probeTitle: {
     flex: 1,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: space.md,
-  },
-  stacked: {
-    flexDirection: 'column',
-    gap: space.xxs,
-  },
-  rowLabel: {
-    flexShrink: 0,
-  },
-  rowValue: {
-    flex: 1,
-    minWidth: 0,
-    textAlign: 'right',
-  },
-  valueStacked: {
-    flex: 0,
-    textAlign: 'left',
   },
 });

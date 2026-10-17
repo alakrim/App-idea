@@ -21,6 +21,8 @@ _Last updated: 2026-10-11 by architect_
 ## Work in flight
 _None. Waiting on the user's device test of `lectio-0.1.0-c3eac7a-arm64.apk` (apk-builds branch). It fixes the Library crash (cover monogram at font size 0). The user asked for bug fixes only until they have tested properly._
 
+- **AM1** (reliable ambience, ADR-0005 amendment 2026-10-17): implemented on branch `worktree-agent-abfdfc00ef800c3f4` (deterministic analysis, prompt v3, cue cache, single-bed fallback, cue report). Awaiting architect review and the device listening test.
+
 ## Next up
 - **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.
 - **S1 device spike** checklist (from A2): lock-screen next/prev/seek is not exposed by expo-audio 57; segment swap gap; pitch at 2×; audio session ownership expo-audio vs audio-api; interruptions; ducking latency < 100 ms; 45 min background ambience.

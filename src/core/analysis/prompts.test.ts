@@ -1,14 +1,94 @@
 import { enabledCategories } from './ambience-taxonomy';
+import { COVERAGE_GOAL_PERCENT, CUE_LIMITS } from './limits';
 import {
   ANALYSIS_SYSTEM_PROMPT,
   PROMPT_VERSION,
+  SETTING_FALLBACK_SYSTEM_PROMPT,
   buildAnalysisPrompt,
+  buildSettingFallbackPrompt,
   buildSummaryReducePrompt,
 } from './prompts';
 
 describe('analysis prompts', () => {
   it('carries a version string', () => {
-    expect(PROMPT_VERSION).toBe('analysis-v2');
+    expect(PROMPT_VERSION).toBe('analysis-v3');
+  });
+
+  it('states the setting-coverage policy with the taxonomy ids it names', () => {
+    expect(ANALYSIS_SYSTEM_PROMPT).toContain('Setting first.');
+    for (const id of ['tavern_crowd', 'forest_night', 'ship_deck']) {
+      expect(ANALYSIS_SYSTEM_PROMPT).toContain(id);
+    }
+    expect(ANALYSIS_SYSTEM_PROMPT).toContain(
+      `roughly ${COVERAGE_GOAL_PERCENT.min} to ${COVERAGE_GOAL_PERCENT.max} percent`,
+    );
+  });
+
+  it('derives the numeric cue rules from CUE_LIMITS, so the prompt and the validators agree', () => {
+    expect(ANALYSIS_SYSTEM_PROMPT).toContain(`Omit cues below ${CUE_LIMITS.confidenceFloor}.`);
+    expect(ANALYSIS_SYSTEM_PROMPT).toContain(
+      `At most ${CUE_LIMITS.maxPer1kWords} cues per 1,000 words`,
+    );
+    expect(ANALYSIS_SYSTEM_PROMPT).toContain(
+      `at least ${CUE_LIMITS.minSentences} sentences and roughly ${CUE_LIMITS.minSeconds} seconds`,
+    );
+  });
+
+  it('adds the cues-decided note only when the cues of the text are cached', () => {
+    const base = {
+      sentences: [{ idx: 0, text: 'Rain fell.' }],
+      seriesTitle: 'S',
+      chapterTitle: 'C',
+      priorContext: '',
+      lang: 'en' as const,
+    };
+    expect(buildAnalysisPrompt(base).user).not.toContain('already decided');
+    expect(buildAnalysisPrompt({ ...base, cuesDecided: false }).user).not.toContain(
+      'already decided',
+    );
+    const decided = buildAnalysisPrompt({ ...base, cuesDecided: true });
+    expect(decided.user).toContain('Return "cues": [] and choose none.');
+    expect(decided.system).toBe(ANALYSIS_SYSTEM_PROMPT);
+  });
+
+  it('builds the fallback prompt from the chapter summary, events and places only', () => {
+    const { system, user } = buildSettingFallbackPrompt({
+      chapterTitle: 'Chapter 3',
+      memory: {
+        summary: 'The crew sails through the storm.',
+        keyEvents: ['The mast breaks.'],
+        characters: [],
+        places: [{ name: 'the Gull', facts: [] }],
+        items: [],
+        relationships: [],
+        openThreads: [],
+        glossary: [],
+      },
+    });
+    expect(system).toBe(SETTING_FALLBACK_SYSTEM_PROMPT);
+    expect(system).toContain('{"cue": null}');
+    expect(user).toContain('Chapter: Chapter 3');
+    expect(user).toContain('Summary: The crew sails through the storm.');
+    expect(user).toContain('- The mast breaks.');
+    expect(user).toContain('- the Gull');
+  });
+
+  it('marks empty fallback sections as none', () => {
+    const { user } = buildSettingFallbackPrompt({
+      chapterTitle: 'C',
+      memory: {
+        summary: '',
+        keyEvents: [],
+        characters: [],
+        places: [],
+        items: [],
+        relationships: [],
+        openThreads: [],
+        glossary: [],
+      },
+    });
+    expect(user).toContain('Key events:\n(none)');
+    expect(user).toContain('Places:\n(none)');
   });
 
   it('keeps the system prompt identical across chapters, series and languages (cacheable prefix)', () => {
