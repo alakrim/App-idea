@@ -7,6 +7,7 @@ import {
   BED_FADE_OUT_MS,
   BED_STOP_DELAY_MS,
   BED_SUSPEND_DELAY_MS,
+  BUFFER_DUCK_HOLD_MS,
   type LectioEngineDeps,
   type PlatformEventSource,
   createLectioEngine,
@@ -351,10 +352,28 @@ describe('lectio-engine: beds follow the transport (P1-2)', () => {
     expect(mixer.setDucking.mock.calls.at(-1)?.[0]).toEqual({ gainDb: 0, rampMs: 550 });
   });
 
-  it('releases the ducking when the voice buffers, since ducking applies only while it plays', async () => {
+  it('keeps the ducking through a buffering flap shorter than BUFFER_DUCK_HOLD_MS (QA-E E-05)', async () => {
     const { voice, mixer, startPlaying } = setup();
     await startPlaying();
+    const whilePlaying = mixer.setDucking.mock.calls.at(-1)?.[0];
+    const sentBefore = mixer.setDucking.mock.calls.length;
+
     voice.emit({ loaded: true, playing: true, buffering: true, positionMs: 1000 });
+    voice.emit({ loaded: true, playing: true, buffering: false, positionMs: 1100 });
+
+    // The flap never releases the ducking, so the beds neither swell nor dip again.
+    expect(mixer.setDucking.mock.calls.slice(sentBefore)).toEqual([]);
+    expect(mixer.setDucking.mock.calls.at(-1)?.[0]).toEqual(whilePlaying);
+  });
+
+  it('releases the ducking when buffering lasts past BUFFER_DUCK_HOLD_MS', async () => {
+    const { voice, mixer, timers, startPlaying } = setup();
+    await startPlaying();
+    voice.emit({ loaded: true, playing: true, buffering: true, positionMs: 1000 });
+
+    timers.advance(BUFFER_DUCK_HOLD_MS - 1);
+    expect(mixer.setDucking.mock.calls.at(-1)?.[0]).not.toEqual({ gainDb: 0, rampMs: 550 });
+    timers.advance(1);
     expect(mixer.setDucking.mock.calls.at(-1)?.[0]).toEqual({ gainDb: 0, rampMs: 550 });
   });
 

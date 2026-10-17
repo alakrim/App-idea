@@ -55,6 +55,11 @@ export const BED_STOP_DELAY_MS = 350;
 export const BED_FADE_OUT_MS = 600;
 /** The audio clock is suspended this long after the beds have faded, so an idle player holds no stream. */
 export const BED_SUSPEND_DELAY_MS = 2000;
+/**
+ * The ducking holds through a buffering flap of up to this length while the voice was playing. A
+ * longer buffer releases it, since the narration has really stopped.
+ */
+export const BUFFER_DUCK_HOLD_MS = 1500;
 
 interface LoadedChapter {
   id: string;
@@ -125,6 +130,9 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
   let suspendTimer: unknown = null;
   /** True from the moment beds start fading out until the fade ends. */
   let duckHeld = false;
+  /** True while a buffer that began during playback is young enough to keep the ducking. */
+  let bufferHold = false;
+  let bufferHoldTimer: unknown = null;
   let ducked = false;
   let previewTimer: unknown = null;
   let loadSeq = 0;
@@ -147,7 +155,7 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
   }
 
   function updateDucking(force = false): void {
-    const engaged = state === 'playing' || duckHeld;
+    const engaged = state === 'playing' || duckHeld || (state === 'buffering' && bufferHold);
     if (engaged === ducked && !force) return;
     ducked = engaged;
     mixer.setDucking(
@@ -216,8 +224,26 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
     updateDucking();
   }
 
+  /** Starts or ends the buffering hold: a buffer that starts while playing keeps the beds ducked. */
+  function trackBufferHold(previous: PlaybackState, next: PlaybackState): void {
+    if (previous === 'playing' && next === 'buffering') {
+      bufferHold = true;
+      cancel(bufferHoldTimer);
+      bufferHoldTimer = timers.setTimeout(() => {
+        bufferHoldTimer = null;
+        bufferHold = false;
+        updateDucking();
+      }, BUFFER_DUCK_HOLD_MS);
+    } else if (next !== 'buffering') {
+      cancel(bufferHoldTimer);
+      bufferHoldTimer = null;
+      bufferHold = false;
+    }
+  }
+
   function setState(next: PlaybackState): void {
     if (next === state) return;
+    trackBufferHold(state, next);
     state = next;
     onTransportChanged();
     for (const listener of stateListeners) listener(next);
@@ -428,7 +454,10 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
       disposed = true;
       unsubscribeVoice();
       unsubscribeRemote();
-      for (const handle of [stopTimer, fadeTimer, suspendTimer, previewTimer]) cancel(handle);
+      for (const handle of [stopTimer, fadeTimer, suspendTimer, previewTimer, bufferHoldTimer]) {
+        cancel(handle);
+      }
+      bufferHoldTimer = null;
       stopTimer = null;
       fadeTimer = null;
       suspendTimer = null;
