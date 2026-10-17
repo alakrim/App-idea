@@ -5,9 +5,26 @@
     "battlefield ambience",
     "distant battle field recording"
   ],
-  "candidates": [],
-  "rejected": {
-    "null s is shorter than 68 s": 1,
-    "licence is not allowed: https://creativecommons.org/licenses/by-nd/4.0/": 1
-  }
+  "candidates": [
+    {
+      "source": "archive.org",
+      "title": "The Designer's Choice UCS Collection - AMBIENCES",
+      "author": "Nicholas A. Judy",
+      "pageUrl": "https://archive.org/details/Designers-Choice-Collection-Ambiences",
+      "downloadUrl": "https://archive.org/download/Designers-Choice-Collection-Ambiences/AMBIENCE%2FPUBLIC%20PLACE%2FAMBPubl-Samsung%20Galaxy%20Smartphone%2C%20CU_Grocery%20Store%2C%20Checkout%20Counter%2C%20Footsteps%2C%20Beeps%2C%20Groceries_Nicholas%20Judy_TDC.wav",
+      "format": "WAVE",
+      "durationS": 240,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseLabel": "CC0 1.0",
+      "licenseKind": "CC0",
+      "score": 3.8,
+      "reasons": [
+        "keywords: war",
+        "240 s",
+        "describes an ambience or field recording"
+      ]
+    }
+  ],
+  "rejected": {}
 }
