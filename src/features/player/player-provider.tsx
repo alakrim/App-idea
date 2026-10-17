@@ -16,6 +16,7 @@ import {
 } from './playback-controller';
 import { createPlaybackData } from './playback-data';
 import { createDefaultEngine, createDefaultSamples } from './player-engine';
+import { useDisposeController } from './use-dispose-controller';
 
 import type { PlayerState } from './player-store';
 import type { SampleOutput } from './sample-output';
@@ -58,7 +59,7 @@ export function PlayerEngineProvider({ children, engine, samples }: PlayerEngine
     [db, engine, pipeline, samples],
   );
 
-  useEffect(() => () => controller.dispose(), [controller]);
+  useDisposeController(controller);
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (state) => {

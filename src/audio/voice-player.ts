@@ -48,6 +48,8 @@ interface Slot {
   pendingSeekMs: number | null;
   /** True once the platform reports the held segment as loaded. */
   loaded: boolean;
+  /** The playback rate this platform player was last given. */
+  appliedRate: number;
   /**
    * False from each load or seek until the new file's first fresh status (its generation). Statuses
    * before that belong to the file the slot replaced, and are ignored.
@@ -147,8 +149,9 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
     if (!segment) return;
     slot.player.pause();
     slot.player.replace({ uri: segment.uri });
-    slot.player.setPlaybackRate(rate, 'high');
-    slot.player.volume = volume;
+    applyRate(slot);
+    // The volume is not set here. expo-audio lowers it during a platform duck, and a boundary must not
+    // undo that duck. setVolume and makeSlot are the only places that set it.
     slot.holds = segmentIdx;
     slot.loaded = false;
     slot.reported = false;
@@ -158,6 +161,7 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
 
   function makeSlot(slotIdx: 0 | 1): Slot {
     const player = createAudioPlayer(null, { updateInterval: UPDATE_INTERVAL_MS });
+    player.volume = volume;
     const slot: Slot = {
       player,
       holds: null,
@@ -165,6 +169,8 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
       loaded: false,
       reported: false,
       startWhenLoaded: false,
+      // A new platform player plays at the default rate, 1.
+      appliedRate: 1,
       unsubscribe: () => undefined,
     };
     const subscription = player.addListener('playbackStatusUpdate', (status) => {
@@ -190,6 +196,16 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
   function cancelPreRoll(): void {
     if (preRollTimer !== null) timers.clearTimeout(preRollTimer);
     preRollTimer = null;
+  }
+
+  /**
+   * Sets the playback rate on a player only when it differs from the rate that player already has.
+   * The rate lives on the platform player and survives a replace, so a boundary sends nothing.
+   */
+  function applyRate(slot: Slot): void {
+    if (slot.appliedRate === rate) return;
+    slot.player.setPlaybackRate(rate, 'high');
+    slot.appliedRate = rate;
   }
 
   /** Plays a slot now if it is loaded, or as soon as it loads. */
@@ -383,7 +399,11 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
       await setAudioModeAsync({
         playsInSilentMode: true,
         shouldPlayInBackground: true,
-        interruptionMode: 'doNotMix',
+        // duckOthers, not doNotMix: on a transient duck request (a navigation prompt, a notification
+        // sound) expo-audio lowers the narration instead of pausing it. On a real interruption (a call,
+        // a permanent loss) it still pauses, with isPaused set so focus gain can resume it. The beds
+        // are not ducked by this: they use their own AudioContext, which expo-audio does not see.
+        interruptionMode: 'duckOthers',
         allowsRecording: false,
         shouldRouteThroughEarpiece: false,
       });
@@ -465,7 +485,7 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
 
     setRate(nextRate) {
       rate = nextRate;
-      for (const slot of slots ?? []) slot.player.setPlaybackRate(rate, 'high');
+      for (const slot of slots ?? []) applyRate(slot);
     },
 
     setVolume(nextVolume) {
