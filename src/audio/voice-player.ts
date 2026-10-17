@@ -25,6 +25,8 @@ export const PRE_ROLL_MS = 80;
  * (or once the chapter is final). Shorter resumes stop and start the narration every few seconds.
  */
 export const RESUME_LEAD_MS = 10_000;
+/** How far past its start a freshly loaded file may report and still count as the new file. */
+const FILE_START_SLACK_MS = 1_000;
 
 export interface VoicePlayerOptions {
   /** Where boundary gaps, buffering and system pauses are recorded. Defaults to a private log. */
@@ -46,6 +48,11 @@ interface Slot {
   pendingSeekMs: number | null;
   /** True once the platform reports the held segment as loaded. */
   loaded: boolean;
+  /**
+   * False from each load or seek until the new file's first fresh status (its generation). Statuses
+   * before that belong to the file the slot replaced, and are ignored.
+   */
+  reported: boolean;
   /** Play the held segment as soon as it reports loaded, because it was promoted before it was ready. */
   startWhenLoaded: boolean;
   unsubscribe: Unsubscribe;
@@ -144,6 +151,7 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
     slot.player.volume = volume;
     slot.holds = segmentIdx;
     slot.loaded = false;
+    slot.reported = false;
     slot.startWhenLoaded = false;
     slot.pendingSeekMs = seekMs;
   }
@@ -155,6 +163,7 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
       holds: null,
       pendingSeekMs: null,
       loaded: false,
+      reported: false,
       startWhenLoaded: false,
       unsubscribe: () => undefined,
     };
@@ -273,8 +282,23 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
     promote();
   }
 
+  /**
+   * A status that can only come from the file a slot was just given: loaded, not finished, and at or
+   * before the position it starts from. A load or a seek replaces the file, and the platform may still
+   * deliver the finish or the loaded flag of the file it replaced (QA-E E-04).
+   */
+  function isFreshStatus(slot: Slot, status: AudioStatus): boolean {
+    if (!status.isLoaded || status.didJustFinish) return false;
+    return status.currentTime * 1000 <= (slot.pendingSeekMs ?? 0) + FILE_START_SLACK_MS;
+  }
+
   function onStatus(slot: Slot, slotIdx: 0 | 1, status: AudioStatus): void {
     if (!slots || slot.holds === null) return;
+    // The first status of the new file opens its generation. Until then, every status is ignored.
+    if (!slot.reported) {
+      if (!isFreshStatus(slot, status)) return;
+      slot.reported = true;
+    }
 
     slot.loaded = status.isLoaded;
     if (status.isLoaded && slot.startWhenLoaded) {
@@ -301,12 +325,16 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
       advance(false);
       return;
     }
-    if (status.playing) armPreRoll(status);
+    // expo-audio clears its own pause only on focus gain, so a call that ended while the listener had
+    // paused would start the narration again. The listener's pause holds until they press play.
+    const playingNow = status.playing && wantPlaying;
+    if (status.playing && !wantPlaying) slot.player.pause();
+    if (playingNow) armPreRoll(status);
     else cancelPreRoll();
     ended = false;
     emit({
       positionMs: (starts[index] ?? 0) + status.currentTime * 1000,
-      playing: status.playing,
+      playing: playingNow,
       buffering: status.isBuffering,
       ended: false,
       loaded: status.isLoaded,

@@ -34,6 +34,8 @@ async function playingChapter() {
   voice.play();
   // The two players this chapter created: a test may build more than one chapter.
   const [outgoing, incoming] = mockPlayers.slice(-2);
+  // A freshly loaded file reports from its start first; that opens its generation.
+  outgoing?.listener?.(status({ playing: true, currentTime: 0 }));
   return {
     voice,
     health,
