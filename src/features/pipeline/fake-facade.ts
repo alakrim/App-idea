@@ -94,6 +94,7 @@ function idleSnapshot(chapterId: string): ChapterProgress {
     estimatedTotalMs: null,
     costUsdSoFar: 0,
     error: null,
+    retryAt: null,
   };
 }
 
@@ -162,6 +163,7 @@ export function createFakePipeline(options: FakePipelineOptions): PipelineFacade
         0,
       ),
       error: run.error,
+      retryAt: null,
     };
   }
 
@@ -418,6 +420,10 @@ export function createFakePipeline(options: FakePipelineOptions): PipelineFacade
       const run = runFor(chapterId);
       if (run.state === 'queued' || run.state === 'running') return;
       start(run, 'extract');
+    },
+
+    retryNow() {
+      // The fake never waits for a connection, so no chapter is ever waiting to be retried.
     },
 
     cancel(chapterId) {

@@ -34,4 +34,5 @@ export const DEFAULT_SETTINGS: Settings = {
   reading: { fontScale: 1, showOriginal: false },
   onboardingDone: false,
   contentNoticeAccepted: false,
+  notificationsExplained: false,
 };

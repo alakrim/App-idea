@@ -72,6 +72,15 @@ describe('createJobStore queue persistence', () => {
     ]);
   });
 
+  it('keeps the retry state of a chapter that waits for a connection', async () => {
+    const { db } = createTestDb();
+    const store = createJobStore({ db, clock: { now: () => T0 } });
+    await store.saveQueue([{ chapterId: id(1), transientFailures: 3, retryAt: T0 + 45_000 }]);
+    expect(await store.loadQueue()).toEqual([
+      { chapterId: id(1), transientFailures: 3, retryAt: T0 + 45_000 },
+    ]);
+  });
+
   it('drops a malformed entry on its own, and an unreadable queue entirely', async () => {
     const { db } = createTestDb();
     const store = createJobStore({ db, clock: { now: () => T0 } });

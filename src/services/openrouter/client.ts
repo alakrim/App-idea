@@ -3,7 +3,7 @@ import { validateKey } from './key';
 import { CATALOG_TTL_MS, createModelCatalog } from './models';
 import { parsePdf } from './pdf';
 import { synthesizeSpeech } from './speech';
-import { createTransport } from './transport';
+import { CALL_TIMEOUTS_MS, createTransport } from './transport';
 
 import type {
   ChatJsonInput,
@@ -24,6 +24,7 @@ export interface OpenRouterClientOptions {
   appUrl: string;
   appTitle: string;
   baseUrl?: string;
+  /** Timeout for the short calls (models, key). Chat and speech calls have longer fixed limits. */
   timeoutMs?: number;
   /** Retries after the first attempt, for retryable errors only. */
   maxRetries?: number;
@@ -47,7 +48,7 @@ export interface OpenRouterClient {
 
 const defaults = {
   baseUrl: 'https://openrouter.ai/api/v1',
-  timeoutMs: 60_000,
+  timeoutMs: CALL_TIMEOUTS_MS.default,
   maxRetries: 3,
   maxSpeechChars: 4_000,
 } as const;

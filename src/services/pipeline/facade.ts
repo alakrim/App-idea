@@ -176,12 +176,15 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
     const current = trackedOf(chapterId);
     const snapshot = queue.snapshot();
     if (snapshot.running === chapterId) return 'running';
+    if (snapshot.waiting.some((entry) => entry.chapterId === chapterId)) return 'waiting';
     if (snapshot.pending.includes(chapterId) && current.state !== 'failed') return 'queued';
     return current.state;
   }
 
   function snapshotOf(chapterId: Id): ChapterProgress {
-    return toChapterProgress(chapterId, trackedOf(chapterId), stateOf(chapterId));
+    const retryAt =
+      queue.snapshot().waiting.find((entry) => entry.chapterId === chapterId)?.retryAt ?? null;
+    return toChapterProgress(chapterId, trackedOf(chapterId), stateOf(chapterId), retryAt);
   }
 
   function emit(chapterId: Id): void {
@@ -318,6 +321,10 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
 
     enqueue(chapterId) {
       queueChapter(chapterId, {});
+    },
+
+    retryNow() {
+      queue.retryNow();
     },
 
     cancel(chapterId) {

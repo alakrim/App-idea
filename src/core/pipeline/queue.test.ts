@@ -70,7 +70,7 @@ describe('PipelineQueue', () => {
 
     expect(doneOrder(events)).toEqual([A, B, C]);
     expect([A, B, C].map((id) => fake.chapter(id).status)).toEqual(['ready', 'ready', 'ready']);
-    expect(queue.snapshot()).toEqual({ running: null, pending: [] });
+    expect(queue.snapshot()).toEqual({ running: null, pending: [], waiting: [] });
     expect(fake.state.queue).toEqual([]);
   });
 
@@ -100,11 +100,11 @@ describe('PipelineQueue', () => {
     await queue.enqueue(A);
     await queue.enqueue(B);
     await queue.enqueue(C);
-    expect(queue.snapshot()).toEqual({ running: A, pending: [B, C] });
+    expect(queue.snapshot()).toEqual({ running: A, pending: [B, C], waiting: [] });
     await until(() => withGate.job('analyze', A)?.status === 'running');
 
     await queue.moveTo(C, 0);
-    expect(queue.snapshot()).toEqual({ running: A, pending: [C, B] });
+    expect(queue.snapshot()).toEqual({ running: A, pending: [C, B], waiting: [] });
 
     gate.release();
     await queue.idle();
@@ -124,7 +124,7 @@ describe('PipelineQueue', () => {
     await queue.enqueue(C);
     await until(() => withGate.job('analyze', A)?.status === 'running');
     await queue.cancel(C);
-    expect(queue.snapshot()).toEqual({ running: A, pending: [B] });
+    expect(queue.snapshot()).toEqual({ running: A, pending: [B], waiting: [] });
 
     gate.release();
     await queue.idle();
@@ -237,7 +237,7 @@ describe('PipelineQueue', () => {
     await queue.idle();
 
     expect(queue.isPaused()).toBe(true);
-    expect(queue.snapshot()).toEqual({ running: null, pending: [A, B] });
+    expect(queue.snapshot()).toEqual({ running: null, pending: [A, B], waiting: [] });
     expect(fake.chapter(A).status).toBe('failed');
     expect(fake.chapter(B).status).toBe('draft');
     expect(fake.state.queue.map((item) => item.chapterId)).toEqual([A, B]);

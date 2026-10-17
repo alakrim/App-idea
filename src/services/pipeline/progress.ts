@@ -176,6 +176,9 @@ export function reduceEvent(
       return { ...tracked, spokenChars: event.chars };
     case 'cost':
       return { ...tracked, runCostUsd: event.totalUsd };
+    case 'retrying':
+      // The waiting state and its time come from the queue's snapshot, so nothing changes here.
+      return tracked;
     case 'error':
       return event.error.code === 'CANCELLED' ? tracked : { ...tracked, error: event.error };
     case 'done':
@@ -288,11 +291,15 @@ function clamp01(value: number): number {
   return Math.min(1, Math.max(0, value));
 }
 
-/** The snapshot the UI reads. `state` is supplied by the caller, because the queue decides queued. */
+/**
+ * The snapshot the UI reads. `state` and `retryAt` are supplied by the caller, because the queue
+ * decides queued and waiting.
+ */
 export function toChapterProgress(
   chapterId: string,
   tracked: TrackedChapter,
   state: ChapterProgress['state'] = tracked.state,
+  retryAt: number | null = null,
 ): ChapterProgress {
   const stages: StageProgress[] = STAGE_ORDER.map((stage) => ({
     stage,
@@ -314,5 +321,6 @@ export function toChapterProgress(
     estimatedTotalMs: ready ? narratedMs : estimatedTotalMsOf(tracked),
     costUsdSoFar: tracked.costBaseUsd + tracked.runCostUsd,
     error: tracked.error,
+    retryAt: state === 'waiting' ? retryAt : null,
   };
 }

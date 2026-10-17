@@ -1,5 +1,6 @@
-import type { Chapter, PipelineError, Stage } from '@/core/domain';
+import type { Chapter, PipelineError } from '@/core/domain';
 import type { ChapterProgress } from '@/features/pipeline/facade';
+import { STAGE_VERBS } from '@/features/pipeline/stage-verbs';
 import { formatDuration } from '@/features/shared/format';
 
 export type ChapterRowState = 'draft' | 'processing' | 'ready' | 'failed';
@@ -7,20 +8,13 @@ export type ChapterRowState = 'draft' | 'processing' | 'ready' | 'failed';
 /** What the row shows: live progress wins over the stored status, which only changes at the ends. */
 export function rowStateOf(chapter: Chapter, progress: ChapterProgress | null): ChapterRowState {
   if (progress?.state === 'queued' || progress?.state === 'running') return 'processing';
+  // A chapter waiting for a connection is still processing: it runs again on its own.
+  if (progress?.state === 'waiting') return 'processing';
   if (progress?.state === 'failed') return 'failed';
   if (progress?.state === 'ready') return 'ready';
   if (chapter.status === 'processing') return 'processing';
   return chapter.status === 'ready' || chapter.status === 'failed' ? chapter.status : 'draft';
 }
-
-const STAGE_VERBS: Readonly<Record<Stage, string>> = {
-  extract: 'Extracting',
-  clean: 'Cleaning',
-  segment: 'Splitting',
-  analyze: 'Analyzing',
-  translate: 'Translating',
-  narrate: 'Narrating',
-};
 
 /** A PDF with no selectable text. Offering OCR is the only remedy the pipeline reports for it. */
 export function isScannedPdfFailure(chapter: Chapter, failure: PipelineError | null): boolean {
@@ -40,6 +34,7 @@ export function statusLine(
         ? 'Ready to listen'
         : `Ready · ${formatDuration(chapter.durationMs)}`;
     case 'processing': {
+      if (progress?.state === 'waiting') return 'Waiting for connection…';
       const active = progress?.stages.find((stage) => stage.status === 'running');
       const verb = active ? STAGE_VERBS[active.stage] : 'Queued';
       return active ? `${verb} · ${Math.round(active.progress * 100)}%` : `${verb}…`;

@@ -18,6 +18,12 @@ export interface TransportConfig {
   now: () => number;
 }
 
+/**
+ * How long one call may take, in milliseconds. Speech and chat replies are long, so they get more
+ * time than the short calls (models, key). Every call stays abortable.
+ */
+export const CALL_TIMEOUTS_MS = { default: 60_000, chat: 120_000, speech: 180_000 } as const;
+
 export interface TransportRequest {
   method: 'GET' | 'POST';
   /** Path below the base URL, for example `/models`. */
@@ -26,6 +32,8 @@ export interface TransportRequest {
   body?: unknown;
   accept: string;
   signal?: AbortSignal;
+  /** How long this call may take. Defaults to the transport's timeout. */
+  timeoutMs?: number;
   /** The copy shown when the free model's daily allowance is used up. */
   dailyLimitMessage?: string;
 }
@@ -127,7 +135,7 @@ async function attemptOnce<T>(
   const timer = setTimeout(() => {
     timedOut = true;
     controller.abort();
-  }, config.timeoutMs);
+  }, req.timeoutMs ?? config.timeoutMs);
   const forwardAbort = () => controller.abort();
   req.signal?.addEventListener('abort', forwardAbort);
 

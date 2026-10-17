@@ -43,6 +43,8 @@ export const SettingsSchema = z.object({
   reading: ReadingSettingsSchema,
   onboardingDone: z.boolean(),
   contentNoticeAccepted: z.boolean(),
+  /** The user has answered the background-notification explainer (Allow or Not now). */
+  notificationsExplained: z.boolean(),
 });
 export type Settings = z.infer<typeof SettingsSchema>;
 

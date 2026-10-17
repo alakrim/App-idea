@@ -133,6 +133,8 @@ function describeEvent(event: PipelineEvent): string | null {
       return 'playable';
     case 'analysisReady':
       return 'analysisReady';
+    case 'retrying':
+      return `retrying after failure ${event.attempt}`;
     case 'done':
       return 'done';
     case 'progress':

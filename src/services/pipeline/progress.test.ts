@@ -27,6 +27,33 @@ const stage = (s: Stage, status: Status): PipelineEvent => ({
   status,
 });
 
+describe('waiting chapters', () => {
+  it('shows the retry time only in the waiting state', () => {
+    const failed = run([stage('extract', 'failed')]);
+    expect(toChapterProgress(ID, failed, 'waiting', 90_000).retryAt).toBe(90_000);
+    expect(toChapterProgress(ID, failed, 'failed', 90_000).retryAt).toBeNull();
+  });
+
+  it('keeps the failure that made it wait, and its stage, so the stepper stays honest', () => {
+    const error = { code: 'NETWORK' as const, message: 'No connection.', retryable: true };
+    const tracked = run([
+      stage('analyze', 'running'),
+      stage('analyze', 'failed'),
+      {
+        type: 'error',
+        chapterId: ID,
+        stage: 'analyze',
+        error,
+      },
+      { type: 'retrying', chapterId: ID, attempt: 1, retryAt: 90_000 },
+    ]);
+    const progress = toChapterProgress(ID, tracked, 'waiting', 90_000);
+    expect(progress.state).toBe('waiting');
+    expect(progress.error).toEqual(error);
+    expect(progress.stages.find((s) => s.stage === 'analyze')?.status).toBe('failed');
+  });
+});
+
 describe('STAGE_WEIGHTS', () => {
   it('add up to 1, as the brief sets them', () => {
     const total = Object.values(STAGE_WEIGHTS).reduce((sum, w) => sum + w, 0);

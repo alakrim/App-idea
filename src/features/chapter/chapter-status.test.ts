@@ -23,6 +23,7 @@ function progress(
     estimatedTotalMs: null,
     costUsdSoFar: 0,
     error: null,
+    retryAt: null,
   };
 }
 
@@ -34,6 +35,20 @@ describe('rowStateOf', () => {
     expect(rowStateOf(chapter, progress('queued'))).toBe('processing');
     expect(rowStateOf(chapter, progress('failed'))).toBe('failed');
     expect(rowStateOf(chapter, idle)).toBe('draft');
+  });
+
+  it('keeps a chapter that waits for a connection in the processing state', () => {
+    const chapter = chapterRow(1, 1, 1, { status: 'failed' });
+    expect(rowStateOf(chapter, progress('waiting'))).toBe('processing');
+  });
+});
+
+describe('statusLine for a waiting chapter', () => {
+  it('says it waits for a connection, not that it is queued', () => {
+    const chapter = chapterRow(1, 1, 1, { status: 'failed' });
+    expect(statusLine('processing', chapter, progress('waiting'), null)).toBe(
+      'Waiting for connection…',
+    );
   });
 });
 

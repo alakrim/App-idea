@@ -44,6 +44,8 @@ export interface PipelineRuntime {
   /** Runs the queue again after an AUTH pause, once a key is saved. */
   resume(): void;
   isPaused(): boolean;
+  /** Runs every chapter that waits for a connection now. Called on foreground and on reconnect. */
+  retryNow(): void;
   /** Resolves when the queue is empty and nothing is running. */
   idle(): Promise<void>;
   subscribeQueue(listener: (snapshot: QueueSnapshot) => void): () => void;
@@ -94,6 +96,7 @@ export function createPipelineRuntime(options: PipelineRuntimeOptions): Pipeline
     restore: () => queue.restore(),
     resume: () => queue.resume(),
     isPaused: () => queue.isPaused(),
+    retryNow: () => queue.retryNow(),
     idle: () => queue.idle(),
     subscribeQueue: (listener) => queue.subscribe(listener),
     subscribeEvents: (listener) => service.subscribeEvents(listener),

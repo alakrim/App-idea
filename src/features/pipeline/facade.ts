@@ -18,8 +18,13 @@ export interface StageProgress {
 
 export interface ChapterProgress {
   chapterId: string;
-  /** 'idle' = not queued and not running. */
-  state: 'idle' | 'queued' | 'running' | 'ready' | 'failed' | 'cancelled';
+  /**
+   * 'idle' = not queued and not running. 'waiting' = a transient failure (for example, no
+   * connection); the chapter runs again at `retryAt`.
+   */
+  state: 'idle' | 'queued' | 'waiting' | 'running' | 'ready' | 'failed' | 'cancelled';
+  /** When a waiting chapter runs again, in epoch milliseconds. Null or absent in every other state. */
+  retryAt?: number | null;
   stages: StageProgress[];
   /** Overall 0..1, weighted by typical stage duration. */
   overall: number;
@@ -86,6 +91,8 @@ export interface PipelineFacade {
   }): Promise<string>;
   /** Queue processing. Idempotent if it is already queued or running. */
   enqueue(chapterId: string): void;
+  /** Runs every chapter that waits for a connection now, instead of at its retry time. */
+  retryNow(): void;
   cancel(chapterId: string): void;
   /** Re-run from a stage (default: the first failed one). */
   retry(chapterId: string, from?: Stage): void;

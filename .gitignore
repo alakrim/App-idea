@@ -4,6 +4,10 @@ dist/
 web-build/
 /android/
 /ios/
+# Gradle output of local Expo modules (modules/*/android), built by scripts/android/build-apk.sh
+/modules/*/android/build/
+/modules/*/android/.gradle/
+/modules/*/android/.cxx/
 *.jks
 *.p8
 *.p12
