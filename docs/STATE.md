@@ -29,6 +29,17 @@ _Last updated: 2026-10-11 by architect_
   - DB compatibility was checked: charming-fermat's 0003/0004 only add tables and a nullable column, and this branch's 0003 has a later timestamp, so both builds install over each other.
 - Next: after the user's device test, port this wave onto `charming-fermat`, keeping what tested better. Also ask the user to set the latest line as the repo's default branch, so new sessions start from it.
 
+## Debug sweep (user request, 2026-10-17): find and fix every bug and inefficiency
+- **Trigger:** the device test of `6842a51` brought back incident 3 (choppy narration). Its fix `254fbad` exists only on charming-fermat. Root problem: two code lines.
+- **Phase 0, unify (I3, blocking):** merge charming-fermat `54b3d2e` into this branch under the conflict policy in `docs/briefs/I3-unify-lines.md`. In parallel, **C1** builds the keyless live OpenRouter contract check (`npm run contract:check`), which catches the incident-4 class.
+- **Phase 1, audit** (2 workers at a time, read-only, findings with evidence and severity, on the unified code):
+  - QA-E audio/player/background
+  - QA-F pipeline/network/data/cost
+  - QA-G UX/a11y/performance
+  - Each re-checks the 2026-10-13 QA-A..D findings against the unified code.
+- **Phase 2, fix waves:** P1s first, with mutation-checked regression tests, `verify` plus `contract:check` before every APK.
+- **Phase 3, device proof:** one APK, a scripted device checklist, and the Diagnostics report back from the user.
+
 ## Incident 4 (2026-10-17, device test of bfbcc4f): every chapter failed at Analyze with "This model is not available on OpenRouter right now"
 - **Cause (AM1 regression):** analysis sent `temperature: 0` and `seed` together with strict `json_schema`, and therefore `provider.require_parameters: true`. None of `anthropic/claude-haiku-5.5`'s 10 provider endpoints accept `temperature` or `seed` (checked live on `/models/.../endpoints`), so OpenRouter found no endpoint and returned 404, which maps to MODEL_UNAVAILABLE.
 - **Fix:** `chat.ts` drops sampling hints whenever `require_parameters` is set, with a regression test. Reproducible cues still come from the cue cache.
