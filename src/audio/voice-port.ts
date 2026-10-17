@@ -32,7 +32,11 @@ export interface VoiceSnapshot {
  */
 export interface VoicePort {
   load(segments: readonly VoiceSegment[], startMs: number, metadata: VoiceMetadata): Promise<void>;
-  append(segments: readonly VoiceSegment[]): void;
+  /**
+   * Adds segments after the current ones. `final` says the chapter has no more segments coming. A
+   * voice that has run dry resumes once it has a usable lead, or at once when the chapter is final.
+   */
+  append(segments: readonly VoiceSegment[], final?: boolean): void;
   play(): void;
   pause(): void;
   seekTo(ms: number): Promise<void>;

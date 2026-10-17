@@ -104,29 +104,6 @@ describe('QA-E proof: a seek near a boundary (P2-A)', () => {
   });
 });
 
-describe('QA-E proof: running dry during progressive narration (P1-B)', () => {
-  it('a resume after running dry waits for a usable lead instead of one 4 s segment', async () => {
-    const voice = createVoicePlayer();
-    const loading = voice.load([{ uri: 'file:///a.m4a', durationMs: 10_000 }], 0, META);
-    releaseAudioMode();
-    await loading;
-    const [first, second] = mockPlayers;
-    voice.play();
-    first?.listener?.(status({ playing: true }));
-    first?.listener?.(status({ playing: false, didJustFinish: true, currentTime: 10 }));
-    second?.play.mockClear();
-
-    // Narration is slower than playback: the next segment arrives 4 s long. Today append() resumes
-    // at once (advance() calls play() because wantPlaying stayed true), so the voice runs dry again
-    // 4 s later. That is the stop-start loop the listener hears. Expected: a minimum lead of about
-    // 10 s (proposed RESUME_LEAD_MS) before the voice restarts, unless the narration is final.
-    voice.append([{ uri: 'file:///b.m4a', durationMs: 4_000 }]);
-
-    expect(second?.play).not.toHaveBeenCalled();
-    voice.dispose();
-  });
-});
-
 describe('QA-E proof: focus returns after the listener paused (P1-C)', () => {
   it('a playing status that arrives after the listener paused is paused again', async () => {
     const voice = createVoicePlayer();

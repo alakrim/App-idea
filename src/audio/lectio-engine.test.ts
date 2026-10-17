@@ -468,7 +468,7 @@ describe('lectio-engine: progressive playback', () => {
       sentenceOffsetsMs: [0],
     };
     engine.appendSegments([next], true);
-    expect(voice.append).toHaveBeenCalledWith([{ uri: 'file:///c.m4a', durationMs: 3000 }]);
+    expect(voice.append).toHaveBeenCalledWith([{ uri: 'file:///c.m4a', durationMs: 3000 }], true);
     expect(states.at(-1)).toBe('ended');
   });
 

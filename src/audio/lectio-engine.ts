@@ -350,7 +350,7 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
       timeline = buildTimeline(merged);
       chapter.segments = merged;
       chapter.final = final;
-      voice.append(segments.map(toVoiceSegment));
+      voice.append(segments.map(toVoiceSegment), final);
       if (lastSnapshot) handleSnapshot(lastSnapshot);
     },
 

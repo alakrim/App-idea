@@ -20,6 +20,11 @@ const LOCK_SCREEN_OPTIONS = { showSeekForward: false, showSeekBackward: false } 
  * TTS segments end in silence, so the overlap of at most this long is not heard.
  */
 export const PRE_ROLL_MS = 80;
+/**
+ * After the voice runs dry, narration resumes only with this much audio past the point it ran out
+ * (or once the chapter is final). Shorter resumes stop and start the narration every few seconds.
+ */
+export const RESUME_LEAD_MS = 10_000;
 
 export interface VoicePlayerOptions {
   /** Where boundary gaps, buffering and system pauses are recorded. Defaults to a private log. */
@@ -67,6 +72,8 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
   let active: 0 | 1 = 0;
   let index = 0;
   let ended = false;
+  /** Media time at which the voice ran dry. The resume lead is measured from here. */
+  let dryAtMs = 0;
   let wantPlaying = false;
   let rate = 1;
   let volume = 1;
@@ -247,8 +254,9 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
     if (!slots) return;
     const next = index + 1;
     if (next >= segments.length) {
+      // The lock screen stays with the finished player: the chapter is paused, not released.
       ended = true;
-      slots[active].player.clearLockScreenControls();
+      dryAtMs = totalMs();
       emit({
         positionMs: totalMs(),
         playing: false,
@@ -364,7 +372,7 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
       activate(created[0]);
     },
 
-    append(more) {
+    append(more, final = false) {
       if (more.length === 0) return;
       segments = [...segments, ...more];
       recomputeStarts();
@@ -373,7 +381,9 @@ export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
       if (incoming.holds === null && index + 1 < segments.length) {
         loadSlot(incoming, index + 1, null);
       }
-      if (ended) {
+      // After a run dry, a short segment is not enough to resume on: the voice would run dry again
+      // within seconds. It waits for RESUME_LEAD_MS of audio past the point it ran out, or for the end.
+      if (ended && (final || totalMs() - dryAtMs >= RESUME_LEAD_MS)) {
         ended = false;
         advance(true);
       }
