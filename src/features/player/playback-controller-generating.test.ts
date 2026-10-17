@@ -73,6 +73,7 @@ describe('a chapter still being narrated', () => {
     const { controller, pipe, fixture, engine } = setupController([processing]);
     await controller.playChapter(id(2));
     controller.seekToSentence(1);
+    controller.player.play();
     expect(engine.soundingBedIds()).toEqual([]);
 
     const lateCue = { ...CUE, id: id(901), chapterId: id(2) };

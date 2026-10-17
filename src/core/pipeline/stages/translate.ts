@@ -26,7 +26,7 @@ import type { ChapterRecord, StoredSentence } from '../ports';
 /** Glossary budget for one chapter, in estimated tokens. */
 export const GLOSSARY_TOKENS = 800;
 /** Chunks in flight at once. Their results are still saved in reading order. */
-export const TRANSLATE_CONCURRENCY = 2;
+export const TRANSLATE_CONCURRENCY = 3;
 
 /** The languages a chapter is translated between, or null when it is read in its own language. */
 export function translationPair(

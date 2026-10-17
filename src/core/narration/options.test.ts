@@ -73,8 +73,8 @@ describe('NARRATOR_OPTIONS catalogue', () => {
   });
 
   it('runs three requests at once for the paid narrators, and one for the rate-limited free one', () => {
-    expect(option('best').narrateConcurrency).toBe(3);
-    expect(option('budget').narrateConcurrency).toBe(3);
+    expect(option('best').narrateConcurrency).toBe(6);
+    expect(option('budget').narrateConcurrency).toBe(6);
     expect(option('free').narrateConcurrency).toBe(1);
   });
 
@@ -176,8 +176,8 @@ describe('segmentLimitsFor', () => {
 
 describe('narrateConcurrencyFor', () => {
   it('uses each narrator concurrency, and the default for any other speech model', () => {
-    expect(narrateConcurrencyFor(GEMINI_NARRATOR_MODEL_ID)).toBe(3);
-    expect(narrateConcurrencyFor(KOKORO_MODEL_ID)).toBe(3);
+    expect(narrateConcurrencyFor(GEMINI_NARRATOR_MODEL_ID)).toBe(6);
+    expect(narrateConcurrencyFor(KOKORO_MODEL_ID)).toBe(6);
     expect(narrateConcurrencyFor(FREE_NARRATOR_MODEL_ID)).toBe(1);
     expect(narrateConcurrencyFor('elevenlabs/eleven-v3')).toBe(DEFAULT_NARRATE_CONCURRENCY);
     expect(DEFAULT_NARRATE_CONCURRENCY).toBe(2);

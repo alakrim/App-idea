@@ -13,18 +13,13 @@
  */
 
 import type { PipelineError, Stage } from '@/core/domain';
-<<<<<<< HEAD
 import type { JobStatusEvent, PipelineEvent, SegmentReady } from '@/core/pipeline/context';
-import type { ChapterProgress, JobStatus, StageProgress } from '@/features/pipeline/facade';
-=======
-import type { PipelineEvent } from '@/core/pipeline/context';
 import type {
   ChapterProgress,
   JobStatus,
   PassageProgress,
   StageProgress,
 } from '@/features/pipeline/facade';
->>>>>>> 54b3d2e
 
 export const STAGE_WEIGHTS: Readonly<Record<Stage, number>> = {
   extract: 0.1,
@@ -92,6 +87,7 @@ export interface TrackedChapter {
 /** The job status a stage has in the database, or null when it has no job yet. */
 export type StatusLookup = (stage: Stage) => JobStatus | null;
 
+/** A stage slot that is not running: it has no start time and no passage count. */
 function settledSlot(status: JobStatus, progress: number): StageSlot {
   return { status, progress, since: null, passages: null };
 }
@@ -173,7 +169,10 @@ function settledStatus(stage: Stage, lookup: StatusLookup): JobStatus {
   return lookup(stage) === 'done' ? 'done' : 'skipped';
 }
 
-/** Folds one runner event into the chapter's tracked state. `at` is the time the event was seen. */
+/**
+ * Folds one runner event into the chapter's tracked state. `at` is the time the event was seen.
+ * Stall and stale-retry events change nothing here: Diagnostics keeps them.
+ */
 export function reduceEvent(
   tracked: TrackedChapter,
   event: PipelineEvent,
@@ -182,11 +181,7 @@ export function reduceEvent(
 ): TrackedChapter {
   switch (event.type) {
     case 'stage':
-<<<<<<< HEAD
-      return reduceStage(tracked, event.stage, event.status, lookup);
-=======
-      return reduceStage(tracked, event, lookup, at);
->>>>>>> 54b3d2e
+      return reduceStage(tracked, event.stage, event.status, lookup, at);
     case 'progress': {
       const current = tracked.stages[event.stage];
       if (current.status === 'done' || current.status === 'skipped') {
@@ -203,7 +198,6 @@ export function reduceEvent(
       };
     }
     case 'segmentReady':
-<<<<<<< HEAD
       return reduceSegment(tracked, event.segment);
     case 'playable':
       return { ...tracked, playable: true };
@@ -212,13 +206,6 @@ export function reduceEvent(
       return tracked;
     case 'spokenChars':
       return { ...tracked, spokenChars: event.chars };
-=======
-      return {
-        ...tracked,
-        reconnecting: false,
-        readySegments: Math.max(tracked.readySegments, event.segment.idx + 1),
-      };
->>>>>>> 54b3d2e
     case 'cost':
       return { ...tracked, runCostUsd: event.totalUsd };
     case 'retrying':
@@ -238,55 +225,50 @@ export function reduceEvent(
       return { ...tracked, reconnecting: true };
     case 'stall':
     case 'staleAbort':
-      // Recorded in Diagnostics, not shown on the chapter.
       return tracked;
   }
 }
 
 function reduceStage(
   tracked: TrackedChapter,
-<<<<<<< HEAD
   stage: Stage,
   status: JobStatusEvent,
   lookup: StatusLookup,
+  at: number,
 ): TrackedChapter {
-  let stages: Record<Stage, StageSlot>;
+  const previous = tracked.stages[stage];
+  let slot: StageSlot;
   let state = tracked.state;
   switch (status) {
     case 'running':
-      stages = withStage(tracked, stage, { status: 'running', progress: 0 });
+      slot = { status: 'running', progress: 0, since: at, passages: null };
       state = 'running';
       break;
     case 'done':
-      stages = withStage(tracked, stage, { status: 'done', progress: 1 });
+      slot = settledSlot('done', 1);
       break;
     case 'skipped':
-      stages = withStage(tracked, stage, { status: settledStatus(stage, lookup), progress: 1 });
+      slot = settledSlot(settledStatus(stage, lookup), 1);
       break;
     case 'failed':
-      stages = withStage(tracked, stage, {
-        status: 'failed',
-        progress: tracked.stages[stage].progress,
-      });
+      slot = settledSlot('failed', previous.progress);
       state = 'failed';
       break;
     case 'cancelled':
-      stages = withStage(tracked, stage, {
-        status: 'cancelled',
-        progress: tracked.stages[stage].progress,
-      });
+      slot = settledSlot('cancelled', previous.progress);
       // A stage stopped by another stage's failure must not hide that failure.
       state = tracked.state === 'failed' ? 'failed' : 'cancelled';
       break;
   }
+  let stages = withStage(tracked, stage, slot);
   // The clean job is written by the extract stage, so it is read back once extract settles.
   if (stage === 'extract' && status !== 'running') {
     const clean = lookup('clean');
     if (clean !== null) {
-      stages = { ...stages, clean: { status: clean, progress: clean === 'pending' ? 0 : 1 } };
+      stages = { ...stages, clean: settledSlot(clean, clean === 'pending' ? 0 : 1) };
     }
   }
-  return { ...tracked, stages, state };
+  return { ...tracked, stages, state, reconnecting: false };
 }
 
 function reduceSegment(tracked: TrackedChapter, segment: SegmentReady): TrackedChapter {
@@ -306,6 +288,7 @@ function reduceSegment(tracked: TrackedChapter, segment: SegmentReady): TrackedC
     readySegments: Math.max(tracked.readySegments, segment.idx + 1),
     secondsPerChar,
     timedSegments: tracked.timedSegments + (sample === null ? 0 : 1),
+    reconnecting: false,
   };
 }
 
@@ -338,45 +321,6 @@ export function estimatedTotalMsOf(tracked: TrackedChapter): number | null {
   const chars = narratedCharsOf(tracked.segments);
   if (tracked.spokenChars === null || chars <= 0) return null;
   return Math.round((narratedMs * tracked.spokenChars) / chars);
-=======
-  event: Extract<PipelineEvent, { type: 'stage' }>,
-  lookup: StatusLookup,
-  at: number,
-): TrackedChapter {
-  const { stage } = event;
-  const previous = tracked.stages[stage];
-  let slot: StageSlot;
-  let state = tracked.state;
-  switch (event.status) {
-    case 'running':
-      slot = { status: 'running', progress: 0, since: at, passages: null };
-      state = 'running';
-      break;
-    case 'done':
-      slot = settledSlot('done', 1);
-      break;
-    case 'skipped':
-      slot = settledSlot(settledStatus(stage, lookup), 1);
-      break;
-    case 'failed':
-      slot = settledSlot('failed', previous.progress);
-      state = 'failed';
-      break;
-    case 'cancelled':
-      slot = settledSlot('cancelled', previous.progress);
-      state = 'cancelled';
-      break;
-  }
-  let stages = withStage(tracked, stage, slot);
-  // The clean job is written by the extract stage, so it is read back once extract settles.
-  if (stage === 'extract' && event.status !== 'running') {
-    const clean = lookup('clean');
-    if (clean !== null) {
-      stages = { ...stages, clean: settledSlot(clean, clean === 'pending' ? 0 : 1) };
-    }
-  }
-  return { ...tracked, stages, state, reconnecting: false };
->>>>>>> 54b3d2e
 }
 
 function clamp01(value: number): number {
@@ -418,10 +362,7 @@ export function toChapterProgress(
     estimatedTotalMs: ready ? narratedMs : estimatedTotalMsOf(tracked),
     costUsdSoFar: tracked.costBaseUsd + tracked.runCostUsd,
     error: tracked.error,
-<<<<<<< HEAD
     retryAt: state === 'waiting' ? retryAt : null,
-=======
     reconnecting: !ready && tracked.reconnecting,
->>>>>>> 54b3d2e
   };
 }

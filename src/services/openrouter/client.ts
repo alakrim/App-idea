@@ -17,6 +17,7 @@ import type { KeyCheck } from './key';
 import type { ModelCatalog } from './models';
 import type { PdfInput, PdfResult } from './pdf';
 import type { SpeechInput, SpeechResult } from './speech';
+import type { Connection } from '../network/connection';
 
 export interface OpenRouterClientOptions {
   /** Returns the user's key, or null when none is saved. Called before every request. */
@@ -34,6 +35,8 @@ export interface OpenRouterClientOptions {
   sleep?: (ms: number) => Promise<void>;
   random?: () => number;
   now?: () => number;
+  /** The connection whose stale requests are retried at once. Defaults to a private one. */
+  connection?: Pick<Connection, 'register'>;
 }
 
 export interface OpenRouterClient {
@@ -66,6 +69,7 @@ export function createOpenRouterClient(options: OpenRouterClientOptions): OpenRo
     sleep: options.sleep ?? ((ms) => new Promise<void>((resolve) => setTimeout(resolve, ms))),
     random: options.random ?? Math.random,
     now,
+    connection: options.connection,
   });
   const models = createModelCatalog({
     transport,

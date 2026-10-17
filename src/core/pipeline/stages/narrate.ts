@@ -114,6 +114,10 @@ async function execute(ctx: FlowContext, profile: NarrationProfile): Promise<Sta
    * Announces a segment that is saved or reused, in order. The first segment also makes the chapter
    * playable, and progress advances with the characters that are saved.
    */
+  /** The passage count, once the chapter's text is complete. Null while it can still grow. */
+  const passageTotal = (): number | null =>
+    ctx.spoken.complete ? planFinalSegments(ctx.spoken.prefix(), plan, true).length : null;
+
   const announce = (
     segment: PlannedSegment,
     uri: string,
@@ -136,24 +140,22 @@ async function execute(ctx: FlowContext, profile: NarrationProfile): Promise<Sta
     });
     if (segment.idx === 0) ctx.emit({ type: 'playable', chapterId: ctx.chapterId });
     const estimate = Math.max(1, ctx.spoken.estimatedChars());
+    // The passage count is shown once the total is known. Before that the copy says "passage N".
+    const total = passageTotal();
     ctx.emit({
       type: 'progress',
       chapterId: ctx.chapterId,
       stage: 'narrate',
       progress: Math.min(1, savedChars / estimate),
+      ...(total === null ? {} : { passages: { done: segment.idx + 1, total } }),
     });
   };
-
-  /** The passage count, once the chapter's text is complete. Null while it can still grow. */
-  const passageTotal = (): number | null =>
-    ctx.spoken.complete ? planFinalSegments(ctx.spoken.prefix(), plan, true).length : null;
 
   const pool = new SlidingWindow<PlannedSegment, SpokenClip>({
     window: new AdaptiveWindow({ ceiling: narrateConcurrencyFor(profile.model) }),
     signal: ctx.signal,
     now: () => ctx.ports.clock.now(),
-    work: (segment, signal) =>
-      narrateSegment(ctx, profile, segment, signal, passageTotal),
+    work: (segment, signal) => narrateSegment(ctx, profile, segment, signal, passageTotal),
     save: async (segment, clip, timing) => {
       const ext = extensionFor(clip.mime);
       const uri = await audio.write(ctx.chapterId, segment.idx, clip.bytes, ext);

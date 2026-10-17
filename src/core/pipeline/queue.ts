@@ -2,17 +2,15 @@
  * A serial queue of chapters. One chapter runs at a time, in queue order. The user can move a
  * pending chapter or cancel one. The queue is persisted through the JobStore, so it resumes after an
  * app restart: the chapter that was running is first in the restored queue, and its jobs resume.
-<<<<<<< HEAD
  *
  * A transient failure (no connection, a timeout, a rate limit, a provider error) never ends a run.
  * The chapter waits with exponential backoff, moves behind the other chapters, and runs again when
  * its time comes or when `retryNow()` is called. A chapter that keeps failing is given up after
  * MAX_TRANSIENT_FAILURES tries, with its last error.
-=======
- * While a chapter runs, a stall watchdog watches for a chapter that stops moving: the first stalls
- * retire its requests in flight, and a stall beyond MAX_STALLS fails the chapter, keeping its saved
- * passages.
->>>>>>> 54b3d2e
+ *
+ * Each run is watched by its own stall watchdog (see `runner.ts`). A stall retires the requests in
+ * flight, and a run that stalls too often fails with a retryable error, which this queue treats like
+ * any other transient failure.
  */
 import { toPipelineError } from './errors';
 import {
@@ -22,16 +20,10 @@ import {
   transientRetryDelayMs,
 } from './retry-policy';
 import { runChapter } from './runner';
-import { MAX_STALLS, STALLED_ERROR, StallWatchdog } from './stall-watchdog';
 
-import type { PipelineError, Stage } from '../domain';
 import type { PipelineEvent } from './context';
-<<<<<<< HEAD
-import type { PersistedQueueItem, PipelinePorts } from './ports';
+import type { Clock, PersistedQueueItem, PipelinePorts } from './ports';
 import type { Scheduler } from './retry-policy';
-=======
-import type { Clock, NetworkEvent, PersistedQueueItem, PipelinePorts } from './ports';
->>>>>>> 54b3d2e
 import type { RunOptions, RunOutcome } from './runner';
 
 /** Per-chapter options. They are persisted with the queue, so a restored chapter keeps them. */
@@ -56,20 +48,17 @@ export interface QueueSnapshot {
 
 export interface PipelineQueueOptions {
   readonly onEvent?: (event: PipelineEvent) => void;
-<<<<<<< HEAD
   /** Wakes the queue when a waiting chapter is due. Defaults to setTimeout. */
   readonly scheduler?: Scheduler;
   /** Jitter source in [0, 1). Defaults to Math.random. */
   readonly random?: () => number;
-=======
-  /** The clock the stall watchdog reads. Defaults to the ports' clock. */
+  /** The clock the stall watchdog of each run reads. Defaults to the ports' clock. */
   readonly clock?: Clock;
   /**
    * True while a platform foreground service keeps the JS runtime alive in the background. The
    * watchdog then keeps counting when the app leaves the foreground, because nothing is frozen.
    */
   readonly keepsAliveInBackground?: () => boolean;
->>>>>>> 54b3d2e
 }
 
 interface Item {
@@ -82,16 +71,6 @@ interface Item {
   retryAt: number | null;
 }
 
-/** The chapter running now, with what the watchdog and the events need to know about it. */
-interface ActiveRun {
-  readonly item: Item;
-  readonly watchdog: StallWatchdog;
-  /** The stage the run is in, so events name it. */
-  stage: Stage;
-  /** Set when the watchdog fails the run. The runner reads it through `stopped`. */
-  stopError: PipelineError | null;
-}
-
 export class PipelineQueue {
   private items: Item[] = [];
   private paused = false;
@@ -99,23 +78,15 @@ export class PipelineQueue {
   private persisting: Promise<void> = Promise.resolve();
   private cancelWakeUp: (() => void) | null = null;
   private readonly listeners = new Set<(snapshot: QueueSnapshot) => void>();
-<<<<<<< HEAD
   private readonly scheduler: Scheduler;
   private readonly random: () => number;
-=======
-  private active: ActiveRun | null = null;
->>>>>>> 54b3d2e
 
   constructor(
     private readonly ports: PipelinePorts,
     private readonly options: PipelineQueueOptions = {},
   ) {
-<<<<<<< HEAD
     this.scheduler = options.scheduler ?? TIMER_SCHEDULER;
     this.random = options.random ?? Math.random;
-=======
-    ports.network.subscribe((event) => this.onNetwork(event));
->>>>>>> 54b3d2e
   }
 
   snapshot(): QueueSnapshot {
@@ -266,38 +237,11 @@ export class PipelineQueue {
   }
 
   private async drain(): Promise<void> {
-<<<<<<< HEAD
     while (!this.paused) {
       const item = this.nextRunnable();
       if (!item) {
         this.armWakeUp();
         return;
-=======
-    while (!this.paused && this.items.length > 0) {
-      const item = this.items[0];
-      if (!item) break;
-      item.controller = new AbortController();
-      this.notify();
-      const run = this.startRun(item);
-      let outcome: RunOutcome | null = null;
-      try {
-        outcome = await runChapter(item.chapterId, this.ports, {
-          ...item.options,
-          signal: item.controller.signal,
-          stopped: () => run.stopError,
-          onEvent: (event) => this.observe(run, event),
-        });
-      } catch (thrown) {
-        this.options.onEvent?.({
-          type: 'error',
-          chapterId: item.chapterId,
-          stage: 'extract',
-          error: toPipelineError(thrown),
-        });
-      } finally {
-        run.watchdog.stop();
-        this.active = null;
->>>>>>> 54b3d2e
       }
       const controller = new AbortController();
       item.controller = controller;
@@ -326,13 +270,14 @@ export class PipelineQueue {
     }
   }
 
-<<<<<<< HEAD
   private async runItem(item: Item, signal: AbortSignal): Promise<RunOutcome | null> {
     try {
       return await runChapter(item.chapterId, this.ports, {
         ...item.options,
         signal,
         onEvent: this.options.onEvent,
+        clock: this.options.clock,
+        keepsAliveInBackground: this.options.keepsAliveInBackground,
       });
     } catch (thrown) {
       this.options.onEvent?.({
@@ -383,75 +328,6 @@ export class PipelineQueue {
     });
   }
 
-=======
-  private startRun(item: Item): ActiveRun {
-    const run: ActiveRun = {
-      item,
-      stage: item.options.from ?? 'extract',
-      stopError: null,
-      watchdog: new StallWatchdog({
-        now: () => (this.options.clock ?? this.ports.clock).now(),
-        onStall: (stalls) => this.onStall(run, stalls),
-      }),
-    };
-    run.watchdog.start();
-    this.active = run;
-    return run;
-  }
-
-  /** Every runner event passes here. It counts as activity, and it tracks the stage the run is in. */
-  private observe(run: ActiveRun, event: PipelineEvent): void {
-    if (event.chapterId === run.item.chapterId) {
-      run.watchdog.touch();
-      if ('stage' in event) run.stage = event.stage;
-    }
-    this.options.onEvent?.(event);
-  }
-
-  /**
-   * The first stalls retire the requests in flight, so each is retried at once. A stall beyond
-   * MAX_STALLS fails the chapter; its finished passages stay saved.
-   */
-  private onStall(run: ActiveRun, stalls: number): void {
-    const chapterId = run.item.chapterId;
-    this.options.onEvent?.({ type: 'stall', chapterId, stage: run.stage, count: stalls });
-    if (stalls >= MAX_STALLS) {
-      run.stopError = STALLED_ERROR;
-      run.watchdog.stop();
-      run.item.controller?.abort();
-      return;
-    }
-    this.ports.network.retireInFlight();
-  }
-
-  private onNetwork(event: NetworkEvent): void {
-    const run = this.active;
-    switch (event.type) {
-      case 'attempt':
-        run?.watchdog.touch(event.timeoutMs);
-        return;
-      case 'staleAbort':
-        if (run) {
-          this.options.onEvent?.({
-            type: 'staleAbort',
-            chapterId: run.item.chapterId,
-            stage: run.stage,
-          });
-        }
-        return;
-      case 'backgrounded':
-        if (!this.options.keepsAliveInBackground?.()) run?.watchdog.suspend();
-        return;
-      case 'resumed':
-        if (run) {
-          run.watchdog.resume();
-          this.options.onEvent?.({ type: 'reconnecting', chapterId: run.item.chapterId });
-        }
-        return;
-    }
-  }
-
->>>>>>> 54b3d2e
   private persist(): Promise<void> {
     const entries: PersistedQueueItem[] = this.items.map((item) => ({
       chapterId: item.chapterId,

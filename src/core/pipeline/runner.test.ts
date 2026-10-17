@@ -5,6 +5,7 @@ import { CHAPTER_ID, createFakePorts, MODELS, mp3Bytes } from './__fixtures__/fa
 import { articleHtml, extractFixture, longText } from './__fixtures__/pages';
 import { StageFailure } from './errors';
 import { runChapter } from './runner';
+import { STALL_AFTER_MS, STALLED_ERROR } from './stall-watchdog';
 
 import type { PipelineEvent } from './context';
 
@@ -475,59 +476,51 @@ describe('runChapter: job timing', () => {
   });
 });
 
-describe('runChapter: a run its owner stops', () => {
-  it('fails the chapter with the owner’s error instead of reporting a cancellation', async () => {
-    const controller = new AbortController();
-    const stopError = {
-      code: 'NETWORK' as const,
-      message: 'Lectio lost its connection while preparing this chapter.',
-      retryable: true,
-    };
-    let stopped: typeof stopError | null = null;
+describe('runChapter: a run its watchdog stops', () => {
+  beforeEach(() => jest.useFakeTimers());
+  afterEach(() => jest.useRealTimers());
+
+  it('fails the chapter with the stall error instead of reporting a cancellation', async () => {
     const fake = createFakePorts({
       sourceText: longText(12, 250),
       targetLang: 'en',
-      // The owner gives up while the first passage is being narrated, and the call honours the abort.
-      tts: (_text, _profile, signal) => {
-        const aborted = new Promise<never>((_resolve, reject) => {
+      // The narration call never answers, and it honours the abort, so every try stalls.
+      tts: (_text, _profile, signal) =>
+        new Promise<never>((_resolve, reject) => {
           signal.addEventListener('abort', () =>
             reject(Object.assign(new Error('aborted'), { name: 'AbortError' })),
           );
-        });
-        stopped = stopError;
-        controller.abort();
-        return aborted;
-      },
+        }),
     });
     const { events, onEvent } = recorder();
 
-    const outcome = await runChapter(CHAPTER_ID, fake.ports, {
-      signal: controller.signal,
-      stopped: () => stopped,
+    const outcome = runChapter(CHAPTER_ID, fake.ports, {
       onEvent,
+      clock: { now: () => Date.now() },
     });
+    await jest.advanceTimersByTimeAsync(3 * STALL_AFTER_MS + 1_000);
 
-    expect(outcome).toEqual({ status: 'failed', stage: 'narrate', error: stopError });
+    await expect(outcome).resolves.toEqual({
+      status: 'failed',
+      stage: 'narrate',
+      error: STALLED_ERROR,
+    });
     expect(fake.chapter().status).toBe('failed');
-    expect(fake.job('narrate')?.status).toBe('failed');
     expect(events).toContainEqual({
       type: 'error',
       chapterId: CHAPTER_ID,
       stage: 'narrate',
-      error: stopError,
+      error: STALLED_ERROR,
     });
     expect(events.some((e) => e.type === 'error' && e.error.code === 'CANCELLED')).toBe(false);
   });
 
-  it('still reports a plain cancellation as cancelled when the owner has no error to give', async () => {
+  it('still reports a plain cancellation as cancelled when nothing stalls', async () => {
     const controller = new AbortController();
     controller.abort();
     const fake = createFakePorts({ sourceText: PASTED });
 
-    const outcome = await runChapter(CHAPTER_ID, fake.ports, {
-      signal: controller.signal,
-      stopped: () => null,
-    });
+    const outcome = await runChapter(CHAPTER_ID, fake.ports, { signal: controller.signal });
 
     expect(outcome.status).toBe('cancelled');
   });

@@ -25,6 +25,7 @@ import {
   translateStage,
 } from './stages';
 import { storedSpokenTexts } from './stages/translate';
+import { MAX_STALLS, STALLED_ERROR, StallWatchdog } from './stall-watchdog';
 
 import type {
   FlowContext,
@@ -35,7 +36,6 @@ import type {
 } from './context';
 import type { JobState } from './job-records';
 import type { Clock, NetworkEvent, PdfEngine, PipelinePorts } from './ports';
-import { MAX_STALLS, STALLED_ERROR, StallWatchdog } from './stall-watchdog';
 import type { SpokenSource } from './spoken-text';
 
 export interface RunOptions {
@@ -148,10 +148,14 @@ class ChapterRun {
   private readonly pdfEngine: PdfEngine;
   private readonly force: boolean;
   private failed: { readonly stage: Stage; readonly error: PipelineError } | null = null;
-  /** The stage the run is in, so events name it. */
-  private currentStage: Stage;
+  /** The stages running now. Analysis, translation and narration run side by side. */
+  private readonly running = new Set<Stage>();
+  /** The last stage an event named. It names the stage when none is running. */
+  private lastStage: Stage;
   /** Set when the watchdog fails the run: the chapter fails with it, not as cancelled. */
   private stallError: PipelineError | null = null;
+  /** The stage the watchdog failed the run in. */
+  private stalledIn: Stage | null = null;
   private readonly watchdog: StallWatchdog;
   private readonly keepsAlive: () => boolean;
   private readonly unsubscribeNetwork: () => void;
@@ -167,7 +171,7 @@ class ChapterRun {
     this.pdfEngine = options.pdfEngine ?? 'cloudflare-ai';
     this.force = options.force === true;
     this.external = options.signal;
-    this.currentStage = options.from ?? 'extract';
+    this.lastStage = options.from ?? 'extract';
     this.keepsAlive = options.keepsAliveInBackground ?? (() => false);
     this.watchdog = new StallWatchdog({
       now: () => (options.clock ?? ports.clock).now(),
@@ -197,9 +201,24 @@ class ChapterRun {
   emit(event: PipelineEvent): void {
     if (event.chapterId === this.chapterId) {
       this.watchdog.touch();
-      if ('stage' in event) this.currentStage = event.stage;
+      if ('stage' in event) this.lastStage = event.stage;
+      if (event.type === 'stage') {
+        if (event.status === 'running') this.running.add(event.stage);
+        else this.running.delete(event.stage);
+      }
     }
     this.onEvent(event);
+  }
+
+  /**
+   * The stage a stall or a stale retry is attributed to: the furthest stage running, since the
+   * stages that are still in flight are the ones that can be waiting on the network.
+   */
+  private activeStage(): Stage {
+    const furthest = [...this.running].sort(
+      (a, b) => STAGE_ORDER.indexOf(b) - STAGE_ORDER.indexOf(a),
+    );
+    return furthest[0] ?? this.lastStage;
   }
 
   /**
@@ -207,9 +226,11 @@ class ChapterRun {
    * MAX_STALLS fails the chapter; its finished passages stay saved.
    */
   private onStall(stalls: number): void {
-    this.onEvent({ type: 'stall', chapterId: this.chapterId, stage: this.currentStage, count: stalls });
+    const stage = this.activeStage();
+    this.onEvent({ type: 'stall', chapterId: this.chapterId, stage, count: stalls });
     if (stalls >= MAX_STALLS) {
       this.stallError = STALLED_ERROR;
+      this.stalledIn = stage;
       this.watchdog.stop();
       this.controller.abort();
       return;
@@ -223,7 +244,11 @@ class ChapterRun {
         this.watchdog.touch(event.timeoutMs);
         return;
       case 'staleAbort':
-        this.onEvent({ type: 'staleAbort', chapterId: this.chapterId, stage: this.currentStage });
+        this.onEvent({
+          type: 'staleAbort',
+          chapterId: this.chapterId,
+          stage: this.activeStage(),
+        });
         return;
       case 'backgrounded':
         if (!this.keepsAlive()) this.watchdog.suspend();
@@ -314,11 +339,16 @@ class ChapterRun {
   async finish(): Promise<RunOutcome> {
     this.watchdog.stop();
     this.unsubscribeNetwork();
-    if (this.stallError !== null) {
-      return { status: 'failed', stage: this.currentStage, error: this.stallError };
-    }
     if (this.failed !== null) {
       return { status: 'failed', stage: this.failed.stage, error: this.failed.error };
+    }
+    if (this.stallError !== null && this.stalledIn !== null) {
+      const { chapterId } = this;
+      const stage = this.stalledIn;
+      await this.ports.chapters.setStatus(chapterId, 'failed');
+      this.emit({ type: 'stage', chapterId, stage, status: 'failed' });
+      this.emit({ type: 'error', chapterId, stage, error: this.stallError });
+      return { status: 'failed', stage, error: this.stallError };
     }
     if (this.cancelledAt !== null) return { status: 'cancelled', stage: this.cancelledAt };
     await this.ports.chapters.setStatus(this.chapterId, 'ready');

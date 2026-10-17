@@ -3,8 +3,8 @@
  * lock-step pairs, so one slow request no longer holds back the others.
  *
  * Two parts:
- * - `AdaptiveWindow` decides how many segments may be outstanding. It starts at 4, adds one after 4
- *   straight successes up to a ceiling (8 by default, or the narrator's own concurrency), and halves
+ * - `AdaptiveWindow` decides how many segments may be outstanding. It starts at 3, adds one after 4
+ *   straight successes up to a ceiling (6 by default, or the narrator's own concurrency), and halves
  *   on congestion (a rate limit or an overload). The free narrator is held to one at a time.
  * - `SlidingWindow` runs the requests. Results can finish in any order, but `save` is called strictly
  *   in submission order, so the saved segments are always a contiguous prefix. A finished segment waits
@@ -18,8 +18,8 @@ import { delay } from './abort';
 import { toPipelineError } from './errors';
 import { throwIfCancelled } from '../llm/transport';
 
-export const WINDOW_START = 4;
-export const WINDOW_MAX = 8;
+export const WINDOW_START = 3;
+export const WINDOW_MAX = 6;
 export const WINDOW_MIN = 1;
 /** Straight successes needed before the window grows by one. */
 export const WINDOW_GROW_AFTER = 4;

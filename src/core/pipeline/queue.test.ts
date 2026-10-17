@@ -319,13 +319,14 @@ function networkEvents(events: PipelineEvent[]): PipelineEvent[] {
 }
 
 describe('PipelineQueue: stalls and the network', () => {
-  it('retires the requests in flight on a stall, and the stalled passage then completes', async () => {
+  it('retires the requests in flight on a stall, retries them in place, and never queues a retry', async () => {
     let retired: () => void = () => undefined;
     const retirement = new Promise<void>((resolve) => {
       retired = resolve;
     });
     let first = true;
     const events: PipelineEvent[] = [];
+    const waitingSeen: number[] = [];
     const fake = createFakePorts({
       sourceText: LONG_TEXT,
       onRetire: () => retired(),
@@ -341,6 +342,7 @@ describe('PipelineQueue: stalls and the network', () => {
       onEvent: (e) => events.push(e),
       clock: WALL_CLOCK,
     });
+    queue.subscribe((snapshot) => waitingSeen.push(snapshot.waiting.length));
 
     await queue.enqueue(A);
     await jest.advanceTimersByTimeAsync(STALL_AFTER_MS);
@@ -349,6 +351,9 @@ describe('PipelineQueue: stalls and the network', () => {
     expect(fake.network.retireCalls).toBe(1);
     expect(events).toContainEqual({ type: 'stall', chapterId: A, stage: 'narrate', count: 1 });
     expect(doneOrder(events)).toEqual([A]);
+    // The retry happens inside the request, once. The queue never waits or retries on top of it.
+    expect(events.some((e) => e.type === 'retrying')).toBe(false);
+    expect(waitingSeen.every((count) => count === 0)).toBe(true);
   });
 
   it('fails the chapter after three stalls, keeps the passages already saved, and a retry resumes there', async () => {

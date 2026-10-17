@@ -13,7 +13,7 @@ export interface PromptPair {
 }
 
 const CATEGORY_LINES = enabledCategories()
-  .map((c) => `${c.id}: ${c.description}`)
+  .map((c) => `${c.id}: ${c.contains}`)
   .join('\n');
 
 /**

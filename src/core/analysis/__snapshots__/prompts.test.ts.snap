@@ -39,55 +39,69 @@ CUE RULES
 - If nothing fits, return "cues": [].
 
 CATEGORIES (id: description)
-forest_day_birds: Daytime forest with birdsong, light leaf rustle, distant woodpecker.
-forest_night: Night forest: crickets, an occasional owl, soft wind in trees.
-open_field_wind: Open grassland or moor, steady wind through grass, no birds.
-mountain_wind: High exposed mountain wind with cold gusts and sparse echo.
-ocean_waves: Surf on a beach, rhythmic waves with a slow swell.
-river_stream: Flowing stream or river over stones.
+forest_day_birds: Daytime forest: birdsong, light leaf rustle, a distant woodpecker.
+forest_night: Night forest: crickets, an occasional owl, soft wind in the trees.
+open_field_wind: Open grassland or moor: steady wind through grass.
+mountain_wind: High exposed mountain wind: cold gusts and a sparse echo.
+ocean_waves: Surf on a beach: rhythmic waves and a slow swell.
+river_stream: A stream or river running over stones.
 jungle_insects: Tropical jungle: insects, distant monkeys, dripping foliage.
+waterfall: A waterfall roaring into a pool.
+lake_shore: A calm lake shore: gentle lapping water and reeds.
+desert_wind: An empty desert: wind hissing over sand.
+wind_in_trees: Wind moving through a tall forest canopy, branches creaking.
+cave_drip: Inside a cave: slow water drips, a faint echo, still air.
+meadow_insects: A summer meadow at dusk: crickets and grasshoppers, a light breeze.
+seabird_cliffs: Sea cliffs: seabirds calling over the surf.
+sea_storm: A rough sea in strong wind: heavy waves breaking, spray, no thunder.
+campfire_night: A campfire at night: crackling wood, soft wind, a far-off owl.
 light_rain: Gentle steady rain on leaves or ground.
-heavy_rain: Downpour, dense steady rain.
-storm_wind: Storm: strong gusts, rain, distant rolling thunder.
-snowfall_quiet: Muffled quiet of falling snow.
-blizzard_wind: Howling snow wind, harsh and cold.
-city_street_day: Busy city street by day: traffic, footsteps, distant voices.
-city_night: Night city: light traffic, distant sirens, humming signs.
-market_crowd: Open market or bazaar: vendors calling, many voices.
-village_square: Small village square, few voices, a cart, a dog barking.
-harbor_port: Port: gulls, ropes, distant cranes, water against hulls.
-crowd_murmur: Large crowd murmuring; no distinct words.
-tavern_crowd: Busy tavern: many conversations, clinking mugs, distant laughter.
-castle_hall: Large stone hall with faint echo and distant footsteps.
-fireplace_crackle: Crackling fire in a room, soft pops.
-kitchen_busy: Kitchen at work: pots, chopping, sizzling, voices.
-office_hum: Modern office: HVAC hum, keyboards, faint phones.
-library_quiet: Library: near silence, page turns, soft room tone.
-hospital_ward: Hospital ward: distant monitors, carts, low voices.
-prison_cell: Stone cell with dripping water and distant metal echoes.
-cafe_soft: Quiet cafe, soft chatter, cups clinking.
-lecture_hall: Lecture hall: quiet audience rustle, distant HVAC.
-horse_trot: Horse walking or trotting on a dirt road, hooves, light tack creak.
-horse_gallop: Fast gallop, pounding hooves, breath and leather.
-carriage_wheels: Wooden carriage on road, wheels creaking, harness jingle.
-ship_deck: Wooden sailing ship at sea: ropes, creaking hull, sails.
-train_interior: Train carriage: rhythmic wheels on rail, muffled cabin.
-airplane_cabin: Airplane cabin: steady engine drone, muffled air.
-battle_field: Distant battlefield: shouts, clashing metal, horns.
+heavy_rain: A downpour: dense, steady rain.
+rain_on_roof: Rain drumming on a roof, heard from inside a building.
+thunderstorm: Rain with distant rolling thunder, and nothing else.
+storm_wind: Gusting storm wind through trees or open land.
+snowfall_quiet: The muffled quiet of falling snow.
+blizzard_wind: Howling snow wind: harsh and cold.
+city_street_day: A busy city street by day: traffic, footsteps, distant voices.
+city_night: A city at night: light traffic and a humming sign.
+market_crowd: An open-air market without engines: vendors calling, many voices.
+village_square: A small village square: a few voices, a cart, a dog barking.
+harbor_port: An old harbour: gulls, ropes, water against wooden hulls.
+crowd_murmur: A large crowd murmuring, with no distinct words.
+tavern_crowd: A busy tavern: many conversations, clinking mugs, a distant laugh.
+castle_hall: A large stone hall: a faint echo and distant footsteps.
+fireplace_crackle: A crackling fire in a room, soft pops.
+kitchen_busy: A kitchen at work: pots, chopping, sizzling.
+office_hum: A modern office: HVAC hum, keyboards, a faint phone.
+library_quiet: A library: near silence, a page turned now and then, soft room tone.
+hospital_ward: A hospital ward: distant monitors, carts, a low voice.
+prison_cell: A stone cell with dripping water and distant echoes of metal.
+cafe_soft: A quiet cafe: soft chatter and cups clinking.
+lecture_hall: A lecture hall: a quiet audience rustle and distant ventilation.
+forge_anvil: A blacksmith's forge: hammer on anvil, bellows, a crackling fire.
+horse_trot: A horse trotting on a dirt road: hooves, a light tack creak.
+horse_gallop: A horse galloping: pounding hooves, breath and leather.
+carriage_wheels: A wooden carriage on a road: wheels creaking, harness jingle.
+ship_deck: A wooden sailing ship at sea: ropes, a creaking hull, flapping sails.
+train_interior: A train carriage: rhythmic wheels on rail, a muffled cabin.
+airplane_cabin: An airplane cabin: a steady engine drone and muffled air.
+subway_platform: An underground platform: a train far off and an echoing hall.
+battle_field: A distant battle: shouts, clashing metal, horns.
 war_drums: Drums and horns of an approaching army, tense.
 gunfight_ambient: Distant gunfire with echoes and shouting.
-arena_crowd: Stadium or arena crowd cheering or jeering.
+arena_crowd: A stadium crowd cheering and jeering, far off.
 ritual_chant: Low chanted voices in a ritual, reverberant.
-temple_incense: Temple interior: soft bells, hushed chanting.
-qi_hum: Cultivation aura: low resonant hum, soft wind, faint shimmer.
-spirit_whispers: Faint ghostly whispers, eerie air.
-starship_bridge: Spaceship bridge: low electronic hum, faint console tones.
-spaceship_engine: Deep engine rumble in a spaceship corridor.
-alien_atmosphere: Alien planet: strange wind, unfamiliar chirps, low drone.
-space_station: Space station: steady air handling, distant clanks.
-tense_heartbeat: Muffled heartbeat under silence, for suspense. Requires explicit tension in text.
-clock_ticking: Slow ticking clock, tension.
-ominous_drone: Low dark drone, horror atmosphere.
-ballroom_party: Ballroom or party murmur: glasses, distant chatter. No music.
-rain_on_window: Rain against window glass heard from a warm room; intimate scenes."
+temple_incense: A temple interior: soft bells and hushed chanting.
+monastery_chant: Monks chanting in a stone hall, long reverberant tones.
+qi_hum: A cultivation aura: a low resonant hum, soft wind, a faint shimmer.
+spirit_whispers: Faint, eerie air with unplaceable low tones.
+starship_bridge: A spaceship bridge: a low electronic hum and faint console tones.
+spaceship_engine: A deep engine rumble in a spaceship corridor.
+alien_atmosphere: An alien planet: strange wind, unfamiliar chirps, a low drone.
+space_station: A space station: steady air handling and distant clanks.
+tense_heartbeat: A muffled heartbeat under near silence, for explicit suspense only.
+clock_ticking: A slow pendulum clock ticking in a quiet room.
+ominous_drone: A low, dark drone in a still, cold room, for a horror tone.
+ballroom_party: A ballroom or party murmur: glasses and distant chatter, no music.
+rain_on_window: Rain against window glass, heard from a warm room."
 `;

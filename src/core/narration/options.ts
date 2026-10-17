@@ -26,7 +26,7 @@ export interface NarratorOption {
    * so a size in characters alone makes very uneven requests. Long requests also hit gateway timeouts.
    */
   readonly segmentMaxSeconds: number;
-  /** Speech requests in flight at once. The free models are rate-limited per minute, so they run one at a time. */
+  /** The most speech requests in flight at once (the window's ceiling). The free models run one at a time. */
   readonly narrateConcurrency: number;
   /** A short, honest note about limits or trade-offs, shown on the card. */
   readonly notes: string;
@@ -46,8 +46,11 @@ const FISH_SEGMENT_MAX_CHARS = 1_800;
 /** Fish takes longer passages, so fewer requests hit its per-minute limit. */
 const FREE_SEGMENT_MAX_SECONDS = 120;
 
-/** Speech requests in flight for a narrator that is not rate-limited per minute. */
-const PAID_NARRATE_CONCURRENCY = 3;
+/**
+ * The most speech requests in flight for a narrator that is not rate-limited per minute. The adaptive
+ * window starts at WINDOW_START (3) and grows to this ceiling while requests succeed.
+ */
+const PAID_NARRATE_CONCURRENCY = 6;
 /** Speech requests in flight when the model is not one of the three narrators. */
 export const DEFAULT_NARRATE_CONCURRENCY = 2;
 

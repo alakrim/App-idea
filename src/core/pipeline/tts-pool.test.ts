@@ -52,33 +52,32 @@ function networkDown(): Error {
 }
 
 describe('AdaptiveWindow', () => {
-  it('starts at four and adds one after four straight successes, up to eight', () => {
+  it('starts at three and adds one after four straight successes, up to six', () => {
     const window = new AdaptiveWindow();
     expect(window.limit).toBe(WINDOW_START);
     for (let i = 0; i < 4; i += 1) window.onSuccess();
-    expect(window.limit).toBe(5);
+    expect(window.limit).toBe(4);
     for (let i = 0; i < 4 * 10; i += 1) window.onSuccess();
     expect(window.limit).toBe(WINDOW_MAX);
   });
 
   it('needs four successes in a row, so a failure resets the count', () => {
     const window = new AdaptiveWindow();
-    window.onSuccess();
-    window.onSuccess();
-    window.onSuccess();
+    for (let i = 0; i < 3; i += 1) window.onSuccess();
     window.onCongestion();
-    window.onSuccess();
-    window.onSuccess();
+    expect(window.limit).toBe(1);
+    for (let i = 0; i < 3; i += 1) window.onSuccess();
+    expect(window.limit).toBe(1);
     window.onSuccess();
     expect(window.limit).toBe(2);
-    window.onSuccess();
-    expect(window.limit).toBe(3);
   });
 
   it('halves on congestion and never goes below one', () => {
     const window = new AdaptiveWindow();
+    for (let i = 0; i < 20; i += 1) window.onSuccess();
+    expect(window.limit).toBe(WINDOW_MAX);
     window.onCongestion();
-    expect(window.limit).toBe(2);
+    expect(window.limit).toBe(3);
     window.onCongestion();
     expect(window.limit).toBe(1);
     window.onCongestion();
@@ -87,7 +86,7 @@ describe('AdaptiveWindow', () => {
 
   it('rounds the halving down from an odd window', () => {
     const window = new AdaptiveWindow();
-    for (let i = 0; i < 4; i += 1) window.onSuccess();
+    for (let i = 0; i < 8; i += 1) window.onSuccess();
     expect(window.limit).toBe(5);
     window.onCongestion();
     expect(window.limit).toBe(2);
@@ -147,17 +146,16 @@ describe('SlidingWindow: order', () => {
         saved.push(item);
       },
     });
-    for (const item of [0, 1, 2, 3]) await pool.submit(item);
+    for (const item of [0, 1, 2]) await pool.submit(item);
 
-    provider.requests[3]?.resolve('three');
-    provider.requests[1]?.resolve('one');
     provider.requests[2]?.resolve('two');
+    provider.requests[1]?.resolve('one');
     await settle();
     expect(saved).toEqual([]);
 
     provider.requests[0]?.resolve('zero');
     await settle();
-    expect(saved).toEqual([0, 1, 2, 3]);
+    expect(saved).toEqual([0, 1, 2]);
     await pool.finish();
   });
 
@@ -193,7 +191,7 @@ describe('SlidingWindow: order', () => {
     expect(saved).toEqual([0, 1]);
   });
 
-  it('keeps four requests in flight and waits for a save before starting a fifth', async () => {
+  it('keeps three requests in flight and waits for a save before starting a fourth', async () => {
     const provider = controlledProvider<string>();
     const pool = new SlidingWindow<number, string>({
       window: new AdaptiveWindow(),
@@ -202,18 +200,18 @@ describe('SlidingWindow: order', () => {
       work: provider.work,
       save: async () => undefined,
     });
-    for (const item of [0, 1, 2, 3]) await pool.submit(item);
-    let fifthStarted = false;
-    const fifth = pool.submit(4).then(() => {
-      fifthStarted = true;
+    for (const item of [0, 1, 2]) await pool.submit(item);
+    let fourthStarted = false;
+    const fourth = pool.submit(3).then(() => {
+      fourthStarted = true;
     });
     await settle();
-    expect(provider.requests).toHaveLength(4);
-    expect(fifthStarted).toBe(false);
+    expect(provider.requests).toHaveLength(3);
+    expect(fourthStarted).toBe(false);
 
     provider.requests[0]?.resolve('zero');
-    await fifth;
-    expect(provider.requests).toHaveLength(5);
+    await fourth;
+    expect(provider.requests).toHaveLength(4);
     for (const request of provider.requests.slice(1)) request.resolve('ok');
     await pool.finish();
   });
@@ -235,7 +233,7 @@ describe('SlidingWindow: order', () => {
     clock = 13_000;
     provider.requests[0]?.resolve('zero');
     await pool.finish();
-    expect(timings).toEqual([{ synthMs: 12_000, slots: 4 }]);
+    expect(timings).toEqual([{ synthMs: 12_000, slots: WINDOW_START }]);
   });
 });
 
@@ -261,7 +259,7 @@ describe('SlidingWindow: adaptive congestion', () => {
     provider.requests[0]?.reject(rateLimited());
     await settle();
 
-    expect(window.limit).toBe(2);
+    expect(window.limit).toBe(1);
     expect(waits).toEqual([2_000]);
     expect(provider.requests).toHaveLength(2);
     provider.requests[1]?.resolve('again');
@@ -322,12 +320,11 @@ describe('SlidingWindow: failure and cancellation', () => {
         saved.push(item);
       },
     });
-    for (const item of [0, 1, 2, 3]) await pool.submit(item);
+    for (const item of [0, 1, 2]) await pool.submit(item);
 
     provider.requests[0]?.resolve('zero');
     await settle();
     provider.requests[2]?.resolve('two');
-    provider.requests[3]?.resolve('three');
     provider.requests[1]?.reject(networkDown());
     await settle();
 

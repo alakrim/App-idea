@@ -1,7 +1,9 @@
 import { z } from 'zod';
 
+import { pipelineFailure } from './errors';
 import { jsonBody } from './transport';
 
+import type { PipelineFailure } from './errors';
 import type { Transport } from './transport';
 
 export type OutputModality = 'text' | 'speech' | 'embeddings';
