@@ -20,6 +20,11 @@ export interface TtsPlanOptions {
   maxChars?: number;
   /** Paragraphs shorter than this may be joined with a following text paragraph. Defaults to 120. */
   minChars?: number;
+  /**
+   * Size caps for the first segments, in order. Segment `i` is capped at `ramp[i]`, and segments past
+   * the ramp use `maxChars`. Every cap is also limited by `maxChars`. Defaults to no ramp.
+   */
+  ramp?: readonly number[];
 }
 
 export interface LlmPlanOptions {
@@ -33,6 +38,12 @@ export type TtsPlanInput = Pick<Sentence, 'idx' | 'paragraphIdx' | 'kind' | 'cha
 export const DEFAULT_TTS_MAX_CHARS = 600;
 const DEFAULT_MIN_CHARS = 120;
 
+/**
+ * The opening segment sizes of a chapter (ADR-0008). The first segment is short, so the first audio
+ * arrives in seconds, and the second is twice as long. Then the narrator's own size applies.
+ */
+export const NARRATION_RAMP_CHARS: readonly number[] = [200, 400];
+
 interface OpenSegment {
   start: number;
   end: number;
@@ -43,9 +54,14 @@ interface OpenSegment {
 /**
  * Groups sentences into TTS segments.
  *
- * Greedy within a paragraph, up to `maxChars`. A segment never crosses a paragraph, except that a
- * paragraph shorter than `minChars` may continue into a following text paragraph. Headings get a
- * segment of their own, and so does any single sentence longer than `maxChars`.
+ * Greedy within a paragraph, up to the segment's cap (`ramp`, then `maxChars`). A segment never
+ * crosses a paragraph, except that a paragraph shorter than `minChars` may continue into a following
+ * text paragraph. Headings get a segment of their own, and so does any single sentence longer than
+ * `maxChars`. A sentence longer than a ramp cap still forms a segment, because a segment always holds
+ * at least one sentence.
+ *
+ * Prefix stable: the segments that a prefix of the sentences closes are the same as in the full plan,
+ * because a decision only looks at sentences up to the one that closes the segment.
  */
 export function planTtsSegments(
   sentences: readonly TtsPlanInput[],
@@ -53,8 +69,12 @@ export function planTtsSegments(
 ): TtsSegment[] {
   const maxChars = options.maxChars ?? DEFAULT_TTS_MAX_CHARS;
   const minChars = options.minChars ?? DEFAULT_MIN_CHARS;
+  const ramp = options.ramp ?? [];
   assertPositiveInteger('maxChars', maxChars);
   assertNonNegativeInteger('minChars', minChars);
+  ramp.forEach((cap, i) => assertPositiveInteger(`ramp[${i}]`, cap));
+  // The cap of the segment that will be at position `index`.
+  const capAt = (index: number): number => Math.min(ramp[index] ?? maxChars, maxChars);
 
   const paragraphChars = new Map<number, number>();
   for (const sentence of sentences) {
@@ -74,13 +94,15 @@ export function planTtsSegments(
     if (open && sentence.paragraphIdx !== open.paragraphIdx) {
       const previousIsTiny = (paragraphChars.get(open.paragraphIdx) ?? 0) < minChars;
       const mayContinue =
-        previousIsTiny && sentence.kind === 'text' && open.chars + sentence.charCount <= maxChars;
+        previousIsTiny &&
+        sentence.kind === 'text' &&
+        open.chars + sentence.charCount <= capAt(segments.length);
       if (!mayContinue) {
         segments.push(toSegment(open));
         open = undefined;
       }
     }
-    if (open && open.chars + sentence.charCount > maxChars) {
+    if (open && open.chars + sentence.charCount > capAt(segments.length)) {
       segments.push(toSegment(open));
       open = undefined;
     }
