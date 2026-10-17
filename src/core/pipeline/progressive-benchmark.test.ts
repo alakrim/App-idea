@@ -79,7 +79,10 @@ describe('progressive narration benchmark: a 40-minute chapter', () => {
 
     // The chapter as the lock-step algorithm planned it: no ramp, 600-character segments.
     const sentences = fake.state.sentences.get(CHAPTER_ID) ?? [];
-    const lockStepSegments = planTtsSegments(sentences, { maxChars: SEGMENT_MAX_CHARS }).length;
+    const lockStepSegments = planTtsSegments(
+      sentences.map((s) => ({ ...s, speechSeconds: s.charCount / 9.2 })),
+      { maxChars: SEGMENT_MAX_CHARS },
+    ).length;
     const before = {
       firstAudioMs: ANALYSIS_DONE_MS + SPEECH_MS,
       totalMs: ANALYSIS_DONE_MS + Math.ceil(lockStepSegments / 2) * SPEECH_MS,

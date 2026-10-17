@@ -17,7 +17,7 @@ The user suggested splitting long chapters into three parts. The segment-based d
 4. **Adaptive TTS pool.** This replaces the lock-step pairs:
    - a sliding window, starting at 4 requests in flight, AIMD (+1 after 4 straight successes up to 8, halve on 429 or overload)
    - segments are saved and announced strictly in order, so the player always has a contiguous prefix
-5. **Ramped segment sizes.** The first segment is short (one or two sentences, about 200 chars), so the first audio arrives in seconds. The second is about 400. Then the narrator's normal size applies.
+5. **Ramped segment sizes.** The first segment is short, about 12 s of estimated speech (one or two sentences), so the first audio arrives in seconds. The second is about 25 s. Then the narrator's normal size applies. The ramp is measured in speech seconds, not characters, so Chinese and Japanese ramp as quickly as Latin scripts (brief F2).
 6. **Player UX.**
    - "Listen now" becomes available as soon as the first segment exists.
    - The scrubber shows the generated portion as a buffer band.

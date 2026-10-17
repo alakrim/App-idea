@@ -68,6 +68,11 @@ export interface AudioEngine {
    * as in setAmbienceMaster. A second call while a preview plays restarts its timer.
    */
   previewBed(category: string, levelDb: number, durationMs: number): void;
+  /**
+   * Replaces the chapter's ambience cues, for analysis that lands after playback started. A bed that
+   * covers the current sentence starts with its fade-in. Cues given at load are replaced the same way.
+   */
+  setCues(cues: readonly AmbienceCue[]): void;
   /** About 4 Hz while playing, plus on every sentence change and seek. */
   onPosition(callback: (update: PositionUpdate) => void): Unsubscribe;
   onState(callback: (state: PlaybackState) => void): Unsubscribe;

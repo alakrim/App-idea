@@ -18,6 +18,8 @@ export const PLAYER = {
   scrubThumbRing: 2,
   /** Sentence ticks stay faint so they never compete with the thumb. */
   tickOpacity: 0.35,
+  /** The buffer band shows the audio made so far: subtle, behind the played part. */
+  bufferOpacity: 0.4,
   scrubBubbleWidth: 56,
   /** Height of the text pane when it is collapsed, before the bottom inset. */
   peekHeight: 112,

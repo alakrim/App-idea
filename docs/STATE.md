@@ -29,7 +29,8 @@ _Last updated: 2026-10-11 by architect_
   - **F1** (ADR-0008): an adaptive TTS window, ramped first segments, analysis beside translate and narrate, streaming translation and a progress ETA. The benchmark on a 40-min chapter: first audio 52 s → 12 s, total 280 s → 84 s.
   - **BG1** (ADR-0007): an Android foreground service (`modules/lectio-background`, dataSync, progress notification with Cancel, wake and Wi-Fi locks). Transient failures wait with backoff and retry on foreground; per-call timeouts (speech 180 s). The native compile was proven (APK built, manifest checked). The device checklist is in `docs/briefs/BG1-background-processing.md` § Device checklist.
   - **SND1**: 34 category beds plus 6 base beds (40 files, 19.9 MB). Of these, 31 are procedural (in-house) and 3 are sampled archive.org Public Domain Mark recordings (forest_day_birds, jungle_insects, ocean_waves). `sounds:verify` and `verify` pass. An ear audition is pending; the audition page is published for the user.
-- **Next**: F2 (Listen now / player UX, `docs/briefs/F2-listen-while-generating.md`). It must also treat the queue's `waiting` state as still narrating in `playback-controller.ts` (BG1 open issue).
+  - **F2**: "Listen now" on the chapter screen as soon as the first segment is saved, a buffer band and "Narrating ahead…" in the player, late ambience cues and the playable toast. The ramp is now in speech seconds (12 s, 25 s), so CJK first audio is fast too. The queue's `waiting` state counts as narrating.
+- **Next**: deliver one APK with all six, plus the device checklist. Open follow-ups: an ear audition of the beds (the crowd family may sound alike); the paid live test (not approved yet); a narration audio cache for re-uploads (cost).
 
 ## Next up
 - **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.

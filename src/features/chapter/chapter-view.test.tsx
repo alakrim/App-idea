@@ -99,11 +99,41 @@ describe('ChapterView ambience cues', () => {
     expect(onToggleCue).toHaveBeenCalledWith(id(90), false);
   });
 
-  it('enables Play only once the chapter is ready', async () => {
+  it('offers Listen now disabled, with the preparing line, until the first segment is saved', async () => {
     await renderThemed(
       <ChapterView {...props({ chapter: chapterRow(1, 1, 1, { status: 'processing' }) })} />,
     );
 
-    expect(screen.getByRole('button', { name: 'Play chapter' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Listen now' })).toBeDisabled();
+    expect(screen.getByText('Preparing the first minutes…')).toBeOnTheScreen();
+  });
+
+  it('enables Listen now with the ready time and the time left once the first segment is saved', async () => {
+    const progress = {
+      chapterId: id(1),
+      state: 'running' as const,
+      stages: [{ stage: 'narrate' as const, status: 'running' as const, progress: 0.2 }],
+      overall: 0.5,
+      playable: true,
+      etaMs: 3 * 60_000,
+      readySegments: 4,
+      totalSegments: null,
+      narratedMs: 12 * 60_000,
+      estimatedTotalMs: 40 * 60_000,
+      costUsdSoFar: 0,
+      error: null,
+    };
+    const onPlay = jest.fn();
+    await renderThemed(
+      <ChapterView
+        {...props({ chapter: chapterRow(1, 1, 1, { status: 'processing' }), progress, onPlay })}
+      />,
+    );
+
+    const button = screen.getByRole('button', { name: 'Listen now' });
+    expect(button).toBeEnabled();
+    expect(screen.getByText('12 m ready · about 3 m left')).toBeOnTheScreen();
+    await fireEvent.press(button);
+    expect(onPlay).toHaveBeenCalledWith(id(1));
   });
 });

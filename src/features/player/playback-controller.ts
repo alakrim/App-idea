@@ -12,7 +12,7 @@ import type {
 import { DEFAULT_BED_LEVEL_DB } from '@/core/playback/ambience-scheduler';
 import { buildTimeline, type ChapterTimeline } from '@/core/playback/timeline';
 import type { ChapterForPlayback } from '@/db/repos/playback-repo';
-import type { PipelineFacade } from '@/features/pipeline/facade';
+import type { ChapterProgress, PipelineFacade } from '@/features/pipeline/facade';
 
 import { createPlayerStore, type PlayerStore, type PlayerTimers } from './player-store';
 import { containsMs, sentenceRange } from './sentence-range';
@@ -44,6 +44,8 @@ export interface PlaybackContent {
   coverTint: string | null;
   /** False while narration is still being generated. */
   final: boolean;
+  /** The estimated length of the whole narration while it is being generated, else null. */
+  estimatedTotalMs: number | null;
   paragraphs: readonly Paragraph[];
   sentences: readonly Sentence[];
   cues: readonly AmbienceCue[];
@@ -60,6 +62,7 @@ const INITIAL_CONTENT: PlaybackContent = {
   seriesId: null,
   coverTint: null,
   final: true,
+  estimatedTotalMs: null,
   paragraphs: [],
   sentences: [],
   cues: [],
@@ -106,6 +109,21 @@ export interface PlaybackController {
 /** A chapter whose narration has finished, whatever it produced. */
 function isNarrationComplete(status: ChapterStatus): boolean {
   return status === 'ready' || status === 'failed';
+}
+
+/**
+ * A chapter whose narration is still to come: queued, running, or waiting for a connection to retry
+ * (BG1). The player keeps following it, so audio that arrives later is still picked up.
+ */
+function isNarrating(state: ChapterProgress['state']): boolean {
+  return state === 'queued' || state === 'running' || state === 'waiting';
+}
+
+/** The analysis is settled once its stage is done or skipped: its cues are in the database by then. */
+function isAnalysisSettled(progress: ChapterProgress): boolean {
+  return progress.stages.some(
+    (stage) => stage.stage === 'analyze' && (stage.status === 'done' || stage.status === 'skipped'),
+  );
 }
 
 function toLoadedSegment(segment: AudioSegment): LoadedSegment {
@@ -202,17 +220,19 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
   function watchProgress(chapterId: string): void {
     stopWatchingProgress();
     let active = true;
+    let cuesReloaded = false;
     let unsubscribe: (() => void) | null = null;
     const stop = () => {
       active = false;
       unsubscribe?.();
       if (stopWatching === stop) stopWatching = null;
+      writeContent({ estimatedTotalMs: null });
     };
     stopWatching = stop;
 
     unsubscribe = pipeline.subscribe(chapterId, (progress) => {
       if (!active) return;
-      const narrating = progress.state === 'queued' || progress.state === 'running';
+      const narrating = isNarrating(progress.state);
       if (readContent().status === 'unavailable') {
         // Nothing was playable when the chapter opened: start it once narration produces audio.
         if (data.segmentsFrom(chapterId, 0).length > 0) {
@@ -223,10 +243,18 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
         }
         return;
       }
+      if (!cuesReloaded && isAnalysisSettled(progress)) {
+        cuesReloaded = true;
+        reloadCues(chapterId);
+      }
       if (progress.readySegments > segments.length || !narrating) {
         appendFromData(chapterId, !narrating);
       }
-      if (!narrating) stop();
+      if (!narrating) {
+        stop();
+        return;
+      }
+      writeContent({ estimatedTotalMs: progress.estimatedTotalMs });
     });
     // The subscribe call emits the current snapshot at once, which may have stopped the watch already.
     if (!active) unsubscribe();
@@ -238,6 +266,15 @@ export function createPlaybackController(deps: PlaybackControllerDeps): Playback
     segments = [...segments, ...fresh];
     player.appendSegments(fresh, final);
     writeContent({ timeline: buildTimeline(segments), final });
+  }
+
+  /** Analysis finished after the audio started: the cues are read again and reach the engine live. */
+  function reloadCues(chapterId: string): void {
+    if (readContent().chapterId !== chapterId) return;
+    const chapter = data.loadChapter(chapterId);
+    if (chapter === null) return;
+    writeContent({ cues: chapter.cues });
+    engine.setCues(chapter.cues);
   }
 
   function resumeSentence(chapterId: string): number {

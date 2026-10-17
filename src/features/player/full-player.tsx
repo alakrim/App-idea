@@ -33,6 +33,7 @@ import { SleepChip, SleepSheet } from './sleep-timer';
 import { SpeedSheet } from './speed-sheet';
 import { SyncedTextPane, displayText } from './synced-text-pane';
 import { Transport } from './transport';
+import { useNarratingAhead } from './use-narrating-ahead';
 
 type OpenSheet = 'speed' | 'sleep' | 'ambience' | null;
 
@@ -169,9 +170,15 @@ function ReadyPlayer() {
   const ambience = usePlaybackContent((content) => content.ambience);
 
   const durationMs = timeline?.totalDurationMs ?? 0;
+  const final = usePlaybackContent((content) => content.final);
+  const estimatedTotalMs = usePlaybackContent((content) => content.estimatedTotalMs);
+  // While narration is still being made, the track spans the estimated length and the band shows
+  // the audio made so far.
+  const trackMs = final ? durationMs : Math.max(durationMs, estimatedTotalMs ?? 0);
+  const narratingAhead = useNarratingAhead();
   const availableCount = timeline?.sentenceCount ?? 0;
-  const busy = playState === 'loading' || playState === 'buffering';
-  const playing = playState === 'playing';
+  const busy = (playState === 'loading' || playState === 'buffering') && !narratingAhead;
+  const playing = playState === 'playing' || narratingAhead;
 
   const tickMs = useMemo(
     () =>
@@ -277,7 +284,8 @@ function ReadyPlayer() {
           <View style={styles.inset}>
             <Scrubber
               positionMs={positionMs}
-              durationMs={durationMs}
+              durationMs={trackMs}
+              bufferedMs={durationMs}
               tickMs={tickMs}
               onSeek={(ms) => controller.seekToMs(ms)}
             />
@@ -285,6 +293,7 @@ function ReadyPlayer() {
           <Transport
             playing={playing}
             busy={busy}
+            narratingAhead={narratingAhead}
             onTogglePlay={() => controller.player.togglePlay()}
             onSkip={(deltaMs) => controller.seekBy(deltaMs)}
             onSentence={(direction) => controller.stepSentence(direction)}

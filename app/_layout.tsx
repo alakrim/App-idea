@@ -18,6 +18,7 @@ import { FatalError, formatErrorDetails } from '@/app-shell/fatal-error';
 import { OpenRouterProvider } from '@/app-shell/openrouter-provider';
 import { PipelineLifecycle } from '@/features/pipeline/pipeline-lifecycle';
 import { PipelineProvider } from '@/features/pipeline/pipeline-provider';
+import { PlayableAnnouncer } from '@/features/player/playable-announcer';
 import { PlayerEngineProvider } from '@/features/player/player-provider';
 import { useSettings } from '@/features/settings/settings-store';
 import { VocabActionsProvider } from '@/features/vocab/vocab-provider';
@@ -51,6 +52,7 @@ export default function RootLayout() {
                 <PipelineLifecycle />
                 <VocabActionsProvider>
                   <PlayerEngineProvider>
+                    <PlayableAnnouncer />
                     <RootNavigator />
                   </PlayerEngineProvider>
                 </VocabActionsProvider>

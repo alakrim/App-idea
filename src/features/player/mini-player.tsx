@@ -18,9 +18,11 @@ import {
   space,
 } from '@/ui/tokens';
 
+import { NARRATING_AHEAD_COPY } from './ahead-state';
 import { useGlide } from './motion';
 import { usePlayback, usePlaybackContent, usePlayerState } from './player-provider';
 import { displayText } from './synced-text-pane';
+import { useNarratingAhead } from './use-narrating-ahead';
 
 /** A drag upwards this far (px) opens the full player, as does a quick flick. */
 const SWIPE_OPEN_DISTANCE = 24;
@@ -124,6 +126,7 @@ export function MiniPlayer() {
   const sentenceIdx = usePlayerState((state) => state.sentenceIdx);
   const durationMs = usePlaybackContent((content) => content.timeline?.totalDurationMs ?? 0);
   const sentence = usePlaybackContent((content) => content.sentences[sentenceIdx]);
+  const narratingAhead = useNarratingAhead();
 
   if (nowPlaying === null) {
     return null;
@@ -133,7 +136,11 @@ export function MiniPlayer() {
     <MiniPlayerView
       nowPlaying={{
         title: nowPlaying.title,
-        subtitle: sentence ? displayText(sentence) : nowPlaying.seriesTitle,
+        subtitle: narratingAhead
+          ? NARRATING_AHEAD_COPY
+          : sentence
+            ? displayText(sentence)
+            : nowPlaying.seriesTitle,
         coverUri: nowPlaying.coverUri,
         progress: durationMs > 0 ? positionMs / durationMs : 0,
         playing: playState === 'playing' || playState === 'buffering',

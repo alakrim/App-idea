@@ -3,8 +3,9 @@
  * same segments and hashes, which is what makes a rerun reuse the audio already saved.
  */
 import { countCodePoints } from '@/core/text/build';
-import { NARRATION_RAMP_CHARS, planTtsSegments } from '@/core/text/chunk';
+import { NARRATION_RAMP_SECONDS, planTtsSegments } from '@/core/text/chunk';
 import { detectScript } from '@/core/text/normalize';
+import { estimateSpeechSeconds } from '@/core/text/speech-rate';
 
 import { stableHash } from '../hash';
 
@@ -24,6 +25,8 @@ export interface PlannedSegment {
 export interface PlanOptions {
   /** The narrator's longest segment, in characters. */
   readonly maxChars: number;
+  /** The language read aloud. It sets the speech time of a sentence, which sizes the opening segments. */
+  readonly lang: string | null;
   /** The narration settings that change the audio: provider, model, voice, style and speed. */
   readonly voiceKey: readonly unknown[];
 }
@@ -38,10 +41,16 @@ export function planFinalSegments(
   options: PlanOptions,
   complete: boolean,
 ): PlannedSegment[] {
-  const groups = planTtsSegments(sentences, {
-    maxChars: options.maxChars,
-    ramp: NARRATION_RAMP_CHARS,
-  });
+  const groups = planTtsSegments(
+    sentences.map((s) => ({
+      idx: s.idx,
+      paragraphIdx: s.paragraphIdx,
+      kind: s.kind,
+      charCount: s.charCount,
+      speechSeconds: estimateSpeechSeconds(s.text, options.lang),
+    })),
+    { maxChars: options.maxChars, rampSeconds: NARRATION_RAMP_SECONDS },
+  );
   const final = complete ? groups : groups.slice(0, -1);
   return final.map((group, idx) => {
     const members = sentences.filter(

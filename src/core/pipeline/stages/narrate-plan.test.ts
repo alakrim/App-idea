@@ -5,6 +5,7 @@ import type { SpokenSentence } from '../spoken-text';
 
 const OPTIONS: PlanOptions = {
   maxChars: 600,
+  lang: 'en',
   voiceKey: ['openrouter', 'narrator/model', 'Kore', 'Warm.', 1],
 };
 
@@ -18,6 +19,14 @@ function latin(count: number, length = 80): SpokenSentence[] {
     sentence(n, `Sentence ${n} `.padEnd(length, 'x') + '.'),
   );
 }
+
+/** `count` sentences of one paragraph, each `length` characters of a single repeated glyph. */
+function oneParagraph(glyph: string, count: number, length: number): SpokenSentence[] {
+  return Array.from({ length: count }, (_, n) => sentence(n, glyph.repeat(length), 0));
+}
+
+const rangeOf = (plan: readonly { sentenceStart: number; sentenceEnd: number }[]) =>
+  plan.map((s) => [s.sentenceStart, s.sentenceEnd]);
 
 describe('planFinalSegments: what is final', () => {
   it('leaves out the open last segment of an incomplete chapter, because later sentences could join it', () => {
@@ -47,13 +56,36 @@ describe('planFinalSegments: what is final', () => {
 });
 
 describe('planFinalSegments: sizes and the ramp', () => {
-  it('makes the first segment short, about 200 characters, and the second about 400', () => {
-    const plan = planFinalSegments(latin(40, 60), OPTIONS, true);
+  it('makes the first segment about 12 s of speech and the second about 25 s, then the narrator size', () => {
+    // Each Latin sentence is 80 characters, about 8.7 s. One fills the first segment, and two the second.
+    const plan = planFinalSegments(latin(40), OPTIONS, true);
 
-    expect(plan[0]?.chars).toBeLessThanOrEqual(200);
-    expect(plan[1]?.chars).toBeLessThanOrEqual(400);
-    expect(plan[1]?.chars ?? 0).toBeGreaterThan(plan[0]?.chars ?? 0);
+    expect(rangeOf(plan.slice(0, 3))).toEqual([
+      [0, 0],
+      [1, 2],
+      [3, 9],
+    ]);
     expect(plan.slice(2).every((s) => s.chars <= 600)).toBe(true);
+  });
+
+  it('measures the ramp in speech, so the same characters fill different first segments by language', () => {
+    // Twenty characters each: Latin is about 2.2 s a sentence, Japanese 4.8 s, Mandarin 8 s.
+    const latinText = oneParagraph('x', 8, 20);
+    const japanese = oneParagraph('あ', 8, 20);
+    const mandarin = oneParagraph('汉', 8, 20);
+
+    expect(planFinalSegments(latinText, { ...OPTIONS, lang: 'en' }, true)[0]).toMatchObject({
+      sentenceStart: 0,
+      sentenceEnd: 4,
+    });
+    expect(planFinalSegments(japanese, { ...OPTIONS, lang: 'ja' }, true)[0]).toMatchObject({
+      sentenceStart: 0,
+      sentenceEnd: 1,
+    });
+    expect(planFinalSegments(mandarin, { ...OPTIONS, lang: 'zh' }, true)[0]).toMatchObject({
+      sentenceStart: 0,
+      sentenceEnd: 0,
+    });
   });
 
   it('gives a first sentence longer than the ramp its own segment, and never splits it', () => {
@@ -64,11 +96,11 @@ describe('planFinalSegments: sizes and the ramp', () => {
     expect(plan[0]?.text).toBe(long.text);
   });
 
-  it('plans CJK by its characters, so the first segment is one long sentence', () => {
+  it('keeps a Mandarin first segment to one sentence even when it is far longer than 12 s', () => {
     const han = Array.from({ length: 3 }, (_, n) =>
       sentence(n, `第${n}句话，很长很长的故事。`.repeat(8)),
     );
-    const plan = planFinalSegments(han, OPTIONS, true);
+    const plan = planFinalSegments(han, { ...OPTIONS, lang: 'zh' }, true);
     expect(plan[0]?.sentenceEnd).toBe(0);
   });
 });

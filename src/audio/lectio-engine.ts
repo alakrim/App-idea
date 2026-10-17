@@ -273,6 +273,12 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
       mixer.apply(commands);
     },
 
+    setCues(next: readonly AmbienceCue[]) {
+      if (disposed || !chapter) return;
+      cues = next.filter((cue) => cue.enabled);
+      if (sentenceIdx >= 0) planAt(sentenceIdx);
+    },
+
     setAmbienceMaster(enabled: boolean, nextLevelDb: number) {
       if (!(nextLevelDb >= MIN_LEVEL_DB && nextLevelDb <= MAX_LEVEL_DB)) {
         throw new RangeError(

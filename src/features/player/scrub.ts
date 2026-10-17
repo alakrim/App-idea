@@ -51,6 +51,20 @@ export function msToFraction(ms: number, durationMs: number): number {
   return clamp01(ms / durationMs);
 }
 
+/**
+ * Keeps a scrub position inside the buffer band, which is the audio made so far. `capped` says the
+ * finger went past the band, the moment for a light haptic.
+ */
+export interface BufferClamp {
+  fraction: number;
+  capped: boolean;
+}
+
+export function clampToBuffer(fraction: number, bufferFraction: number): BufferClamp {
+  'worklet';
+  return { fraction: Math.min(fraction, bufferFraction), capped: fraction > bufferFraction };
+}
+
 /** The 15 s step index a position falls in. Crossing a boundary is what earns a haptic tick. */
 export function scrubStep(ms: number): number {
   'worklet';
