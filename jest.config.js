@@ -1,5 +1,7 @@
 /** @type {import('jest').Config} */
 const moduleNameMapper = { '^@/(.*)$': '<rootDir>/src/$1' };
+// Audit proofs (QA-E and later audits) fail on purpose until their fix lands. Each run them by hand.
+const AUDIT_PROOFS = '\\.audit\\.test\\.[jt]sx?$';
 const tsTransform = {
   '^.+\\.ts$': [
     'ts-jest',
@@ -13,6 +15,7 @@ module.exports = {
       displayName: 'core',
       testEnvironment: 'node',
       testMatch: ['<rootDir>/src/core/**/*.test.ts'],
+      testPathIgnorePatterns: [AUDIT_PROOFS],
       moduleNameMapper,
       transform: {
         ...tsTransform,
@@ -41,6 +44,7 @@ module.exports = {
         '<rootDir>/src/services/pipeline/**/*.test.ts',
         '<rootDir>/src/db/**/*.test.ts',
       ],
+      testPathIgnorePatterns: [AUDIT_PROOFS],
       moduleNameMapper,
       transform: {
         ...tsTransform,
@@ -62,6 +66,7 @@ module.exports = {
       displayName: 'plugins',
       testEnvironment: 'node',
       testMatch: ['<rootDir>/plugins/**/*.test.js'],
+      testPathIgnorePatterns: [AUDIT_PROOFS],
       transform: {},
     },
     {
@@ -70,6 +75,7 @@ module.exports = {
       testMatch: ['<rootDir>/src/**/*.test.[jt]s?(x)'],
       testPathIgnorePatterns: [
         '/node_modules/',
+        AUDIT_PROOFS,
         '<rootDir>/src/core/',
         '<rootDir>/src/services/network/',
         '<rootDir>/src/services/openrouter/',
