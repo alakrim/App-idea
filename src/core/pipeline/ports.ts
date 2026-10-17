@@ -3,6 +3,7 @@
  * the network, the file system or a WebView directly. The app layer (P2) implements these with
  * SQLite, OpenRouter, expo-file-system and a hidden WebView, and tests use in-memory fakes.
  */
+import type { CueReport } from '../analysis/cue-report';
 import type { ChapterMemoryRecord, ValidatedCue } from '../analysis/types';
 import type {
   AudioSegment,
@@ -82,6 +83,11 @@ export interface ChapterStore {
   ): Promise<void>;
   /** Replaces the chapter's ambience cues. The store assigns ids and `enabled: true`. */
   saveCues(chapterId: Id, cues: readonly ValidatedCue[]): Promise<void>;
+  /** The cues cached under a text key (see cueCacheKey). Null when nothing is cached under it. */
+  getCueCache(key: string): Promise<ValidatedCue[] | null>;
+  saveCueCache(key: string, cues: readonly ValidatedCue[]): Promise<void>;
+  /** Stores the chapter's cue report from its latest analysis, replacing the previous one. */
+  saveCueReport(chapterId: Id, report: CueReport): Promise<void>;
   /** Stores (replaces) the chapter's memory card. */
   saveMemory(memory: ChapterMemory): Promise<void>;
   /** The memory of one chapter with its order and display number. Null when none is stored. */

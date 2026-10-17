@@ -15,8 +15,10 @@ import type {
   StoredSentence,
 } from '@/core/pipeline/ports';
 import type { ChapterText } from '@/core/text/build';
+import { ambienceReportRepo } from '@/db/repos/ambience-report-repo';
 import { audioSegmentRepo } from '@/db/repos/audio-segment-repo';
 import { chapterRepo } from '@/db/repos/chapter-repo';
+import { cueCacheRepo } from '@/db/repos/cue-cache-repo';
 import { cueRepo } from '@/db/repos/cue-repo';
 import { memoryRepo } from '@/db/repos/memory-repo';
 import { narrationProfileRepo } from '@/db/repos/narration-profile-repo';
@@ -129,6 +131,18 @@ export function createChapterStore(deps: ChapterStoreDeps): ChapterStore {
         chapterId,
         cues.map((cue) => ({ ...cue, id: ids(), chapterId, enabled: true })),
       );
+    },
+
+    async getCueCache(key) {
+      return cueCacheRepo.get(db, key);
+    },
+
+    async saveCueCache(key, cues) {
+      cueCacheRepo.put(db, key, cues, clock.now());
+    },
+
+    async saveCueReport(chapterId, report) {
+      ambienceReportRepo.upsert(db, chapterId, report);
     },
 
     async saveMemory(memory: ChapterMemory) {

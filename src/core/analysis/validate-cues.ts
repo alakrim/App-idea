@@ -6,16 +6,20 @@ import { estimateSpeechSeconds } from '../text/speech-rate';
 import type { AmbienceCategoryId } from './ambience-taxonomy';
 import type { IntensityLevel, SentenceInput, ValidatedCue } from './types';
 
-export type CueDropReason =
-  | 'malformed'
-  | 'unknown_category'
-  | 'category_not_enabled'
-  | 'low_confidence'
-  | 'invalid_span'
-  | 'too_short'
-  | 'merged'
-  | 'overlap_limit'
-  | 'density_cap';
+/** Every reason a cue can be dropped. The cue report counts each of them, zero included. */
+export const CUE_DROP_REASONS = [
+  'malformed',
+  'unknown_category',
+  'category_not_enabled',
+  'low_confidence',
+  'invalid_span',
+  'too_short',
+  'merged',
+  'overlap_limit',
+  'density_cap',
+] as const;
+
+export type CueDropReason = (typeof CUE_DROP_REASONS)[number];
 
 export interface DroppedCue {
   /** The cue as received from the model (or a merged candidate), for debugging. Never logged with text. */
