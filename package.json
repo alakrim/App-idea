@@ -16,8 +16,11 @@
     "bundle:check": "expo export --platform android --output-dir dist/check && rm -rf dist/check",
     "boot:check": "node scripts/smoke/boot-bundle.mjs",
     "sounds:build": "node scripts/sounds/build-base-pack.mjs",
+    "sounds:curate": "node scripts/sounds/curate-open.mjs",
+    "sounds:build-open": "node scripts/sounds/build-open-pack.mjs",
+    "sounds:test": "node --test scripts/sounds/*.test.mjs",
     "sounds:verify": "node scripts/sounds/verify-pack.mjs",
-    "verify": "npm run typecheck && npm run lint && npm run worklet:check && npm run test && npm run bundle:check",
+    "verify": "npm run typecheck && npm run lint && npm run worklet:check && npm run sounds:test && npm run test && npm run bundle:check",
     "worklet:check": "node scripts/smoke/worklet-audit.cjs"
   },
   "dependencies": {

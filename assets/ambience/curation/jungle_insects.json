@@ -1,0 +1,33 @@
+{
+  "category": "jungle_insects",
+  "curatedOn": "2026-10-17",
+  "queries": [
+    "jungle insects ambience",
+    "rainforest night insects"
+  ],
+  "candidates": [
+    {
+      "source": "archive.org",
+      "title": "Coastal Forest, Atiu Cookinseln - Coastal Rain Forest at night, no rain.",
+      "author": "matthias.feuersenger",
+      "pageUrl": "https://archive.org/details/aporee_54114_61850",
+      "downloadUrl": "https://archive.org/download/aporee_54114_61850/T695AtiuCoastalForestatnight310720122143.mp3",
+      "format": "VBR MP3",
+      "durationS": 322,
+      "licenseName": null,
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "licenseLabel": "Public Domain Mark 1.0",
+      "licenseKind": "Public Domain",
+      "score": 6,
+      "reasons": [
+        "keywords: rainforest, insect",
+        "322 s",
+        "describes an ambience or field recording"
+      ]
+    }
+  ],
+  "rejected": {
+    "title or description suggests speech or music (\"radio\")": 1,
+    "3600 s is longer than 1200 s": 1
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "category": "crowd_murmur",
+  "curatedOn": "2026-10-17",
+  "queries": [
+    "crowd murmur ambience",
+    "people talking crowd room tone"
+  ],
+  "candidates": [],
+  "rejected": {
+    "title or description suggests speech or music (\"voices\")": 1,
+    "no target keyword in the title or description": 3,
+    "title or description suggests speech or music (\"Podcast\")": 1,
+    "title or description suggests speech or music (\"MUSIC\")": 1
+  }
+}
