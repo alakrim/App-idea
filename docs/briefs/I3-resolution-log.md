@@ -109,3 +109,47 @@ Status: **partial**. 10 files still hold markers (listed below). 21 files are ma
 - `npm run boot:check`: FAIL. `expo export` cannot bundle the marker files.
 - `scripts/android/build-apk.sh`: not run.
 - Mutation check of the incident-3 regression test: not run.
+
+## Checkpoint 3 (third worker, after 9affb1b)
+
+Status: **partial**. 8 of the 10 files from checkpoint 2 are marker-free. `queue.ts` and `progress.ts` still hold markers (see the list below). Nothing after the merge base is merged.
+
+### Resolved in checkpoint 3
+| File | Side | Note |
+|---|---|---|
+| `src/core/text/chunk.ts` | UNION (ours planner base) | Ours `speechSeconds`, `rampSeconds` (ADR-0008). Theirs `maxSeconds` added as an optional global cap, unbounded when absent. Ramp index counts text segments only (theirs' heading rule). |
+| `src/core/text/chunk.test.ts` | UNION | Ours tests, plus theirs' speech-budget block rewritten for `speechSeconds`, `rampSeconds: [12]` and `maxSeconds`. Imports `estimateSpeechSeconds` from `./speech-rate`. |
+| `src/core/narration/options.ts` | UNION | `segmentMaxSeconds` (40/40/120) and `narrateConcurrency` (3/3/1, default 2) on each narrator. `segmentLimitsFor(modelId)` returns `{maxChars, maxSeconds}`. Ours' `isFishModel` rule (1,800 characters for every Fish model) kept. |
+| `src/core/narration/options.test.ts` | UNION | `segmentLimitsFor` / `narrateConcurrencyFor` tests from theirs; the fish-size test from ours. |
+| `src/core/pipeline/stages/narrate.ts` | OURS base + PORT | Ours FlowContext, ordered `SlidingWindow`, `AdaptiveWindow` with `ceiling = narrateConcurrencyFor(model)`. Theirs N2 split-and-join (`synthesizeWithFallback`) wraps each passage. Metering moved into the per-call speak, so each half of a split is recorded. Passage-N-of-M copy (theirs). The free narrator is ceiling 1, replacing `isPinnedNarrator`. Language guard kept. |
+| `src/core/pipeline/stages/narrate.test.ts` | OURS | Ours' harness and free-narrator ramp test kept. Theirs' N2 tests are not ported yet (see open issues). |
+| `src/core/pipeline/stages/narrate-plan.ts` | OURS + `maxSeconds` | `PlanOptions.maxSeconds` passed to `planTtsSegments`. |
+| `src/core/pipeline/stages/narrate-plan.test.ts` | OURS + 1 test | `maxSeconds: 1_000` keeps ours' ramp tests unbounded. New test: the narrator cap of 40 s applies after the ramp. |
+| `src/core/pipeline/tts-pool.ts`, `tts-pool.test.ts` | OURS + PORT | `AdaptiveWindow({ pinned })` becomes `({ ceiling })`, default `WINDOW_MAX`. The window starts at `min(4, ceiling)` and grows up to the ceiling. Paid narrators now grow to 3, not 8 (theirs' N2 tuning). Free stays 1. |
+| `src/core/pipeline/__fixtures__/fake-ports.ts` | OURS | Doc comment only. The network fake (`subscribe`, `retireInFlight`) is already present. |
+| `src/core/pipeline/runner.test.ts` | OURS | The ramp-total assertion kept. Theirs' comment is dropped. |
+
+### Still conflicted (2 files)
+| File | Hunks | Port still needed |
+|---|---|---|
+| `src/core/pipeline/queue.ts` | 7 | Ours base. Theirs N3 connection epochs and `stage_activity` writes (`src/services/pipeline/activity.ts`). Keep ours' BG1 waiting/backoff. |
+| `src/services/pipeline/progress.ts` | 5 | Union. Theirs `since`, `passages`, `reconnecting`. Ours `retryAt`, synthesis ETA, `waiting`. |
+
+### Decisions made in checkpoint 3
+- `firstMaxSeconds` (theirs, 12 s) is not a separate field. It is ours' ramp entry `NARRATION_RAMP_SECONDS[0]`, which has the same value. One source of truth.
+- `segmentMaxChars` on the narrator option is not kept. The fish rule (`isFishModel`) gives 1,800 characters, which covers the free narrator and any other Fish model.
+- The ramp index counts text segments only, not headings. This matches theirs' tests.
+- Paid narrators use the adaptive window with ceiling 3 instead of ours' 8. This follows the architect's "narrateConcurrency per option" item. The adaptive halving and growth still apply. It is a throughput trade-off to review on device. Raising the ceiling is a one-line change in `narrateConcurrencyFor`.
+- Each call to the narrator is metered, so a split passage records both halves. Theirs did the same.
+- The passage-N-of-M copy: the total is shown only when the chapter text is complete (`passageTotal()`). While the chapter is still being written, the copy says "passage N".
+
+### Open issues added in checkpoint 3
+11. Theirs' N2 narrate tests (`narrate.test.ts` on 54b3d2e, lines 196 to 445: fallback joins, the passage copy, concurrency per narrator, order) are not ported. They use theirs' harness. Port them against ours' harness.
+12. The N3 connection retirement (`retireInFlight` in the OpenRouter transport, epochs, `stale.test.ts`) is still not ported. It is the key protection after background, so it is the next priority after `queue.ts`.
+13. `src/features/player/__fixtures__/playback-fixtures.ts` still lacks `estimatedTotalMs` (brief item 3). Not started.
+14. Notifications re-point (item 3), Diagnostics, `catalog-cache.ts` (item 4), F4 translate upsert, N2 analysis concurrency (item 6): not started.
+
+### Verification at checkpoint 3 (real output)
+- `npx jest` on `chunk.test.ts`, `options.test.ts`, `tts-pool.test.ts`, `narrate-plan.test.ts`, `narrate-fallback.test.ts`, `narrate.test.ts`: all 6 suites are green after the fixes above (101 tests in the first run, 1 failure in narrate-plan before the cap fix, 36 of 36 in options and narrate-plan after it).
+- `npm run typecheck`: not green. It fails on the 2 marker files (`queue.ts`, `progress.ts`) and the errors that follow from them.
+- `npm run verify`, lint and the full test run: not run, because the tree still has markers.

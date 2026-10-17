@@ -93,8 +93,8 @@ describe('AdaptiveWindow', () => {
     expect(window.limit).toBe(2);
   });
 
-  it('is pinned to one request at a time for the free narrator, whatever happens', () => {
-    const window = new AdaptiveWindow({ pinned: true });
+  it('holds the free narrator to one request at a time, whatever happens', () => {
+    const window = new AdaptiveWindow({ ceiling: 1 });
     expect(window.limit).toBe(1);
     for (let i = 0; i < 20; i += 1) window.onSuccess();
     expect(window.limit).toBe(1);
@@ -291,7 +291,7 @@ describe('SlidingWindow: adaptive congestion', () => {
     let inFlight = 0;
     let most = 0;
     const pool = new SlidingWindow<number, number>({
-      window: new AdaptiveWindow({ pinned: true }),
+      window: new AdaptiveWindow({ ceiling: 1 }),
       signal: new AbortController().signal,
       now: () => 0,
       work: async (item) => {

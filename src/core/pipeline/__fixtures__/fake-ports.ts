@@ -110,11 +110,7 @@ export interface FakeOptions {
     request: LlmRequest,
     model: string,
   ) => LlmReply | undefined | Promise<LlmReply | undefined>;
-<<<<<<< HEAD
   /** Replaces the default speech. It receives the run's signal, so a held request can be cancelled. */
-=======
-  /** Replaces the default narration. The signal is the one the stage passed to the call. */
->>>>>>> 54b3d2e
   readonly tts?: (
     text: string,
     profile: NarrationProfile,

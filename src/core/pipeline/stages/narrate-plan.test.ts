@@ -3,8 +3,10 @@ import { planFinalSegments, joinSpoken } from './narrate-plan';
 import type { PlanOptions } from './narrate-plan';
 import type { SpokenSentence } from '../spoken-text';
 
+// No speech cap here, so these tests isolate the ramp and the character limit.
 const OPTIONS: PlanOptions = {
   maxChars: 600,
+  maxSeconds: 1_000,
   lang: 'en',
   voiceKey: ['openrouter', 'narrator/model', 'Kore', 'Warm.', 1],
 };
@@ -66,6 +68,15 @@ describe('planFinalSegments: sizes and the ramp', () => {
       [3, 9],
     ]);
     expect(plan.slice(2).every((s) => s.chars <= 600)).toBe(true);
+  });
+
+  it('caps every segment at the narrator speech time, after the ramp', () => {
+    // Each sentence is about 8.7 s. Four fit a 40 s cap; a fifth would pass it.
+    const plan = planFinalSegments(latin(40), { ...OPTIONS, maxSeconds: 40 }, true);
+    expect(rangeOf(plan.slice(2, 4))).toEqual([
+      [3, 6],
+      [7, 10],
+    ]);
   });
 
   it('measures the ramp in speech, so the same characters fill different first segments by language', () => {

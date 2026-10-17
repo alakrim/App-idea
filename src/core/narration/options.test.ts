@@ -12,6 +12,7 @@ import {
   segmentLimitsFor,
   type NarratorId,
 } from './options';
+import { NARRATION_RAMP_SECONDS } from '../text/chunk';
 
 /** Voice lists in the shape the live catalogue returns them (ADR-0003, L1 brief). */
 const KOKORO_VOICES = [
@@ -54,7 +55,7 @@ describe('NARRATOR_OPTIONS catalogue', () => {
 
   it('sizes every curated segment under the 4,000-character speech guard', () => {
     for (const entry of NARRATOR_OPTIONS) {
-      expect(segmentMaxCharsFor(entry.modelId)).toBeLessThan(4_000);
+      expect(segmentLimitsFor(entry.modelId).maxChars).toBeLessThan(4_000);
     }
   });
 
@@ -65,9 +66,9 @@ describe('NARRATOR_OPTIONS catalogue', () => {
   });
 
   it('starts every narrator with a 12-second first segment, so the first audio arrives quickly', () => {
+    expect(NARRATION_RAMP_SECONDS[0]).toBe(12);
     for (const entry of NARRATOR_OPTIONS) {
-      expect(entry.firstMaxSeconds).toBe(12);
-      expect(entry.firstMaxSeconds).toBeLessThanOrEqual(entry.segmentMaxSeconds);
+      expect(NARRATION_RAMP_SECONDS[0] ?? 0).toBeLessThanOrEqual(entry.segmentMaxSeconds);
     }
   });
 
@@ -152,41 +153,24 @@ describe('defaultVoice', () => {
   });
 });
 
-<<<<<<< HEAD
-describe('segmentMaxCharsFor', () => {
+describe('segmentLimitsFor', () => {
   it('gives every Fish Audio model 1,800 characters, Free and paid alike', () => {
-    expect(segmentMaxCharsFor(FREE_NARRATOR_MODEL_ID)).toBe(1_800);
-    expect(segmentMaxCharsFor('fish-audio/drama-3')).toBe(1_800);
-    expect(segmentMaxCharsFor('fish-audio/s2.1-pro')).toBe(1_800);
+    expect(segmentLimitsFor(FREE_NARRATOR_MODEL_ID).maxChars).toBe(1_800);
+    expect(segmentLimitsFor('fish-audio/drama-3').maxChars).toBe(1_800);
+    expect(segmentLimitsFor('fish-audio/s2.1-pro').maxChars).toBe(1_800);
   });
 
   it('gives every other speech model the 600-character default', () => {
-    expect(segmentMaxCharsFor(GEMINI_NARRATOR_MODEL_ID)).toBe(600);
-    expect(segmentMaxCharsFor(KOKORO_MODEL_ID)).toBe(600);
-    expect(segmentMaxCharsFor('elevenlabs/eleven-v3')).toBe(600);
-=======
-describe('segmentLimitsFor', () => {
-  it('uses each narrator limits, and the defaults for any other speech model', () => {
-    expect(segmentLimitsFor(FREE_NARRATOR_MODEL_ID)).toEqual({
-      maxChars: 1_800,
-      maxSeconds: 120,
-      firstMaxSeconds: 12,
-    });
-    expect(segmentLimitsFor(GEMINI_NARRATOR_MODEL_ID)).toEqual({
-      maxChars: 600,
-      maxSeconds: 40,
-      firstMaxSeconds: 12,
-    });
-    expect(segmentLimitsFor(KOKORO_MODEL_ID)).toEqual({
-      maxChars: 600,
-      maxSeconds: 40,
-      firstMaxSeconds: 12,
-    });
-    expect(segmentLimitsFor('elevenlabs/eleven-v3')).toEqual({
-      maxChars: 600,
-      maxSeconds: 40,
-      firstMaxSeconds: 12,
-    });
+    expect(segmentLimitsFor(GEMINI_NARRATOR_MODEL_ID).maxChars).toBe(600);
+    expect(segmentLimitsFor(KOKORO_MODEL_ID).maxChars).toBe(600);
+    expect(segmentLimitsFor('elevenlabs/eleven-v3').maxChars).toBe(600);
+  });
+
+  it('uses each narrator speech-time limit, and the default for any other speech model', () => {
+    expect(segmentLimitsFor(FREE_NARRATOR_MODEL_ID).maxSeconds).toBe(120);
+    expect(segmentLimitsFor(GEMINI_NARRATOR_MODEL_ID).maxSeconds).toBe(40);
+    expect(segmentLimitsFor(KOKORO_MODEL_ID).maxSeconds).toBe(40);
+    expect(segmentLimitsFor('elevenlabs/eleven-v3').maxSeconds).toBe(40);
   });
 });
 
@@ -197,7 +181,6 @@ describe('narrateConcurrencyFor', () => {
     expect(narrateConcurrencyFor(FREE_NARRATOR_MODEL_ID)).toBe(1);
     expect(narrateConcurrencyFor('elevenlabs/eleven-v3')).toBe(DEFAULT_NARRATE_CONCURRENCY);
     expect(DEFAULT_NARRATE_CONCURRENCY).toBe(2);
->>>>>>> 54b3d2e
   });
 });
 

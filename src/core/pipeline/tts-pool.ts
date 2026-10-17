@@ -4,8 +4,8 @@
  *
  * Two parts:
  * - `AdaptiveWindow` decides how many segments may be outstanding. It starts at 4, adds one after 4
- *   straight successes up to 8, and halves on congestion (a rate limit or an overload). The free
- *   narrator, `:free`, is pinned to one at a time.
+ *   straight successes up to a ceiling (8 by default, or the narrator's own concurrency), and halves
+ *   on congestion (a rate limit or an overload). The free narrator is held to one at a time.
  * - `SlidingWindow` runs the requests. Results can finish in any order, but `save` is called strictly
  *   in submission order, so the saved segments are always a contiguous prefix. A finished segment waits
  *   in memory until its predecessors are saved. A segment that failed, or that waits behind a failure,
@@ -29,27 +29,33 @@ const BACKOFF_BASE_MS = 2_000;
 const BACKOFF_MAX_MS = 30_000;
 
 export interface AdaptiveWindowOptions {
-  /** Always one request at a time. Used for the free narrator. */
-  readonly pinned?: boolean;
+  /**
+   * The most requests in flight at once, from 1 to WINDOW_MAX. Each narrator sets its own (the free
+   * one is held to 1). Defaults to WINDOW_MAX.
+   */
+  readonly ceiling?: number;
 }
 
 /** The additive-increase, multiplicative-decrease rule for the number of outstanding segments. */
 export class AdaptiveWindow {
-  private current = WINDOW_START;
+  private readonly ceiling: number;
+  private current: number;
   private successes = 0;
 
-  constructor(private readonly options: AdaptiveWindowOptions = {}) {}
+  constructor(options: AdaptiveWindowOptions = {}) {
+    this.ceiling = Math.max(WINDOW_MIN, Math.min(WINDOW_MAX, options.ceiling ?? WINDOW_MAX));
+    this.current = Math.min(WINDOW_START, this.ceiling);
+  }
 
   get limit(): number {
-    return this.options.pinned === true ? WINDOW_MIN : this.current;
+    return this.current;
   }
 
   onSuccess(): void {
-    if (this.options.pinned === true) return;
     this.successes += 1;
     if (this.successes < WINDOW_GROW_AFTER) return;
     this.successes = 0;
-    this.current = Math.min(WINDOW_MAX, this.current + 1);
+    this.current = Math.min(this.ceiling, this.current + 1);
   }
 
   onCongestion(): void {

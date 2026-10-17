@@ -55,7 +55,13 @@ Each one: take the policy base, then port the other side's listed items, then `g
 - The worktree `node_modules` is a symlink to the shared checkout. Do not run `npm install` or `npm uninstall` through it.
 - The branch currently contains conflict markers in the 31 files above. Do not push it.
 
-## 5. Checkpoint 2 pointer (read this first)
+## 5. Checkpoint 3 pointer (read this first, supersedes 5a)
+- **Done since checkpoint 2**: `chunk.ts`/`chunk.test.ts`, `options.ts`/`options.test.ts`, `narrate.ts` (ours base, N2 split-and-join fallback, per-narrator window ceiling, passage copy), `narrate.test.ts` (ours), `narrate-plan.ts`/test (`maxSeconds`), `tts-pool.ts`/test (`ceiling` replaces `pinned`), `fake-ports.ts`, `runner.test.ts`. Details in the log under "Checkpoint 3".
+- **Still conflicted (2 files)**: `src/core/pipeline/queue.ts` (7 hunks, base ours, port theirs' N3 epochs and `stage_activity`) and `src/services/pipeline/progress.ts` (5 hunks, union).
+- **Next, in priority order**: (1) queue.ts and progress.ts; (2) N3 connection retirement in `src/services/openrouter` (`retireInFlight`, epochs, retry without budget, and `stale.test.ts`, 8 tests adapted to `serialize`/`hydrate`); (3) theirs' N2 narrate tests; (4) playback fixture `estimatedTotalMs`; (5) notifications, Diagnostics, `catalog-cache.ts`; (6) verification (`npm run verify`, mutation checks, `sounds:verify`, `boot:check`, `contract:check`, APK manifest).
+- Verification at this checkpoint: 6 targeted jest suites green. Typecheck blocked by the 2 marker files. Full verify not run.
+
+## 5a. Checkpoint 2 pointer (historical)
 The list in sections 1 to 4 is historical. Current state, branch `worktree-agent-a9a08efbbba2e4f61`, commit `9affb1b`:
 - **Done since the WIP**: 21 files resolved (chapter feature, pipeline lifecycle, fake facade, map-reduce, translate, estimate test, facade, dev screens, DB union). The DB work is done: `0005_merged_schema_repair.sql` is idempotent, `repair-schema.ts` fixes `series.playback_rate`, and `src/db/upgrade-paths.test.ts` passes (5 tests) from both starting states.
 - **N4 removed**: `react-native-background-actions` is gone from package.json and the lockfile. The N4 runner, foreground service, app-foreground, notification-permission, the background-notification copy, the mock and the Expo plugin are deleted. `app.config.ts` no longer lists the plugin.

@@ -20,22 +20,14 @@ export interface TtsPlanOptions {
   maxChars?: number;
   /** Paragraphs shorter than this may be joined with a following text paragraph. Defaults to 120. */
   minChars?: number;
-<<<<<<< HEAD
   /**
-   * Speech-time caps for the first segments, in estimated seconds, in order. Segment `i` closes before
-   * it would exceed `rampSeconds[i]`. Segments past the ramp are bounded by `maxChars` alone. Defaults
-   * to no ramp.
+   * Speech-time caps for the first text segments, in estimated seconds, in order. Segment `i` closes
+   * before it would exceed `rampSeconds[i]`. Headings do not count. Segments past the ramp are bounded
+   * by `maxSeconds` and `maxChars` alone. Defaults to no ramp.
    */
   rampSeconds?: readonly number[];
-=======
-  /** Longest segment in estimated speech seconds. Defaults to DEFAULT_TTS_MAX_SECONDS. */
+  /** Longest segment in estimated speech seconds, for every segment. Unbounded when absent. */
   maxSeconds?: number;
-  /**
-   * Longest first text segment in estimated speech seconds, so playback starts quickly. Defaults to
-   * DEFAULT_TTS_FIRST_MAX_SECONDS.
-   */
-  firstMaxSeconds?: number;
->>>>>>> 54b3d2e
 }
 
 export interface LlmPlanOptions {
@@ -43,25 +35,17 @@ export interface LlmPlanOptions {
   overlapSentences: number;
 }
 
-<<<<<<< HEAD
 /** A sentence as the TTS planner sees it. `speechSeconds` is its estimated narration time. */
 export type TtsPlanInput = Pick<Sentence, 'idx' | 'paragraphIdx' | 'kind' | 'charCount'> & {
   readonly speechSeconds: number;
-=======
-/** A sentence as the TTS planner sees it. `seconds` is its estimated speech time, zero when unknown. */
-export type TtsPlanInput = Pick<Sentence, 'idx' | 'paragraphIdx' | 'kind' | 'charCount'> & {
-  readonly seconds?: number;
->>>>>>> 54b3d2e
 };
 
 /** Longest narration segment in characters, when the narrator does not ask for another size. */
 export const DEFAULT_TTS_MAX_CHARS = 600;
 /** Longest narration segment in speech seconds, when the narrator does not ask for another size. */
 export const DEFAULT_TTS_MAX_SECONDS = 40;
-/** Longest first text segment in speech seconds. Short, so the first audio arrives quickly. */
-export const DEFAULT_TTS_FIRST_MAX_SECONDS = 12;
 const DEFAULT_MIN_CHARS = 120;
-/** Absorbs floating-point error in the sums of per-character seconds. */
+/** Absorbs floating-point error in the sums of per-sentence seconds. */
 const SECONDS_TOLERANCE = 1e-6;
 
 /**
@@ -82,21 +66,14 @@ interface OpenSegment {
 /**
  * Groups sentences into TTS segments.
  *
-<<<<<<< HEAD
- * Greedy within a paragraph, up to the segment's caps: `maxChars`, and for the opening segments also
- * the `rampSeconds` cap. A segment never crosses a paragraph, except that a paragraph shorter than
- * `minChars` may continue into a following text paragraph. Headings get a segment of their own, and so
- * does any single sentence longer than `maxChars`. A sentence longer than a ramp cap still forms a
- * segment, because a segment always holds at least one sentence.
+ * Greedy within a paragraph, up to the segment's caps: `maxChars`, `maxSeconds`, and for the opening
+ * text segments also the `rampSeconds` cap. A segment never crosses a paragraph, except that a
+ * paragraph shorter than `minChars` may continue into a following text paragraph. Headings get a
+ * segment of their own, and so does any single sentence over a cap. A segment always holds at least
+ * one sentence.
  *
  * Prefix stable: the segments that a prefix of the sentences closes are the same as in the full plan,
  * because a decision only looks at sentences up to the one that closes the segment.
-=======
- * Greedy within a paragraph, up to `maxChars` characters and `maxSeconds` of speech. The first text
- * segment of the chapter is held to `firstMaxSeconds`. A segment never crosses a paragraph, except
- * that a paragraph shorter than `minChars` may continue into a following text paragraph. Headings
- * get a segment of their own, and so does any single sentence over a limit.
->>>>>>> 54b3d2e
  */
 export function planTtsSegments(
   sentences: readonly TtsPlanInput[],
@@ -104,26 +81,20 @@ export function planTtsSegments(
 ): TtsSegment[] {
   const maxChars = options.maxChars ?? DEFAULT_TTS_MAX_CHARS;
   const minChars = options.minChars ?? DEFAULT_MIN_CHARS;
-<<<<<<< HEAD
   const rampSeconds = options.rampSeconds ?? [];
+  const maxSeconds = options.maxSeconds ?? Number.POSITIVE_INFINITY;
   assertPositiveInteger('maxChars', maxChars);
   assertNonNegativeInteger('minChars', minChars);
   rampSeconds.forEach((cap, i) => assertPositiveNumber(`rampSeconds[${i}]`, cap));
+  if (options.maxSeconds !== undefined) assertPositiveNumber('maxSeconds', options.maxSeconds);
 
-  // Whether `sentence` may join `open`, given that `open` will sit at position `index`.
-  const fits = (open: OpenSegment, sentence: TtsPlanInput, index: number): boolean => {
+  // Whether `sentence` may join `open`, given that `open` is text segment number `textSegments`.
+  const fits = (open: OpenSegment, sentence: TtsPlanInput, textSegments: number): boolean => {
     if (open.chars + sentence.charCount > maxChars) return false;
-    const cap = rampSeconds[index];
-    return cap === undefined || open.seconds + sentence.speechSeconds <= cap;
+    const ramp = rampSeconds[textSegments] ?? Number.POSITIVE_INFINITY;
+    const cap = Math.min(ramp, maxSeconds);
+    return open.seconds + sentence.speechSeconds <= cap + SECONDS_TOLERANCE;
   };
-=======
-  const maxSeconds = options.maxSeconds ?? DEFAULT_TTS_MAX_SECONDS;
-  const firstMaxSeconds = options.firstMaxSeconds ?? DEFAULT_TTS_FIRST_MAX_SECONDS;
-  assertPositiveInteger('maxChars', maxChars);
-  assertNonNegativeInteger('minChars', minChars);
-  assertPositiveNumber('maxSeconds', maxSeconds);
-  assertPositiveNumber('firstMaxSeconds', firstMaxSeconds);
->>>>>>> 54b3d2e
 
   const paragraphChars = new Map<number, number>();
   for (const sentence of sentences) {
@@ -132,10 +103,8 @@ export function planTtsSegments(
   }
 
   const segments: TtsSegment[] = [];
-  // Headings do not count as text. The first text segment has the short budget.
   let textSegments = 0;
   let open: OpenSegment | undefined;
-  const secondsBudget = (): number => (textSegments === 0 ? firstMaxSeconds : maxSeconds);
   const close = (): void => {
     if (open) {
       segments.push(toSegment(open));
@@ -145,42 +114,18 @@ export function planTtsSegments(
   };
 
   for (const sentence of sentences) {
-    const seconds = sentence.seconds ?? 0;
     if (sentence.kind === 'heading') {
       close();
       segments.push({ sentenceStart: sentence.idx, sentenceEnd: sentence.idx });
       continue;
     }
-    // A sentence over a limit on its own gets a segment of its own. If a segment is open, it is
-    // closed first, so the sentence's segment comes later and gets the full budget.
-    const ownBudget = open ? maxSeconds : secondsBudget();
-    if (sentence.charCount > maxChars || seconds > ownBudget + SECONDS_TOLERANCE) {
-      close();
-      segments.push({ sentenceStart: sentence.idx, sentenceEnd: sentence.idx });
-      textSegments += 1;
-      continue;
-    }
     if (open && sentence.paragraphIdx !== open.paragraphIdx) {
       const previousIsTiny = (paragraphChars.get(open.paragraphIdx) ?? 0) < minChars;
       const mayContinue =
-<<<<<<< HEAD
-        previousIsTiny && sentence.kind === 'text' && fits(open, sentence, segments.length);
-      if (!mayContinue) {
-        segments.push(toSegment(open));
-        open = undefined;
-      }
-    }
-    if (open && !fits(open, sentence, segments.length)) {
-      segments.push(toSegment(open));
-      open = undefined;
-=======
-        previousIsTiny &&
-        sentence.kind === 'text' &&
-        fits(open, sentence.charCount, seconds, maxChars, secondsBudget());
+        previousIsTiny && sentence.kind === 'text' && fits(open, sentence, textSegments);
       if (!mayContinue) close();
->>>>>>> 54b3d2e
     }
-    if (open && !fits(open, sentence.charCount, seconds, maxChars, secondsBudget())) close();
+    if (open && !fits(open, sentence, textSegments)) close();
     if (!open) {
       open = {
         start: sentence.idx,
@@ -192,28 +137,11 @@ export function planTtsSegments(
     }
     open.end = sentence.idx;
     open.chars += sentence.charCount;
-<<<<<<< HEAD
     open.seconds += sentence.speechSeconds;
-=======
-    open.seconds += seconds;
->>>>>>> 54b3d2e
     open.paragraphIdx = sentence.paragraphIdx;
   }
   close();
   return segments;
-}
-
-/** Whether a sentence can join the open segment without passing either limit. */
-function fits(
-  open: OpenSegment,
-  charCount: number,
-  seconds: number,
-  maxChars: number,
-  maxSeconds: number,
-): boolean {
-  return (
-    open.chars + charCount <= maxChars && open.seconds + seconds <= maxSeconds + SECONDS_TOLERANCE
-  );
 }
 
 function toSegment(open: OpenSegment): TtsSegment {

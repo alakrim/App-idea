@@ -25,6 +25,8 @@ export interface PlannedSegment {
 export interface PlanOptions {
   /** The narrator's longest segment, in characters. */
   readonly maxChars: number;
+  /** The narrator's longest segment, in estimated speech seconds. */
+  readonly maxSeconds: number;
   /** The language read aloud. It sets the speech time of a sentence, which sizes the opening segments. */
   readonly lang: string | null;
   /** The narration settings that change the audio: provider, model, voice, style and speed. */
@@ -49,7 +51,11 @@ export function planFinalSegments(
       charCount: s.charCount,
       speechSeconds: estimateSpeechSeconds(s.text, options.lang),
     })),
-    { maxChars: options.maxChars, rampSeconds: NARRATION_RAMP_SECONDS },
+    {
+      maxChars: options.maxChars,
+      maxSeconds: options.maxSeconds,
+      rampSeconds: NARRATION_RAMP_SECONDS,
+    },
   );
   const final = complete ? groups : groups.slice(0, -1);
   return final.map((group, idx) => {

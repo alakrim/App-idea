@@ -369,17 +369,10 @@ describe('runChapter: cancellation and resume', () => {
     const ttsBefore = fake.state.ttsCalls.length;
     const resumed = await runChapter(CHAPTER_ID, fake.ports);
 
-<<<<<<< HEAD
     // The ramp plans this chapter in more segments than its characters alone suggest, so count them.
     const total = fake.state.segments.get(CHAPTER_ID)?.length ?? 0;
     expect(saved).toBeLessThan(total);
     expect(resumed.status).toBe('ready');
-=======
-    // The planned total is read from the finished chapter, since the first-segment budget decides it.
-    const total = fake.state.segments.get(CHAPTER_ID)?.length ?? 0;
-    expect(resumed.status).toBe('ready');
-    expect(total).toBeGreaterThan(saved);
->>>>>>> 54b3d2e
     expect(fake.state.ttsCalls.length - ttsBefore).toBe(total - saved);
   });
 
