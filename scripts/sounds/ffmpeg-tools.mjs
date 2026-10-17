@@ -56,8 +56,11 @@ export async function measureLoudness(file) {
   return { integratedLufs: Number(integrated[1]), truePeakDbtp: Number(truePeak[1]) };
 }
 
-/** Decodes an audio file to mono float32 PCM at SAMPLE_RATE (edit lists are honoured by ffmpeg). */
-export async function decodeMono(file) {
+/**
+ * Decodes an audio file to mono float32 PCM at SAMPLE_RATE (edit lists are honoured by ffmpeg).
+ * `filter` is an optional ffmpeg audio filter chain applied while decoding.
+ */
+export async function decodeMono(file, filter = null) {
   const args = [
     '-hide_banner',
     '-nostdin',
@@ -65,6 +68,7 @@ export async function decodeMono(file) {
     'error',
     '-i',
     file,
+    ...(filter ? ['-af', filter] : []),
     '-ac',
     '1',
     '-ar',
