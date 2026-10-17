@@ -1,6 +1,6 @@
 import { buildChapterText } from './build';
-import { estimateSpeechSeconds } from './speech-rate';
 import { estimateTokens, NARRATION_RAMP_SECONDS, planLlmChunks, planTtsSegments } from './chunk';
+import { estimateSpeechSeconds } from './speech-rate';
 
 import type { TtsPlanInput } from './chunk';
 import type { ParagraphKind } from './paragraphs';

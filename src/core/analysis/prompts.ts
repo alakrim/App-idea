@@ -5,7 +5,7 @@ import { normalizeWhitespace } from '../text/normalize';
 import type { Lang, MemoryFields, SentenceInput } from './types';
 
 /** Bump when the wording or the output shape changes. Stored with every analysis result. */
-export const PROMPT_VERSION = 'analysis-v3';
+export const PROMPT_VERSION = 'analysis-v4';
 
 export interface PromptPair {
   readonly system: string;

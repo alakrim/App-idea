@@ -11,7 +11,7 @@ import {
 
 describe('analysis prompts', () => {
   it('carries a version string', () => {
-    expect(PROMPT_VERSION).toBe('analysis-v3');
+    expect(PROMPT_VERSION).toBe('analysis-v4');
   });
 
   it('states the setting-coverage policy with the taxonomy ids it names', () => {

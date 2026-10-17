@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
+import { useMemo } from 'react';
 
 import { bundledMigrations } from './bundled-migrations';
 import { repairSchema } from './repair-schema';
@@ -17,13 +17,10 @@ interface MigrationState {
  */
 export function useLectioMigrations(db: LectioDatabase): MigrationState {
   const migration = useMigrations(db, bundledMigrations);
-  const [repair, setRepair] = useState<{ done: boolean; error: Error | undefined }>({
-    done: false,
-    error: undefined,
-  });
-
-  useEffect(() => {
-    if (!migration.success) return;
+  // The repair is synchronous and idempotent, so it runs during render once migrations succeed,
+  // instead of setting state from an effect.
+  const repair = useMemo((): { done: boolean; error: Error | undefined } => {
+    if (!migration.success) return { done: false, error: undefined };
     const client = db.$client;
     try {
       repairSchema({
@@ -31,9 +28,9 @@ export function useLectioMigrations(db: LectioDatabase): MigrationState {
           client.getAllSync<{ name: string }>(`PRAGMA table_info(${table})`).map((row) => row.name),
         exec: (statement) => client.execSync(statement),
       });
-      setRepair({ done: true, error: undefined });
+      return { done: true, error: undefined };
     } catch (error) {
-      setRepair({ done: true, error: error instanceof Error ? error : new Error(String(error)) });
+      return { done: true, error: error instanceof Error ? error : new Error(String(error)) };
     }
   }, [migration.success, db]);
 
