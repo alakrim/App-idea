@@ -30,3 +30,9 @@ On a dev build, run two engines on one audio session for 45 minutes in the backg
 
 ## Amendment 2026-10-17 (user decision): duck, don't pause, for short sounds from other apps
 When another app takes transient audio focus that allows ducking (navigation prompts, notification sounds; Android `AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK`), narration keeps playing at a lowered volume and restores afterwards. Phone calls and other non-duckable or permanent focus losses still pause. A narration the listener paused is never resumed by a focus change. expo-audio stays the only audio-focus client (incident 3).
+- **Implementation (FX-E):** `interruptionMode: 'duckOthers'` on Android and `doNotMix` on iOS (expo-audio needs it there for lock-screen controls).
+- **Known limits:**
+  - expo-audio ducks by a fixed 0.5× (about −6 dB, not 20–30 %).
+  - Ambience beds are not ducked: they run on react-native-audio-api, and observing focus there would add a second focus client (incident 3).
+  - On Android, focus is requested as MAY_DUCK, so another app's music ducks under narration instead of pausing.
+- **To revisit after the device test:** the depth and the music behaviour need a small expo-audio patch.
