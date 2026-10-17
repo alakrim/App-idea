@@ -333,14 +333,22 @@ function requestBody(
   messages: ChatMessage[],
   responseFormat: ResponseFormat | undefined,
 ): ChatRequestBody {
+  // Sampling is a hint. With `require_parameters`, OpenRouter routes only to providers that accept
+  // every parameter sent, and many structured-output providers (all of claude-haiku-5.5's) accept
+  // neither temperature nor seed, so the request would find no endpoint at all. Hints are dropped then.
+  const sampling = responseFormat
+    ? {}
+    : {
+        ...(input.temperature !== undefined ? { temperature: input.temperature } : {}),
+        ...(input.seed !== undefined ? { seed: input.seed } : {}),
+      };
   return {
     model: input.model,
     messages,
     ...(responseFormat
       ? { response_format: responseFormat, provider: { require_parameters: true as const } }
       : {}),
-    ...(input.temperature !== undefined ? { temperature: input.temperature } : {}),
-    ...(input.seed !== undefined ? { seed: input.seed } : {}),
+    ...sampling,
     ...(input.maxTokens !== undefined ? { max_tokens: input.maxTokens } : {}),
     usage: { include: true },
   };

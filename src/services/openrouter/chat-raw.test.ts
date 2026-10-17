@@ -119,6 +119,24 @@ describe('chatRaw', () => {
     expect(body.seed).toBe(1017);
   });
 
+  it('drops temperature and seed when structured output requires every parameter', async () => {
+    // Regression: claude-haiku-5.5 has no provider that accepts temperature or seed, so sending them
+    // with require_parameters found no endpoint and every analysis failed as "model not available".
+    const { deps, completions } = makeDeps(() => chatReply('{}'));
+    await chatRaw(deps, {
+      model: STRUCTURED,
+      system: 's',
+      user: 'u',
+      jsonSchema: { name: 'index_selection', schema: SCHEMA },
+      temperature: 0,
+      seed: 1017,
+    });
+    const body = bodyOf(completions()[0]);
+    expect(body.provider).toEqual({ require_parameters: true });
+    expect(body).not.toHaveProperty('temperature');
+    expect(body).not.toHaveProperty('seed');
+  });
+
   it('omits temperature and seed from the body when they are not given', async () => {
     const { deps, completions } = makeDeps(() => chatReply('{}'));
     await chatRaw(deps, { model: PLAIN, system: 's', user: 'u' });

@@ -29,6 +29,11 @@ _Last updated: 2026-10-11 by architect_
   - DB compatibility was checked: charming-fermat's 0003/0004 only add tables and a nullable column, and this branch's 0003 has a later timestamp, so both builds install over each other.
 - Next: after the user's device test, port this wave onto `charming-fermat`, keeping what tested better. Also ask the user to set the latest line as the repo's default branch, so new sessions start from it.
 
+## Incident 4 (2026-10-17, device test of bfbcc4f): every chapter failed at Analyze with "This model is not available on OpenRouter right now"
+- **Cause (AM1 regression):** analysis sent `temperature: 0` and `seed` together with strict `json_schema`, and therefore `provider.require_parameters: true`. None of `anthropic/claude-haiku-5.5`'s 10 provider endpoints accept `temperature` or `seed` (checked live on `/models/.../endpoints`), so OpenRouter found no endpoint and returned 404, which maps to MODEL_UNAVAILABLE.
+- **Fix:** `chat.ts` drops sampling hints whenever `require_parameters` is set, with a regression test. Reproducible cues still come from the cue cache.
+- **Lesson:** a request parameter added under `require_parameters` narrows routing. Check it against the live `/endpoints` of the default models before shipping.
+
 ## Work in flight
 - **Merged and verified by the architect (2026-10-17)**, device test pending for each:
   - **N2**: every OpenRouter speech model is listed, newest first after the three narrators. It adds a "New" badge (30 days) and "Default voice" for voice-less models. Fish Audio Drama 3 is included and Seed Audio is excluded.
