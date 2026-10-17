@@ -5,6 +5,7 @@ import type { RemoteEvent } from '@/core/playback/remote-commands';
 import { type ResolveBed, createAmbienceMixer } from './ambience-mixer';
 import { resolveInstalledBed } from './ambience-pack';
 import { createLectioEngine, type PlatformEventSource } from './lectio-engine';
+import { playbackHealth } from './playback-health';
 import { createVoicePlayer } from './voice-player';
 
 import type { AudioEngine } from './engine';
@@ -60,12 +61,13 @@ const resolveBundledBed: ResolveBed = (categoryId) => {
 export function createNativeAudioEngine(options: NativeEngineOptions = {}): AudioEngine {
   const resolveBed = options.resolveBed ?? resolveBundledBed;
   return createLectioEngine({
-    voice: createVoicePlayer(),
+    voice: createVoicePlayer({ health: playbackHealth }),
     mixer: createAmbienceMixer({
       resolveBed,
       createContext: () => new AudioContext(),
     }),
     remote: noRemoteEvents,
     bedLufs: (category) => resolveBed(category)?.lufs ?? null,
+    health: playbackHealth,
   });
 }

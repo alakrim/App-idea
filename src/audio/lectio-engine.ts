@@ -7,6 +7,7 @@ import {
   planBeds,
 } from '@/core/playback/ambience-scheduler';
 import { DUCKING_DEFAULTS, duckEnvelope } from '@/core/playback/ducking';
+import type { PlaybackHealthLog } from '@/core/playback/playback-health';
 import { BED_LEVEL_RANGE_DB, DUCKING_RANGE_DB, isInRange } from '@/core/playback/ranges';
 import {
   type RemoteCommand,
@@ -41,6 +42,8 @@ export interface LectioEngineDeps {
   bedLufs?: (category: string) => number | null;
   /** Schedules the bed fades. Tests drive it with a virtual clock. */
   timers?: TimerPort;
+  /** Where runs of the queue are recorded. Omitted means nothing is recorded. */
+  health?: PlaybackHealthLog;
 }
 
 /**
@@ -242,6 +245,8 @@ export function createLectioEngine(deps: LectioEngineDeps): AudioEngine {
   function handleSnapshot(snapshot: VoiceSnapshot): void {
     if (disposed || !chapter) return;
     lastSnapshot = snapshot;
+    // The queue ran out before the chapter was complete: the voice waits for more segments.
+    if (snapshot.ended && !chapter.final && state !== 'buffering') deps.health?.ranDry();
     if (timeline) {
       moveTo(snapshot.positionMs);
     }

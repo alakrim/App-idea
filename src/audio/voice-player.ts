@@ -6,6 +6,8 @@ import {
   setAudioModeAsync,
 } from 'expo-audio';
 
+import { createPlaybackHealthLog, type PlaybackHealthLog } from '@/core/playback/playback-health';
+
 import type { Unsubscribe } from './engine';
 import type { VoiceMetadata, VoicePort, VoiceSegment, VoiceSnapshot } from './voice-port';
 
@@ -36,7 +38,13 @@ interface Slot {
  * not expose a pitch-correction switch. The swap leaves a gap of one status-event latency, so S1
  * must measure it against a playlist before the choice is final.
  */
-export function createVoicePlayer(): VoicePort {
+export interface VoicePlayerOptions {
+  /** Where boundary gaps, buffering and system pauses are recorded. Defaults to a private log. */
+  health?: PlaybackHealthLog;
+}
+
+export function createVoicePlayer(options: VoicePlayerOptions = {}): VoicePort {
+  const health = options.health ?? createPlaybackHealthLog({ now: Date.now });
   let segments: VoiceSegment[] = [];
   let starts: number[] = [];
   let slots: [Slot, Slot] | null = null;
@@ -50,6 +58,9 @@ export function createVoicePlayer(): VoicePort {
   /** Bumped by every load and by dispose. A load that finds it moved on creates nothing. */
   let loadToken = 0;
   let disposed = false;
+  /** Whether the active player reported buffering or playing on its last status. For the health log. */
+  let buffering = false;
+  let playing = false;
   /** The position the next load starts at. A seek made before the players exist moves it. */
   let requestedStartMs = 0;
   const listeners = new Set<(snapshot: VoiceSnapshot) => void>();
@@ -159,6 +170,8 @@ export function createVoicePlayer(): VoicePort {
     if (incoming.holds !== next) loadSlot(incoming, next, null);
     active = otherSlotIndex();
     index = next;
+    buffering = false;
+    playing = false;
     incoming.pendingSeekMs = null;
     loadSlot(finished, next + 1 < segments.length ? next + 1 : null, null);
     activate(incoming);
@@ -176,7 +189,10 @@ export function createVoicePlayer(): VoicePort {
       if (seekMs > 0) void slot.player.seekTo(seekMs / 1000);
       if (wantPlaying) slot.player.play();
     }
+    if (slotIdx === active) recordHealth(status);
     if (status.didJustFinish) {
+      // A finish while the queue is running dry is a resume, not a boundary.
+      if (!ended) health.boundaryStarted();
       advance();
       return;
     }
@@ -189,6 +205,18 @@ export function createVoicePlayer(): VoicePort {
       loaded: status.isLoaded,
       error: status.error,
     });
+  }
+
+  /** Feeds the health log from the active player's raw status. */
+  function recordHealth(status: AudioStatus): void {
+    if (status.isBuffering && !buffering) health.bufferingStarted();
+    buffering = status.isBuffering;
+    if (status.playing && status.currentTime > 0) health.boundaryPlaying();
+    // A pause the system made: the player stopped while the listener still wants it playing.
+    const systemPaused =
+      playing && !status.playing && wantPlaying && status.isLoaded && !status.isBuffering;
+    if (systemPaused) health.focusLossPaused();
+    playing = status.playing;
   }
 
   function releaseSlots(): void {

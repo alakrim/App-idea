@@ -1,3 +1,5 @@
+import type { PlaybackHealthSummary } from '@/core/playback/playback-health';
+
 import type { EnvironmentInfo } from './environment';
 import type { ProbeResult, ProbeStatus } from './probe';
 
@@ -10,6 +12,8 @@ export interface DiagnosticsReport {
   generatedAt: string;
   environment: EnvironmentInfo;
   summary: Record<ProbeStatus, number> & { total: number };
+  /** Narration health over the last hour, the numbers a device test sends back. */
+  playback: PlaybackHealthSummary;
   probes: ProbeResult[];
 }
 
@@ -24,6 +28,7 @@ export function buildReport(
   results: readonly ProbeResult[],
   environment: EnvironmentInfo,
   generatedAt: Date,
+  playback: PlaybackHealthSummary,
 ): DiagnosticsReport {
   return {
     schema: REPORT_SCHEMA,
@@ -31,6 +36,7 @@ export function buildReport(
     generatedAt: generatedAt.toISOString(),
     environment,
     summary: summarize(results),
+    playback,
     probes: [...results],
   };
 }
