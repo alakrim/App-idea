@@ -1,5 +1,10 @@
 import { buildChapterText } from './build';
-import { estimateTokens, planLlmChunks, planTtsSegments } from './chunk';
+import {
+  estimateTokens,
+  NARRATION_RAMP_CHARS,
+  planLlmChunks,
+  planTtsSegments,
+} from './chunk';
 
 import type { TtsPlanInput } from './chunk';
 import type { ParagraphKind } from './paragraphs';
@@ -212,6 +217,109 @@ describe('planLlmChunks', () => {
       RangeError,
     );
     expect(() => planLlmChunks(words(2), { maxTokens: 5, overlapSentences: -1 })).toThrow(
+      RangeError,
+    );
+  });
+});
+
+describe('planTtsSegments with the narration ramp', () => {
+  const ramped = { maxChars: 600, minChars: 0, ramp: NARRATION_RAMP_CHARS };
+
+  /** The ranges as [start, end] pairs, which read better in a failing assertion. */
+  function ranges(sentences: TtsPlanInput[], options = ramped): [number, number][] {
+    return planTtsSegments(sentences, options).map((s) => [s.sentenceStart, s.sentenceEnd]);
+  }
+
+  it('makes the first segment about 200 characters and the second about 400, then the narrator size', () => {
+    const latin = plan([{ kind: 'text', sentences: Array.from({ length: 10 }, () => 90) }]);
+    expect(ranges(latin)).toEqual([
+      [0, 1],
+      [2, 5],
+      [6, 9],
+    ]);
+  });
+
+  it('keeps every ramped segment within its cap', () => {
+    const latin = plan([{ kind: 'text', sentences: Array.from({ length: 40 }, () => 37) }]);
+    const segments = planTtsSegments(latin, ramped);
+    const chars = (start: number, end: number) =>
+      latin.slice(start, end + 1).reduce((sum, s) => sum + s.charCount, 0);
+    expect(chars(segments[0]?.sentenceStart ?? 0, segments[0]?.sentenceEnd ?? 0)).toBeLessThanOrEqual(
+      200,
+    );
+    expect(chars(segments[1]?.sentenceStart ?? 0, segments[1]?.sentenceEnd ?? 0)).toBeLessThanOrEqual(
+      400,
+    );
+    for (const s of segments.slice(2)) {
+      expect(chars(s.sentenceStart, s.sentenceEnd)).toBeLessThanOrEqual(600);
+    }
+  });
+
+  it('never lets a ramp cap exceed the narrator maximum', () => {
+    const latin = plan([{ kind: 'text', sentences: Array.from({ length: 12 }, () => 60) }]);
+    // maxChars 300 caps the second segment at 300, not 400.
+    expect(ranges(latin, { maxChars: 300, minChars: 0, ramp: NARRATION_RAMP_CHARS })).toEqual([
+      [0, 2],
+      [3, 7],
+      [8, 11],
+    ]);
+  });
+
+  it('plans CJK text by its character count, so the first segment is one long sentence', () => {
+    const cjk = plan([{ kind: 'text', sentences: Array.from({ length: 9 }, () => 120) }]);
+    expect(ranges(cjk)).toEqual([
+      [0, 0],
+      [1, 3],
+      [4, 8],
+    ]);
+  });
+
+  it('gives a first sentence longer than the ramp cap a segment of its own, not a split', () => {
+    const sentences = plan([
+      { kind: 'text', sentences: [350, 50, 50, 50] },
+    ]);
+    expect(ranges(sentences)).toEqual([
+      [0, 0],
+      [1, 3],
+    ]);
+  });
+
+  it('gives a single sentence longer than maxChars its own segment wherever it falls in the ramp', () => {
+    const sentences = plan([{ kind: 'text', sentences: [40, 900, 50, 50, 50] }]);
+    expect(ranges(sentences)).toEqual([
+      [0, 0],
+      [1, 1],
+      [2, 4],
+    ]);
+  });
+
+  it('keeps the plan of a prefix as the start of the full plan, for every prefix length', () => {
+    const sentences = plan([
+      { kind: 'text', sentences: [70, 80, 90] },
+      { kind: 'text', sentences: [30, 40] },
+      { kind: 'heading', sentences: [12] },
+      { kind: 'text', sentences: [100, 100, 100, 100, 100, 100, 100] },
+    ]);
+    const full = planTtsSegments(sentences, ramped);
+    for (let length = 1; length <= sentences.length; length += 1) {
+      const prefix = planTtsSegments(sentences.slice(0, length), ramped);
+      // Every segment but the last one of a prefix is closed by a later sentence, so it is final.
+      const closed = prefix.slice(0, -1);
+      expect(closed).toEqual(full.slice(0, closed.length));
+      expect(prefix[prefix.length - 1]?.sentenceStart).toBe(full[prefix.length - 1]?.sentenceStart);
+    }
+  });
+
+  it('plans exactly as before when no ramp is given', () => {
+    const latin = plan([{ kind: 'text', sentences: Array.from({ length: 10 }, () => 90) }]);
+    expect(planTtsSegments(latin, { maxChars: 600, minChars: 0 })).toEqual([
+      { sentenceStart: 0, sentenceEnd: 5 },
+      { sentenceStart: 6, sentenceEnd: 9 },
+    ]);
+  });
+
+  it('rejects a ramp cap that is not a positive integer', () => {
+    expect(() => planTtsSegments(plan([{ kind: 'text', sentences: [10] }]), { ramp: [0] })).toThrow(
       RangeError,
     );
   });

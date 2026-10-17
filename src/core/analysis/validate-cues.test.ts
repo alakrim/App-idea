@@ -77,8 +77,8 @@ describe('validateCues: rule by rule', () => {
     expect(dropped[0]?.reason).toBe('category_not_enabled');
   });
 
-  it('drops confidence below 0.55 and keeps exactly 0.55', () => {
-    const low = validateCues([cue({ confidence: 0.54 })], ctx());
+  it('drops confidence below 0.45 and keeps exactly 0.45', () => {
+    const low = validateCues([cue({ confidence: 0.44 })], ctx());
     expect(low.dropped[0]?.reason).toBe('low_confidence');
     const edge = validateCues([cue({ confidence: CUE_LIMITS.confidenceFloor })], ctx());
     expect(edge.cues).toHaveLength(1);
@@ -159,14 +159,15 @@ describe('validateCues: rule by rule', () => {
     expect(cues).toHaveLength(2);
   });
 
-  it('caps density at 2 per 1,000 words and keeps the highest confidence', () => {
-    const three = [
+  it('caps density at 3 per 1,000 words and keeps the highest confidence', () => {
+    const four = [
       cue({ startSentence: 0, endSentence: 4, confidence: 0.6, category: 'light_rain' }),
       cue({ startSentence: 10, endSentence: 14, confidence: 0.95, category: 'city_night' }),
       cue({ startSentence: 20, endSentence: 24, confidence: 0.8, category: 'tavern_crowd' }),
+      cue({ startSentence: 30, endSentence: 34, confidence: 0.9, category: 'forest_night' }),
     ];
-    const { cues, dropped } = validateCues(three, ctx({ wordCount: 1000 }));
-    expect(cues.map((c) => c.category)).toEqual(['city_night', 'tavern_crowd']);
+    const { cues, dropped } = validateCues(four, ctx({ wordCount: 1000 }));
+    expect(cues.map((c) => c.category)).toEqual(['city_night', 'tavern_crowd', 'forest_night']);
     expect(dropped).toEqual([expect.objectContaining({ reason: 'density_cap' })]);
   });
 
@@ -176,7 +177,7 @@ describe('validateCues: rule by rule', () => {
     expect(dropped[0]?.reason).toBe('density_cap');
   });
 
-  it('allows one cue from 200 words, even though 2 per 1,000 words rounds down to zero', () => {
+  it('allows one cue from 200 words, even though 3 per 1,000 words rounds down to zero', () => {
     const two = [
       cue({ startSentence: 0, endSentence: 4, confidence: 0.6, category: 'light_rain' }),
       cue({ startSentence: 10, endSentence: 14, confidence: 0.9, category: 'city_night' }),
@@ -190,11 +191,13 @@ describe('validateCues: rule by rule', () => {
     expect(maxCuesForWordCount(0)).toBe(0);
     expect(maxCuesForWordCount(199)).toBe(0);
     expect(maxCuesForWordCount(200)).toBe(1);
+    expect(maxCuesForWordCount(333)).toBe(1);
+    expect(maxCuesForWordCount(334)).toBe(1);
     expect(maxCuesForWordCount(499)).toBe(1);
     expect(maxCuesForWordCount(500)).toBe(1);
-    expect(maxCuesForWordCount(999)).toBe(1);
-    expect(maxCuesForWordCount(1000)).toBe(2);
-    expect(maxCuesForWordCount(2500)).toBe(5);
+    expect(maxCuesForWordCount(999)).toBe(2);
+    expect(maxCuesForWordCount(1000)).toBe(3);
+    expect(maxCuesForWordCount(2500)).toBe(7);
   });
 
   it('allows at most two overlapping beds at any sentence', () => {

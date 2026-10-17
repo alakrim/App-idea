@@ -1,6 +1,6 @@
 import { chatReply, createFakeFetch, jsonResponse } from './__fixtures__/fake-fetch';
 import { chatRaw } from './chat';
-import { createModelCatalog } from './models';
+import { CATALOG_TTL_MS, createModelCatalog } from './models';
 import { createTransport } from './transport';
 
 import type { RecordedCall, Route } from './__fixtures__/fake-fetch';
@@ -38,7 +38,7 @@ function makeDeps(reply: (call: RecordedCall) => Response) {
     random: () => 0.5,
     now: () => 0,
   });
-  const models = createModelCatalog({ transport, ttlMs: 60_000, now: () => 0 });
+  const models = createModelCatalog({ transport, ttlMs: CATALOG_TTL_MS, now: () => 0 });
   const deps: ChatDeps = { transport, models };
   const completions = () => fake.calls.filter((call) => call.url.endsWith('/chat/completions'));
   return { deps, completions };
@@ -109,6 +109,22 @@ describe('chatRaw', () => {
       { role: 'user', content: 'hi' },
     ]);
     expect(result.text).toBe('  plain text  ');
+  });
+
+  it('sends temperature and seed in the body when they are given', async () => {
+    const { deps, completions } = makeDeps(() => chatReply('{}'));
+    await chatRaw(deps, { model: PLAIN, system: 's', user: 'u', temperature: 0, seed: 1017 });
+    const body = bodyOf(completions()[0]);
+    expect(body.temperature).toBe(0);
+    expect(body.seed).toBe(1017);
+  });
+
+  it('omits temperature and seed from the body when they are not given', async () => {
+    const { deps, completions } = makeDeps(() => chatReply('{}'));
+    await chatRaw(deps, { model: PLAIN, system: 's', user: 'u' });
+    const body = bodyOf(completions()[0]);
+    expect(body).not.toHaveProperty('temperature');
+    expect(body).not.toHaveProperty('seed');
   });
 
   it('rejects with CANCELLED when the signal is aborted before the reply', async () => {

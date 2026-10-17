@@ -4,17 +4,26 @@ import {
   NARRATOR_OPTIONS,
   type NarratorId,
 } from '@/core/narration/options';
-import type { OpenRouterModel } from '@/services/openrouter';
+import { parseModelItems, type OpenRouterModel } from '@/services/openrouter';
+import catalogue from '@/services/openrouter/__fixtures__/openrouter-speech-2026-10-17.json';
 
 import {
+  arrangeSpeechModels,
   hourlyNarrationCost,
   narrationForDevice,
   narrationForModel,
   narrationForOption,
   narrationWithVoice,
   narratableModels,
-  supportsStyleInstructions,
 } from './narration-choices';
+
+/** The live speech catalogue of 2026-10-17, parsed the way the app parses it. */
+const LIVE = parseModelItems(catalogue.data);
+const liveModel = (id: string): OpenRouterModel => {
+  const found = LIVE.find((model) => model.id === id);
+  if (!found) throw new Error(`no live model ${id}`);
+  return found;
+};
 
 function speech(id: string, prompt: number, completion: number, voices = 10): OpenRouterModel {
   return {
@@ -26,6 +35,7 @@ function speech(id: string, prompt: number, completion: number, voices = 10): Op
     outputModalities: ['speech'],
     supportedParameters: [],
     supportedVoices: Array.from({ length: voices }, (_, index) => `voice-${index}`),
+    createdAt: null,
   };
 }
 
@@ -56,12 +66,79 @@ describe('hourly narration cost', () => {
 });
 
 describe('narratableModels', () => {
-  it('keeps speech models with voices and the free narrator, and drops other silent models', () => {
-    const silent = speech('bytedance-seed/seed-audio-1-0', 0, 0.0025, 0);
-    expect(narratableModels([silent, KOKORO, FREE]).map((model) => model.id)).toEqual([
-      KOKORO.id,
-      FREE.id,
+  it('keeps every speech model of the live catalogue except Seed Audio', () => {
+    const ids = narratableModels(LIVE).map((model) => model.id);
+    expect(LIVE).toHaveLength(35);
+    expect(ids).toHaveLength(34);
+    expect(ids).not.toContain('bytedance-seed/seed-audio-1-0');
+  });
+
+  it('includes Fish Audio Drama 3, which lists no preset voices', () => {
+    const drama = liveModel('fish-audio/drama-3');
+    expect(drama.supportedVoices).toEqual([]);
+    expect(narratableModels([drama])).toEqual([drama]);
+  });
+
+  it('drops a model whose output is not speech', () => {
+    const text = { ...liveModel('fish-audio/drama-3'), outputModalities: ['text'] };
+    expect(narratableModels([text])).toEqual([]);
+  });
+});
+
+describe('arrangeSpeechModels', () => {
+  const dated = (id: string, name: string, createdAt: number | null): OpenRouterModel => ({
+    ...speech(id, 0, 0, 0),
+    name,
+    createdAt,
+  });
+
+  it('puts the three curated narrators first, in their own order, whatever their dates', () => {
+    const arranged = arrangeSpeechModels([
+      dated('fish-audio/drama-3', 'Fish Audio: Drama 3', 9_000),
+      dated(FREE_NARRATOR_MODEL_ID, 'Fish Audio: S2.1 Pro Free', 1),
+      dated('hexgrad/kokoro-82m', 'hexgrad: Kokoro 82M', 2),
+      dated(GEMINI_FLASH_LITE.id, 'Google: Gemini', 3),
     ]);
+    expect(arranged.map((model) => model.id)).toEqual([
+      GEMINI_FLASH_LITE.id,
+      'hexgrad/kokoro-82m',
+      FREE_NARRATOR_MODEL_ID,
+      'fish-audio/drama-3',
+    ]);
+  });
+
+  it('orders the rest newest first on the live catalogue', () => {
+    const ids = arrangeSpeechModels(LIVE).map((model) => model.id);
+    expect(ids.slice(0, 3)).toEqual([GEMINI_FLASH_LITE.id, KOKORO.id, FREE_NARRATOR_MODEL_ID]);
+    expect(ids.slice(3, 6)).toEqual([
+      'heygen/heygen-voice-1',
+      'heygen/heygen-voice-1-turbo',
+      'fish-audio/drama-3',
+    ]);
+  });
+
+  it('puts a model with no date after the dated ones, and breaks ties by name then id', () => {
+    const arranged = arrangeSpeechModels([
+      dated('vendor/undated', 'Vendor: Undated', null),
+      dated('vendor/b-same', 'Vendor: Same B', 5),
+      dated('vendor/z-older', 'Vendor: Older', 4),
+      dated('vendor/a-same', 'Vendor: Same A', 5),
+      dated('vendor/a-undated', 'Vendor: Aardvark', null),
+    ]);
+    expect(arranged.map((model) => model.id)).toEqual([
+      'vendor/a-same',
+      'vendor/b-same',
+      'vendor/z-older',
+      'vendor/a-undated',
+      'vendor/undated',
+    ]);
+  });
+
+  it('does not change the list it was given', () => {
+    const input = [dated('vendor/a', 'A', 1), dated('vendor/b', 'B', 2)];
+    const snapshot = input.map((model) => model.id);
+    arrangeSpeechModels(input);
+    expect(input.map((model) => model.id)).toEqual(snapshot);
   });
 });
 
@@ -87,6 +164,7 @@ describe('narration settings for a model', () => {
     const mai = {
       ...it,
       supportedVoices: ['en-US-Ethan:MAI-Voice-2.1-Flash', 'it-IT-Grant:MAI-Voice-2.1-Flash'],
+      createdAt: null,
     };
     expect(narrationForModel(current, mai, 'it').voice).toBe('it-IT-Grant:MAI-Voice-2.1-Flash');
   });
@@ -98,12 +176,6 @@ describe('narration settings for a model', () => {
   it('keeps the style only for models that take steering instructions', () => {
     expect(narrationForModel(current, GEMINI_FLASH_LITE).style).toBe('calm');
     expect(narrationForModel(current, ORPHEUS).style).toBeNull();
-  });
-
-  it('recognises Gemini TTS and gpt-4o-mini-tts as steerable', () => {
-    expect(supportsStyleInstructions('google/gemini-3.8-flash-lite-tts')).toBe(true);
-    expect(supportsStyleInstructions('openai/gpt-4o-mini-tts')).toBe(true);
-    expect(supportsStyleInstructions('hexgrad/kokoro-82m')).toBe(false);
   });
 });
 

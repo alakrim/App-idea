@@ -50,6 +50,8 @@ export interface ChapterViewProps {
   jobs: readonly Job[];
   paragraphs: readonly ReadingParagraph[];
   cues: readonly AmbienceCue[];
+  /** True once the chapter has been analysed, so an empty cue list means "no setting found". */
+  analysed?: boolean;
   onBack: () => void;
   onPlay: (chapterId: string) => void;
   onRetry: (chapterId: string) => void;
@@ -67,6 +69,7 @@ export function ChapterView({
   jobs,
   paragraphs,
   cues,
+  analysed = false,
   onBack,
   onPlay,
   onRetry,
@@ -192,7 +195,9 @@ export function ChapterView({
             ) : null}
             <View
               testID="chapter-reading-text"
-              onLayout={(event: LayoutChangeEvent) => scroll.onReadingLayout(event.nativeEvent.layout.y)}
+              onLayout={(event: LayoutChangeEvent) =>
+                scroll.onReadingLayout(event.nativeEvent.layout.y)
+              }
             >
               <ReadingText
                 paragraphs={paragraphs}
@@ -206,7 +211,7 @@ export function ChapterView({
         ) : null}
 
         <Section title="Ambience" trailing={cues.length > 0 ? String(cues.length) : undefined}>
-          <AmbienceList cues={cues} onToggle={onToggleCue} />
+          <AmbienceList cues={cues} analysed={analysed} onToggle={onToggleCue} />
         </Section>
       </ScrollView>
     </SafeAreaView>

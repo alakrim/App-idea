@@ -19,12 +19,16 @@ function recorder(): { events: PipelineEvent[]; onEvent: (e: PipelineEvent) => v
   return { events, onEvent: (event) => events.push(event) };
 }
 
-function stageStatuses(events: PipelineEvent[]): string[] {
-  return events.flatMap((e) =>
-    e.type === 'stage' && (e.status === 'done' || e.status === 'skipped' || e.status === 'failed')
-      ? [`${e.stage}:${e.status}`]
-      : [],
-  );
+/**
+ * The settled status of each stage of the run. Analyze, translate and narrate run at once, so the
+ * order of their events is not part of the contract, only the status each one ends with.
+ */
+function stageStatuses(events: PipelineEvent[]): Record<string, string> {
+  const statuses: Record<string, string> = {};
+  for (const e of events) {
+    if (e.type === 'stage' && e.status !== 'running') statuses[e.stage] = e.status;
+  }
+  return statuses;
 }
 
 function callsNamed(state: { llmCalls: { request: LlmRequest }[] }, name: string): number {
@@ -46,13 +50,13 @@ describe('runChapter: the happy path', () => {
     const outcome = await runChapter(CHAPTER_ID, fake.ports, { onEvent });
 
     expect(outcome).toEqual({ status: 'ready' });
-    expect(stageStatuses(events)).toEqual([
-      'extract:done',
-      'segment:done',
-      'analyze:done',
-      'translate:skipped',
-      'narrate:done',
-    ]);
+    expect(stageStatuses(events)).toEqual({
+      extract: 'done',
+      segment: 'done',
+      analyze: 'done',
+      translate: 'skipped',
+      narrate: 'done',
+    });
     expect(events.at(-1)).toEqual({ type: 'done', chapterId: CHAPTER_ID });
 
     const chapter = fake.chapter();
@@ -272,13 +276,13 @@ describe('runChapter: translation', () => {
     const second = await runChapter(CHAPTER_ID, fake.ports, { onEvent });
 
     expect(second.status).toBe('ready');
-    expect(stageStatuses(events)).toEqual([
-      'extract:skipped',
-      'segment:skipped',
-      'analyze:skipped',
-      'translate:done',
-      'narrate:done',
-    ]);
+    expect(stageStatuses(events)).toEqual({
+      extract: 'skipped',
+      segment: 'skipped',
+      analyze: 'skipped',
+      translate: 'done',
+      narrate: 'done',
+    });
     expect(callsNamed(fake.state, 'chapter_analysis')).toBe(1);
     expect(fake.job('translate')?.status).toBe('done');
   });
@@ -296,13 +300,13 @@ describe('runChapter: changing settings', () => {
       'ready',
     );
     expect(fake.state.ttsCalls).toHaveLength(firstTtsCalls);
-    expect(stageStatuses(unchanged.events)).toEqual([
-      'extract:skipped',
-      'segment:skipped',
-      'analyze:skipped',
-      'translate:skipped',
-      'narrate:skipped',
-    ]);
+    expect(stageStatuses(unchanged.events)).toEqual({
+      extract: 'skipped',
+      segment: 'skipped',
+      analyze: 'skipped',
+      translate: 'skipped',
+      narrate: 'skipped',
+    });
 
     fake.state.narration = { ...fake.state.narration, voice: 'Puck' };
     const changed = recorder();
@@ -353,20 +357,22 @@ describe('runChapter: cancellation and resume', () => {
 
     const cancelled = await runChapter(CHAPTER_ID, fake.ports, { signal: controller.signal });
 
-    expect(cancelled).toEqual({ status: 'cancelled', stage: 'narrate' });
+    // Analysis runs beside narration, so either of them may be the stage that observed the cancel.
+    expect(cancelled.status).toBe('cancelled');
     expect(fake.chapter().status).toBe('draft');
     expect(fake.job('narrate')?.status).toBe('cancelled');
-    expect(fake.job('analyze')?.status).toBe('done');
+    expect(['done', 'cancelled']).toContain(fake.job('analyze')?.status);
     const saved = fake.state.segments.get(CHAPTER_ID)?.length ?? 0;
     expect(saved).toBeGreaterThan(0);
-    expect(saved).toBeLessThan(12);
 
     const ttsBefore = fake.state.ttsCalls.length;
     const resumed = await runChapter(CHAPTER_ID, fake.ports);
 
+    // The ramp plans this chapter in more segments than its characters alone suggest, so count them.
+    const total = fake.state.segments.get(CHAPTER_ID)?.length ?? 0;
+    expect(saved).toBeLessThan(total);
     expect(resumed.status).toBe('ready');
-    expect(fake.state.ttsCalls.length - ttsBefore).toBe(12 - saved);
-    expect(fake.state.segments.get(CHAPTER_ID)).toHaveLength(12);
+    expect(fake.state.ttsCalls.length - ttsBefore).toBe(total - saved);
   });
 
   it('reports cancellation of a stage before it starts as a cancelled run', async () => {

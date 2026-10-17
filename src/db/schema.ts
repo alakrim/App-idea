@@ -128,6 +128,31 @@ export const ambienceCues = sqliteTable(
   (t) => [index('ambience_cues_chapter_start_idx').on(t.chapterId, t.startSentence)],
 );
 
+/**
+ * Validated cues keyed by a hash of the chapter text, model and prompt version. Not tied to a
+ * chapter, so a re-upload of the same text finds its cues (ADR-0005 amendment 2026-10-17).
+ */
+export const ambienceCueCache = sqliteTable('ambience_cue_cache', {
+  key: text('key').primaryKey(),
+  /** JSON: CachedCuesSchema. */
+  cues: text('cues').notNull(),
+  createdAt: integer('created_at').notNull(),
+});
+
+/** The compact cue report of each chapter's latest analysis. */
+export const ambienceReports = sqliteTable(
+  'ambience_reports',
+  {
+    chapterId: text('chapter_id')
+      .primaryKey()
+      .references(() => chapters.id, { onDelete: 'cascade' }),
+    /** JSON: CueReportSchema. */
+    report: text('report').notNull(),
+    updatedAt: integer('updated_at').notNull(),
+  },
+  (t) => [index('ambience_reports_updated_idx').on(t.updatedAt)],
+);
+
 export const chapterMemory = sqliteTable('chapter_memory', {
   chapterId: text('chapter_id')
     .primaryKey()
@@ -329,6 +354,8 @@ export const schema = {
   paragraphs,
   sentences,
   ambienceCues,
+  ambienceCueCache,
+  ambienceReports,
   chapterMemory,
   entities,
   entityFacts,

@@ -47,6 +47,7 @@ export function ChapterScreen({ chapterId, focusSentence = null }: ChapterScreen
       jobs={data.jobs}
       paragraphs={data.paragraphs}
       cues={data.cues}
+      analysed={data.cueReport !== null}
       onBack={() => (router.canGoBack() ? router.back() : router.replace('/'))}
       onPlay={(id) => router.push({ pathname: '/player', params: { chapterId: id } })}
       onRetry={(id) => pipeline.retry(id)}

@@ -3,6 +3,7 @@
  * inspect what the pipeline wrote and count what it called. No test touches a database, the
  * network or a file system.
  */
+import type { CueReport } from '@/core/analysis/cue-report';
 import type { ChapterMemoryRecord, ValidatedCue } from '@/core/analysis/types';
 import { DEFAULT_SETTINGS } from '@/core/defaults';
 import type {
@@ -108,7 +109,12 @@ export interface FakeOptions {
     request: LlmRequest,
     model: string,
   ) => LlmReply | undefined | Promise<LlmReply | undefined>;
-  readonly tts?: (text: string, profile: NarrationProfile) => TtsResult | Promise<TtsResult>;
+  /** Replaces the default speech. It receives the run's signal, so a held request can be cancelled. */
+  readonly tts?: (
+    text: string,
+    profile: NarrationProfile,
+    signal: AbortSignal,
+  ) => TtsResult | Promise<TtsResult>;
   readonly catalog?: Record<string, CatalogModel>;
   /** Overrides fields of the chapter's narration profile. */
   readonly narration?: Partial<NarrationProfile>;
@@ -123,6 +129,8 @@ export interface FakeState {
   readonly sentences: Map<Id, StoredSentence[]>;
   readonly memories: Map<Id, ChapterMemory>;
   readonly cues: Map<Id, readonly ValidatedCue[]>;
+  readonly cueCache: Map<string, readonly ValidatedCue[]>;
+  readonly cueReports: Map<Id, CueReport>;
   readonly entities: Entity[];
   readonly facts: EntityFact[];
   readonly segments: Map<Id, AudioSegment[]>;
@@ -199,6 +207,7 @@ export function defaultReply(request: LlmRequest): LlmReply {
     }));
     return reply(JSON.stringify({ items }));
   }
+  if (name === 'setting_fallback') return reply(JSON.stringify({ cue: null }));
   if (name === 'index_selection') {
     const count = [...request.user.matchAll(/^\[(\d+)\] /gmu)].length;
     return reply(JSON.stringify({ keep: Array.from({ length: count }, (_, i) => i) }));
@@ -246,6 +255,8 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     sentences: new Map(),
     memories: new Map(),
     cues: new Map(),
+    cueCache: new Map(),
+    cueReports: new Map(),
     entities: [],
     facts: [],
     segments: new Map(),
@@ -315,16 +326,28 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     },
     async setTranslations(chapterId, translations, partialIdx) {
       const partial = new Set(partialIdx);
+      // Like the real store, only the sentences in `translations` change. The rest keep their rows.
       state.sentences.set(
         chapterId,
-        (state.sentences.get(chapterId) ?? []).map((s) => ({
-          ...s,
-          translated: partial.has(s.idx) ? null : (translations.get(s.idx) ?? null),
-        })),
+        (state.sentences.get(chapterId) ?? []).map((s) => {
+          const text = translations.get(s.idx);
+          if (text === undefined) return s;
+          return { ...s, translated: partial.has(s.idx) ? null : text };
+        }),
       );
     },
     async saveCues(chapterId, cues) {
       state.cues.set(chapterId, cues);
+    },
+    async getCueCache(key) {
+      const cached = state.cueCache.get(key);
+      return cached ? [...cached] : null;
+    },
+    async saveCueCache(key, cues) {
+      state.cueCache.set(key, [...cues]);
+    },
+    async saveCueReport(chapterId, report) {
+      state.cueReports.set(chapterId, report);
     },
     async saveMemory(memory) {
       state.memories.set(memory.chapterId, memory);
@@ -435,9 +458,9 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
       },
     },
     tts: {
-      async synthesize({ text, profile }) {
+      async synthesize({ text, profile, signal }) {
         state.ttsCalls.push({ text, style: profile.style, voice: profile.voice });
-        if (options.tts) return options.tts(text, profile);
+        if (options.tts) return options.tts(text, profile, signal);
         const frames = Math.max(1, Math.ceil(text.length / 200));
         return { bytes: mp3Bytes(frames), mime: 'audio/mpeg', costUsd: null };
       },

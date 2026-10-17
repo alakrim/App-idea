@@ -12,15 +12,19 @@ import { hairline, iconSize, iconStrokeWidth, minTouchTarget, radius, space } fr
 
 export interface AmbienceListProps {
   cues: readonly AmbienceCue[];
+  /** True once the chapter has been analysed. Decides the copy of the empty state. */
+  analysed: boolean;
   onToggle: (cueId: string, enabled: boolean) => void;
 }
 
 /** The ambience cues of a chapter. Each switch persists straight away. */
-export function AmbienceList({ cues, onToggle }: AmbienceListProps) {
+export function AmbienceList({ cues, analysed, onToggle }: AmbienceListProps) {
   if (cues.length === 0) {
     return (
       <Text variant="caption" tone="muted">
-        No ambience in this chapter. Its voice plays on its own.
+        {analysed
+          ? 'No ambience: no clear setting found'
+          : 'No ambience in this chapter. Its voice plays on its own.'}
       </Text>
     );
   }

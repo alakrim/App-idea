@@ -1,6 +1,7 @@
 import { DEFAULT_NARRATION } from '@/core/defaults';
 import { estimateSpeechCost } from '@/core/llm/cost';
-import { optionFor, type NarratorOption } from '@/core/narration/options';
+import { isNarratableModel, supportsStyleInstructions } from '@/core/narration/capabilities';
+import { NARRATOR_OPTIONS, type NarratorOption } from '@/core/narration/options';
 import { defaultVoiceFor } from '@/core/narration/voices';
 import type { NarrationSettings } from '@/core/settings';
 import type { OpenRouterModel } from '@/services/openrouter';
@@ -20,17 +21,36 @@ export function hourlyNarrationCost(model: Pick<OpenRouterModel, 'pricing'>): nu
   return estimateSpeechCost(model, NARRATION_CHARS_PER_HOUR);
 }
 
-/**
- * Speech models the user can narrate with: those that list at least one voice, plus the narrators
- * that take no voice at all.
- */
+/** Every speech model the user can narrate with. Voice-less models are kept: they use their own voice. */
 export function narratableModels(models: readonly OpenRouterModel[]): OpenRouterModel[] {
-  return models.filter((model) => model.supportedVoices.length > 0 || optionFor(model.id) !== null);
+  return models.filter(isNarratableModel);
 }
 
-/** Only some providers accept the `instructions` steering field. R1 documents Gemini TTS and gpt-4o-mini-tts. */
-export function supportsStyleInstructions(modelId: string): boolean {
-  return /^google\/gemini-.*tts/.test(modelId) || /gpt-4o-mini-tts/.test(modelId);
+/**
+ * The speech models in picker order: the three curated narrators first, in their own order, then
+ * the rest newest first. A model with no date goes after the dated ones. Name, then id, break ties.
+ */
+export function arrangeSpeechModels(models: readonly OpenRouterModel[]): OpenRouterModel[] {
+  return [...models].sort(compareSpeechModels);
+}
+
+/** Position among the curated narrators, or past the end for any other model. */
+function narratorRank(modelId: string): number {
+  const index = NARRATOR_OPTIONS.findIndex((option) => option.modelId === modelId);
+  return index === -1 ? NARRATOR_OPTIONS.length : index;
+}
+
+function compareSpeechModels(a: OpenRouterModel, b: OpenRouterModel): number {
+  const rank = narratorRank(a.id) - narratorRank(b.id);
+  if (rank !== 0) return rank;
+  if (a.createdAt !== b.createdAt) {
+    if (a.createdAt === null) return 1;
+    if (b.createdAt === null) return -1;
+    return b.createdAt - a.createdAt;
+  }
+  if (a.name !== b.name) return a.name < b.name ? -1 : 1;
+  if (a.id === b.id) return 0;
+  return a.id < b.id ? -1 : 1;
 }
 
 /**
@@ -40,7 +60,7 @@ export function supportsStyleInstructions(modelId: string): boolean {
  */
 export function narrationForModel(
   current: NarrationSettings,
-  model: Pick<OpenRouterModel, 'id' | 'supportedVoices'>,
+  model: Pick<OpenRouterModel, 'id' | 'supportedVoices' | 'supportedParameters'>,
   lang: string | null = null,
 ): NarrationSettings {
   const voice = model.supportedVoices.includes(current.voice)
@@ -53,7 +73,7 @@ export function narrationForModel(
     provider: 'openrouter',
     model: model.id,
     voice,
-    style: supportsStyleInstructions(model.id) ? (current.style ?? DEFAULT_NARRATION.style) : null,
+    style: supportsStyleInstructions(model) ? (current.style ?? DEFAULT_NARRATION.style) : null,
   };
 }
 

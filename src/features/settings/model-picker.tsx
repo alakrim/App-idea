@@ -1,5 +1,12 @@
 import { useMemo, useState, type ReactNode } from 'react';
-import { FlatList, Pressable, StyleSheet, View, type ListRenderItem } from 'react-native';
+import {
+  FlatList,
+  Pressable,
+  RefreshControl,
+  StyleSheet,
+  View,
+  type ListRenderItem,
+} from 'react-native';
 
 import type { OpenRouterModel } from '@/services/openrouter';
 import { Badge } from '@/ui/badge';
@@ -74,6 +81,11 @@ export interface ModelPickerProps {
   searchLabel: string;
   /** Shown above the search field, for notices such as an offline snapshot. */
   header?: ReactNode;
+  /** Gives a row the "New" badge. */
+  isNew?: (model: OpenRouterModel) => boolean;
+  /** Pull-to-refresh. Leave out `onRefresh` for a list that cannot be refreshed. */
+  refreshing?: boolean;
+  onRefresh?: () => void;
 }
 
 /** Searchable model list with a Recommended section and the selected model checked. */
@@ -85,6 +97,9 @@ export function ModelPicker({
   onSelect,
   searchLabel,
   header,
+  isNew,
+  refreshing = false,
+  onRefresh,
 }: ModelPickerProps) {
   const { colors } = useTheme();
   const [query, setQuery] = useState('');
@@ -115,10 +130,11 @@ export function ModelPicker({
 
     const selected = item.model.id === selectedId;
     const label = displayName(item.model);
+    const newModel = isNew?.(item.model) === true;
     return (
       <Pressable
         accessibilityRole="radio"
-        accessibilityLabel={`${label}. ${providerLabel(item.model.id)}. ${describe(item.model)}`}
+        accessibilityLabel={`${label}. ${newModel ? 'New. ' : ''}${providerLabel(item.model.id)}. ${describe(item.model)}`}
         accessibilityState={{ checked: selected }}
         onPress={() => onSelect(item.model)}
         style={({ pressed }) => [
@@ -137,6 +153,7 @@ export function ModelPicker({
               {label}
             </Text>
             {item.recommended ? <Badge label="Recommended" tone="accent" /> : null}
+            {newModel ? <Badge label="New" tone="success" /> : null}
           </View>
           <Text variant="caption" tone="muted" numberOfLines={2}>
             {`${providerLabel(item.model.id)} · ${describe(item.model)}`}
@@ -156,6 +173,16 @@ export function ModelPicker({
       renderItem={renderItem}
       keyboardShouldPersistTaps="handled"
       contentContainerStyle={styles.content}
+      refreshControl={
+        onRefresh ? (
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={colors.accent}
+            colors={[colors.accent]}
+          />
+        ) : undefined
+      }
       ListHeaderComponent={
         <View style={styles.headerBlock}>
           {header}

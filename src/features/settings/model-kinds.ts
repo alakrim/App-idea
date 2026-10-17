@@ -1,10 +1,12 @@
 import { DEFAULT_MODELS, DEFAULT_NARRATION } from '@/core/defaults';
+import { isNarratableModel } from '@/core/narration/capabilities';
 import type { Settings, SettingsPatch } from '@/core/settings';
 import type { OpenRouterModel, OutputModality } from '@/services/openrouter';
 import { supportsStructuredOutput } from '@/services/openrouter';
 
 import { formatContext, formatHourlyCost, formatPerMillion } from './format';
-import { hourlyNarrationCost, narrationForModel, narratableModels } from './narration-choices';
+import { isNewModel } from './model-badges';
+import { arrangeSpeechModels, hourlyNarrationCost, narrationForModel } from './narration-choices';
 
 /**
  * The model pickers the app offers. One route serves all of them, selected by `kind`, so each
@@ -24,6 +26,10 @@ export interface ModelKindConfig {
   modality: OutputModality;
   /** Keeps the models this picker can use. */
   accept: (model: OpenRouterModel) => boolean;
+  /** Puts the accepted models in picker order. */
+  arrange: (models: readonly OpenRouterModel[]) => readonly OpenRouterModel[];
+  /** Whether a row gets the "New" badge. `now` is the time the picker was opened. */
+  isNew: (model: OpenRouterModel, now: number) => boolean;
   selectedId: string;
   recommendedId: string;
   describe: (model: OpenRouterModel) => string;
@@ -34,6 +40,9 @@ export interface ModelKindConfig {
 function isTextModel(model: OpenRouterModel): boolean {
   return model.outputModalities.includes('text');
 }
+
+const keepOrder = (models: readonly OpenRouterModel[]) => models;
+const neverNew = () => false;
 
 /** Text output, plus structured JSON output because the pipeline validates JSON against schemas. */
 function isStructuredTextModel(model: OpenRouterModel): boolean {
@@ -46,7 +55,7 @@ function describeText(model: OpenRouterModel): string {
 
 function describeSpeech(model: OpenRouterModel): string {
   const voices = model.supportedVoices.length;
-  const voiceText = voices === 0 ? 'Own voice' : `${voices} voices`;
+  const voiceText = voices === 0 ? 'Default voice' : `${voices} voices`;
   return `${voiceText} · ${formatHourlyCost(hourlyNarrationCost(model))} of narration`;
 }
 
@@ -63,6 +72,8 @@ export function modelKindConfig(kind: ModelKind, settings: Settings): ModelKindC
         searchLabel: 'Search translation models',
         modality: 'text',
         accept: isStructuredTextModel,
+        arrange: keepOrder,
+        isNew: neverNew,
         selectedId: settings.translationModel,
         recommendedId: DEFAULT_MODELS.translation,
         describe: describeText,
@@ -74,6 +85,8 @@ export function modelKindConfig(kind: ModelKind, settings: Settings): ModelKindC
         searchLabel: 'Search analysis models',
         modality: 'text',
         accept: isStructuredTextModel,
+        arrange: keepOrder,
+        isNew: neverNew,
         selectedId: settings.analysisModel,
         recommendedId: DEFAULT_MODELS.analysis,
         describe: describeText,
@@ -85,6 +98,8 @@ export function modelKindConfig(kind: ModelKind, settings: Settings): ModelKindC
         searchLabel: 'Search cleanup models',
         modality: 'text',
         accept: isStructuredTextModel,
+        arrange: keepOrder,
+        isNew: neverNew,
         selectedId: settings.cleanupModel,
         recommendedId: DEFAULT_MODELS.cleanup,
         describe: describeText,
@@ -95,7 +110,9 @@ export function modelKindConfig(kind: ModelKind, settings: Settings): ModelKindC
         title: 'Narration model',
         searchLabel: 'Search narration models',
         modality: 'speech',
-        accept: (model) => narratableModels([model]).length > 0,
+        accept: isNarratableModel,
+        arrange: arrangeSpeechModels,
+        isNew: isNewModel,
         selectedId: settings.narration.model,
         recommendedId: DEFAULT_NARRATION.model,
         describe: describeSpeech,

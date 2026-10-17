@@ -129,9 +129,14 @@ function describeEvent(event: PipelineEvent): string | null {
       return `segmentReady #${event.segment.idx} sentences ${event.segment.sentenceStart}-${event.segment.sentenceEnd} ${event.segment.durationMs}ms`;
     case 'error':
       return `error ${event.stage}: ${event.error.code} ${event.error.message}`;
+    case 'playable':
+      return 'playable';
+    case 'analysisReady':
+      return 'analysisReady';
     case 'done':
       return 'done';
     case 'progress':
+    case 'spokenChars':
       return null;
   }
 }

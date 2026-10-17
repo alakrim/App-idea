@@ -123,8 +123,12 @@ function live(
     state,
     stages,
     overall: 0.4,
+    playable: false,
+    etaMs: null,
     readySegments: 0,
     totalSegments: 4,
+    narratedMs: 0,
+    estimatedTotalMs: null,
     costUsdSoFar: 0.012,
     error,
   };

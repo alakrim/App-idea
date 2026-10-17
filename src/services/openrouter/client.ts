@@ -1,6 +1,6 @@
 import { chatJson, chatRaw, chatText } from './chat';
 import { validateKey } from './key';
-import { createModelCatalog } from './models';
+import { CATALOG_TTL_MS, createModelCatalog } from './models';
 import { parsePdf } from './pdf';
 import { synthesizeSpeech } from './speech';
 import { createTransport } from './transport';
@@ -29,7 +29,6 @@ export interface OpenRouterClientOptions {
   maxRetries?: number;
   /** Longest passage accepted by synthesizeSpeech. */
   maxSpeechChars?: number;
-  modelCacheTtlMs?: number;
   fetchImpl?: typeof fetch;
   sleep?: (ms: number) => Promise<void>;
   random?: () => number;
@@ -51,7 +50,6 @@ const defaults = {
   timeoutMs: 60_000,
   maxRetries: 3,
   maxSpeechChars: 4_000,
-  modelCacheTtlMs: 60 * 60 * 1000,
 } as const;
 
 export function createOpenRouterClient(options: OpenRouterClientOptions): OpenRouterClient {
@@ -70,7 +68,7 @@ export function createOpenRouterClient(options: OpenRouterClientOptions): OpenRo
   });
   const models = createModelCatalog({
     transport,
-    ttlMs: options.modelCacheTtlMs ?? defaults.modelCacheTtlMs,
+    ttlMs: CATALOG_TTL_MS,
     now,
   });
   const chatDeps = { transport, models };

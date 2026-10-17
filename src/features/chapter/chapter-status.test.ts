@@ -15,8 +15,12 @@ function progress(
     state,
     stages,
     overall: 0,
+    playable: false,
+    etaMs: null,
     readySegments: 0,
     totalSegments: null,
+    narratedMs: 0,
+    estimatedTotalMs: null,
     costUsdSoFar: 0,
     error: null,
   };
