@@ -31,6 +31,9 @@ _Last updated: 2026-10-11 by architect_
 
 ## Debug sweep (user request, 2026-10-17): find and fix every bug and inefficiency
 - **Trigger:** the device test of `6842a51` brought back incident 3 (choppy narration). Its fix `254fbad` exists only on charming-fermat. Root problem: two code lines.
+- **User instruction (2026-10-17): once I3 is green, delete every other version.** Keep only one code line (`claude/serene-hypatia-73g7qo`) and one APK (the latest unified build).
+  - Before deleting: archive charming-fermat's post-`54b3d2e` docs (F3 brief, A4 notes) into `docs/archive/`, and merge vigilant-brahmagupta's 2 doc commits.
+  - Then delete the remote branches `charming-fermat`, `vigilant-brahmagupta` and `test-100-credit` (the last needs the user to change GitHub's default branch first), and rewrite `apk-builds` to hold only the latest APK.
 - **Phase 0, unify (I3, blocking):** merge charming-fermat `54b3d2e` into this branch under the conflict policy in `docs/briefs/I3-unify-lines.md`. In parallel, **C1** builds the keyless live OpenRouter contract check (`npm run contract:check`), which catches the incident-4 class.
 - **C1 (done, branch `worktree-agent-adb5d14e474db71c2`, not pushed):** `npm run contract:check` runs keyless against the live catalogue, judges the app's real request bodies, and is a pre-flight in `build-apk.sh` (warns, or stops with `--strict`). Inventory: `scripts/contract/inventory.md`.
 - **Phase 1, audit** (2 workers at a time, read-only, findings with evidence and severity, on the unified code):
