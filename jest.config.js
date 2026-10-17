@@ -15,7 +15,7 @@ module.exports = {
       displayName: 'core',
       testEnvironment: 'node',
       testMatch: ['<rootDir>/src/core/**/*.test.ts'],
-      testPathIgnorePatterns: [AUDIT_PROOFS],
+      testPathIgnorePatterns: ['/node_modules/', AUDIT_PROOFS],
       moduleNameMapper,
       transform: {
         ...tsTransform,
@@ -44,7 +44,7 @@ module.exports = {
         '<rootDir>/src/services/pipeline/**/*.test.ts',
         '<rootDir>/src/db/**/*.test.ts',
       ],
-      testPathIgnorePatterns: [AUDIT_PROOFS],
+      testPathIgnorePatterns: ['/node_modules/', AUDIT_PROOFS],
       moduleNameMapper,
       transform: {
         ...tsTransform,
