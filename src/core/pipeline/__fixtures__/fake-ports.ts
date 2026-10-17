@@ -109,7 +109,12 @@ export interface FakeOptions {
     request: LlmRequest,
     model: string,
   ) => LlmReply | undefined | Promise<LlmReply | undefined>;
-  readonly tts?: (text: string, profile: NarrationProfile) => TtsResult | Promise<TtsResult>;
+  /** Replaces the default speech. It receives the run's signal, so a held request can be cancelled. */
+  readonly tts?: (
+    text: string,
+    profile: NarrationProfile,
+    signal: AbortSignal,
+  ) => TtsResult | Promise<TtsResult>;
   readonly catalog?: Record<string, CatalogModel>;
   /** Overrides fields of the chapter's narration profile. */
   readonly narration?: Partial<NarrationProfile>;
@@ -321,12 +326,14 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
     },
     async setTranslations(chapterId, translations, partialIdx) {
       const partial = new Set(partialIdx);
+      // Like the real store, only the sentences in `translations` change. The rest keep their rows.
       state.sentences.set(
         chapterId,
-        (state.sentences.get(chapterId) ?? []).map((s) => ({
-          ...s,
-          translated: partial.has(s.idx) ? null : (translations.get(s.idx) ?? null),
-        })),
+        (state.sentences.get(chapterId) ?? []).map((s) => {
+          const text = translations.get(s.idx);
+          if (text === undefined) return s;
+          return { ...s, translated: partial.has(s.idx) ? null : text };
+        }),
       );
     },
     async saveCues(chapterId, cues) {
@@ -451,9 +458,9 @@ export function createFakePorts(options: FakeOptions = {}): FakePorts {
       },
     },
     tts: {
-      async synthesize({ text, profile }) {
+      async synthesize({ text, profile, signal }) {
         state.ttsCalls.push({ text, style: profile.style, voice: profile.voice });
-        if (options.tts) return options.tts(text, profile);
+        if (options.tts) return options.tts(text, profile, signal);
         const frames = Math.max(1, Math.ceil(text.length / 200));
         return { bytes: mp3Bytes(frames), mime: 'audio/mpeg', costUsd: null };
       },

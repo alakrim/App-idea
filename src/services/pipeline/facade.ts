@@ -143,12 +143,20 @@ export function createPipelineService(deps: PipelineServiceDeps): PipelineServic
       (job) => job?.status === 'failed',
     );
     const ready = chapter.status === 'ready';
-    const segments = audioSegmentRepo.listByChapter(db, chapterId).length;
+    const rows = audioSegmentRepo.listByChapter(db, chapterId);
     return {
       state: ready ? 'ready' : chapter.status === 'failed' ? 'failed' : 'idle',
       stages,
-      readySegments: segments,
-      totalSegments: ready ? segments : null,
+      playable: rows.length > 0,
+      // The database does not store a segment's characters, so they are unknown until it is narrated again.
+      segments: new Map(
+        rows.map((row) => [row.idx, { durationMs: row.durationMs, chars: null }] as const),
+      ),
+      readySegments: rows.length,
+      totalSegments: ready ? rows.length : null,
+      spokenChars: null,
+      secondsPerChar: null,
+      timedSegments: 0,
       costBaseUsd: ledgerTotalOf(chapterId),
       runCostUsd: 0,
       error: failed?.error ?? null,

@@ -156,8 +156,12 @@ export function fakePipeline() {
         state,
         stages: [],
         overall: 0,
+        playable: readySegments > 0,
+        etaMs: null,
         readySegments,
         totalSegments: null,
+        narratedMs: 0,
+        estimatedTotalMs: null,
         costUsdSoFar: 0,
         error: null,
       };

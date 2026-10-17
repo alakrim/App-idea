@@ -1,45 +1,32 @@
 /*
- * The narrate stage: the spoken text (translation when present, else the original) is grouped into
- * segments and synthesized two at a time. Each saved segment is playable at once, so playback can
- * start before the chapter is finished. A rerun resumes at the first segment that is missing or was
- * made from different input (a new voice, a new style, or edited text).
+ * The narrate stage (ADR-0008). The spoken text is planned into segments as its sentences become
+ * final, and each segment is synthesized as soon as it is complete. Requests run in an adaptive
+ * window, and the segments are saved and announced strictly in order, so the player always has a
+ * contiguous prefix.
+ *
+ * A rerun reuses every saved segment whose sentences, text and voice still match, so it makes no
+ * speech call for them. The stage's job hash is the hash of the final plan, written when the stage
+ * completes.
  */
 import type { AudioSegment, NarrationProfile } from '@/core/domain';
 import { throwIfCancelled } from '@/core/llm/transport';
 import { wavDurationMs } from '@/core/narration/formats';
 import { isLanguageSupported, optionFor, segmentMaxCharsFor } from '@/core/narration/options';
-import { countCodePoints } from '@/core/text/build';
-import { planTtsSegments } from '@/core/text/chunk';
-import { detectScript } from '@/core/text/normalize';
 import { estimateSpeechSeconds } from '@/core/text/speech-rate';
 import { estimateSentenceOffsets } from '@/core/text/timing';
 
 import { StageFailure } from '../errors';
 import { stableHash } from '../hash';
 import { mp3DurationMs } from '../mp3-duration';
+import { AdaptiveWindow, SlidingWindow } from '../tts-pool';
+import { planFinalSegments } from './narrate-plan';
+import { translationPair } from './translate';
 
-import type { StageContext, StageDefinition } from '../context';
-import type { StoredSentence } from '../ports';
-
-/** Segments synthesized at once. Saving stays in segment order. */
-export const NARRATE_CONCURRENCY = 2;
-
-interface PlannedSegment {
-  readonly idx: number;
-  readonly sentenceStart: number;
-  readonly sentenceEnd: number;
-  readonly sentenceTexts: readonly string[];
-  readonly text: string;
-  readonly chars: number;
-  readonly hash: string;
-}
-
-interface Plan {
-  readonly profile: NarrationProfile;
-  readonly segments: readonly PlannedSegment[];
-  /** The language being read aloud: the translation's when there is one, else the source's. */
-  readonly spokenLang: string | null;
-}
+import type { FlowContext, StageDefinition, StageExecution } from '../context';
+import type { TtsResult } from '../ports';
+import type { SpokenTextGate } from '../spoken-text';
+import type { SegmentTiming } from '../tts-pool';
+import type { PlannedSegment } from './narrate-plan';
 
 /** English names for the messages below. Unlisted languages show their code. */
 const LANGUAGE_NAMES: Readonly<Record<string, string>> = {
@@ -78,161 +65,192 @@ function assertNarratorSpeaks(profile: NarrationProfile, spokenLang: string | nu
   );
 }
 
-export const narrateStage: StageDefinition = {
+/**
+ * The free narrator (`:free`) is rate-limited per model, so it gets one request at a time. Every
+ * other narrator uses the adaptive window.
+ */
+function isPinnedNarrator(modelId: string): boolean {
+  return modelId.endsWith(':free');
+}
+
+export const narrateStage: StageDefinition<FlowContext> = {
   stage: 'narrate',
   async prepare(ctx) {
-    const plan = await buildPlan(ctx);
-    const inputHash = stableHash(['narrate', plan.segments.map((s) => s.hash)]);
+    // The job hash is only known once the text is final, so the stage always runs and reuses audio.
+    const model = await ctx.ports.catalog.find(ctx.record.narration.model);
+    const profile: NarrationProfile = model?.supportsStyle
+      ? ctx.record.narration
+      : { ...ctx.record.narration, style: null };
     return {
-      inputHash,
-      model: plan.profile.model,
+      inputHash: null,
+      model: profile.model,
       promptVersion: null,
-      skip: plan.segments.length === 0,
-      execute: () => execute(ctx, plan),
+      skip: false,
+      execute: () => execute(ctx, profile),
     };
   },
 };
 
-async function buildPlan(ctx: StageContext): Promise<Plan> {
-  const sentences = await ctx.ports.chapters.getSentences(ctx.chapterId);
-  const model = await ctx.ports.catalog.find(ctx.record.narration.model);
-  const profile: NarrationProfile = model?.supportsStyle
-    ? ctx.record.narration
-    : { ...ctx.record.narration, style: null };
-
-  const spoken = sentences.map((s) => spokenSentence(s));
-  const groups = planTtsSegments(spoken, { maxChars: segmentMaxCharsFor(profile.model) });
-  const segments = groups.map((group, idx) => {
-    const members = spoken.filter(
-      (s) => s.idx >= group.sentenceStart && s.idx <= group.sentenceEnd,
-    );
-    const sentenceTexts = members.map((m) => m.text);
-    const text = joinSpoken(sentenceTexts);
-    return {
-      idx,
-      sentenceStart: group.sentenceStart,
-      sentenceEnd: group.sentenceEnd,
-      sentenceTexts,
-      text,
-      chars: countCodePoints(text),
-      hash: stableHash([
-        text,
-        profile.provider,
-        profile.model,
-        profile.voice,
-        profile.style,
-        profile.speed,
-      ]),
-    };
-  });
-  const translated = sentences.some((s) => s.translated !== null);
-  const { chapter, series } = ctx.record;
-  const spokenLang = translated
-    ? series.targetLang
-    : (chapter.sourceLang ?? series.sourceLang ?? null);
-  return { profile, segments, spokenLang };
+/** The language being read aloud: the translation's when there is one, else the source's. */
+function spokenLanguageOf(ctx: FlowContext): string | null {
+  const pair = translationPair(ctx.record);
+  if (pair !== null) return pair.targetLang;
+  return ctx.record.chapter.sourceLang ?? ctx.record.series.sourceLang ?? null;
 }
 
-function spokenSentence(sentence: StoredSentence) {
-  const text = (sentence.translated ?? sentence.text).trim();
-  return {
-    idx: sentence.idx,
-    paragraphIdx: sentence.paragraphIdx,
-    kind: sentence.kind,
-    text,
-    charCount: countCodePoints(text),
-  };
-}
-
-/** Joins sentences with a space, except between CJK sentences, which are written without one. */
-function joinSpoken(parts: readonly string[]): string {
-  return parts.reduce((acc, part) => {
-    if (acc === '') return part;
-    const separator = detectScript(acc.slice(-1)) === 'cjk' ? '' : ' ';
-    return `${acc}${separator}${part}`;
-  }, '');
-}
-
-async function execute(ctx: StageContext, plan: Plan): Promise<void> {
+async function execute(ctx: FlowContext, profile: NarrationProfile): Promise<StageExecution> {
   const { chapters, audio, tts } = ctx.ports;
-  const { profile, segments } = plan;
-  assertNarratorSpeaks(profile, plan.spokenLang);
+  assertNarratorSpeaks(profile, spokenLanguageOf(ctx));
+  const plan = {
+    maxChars: segmentMaxCharsFor(profile.model),
+    voiceKey: [profile.provider, profile.model, profile.voice, profile.style, profile.speed],
+  };
   const existing = await chapters.listAudioSegments(ctx.chapterId);
+  let savedChars = 0;
 
-  let firstStale = 0;
-  while (firstStale < segments.length && matches(existing[firstStale], segments[firstStale])) {
-    firstStale += 1;
-  }
-  if (existing.length > firstStale) {
-    await chapters.deleteAudioFrom(ctx.chapterId, firstStale);
-  }
-
-  const total = segments.length;
-  for (let start = firstStale; start < total; start += NARRATE_CONCURRENCY) {
-    throwIfCancelled(ctx.signal);
-    const batch = segments.slice(start, start + NARRATE_CONCURRENCY);
-    const built = await Promise.all(
-      batch.map(async (segment) => {
-        const result = await tts.synthesize({ text: segment.text, profile, signal: ctx.signal });
-        const ext = extensionFor(result.mime);
-        const uri = await audio.write(ctx.chapterId, segment.idx, result.bytes, ext);
-        const measured = measureDurationMs(ext, result.bytes);
-        const durationMs =
-          measured !== null && measured > 0
-            ? measured
-            : Math.max(1, Math.round(estimateSpeechSeconds(segment.text) * 1000));
-        await ctx.meter.recordSpeech(profile.model, {
-          chars: segment.chars,
-          audioSeconds: durationMs / 1000,
-          costUsd: result.costUsd,
-        });
-        return { segment, uri, durationMs };
-      }),
-    );
-
-    for (const { segment, uri, durationMs } of built) {
-      const row: AudioSegment = {
-        id: ctx.ports.ids(),
-        chapterId: ctx.chapterId,
+  /**
+   * Announces a segment that is saved or reused, in order. The first segment also makes the chapter
+   * playable, and progress advances with the characters that are saved.
+   */
+  const announce = (
+    segment: PlannedSegment,
+    uri: string,
+    durationMs: number,
+    synthesis: SegmentTiming | null,
+  ): void => {
+    savedChars += segment.chars;
+    ctx.emit({
+      type: 'segmentReady',
+      chapterId: ctx.chapterId,
+      segment: {
         idx: segment.idx,
         sentenceStart: segment.sentenceStart,
         sentenceEnd: segment.sentenceEnd,
-        fileUri: uri,
         durationMs,
-        sentenceOffsetsMs: estimateSentenceOffsets(segment.sentenceTexts, durationMs),
-        profileId: profile.id,
-        inputHash: segment.hash,
-      };
-      await chapters.saveAudioSegment(row);
-      ctx.emit({
-        type: 'segmentReady',
-        chapterId: ctx.chapterId,
-        segment: {
-          idx: row.idx,
-          sentenceStart: row.sentenceStart,
-          sentenceEnd: row.sentenceEnd,
-          durationMs,
-          uri,
-        },
-      });
-    }
+        uri,
+        chars: segment.chars,
+        synthesis: synthesis === null ? null : { ms: synthesis.synthMs, slots: synthesis.slots },
+      },
+    });
+    if (segment.idx === 0) ctx.emit({ type: 'playable', chapterId: ctx.chapterId });
+    const estimate = Math.max(1, ctx.spoken.estimatedChars());
     ctx.emit({
       type: 'progress',
       chapterId: ctx.chapterId,
       stage: 'narrate',
-      progress: (start + batch.length) / total,
+      progress: Math.min(1, savedChars / estimate),
     });
+  };
+
+  const pool = new SlidingWindow<PlannedSegment, TtsResult>({
+    window: new AdaptiveWindow({ pinned: isPinnedNarrator(profile.model) }),
+    signal: ctx.signal,
+    now: () => ctx.ports.clock.now(),
+    work: (segment, signal) => tts.synthesize({ text: segment.text, profile, signal }),
+    save: async (segment, result, timing) => {
+      const ext = extensionFor(result.mime);
+      const uri = await audio.write(ctx.chapterId, segment.idx, result.bytes, ext);
+      const durationMs = durationOf(ext, result.bytes, segment.text);
+      await ctx.meter.recordSpeech(profile.model, {
+        chars: segment.chars,
+        audioSeconds: durationMs / 1000,
+        costUsd: result.costUsd,
+      });
+      await chapters.saveAudioSegment(toRow(ctx, segment, uri, durationMs, profile));
+      announce(segment, uri, durationMs, timing);
+    },
+  });
+
+  const finals: PlannedSegment[] = [];
+  let reusing = true;
+  let synthesized = 0;
+  let lastEstimate = -1;
+  for (let k = 0; ; k += 1) {
+    const segment = await nextFinalSegment(ctx.spoken, ctx.signal, k, plan, (chars) => {
+      if (chars === lastEstimate) return;
+      lastEstimate = chars;
+      ctx.emit({ type: 'spokenChars', chapterId: ctx.chapterId, chars });
+    });
+    if (segment === null) break;
+    finals.push(segment);
+
+    const stored = existing[k];
+    if (reusing && stored !== undefined && matches(stored, segment)) {
+      announce(segment, stored.fileUri, stored.durationMs, null);
+      continue;
+    }
+    if (reusing) {
+      reusing = false;
+      if (existing.length > k) await chapters.deleteAudioFrom(ctx.chapterId, k);
+    }
+    synthesized += 1;
+    await pool.submit(segment);
+  }
+  await pool.finish();
+  if (existing.length > finals.length) {
+    await chapters.deleteAudioFrom(ctx.chapterId, finals.length);
   }
 
   const saved = await chapters.listAudioSegments(ctx.chapterId);
   const durationMs = saved.reduce((sum, s) => sum + s.durationMs, 0);
   await chapters.setMeta(ctx.chapterId, { durationMs });
+  return {
+    inputHash: stableHash(['narrate', finals.map((s) => s.hash)]),
+    status: synthesized === 0 ? 'skipped' : 'done',
+  };
 }
 
-function matches(stored: AudioSegment | undefined, planned: PlannedSegment | undefined): boolean {
+/**
+ * Waits until segment `k` is final, and returns it. Returns null when the chapter is complete and has
+ * no segment `k`. `onEstimate` reports the spoken character count each time the text changes.
+ */
+async function nextFinalSegment(
+  spoken: SpokenTextGate,
+  signal: AbortSignal,
+  k: number,
+  plan: { readonly maxChars: number; readonly voiceKey: readonly unknown[] },
+  onEstimate: (chars: number) => void,
+): Promise<PlannedSegment | null> {
+  for (;;) {
+    throwIfCancelled(signal);
+    onEstimate(spoken.estimatedChars());
+    const next = planFinalSegments(spoken.prefix(), plan, spoken.complete)[k];
+    if (next !== undefined) return next;
+    if (spoken.complete) return null;
+    await spoken.waitForChange(signal);
+  }
+}
+
+function toRow(
+  ctx: FlowContext,
+  segment: PlannedSegment,
+  uri: string,
+  durationMs: number,
+  profile: NarrationProfile,
+): AudioSegment {
+  return {
+    id: ctx.ports.ids(),
+    chapterId: ctx.chapterId,
+    idx: segment.idx,
+    sentenceStart: segment.sentenceStart,
+    sentenceEnd: segment.sentenceEnd,
+    fileUri: uri,
+    durationMs,
+    sentenceOffsetsMs: estimateSentenceOffsets(segment.sentenceTexts, durationMs),
+    profileId: profile.id,
+    inputHash: segment.hash,
+  };
+}
+
+/** The exact length from the file header when the format has one, else an estimate from the text. */
+function durationOf(ext: string, bytes: Uint8Array, text: string): number {
+  const measured = measureDurationMs(ext, bytes);
+  if (measured !== null && measured > 0) return measured;
+  return Math.max(1, Math.round(estimateSpeechSeconds(text) * 1000));
+}
+
+function matches(stored: AudioSegment, planned: PlannedSegment): boolean {
   return (
-    stored !== undefined &&
-    planned !== undefined &&
     stored.idx === planned.idx &&
     stored.sentenceStart === planned.sentenceStart &&
     stored.sentenceEnd === planned.sentenceEnd &&

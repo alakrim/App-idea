@@ -23,9 +23,17 @@ export interface ChapterProgress {
   stages: StageProgress[];
   /** Overall 0..1, weighted by typical stage duration. */
   overall: number;
+  /** The first narration segment is saved, so the chapter can be played. */
+  playable: boolean;
+  /** Estimated milliseconds of narration still to make. Null until the rate is known, and when ready. */
+  etaMs: number | null;
   /** Narration segments already playable (progressive playback). */
   readySegments: number;
   totalSegments: number | null;
+  /** Milliseconds of narration that are ready. */
+  narratedMs: number;
+  /** Estimated milliseconds of the whole narration. Null until some audio is ready. */
+  estimatedTotalMs: number | null;
   costUsdSoFar: number;
   error: PipelineError | null;
 }

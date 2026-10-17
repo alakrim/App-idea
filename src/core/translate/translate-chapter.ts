@@ -21,18 +21,28 @@ export const TRANSLATE_CHUNK_TOKENS = 1500;
 export const TRANSLATE_CONTEXT_SENTENCES = 5;
 
 /**
- * Splits the chapter into chunks of sentence idx ranges, both ends inclusive. A custom planner must
- * cover every sentence. A sentence it misses still gets the source text, flagged as partial.
+ * Splits the sentences into chunks of sentence idx ranges, both ends inclusive. A custom planner
+ * should cover every sentence it is given. A sentence it misses still gets the source text, flagged
+ * as partial.
  */
 export type ChunkPlanner = (sentences: readonly TranslateSentence[]) => readonly LlmChunk[];
 
 export interface TranslateProgress {
-  /** Sentences with a result so far, including the source fallbacks. */
+  /** Sentences with a final result so far, including the source fallbacks and the prefilled ones. */
   readonly translated: number;
   readonly total: number;
 }
 
+/** The results of one chunk, committed together. */
+export interface TranslateCommit {
+  /** Every sentence of the chunk, with its final text. Partial sentences hold the source text. */
+  readonly translations: ReadonlyMap<number, string>;
+  /** The sentences of this commit that fell back to the source text, ascending. */
+  readonly partialIdx: readonly number[];
+}
+
 export interface TranslateChapterInput {
+  /** Every sentence of the chapter, in reading order. */
   readonly sentences: readonly TranslateSentence[];
   readonly sourceLang: Lang;
   readonly targetLang: Lang;
@@ -45,14 +55,23 @@ export interface TranslateChapterInput {
   /** Chunks in flight at once. Defaults to 1, which keeps the context strictly sequential. */
   readonly concurrency?: number;
   readonly onProgress?: (progress: TranslateProgress) => void;
+  /**
+   * Called with each chunk's results once they are final, strictly in reading order, even when the
+   * chunks finished out of order. Awaited, so a slow write holds back the next commit.
+   */
+  readonly onCommit?: (commit: TranslateCommit) => Promise<void> | void;
+  /** Sentences that are already final (from an earlier call or a resumed run). They are not sent, but they give context. */
+  readonly translated?: ReadonlyMap<number, string>;
+  /** Only the sentences whose idx is in this inclusive range are translated. Defaults to all of them. */
+  readonly range?: { readonly fromIdx: number; readonly toIdx: number };
   /** Checked between chunks and passed to every model call. */
   readonly signal?: AbortSignal;
 }
 
 export interface TranslateChapterResult {
-  /** One entry for every input idx: the translation, or the source text when it is partial. */
+  /** Every final translation, prefilled ones included. Partial sentences hold the source text. */
   readonly translations: Map<number, string>;
-  /** idx values that fell back to the source text after the repair attempt, ascending. */
+  /** idx values of this call that fell back to the source text after the repair attempt, ascending. */
   readonly partialIdx: number[];
   readonly usage: TranslateUsage;
 }
@@ -68,10 +87,10 @@ export class TranslateOutputError extends Error {
 }
 
 /**
- * Translates a chapter sentence by sentence (by idx), keeping alignment. Each chunk is checked
- * against the idx values sent. Missing idx values get one repair request. Anything still missing
- * falls back to the source text and is reported in `partialIdx`. Transport errors propagate
- * unchanged for the caller to classify.
+ * Translates the sentences of a range by idx, keeping alignment. Each chunk is checked against the
+ * idx values sent. Missing idx values get one repair request. Anything still missing falls back to
+ * the source text and is reported in `partialIdx`. Transport errors propagate unchanged for the
+ * caller to classify.
  */
 export async function translateChapter(
   input: TranslateChapterInput,
@@ -93,9 +112,34 @@ export async function translateChapter(
 }
 
 interface ChunkJob {
-  readonly members: readonly TranslateSentence[];
+  /** The sentences of the chunk that are still to be translated, blanks included. */
+  readonly candidates: readonly TranslateSentence[];
   /** Position of the chunk's first sentence in the chapter, for the context window. */
   readonly startPos: number;
+}
+
+/** Hands out commits in job order, whatever order the jobs finish in. */
+class OrderedCommits {
+  private readonly ready = new Map<number, TranslateCommit>();
+  private next = 0;
+  private chain: Promise<void> = Promise.resolve();
+
+  constructor(private readonly apply: (commit: TranslateCommit) => Promise<void> | void) {}
+
+  /** Resolves once every commit up to and including this one has been applied. */
+  offer(index: number, commit: TranslateCommit): Promise<void> {
+    this.ready.set(index, commit);
+    this.chain = this.chain.then(() => this.drain());
+    return this.chain;
+  }
+
+  private async drain(): Promise<void> {
+    for (let commit = this.ready.get(this.next); commit; commit = this.ready.get(this.next)) {
+      this.ready.delete(this.next);
+      this.next += 1;
+      await this.apply(commit);
+    }
+  }
 }
 
 class ChapterRun {
@@ -108,6 +152,7 @@ class ChapterRun {
 
   constructor(input: TranslateChapterInput) {
     this.input = input;
+    for (const [idx, text] of input.translated ?? []) this.translations.set(idx, text);
   }
 
   usage(): TranslateUsage {
@@ -123,21 +168,20 @@ class ChapterRun {
     const concurrency = this.input.concurrency ?? 1;
     throwIfCancelled(signal);
 
-    // Blank sentences are not sent to the model. They come back unchanged.
-    for (const sentence of sentences) {
-      if (isBlank(sentence.text)) this.translations.set(sentence.idx, sentence.text);
-    }
-
-    const jobs = this.planJobs();
+    const candidates = this.candidates();
+    const jobs = this.planJobs(candidates);
+    const commits = new OrderedCommits((commit) => this.apply(commit));
     let next = 0;
     let failed = false;
     const worker = async (): Promise<void> => {
       while (!failed && next < jobs.length) {
-        const job = jobs[next];
+        const index = next;
+        const job = jobs[index];
         next += 1;
         if (!job) break;
         try {
-          await this.translateChunk(job.members, this.previousContext(job.startPos));
+          const commit = await this.translateJob(job);
+          await commits.offer(index, commit);
         } catch (error) {
           failed = true;
           throw error;
@@ -148,24 +192,33 @@ class ChapterRun {
     await Promise.all(Array.from({ length: Math.min(concurrency, jobs.length) }, worker));
 
     // A custom chunker that skipped a sentence still yields a complete result.
-    for (const sentence of sentences) {
-      if (this.translations.has(sentence.idx)) continue;
-      this.translations.set(sentence.idx, sentence.text);
-      this.partialIdx.push(sentence.idx);
+    const leftover = candidates.filter((s) => !this.translations.has(s.idx));
+    if (leftover.length > 0) {
+      await commits.offer(jobs.length, this.fallbackCommit(leftover));
+      onProgress?.({ translated: this.translations.size, total: sentences.length });
     }
   }
 
-  private planJobs(): ChunkJob[] {
-    const { sentences, chunker } = this.input;
-    const plan = chunker ?? defaultChunker;
+  /** Sentences in range that have no final text yet, in reading order. */
+  private candidates(): TranslateSentence[] {
+    const range = this.input.range ?? { fromIdx: -Infinity, toIdx: Infinity };
+    return this.input.sentences.filter(
+      (s) => s.idx >= range.fromIdx && s.idx <= range.toIdx && !this.translations.has(s.idx),
+    );
+  }
+
+  private planJobs(candidates: readonly TranslateSentence[]): ChunkJob[] {
+    const plan = this.input.chunker ?? defaultChunker;
+    const assigned = new Set<number>();
     const jobs: ChunkJob[] = [];
-    for (const chunk of plan(sentences)) {
-      const members = sentences.filter(
-        (s) => s.idx >= chunk.start && s.idx <= chunk.end && !isBlank(s.text),
+    for (const chunk of plan(candidates)) {
+      const inside = candidates.filter(
+        (s) => s.idx >= chunk.start && s.idx <= chunk.end && !assigned.has(s.idx),
       );
-      if (members.length === 0) continue;
-      const startPos = sentences.findIndex((s) => s.idx >= chunk.start);
-      jobs.push({ members, startPos });
+      if (inside.length === 0) continue;
+      for (const s of inside) assigned.add(s.idx);
+      const startPos = this.input.sentences.findIndex((s) => s.idx >= chunk.start);
+      jobs.push({ candidates: inside, startPos });
     }
     return jobs;
   }
@@ -179,10 +232,33 @@ class ChapterRun {
     }));
   }
 
-  private async translateChunk(
+  /** Translates one chunk. Blank sentences come back unchanged and are never sent. */
+  private async translateJob(job: ChunkJob): Promise<TranslateCommit> {
+    const members = job.candidates.filter((s) => !isBlank(s.text));
+    if (members.length === 0) return this.blankCommit(job.candidates);
+    const translated = await this.translateMembers(members, this.previousContext(job.startPos));
+    const translations = new Map<number, string>();
+    const partialIdx: number[] = [];
+    for (const sentence of job.candidates) {
+      if (isBlank(sentence.text)) {
+        translations.set(sentence.idx, sentence.text);
+        continue;
+      }
+      const text = translated.get(sentence.idx);
+      if (text === undefined) {
+        translations.set(sentence.idx, sentence.text);
+        partialIdx.push(sentence.idx);
+      } else {
+        translations.set(sentence.idx, text);
+      }
+    }
+    return { translations, partialIdx };
+  }
+
+  private async translateMembers(
     members: readonly TranslateSentence[],
     previousContext: readonly PreviousSentence[],
-  ): Promise<void> {
+  ): Promise<Map<number, string>> {
     const { sourceLang, targetLang, glossary, styleNotes } = this.input;
     const base = {
       sourceLang,
@@ -225,16 +301,7 @@ class ChapterRun {
         }
       }
     }
-
-    for (const sentence of members) {
-      const text = got.get(sentence.idx);
-      if (text === undefined) {
-        this.translations.set(sentence.idx, sentence.text);
-        this.partialIdx.push(sentence.idx);
-      } else {
-        this.translations.set(sentence.idx, text);
-      }
-    }
+    return got;
   }
 
   private async call(prompt: PromptPair, isRepair: boolean): Promise<string> {
@@ -250,6 +317,30 @@ class ChapterRun {
     if (isRepair) this.counts.repairRequests += 1;
     this.spent = addUsage(this.spent, reply.usage);
     return reply.text;
+  }
+
+  /** Records a commit: sets the final text of its sentences and reports it to the caller. */
+  private async apply(commit: TranslateCommit): Promise<void> {
+    for (const [idx, text] of commit.translations) this.translations.set(idx, text);
+    this.partialIdx.push(...commit.partialIdx);
+    await this.input.onCommit?.(commit);
+  }
+
+  private blankCommit(sentences: readonly TranslateSentence[]): TranslateCommit {
+    return {
+      translations: new Map(sentences.map((s) => [s.idx, s.text] as const)),
+      partialIdx: [],
+    };
+  }
+
+  private fallbackCommit(sentences: readonly TranslateSentence[]): TranslateCommit {
+    const translations = new Map<number, string>();
+    const partialIdx: number[] = [];
+    for (const sentence of sentences) {
+      translations.set(sentence.idx, sentence.text);
+      if (!isBlank(sentence.text)) partialIdx.push(sentence.idx);
+    }
+    return { translations, partialIdx };
   }
 }
 

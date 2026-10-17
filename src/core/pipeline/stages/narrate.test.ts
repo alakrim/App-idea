@@ -126,7 +126,7 @@ describe('narrate stage: segment size per narrator', () => {
     for (const text of texts) expect(text.length).toBeLessThanOrEqual(600);
   });
 
-  it('sends the free narrator a passage of up to 1,800 characters in one request', async () => {
+  it('ramps the free narrator up to its 1,800-character segments, after a short first one', async () => {
     const fake = createFakePorts({
       sourceText: LONG_PARAGRAPH,
       targetLang: null,
@@ -135,10 +135,13 @@ describe('narrate stage: segment size per narrator', () => {
 
     await runChapter(CHAPTER_ID, fake.ports);
 
-    expect(fake.state.ttsCalls).toHaveLength(1);
-    expect(fake.state.ttsCalls[0]?.text.length).toBeGreaterThan(600);
-    expect(fake.state.ttsCalls[0]?.text.length).toBeLessThanOrEqual(1_800);
-    expect(fake.state.ttsCalls[0]?.voice).toBe('');
+    const [first, second, ...rest] = fake.state.ttsCalls.map((call) => call.text.length);
+    expect(first).toBeLessThanOrEqual(200);
+    expect(second).toBeGreaterThan(first ?? 0);
+    expect(second).toBeLessThanOrEqual(400);
+    expect(rest.length).toBeGreaterThan(0);
+    for (const length of rest) expect(length).toBeLessThanOrEqual(1_800);
+    expect(fake.state.ttsCalls.every((call) => call.voice === '')).toBe(true);
   });
 });
 
