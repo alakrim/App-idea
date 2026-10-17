@@ -27,3 +27,4 @@ The user suggested splitting long chapters into three parts. The segment-based d
 ## Consequences
 - The run model changes from "one stage at a time" to "extract → segment, then three concurrent workers". Job records keep one row per stage, so progress and resume semantics remain.
 - Cost is unchanged: the same text is synthesized once.
+- Trade-off: the opening window (about 90 s of speech) is translated with a glossary from earlier chapters only, so a name first met in this chapter may be rendered differently there. The segment that closes the window also waits for the first chunk after it, which waits for analysis, so the window's last segment can start later than the first one.

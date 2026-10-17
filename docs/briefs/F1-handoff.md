@@ -1,4 +1,6 @@
-# F1 handoff: paused snapshot (unverified)
+# F1 handoff: completed (see the F1 commit on this branch)
+
+Status after the completion pass: the runner, the progress reducer, the tests and the benchmark are done, and `npm run verify` is green. The "Not done" list below is kept for history.
 
 Branch: worktree-agent-ae20f0e270d30d60c. Status: **partial, does not typecheck, no tests run for the new modules except as noted.**
 

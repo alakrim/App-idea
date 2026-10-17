@@ -1,5 +1,3 @@
-import { LlmCancelledError } from '../llm/transport';
-
 import { delay } from './abort';
 import {
   AdaptiveWindow,
@@ -10,6 +8,7 @@ import {
   WINDOW_MAX,
   WINDOW_START,
 } from './tts-pool';
+import { LlmCancelledError } from '../llm/transport';
 
 import type { SegmentTiming } from './tts-pool';
 

@@ -85,12 +85,28 @@ describe('reduceEvent', () => {
       {
         type: 'segmentReady',
         chapterId: ID,
-        segment: { idx: 0, sentenceStart: 0, sentenceEnd: 3, durationMs: 1000, uri: 'a' },
+        segment: {
+          idx: 0,
+          sentenceStart: 0,
+          sentenceEnd: 3,
+          durationMs: 1000,
+          uri: 'a',
+          chars: 300,
+          synthesis: null,
+        },
       },
       {
         type: 'segmentReady',
         chapterId: ID,
-        segment: { idx: 1, sentenceStart: 4, sentenceEnd: 6, durationMs: 900, uri: 'b' },
+        segment: {
+          idx: 1,
+          sentenceStart: 4,
+          sentenceEnd: 6,
+          durationMs: 900,
+          uri: 'b',
+          chars: 280,
+          synthesis: null,
+        },
       },
       { type: 'done', chapterId: ID },
     ]);
@@ -190,5 +206,119 @@ describe('reduceEvent', () => {
       last = overall;
     }
     expect(last).toBe(1);
+  });
+});
+
+describe('reduceEvent: playable, the ETA and the narrated audio', () => {
+  type Synthesis = { readonly ms: number; readonly slots: number } | null;
+  const ready = (
+    idx: number,
+    chars: number,
+    durationMs: number,
+    synthesis: Synthesis = null,
+  ): PipelineEvent => ({
+    type: 'segmentReady',
+    chapterId: ID,
+    segment: {
+      idx,
+      sentenceStart: idx,
+      sentenceEnd: idx,
+      durationMs,
+      uri: `file:///${idx}.mp3`,
+      chars,
+      synthesis,
+    },
+  });
+  const spoken = (chars: number): PipelineEvent => ({ type: 'spokenChars', chapterId: ID, chars });
+  const progressOf = (tracked: TrackedChapter) => toChapterProgress(ID, tracked);
+
+  it('makes the chapter playable on its first segment, and not before', () => {
+    const tracked = run([ready(1, 300, 2000)]);
+    expect(tracked.playable).toBe(false);
+    expect(progressOf(run([ready(0, 200, 1500)])).playable).toBe(true);
+    expect(progressOf(run([{ type: 'playable', chapterId: ID }])).playable).toBe(true);
+  });
+
+  it('leaves the ETA null until two segments have been synthesized', () => {
+    const one = run([spoken(3000), ready(0, 500, 4000, { ms: 10_000, slots: 4 })]);
+    expect(progressOf(one).etaMs).toBeNull();
+    const two = run([
+      spoken(3000),
+      ready(0, 500, 4000, { ms: 10_000, slots: 4 }),
+      ready(1, 500, 4000, { ms: 10_000, slots: 4 }),
+    ]);
+    expect(progressOf(two).etaMs).not.toBeNull();
+  });
+
+  it('estimates the time left as the remaining characters times seconds per character per request in flight', () => {
+    // Each segment: 10 s for 500 characters with 4 requests in flight, so 0.005 s per character.
+    const tracked = run([
+      spoken(3000),
+      ready(0, 500, 4000, { ms: 10_000, slots: 4 }),
+      ready(1, 500, 4000, { ms: 10_000, slots: 4 }),
+    ]);
+    // 2,000 characters are left at 0.005 s each.
+    expect(progressOf(tracked).etaMs).toBe(10_000);
+  });
+
+  it('averages the rate with an exponentially weighted moving average, weighting the newest at 0.3', () => {
+    const tracked = run([
+      spoken(3000),
+      ready(0, 500, 4000, { ms: 10_000, slots: 4 }),
+      ready(1, 500, 4000, { ms: 20_000, slots: 4 }),
+    ]);
+    // Samples: 0.005, then 0.01. The average is 0.3 * 0.01 + 0.7 * 0.005 = 0.0065.
+    expect(tracked.secondsPerChar).toBeCloseTo(0.0065, 12);
+    expect(progressOf(tracked).etaMs).toBe(13_000);
+  });
+
+  it('does not time a segment that was reused rather than synthesized', () => {
+    const tracked = run([spoken(3000), ready(0, 500, 4000), ready(1, 500, 4000)]);
+    expect(tracked.timedSegments).toBe(0);
+    expect(progressOf(tracked).etaMs).toBeNull();
+  });
+
+  it('reports the narrated milliseconds, and the total they imply for the whole chapter', () => {
+    const progress = progressOf(run([spoken(3000), ready(0, 1000, 10_000)]));
+    expect(progress.narratedMs).toBe(10_000);
+    expect(progress.estimatedTotalMs).toBe(30_000);
+  });
+
+  it('shows the final total with no ETA once the chapter is ready', () => {
+    const progress = progressOf(
+      run([spoken(3000), ready(0, 1000, 10_000), { type: 'done', chapterId: ID }]),
+    );
+    expect(progress.etaMs).toBeNull();
+    expect(progress.estimatedTotalMs).toBe(10_000);
+  });
+
+  it('does not let a cancelled stage hide a failure from another stage', () => {
+    const tracked = run([stage('analyze', 'failed'), stage('narrate', 'cancelled')]);
+    expect(tracked.state).toBe('failed');
+  });
+
+  it('records the spoken characters and the analysis without moving any stage', () => {
+    const before = run([stage('analyze', 'done')]);
+    const after = run([
+      stage('analyze', 'done'),
+      spoken(900),
+      { type: 'analysisReady', chapterId: ID },
+    ]);
+    expect(after.spokenChars).toBe(900);
+    expect(after.stages).toEqual(before.stages);
+  });
+
+  it('shows stored audio as playable, with unknown characters, so it gives no ETA', () => {
+    const seeded: TrackedChapter = {
+      ...emptyTracked('idle'),
+      playable: true,
+      segments: new Map([[0, { durationMs: 4000, chars: null }]]),
+      readySegments: 1,
+    };
+    const progress = progressOf(seeded);
+    expect(progress.playable).toBe(true);
+    expect(progress.narratedMs).toBe(4000);
+    expect(progress.etaMs).toBeNull();
+    expect(progress.estimatedTotalMs).toBeNull();
   });
 });

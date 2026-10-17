@@ -28,13 +28,14 @@ _Last updated: 2026-10-11 by architect_
   - N2 speech catalogue (the Fish Drama 3 fix): running
   - AM1 reliable ambience: paused (handoff)
   - SND1 30 beds: paused (handoff)
-  - F1 progressive narration (ADR-0008): paused (handoff)
+  - F1 progressive narration (ADR-0008): implemented, awaiting review (see below)
   - F2 player UX: after F1
   - Gemini cost options: answered in chat; the cost levers are pending the paid test
 _None. Waiting on the user's device test of `lectio-0.1.0-c3eac7a-arm64.apk` (apk-builds branch). It fixes the Library crash (cover monogram at font size 0). The user asked for bug fixes only until they have tested properly._
 - **N2** (worker, branch `worktree-agent-aa832b725fb210ea0`, awaiting review): every OpenRouter speech model is listed, newest first after the three narrators, with a "New" badge (30 days) and "Default voice" for voice-less models. Fish Audio Drama 3 is included, Seed Audio is excluded, the speech catalogue is fetched live on open with a 10-minute cache, and the picker can be pulled to refresh.
 
 - **AM1** (reliable ambience, ADR-0005 amendment 2026-10-17): implemented on branch `worktree-agent-abfdfc00ef800c3f4` (deterministic analysis, prompt v3, cue cache, single-bed fallback, cue report). Awaiting architect review and the device listening test.
+- **F1** (progressive narration core, ADR-0008): implemented on branch `worktree-agent-ae20f0e270d30d60c`, `npm run verify` green. Adaptive TTS window, ramped first segments, analysis beside translate and narrate, streaming translation, progress ETA. Benchmark on a 40-minute chapter: first audio 52 s to 12 s, total 280 s to 84 s. Awaiting architect review and the device test. F2 (player UX) can start.
 
 ## Next up
 - **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.

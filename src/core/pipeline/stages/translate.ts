@@ -8,8 +8,8 @@
  *
  * Skipped when there is no target language, or when the target is the source language.
  */
-import type { Lang } from '@/core/domain';
 import type { ChapterMemoryRecord } from '@/core/analysis/types';
+import type { Lang } from '@/core/domain';
 import { firstWindowEnd } from '@/core/translate/first-window';
 import { buildGlossary } from '@/core/translate/glossary';
 import { TRANSLATE_PROMPT_VERSION } from '@/core/translate/prompts';
@@ -18,10 +18,9 @@ import type { GlossaryEntry } from '@/core/translate/types';
 
 import { untilSettled } from '../abort';
 import { stableHash } from '../hash';
-
 import { analyzeStage } from './analyze';
 
-import type { StageContext, StageDefinition } from '../context';
+import type { FlowContext, StageContext, StageDefinition } from '../context';
 import type { ChapterRecord, StoredSentence } from '../ports';
 
 /** Glossary budget for one chapter, in estimated tokens. */
@@ -51,7 +50,7 @@ function sourceTexts(sentences: readonly StoredSentence[]): Map<number, string> 
 }
 
 /** Every sentence's stored spoken text: its translation where one is stored, else its source. */
-function storedSpokenTexts(sentences: readonly StoredSentence[]): Map<number, string> {
+export function storedSpokenTexts(sentences: readonly StoredSentence[]): Map<number, string> {
   return new Map(sentences.map((s) => [s.idx, s.translated ?? s.text] as const));
 }
 
@@ -62,7 +61,7 @@ function storedTranslations(sentences: readonly StoredSentence[]): Map<number, s
   return out;
 }
 
-export const translateStage: StageDefinition = {
+export const translateStage: StageDefinition<FlowContext> = {
   stage: 'translate',
   async prepare(ctx) {
     const { chapters, jobs } = ctx.ports;
@@ -83,11 +82,15 @@ export const translateStage: StageDefinition = {
     const model = settings.translationModel;
     const priors = await chapters.getPriorMemories(series.id, chapter.order);
     const snapshot = await chapters.getEntities(series.id);
+    // Only the chapters and entities before this one: this chapter's analysis may be writing its own
+    // entities at the same time, and the opening window must not depend on that.
     const priorGlossary = buildGlossary(priors, snapshot.entities, {
-      currentChapterOrder: chapter.order,
+      currentChapterOrder: chapter.order - 1,
       budgetTokens: GLOSSARY_TOKENS,
     });
-    // The rest of the chapter depends on this chapter's analysis, so the analysis input is part of the hash.
+    // The hash covers the analysis input, not the glossary snapshot. The analysis input only sees
+    // earlier chapters, so it is the same whether or not this chapter's analysis has already run. The
+    // glossary snapshot is not, which is why it stays out of the hash.
     const analysisHash = (await analyzeStage.prepare(ctx)).inputHash;
     const inputHash = stableHash([
       'translate',
@@ -95,7 +98,6 @@ export const translateStage: StageDefinition = {
       model,
       pair.sourceLang,
       pair.targetLang,
-      priorGlossary,
       analysisHash,
       sentences.map((s) => s.text),
     ]);
@@ -131,7 +133,7 @@ interface TranslationPlan {
   readonly prefill: ReadonlyMap<number, string>;
 }
 
-async function runTranslation(ctx: StageContext, plan: TranslationPlan): Promise<void> {
+async function runTranslation(ctx: FlowContext, plan: TranslationPlan): Promise<void> {
   const { chapters } = ctx.ports;
   const { sentences, pair, model, prefill } = plan;
   const transport = ctx.meter.transport(model, ctx.ports.llm.transportFor(model));

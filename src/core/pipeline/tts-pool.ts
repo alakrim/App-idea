@@ -13,10 +13,10 @@
  *
  * The window bounds outstanding work (submitted but not yet saved), so memory stays bounded too.
  */
-import { throwIfCancelled } from '../llm/transport';
 
 import { delay } from './abort';
 import { toPipelineError } from './errors';
+import { throwIfCancelled } from '../llm/transport';
 
 export const WINDOW_START = 4;
 export const WINDOW_MAX = 8;

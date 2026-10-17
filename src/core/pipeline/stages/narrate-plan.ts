@@ -2,9 +2,9 @@
  * The segment plan of the narrate stage. Pure: the same final sentences and profile always give the
  * same segments and hashes, which is what makes a rerun reuse the audio already saved.
  */
+import { countCodePoints } from '@/core/text/build';
 import { NARRATION_RAMP_CHARS, planTtsSegments } from '@/core/text/chunk';
 import { detectScript } from '@/core/text/normalize';
-import { countCodePoints } from '@/core/text/build';
 
 import { stableHash } from '../hash';
 
@@ -61,11 +61,14 @@ export function planFinalSegments(
   });
 }
 
-/** Joins sentences with a space, except between CJK sentences, which are written without one. */
+/**
+ * Joins sentences with a space, except after a CJK sentence, which is written without one. The
+ * script is read from the sentence just joined, so its closing punctuation does not decide it.
+ */
 export function joinSpoken(parts: readonly string[]): string {
-  return parts.reduce((acc, part) => {
+  return parts.reduce((acc, part, i) => {
     if (acc === '') return part;
-    const separator = detectScript(acc.slice(-1)) === 'cjk' ? '' : ' ';
+    const separator = detectScript(parts[i - 1] ?? '') === 'cjk' ? '' : ' ';
     return `${acc}${separator}${part}`;
   }, '');
 }

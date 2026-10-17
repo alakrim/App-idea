@@ -7,9 +7,10 @@
  * planned over the final prefix is the same segment as in the finished chapter, and it can be
  * synthesized at once.
  */
-import type { ParagraphKind } from '../domain';
 import { untilSettled } from './abort';
 import { countCodePoints } from '../text/build';
+
+import type { ParagraphKind } from '../domain';
 
 /** A sentence as the chapter stores it, before any translation. */
 export interface SpokenSource {

@@ -77,7 +77,13 @@ export interface StageContext {
   /** Records the cost of every model and speech call this stage makes. */
   readonly meter: CostMeter;
   readonly emit: (event: PipelineEvent) => void;
-  /** The spoken text of the chapter, which translation publishes and narration reads. */
+}
+
+/**
+ * The context of the stages that run beside analysis: translation and narration. The spoken text
+ * is what translation publishes and narration reads, and analysis resolves `analysisDone`.
+ */
+export interface FlowContext extends StageContext {
   readonly spoken: SpokenTextGate;
   /** Resolves when the chapter's analysis has finished successfully. Never rejects. */
   readonly analysisDone: Promise<void>;
@@ -110,7 +116,7 @@ export interface PreparedStage {
   execute(): Promise<StageExecution | void>;
 }
 
-export interface StageDefinition {
+export interface StageDefinition<C extends StageContext = StageContext> {
   readonly stage: Stage;
-  prepare(ctx: StageContext): Promise<PreparedStage>;
+  prepare(ctx: C): Promise<PreparedStage>;
 }

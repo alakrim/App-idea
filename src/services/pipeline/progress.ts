@@ -5,10 +5,15 @@
  * Overall progress weights each stage by its typical share of a run. A skipped stage leaves the
  * denominator, so the bar still reaches 100% when translation does not run. Within one run every
  * event only moves a stage forward, so the overall value never goes down.
+ *
+ * The estimate (ADR-0008): the time per character of one in-flight request is averaged over the
+ * synthesized segments (an exponentially weighted moving average), and divided by the requests in
+ * flight. The remaining characters times that gives the ETA. It stays null until two segments have
+ * been synthesized, because one sample says little about the network.
  */
 
 import type { PipelineError, Stage } from '@/core/domain';
-import type { PipelineEvent } from '@/core/pipeline/context';
+import type { JobStatusEvent, PipelineEvent, SegmentReady } from '@/core/pipeline/context';
 import type { ChapterProgress, JobStatus, StageProgress } from '@/features/pipeline/facade';
 
 export const STAGE_WEIGHTS: Readonly<Record<Stage, number>> = {
@@ -29,17 +34,38 @@ export const STAGE_ORDER: readonly Stage[] = [
   'narrate',
 ];
 
+/** Weight of the newest sample in the seconds-per-character average. */
+export const EWMA_ALPHA = 0.3;
+/** Synthesized segments needed before an ETA is shown. */
+export const MIN_TIMED_SEGMENTS = 2;
+
 export interface StageSlot {
   readonly status: JobStatus;
   /** 0..1 within the stage. */
   readonly progress: number;
 }
 
+/** What the player and the estimate know about one ready segment. */
+export interface SegmentStat {
+  readonly durationMs: number;
+  /** Null for a segment read back from the database, which does not store its characters. */
+  readonly chars: number | null;
+}
+
 export interface TrackedChapter {
   readonly state: ChapterProgress['state'];
   readonly stages: Readonly<Record<Stage, StageSlot>>;
+  /** The first segment is saved, so the chapter can be played. */
+  readonly playable: boolean;
+  readonly segments: ReadonlyMap<number, SegmentStat>;
   readonly readySegments: number;
   readonly totalSegments: number | null;
+  /** The characters the narration will speak, as far as they are known. Null until the first event. */
+  readonly spokenChars: number | null;
+  /** The EWMA of wall-clock seconds per character, per request in flight. Null until a sample. */
+  readonly secondsPerChar: number | null;
+  /** Synthesized segments that fed `secondsPerChar`. */
+  readonly timedSegments: number;
   /** What the ledger held for this chapter before the current run started. */
   readonly costBaseUsd: number;
   /** What the current run has spent so far, as the runner reports it. */
@@ -60,8 +86,13 @@ export function emptyTracked(state: ChapterProgress['state'] = 'idle'): TrackedC
   return {
     state,
     stages: emptyStages(),
+    playable: false,
+    segments: new Map(),
     readySegments: 0,
     totalSegments: null,
+    spokenChars: null,
+    secondsPerChar: null,
+    timedSegments: 0,
     costBaseUsd: 0,
     runCostUsd: 0,
     error: null,
@@ -87,6 +118,20 @@ export function overallProgress(stages: Readonly<Record<Stage, StageSlot>>): num
   return total === 0 ? 0 : done / total;
 }
 
+/** Audio that is ready, in milliseconds. */
+export function narratedMsOf(segments: ReadonlyMap<number, SegmentStat>): number {
+  let total = 0;
+  for (const segment of segments.values()) total += segment.durationMs;
+  return total;
+}
+
+/** Characters that are ready, counting only the segments whose characters are known. */
+function narratedCharsOf(segments: ReadonlyMap<number, SegmentStat>): number {
+  let total = 0;
+  for (const segment of segments.values()) total += segment.chars ?? 0;
+  return total;
+}
+
 function withStage(
   tracked: TrackedChapter,
   stage: Stage,
@@ -107,45 +152,8 @@ export function reduceEvent(
   lookup: StatusLookup,
 ): TrackedChapter {
   switch (event.type) {
-    case 'stage': {
-      const { stage } = event;
-      let stages: Record<Stage, StageSlot>;
-      let state = tracked.state;
-      switch (event.status) {
-        case 'running':
-          stages = withStage(tracked, stage, { status: 'running', progress: 0 });
-          state = 'running';
-          break;
-        case 'done':
-          stages = withStage(tracked, stage, { status: 'done', progress: 1 });
-          break;
-        case 'skipped':
-          stages = withStage(tracked, stage, { status: settledStatus(stage, lookup), progress: 1 });
-          break;
-        case 'failed':
-          stages = withStage(tracked, stage, {
-            status: 'failed',
-            progress: tracked.stages[stage].progress,
-          });
-          state = 'failed';
-          break;
-        case 'cancelled':
-          stages = withStage(tracked, stage, {
-            status: 'cancelled',
-            progress: tracked.stages[stage].progress,
-          });
-          state = 'cancelled';
-          break;
-      }
-      // The clean job is written by the extract stage, so it is read back once extract settles.
-      if (stage === 'extract' && event.status !== 'running') {
-        const clean = lookup('clean');
-        if (clean !== null) {
-          stages = { ...stages, clean: { status: clean, progress: clean === 'pending' ? 0 : 1 } };
-        }
-      }
-      return { ...tracked, stages, state };
-    }
+    case 'stage':
+      return reduceStage(tracked, event.stage, event.status, lookup);
     case 'progress': {
       const current = tracked.stages[event.stage];
       if (current.status === 'done' || current.status === 'skipped') return tracked;
@@ -158,10 +166,14 @@ export function reduceEvent(
       };
     }
     case 'segmentReady':
-      return {
-        ...tracked,
-        readySegments: Math.max(tracked.readySegments, event.segment.idx + 1),
-      };
+      return reduceSegment(tracked, event.segment);
+    case 'playable':
+      return { ...tracked, playable: true };
+    case 'analysisReady':
+      // The analyze stage event already shows the stage done. The player reads the cues from the database.
+      return tracked;
+    case 'spokenChars':
+      return { ...tracked, spokenChars: event.chars };
     case 'cost':
       return { ...tracked, runCostUsd: event.totalUsd };
     case 'error':
@@ -174,6 +186,102 @@ export function reduceEvent(
         totalSegments: tracked.readySegments,
       };
   }
+}
+
+function reduceStage(
+  tracked: TrackedChapter,
+  stage: Stage,
+  status: JobStatusEvent,
+  lookup: StatusLookup,
+): TrackedChapter {
+  let stages: Record<Stage, StageSlot>;
+  let state = tracked.state;
+  switch (status) {
+    case 'running':
+      stages = withStage(tracked, stage, { status: 'running', progress: 0 });
+      state = 'running';
+      break;
+    case 'done':
+      stages = withStage(tracked, stage, { status: 'done', progress: 1 });
+      break;
+    case 'skipped':
+      stages = withStage(tracked, stage, { status: settledStatus(stage, lookup), progress: 1 });
+      break;
+    case 'failed':
+      stages = withStage(tracked, stage, {
+        status: 'failed',
+        progress: tracked.stages[stage].progress,
+      });
+      state = 'failed';
+      break;
+    case 'cancelled':
+      stages = withStage(tracked, stage, {
+        status: 'cancelled',
+        progress: tracked.stages[stage].progress,
+      });
+      // A stage stopped by another stage's failure must not hide that failure.
+      state = tracked.state === 'failed' ? 'failed' : 'cancelled';
+      break;
+  }
+  // The clean job is written by the extract stage, so it is read back once extract settles.
+  if (stage === 'extract' && status !== 'running') {
+    const clean = lookup('clean');
+    if (clean !== null) {
+      stages = { ...stages, clean: { status: clean, progress: clean === 'pending' ? 0 : 1 } };
+    }
+  }
+  return { ...tracked, stages, state };
+}
+
+function reduceSegment(tracked: TrackedChapter, segment: SegmentReady): TrackedChapter {
+  const segments = new Map(tracked.segments);
+  segments.set(segment.idx, { durationMs: segment.durationMs, chars: segment.chars });
+  const sample = secondsPerCharSample(segment);
+  const secondsPerChar =
+    sample === null
+      ? tracked.secondsPerChar
+      : tracked.secondsPerChar === null
+        ? sample
+        : EWMA_ALPHA * sample + (1 - EWMA_ALPHA) * tracked.secondsPerChar;
+  return {
+    ...tracked,
+    playable: tracked.playable || segment.idx === 0,
+    segments,
+    readySegments: Math.max(tracked.readySegments, segment.idx + 1),
+    secondsPerChar,
+    timedSegments: tracked.timedSegments + (sample === null ? 0 : 1),
+  };
+}
+
+/** Seconds per character per request in flight, from one synthesized segment. Null when not timed. */
+function secondsPerCharSample(segment: SegmentReady): number | null {
+  const { synthesis, chars } = segment;
+  if (synthesis === null || chars <= 0 || synthesis.slots <= 0) return null;
+  return synthesis.ms / 1000 / (chars * synthesis.slots);
+}
+
+/**
+ * Estimated milliseconds of narration still to make, or null until the rate is known. Only the
+ * characters still to make count, so it reaches zero when the chapter is fully narrated.
+ */
+export function etaMsOf(tracked: TrackedChapter): number | null {
+  if (
+    tracked.secondsPerChar === null ||
+    tracked.timedSegments < MIN_TIMED_SEGMENTS ||
+    tracked.spokenChars === null
+  ) {
+    return null;
+  }
+  const remaining = Math.max(0, tracked.spokenChars - narratedCharsOf(tracked.segments));
+  return Math.round(remaining * tracked.secondsPerChar * 1000);
+}
+
+/** Estimated total length of the narration in milliseconds, from the rate the ready audio has. */
+export function estimatedTotalMsOf(tracked: TrackedChapter): number | null {
+  const narratedMs = narratedMsOf(tracked.segments);
+  const chars = narratedCharsOf(tracked.segments);
+  if (tracked.spokenChars === null || chars <= 0) return null;
+  return Math.round((narratedMs * tracked.spokenChars) / chars);
 }
 
 function clamp01(value: number): number {
@@ -192,13 +300,18 @@ export function toChapterProgress(
     progress: tracked.stages[stage].progress,
   }));
   const ready = state === 'ready';
+  const narratedMs = narratedMsOf(tracked.segments);
   return {
     chapterId,
     state,
     stages,
     overall: ready ? 1 : overallProgress(tracked.stages),
+    playable: tracked.playable,
+    etaMs: ready ? null : etaMsOf(tracked),
     readySegments: tracked.readySegments,
     totalSegments: ready ? tracked.readySegments : tracked.totalSegments,
+    narratedMs,
+    estimatedTotalMs: ready ? narratedMs : estimatedTotalMsOf(tracked),
     costUsdSoFar: tracked.costBaseUsd + tracked.runCostUsd,
     error: tracked.error,
   };
