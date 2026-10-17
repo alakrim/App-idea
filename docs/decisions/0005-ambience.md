@@ -13,3 +13,11 @@
 
 ## Amendment (2026-10-11): minimum cue span 12 s (was 20 s)
 The live test showed a typical 4-sentence Mandarin scene (~70 Han characters, ~15 s at 4.5 chars/s) being dropped. The floor is now **12 s of estimated narration plus ≥ 3 sentences**, the same rule for every script (durations come from `text/speech-rate`). With the default 2.5 s fade-in and 3 s fade-out, a 12 s bed still holds full level for about 6 s, so beds don't feel jittery.
+
+## Amendment 2026-10-17 (user request: reliable cues, 30+ sounds)
+- **Coverage over caution.** Every scene with an identifiable setting gets the matching bed, even when no sound is named. Mood beds still need explicit evidence. Coverage goal: 40–80 % of the narration when settings are identifiable (prompt v3, brief AM1).
+- **Thresholds.** The confidence floor drops 0.55 → 0.45 and the density cap rises 2 → 3 cues per 1,000 words. Min span is unchanged (3 sentences, 12 s).
+- **Reproducibility.** Analysis runs at temperature 0 with a fixed seed. Validated cues are cached by text hash, model and prompt version, so the same chapter text always gets the same cues.
+- **Fallback.** A chapter of at least 200 words with zero valid cues gets one "dominant setting" call (at most one bed).
+- **Licences.** CC0 and Public Domain are preferred. CC-BY 3.0/4.0 is allowed, with attribution in `LICENSES.json` and Settings → Licenses. NC, ND, SA and no-redistribution licences are excluded.
+- **Pack size.** At least 30 installed beds with exact-id resolution (brief SND1), with a budget of about 20 MB.
