@@ -22,6 +22,11 @@ _Last updated: 2026-10-11 by architect_
 - At most **2 worker agents at once**. A worker whose context passes ~220k tokens writes `docs/briefs/<id>-handoff.md`, commits a WIP snapshot and stops, and a fresh worker continues from the handoff.
 - **Paid live test: not approved yet** (it would compare Fish Drama 3 with Gemini and measure a brisker style). Ask again later.
 
+## ⚠️ Branch divergence found (2026-10-17, architect)
+- This session started from `ee5b958` (the repo's default branch `claude/test-100-credit-64yv57`). The user's real latest line is **`claude/charming-fermat-srbk25`**: 44 commits (Oct 12–14) and the APK `54b3d2e` the user is testing. It has N2–N4 (narration speed, background stalls, a background service via react-native-background-actions), L1 (per-chapter resume, bookmarks, speed per series), F1/F2/F4 fixes, A3 Freesound beds and WIP F3/A4.
+- Everything in this branch's 2026-10-17 wave (N2 catalogue, AM1, F1/F2 progressive narration, BG1, SND1) was built on the old base. **The APK `bfbcc4f` built here is NOT delivered**, because it would drop L1 and the Oct 12–14 fixes.
+- Next: port this wave onto `charming-fermat` (user decision pending). Also ask the user to set the latest line as the repo's default branch, so new sessions start from it.
+
 ## Work in flight
 - **Merged and verified by the architect (2026-10-17)**, device test pending for each:
   - **N2**: every OpenRouter speech model is listed, newest first after the three narrators. It adds a "New" badge (30 days) and "Default voice" for voice-less models. Fish Audio Drama 3 is included and Seed Audio is excluded.
