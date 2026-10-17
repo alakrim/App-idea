@@ -25,7 +25,7 @@ _Last updated: 2026-10-11 by architect_
 ## ⚠️ Branch divergence found (2026-10-17, architect)
 - This session started from `ee5b958` (the repo's default branch `claude/test-100-credit-64yv57`). The user's real latest line is **`claude/charming-fermat-srbk25`**: 44 commits (Oct 12–14) and the APK `54b3d2e` the user is testing. It has N2–N4 (narration speed, background stalls, a background service via react-native-background-actions), L1 (per-chapter resume, bookmarks, speed per series), F1/F2/F4 fixes, A3 Freesound beds and WIP F3/A4.
 - Everything in this branch's 2026-10-17 wave (N2 catalogue, AM1, F1/F2 progressive narration, BG1, SND1) was built on the old base.
-- **User decision (2026-10-17): test this branch's APK first.** `lectio-0.1.0-bfbcc4f-arm64.apk` is on `apk-builds` (commit 24a0848; 62.7 MB; SHA-256 `938d84f5…e415`), beside `54b3d2e`. The README says what it lacks.
+- **User decision (2026-10-17): test this branch's APK first.** `lectio-0.1.0-6842a51-arm64.apk` (incident 4 fixed) is on `apk-builds`, replacing `bfbcc4f` (62.7 MB; SHA-256 `65dcb8e5…2755`), beside `54b3d2e`. The README says what it lacks.
   - DB compatibility was checked: charming-fermat's 0003/0004 only add tables and a nullable column, and this branch's 0003 has a later timestamp, so both builds install over each other.
 - Next: after the user's device test, port this wave onto `charming-fermat`, keeping what tested better. Also ask the user to set the latest line as the repo's default branch, so new sessions start from it.
 
