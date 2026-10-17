@@ -54,3 +54,12 @@ Each one: take the policy base, then port the other side's listed items, then `g
 ## 4. Known risks
 - The worktree `node_modules` is a symlink to the shared checkout. Do not run `npm install` or `npm uninstall` through it.
 - The branch currently contains conflict markers in the 31 files above. Do not push it.
+
+## 5. Checkpoint 2 pointer (read this first)
+The list in sections 1 to 4 is historical. Current state, branch `worktree-agent-a9a08efbbba2e4f61`, commit `9affb1b`:
+- **Done since the WIP**: 21 files resolved (chapter feature, pipeline lifecycle, fake facade, map-reduce, translate, estimate test, facade, dev screens, DB union). The DB work is done: `0005_merged_schema_repair.sql` is idempotent, `repair-schema.ts` fixes `series.playback_rate`, and `src/db/upgrade-paths.test.ts` passes (5 tests) from both starting states.
+- **N4 removed**: `react-native-background-actions` is gone from package.json and the lockfile. The N4 runner, foreground service, app-foreground, notification-permission, the background-notification copy, the mock and the Expo plugin are deleted. `app.config.ts` no longer lists the plugin.
+- **Dropped (listed)**: `src/audio/ambience-pack.test.ts` (10 tests, A3, covered by `installed-beds.test.ts`); `src/services/openrouter/stale.test.ts` (8 tests, N3 connection retirement, not ported).
+- **Still conflicted (10 files)**: `options.ts`, `options.test.ts`, `chunk.ts`, `chunk.test.ts`, `narrate.ts`, `narrate.test.ts`, `queue.ts`, `runner.test.ts`, `__fixtures__/fake-ports.ts`, `progress.ts`. Each needs the port described in `I3-resolution-log.md` under "Still conflicted".
+- **Still owed**: the open issues list in the log (N4 importers in diagnostics, settings, pipeline index, and notification-primer; `catalog-cache.ts`; playback fixture; A4 era; N2 and F4 ports; N3 connection retirement).
+- **Verification**: typecheck 104 errors (blocked by the 10 files). `sounds:verify` PASS. `boot:check` FAIL (blocked by the markers). `npm run verify`, lint, full tests, APK build and the incident-3 mutation check are still owed. The incident-3 test (`src/audio/native-engine.test.ts`, 2 tests) passes.
