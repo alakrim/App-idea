@@ -20,6 +20,7 @@ import { gutter, hairline, space } from '@/ui/tokens';
 import { AmbienceList } from './ambience-list';
 import { isTranslated, type ReadingParagraph } from './chapter-data';
 import { rowStateOf, statusLine } from './chapter-status';
+import { listenNowOf } from './listen-now';
 import { READING_MODES, ReadingText, type ReadingMode } from './reading-text';
 import { StageStepper } from './stage-stepper';
 import { stepStates } from './stage-steps';
@@ -90,6 +91,7 @@ export function ChapterView({
   const scroll = useSentenceScroll({ focusSentence, paragraphs, reduced, scrollTo: scrollToY });
   const highlight = useSentenceFocus(focusSentence, reduced);
   const state = rowStateOf(chapter, progress);
+  const listen = listenNowOf(state, progress);
   const badge =
     progress?.state === 'waiting'
       ? { label: 'Waiting', tone: 'neutral' as const }
@@ -135,14 +137,22 @@ export function ChapterView({
           </View>
         </View>
 
-        <Button
-          label="Play chapter"
-          icon={Play}
-          size="lg"
-          fullWidth
-          disabled={state !== 'ready'}
-          onPress={() => onPlay(chapter.id)}
-        />
+        <View style={styles.listen}>
+          <Button
+            label={listen.label}
+            icon={Play}
+            size="lg"
+            fullWidth
+            disabled={!listen.enabled}
+            accessibilityHint={listen.subtitle ?? undefined}
+            onPress={() => onPlay(chapter.id)}
+          />
+          {listen.subtitle ? (
+            <Text variant="caption" tone="muted" align="center" testID="listen-now-subtitle">
+              {listen.subtitle}
+            </Text>
+          ) : null}
+        </View>
 
         {state === 'failed' ? (
           <ErrorState
@@ -278,6 +288,9 @@ const styles = StyleSheet.create({
     gap: space.xl,
   },
   header: {
+    gap: space.sm,
+  },
+  listen: {
     gap: space.sm,
   },
   meta: {

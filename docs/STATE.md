@@ -29,7 +29,7 @@ _Last updated: 2026-10-11 by architect_
   - **F1** (ADR-0008): an adaptive TTS window, ramped first segments, analysis beside translate and narrate, streaming translation and a progress ETA. The benchmark on a 40-min chapter: first audio 52 s → 12 s, total 280 s → 84 s.
   - **BG1** (ADR-0007): an Android foreground service (`modules/lectio-background`, dataSync, progress notification with Cancel, wake and Wi-Fi locks). Transient failures wait with backoff and retry on foreground; per-call timeouts (speech 180 s). The native compile was proven (APK built, manifest checked). The device checklist is in `docs/briefs/BG1-background-processing.md` § Device checklist.
 - **Running**: SND1 (30 beds, continuation from the handoff).
-- **Next**: F2 (Listen now / player UX, `docs/briefs/F2-listen-while-generating.md`). It must also treat the queue's `waiting` state as still narrating in `playback-controller.ts` (BG1 open issue).
+- **F2** (brief `docs/briefs/F2-listen-while-generating.md`): "Listen now" on the chapter screen as soon as the first segment is saved, a buffer band and "Narrating ahead…" in the player, late ambience cues, the playable toast, and speech-seconds ramp (12 s, 25 s). The queue's `waiting` state counts as narrating. Implemented on its branch with `npm run verify` green; awaiting architect review and a device test.
 
 ## Next up
 - **I2** integration pass (after U3/P2): the U4 items above, dedupe `use-db-read` vs `src/db/hooks.ts`, dedupe the language lists (U1/U2), the M8 polish list.

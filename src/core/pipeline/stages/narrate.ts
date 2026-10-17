@@ -26,7 +26,7 @@ import type { FlowContext, StageDefinition, StageExecution } from '../context';
 import type { TtsResult } from '../ports';
 import type { SpokenTextGate } from '../spoken-text';
 import type { SegmentTiming } from '../tts-pool';
-import type { PlannedSegment } from './narrate-plan';
+import type { PlanOptions, PlannedSegment } from './narrate-plan';
 
 /** English names for the messages below. Unlisted languages show their code. */
 const LANGUAGE_NAMES: Readonly<Record<string, string>> = {
@@ -100,9 +100,11 @@ function spokenLanguageOf(ctx: FlowContext): string | null {
 
 async function execute(ctx: FlowContext, profile: NarrationProfile): Promise<StageExecution> {
   const { chapters, audio, tts } = ctx.ports;
-  assertNarratorSpeaks(profile, spokenLanguageOf(ctx));
-  const plan = {
+  const lang = spokenLanguageOf(ctx);
+  assertNarratorSpeaks(profile, lang);
+  const plan: PlanOptions = {
     maxChars: segmentMaxCharsFor(profile.model),
+    lang,
     voiceKey: [profile.provider, profile.model, profile.voice, profile.style, profile.speed],
   };
   const existing = await chapters.listAudioSegments(ctx.chapterId);
@@ -208,7 +210,7 @@ async function nextFinalSegment(
   spoken: SpokenTextGate,
   signal: AbortSignal,
   k: number,
-  plan: { readonly maxChars: number; readonly voiceKey: readonly unknown[] },
+  plan: PlanOptions,
   onEstimate: (chars: number) => void,
 ): Promise<PlannedSegment | null> {
   for (;;) {

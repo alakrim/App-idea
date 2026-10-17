@@ -150,7 +150,12 @@ export function fakePipeline() {
   };
   return {
     pipeline,
-    emit(chapterId: string, state: ChapterProgress['state'], readySegments: number) {
+    emit(
+      chapterId: string,
+      state: ChapterProgress['state'],
+      readySegments: number,
+      extra: Partial<ChapterProgress> = {},
+    ) {
       const progress: ChapterProgress = {
         chapterId,
         state,
@@ -164,6 +169,7 @@ export function fakePipeline() {
         estimatedTotalMs: null,
         costUsdSoFar: 0,
         error: null,
+        ...extra,
       };
       latest.set(chapterId, progress);
       for (const listener of [...(listeners.get(chapterId) ?? [])]) listener(progress);

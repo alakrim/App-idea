@@ -21,10 +21,11 @@ export interface TtsPlanOptions {
   /** Paragraphs shorter than this may be joined with a following text paragraph. Defaults to 120. */
   minChars?: number;
   /**
-   * Size caps for the first segments, in order. Segment `i` is capped at `ramp[i]`, and segments past
-   * the ramp use `maxChars`. Every cap is also limited by `maxChars`. Defaults to no ramp.
+   * Speech-time caps for the first segments, in estimated seconds, in order. Segment `i` closes before
+   * it would exceed `rampSeconds[i]`. Segments past the ramp are bounded by `maxChars` alone. Defaults
+   * to no ramp.
    */
-  ramp?: readonly number[];
+  rampSeconds?: readonly number[];
 }
 
 export interface LlmPlanOptions {
@@ -32,33 +33,38 @@ export interface LlmPlanOptions {
   overlapSentences: number;
 }
 
-export type TtsPlanInput = Pick<Sentence, 'idx' | 'paragraphIdx' | 'kind' | 'charCount'>;
+/** A sentence as the TTS planner sees it. `speechSeconds` is its estimated narration time. */
+export type TtsPlanInput = Pick<Sentence, 'idx' | 'paragraphIdx' | 'kind' | 'charCount'> & {
+  readonly speechSeconds: number;
+};
 
 /** Longest narration segment in characters, when the narrator does not ask for another size. */
 export const DEFAULT_TTS_MAX_CHARS = 600;
 const DEFAULT_MIN_CHARS = 120;
 
 /**
- * The opening segment sizes of a chapter (ADR-0008). The first segment is short, so the first audio
- * arrives in seconds, and the second is twice as long. Then the narrator's own size applies.
+ * The opening segment lengths of a chapter, in estimated seconds of speech (ADR-0008). The first
+ * segment is about 12 s, so first audio arrives quickly in any script: 12 s is about 30 Han characters
+ * or about 110 Latin ones. The second is about 25 s. Then the narrator's own size applies.
  */
-export const NARRATION_RAMP_CHARS: readonly number[] = [200, 400];
+export const NARRATION_RAMP_SECONDS: readonly number[] = [12, 25];
 
 interface OpenSegment {
   start: number;
   end: number;
   chars: number;
+  seconds: number;
   paragraphIdx: number;
 }
 
 /**
  * Groups sentences into TTS segments.
  *
- * Greedy within a paragraph, up to the segment's cap (`ramp`, then `maxChars`). A segment never
- * crosses a paragraph, except that a paragraph shorter than `minChars` may continue into a following
- * text paragraph. Headings get a segment of their own, and so does any single sentence longer than
- * `maxChars`. A sentence longer than a ramp cap still forms a segment, because a segment always holds
- * at least one sentence.
+ * Greedy within a paragraph, up to the segment's caps: `maxChars`, and for the opening segments also
+ * the `rampSeconds` cap. A segment never crosses a paragraph, except that a paragraph shorter than
+ * `minChars` may continue into a following text paragraph. Headings get a segment of their own, and so
+ * does any single sentence longer than `maxChars`. A sentence longer than a ramp cap still forms a
+ * segment, because a segment always holds at least one sentence.
  *
  * Prefix stable: the segments that a prefix of the sentences closes are the same as in the full plan,
  * because a decision only looks at sentences up to the one that closes the segment.
@@ -69,12 +75,17 @@ export function planTtsSegments(
 ): TtsSegment[] {
   const maxChars = options.maxChars ?? DEFAULT_TTS_MAX_CHARS;
   const minChars = options.minChars ?? DEFAULT_MIN_CHARS;
-  const ramp = options.ramp ?? [];
+  const rampSeconds = options.rampSeconds ?? [];
   assertPositiveInteger('maxChars', maxChars);
   assertNonNegativeInteger('minChars', minChars);
-  ramp.forEach((cap, i) => assertPositiveInteger(`ramp[${i}]`, cap));
-  // The cap of the segment that will be at position `index`.
-  const capAt = (index: number): number => Math.min(ramp[index] ?? maxChars, maxChars);
+  rampSeconds.forEach((cap, i) => assertPositiveNumber(`rampSeconds[${i}]`, cap));
+
+  // Whether `sentence` may join `open`, given that `open` will sit at position `index`.
+  const fits = (open: OpenSegment, sentence: TtsPlanInput, index: number): boolean => {
+    if (open.chars + sentence.charCount > maxChars) return false;
+    const cap = rampSeconds[index];
+    return cap === undefined || open.seconds + sentence.speechSeconds <= cap;
+  };
 
   const paragraphChars = new Map<number, number>();
   for (const sentence of sentences) {
@@ -94,15 +105,13 @@ export function planTtsSegments(
     if (open && sentence.paragraphIdx !== open.paragraphIdx) {
       const previousIsTiny = (paragraphChars.get(open.paragraphIdx) ?? 0) < minChars;
       const mayContinue =
-        previousIsTiny &&
-        sentence.kind === 'text' &&
-        open.chars + sentence.charCount <= capAt(segments.length);
+        previousIsTiny && sentence.kind === 'text' && fits(open, sentence, segments.length);
       if (!mayContinue) {
         segments.push(toSegment(open));
         open = undefined;
       }
     }
-    if (open && open.chars + sentence.charCount > capAt(segments.length)) {
+    if (open && !fits(open, sentence, segments.length)) {
       segments.push(toSegment(open));
       open = undefined;
     }
@@ -111,11 +120,13 @@ export function planTtsSegments(
         start: sentence.idx,
         end: sentence.idx,
         chars: 0,
+        seconds: 0,
         paragraphIdx: sentence.paragraphIdx,
       };
     }
     open.end = sentence.idx;
     open.chars += sentence.charCount;
+    open.seconds += sentence.speechSeconds;
     open.paragraphIdx = sentence.paragraphIdx;
   }
   if (open) segments.push(toSegment(open));
@@ -174,6 +185,12 @@ export function planLlmChunks(
 function assertPositiveInteger(name: string, value: number): void {
   if (!Number.isInteger(value) || value < 1) {
     throw new RangeError(`${name} must be a positive integer, got ${value}`);
+  }
+}
+
+function assertPositiveNumber(name: string, value: number): void {
+  if (!Number.isFinite(value) || value <= 0) {
+    throw new RangeError(`${name} must be a positive number, got ${value}`);
   }
 }
 

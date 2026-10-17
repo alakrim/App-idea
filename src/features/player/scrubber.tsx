@@ -8,7 +8,7 @@ import {
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
-import { selectionHaptic } from '@/ui/haptics';
+import { impactHaptic, selectionHaptic } from '@/ui/haptics';
 import { useMotion } from '@/ui/motion';
 import { Text } from '@/ui/text';
 import { useTheme } from '@/ui/theme';
@@ -19,6 +19,7 @@ import { PLAYER } from './layout';
 import { glideTo } from './motion';
 import {
   SCRUB_STEP_MS,
+  clampToBuffer,
   fractionToMs,
   msToFraction,
   scrubFraction,
@@ -28,7 +29,13 @@ import {
 
 export interface ScrubberProps {
   positionMs: number;
+  /** The length of the whole track: the estimated length while narration is still being made. */
   durationMs: number;
+  /**
+   * The audio made so far, drawn as a buffer band behind the progress. A seek cannot pass its end.
+   * Defaults to the whole track.
+   */
+  bufferedMs?: number;
   /** Start of each sentence on the timeline, drawn as faint ticks. */
   tickMs: readonly number[];
   /** Asks for a seek to an absolute media time. Fires once, when the listener lets go. */
@@ -46,11 +53,19 @@ function clamp(value: number, min: number, max: number): number {
  * sent on release, so the audio never stutters under the finger. Screen readers get an adjustable
  * control that steps 15 s.
  */
-export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberProps) {
+export function Scrubber({
+  positionMs,
+  durationMs,
+  bufferedMs = durationMs,
+  tickMs,
+  onSeek,
+}: ScrubberProps) {
   const { colors } = useTheme();
   const [previewMs, setPreviewMs] = useState<number | null>(null);
   const shownMs = previewMs ?? positionMs;
   const enabled = durationMs > 0;
+  const buffered = clamp(bufferedMs, 0, durationMs);
+  const bufferFraction = msToFraction(buffered, durationMs);
 
   const width = useSharedValue(0);
   const scrubbing = useSharedValue(false);
@@ -59,12 +74,18 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
   const fraction = useSharedValue(msToFraction(positionMs, durationMs));
   const targetFraction = msToFraction(positionMs, durationMs);
   const durationShared = useSharedValue(durationMs);
+  const bufferShared = useSharedValue(bufferFraction);
+  const cappedNow = useSharedValue(false);
   const reportedMs = useSharedValue(-1);
   const lastStep = useSharedValue(-1);
 
   useEffect(() => {
     durationShared.value = durationMs;
   }, [durationMs, durationShared]);
+
+  useEffect(() => {
+    bufferShared.value = bufferFraction;
+  }, [bufferFraction, bufferShared]);
 
   // The thumb follows the playing position, but never while the finger is on it: engine updates
   // keep arriving during a drag and must not pull the thumb away from the finger.
@@ -76,6 +97,7 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
 
   const showPreview = useCallback((ms: number | null) => setPreviewMs(ms), []);
   const haptic = useCallback(() => selectionHaptic(), []);
+  const edgeHaptic = useCallback(() => impactHaptic(), []);
   const commit = useCallback(
     (ms: number) => {
       onSeek(ms);
@@ -91,20 +113,31 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
         .enabled(enabled)
         .minDistance(0)
         .onBegin((event) => {
-          const start = width.value > 0 ? clamp(event.x / width.value, 0, 1) : 0;
+          const raw = width.value > 0 ? clamp(event.x / width.value, 0, 1) : 0;
+          const start = clampToBuffer(raw, bufferShared.value);
           scrubbing.value = true;
-          anchor.value = start;
-          fraction.value = start;
-          runOnJS(showPreview)(Math.round(start * durationShared.value));
+          anchor.value = start.fraction;
+          fraction.value = start.fraction;
+          cappedNow.value = start.capped;
+          runOnJS(showPreview)(Math.round(start.fraction * durationShared.value));
         })
         .onUpdate((event) => {
-          const next = scrubFraction(
-            anchor.value,
-            event.translationX,
-            width.value,
-            scrubSensitivity(event.translationY),
+          const limited = clampToBuffer(
+            scrubFraction(
+              anchor.value,
+              event.translationX,
+              width.value,
+              scrubSensitivity(event.translationY),
+            ),
+            bufferShared.value,
           );
+          const next = limited.fraction;
           fraction.value = next;
+          // Passing the end of the band is marked once, with a light haptic, not on every frame.
+          if (limited.capped !== cappedNow.value) {
+            cappedNow.value = limited.capped;
+            if (limited.capped) runOnJS(edgeHaptic)();
+          }
           // Labels update once per second, not per frame, to keep the JS thread quiet.
           const ms = Math.round((next * durationShared.value) / 1000) * 1000;
           if (ms !== reportedMs.value) {
@@ -133,10 +166,13 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
       anchor,
       fraction,
       durationShared,
+      bufferShared,
+      cappedNow,
       reportedMs,
       lastStep,
       showPreview,
       haptic,
+      edgeHaptic,
       commit,
     ],
   );
@@ -169,11 +205,16 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
   };
   /* eslint-enable react-hooks/immutability */
 
+  const accessibleValue =
+    buffered < durationMs
+      ? `${describeDuration(positionMs)} of ${describeDuration(durationMs)}, ${describeDuration(buffered)} ready`
+      : `${describeDuration(positionMs)} of ${describeDuration(durationMs)}`;
+
   const onAccessibilityAction = (event: AccessibilityActionEvent) => {
     const { actionName } = event.nativeEvent;
     if (!enabled || (actionName !== 'increment' && actionName !== 'decrement')) return;
     const delta = actionName === 'increment' ? SCRUB_STEP_MS : -SCRUB_STEP_MS;
-    onSeek(clamp(positionMs + delta, 0, durationMs));
+    onSeek(clamp(positionMs + delta, 0, buffered));
     selectionHaptic();
   };
 
@@ -190,7 +231,7 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
             min: 0,
             max: Math.round(durationMs / 1000),
             now: Math.round(positionMs / 1000),
-            text: `${describeDuration(positionMs)} of ${describeDuration(durationMs)}`,
+            text: accessibleValue,
           }}
           accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
           onAccessibilityAction={onAccessibilityAction}
@@ -198,6 +239,16 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
           style={styles.hitArea}
         >
           <View style={[styles.track, { backgroundColor: colors.border }]}>
+            {bufferFraction < 1 ? (
+              <View
+                pointerEvents="none"
+                testID="scrubber-buffer"
+                style={[
+                  styles.buffer,
+                  { width: `${bufferFraction * 100}%`, backgroundColor: colors.textFaint },
+                ]}
+              />
+            ) : null}
             {tickMs.map((ms, index) => (
               <View
                 key={index}
@@ -250,6 +301,13 @@ export function Scrubber({ positionMs, durationMs, tickMs, onSeek }: ScrubberPro
 const styles = StyleSheet.create({
   wrapper: {
     gap: space.xs,
+  },
+  buffer: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
+    opacity: PLAYER.bufferOpacity,
   },
   hitArea: {
     height: PLAYER.scrubHitHeight,
